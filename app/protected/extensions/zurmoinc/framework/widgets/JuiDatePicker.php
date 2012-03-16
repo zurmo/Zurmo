@@ -51,6 +51,7 @@
             {
                 $this->htmlOptions['id'] = $id;
             }
+
             if (isset($this->htmlOptions['name']))
             {
                 $name = $this->htmlOptions['name'];
@@ -87,7 +88,7 @@
 
                 if (!isset($this->options['onSelect']))
                 {
-                    $this->options['onSelect']="js:function( selectedDate ) { jQuery('#{$id}').val(selectedDate);}";
+                    $this->options['onSelect']="js:function( selectedDate ) { jQuery('#{$id}').val(selectedDate);}"; // Not Coding Standard
                 }
 
                 $id = $this->htmlOptions['id'] = $this->htmlOptions['id'].'_container';
@@ -99,7 +100,7 @@
             $options = CJavaScript::encode($this->options);
             $js = "jQuery('#{$id}').datepicker($options);";
 
-            if ($this->language!='' && $this->language!='en')
+            if ($this->language != '' && $this->language != 'en')
             {
                 $this->registerScriptFile($this->i18nScriptFile);
                 $js = "jQuery(function(){jQuery('#{$id}').datepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional['{$this->language}'], {$options}));})";
@@ -110,9 +111,9 @@
             if (isset($this->defaultOptions))
             {
                 $this->registerScriptFile($this->i18nScriptFile);
-                $cs->registerScript(__CLASS__, $this->defaultOptions!==null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':''); // Not Coding Standard
+                $cs->registerScript(__CLASS__,     $this->defaultOptions !== null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':'');
             }
-            $cs->registerScript(__CLASS__ . '#' . $id, $js);
+            $cs->registerScript(__CLASS__. '#' . $id, $js);
         }
     }
 ?>

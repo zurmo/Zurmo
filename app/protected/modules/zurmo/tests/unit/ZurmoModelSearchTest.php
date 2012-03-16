@@ -56,5 +56,31 @@
             $this->assertEquals($id, $contacts[0]->id);
             $this->assertEquals('Super Man', strval($contacts[0]));
         }
+
+        /**
+         * @depends testGetModelsByFullName
+         */
+        public function testCasingInsensitivity()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $user = User::getByUsername('billy');
+
+            ContactsModule::loadStartingData();
+            $states = ContactState::GetAll();
+            $contact = new Contact();
+            $contact->owner        = $user;
+            $contact->title->value = 'Mr.';
+            $contact->firstName    = 'super';
+            $contact->lastName     = 'man';
+            $contact->state        = $states[0];
+            $this->assertTrue($contact->save());
+            $id = $contact->id;
+            $this->assertNotEmpty($id);
+            unset($contact);
+
+            $contacts = ZurmoModelSearch::getModelsByFullName('Contact', 'Super Man');
+            $this->assertEquals(2, count($contacts));
+        }
     }
 ?>

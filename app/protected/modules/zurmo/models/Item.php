@@ -171,10 +171,10 @@
                     array('createdDateTime',  'required'),
                     array('createdDateTime',  'readOnly'),
                     array('createdDateTime',  'type', 'type' => 'datetime'),
+                    array('createdByUser',    'readOnly'),
                     array('modifiedDateTime', 'required'),
                     array('modifiedDateTime', 'readOnly'),
                     array('modifiedDateTime', 'type', 'type' => 'datetime'),
-                    array('createdByUser',    'readOnly'),
                     array('modifiedByUser',   'readOnly'),
                 ),
                 'elements' => array(

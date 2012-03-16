@@ -28,11 +28,18 @@
     {
         public function __toString()
         {
-            if (trim($this->name) == '')
+            try
             {
-                return Yii::t('Default', '(Unnamed)');
+                if (trim($this->name) == '')
+                {
+                    return Yii::t('Default', '(Unnamed)');
+                }
+                return $this->name;
             }
-            return $this->name;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
         public static function getModuleClassName()
@@ -68,24 +75,24 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'name',
-                    'dueDateTime',
                     'completedDateTime',
                     'completed',
                     'description',
+                    'dueDateTime',
+                    'name',
                 ),
                 'rules' => array(
+                    array('completedDateTime', 'type', 'type' => 'datetime'),
+                    array('completed',        'boolean'),
+                    array('dueDateTime',       'type', 'type' => 'datetime'),
+                    array('description',      'type',    'type' => 'string'),
                     array('name',             'required'),
                     array('name',             'type',    'type' => 'string'),
                     array('name',             'length',  'min'  => 3, 'max' => 64),
-                    array('dueDateTime',       'type', 'type' => 'datetime'),
-                    array('completedDateTime', 'type', 'type' => 'datetime'),
-                    array('completed',        'boolean'),
-                    array('description',      'type',    'type' => 'string'),
                 ),
                 'elements' => array(
-                    'dueDateTime'       => 'DateTime',
                     'completedDateTime' => 'DateTime',
+                    'dueDateTime'       => 'DateTime',
                 ),
                 'defaultSortAttribute' => 'name',
                 'noAudit' => array(
@@ -99,8 +106,8 @@
         {
             return array_merge(parent::untranslatedAttributeLabels(),
                 array(
-                    'dueDateTime'       => 'Due On',
                     'completedDateTime' => 'Completed On',
+                    'dueDateTime'       => 'Due On',
                 )
             );
         }

@@ -109,9 +109,9 @@
             $labelOptions   =   isset($htmlOptions['labelOptions'])?$htmlOptions['labelOptions']:array();
             unset($htmlOptions['labelOptions']);
 
-            $items = array();
+            $items  = array();
             $baseID = self::getIdByName($name);
-            $id = 0;
+            $id     = 0;
             foreach ($data as $value => $label)
             {
                 $checked                =   !strcmp($value, $select);

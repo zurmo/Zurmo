@@ -28,14 +28,35 @@
     {
         public function attach($owner)
         {
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
         }
 
-        public function handleSetupDatabaseConnection($event)
+        /**
+        * Import all files that need to be included(for lazy loading)
+        * @param $event
+        */
+        public function handleImports($event)
         {
-            RedBeanDatabase::setup(Yii::app()->db->connectionString,
-                                   Yii::app()->db->username,
-                                   Yii::app()->db->password);
+            try
+            {
+                $filesToInclude = GeneralCache::getEntry('filesToIncludeForTests');
+            }
+            catch (NotFoundException $e)
+            {
+                $filesToInclude   = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules', true);
+                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework', true);
+                $totalFilesToIncludeFromModules = count($filesToInclude);
+
+                foreach ($filesToIncludeFromFramework as $key => $file)
+                {
+                    $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
+                }
+                GeneralCache::cacheEntry('filesToIncludeForTests', $filesToInclude);
+            }
+            foreach ($filesToInclude as $file)
+            {
+                Yii::import($file);
+            }
         }
     }
 ?>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateCalculatedNumberAttribute</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CreateCalculatedNumberAttribute</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/designer/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Integer</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_attributeName</td>
+	<td>attendance_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_attributeLabels_en</td>
+	<td>attendance_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_defaultValue</td>
+	<td>22</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_minValue</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_maxValue</td>
+	<td>22</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=IntegerAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=IntegerAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: attendance_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Integer</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>attendance_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>attendance_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>22</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[5]/td</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[6]/td</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[7]/td</td>
+	<td>22</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[9]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='IntegerAttributeDetailsView']/table/tbody/tr[9]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Decimal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_attributeName</td>
+	<td>salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_attributeLabels_en</td>
+	<td>salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_defaultValue</td>
+	<td>900</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=DecimalAttributeForm_isRequired</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=DecimalAttributeForm_isAudited</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Decimal</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>900</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[5]/td</td>
+	<td>18</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[6]/td</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>assertNotEditable</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Calculated Number</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_attributeName</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_attributeLabels_en</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_formula</td>
+	<td>attendance_${randomSuffix} + salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Calculated Number</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>attendance_${randomSuffix} + salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_formula</td>
+	<td>attendance_${randomSuffix} * salary_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='TitleBarAndAttributeDetailsView']/div[1]/div/h1</td>
+	<td>exact:Field: calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[1]/td</td>
+	<td>Calculated Number</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[2]/td</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[3]/td</td>
+	<td>calculatedValue_${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='CalculatedNumberAttributeDetailsView']/table/tbody/tr[4]/td</td>
+	<td>attendance_${randomSuffix} * salary_${randomSuffix}</td>
+</tr>
+</tbody></table>
+</body>
+</html>

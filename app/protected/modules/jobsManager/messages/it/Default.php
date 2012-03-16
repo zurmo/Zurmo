@@ -37,6 +37,10 @@
             => 'Accesso ai jobs',
         'Available Jobs'
             => 'Jobs disponibili',
+        'Cleanup old job logs Job'
+            => 'Pulire i vecchi job logs.',
+        'Clear the assets folder on server(optional).'
+            => 'Pulisci la cartella Assets nel server (opionale).',
         'Click Here'
             => 'Clicca qui',
         'Completed'
@@ -46,11 +50,11 @@
         'End Date Time'
             => 'Data/ora di fina',
         'Error Log'
-            => 'Log di Errore',
+            => 'Log errori',
         'Every 5 minutes'
             => 'Ogni 5 minuti',
         'hostInfo or scriptUrl not set up'
-            => 'hostInfo o scriptUrl non é configurato',
+            => 'hostInfo o scriptUrl non è configurato.',
         'How often should I run each Job?'
             => 'Frequenza di esecuzione dei jobs',
         'How to Setup the Jobs to Run Automatically'
@@ -87,17 +91,18 @@
             => 'Inattivo',
         'Recommended Frequency'
             => 'Frequenza raccomandata',
+        'Remove the api test entry script for production use.'
+            => 'Rimuove il script test API per produzione.',
         'Reset'
             => 'Reset',
         'Return to Job Manager'
-            => 'Ritorna al Gestione dei jobs',
+            => 'Ritorno a Gestione dei jobs',
         'Scheduled jobs are stuck'
             => 'Jobs pianificati hanno fallito',
         'Script will run at most for {seconds} seconds.'
             => 'Tempo massimo di esecuzione dello script: {seconds} seconde.',
         'Start Date Time'
             => 'Data/ora di inizio',
-
         'The job {jobName} has been reset.'
             => 'Il job {jobName} ha ricominciato.',
         'The job {jobName} was not found to be stuck and therefore was not reset.'

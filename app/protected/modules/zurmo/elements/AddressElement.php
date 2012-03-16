@@ -151,16 +151,14 @@
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
             $content      = '<span>';
-            // Begin Not Coding Standard
             $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl, array(
-                                'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                                'update' => '#modalContainer',
+                                'onclick'    => '$("#modalContainer").dialog("open"); return false;',
+                                'update'     => '#modalContainer',
                                 'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
                                 'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
                                 ),
                                 array('id' => $id)
             );
-            // End Not Coding Standard
             $content     .= '</span>';
             return $content;
         }

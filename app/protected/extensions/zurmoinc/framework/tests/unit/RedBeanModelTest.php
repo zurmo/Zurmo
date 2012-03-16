@@ -1114,7 +1114,7 @@
 
             $thing = TestBooleanAttributeModel::getById($id);
             $this->assertEquals   (1,    $thing->bool);
-            $this->assertNotEquals(true, $thing->bool);
+            $this->assertNotSame(true, $thing->bool);
 
             $thing->bool = 0;
             $this->assertTrue($thing->save());
@@ -1123,7 +1123,7 @@
 
             $thing = TestBooleanAttributeModel::getById($id);
             $this->assertEquals   (0,     $thing->bool);
-            $this->assertNotEquals(false, $thing->bool);
+            $this->assertNotSame(false, $thing->bool);
 
             $thing->bool = 3;
             $this->assertFalse($thing->save());
@@ -1436,7 +1436,8 @@
             unset($model);
             $model = TestDateTimeModel::getById($id);
             $this->assertEquals('2011-06-07', $model->myDate);
-            $this->assertEquals($now, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
+            $this->assertGreaterThanOrEqual($now - 2, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
+            $this->assertLessThanOrEqual($now + 2, DateTimeUtil::convertDbFormatDateTimeToTimestamp($model->myDateTime));
 
             $rows = R::getAll('desc testdatetimemodel');
             $this->assertEquals('mydate',     $rows[1]['Field']);

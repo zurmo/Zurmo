@@ -35,10 +35,19 @@
 
         public function testRunAndProcessStuckJobs()
         {
+            Yii::app()->user->userModel               = User::getByUsername('super');
+            $emailAddress                             = new Email();
+            $emailAddress->emailAddress               = 'sometest@zurmoalerts.com';
+            Yii::app()->user->userModel->primaryEmail = $emailAddress;
+            $saved                                    = Yii::app()->user->userModel->save();
+            $this->assertTrue($saved);
+
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
+
             $monitorJob = new MonitorJob();
             $this->assertEquals(0, count(JobInProcess::getAll()));
             $this->assertEquals(0, count(Notification::getAll()));
-            Yii::app()->emailHelper->removeAllSent();
             $jobInProcess = new JobInProcess();
             $jobInProcess->type = 'Test';
             $this->assertTrue($jobInProcess->save());
@@ -48,16 +57,12 @@
                    $jobInProcess->getClassId('Item');
             R::exec($sql);
             $jobInProcess->forget();
-
             $monitorJob->run();
             $this->assertEquals(1, count(Notification::getAll()));
 
-            /** When the Email is available, we can test that the notification also sends
-             *  a critical email.
-            echo "<pre>";
-            print_r(Yii::app()->emailHelper->getSentEmailMessages());
-            echo "</pre>";
-            */
+            //Confirm an email was sent
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());
         }
     }
 ?>

@@ -212,10 +212,7 @@
             }
             if (is_string($value))
             {
-                return SQLOperatorUtil::getOperatorByType($operatorType) . " " .
-                       self::lower("'" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
-                       self::escape($value) .
-                       SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'");
+                return self::resolveToLowerForStringComparison($operatorType, self::escape($value));
             }
             elseif (is_array($value) && count($value) > 0)
             {
@@ -223,12 +220,27 @@
             }
             elseif ($value !== null)
             {
-                return SQLOperatorUtil::getOperatorByType($operatorType) . " " . $value;
+                return SQLOperatorUtil::getOperatorByType($operatorType) . " " . DatabaseCompatibilityUtil::escape($value);
             }
             elseif ($value === null)
             {
                 return SQLOperatorUtil::resolveOperatorAndValueForNullOrEmpty($operatorType);
             }
+        }
+
+        public static function resolveToLowerForStringComparison($operatorType, $value)
+        {
+            assert('is_string($operatorType)');
+            assert('is_string($value)');
+            if (RedBeanDatabase::getDatabaseType() != 'mysql')
+            {
+                //todo: for pgsql, need to use lower or ILIKE to make sure evaluation is not case sensitive
+                throw new NotSupportedException();
+            }
+            return SQLOperatorUtil::getOperatorByType($operatorType) .
+            " '" . SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType($operatorType) .
+            $value .
+            SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType($operatorType) . "'";
         }
 
         /**
@@ -441,6 +453,41 @@
                 case 'mysql':
                     $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'thread_stack'");
+                    $row    = @mysql_fetch_row($result);
+                    if (is_resource($connection))
+                    {
+                        mysql_close($connection);
+                    }
+                    if (isset($row[1]))
+                    {
+                        return $row[1];
+                    }
+            }
+            return false;
+        }
+
+        /**
+        * Get database optimizer_search_depth
+        * @param string $databaseType
+        * @param string $databaseHostname
+        * @param string $databaseUsername
+        * @param string $databasePassword
+        * @throws NotSupportedException
+        */
+        public static function getDatabaseOptimizerSearchDepthValue($databaseType,
+                                                                    $databaseHostname,
+                                                                    $databaseUsername,
+                                                                    $databasePassword)
+        {
+            if ($databaseType != 'mysql')
+            {
+                throw new NotSupportedException();
+            }
+            switch ($databaseType)
+            {
+                case 'mysql':
+                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $result = @mysql_query("SHOW VARIABLES LIKE 'optimizer_search_depth'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
                     {

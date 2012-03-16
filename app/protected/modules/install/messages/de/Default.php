@@ -77,12 +77,12 @@
             => 'Datenbank ist ist in Strict-Modus',
         'Database is not in strict mode.'
             => 'Datenbank ist nicht im Strict-Modus',
-        'Database log_bin=off and therefore satisfies this requirement.'
-            => 'In der Datenbank der Wert des Parameters log_bin=off und erfüllt die benötigte Voraussetzungen.',
-        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement'
-            => 'Datenbank Werte log_bin=on und _bin_trust_function_creators=on und erfüllt die benötigte Voraussetzungen.',
-        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.'
-            => 'Datenbank Werte log_bin=on. Sie müssen die Einstellung ändern für log_bin=off oder log_bin_trust_function_creators=on.',
+        'Database log_bin=off and therefore satisfies this requirement.' // Not Coding Standard
+            => 'In der Datenbank der Wert des Parameters log_bin=off und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard
+        'Database log_bin=on and log_bin_trust_function_creators=on and therefore satisfies this requirement' // Not Coding Standard
+            => 'Datenbank Werte log_bin=on und _bin_trust_function_creators=on und erfüllt die benötigte Voraussetzungen.', // Not Coding Standard
+        'Database log_bin=on. Either set log_bin=off or set log_bin_trust_function_creators=on.' // Not Coding Standard
+            => 'Datenbank Werte log_bin=on. Sie müssen die Einstellung ändern für log_bin=off oder log_bin_trust_function_creators=on.', // Not Coding Standard
         'Database max_allowed_packet size is:'
             => 'Datenbank max_allowed_packet Größe ist',
         'Database max_allowed_packet size meets minimum requirement.'
@@ -93,6 +93,10 @@
             => 'Datenbank max_sp_recursion_depth Größe erfüllt Mindestanforderung',
         'Database name'
             => 'Name der Datenbank',
+        'Database optimizer_search_depth size meets requirement.'
+            => 'Der Einstellwert optimizer_search_depth erfüllt die Anforderungen.',
+        'Database optimizer_search_depth value is {searchDepth}. It is required to be set to 0.'
+            => 'Der einstellwert optimizer_search_depth ist {searchDepth}. Der Wert muss 0 sein.',
         'Database password'
             => 'Datenbankkennwort',
         'Database schema creation complete.'
@@ -119,6 +123,8 @@
             => 'Freezing Datenbank',
         'Host name where Zurmo will be installed.'
             => 'Der Name des Hosts, auf dem Zurmo installiert werden soll.',
+        'If this website is in production mode, please remove the app/test.php file.'
+            => 'Wenn diese Web-Seite in Produktion ist, entfernen Sie bitte die Datei app/test.php.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -200,6 +206,8 @@
             => 'PHP upload_max_filesize ist:',
         'PHP upload_max_filesize value meets minimum requirement.'
             => 'PHP upload_max_filesize erfüllt Mindestanforderung.',
+        'Please delete all files from assets folder on server.'
+            => 'Bitte löschen Sie alle Dateien im Ordner Assets.',
         'Rebuilding Permissions.'
             => 'Rekonstruktion von Berechtigungen.',
         'Recheck System'
@@ -298,5 +306,5 @@
             => '{folderPath} fehlt',
         '{folderPath} is not writable.'
             => '{folderPath} ist nicht beschreibbar.',
-    );
+    ); // Not Coding Standard
 ?>

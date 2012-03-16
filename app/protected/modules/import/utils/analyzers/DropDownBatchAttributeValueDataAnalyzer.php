@@ -64,10 +64,17 @@
          */
         protected function analyzeByValue($value)
         {
-            if ($value != null && !in_array(strtolower($value), $this->dropDownValues))
+            if ($value != null)
             {
-                $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;
-                $this->messageCountData[static::INVALID] ++;
+                $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase(
+                                               $this->missingDropDownInstructions
+                                               [DropDownSanitizerUtil::ADD_MISSING_VALUE]);
+                if (!in_array(strtolower($value), $this->dropDownValues) &&
+                   !in_array(strtolower($value), $lowerCaseMissingValuesToMap))
+                {
+                    $this->missingDropDownInstructions[DropDownSanitizerUtil::ADD_MISSING_VALUE][] = $value;
+                    $this->messageCountData[static::INVALID] ++;
+                }
             }
         }
 

@@ -139,6 +139,23 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                        array(
+                                            'element' => 'calculatednumber',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'dropdowndependency',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -217,6 +234,26 @@
                                         ),
                                         array(
                                             'element' => 'multiselect',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                        array(
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -488,6 +525,41 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'calculatednumber',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -647,6 +719,34 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -685,28 +785,33 @@
         public static function fetchOpportunitiesSearchFormGetData($accountId, $superUserId, $currencyId)
         {
             return array(
-                            'name'               =>  'myEditOpportunity',
-                            'owner'              =>  array('id' => $superUserId),
-                            'ownedItemsOnly'     =>  '1',
-                            'account'            =>  array('id' => $accountId),
-                            'amount'             =>  array('value'    => 288000,
+                            'name'               => 'myEditOpportunity',
+                            'owner'              => array('id' => $superUserId),
+                            'ownedItemsOnly'     => '1',
+                            'account'            => array('id' => $accountId),
+                            'amount'             => array('value'    => 288000,
                                                           'currency' => array('id' => $currencyId)),
-                            'closeDate__Date'    =>  array('value' => 'Today'),
-                            'stage'              =>  array('value' => 'Qualification'),
-                            'source'             =>  array('value' => 'Inbound Call'),
-                            'probability'        =>  '2',
-                            'decimal'            =>  '12',
-                            'integer'            =>  '11',
-                            'phone'              =>  '259-784-2069',
-                            'text'               =>  'This is a test Edit Text',
-                            'textarea'           =>  'This is a test Edit TextArea',
-                            'url'                =>  'http://wwww.abc-edit.com',
-                            'checkbox'           =>  array('value'  =>  '0'),
-                            'currency'           =>  array('value'  =>  40),
-                            'picklist'           =>  array('value'  =>  'b'),
-                            'radio'              =>  array('value'  =>  'e'),
-                            'date__Date'         =>  array('type'   =>  'Today'),
-                            'datetime__DateTime' =>  array('type'   =>  'Today'));
+                            'closeDate__Date'    => array('value' => 'Today'),
+                            'stage'              => array('value' => 'Qualification'),
+                            'source'             => array('value' => 'Inbound Call'),
+                            'probability'        => '2',
+                            'decimal'            => '12',
+                            'integer'            => '11',
+                            'phone'              => '259-784-2069',
+                            'text'               => 'This is a test Edit Text',
+                            'textarea'           => 'This is a test Edit TextArea',
+                            'url'                => 'http://wwww.abc-edit.com',
+                            'checkbox'           => array('value'  =>  '0'),
+                            'currency'           => array('value'  =>  40),
+                            'picklist'           => array('value'  =>  'b'),
+                            'multiselect'        => array('values' => array('gg', 'hh')),
+                            'tagcloud'           => array('values' => array('reading', 'surfing')),
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
+                            'radio'              => array('value'  =>  'e'),
+                            'date__Date'         => array('type'   =>  'Today'),
+                            'datetime__DateTime' => array('type'   =>  'Today'));
         }
     }
 ?>

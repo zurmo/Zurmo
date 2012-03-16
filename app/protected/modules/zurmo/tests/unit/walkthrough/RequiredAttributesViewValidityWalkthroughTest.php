@@ -173,6 +173,7 @@
         }
 
         //todo: test note inlineEditSave
+        //todo: testing calculated and dependent dropdown attributes, that they do not affect this at all.
         //todo: test out multiple custom fields not placed, make sure array of config for RequiredAttributesValidViewUtil is working ok.
     }
 ?>

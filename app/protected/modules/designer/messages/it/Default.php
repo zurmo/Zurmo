@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A calculated number based on other field values'
+            => 'Un campo calcolato',
         'A check box'
             => 'Un checkbox',
         'A currency field'
@@ -53,26 +55,44 @@
             => 'Un pick list con valori specifice da scegliere',
         'A radio button pick list'
             => 'Un campo radio button',
+        'A set of dependent pick lists'
+            => 'Picklists dipendenti',
+        'A tag cloud'
+            => 'Una nuvola di etichette',
         'A text field'
             => 'Un campo di testo',
         'Access Designer Tool'
             => 'Acceso al Designer',
         'Address fields'
             => 'Campi Indirizzi',
+        'All fields placed must be unique. Two of the placed fields: {field1Label} and {field2Label} contain the same fields.'
+            => 'Un campo può essere aggiunto una sola volta.   I campi seguenti contengono lo stesso campo: {field1Label} e {field2Label}.',
         'All panels visible'
             => 'Tutti los pannellos visibile',
         'All required fields must be placed in this layout.'
             => 'Tutti i campi richiesti devono essere collocati nel layout.',
         'An integer field'
             => 'Un campo intero',
+        'At least one pick-list value must be mapped for each used level.'
+            => 'Prego di mappare almeno una valuta del pick list per ogni livello.',
+        'Available Fields:'
+            => 'Campi disponibile:',
+        'Calculated Number'
+            => 'Campo Calcolato',
         'Check Box'
             => 'Check box',
+        'Create a math formula that is calculated from other fields. Use the Formula Name from the Available Fields grid below to create your formula. Example formula (field1 x field2) / field3'
+            => 'Creare una formula calcoli sui valori di altri campi.  Usate il nome Formula sotto della colonna. Campi Disponibili per creare vostra formula. Per esempio: campo1 x campo2) / campo3',
         'Create Field'
             => 'Crea un campo',
         'Custom Fields'
             => 'Campi personalizzati',
         'Decimal'
             => 'Decimale',
+        'Dependency Mapping'
+            => 'Mapping Dipendente',
+        'Dependent Pick Lists'
+            => 'Picklists dipendenti',
         'Designer'
             => 'Designer',
         'Designer Home'
@@ -85,8 +105,12 @@
             => 'Layout dettaglio',
         'Display Name'
             => 'Etichetta campo',
+        'Dropdown Dependency Mapping'
+            => 'Mapping della lista a cascata dipendenta',
         'Each item must be uniquely named'
             => 'Ogni valore deve aver un nome unico',
+        'Each value must not contain a comma.'
+            => 'Il valore non può contenere una virgola.',
         'Edit Field'
             => 'Modifica campo',
         'Edit Layout'
@@ -109,16 +133,26 @@
             => 'Il primo carattere deve essere una lettera minuscola',
         'First panel visible, then `show more` link'
             => 'Primo pannello visible, dopo un link "visto di piu"',
+        'First select level {number}'
+            => 'Primo, scegliete livello {number}',
+        'Formula'
+            => 'Formula',
+        'Formula Name'
+            => 'Nome Formula',
         'General'
             => 'Generale',
         'General Edit'
             => 'Modifica generale',
+        'How does this work?'
+            => 'Come funziona?',
         'Invalid panel configuration type'
             => 'Configurazione del pannello non valida',
         'Layout saved successfully.'
             => 'Layout salvato con successo',
         'Layouts'
             => 'Layouts',
+        'Level: {number}'
+            => 'Livello: {number}',
         'Manage module fields, layouts, and labels.'
             => 'Gestione dei campi, layouts e etichette.',
         'Mass Edit View'
@@ -169,17 +203,34 @@
             => 'Salva',
         'Search View'
             => 'Vista ricerca',
+        'Show If'
+            => 'Valore dipendente',
+        'Tag Cloud'
+            => 'Nuvola di etichette',
+        'Tag Cloud Values'
+            => 'Parole del nuvola di etichette',
         'Text'
             => 'Testo',
         'Text Area'
             => 'Textarea',
+        'The formula is invalid.'
+            => 'La formula non è valida.',
+        'There are no fields in this module to be used in a formula.'
+            => 'Non esiste campi per utilizzare nella formula.',
         'There was an error processing your request.'
             => 'C\'era un errore durante l\'elaborazione della vostra richiesta.',
         'Track Audit Log'
             => 'Audit questo campo',
         'URL'
             => 'URL',
+        'You can only have at most 4 pick-lists selected.'
+            => 'Potete avere al massimo 4 picklists.',
+        'You must have at least one field placed in order to save a layout.'
+            => 'Il layout deve contenire al meno 1 campo.',
         'You must have at least one panel in order to save a layout.'
             => 'Dovrebbe avere almeno uno pannello per salvare un layout.',
+        'You must select at least 2 pick-lists.'
+            => 'Si deve scegliere al minimo 2 picklists.',
+
     );
 ?>

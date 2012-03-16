@@ -103,7 +103,6 @@
             self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);
             self::addOrUpdateRules($modelClassName, $relationName, null, null, null,
                                    null, null, $isRequired, array(), $metadata);
-
             $modelClassName::setMetadata($metadata);
         }
 
@@ -116,7 +115,9 @@
                                                               $elementType,
                                                               $customFieldDataName,
                                                               $customFieldDataData = null,
-                                                              $customFieldDataLabels = null)
+                                                              $customFieldDataLabels = null,
+                                                              $relationModelClassName = 'OwnedCustomField',
+                                                              $owned = true)
         {
             assert('is_string($modelClassName)      && $modelClassName != ""');
             assert('is_string($relationName)        && $relationName != ""');
@@ -125,12 +126,33 @@
             assert('is_bool($isAudited)');
             assert('is_string($customFieldDataName) && $customFieldDataName != ""');
             assert('is_array($customFieldDataLabels) || $customFieldDataLabels == null');
+            assert('in_array($relationModelClassName, array("CustomField", "OwnedCustomField",
+                             "OwnedMultipleValuesCustomField", "MultipleValuesCustomField"))');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
+            if ($owned)
+            {
+                if (!in_array($relationModelClassName, array("OwnedCustomField", "OwnedMultipleValuesCustomField")))
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                if (!in_array($relationModelClassName, array("CustomField", "MultipleValuesCustomField")))
+                {
+                    throw new NotSupportedException();
+                }
+            }
             if (!isset           (               $metadata[$modelClassName]['relations']) ||
                  !array_key_exists($relationName, $metadata[$modelClassName]['relations']))
             {
-                $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,  'CustomField');
+                $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,
+                                                                               $relationModelClassName);
+                if ($owned)
+                {
+                    $metadata[$modelClassName]['relations'][$relationName][2] = RedBeanModel::OWNED;
+                }
             }
             $metadata[$modelClassName]['elements'][$relationName] = $elementType;
             self::resolveAttributeLabelsMetadata($attributeLabels, $metadata, $modelClassName, $relationName);

@@ -30,7 +30,7 @@
      * but also during an upgrade or manually  to update the database schema based on any detected
      * changes.
      */
-    class AutoBuildDatabaseTest extends BaseTest
+    class AutoBuildDatabaseTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -52,7 +52,7 @@
             $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
             InstallUtil::autoBuildDatabase($messageLogger);
             $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //There are 6 extra rows that are not being removed during the autobuild process.
+            //There are only 6 extra rows that are not being removed during the autobuild process.
             //These need to eventually be fixed so they are properly removed, except currency which is ok.
             //activity_items (3), contact_Opportunity, (1) _group__user (1), currency (1)
             $this->assertEquals($beforeRowCount, ($afterRowCount - 6));

@@ -150,8 +150,14 @@
             $this->createDateTimeCustomFieldByModule            ('NotesModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('NotesModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('NotesModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('NotesModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('NotesModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('NotesModule', 'citypicklist');
             $this->createIntegerCustomFieldByModule             ('NotesModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('NotesModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('NotesModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('NotesModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('NotesModule', 'dropdowndependency');
             $this->createPhoneCustomFieldByModule               ('NotesModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('NotesModule', 'radio');
             $this->createTextCustomFieldByModule                ('NotesModule', 'text');
@@ -241,7 +247,12 @@
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value' => 'a'),
+                                            'picklist'                          => array('value'  => 'a'),
+                                            'multiselect'                       => array('values' => array('ff', 'rr')),
+                                            'tagcloud'                          => array('values' => array('writing', 'gardening')),
+                                            'countrypicklist'                   => array('value'  => 'bbbb'),
+                                            'statepicklist'                     => array('value'  => 'bbb1'),
+                                            'citypicklist'                      => array('value'  => 'bb1'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -282,12 +293,23 @@
             $this->assertEquals($note[0]->text                             , 'This is a test Text');
             $this->assertEquals($note[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($note[0]->url                              , 'http://wwww.abc.com');
+            $this->assertEquals($note[0]->countrypicklist->value           , 'bbbb');
+            $this->assertEquals($note[0]->statepicklist->value             , 'bbb1');
+            $this->assertEquals($note[0]->citypicklist->value              , 'bb1');
+            $this->assertContains('ff'                                     , $note[0]->multiselect->values);
+            $this->assertContains('rr'                                     , $note[0]->multiselect->values);
+            $this->assertContains('writing'                                , $note[0]->tagcloud->values);
+            $this->assertContains('gardening'                              , $note[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Note');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
+            $this->assertEquals(135                                        , $testCalculatedValue);
         }
 
         /**
          * @depends testCreateAnNoteAfterTheCustomFieldsArePlacedForNotesModule
          */
-        public function testEditOfTheNoteForTheCustomFieldsPlacedForNotesModule()
+        public function testEditOfTheNoteForTheTagCloudFieldAfterRemovingAllTagsPlacedForNotesModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -307,6 +329,7 @@
 
             //Retrieve the note Id based on the created note.
             $note = Note::getByName('Note Description');
+            $this->assertEquals(2, $note[0]->tagcloud->values->count());
 
             //Edit a note based on the custom fields.
             $this->setGetArray(array('id' => $note[0]->id));
@@ -322,7 +345,12 @@
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value' => 'b'),
+                                'picklist'                          => array('value'  => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array()),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -363,6 +391,113 @@
             $this->assertEquals($note[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($note[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($note[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($note[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($note[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($note[0]->citypicklist->value              , 'ab1');
+            $this->assertContains('gg'                                     , $note[0]->multiselect->values);
+            $this->assertContains('hh'                                     , $note[0]->multiselect->values);
+            $this->assertEquals(0                                          , $note[0]->tagcloud->values->count());
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Note');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
+            $this->assertEquals(23                                         , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheNoteForTheTagCloudFieldAfterRemovingAllTagsPlacedForNotesModule
+         */
+        public function testEditOfTheNoteForTheCustomFieldsPlacedForNotesModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+
+            //Get the super user, account, opportunity and contact id.
+            $superUserId        = $super->id;
+            $superAccount       = Account::getByName('superAccount');
+            $superContactId     = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
+            $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Retrieve the note Id based on the created note.
+            $note = Note::getByName('Note Edit Description');
+
+            //Edit a note based on the custom fields.
+            $this->setGetArray(array('id' => $note[0]->id));
+            $this->setPostArray(array('Note' => array(
+                                'occurredOnDateTime'                => $datetime,
+                                'description'                       => 'Note Edit Description',
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                                'owner'                             => array('id' => $superUserId),
+                                'checkbox'                          => '0',
+                                'currency'                          => array('value'   => 40,
+                                                                             'currency' => array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '12',
+                                'picklist'                          => array('value'  => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
+                                'integer'                           => '11',
+                                'phone'                             => '259-784-2069',
+                                'radio'                             => array('value' => 'e'),
+                                'text'                              => 'This is a test Edit Text',
+                                'textarea'                          => 'This is a test Edit TextArea',
+                                'url'                               => 'http://wwww.abc-edit.com'),
+                          'ActivityItemForm'  => array(
+                                'Account'     => array('id'  => $superAccount[0]->id),
+                                'Contact'     => array('id'  => $superContactId),
+                                'Opportunity' => array('id'  => $superOpportunityId))));
+            $this->runControllerWithRedirectExceptionAndGetUrl('notes/default/edit');
+
+            //Check the details if they are saved properly for the custom fields.
+            $note = Note::getByName('Note Edit Description');
+
+            //Retrieve the permission of the note.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Note::getById($note[0]->id));
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($note[0]->description                      , 'Note Edit Description');
+            $this->assertEquals($note[0]->occurredOnDateTime               , $datetimeAssert);
+            $this->assertEquals($note[0]->owner->id                        , $superUserId);
+            $this->assertEquals($note[0]->activityItems->count()           , 3);
+            $this->assertEquals(1                                          , count($readWritePermitables));
+            $this->assertEquals(0                                          , count($readOnlyPermitables));
+            $this->assertEquals($note[0]->checkbox                         , '0');
+            $this->assertEquals($note[0]->currency->value                  , 40);
+            $this->assertEquals($note[0]->currency->currency->id           , $baseCurrency->id);
+            $this->assertEquals($note[0]->date                             , $dateAssert);
+            $this->assertEquals($note[0]->datetime                         , $datetimeAssert);
+            $this->assertEquals($note[0]->decimal                          , '12');
+            $this->assertEquals($note[0]->picklist->value                  , 'b');
+            $this->assertEquals($note[0]->integer                          , 11);
+            $this->assertEquals($note[0]->phone                            , '259-784-2069');
+            $this->assertEquals($note[0]->radio->value                     , 'e');
+            $this->assertEquals($note[0]->text                             , 'This is a test Edit Text');
+            $this->assertEquals($note[0]->textarea                         , 'This is a test Edit TextArea');
+            $this->assertEquals($note[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($note[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($note[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($note[0]->citypicklist->value              , 'ab1');
+            $this->assertContains('gg'                                     , $note[0]->multiselect->values);
+            $this->assertContains('hh'                                     , $note[0]->multiselect->values);
+            $this->assertContains('reading'                                , $note[0]->tagcloud->values);
+            $this->assertContains('surfing'                                , $note[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Note');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
+            $this->assertEquals(23                                         , $testCalculatedValue);
         }
 
         /**
@@ -382,6 +517,49 @@
             //Check to confirm that the note is deleted.
             $note = Note::getByName('Note Edit Description');
             $this->assertEquals(0, count($note));
+        }
+
+        /**
+         * @depends testDeleteOfTheNoteForTheCustomFieldsPlacedForNotesModule
+         */
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForNotesModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'rea'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "reading") > 0);
+        }
+
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForNotesModule
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForNotesModule()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $this->assertEquals('en', $languageHelper->getForCurrentUser());
+            Yii::app()->user->userModel->language = 'fr';
+            $this->assertTrue(Yii::app()->user->userModel->save());
+            $languageHelper->setActive('fr');
+            $this->assertEquals('fr', Yii::app()->user->getState('language'));
+
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'surf'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "surfing fr") > 0);
         }
     }
 ?>

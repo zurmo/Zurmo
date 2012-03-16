@@ -56,6 +56,15 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'designerMenuItems' => array(
+                    'showFieldsLink' => true,
+                    'showGeneralLink' => true,
+                    'showLayoutsLink' => true,
+                    'showMenusLink' => true,
+                ),
+                'globalSearchAttributeNames' => array(
+                    'name'
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label' => 'OpportunitiesModulePluralLabel',
@@ -82,14 +91,6 @@
                         'right' => self::RIGHT_CREATE_OPPORTUNITIES,
                     ),
                 ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => true,
-                    'showGeneralLink' => true,
-                    'showLayoutsLink' => true,
-                    'showMenusLink' => true,
-                ),
-                'globalSearchAttributeNames' => array(
-                    'name'
                 )
             );
             return $metadata;

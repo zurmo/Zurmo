@@ -40,5 +40,27 @@
         {
             return 'MultiSelectDropDown';
         }
+
+        /**
+         * @see AttributeForm::getModelAttributeAdapterNameForSavingAttributeFormData()
+         */
+        public static function getModelAttributeAdapterNameForSavingAttributeFormData()
+        {
+            return 'MultiSelectDropDownModelAttributesAdapter';
+        }
+
+        /**
+         * Get how many records in a model have each possible customFieldData value selected.
+         * If the customFieldData doesn't exist yet, then return 0.
+         */
+        public function getCollectionCountData()
+        {
+            if ($this->customFieldDataId > 0)
+            {
+                return GroupedAttributeCountUtil::getCountData('MultipleValuesCustomField', 'values', 'data',
+                                                               $this->customFieldDataId);
+            }
+            return 0;
+        }
     }
 ?>

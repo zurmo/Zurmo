@@ -49,12 +49,10 @@
                                             array('target' => 'bottomRight',
                                                   'tooltip' => 'topRight')),
                                      'style'  => array('width' => array('max' => 600)),
-                                     // Begin Not Coding Standard
-                                     'api' => array('beforeHide' => 'js:function (event, api) {
-                                                                     if (event.originalEvent.type !== "click")
-                                                                        return false;}')
-                                    // End Not Coding Standard
-                               );
+                                     'api' => array('beforeHide' => 'js:function (event, api)
+                                                                     { if (event.originalEvent.type !== "click")
+                                                                     { return false;}}')
+                               ); // Not Coding Standard
                 $qtip        = new QTip();
                 $qtip->addQTip("#active-nonmonitor-job-tooltip-" . $jobLog->id, $options);
                 return $content;

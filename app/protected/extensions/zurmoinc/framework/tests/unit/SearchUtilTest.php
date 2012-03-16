@@ -148,6 +148,21 @@
             $this->assertEquals(array('a' => '0'), $newArray);
         }
 
+        /**
+         * This test is for testing the method SearchUtil::changeEmptyArrayValuesToNull.
+         * if a value in the search array for multiselect attribute has an empty element it is removed(eliminated).
+         */
+        public function testGetSearchAttributesFromSearchArrayChangeEmptyArrayValuesToNull()
+        {
+            $searchArray = array('testMultiSelectDropDown' => array('values' => array(0 => '')));
+            $resultArray = array('testMultiSelectDropDown' => array('values' => array()));
+            $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
+            $this->assertEquals($resultArray, $newArray);
+
+            $searchArray = array('testMultiSelectDropDown' => array('values' => array(0 => null)));
+            $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
+            $this->assertEquals($resultArray, $newArray);
+        }
         public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
         {
             $searchArray = array(

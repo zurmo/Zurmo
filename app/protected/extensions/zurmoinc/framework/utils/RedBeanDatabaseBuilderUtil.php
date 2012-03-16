@@ -66,6 +66,7 @@
 
         public static function autoBuildModels(array $modelClassNames, & $messageLogger)
         {
+            AuditEvent::$isTableOptimized = false;
             assert('AssertUtil::all($modelClassNames, "is_string")');
             assert('$messageLogger instanceof MessageLogger');
             self::$modelClassNamesToSampleModels = array();
@@ -78,7 +79,7 @@
             }
             foreach (self::$modelClassNamesToSampleModels as $modelClassName => $model)
             {
-                if (!$model instanceof OwnedModel && !$model instanceof OwnedCustomField)
+                if (!$model instanceof OwnedModel && !$model instanceof OwnedCustomField && !$model instanceof OwnedMultipleValuesCustomField)
                 {
                     try
                     {
@@ -102,6 +103,7 @@
                     {
                         $messageLogger->addErrorMessage("*** Saving the sample $modelClassName failed.");
                         if (is_subclass_of($modelClassName, 'OwnedCustomField') ||
+                            is_subclass_of($modelClassName, 'OwnedMultipleValuesCustomField') ||
                             is_subclass_of($modelClassName, 'OwnedModel'))
                         {
                             $messageLogger->addErrorMessage('It is OWNED and was probably not saved via its owner, making it not a root model.');
@@ -138,6 +140,7 @@
             {
                 $messageLogger->addErrorMessage('*** Deleting of the sample(s) ' . join(', ', array_keys(self::$modelClassNamesToSampleModels)) . " didn't happen.");
             }
+            AuditEvent::$isTableOptimized = false;
         }
 
         public static function autoBuildSampleModel($modelClassName, array $modelClassNames, & $messageLogger)
@@ -322,7 +325,7 @@
                     case 'RedBeanModelCompareDateTimeValidator':
                     case 'RedBeanModelRequiredValidator':
                     case 'UsernameLengthValidator':
-                    case 'validateTimeZone':
+                    case 'ValidateTimeZone':
                         break;
 
                     case 'RedBeanModelTypeValidator':

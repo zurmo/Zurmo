@@ -58,10 +58,12 @@
             {
                 if (!$this->model->isRelation($attributeName) ||
                      $this->isAttributeAnOwnedCustomFieldRelation($attributeName) ||
+                     $this->isAttributeAnOwnedMultipleValuesCustomFieldRelation($attributeName) ||
                      $this->isAttributeAHasOneNotOwnedRelation($attributeName) ||
                      $this->isAttributeAHasOneOwnedRelationThatShouldBehaveAsNotOwnedRelation($attributeName))
                 {
                    $type         = ModelAttributeToMixedTypeUtil::getType($this->model, $attributeName);
+
                    $resolvedType = static::resolveAttributeImportTypeByAttributeName($type, $attributeName);
                     ModelAttributeImportMappingCollectionUtil::populateCollection(
                         $attributes,
@@ -134,6 +136,19 @@
                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
                        $this->model->isOwnedRelation($attributeName) &&
                        $this->model->{$attributeName} instanceof OwnedCustomField)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        protected function isAttributeAnOwnedMultipleValuesCustomFieldRelation($attributeName)
+        {
+            assert('is_string($attributeName)');
+            if ($this->model->isRelation($attributeName) &&
+                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE &&
+                       $this->model->isOwnedRelation($attributeName) &&
+                       $this->model->{$attributeName} instanceof OwnedMultipleValuesCustomField)
             {
                 return true;
             }

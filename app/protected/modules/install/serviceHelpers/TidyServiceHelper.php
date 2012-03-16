@@ -29,6 +29,8 @@
      */
     class TidyServiceHelper extends ServiceHelper
     {
+        protected $required = false;
+
         protected $minimumVersion = '2.0';
 
         protected function checkService()

@@ -169,6 +169,26 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                        array(
+                                            'element' => 'calculatednumber',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'dropdowndependency',
+                                        ),
+                                        array(
+                                            'element' => 'dropdowndependency2',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                         array(
@@ -247,6 +267,26 @@
                                         ),
                                         array(
                                             'element' => 'multiselect',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                        array(
+                                            'element' => 'citypicklist',
                                         ),
                                     )
                                 ),
@@ -603,6 +643,41 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'calculatednumber',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -769,6 +844,34 @@
                                 array('cells' =>
                                     array(
                                         array(
+                                            'element' => 'tagcloud',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'countrypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'statepicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'element' => 'citypicklist',
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
                                             'element' => 'phone',
                                         ),
                                     )
@@ -807,35 +910,83 @@
         public static function fetchAccountsSearchFormGetData()
         {
             return array(
-                            'name'                  =>  'myEditAccount',
-                            'officePhone'           =>  '259-734-2169',
-                            'type'                  =>   array('value'  =>  'Customer'),
-                            'officeFax'             =>  '299-825-7863',
-                            'employees'             =>  '630',
-                            'website'               =>  'http://www.UnnamedEdit.com',
-                            'annualRevenue'         =>  '472000000',
-                            'anyCity'               =>  'San Jose',
-                            'anyState'              =>  'CA',
-                            'anyStreet'             =>  '26378 South Arlington Ave',
-                            'anyPostalCode'         =>  '95131',
-                            'anyCountry'            =>  'USA',
-                            'anyEmail'              =>  'info@myEditAccount.com',
-                            'anyOptOutEmail'        =>  array('value' => null),
-                            'anyInvalidEmail'       =>  array('value' => ''),
-                            'ownedItemsOnly'        =>  '1',
-                            'industry'              =>  array('value' => 'Energy'),
-                            'decimal'               =>  '12',
-                            'integer'               =>  '11',
-                            'phone'                 =>  '259-784-2069',
-                            'text'                  =>  'This is a test Edit Text',
-                            'textarea'              =>  'This is a test Edit TextArea',
-                            'url'                   =>  'http://wwww.abc-edit.com',
-                            'checkbox'              =>  array('value'  =>  '0'),
-                            'currency'              =>  array('value'  =>  40),
-                            'picklist'              =>  array('value'  =>  'b'),
-                            'radio'                 =>  array('value'  =>  'e'),
-                            'date__Date'            =>  array('type'   =>  'Today'),
-                            'datetime__DateTime'    =>  array('type'   =>  'Today'));
+                            'name'               => 'myEditAccount',
+                            'officePhone'        => '259-734-2169',
+                            'type'               => array('value'  =>  'Customer'),
+                            'officeFax'          => '299-825-7863',
+                            'employees'          => '630',
+                            'website'            => 'http://www.UnnamedEdit.com',
+                            'annualRevenue'      => '472000000',
+                            'anyCity'            => 'San Jose',
+                            'anyState'           => 'CA',
+                            'anyStreet'          => '26378 South Arlington Ave',
+                            'anyPostalCode'      => '95131',
+                            'anyCountry'         => 'USA',
+                            'anyEmail'           => 'info@myEditAccount.com',
+                            'anyOptOutEmail'     => array('value' => null),
+                            'anyInvalidEmail'    => array('value' => ''),
+                            'ownedItemsOnly'     => '1',
+                            'industry'           => array('value' => 'Energy'),
+                            'decimal'            => '12',
+                            'integer'            => '11',
+                            'phone'              => '259-784-2069',
+                            'text'               => 'This is a test Edit Text',
+                            'textarea'           => 'This is a test Edit TextArea',
+                            'url'                => 'http://wwww.abc-edit.com',
+                            'checkbox'           => array('value'  => '0'),
+                            'currency'           => array('value'  => 40),
+                            'picklist'           => array('value'  => 'b'),
+                            'multiselect'        => array('values' => array('gg', 'hh')),
+                            'tagcloud'           => array('values' => array('reading', 'surfing')),
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
+                            'radio'              => array('value'  => 'e'),
+                            'date__Date'         => array('type'   => 'Today'),
+                            'datetime__DateTime' => array('type'   => 'Today'));
+        }
+
+        /**
+         * This function returns the necessary get parameters for the account search form
+         * based on the account edited data but sets the Multi-select to null value.
+         */
+        public static function fetchAccountsSearchFormGetDataWithMultiSelectValueSetToNull()
+        {
+            return array(
+                            'name'               => 'myEditAccount',
+                            'officePhone'        => '259-734-2169',
+                            'type'               => array('value'  =>  'Customer'),
+                            'officeFax'          => '299-825-7863',
+                            'employees'          => '630',
+                            'website'            => 'http://www.UnnamedEdit.com',
+                            'annualRevenue'      => '472000000',
+                            'anyCity'            => 'San Jose',
+                            'anyState'           => 'CA',
+                            'anyStreet'          => '26378 South Arlington Ave',
+                            'anyPostalCode'      => '95131',
+                            'anyCountry'         => 'USA',
+                            'anyEmail'           => 'info@myEditAccount.com',
+                            'anyOptOutEmail'     => array('value' => null),
+                            'anyInvalidEmail'    => array('value' => ''),
+                            'ownedItemsOnly'     => '1',
+                            'industry'           => array('value' => 'Energy'),
+                            'decimal'            => '12',
+                            'integer'            => '11',
+                            'phone'              => '259-784-2069',
+                            'text'               => 'This is a test Edit Text',
+                            'textarea'           => 'This is a test Edit TextArea',
+                            'url'                => 'http://wwww.abc-edit.com',
+                            'checkbox'           => array('value'  => '0'),
+                            'currency'           => array('value'  => 40),
+                            'picklist'           => array('value'  => 'b'),
+                            'multiselect'        => array('values' => array(0 => null)),
+                            'tagcloud'           => array('values' => array('reading', 'surfing')),
+                            'countrypicklist'    => array('value'  => 'aaaa'),
+                            'statepicklist'      => array('value'  => 'aaa1'),
+                            'citypicklist'       => array('value'  => 'ab1'),
+                            'radio'              => array('value'  => 'e'),
+                            'date__Date'         => array('type'   => 'Today'),
+                            'datetime__DateTime' => array('type'   => 'Today'));
         }
     }
 ?>

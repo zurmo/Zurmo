@@ -60,7 +60,7 @@
                 $moduleForm->pluralModuleLabels[$language]   = $moduleClassName::getModuleLabelByTypeAndLanguage(
                                                                                     'PluralLowerCase',   $language);
             }
-            if($moduleForm instanceof GlobalSearchEnabledModuleForm)
+            if ($moduleForm instanceof GlobalSearchEnabledModuleForm)
             {
                 $moduleClassName         = $this->moduleClassName;
                 $modelAttributesAdapter  = DesignerModelToViewUtil::

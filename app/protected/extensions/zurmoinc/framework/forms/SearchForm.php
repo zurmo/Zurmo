@@ -34,6 +34,8 @@
 
         private $dynamicAttributeNames = array();
 
+        private $attributeNamesThatCanBeSplitUsingDelimiter = array();
+
         private $supportsMixedSearch;
 
         /**
@@ -65,6 +67,10 @@
             }
         }
 
+        protected function addAttributeNamesThatCanBeSplitUsingDelimiter($value)
+        {
+            $this->attributeNamesThatCanBeSplitUsingDelimiter[] = $value;
+        }
         public function setAnyMixedAttributesScope($anyMixedAttributesScope)
         {
             $this->anyMixedAttributesScope = $anyMixedAttributesScope;
@@ -158,6 +164,13 @@
             $metadata = parent::getMetadata();
             $dynamicAttributeToElementTypes = static::getDynamicAttributeToElementTypes();
             foreach ($this->dynamicAttributeNames as $attributeName)
+            {
+                $delimiter                      = FormModelUtil::DELIMITER;
+                list($realAttributeName, $type) = explode($delimiter, $attributeName);
+                assert('$dynamicAttributeToElementTypes[$type] != null');
+                $metadata[get_called_class()]['elements'][$attributeName] = $dynamicAttributeToElementTypes[$type];
+            }
+            foreach ($this->attributeNamesThatCanBeSplitUsingDelimiter as $attributeName)
             {
                 $delimiter                      = FormModelUtil::DELIMITER;
                 list($realAttributeName, $type) = explode($delimiter, $attributeName);
@@ -269,8 +282,6 @@
             $parts                      = explode($delimiter, $name);
             if (isset($parts[1]) && $parts[1] != null)
             {
-                //also wanted to check for safety:
-                //&& in_array($name, $this->dynamicAttributeNames) but that cant be done statically.
                 if (in_array($parts[1], static::getDynamicAttributeTypes()))
                 {
                     return true;

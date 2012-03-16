@@ -44,7 +44,7 @@
             );
         }
 
-        protected function getIdForSelectInput()
+        public function getIdForSelectInput()
         {
             return $this->resolveInputIdPrefix() . '_' . $this->attribute . '_currency_id';
         }

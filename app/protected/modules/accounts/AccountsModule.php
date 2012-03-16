@@ -56,6 +56,17 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'designerMenuItems' => array(
+                    'showFieldsLink' => true,
+                    'showGeneralLink' => true,
+                    'showLayoutsLink' => true,
+                    'showMenusLink' => true,
+                ),
+                'globalSearchAttributeNames' => array(
+                    'name',
+                    'anyEmail',
+                    'officePhone',
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label' => 'AccountsModulePluralLabel',
@@ -75,23 +86,12 @@
                         ),
                     ),
                 ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => true,
-                    'showGeneralLink' => true,
-                    'showLayoutsLink' => true,
-                    'showMenusLink' => true,
-                ),
                 'shortcutsCreateMenuItems' => array(
                     array(
                         'label' => 'AccountsModuleSingularLabel',
                         'url'   => array('/accounts/default/create'),
                         'right' => self::RIGHT_CREATE_ACCOUNTS,
                     ),
-                ),
-                'globalSearchAttributeNames' => array(
-                    'name',
-                    'anyEmail',
-                    'officePhone',
                 )
             );
             return $metadata;

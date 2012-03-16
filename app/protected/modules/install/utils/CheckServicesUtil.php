@@ -49,6 +49,10 @@
                          'PhpFileUploads',
                          'PhpUploadSize',
                          'PhpPostSize',
+                         'ServerVariable',
+                         'PCRE',
+                         'SPL',
+                         'Ctype',
                          'FilePermissions',
                          'InstanceFolders',
                          'APC',
@@ -70,7 +74,8 @@
                          'DatabaseMaxSpRecursionDepth',
                          'DatabaseThreadStack',
                          'DatabaseDefaultCollation',
-                         'DatabaseLogBin'
+                         'DatabaseLogBin',
+                         'DatabaseOptimizerSearchDepth'
             );
         }
 

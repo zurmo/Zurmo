@@ -35,6 +35,25 @@
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
+            $multiSelectValues = array(
+                'Multi 1',
+                'Multi 2',
+                'Multi 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestMultiDropDown');
+            $customFieldData->serializedData = serialize($multiSelectValues);
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
+
+            $tagCloudValues = array(
+                'Cloud 1',
+                'Cloud 2',
+                'Cloud 3',
+            );
+            $customFieldData = CustomFieldData::getByName('ApiTestTagCloud');
+            $customFieldData->serializedData = serialize($tagCloudValues);
+            $save = $customFieldData->save();
+            assert('$save'); // Not Coding Standard
         }
 
         public function setUp()
@@ -75,6 +94,23 @@
             $testItem->textArea  = 'Some Text Area';
             $testItem->url       = 'http://www.asite.com';
             $testItem->owner     = $super;
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 1';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Multi 3';
+            $testItem->multiDropDown->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 2';
+            $testItem->tagCloud->values->add($customFieldValue);
+
+            $customFieldValue = new CustomFieldValue();
+            $customFieldValue->value = 'Cloud 3';
+            $testItem->tagCloud->values->add($customFieldValue);
+
             $createStamp         = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
@@ -106,19 +142,21 @@
                 'primaryAddress'    => null,
                 'secondaryEmail'    => null,
                 'owner' => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
                 ),
                 'createdDateTime'  => $createStamp,
                 'modifiedDateTime' => $createStamp,
                 'createdByUser'    => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
                 ),
                 'modifiedByUser' => array(
-                    'id' => $super->id,
+                    'id'       => $super->id,
                     'username' => 'super'
-                )
+                ),
+                'multiDropDown'    => array('values' => array('Multi 1', 'Multi 3')),
+                'tagCloud'         => array('values' => array('Cloud 2', 'Cloud 3')),
             );
             $this->assertEquals($compareData, $data);
         }
@@ -196,6 +234,8 @@
                     'value'      => $values[1],
                 ),
                 'radioDropDown'     => null,
+                'multiDropDown'     => array('values' => null),
+                'tagCloud'          => array('values' => null),
                 'hasOne'            => null,
                 'hasOneAlso'        => null,
                 'primaryEmail'      => null,
@@ -214,7 +254,7 @@
                 'modifiedByUser' => array(
                     'id' => $super->id,
                     'username' => 'super'
-                )
+                ),
             );
             $this->assertEquals($compareData, $data);
         }
@@ -315,7 +355,9 @@
                         'modifiedByUser' => array(
                             'id' => $super->id,
                             'username' => 'super'
-                        )
+                        ),
+                        'multiDropDown'    => array('values' => null),
+                        'tagCloud'         => array('values' => null),
             );
             $this->assertEquals($compareData, $data);
         }

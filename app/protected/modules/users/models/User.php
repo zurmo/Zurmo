@@ -30,7 +30,7 @@
         {
             assert('is_string($username)');
             assert('$username != ""');
-            $bean = R::findOne('_user', "username = '$username'");
+            $bean = R::findOne('_user', "username = :username ", array(':username' => $username));
             assert('$bean === false || $bean instanceof RedBean_OODBBean');
             if ($bean === false)
             {
@@ -539,29 +539,23 @@
             $metadata['Person'] = $personMetadata['Person'];
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'username',
                     'hash',
                     'language',
                     'timeZone',
+                    'username',
                 ),
                 'relations' => array(
-                    'manager'  => array(RedBeanModel::HAS_ONE,             'User'),
-                    'groups'   => array(RedBeanModel::MANY_MANY,           'Group'),
-                    'role'     => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'Role'),
-                    'currency' => array(RedBeanModel::HAS_ONE,             'Currency'),
+                    'currency'   => array(RedBeanModel::HAS_ONE,             'Currency'),
+                    'groups'     => array(RedBeanModel::MANY_MANY,           'Group'),
+                    'manager'    => array(RedBeanModel::HAS_ONE,             'User'),
+                    'role'       => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'Role'),
+                    'emailBoxes' => array(RedBeanModel::HAS_MANY,            'User'),
                 ),
                 'foreignRelations' => array(
                     'Dashboard',
                     'Portlet',
                 ),
                 'rules' => array(
-                    array('username', 'required'),
-                    array('username', 'unique'),
-                    array('username', 'UsernameLengthValidator'),
-                    array('username', 'type',  'type' => 'string'),
-                    array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
-                                               'message' => 'Username must be lowercase.'),
-                    array('username', 'length',  'max'   => 64),
                     array('hash',     'type',    'type' => 'string'),
                     array('hash',     'length',  'min'   => 32, 'max' => 32),
                     array('language', 'type',    'type'  => 'string'),
@@ -569,7 +563,14 @@
                     array('timeZone', 'type',    'type'  => 'string'),
                     array('timeZone', 'length',  'max'   => 64),
                     array('timeZone', 'default', 'value' => 'UTC'),
-                    array('timeZone', 'validateTimeZone'),
+                    array('timeZone', 'ValidateTimeZone'),
+                    array('username', 'required'),
+                    array('username', 'unique'),
+                    array('username', 'UsernameLengthValidator'),
+                    array('username', 'type',  'type' => 'string'),
+                    array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
+                                               'message' => 'Username must be lowercase.'),
+                    array('username', 'length',  'max'   => 64),
                 ),
                 'elements' => array(
                 ),

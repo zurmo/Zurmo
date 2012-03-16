@@ -163,8 +163,14 @@
             $this->createDateTimeCustomFieldByModule            ('ContactsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('ContactsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('ContactsModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'citypicklist');
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('ContactsModule', 'dropdowndependency');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -402,52 +408,57 @@
             //Create a new contact based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Contact' => array(
-                                'title'                             =>  array('value' => 'Mr.'),
-                                'firstName'                         =>  'Sarah',
-                                'lastName'                          =>  'Williams',
-                                'state'                             =>  array('id' => $contactStateId),
-                                'jobTitle'                          =>  'Sales Director',
-                                'account'                           =>  array('id' => $accountId),
-                                'department'                        =>  'Sales',
-                                'officePhone'                       =>  '739-741-3005',
-                                'source'                            =>  array('value' => 'Self-Generated'),
-                                'mobilePhone'                       =>  '285-301-8232',
-                                'officeFax'                         =>  '255-455-1914',
-                                'primaryEmail'                      =>  array('emailAddress' => 'info@myNewContact.com',
-                                                                              'optOut' => '1',
-                                                                              'isInvalid' => '0'),
-                                'secondaryEmail'                    =>  array('emailAddress' => '',
+                                'title'                             => array('value' => 'Mr.'),
+                                'firstName'                         => 'Sarah',
+                                'lastName'                          => 'Williams',
+                                'state'                             => array('id' => $contactStateId),
+                                'jobTitle'                          => 'Sales Director',
+                                'account'                           => array('id' => $accountId),
+                                'department'                        => 'Sales',
+                                'officePhone'                       => '739-741-3005',
+                                'source'                            => array('value' => 'Self-Generated'),
+                                'mobilePhone'                       => '285-301-8232',
+                                'officeFax'                         => '255-455-1914',
+                                'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                             'optOut' => '1',
+                                                                             'isInvalid' => '0'),
+                                'secondaryEmail'                    => array('emailAddress' => '',
                                                                               'optOut' => '0',
                                                                               'isInvalid' => '0'),
-                                'primaryAddress'                    =>  array('street1' => '6466 South Madison Creek',
+                                'primaryAddress'                    => array('street1' => '6466 South Madison Creek',
                                                                               'street2' => '',
                                                                               'city' => 'Chicago',
                                                                               'state' => 'IL',
                                                                               'postalCode' => '60652',
                                                                               'country' => 'USA'),
-                                'secondaryAddress'                  =>  array('street1' => '26217 West Third Lane',
-                                                                              'street2' => '',
-                                                                              'city' => 'New York',
-                                                                              'state' => 'NY',
-                                                                              'postalCode' => '10169',
-                                                                              'country' => 'USA'),
-                                'owner'                             =>  array('id' => $superUserId),
-                                'explicitReadWriteModelPermissions' =>  array('type' => null),
-                                'description'                       =>  'This is a Description',
-                                'checkbox'                          =>  '1',
-                                'currency'                          =>  array('value'   => 45,
-                                                                              'currency' => array(
-                                                                              'id' => $baseCurrency->id)),
-                                'date'                              =>  $date,
-                                'datetime'                          =>  $datetime,
-                                'decimal'                           =>  '123',
-                                'picklist'                          =>  array('value' => 'a'),
-                                'integer'                           =>  '12',
-                                'phone'                             =>  '259-784-2169',
-                                'radio'                             =>  array('value' => 'd'),
-                                'text'                              =>  'This is a test Text',
-                                'textarea'                          =>  'This is a test TextArea',
-                                'url'                               =>  'http://wwww.abc.com')));
+                                'secondaryAddress'                  => array('street1' => '26217 West Third Lane',
+                                                                             'street2' => '',
+                                                                             'city' => 'New York',
+                                                                             'state' => 'NY',
+                                                                             'postalCode' => '10169',
+                                                                             'country' => 'USA'),
+                                'owner'                             => array('id' => $superUserId),
+                                'explicitReadWriteModelPermissions' => array('type' => null),
+                                'description'                       => 'This is a Description',
+                                'checkbox'                          => '1',
+                                'currency'                          => array('value'   => 45,
+                                                                             'currency' => array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '123',
+                                'picklist'                          => array('value' => 'a'),
+                                'multiselect'                       => array('values' => array('ff', 'rr')),
+                                'tagcloud'                          => array('values' => array('writing', 'gardening')),
+                                'countrypicklist'                   => array('value'  => 'bbbb'),
+                                'statepicklist'                     => array('value'  => 'bbb1'),
+                                'citypicklist'                      => array('value'  => 'bb1'),
+                                'integer'                           => '12',
+                                'phone'                             => '259-784-2169',
+                                'radio'                             => array('value' => 'd'),
+                                'text'                              => 'This is a test Text',
+                                'textarea'                          => 'This is a test TextArea',
+                                'url'                               => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -505,6 +516,17 @@
             $this->assertEquals($contact->text                           , 'This is a test Text');
             $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'bbbb');
+            $this->assertEquals($contact->statepicklist->value           , 'bbb1');
+            $this->assertEquals($contact->citypicklist->value            , 'bb1');
+            $this->assertContains('ff'                                   , $contact->multiselect->values);
+            $this->assertContains('rr'                                   , $contact->multiselect->values);
+            $this->assertContains('writing'                              , $contact->tagcloud->values);
+            $this->assertContains('gardening'                            , $contact->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(135                                      , $testCalculatedValue);
         }
 
         /**
@@ -551,12 +573,17 @@
                                         'text'               => 'This is a test Text',
                                         'textarea'           => 'This is a test TextArea',
                                         'url'                => 'http://wwww.abc.com',
-                                        'checkbox'           => array('value'  =>  '1'),
-                                        'currency'           => array('value'  =>  45),
-                                        'picklist'           => array('value'  =>  'a'),
-                                        'radio'              => array('value'  =>  'd'),
-                                        'date__Date'         => array('type'   =>  'Today'),
-                                        'datetime__DateTime' => array('type'   =>  'Today')),
+                                        'checkbox'           => array('value'  => '1'),
+                                        'currency'           => array('value'  => 45),
+                                        'picklist'           => array('value'  => 'a'),
+                                        'multiselect'        => array('values' => array('ff', 'rr')),
+                                        'tagcloud'           => array('values' => array('writing', 'gardening')),
+                                        'countrypicklist'    => array('value'  => 'bbbb'),
+                                        'statepicklist'      => array('value'  => 'bbb1'),
+                                        'citypicklist'       => array('value'  => 'bb1'),
+                                        'radio'              => array('value'  => 'd'),
+                                        'date__Date'         => array('type'   => 'Today'),
+                                        'datetime__DateTime' => array('type'   => 'Today')),
                                     'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
 
@@ -569,7 +596,7 @@
         /**
          * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterCreatingTheContact
          */
-        public function testEditOfTheContactForTheCustomFieldsPlacedForContactsModule()
+        public function testEditOfTheContactForTheTagCloudFieldAfterRemovingAllTagsPlacedForContactsModule()
         {
             $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -586,7 +613,9 @@
             $superUserId = $super->id;
 
             //Retrieve the contact id.
-            $contactId   = self::getModelIdByModelNameAndName ('Contact', 'Sarah Williams');
+            $contact   = Contact::getByName('Sarah Williams');
+            $contactId = $contact[0]->id;
+            $this->assertEquals(2, $contact[0]->tagcloud->values->count());
 
             //Retrieve the Contact State (Status) Id based on the name.
             $contactState   = ContactState::getByName('RecycledC');
@@ -595,52 +624,57 @@
             //Edit and save the contact.
             $this->setGetArray(array('id' => $contactId));
             $this->setPostArray(array('Contact' => array(
-                            'title'                             =>  array('value' => 'Mrs.'),
-                            'firstName'                         =>  'Sarah',
-                            'lastName'                          =>  'Williams Edit',
-                            'jobTitle'                          =>  'Sales Director Edit',
-                            'department'                        =>  'Sales Edit',
-                            'officePhone'                       =>  '739-742-3005',
-                            'source'                            =>  array('value' => 'Inbound Call'),
-                            'mobilePhone'                       =>  '285-300-8232',
-                            'officeFax'                         =>  '255-454-1914',
-                            'state'                             =>  array('id' => $contactStateId),
-                            'owner'                             =>  array('id' => $superUserId),
-                            'account'                           =>  array('id' => $accountId),
-                            'primaryEmail'                      =>  array('emailAddress' => 'info@myNewContact.com',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'secondaryEmail'                    =>  array('emailAddress' => 'info@myNewContactEdit.com',
-                                                                          'optOut' => '0',
-                                                                          'isInvalid' => '0'),
-                            'primaryAddress'                    =>  array('street1' => '26378 South Arlington Ave',
-                                                                          'street2' => '',
-                                                                          'city' => 'San Jose',
-                                                                          'state' => 'CA',
-                                                                          'postalCode' => '95131',
-                                                                          'country' => 'USA'),
-                            'secondaryAddress'                  =>  array('street1' => '18693 West Spring Center',
-                                                                          'street2' => '',
-                                                                          'city' => 'Philadelphia',
-                                                                          'state' => 'PA',
-                                                                          'postalCode' => '19102',
-                                                                          'country' => 'USA'),
-                            'explicitReadWriteModelPermissions' =>  array('type' => $explicitReadWriteModelPermission),
-                            'description'                       =>  'This is a Edit Description',
-                            'checkbox'                          =>  '0',
-                            'currency'                          =>  array('value'   => 40,
-                                                                          'currency' => array(
-                                                                          'id' => $baseCurrency->id)),
-                            'date'                              =>  $date,
-                            'datetime'                          =>  $datetime,
-                            'decimal'                           =>  '12',
-                            'picklist'                          =>  array('value' => 'b'),
-                            'integer'                           =>  '11',
-                            'phone'                             =>  '259-784-2069',
-                            'radio'                             =>  array('value' => 'e'),
-                            'text'                              =>  'This is a test Edit Text',
-                            'textarea'                          =>  'This is a test Edit TextArea',
-                            'url'                               =>  'http://wwww.abc-edit.com'),
+                            'title'                             => array('value' => 'Mrs.'),
+                            'firstName'                         => 'Sarah',
+                            'lastName'                          => 'Williams Edit',
+                            'jobTitle'                          => 'Sales Director Edit',
+                            'department'                        => 'Sales Edit',
+                            'officePhone'                       => '739-742-3005',
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'mobilePhone'                       => '285-300-8232',
+                            'officeFax'                         => '255-454-1914',
+                            'state'                             => array('id' => $contactStateId),
+                            'owner'                             => array('id' => $superUserId),
+                            'account'                           => array('id' => $accountId),
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => 'info@myNewContactEdit.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'primaryAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'secondaryAddress'                  => array('street1' => '18693 West Spring Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Philadelphia',
+                                                                         'state' => 'PA',
+                                                                         'postalCode' => '19102',
+                                                                         'country' => 'USA'),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'description'                       => 'This is a Edit Description',
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'    => 40,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array()),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
                                 'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
 
@@ -696,6 +730,165 @@
             $this->assertEquals($contact->text                           , 'This is a test Edit Text');
             $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
+            $this->assertEquals($contact->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                   , $contact->multiselect->values);
+            $this->assertContains('hh'                                   , $contact->multiselect->values);
+            $this->assertEquals(0                                        , $contact->tagcloud->values->count());
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(23                                       , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheContactForTheTagCloudFieldAfterRemovingAllTagsPlacedForContactsModule
+         */
+        public function testEditOfTheContactForTheCustomFieldsPlacedForContactsModule()
+        {
+            $super          = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+            $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+
+            //Retrieve the super account id and the super user id.
+            $accountId   = self::getModelIdByModelNameAndName ('Account', 'superAccount');
+            $superUserId = $super->id;
+
+            //Retrieve the contact id.
+            $contact     = Contact::getByName ('Sarah Williams Edit');
+            $contactId   = $contact[0]->id;
+
+            //Retrieve the Contact State (Status) Id based on the name.
+            $contactState   = ContactState::getByName('RecycledC');
+            $contactStateId = $contactState[0]->id;
+
+            //Edit and save the contact.
+            $this->setGetArray(array('id' => $contactId));
+            $this->setPostArray(array('Contact' => array(
+                            'title'                             => array('value' => 'Mrs.'),
+                            'firstName'                         => 'Sarah',
+                            'lastName'                          => 'Williams Edit',
+                            'jobTitle'                          => 'Sales Director Edit',
+                            'department'                        => 'Sales Edit',
+                            'officePhone'                       => '739-742-3005',
+                            'source'                            => array('value' => 'Inbound Call'),
+                            'mobilePhone'                       => '285-300-8232',
+                            'officeFax'                         => '255-454-1914',
+                            'state'                             => array('id' => $contactStateId),
+                            'owner'                             => array('id' => $superUserId),
+                            'account'                           => array('id' => $accountId),
+                            'primaryEmail'                      => array('emailAddress' => 'info@myNewContact.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'secondaryEmail'                    => array('emailAddress' => 'info@myNewContactEdit.com',
+                                                                         'optOut' => '0',
+                                                                         'isInvalid' => '0'),
+                            'primaryAddress'                    => array('street1' => '26378 South Arlington Ave',
+                                                                         'street2' => '',
+                                                                         'city' => 'San Jose',
+                                                                         'state' => 'CA',
+                                                                         'postalCode' => '95131',
+                                                                         'country' => 'USA'),
+                            'secondaryAddress'                  => array('street1' => '18693 West Spring Center',
+                                                                         'street2' => '',
+                                                                         'city' => 'Philadelphia',
+                                                                         'state' => 'PA',
+                                                                         'postalCode' => '19102',
+                                                                         'country' => 'USA'),
+                            'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                            'description'                       => 'This is a Edit Description',
+                            'checkbox'                          => '0',
+                            'currency'                          => array('value'    => 40,
+                                                                         'currency' => array(
+                                                                         'id' => $baseCurrency->id)),
+                            'date'                              => $date,
+                            'datetime'                          => $datetime,
+                            'decimal'                           => '12',
+                            'picklist'                          => array('value'  => 'b'),
+                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                            'countrypicklist'                   => array('value'  => 'aaaa'),
+                            'statepicklist'                     => array('value'  => 'aaa1'),
+                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'integer'                           => '11',
+                            'phone'                             => '259-784-2069',
+                            'radio'                             => array('value' => 'e'),
+                            'text'                              => 'This is a test Edit Text',
+                            'textarea'                          => 'This is a test Edit TextArea',
+                            'url'                               => 'http://wwww.abc-edit.com'),
+                                'save' => 'Save'));
+            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/edit');
+
+            //Check the details if they are saved properly for the custom fields after the edit.
+            $contact  = Contact::getById($contactId);
+            //Retrieve the permission of the contact.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem($contact);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($contact->title->value                   , 'Mrs.');
+            $this->assertEquals($contact->firstName                      , 'Sarah');
+            $this->assertEquals($contact->lastName                       , 'Williams Edit');
+            $this->assertEquals($contact->state->id                      , $contactStateId);
+            $this->assertEquals($contact->jobTitle                       , 'Sales Director Edit');
+            $this->assertEquals($contact->department                     , 'Sales Edit');
+            $this->assertEquals($contact->officePhone                    , '739-742-3005');
+            $this->assertEquals($contact->source->value                  , 'Inbound Call');
+            $this->assertEquals($contact->mobilePhone                    , '285-300-8232');
+            $this->assertEquals($contact->officeFax                      , '255-454-1914');
+            $this->assertEquals($contact->primaryEmail->emailAddress     , 'info@myNewContact.com');
+            $this->assertEquals($contact->primaryEmail->optOut           , '0');
+            $this->assertEquals($contact->primaryEmail->isInvalid        , '0');
+            $this->assertEquals($contact->secondaryEmail->emailAddress   , 'info@myNewContactEdit.com');
+            $this->assertEquals($contact->secondaryEmail->optOut         , '0');
+            $this->assertEquals($contact->secondaryEmail->isInvalid      , '0');
+            $this->assertEquals($contact->primaryAddress->street1        , '26378 South Arlington Ave');
+            $this->assertEquals($contact->primaryAddress->street2        , '');
+            $this->assertEquals($contact->primaryAddress->city           , 'San Jose');
+            $this->assertEquals($contact->primaryAddress->state          , 'CA');
+            $this->assertEquals($contact->primaryAddress->postalCode     , '95131');
+            $this->assertEquals($contact->primaryAddress->country        , 'USA');
+            $this->assertEquals($contact->secondaryAddress->street1      , '18693 West Spring Center');
+            $this->assertEquals($contact->secondaryAddress->street2      , '');
+            $this->assertEquals($contact->secondaryAddress->city         , 'Philadelphia');
+            $this->assertEquals($contact->secondaryAddress->state        , 'PA');
+            $this->assertEquals($contact->secondaryAddress->postalCode   , '19102');
+            $this->assertEquals($contact->secondaryAddress->country      , 'USA');
+            $this->assertEquals(1                                        , count($readWritePermitables));
+            $this->assertEquals(0                                        , count($readOnlyPermitables));
+            $this->assertEquals($contact->description                    , 'This is a Edit Description');
+            $this->assertEquals($contact->checkbox                       , '0');
+            $this->assertEquals($contact->currency->value                ,  40);
+            $this->assertEquals($contact->currency->currency->id         , $baseCurrency->id);
+            $this->assertEquals($contact->date                           , $dateAssert);
+            $this->assertEquals($contact->datetime                       , $datetimeAssert);
+            $this->assertEquals($contact->decimal                        , '12');
+            $this->assertEquals($contact->picklist->value                , 'b');
+            $this->assertEquals($contact->integer                        ,  11);
+            $this->assertEquals($contact->phone                          , '259-784-2069');
+            $this->assertEquals($contact->radio->value                   , 'e');
+            $this->assertEquals($contact->text                           , 'This is a test Edit Text');
+            $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
+            $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
+            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
+            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
+            $this->assertEquals($contact->citypicklist->value            , 'ab1');
+            $this->assertContains('gg'                                   , $contact->multiselect->values);
+            $this->assertContains('hh'                                   , $contact->multiselect->values);
+            $this->assertContains('reading'                              , $contact->tagcloud->values);
+            $this->assertContains('surfing'                              , $contact->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
+            $this->assertEquals(23                                       , $testCalculatedValue);
         }
 
         /**
@@ -774,6 +967,49 @@
             //Assert that the edit contact does not exits after the search.
             $this->assertTrue(strpos($content, "No results found.") > 0);
             $this->assertFalse(strpos($content, "26378 South Arlington Ave") > 0);
+        }
+
+        /**
+         * @depends testWhetherSearchWorksForTheCustomFieldsPlacedForContactsModuleAfterDeletingTheContact
+         */
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForContactsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'rea'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "reading") > 0);
+        }
+
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForContactsModule
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForContactsModule()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $this->assertEquals('en', $languageHelper->getForCurrentUser());
+            Yii::app()->user->userModel->language = 'fr';
+            $this->assertTrue(Yii::app()->user->userModel->save());
+            $languageHelper->setActive('fr');
+            $this->assertEquals('fr', Yii::app()->user->getState('language'));
+
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'surf'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected vlaue
+            $this->assertTrue(strpos($content, "surfing fr") > 0);
         }
     }
 ?>

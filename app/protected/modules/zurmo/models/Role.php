@@ -64,9 +64,9 @@
                     'name',
                 ),
                 'relations' => array(
-                    'users' => array(RedBeanModel::HAS_MANY,            'User'),
                     'role'  => array(RedBeanModel::HAS_MANY_BELONGS_TO, 'Role'),
                     'roles' => array(RedBeanModel::HAS_MANY,            'Role'),
+                    'users' => array(RedBeanModel::HAS_MANY,            'User'),
                 ),
                 'rules' => array(
                     array('name', 'required'),

@@ -46,9 +46,9 @@
         '3D Vertical Bar Graph'
             => 'Grafico a barre verticale 3D',
         '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
-            => '<b>Zurmo</b> è un sistema di <b>Customer Relationship Management</b> creato da <b>Zurmo Inc.</b>',
+            => '<b>Zurmo</b> � un sistema di <b>Customer Relationship Management</b> creato da <b>Zurmo Inc.</b>',
         '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
-            => '<b>Zurmo</b> è è rilasciato sotto la licenza GPL3.  Potete leggere la licenza <a href="http://www.zurmo.org/license">qui</a>.',
+            => '<b>Zurmo</b> � � rilasciato sotto la licenza GPL3.  Potete leggere la licenza <a href="http://www.zurmo.org/license">qui</a>.',
         '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
             => '<b>Zurmo</b> utilizza i seguenti strumenti e framework di Open Source:',
         'About'
@@ -70,7 +70,7 @@
         'Active currencies can be used when creating new records and as a default currency for a user.'
             => 'Le valute attive sono usando quando create nuovi records e come una valute di default per un utente.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => 'Le lingue attive sono disponibile ai utenti.  La lingua del sistema e qualunque lingua usata per un utente non si può essere inattiva.',
+            => 'Le lingue attive sono disponibile ai utenti.  La lingua del sistema e qualunque lingua usata per un utente non si pu� essere inattiva.',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Proprietario',
         'Add Currency'
@@ -90,7 +90,7 @@
         'An error occured during login. Please try again.'
             => 'Errore login. Prego di provare di nuovo.',
         'Any City'
-            => 'Città',
+            => 'Citt�',
         'Any Country'
             => 'Paese',
         'Any Email Address'
@@ -134,7 +134,7 @@
         'Chart Type'
             => 'Tipo di grafico',
         'City'
-            => 'Città',
+            => 'Citt�',
         'Close'
             => 'Chiudi',
         'Code'
@@ -212,7 +212,7 @@
         'File Content'
             => 'Contenuto di file',
         'File failed to upload. The file is empty.'
-            => 'errore durante il caricamento di file.  Il file è vuoto.',
+            => 'errore durante il caricamento di file.  Il file � vuoto.',
         'Files'
             => 'File',
         'Filter By Created User'
@@ -227,6 +227,8 @@
             => 'Configurazione globale',
         'Global configuration saved successfully.'
             => 'Configurazione globale modificata con successo.',
+        'Global Search Fields'
+            => 'Campi ricerca globale',
         'Go to Search'
             => 'alla Ricerca',
         'Group'
@@ -272,15 +274,15 @@
         'Invalid username or password.'
             => 'Nome utente sconosciuto o password non valida.',
         'Is Invalid'
-            => 'È invalido',
+            => '� invalido',
         'Job Title'
             => 'Titolo',
         'Label must be all lowercase.'
             => 'Tutte le lettere della etichetta devono essere minuscole.',
         'Label must not be empty.'
-            => 'Etichetta non può essere vuota.',
+            => 'Etichetta non pu� essere vuota.',
         'Label must not contain any special characters.'
-            => 'Etichetta non può avere caratteri speciali.',
+            => 'Etichetta non pu� avere caratteri speciali.',
         'Language'
             => 'Lingua',
         'Languages'
@@ -332,7 +334,7 @@
         'Members'
             => 'Membri',
         'Menu'
-            => 'Menù',
+            => 'Men�',
         'Missing Required Fields'
             => 'Campi obbligatori mancanti',
         'Mobile Phone'
@@ -430,7 +432,7 @@
         'Read'
             => 'Leggere',
         'Read permissions rebuild complete.'
-            => 'Ricostruzione dei privilegi di leggere è completa.',
+            => 'Ricostruzione dei privilegi di leggere � completa.',
         'Recently Viewed'
             => 'Ultime visite',
         'Recycled'
@@ -440,7 +442,7 @@
         'Retail'
             => 'Commercio Retail',
         'Return to Admin Menu'
-            => 'Ritorno al Menù Admin',
+            => 'Ritorno al Men� Admin',
         'Rights'
             => 'Diritti',
         'Rights Saved Successfully.'
@@ -478,13 +480,13 @@
         'Size'
             => 'Dimensione',
         'skipped because you do not have sufficient permissions.'
-            => 'saltato perché non avete privilegi sufficienti.',
+            => 'saltato perch� non avete privilegi sufficienti.',
         'Sorry! Your browser is not supported.'
             => 'Spiacente! Il tuo browser non supporta.',
         'Source'
             => 'Fonte',
         'Specified custom field name was invalid.'
-            => 'Nome del campo personalizzato non è valido.',
+            => 'Nome del campo personalizzato non � valido.',
         'Stage'
             => 'Fase di Vendita',
         'Standard Fields'
@@ -506,21 +508,21 @@
         'Technology'
             => 'Tecnologia',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
-            => 'Il servizio di corsi delle valute indica che questo codice non è valido, anche se zurmo indica che è valido. Il tasso non fu aggiornato.',
+            => 'Il servizio di corsi delle valute indica che questo codice non � valido, anche se zurmo indica che � valido. Il tasso non fu aggiornato.',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
-            => 'Il servizio di corsi delle valute non è disponibile. Il tasso non fu aggiornato.',
+            => 'Il servizio di corsi delle valute non � disponibile. Il tasso non fu aggiornato.',
         'The currency was not removed because it is in use.'
-            => 'La valuta non fu eliminata perché é in uso.',
+            => 'La valuta non fu eliminata perch� � in uso.',
         'The ID specified was invalid.'
-            => 'ID non è valido.',
+            => 'ID non � valido.',
         'The status specified is invalid.'
-            => 'Il stato specificate non é valido.',
+            => 'Il stato specificate non � valido.',
         'There are no recently viewed items.'
             => 'Non ci sono elementi di ultime visite.',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
             => 'Ci sono campi obbligatori mancante del layout: {view}.  Prego di contattare il amministratore.',
         'This action is only available in debug mode.'
-            => 'Questa azione é solamente disponibile nel modo di debug.',
+            => 'Questa azione � solamente disponibile nel modo di debug.',
         'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
             => 'Voi utilizzate la <b>versione {zurmoVersion}</b> di <b>Zurmo</b>.',
         'This name is reserved. Please pick a different name.'
@@ -545,6 +547,8 @@
             => 'Nome utente',
         'Value'
             => 'Valore',
+        'Values'
+            => 'Valori',
         'Visit <b>Zurmo Inc.</b> at {url}.'
             => 'Visita <b>Zurmo Inc.</b> a {url}.',
         'Visit the <b>Zurmo Open Source Project</b> at {url}.'
@@ -554,7 +558,7 @@
         'Welcome'
             => 'Benvenuto',
         'What is this?'
-            => 'Che cos\'è?',
+            => 'Che cos\'�?',
         'Who can read and write'
             => 'Autorizzazione di leggere/scrivere',
         'Word of Mouth'
@@ -562,22 +566,22 @@
         'Write'
             => 'Scrivere',
         'You have tried to access a page you do not have access to.'
-            => 'Non si è autorizzati a visualizzare questa pagina.',
+            => 'Non si � autorizzati a visualizzare questa pagina.',
         'You must have at least one active currency.'
             => 'Ha bisogno di almeno una valuta attiva.',
         'Your Profile'
             => 'Suo Profile',
         'Your RedBean version is currentVersion and it should be acceptableVersion.'
-            => 'Suo versione di RedBean è currentVersion e dovrebbe essere acceptableVersion.',
+            => 'Suo versione di RedBean � currentVersion e dovrebbe essere acceptableVersion.',
         'Your Yii version is currentVersion and it should be acceptableVersion.'
-            => 'Suo versione di Yii è currentVersion e dovrebbe essere acceptableVersion.',
+            => 'Suo versione di Yii � currentVersion e dovrebbe essere acceptableVersion.',
         'ZurmoCRM'
-            => 'ZurmoCRM',
+            => 'ZurmoCR',
         '{count} unread'
             => '{count} non letti',
         '{url} (installed with Yii)'
             => '{url} (installato con Yii)',
         '{url} (version {version} is installed)'
-            => '{url} (la versione {version} è installato)',
+            => '{url} (la versione {version} � installato)',
     );
 ?>

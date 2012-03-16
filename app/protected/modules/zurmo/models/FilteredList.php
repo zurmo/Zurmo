@@ -56,17 +56,17 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
+                    'filterByCreatedUser',
                     'name',
                     'serializedData',
-                    'filterByCreatedUser',
                 ),
                 'rules' => array(
+                    array('filterByCreatedUser', 'boolean'),
                     array('name'          ,      'required'),
                     array('name',                'type',   'type' => 'string'),
                     array('name',                'length', 'max'  => 64),
                     array('serializedData',      'required'),
                     array('serializedData',      'type', 'type' => 'string'),
-                    array('filterByCreatedUser', 'boolean'),
                 )
             );
             return $metadata;

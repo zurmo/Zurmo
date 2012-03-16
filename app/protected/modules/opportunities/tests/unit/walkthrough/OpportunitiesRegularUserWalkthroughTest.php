@@ -53,6 +53,7 @@
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp4',     $super, $account);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser                                  (Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function testRegularUserAllControllerActions()
@@ -403,6 +404,28 @@
             $this->assertTrue($parentGroup->save());
             $childGroup->users->remove($userInChildGroup);
             $this->assertTrue($childGroup->save());
+        }
+
+        /**
+         * @depends testRegularUserControllerActionsWithElevationToModels
+         */
+        public function testRegularUserViewingOpportunityWithoutAccessToAccount()
+        {
+            $super       = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser       = UserTestHelper::createBasicUser('aUser');
+            $aUser->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $aUser->setRight('AccountsModule',      AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $this->assertTrue($aUser->save());
+            $aUser       = User::getByUsername('aUser');
+            $account     = AccountTestHelper::createAccountByNameForOwner('superTestAccount', $super);
+            $opportunity = OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('opportunityOwnedByaUser', $aUser, $account);
+            $account->forget();
+            $id          = $opportunity->id;
+            $opportunity->forget();
+            unset($opportunity);
+            $this->logoutCurrentUserLoginNewUserAndGetByUsername('aUser');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
+            $this->assertFalse(strpos($content, 'Fatal error: Method Account::__toString() must not throw an exception') > 0);
         }
     }
 ?>

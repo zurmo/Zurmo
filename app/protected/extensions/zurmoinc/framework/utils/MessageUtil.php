@@ -330,6 +330,7 @@
                         $modelClassName = basename(substr($fullEntryName, 0, -4));
                         $modelReflectionClass = new ReflectionClass($modelClassName);
                         if ($modelReflectionClass->isSubclassOf('RedBeanModel') &&
+                            $modelReflectionClass->isSubclassOf('OwnedModel') &&
                             !$modelReflectionClass->isAbstract())
                         {
                            $model              = new $modelClassName(false);
@@ -361,7 +362,9 @@
                                //that will need to be translated.
                                if ($model->isRelation($attributeName) &&
                                    ($model->getRelationModelClassName($attributeName) == 'OwnedCustomField' ||
-                                   $model->getRelationModelClassName($attributeName) == 'CustomField'))
+                                   $model->getRelationModelClassName($attributeName) == 'CustomField' ||
+                                   $model->getRelationModelClassName($attributeName) == 'MultipleValuesCustomField' ||
+                                   $model->getRelationModelClassName($attributeName) == 'OwnedMultipleValuesCustomField'))
                                 {
                                     $customFieldData = CustomFieldDataModelUtil::
                                                        getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);

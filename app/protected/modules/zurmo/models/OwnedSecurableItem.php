@@ -221,12 +221,11 @@
                 $permission = PermissionsUtil::getActualPermissionDataForReadByModuleNameForCurrentUser($moduleClassName);
                 if ($permission == Permission::NONE || $permission == Permission::DENY)
                 {
-                    $quote               = DatabaseCompatibilityUtil::getQuote();
-                    $ownedTableName      = $modelClassName::getTableName('OwnedSecurableItem');
+                    $quote                               = DatabaseCompatibilityUtil::getQuote();
+                    $modelAttributeToDataProviderAdapter = new OwnedSecurableItemIdToDataProviderAdapter(
+                                                               $modelClassName, null);
                     $ownedTableAliasName = ModelDataProviderUtil::
-                                           resolveShouldAddFromTableAndGetAliasName( $ownedTableName,
-                                                                                     'OwnedSecurableItem',
-                                                                                     $modelClassName,
+                                           resolveShouldAddFromTableAndGetAliasName( $modelAttributeToDataProviderAdapter,
                                                                                      $joinTablesAdapter);
                     $ownerColumnName = RedBeanModel::getForeignKeyName('OwnedSecurableItem', 'owner');
                     $mungeIds = ReadPermissionsOptimizationUtil::getMungeIdsByUser($user);

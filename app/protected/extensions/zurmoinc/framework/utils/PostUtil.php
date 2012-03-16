@@ -38,6 +38,21 @@
                 {
                     unset($_POST[$postVariableName][$attributeName]);
                 }
+                else
+                {
+                    if (is_array($values) && isset($values['values']) && is_string($values['values']))
+                    {
+                        if ($_POST[$postVariableName][$attributeName]['values'] == '')
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] = array();
+                        }
+                        else
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] =
+                                explode(',', $_POST[$postVariableName][$attributeName]['values']); // Not Coding Standard
+                        }
+                    }
+                }
             }
         }
 

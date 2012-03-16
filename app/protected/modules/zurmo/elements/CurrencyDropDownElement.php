@@ -55,7 +55,7 @@
             return Yii::app()->format->text(ArrayUtil::getArrayValue($dropDownArray, $dropDownModel->id));
         }
 
-        protected function getIdForSelectInput()
+        public function getIdForSelectInput()
         {
             return $this->getEditableInputId($this->attribute, 'id');
         }

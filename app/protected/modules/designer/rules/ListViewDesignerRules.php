@@ -61,6 +61,13 @@
             return Yii::t('Default', 'List View');
         }
 
+        public function getNonPlaceableLayoutAttributeTypes()
+        {
+            return array(
+                'DropDownDependency'
+            );
+        }
+
         public function getSavableMetadataRules()
         {
             return array('AddLink');

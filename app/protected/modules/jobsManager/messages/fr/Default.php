@@ -37,6 +37,10 @@
             => 'Accès aux tâches système',
         'Available Jobs'
             => 'Jobs disponibles',
+        'Cleanup old job logs Job'
+            => 'Nettoyage des vieux job logs.',
+        'Clear the assets folder on server(optional).'
+            => 'Suppression du dossier Assets sur le serveur (optionnel)',
         'Click Here'
             => 'Cliquez ici',
         'Completed'
@@ -46,11 +50,11 @@
         'End Date Time'
             => 'Date/heure réalisé?',
         'Error Log'
-            => 'Log d\'Erreurs',
+            => 'Log d\'erreurs',
         'Every 5 minutes'
             => 'Chaque 5 minutes',
         'hostInfo or scriptUrl not set up'
-            => 'hostInfo ou scriptUrl n\'est pas configuré',
+            => 'hostInfo or scriptUrl n\'est pas configuré.',
         'How often should I run each Job?'
             => 'Fréquence d\'exécution de tâches: recommendations',
         'How to Setup the Jobs to Run Automatically'
@@ -87,10 +91,12 @@
             => 'Inactif',
         'Recommended Frequency'
             => 'Fréquence recommandée',
+        'Remove the api test entry script for production use.'
+            => 'Supprimez le script test API pour production.',
         'Reset'
             => 'Relance',
         'Return to Job Manager'
-            => 'Retour aux Tâches système',
+            => 'Retour au Job Manager',
         'Scheduled jobs are stuck'
             => 'Les tâches planifiées ont échouées.',
         'Script will run at most for {seconds} seconds.'

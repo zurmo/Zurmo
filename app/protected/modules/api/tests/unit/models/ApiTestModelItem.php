@@ -65,13 +65,14 @@
                     'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
                     'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
                     'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
+                    'multiDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED),
+                    'tagCloud'         => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED),
                     'hasOne'           => array(RedBeanModel::HAS_ONE,   'ApiTestModelItem2'),
                     'hasMany'          => array(RedBeanModel::MANY_MANY, 'ApiTestModelItem3'),
                     'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ApiTestModelItem4'),
                     'primaryEmail'     => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
                     'primaryAddress'   => array(RedBeanModel::HAS_ONE,   'Address', RedBeanModel::OWNED),
                     'secondaryEmail'   => array(RedBeanModel::HAS_ONE,   'Email', RedBeanModel::OWNED),
-
                 ),
                 'rules' => array(
                     array('firstName', 'type',   'type' => 'string'),
@@ -104,10 +105,14 @@
                     'primaryAddress'   => 'Address',
                     'textArea'         => 'TextArea',
                     'radioDropDown'    => 'RadioDropDown',
+                    'multiDropDown'    => 'MultiSelectDropDown',
+                    'tagCloud'         => 'TagCloud',
                 ),
                 'customFields' => array(
                     'dropDown'        => 'ApiTestDropDown',
                     'radioDropDown'   => 'ApiTestRadioDropDown',
+                    'multiDropDown'   => 'ApiTestMultiDropDown',
+                    'tagCloud'        => 'ApiTestTagCloud',
                 ),
             );
             return $metadata;

@@ -39,7 +39,7 @@
 
     // The application has only been tested in Linux, and
     // Windows variants identifying themselves as WINNT.
-    assert(IS_LINUX || IS_WINNT);
+    assert(IS_LINUX || IS_WINNT); // Not Coding Standard
 
     define('COMMON_ROOT',   dirname(__FILE__));
     define('INSTANCE_ROOT', getcwd());

@@ -31,19 +31,11 @@
         require('main.php'),
         array(
             'import' => array(
-                'application.extensions.zurmoinc.framework.tests.common.*',
-                'application.extensions.zurmoinc.framework.tests.unit.*',
-                'application.extensions.zurmoinc.framework.tests.unit.components.*',
-                'application.extensions.zurmoinc.framework.tests.unit.forms.*',
-                'application.extensions.zurmoinc.framework.tests.unit.models.*',
-                'application.extensions.zurmoinc.framework.tests.unit.modules.*',
-                'application.extensions.zurmoinc.framework.tests.unit.views.*',
-                'application.modules.zurmo.tests.components.*',
                 'application.tests.unit.*',
-////////////////////////////////////////////////////////////////////////////////
-// Temporary - See Readme.txt in the app/protected/tests/unit/notSupposedToBeHere directory.
+    ////////////////////////////////////////////////////////////////////////////////
+    // Temporary - See Readme.txt in the app/protected/tests/unit/notSupposedToBeHere directory.
                 'application.tests.unit.notSupposedToBeHere.*',
-////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
             ),
             'components' => array(
                 'fixture' => array(

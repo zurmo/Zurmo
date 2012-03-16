@@ -45,11 +45,12 @@
         public function getValuesAndLabelsData()
         {
             $valuesAndLabels = array();
-            foreach($this->attributes as $attributeName => $data)
+            foreach ($this->attributes as $attributeName => $data)
             {
-                if(($data['elementType'] == 'Text' ||
+                if (($data['elementType'] == 'Text' ||
                    $data['elementType'] == 'Integer' ||
                    $data['elementType'] == 'Decimal' ||
+                   $data['elementType'] == 'Phone' ||
                    $data['elementType'] == 'TextArea') && $attributeName != 'id')
                 {
                     $valuesAndLabels[$attributeName] = $data['attributeLabel'];

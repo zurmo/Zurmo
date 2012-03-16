@@ -123,7 +123,7 @@
             $this->assertEquals('meeting new name',  MeetingsModule::getModuleLabelByTypeAndLanguage('SingularLowerCase'));
             $this->assertEquals('meeting new names', MeetingsModule::getModuleLabelByTypeAndLanguage('PluralLowerCase'));
 
-            //Load LayoutEdit for each applicable module and applicable layout
+            //Load LayoutEdit for each applicable module and applicable layout.
             $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
                                      'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
@@ -157,8 +157,14 @@
             $this->createDateTimeCustomFieldByModule            ('MeetingsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('MeetingsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('MeetingsModule', 'picklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'statepicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'citypicklist');
             $this->createIntegerCustomFieldByModule             ('MeetingsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('MeetingsModule', 'multiselect');
+            $this->createTagCloudCustomFieldByModule            ('MeetingsModule', 'tagcloud');
+            $this->createCalculatedNumberCustomFieldByModule    ('MeetingsModule', 'calculatednumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('MeetingsModule', 'dropdowndependency');
             $this->createPhoneCustomFieldByModule               ('MeetingsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('MeetingsModule', 'radio');
             $this->createTextCustomFieldByModule                ('MeetingsModule', 'text');
@@ -269,7 +275,12 @@
                                             'date'                              => $date,
                                             'datetime'                          => $datetime,
                                             'decimal'                           => '123',
-                                            'picklist'                          => array('value' => 'a'),
+                                            'picklist'                          => array('value'  => 'a'),
+                                            'multiselect'                       => array('values' => array('ff', 'rr')),
+                                            'tagcloud'                          => array('values' => array('writing', 'gardening')),
+                                            'countrypicklist'                   => array('value'  => 'bbbb'),
+                                            'statepicklist'                     => array('value'  => 'bbb1'),
+                                            'citypicklist'                      => array('value'  => 'bb1'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -313,17 +324,30 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc.com');
+            $this->assertEquals($meeting[0]->countrypicklist->value           , 'bbbb');
+            $this->assertEquals($meeting[0]->statepicklist->value             , 'bbb1');
+            $this->assertEquals($meeting[0]->citypicklist->value              , 'bb1');
+            $this->assertContains('ff'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('rr'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('writing'                                   , $meeting[0]->tagcloud->values);
+            $this->assertContains('gardening'                                 , $meeting[0]->tagcloud->values);
+
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
+            $this->assertEquals(111                                           , $testCalculatedValue);
         }
 
         /**
          * @depends testCreateAnMeetingAfterTheCustomFieldsArePlacedForMeetingsModule
          */
-        public function testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
+        public function testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Retrieve the meeting Id.
             $meeting = Meeting::getByName('myNewMeeting');
+            $this->assertEquals(2, $meeting[0]->tagcloud->values->count());
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
@@ -360,7 +384,12 @@
                                 'date'                              => $date,
                                 'datetime'                          => $datetime,
                                 'decimal'                           => '12',
-                                'picklist'                          => array('value' => 'b'),
+                                'picklist'                          => array('value'  => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array()),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -405,6 +434,124 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($meeting[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($meeting[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
+            $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
+            $this->assertEquals(0                                             , $meeting[0]->tagcloud->values->count());
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
+            $this->assertEquals(1                                             , $testCalculatedValue);
+        }
+
+        /**
+         * @depends testEditOfTheMeetingForTheTagCloudFieldAfterRemovingAllTagsPlacedForMeetingsModule
+         */
+        public function testEditOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Retrieve the meeting Id.
+            $meeting = Meeting::getByName('myEditMeeting');
+
+            //Set the date and datetime variable values here.
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $dateAssert     = date('Y-m-d');
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetimeAssert = date('Y-m-d H:i:')."00";
+
+            //Get the super user, account, opportunity and contact id.
+            $superUserId        = $super->id;
+            $superAccount       = Account::getByName('superAccount');
+            $superContactId1    = self::getModelIdByModelNameAndName('Contact', 'superContact1 superContact1son');
+            $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
+            $superContactId3    = self::getModelIdByModelNameAndName('Contact', 'superContact3 superContact3son');
+            $superOpportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $baseCurrency       = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
+            $explicitReadWriteModelPermission = ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+            $activityItemFormContacts         = $superContactId1 . ',' . $superContactId2 . ',' . $superContactId3; // Not Coding Standard
+
+            //Edit the meeting based on the custom fields and the meeting Id.
+            $this->setGetArray (array('id' => $meeting[0]->id));
+            $this->setPostArray(array('Meeting' => array(
+                                'name'                              => 'myEditMeeting',
+                                'location'                          => 'LandLine',
+                                'startDateTime'                     => $datetime,
+                                'endDateTime'                       => $datetime,
+                                'category'                          => array('value' => 'Call'),
+                                'description'                       => 'This is Edit Meeting Description',
+                                'owner'                             => array('id' => $superUserId),
+                                'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
+                                'checkbox'                          => '0',
+                                'currency'                          => array('value'   => 40,
+                                                                             'currency' => array(
+                                                                             'id' => $baseCurrency->id)),
+                                'date'                              => $date,
+                                'datetime'                          => $datetime,
+                                'decimal'                           => '12',
+                                'picklist'                          => array('value'  => 'b'),
+                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
+                                'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
+                                'countrypicklist'                   => array('value'  => 'aaaa'),
+                                'statepicklist'                     => array('value'  => 'aaa1'),
+                                'citypicklist'                      => array('value'  => 'ab1'),
+                                'integer'                           => '11',
+                                'phone'                             => '259-784-2069',
+                                'radio'                             => array('value' => 'e'),
+                                'text'                              => 'This is a test Edit Text',
+                                'textarea'                          => 'This is a test Edit TextArea',
+                                'url'                               => 'http://wwww.abc-edit.com'),
+                                'ActivityItemForm' => array(
+                                'Account'     => array('id'  => $superAccount[0]->id),
+                                'contact'     => array('ids' => $activityItemFormContacts),
+                                'Opportunity' => array('id'  => $superOpportunityId))));
+            $this->runControllerWithRedirectExceptionAndGetUrl('meetings/default/edit');
+
+            //Check the details if they are saved properly for the custom fields.
+            $meeting = Meeting::getByName('myEditMeeting');
+
+            //Retrieve the permission of the meeting.
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                 makeBySecurableItem(Meeting::getById($meeting[0]->id));
+            $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $readOnlyPermitables               = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
+
+            $this->assertEquals($meeting[0]->name                             , 'myEditMeeting');
+            $this->assertEquals($meeting[0]->location                         , 'LandLine');
+            $this->assertEquals($meeting[0]->startDateTime                    , $datetimeAssert);
+            $this->assertEquals($meeting[0]->endDateTime                      , $datetimeAssert);
+            $this->assertEquals($meeting[0]->category->value                  , 'Call');
+            $this->assertEquals($meeting[0]->description                      , 'This is Edit Meeting Description');
+            $this->assertEquals($meeting[0]->owner->id                        , $superUserId);
+            $this->assertEquals($meeting[0]->activityItems->count()           , 5);
+            $this->assertEquals(1                                             , count($readWritePermitables));
+            $this->assertEquals(0                                             , count($readOnlyPermitables));
+            $this->assertEquals($meeting[0]->checkbox                         , '0');
+            $this->assertEquals($meeting[0]->currency->value                  , 40);
+            $this->assertEquals($meeting[0]->currency->currency->id           , $baseCurrency->id);
+            $this->assertEquals($meeting[0]->date                             , $dateAssert);
+            $this->assertEquals($meeting[0]->datetime                         , $datetimeAssert);
+            $this->assertEquals($meeting[0]->decimal                          , '12');
+            $this->assertEquals($meeting[0]->picklist->value                  , 'b');
+            $this->assertEquals($meeting[0]->integer                          , 11);
+            $this->assertEquals($meeting[0]->phone                            , '259-784-2069');
+            $this->assertEquals($meeting[0]->radio->value                     , 'e');
+            $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
+            $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
+            $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
+            $this->assertEquals($meeting[0]->countrypicklist->value           , 'aaaa');
+            $this->assertEquals($meeting[0]->statepicklist->value             , 'aaa1');
+            $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
+            $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
+            $this->assertContains('reading'                                   , $meeting[0]->tagcloud->values);
+            $this->assertContains('surfing'                                   , $meeting[0]->tagcloud->values);
+            $metadata            = CalculatedDerivedAttributeMetadata::
+                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+            $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
+            $this->assertEquals(1                                             , $testCalculatedValue);
         }
 
         /**
@@ -424,6 +571,49 @@
             //Check to confirm that the meeting is deleted.
             $meeting = Meeting::getByName('myEditMeeting');
             $this->assertEquals(0, count($meeting));
+        }
+
+        /**
+         * @depends testDeleteOfTheMeetingForTheCustomFieldsPlacedForMeetingsModule
+         */
+        public function testTypeAheadWorksForTheTagCloudFieldPlacedForMeetingsModule()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'rea'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected value.
+            $this->assertTrue(strpos($content, "reading") > 0);
+        }
+
+        /**
+         * @depends testTypeAheadWorksForTheTagCloudFieldPlacedForMeetingsModule
+         */
+        public function testLabelLocalizationForTheTagCloudFieldPlacedForMeetingsModule()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $languageHelper = new ZurmoLanguageHelper();
+            $languageHelper->load();
+            $this->assertEquals('en', $languageHelper->getForCurrentUser());
+            Yii::app()->user->userModel->language = 'fr';
+            $this->assertTrue(Yii::app()->user->userModel->save());
+            $languageHelper->setActive('fr');
+            $this->assertEquals('fr', Yii::app()->user->getState('language'));
+
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //Search a list item by typing in tag cloud attribute.
+            $this->resetPostArray();
+            $this->setGetArray(array('name' => 'tagcloud',
+                                     'term' => 'surf'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/autoCompleteCustomFieldData');
+
+            //Check if the returned content contains the expected value.
+            $this->assertTrue(strpos($content, "surfing fr") > 0);
         }
     }
 ?>

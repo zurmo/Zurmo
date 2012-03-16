@@ -39,7 +39,7 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $mashableModelData = LatestActivitiesUtil::getMashableModelDataForCurrentUser();
-            $this->assertEquals(3, count($mashableModelData));
+            $this->assertEquals(4, count($mashableModelData));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $mashableModelData = LatestActivitiesUtil::getMashableModelDataForCurrentUser();
             $this->assertEquals(0, count($mashableModelData));

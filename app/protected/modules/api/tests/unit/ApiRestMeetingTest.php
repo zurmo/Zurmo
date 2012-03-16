@@ -27,7 +27,7 @@
     /**
     * Test Meeting related API functions.
     */
-    class ApiRestAAMeetingTest extends ApiRestTest
+    class ApiRestMeetingTest extends ApiRestTest
     {
         public function testApiServerUrl()
         {

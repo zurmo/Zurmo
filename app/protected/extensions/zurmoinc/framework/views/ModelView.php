@@ -106,5 +106,10 @@
                 }
             }
         }
+
+        public function getModelClassName()
+        {
+            return $this->modelClassName;
+        }
     }
 ?>

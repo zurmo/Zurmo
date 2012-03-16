@@ -54,5 +54,44 @@
         {
             return array_intersect_key($array, array_unique(array_map('strtolower', $array)));
         }
+
+        /**
+         * Given an array, stringify the array values into content seperated by commas and return the content.
+         * @param array $data
+         */
+        public static function stringify($data)
+        {
+            assert('is_array($data)');
+            $s             = null;
+            foreach ($data as $value)
+            {
+                if ($s != null)
+                {
+                    $s .= ', ';
+                }
+                $s .= $value;
+            }
+            return $s;
+        }
+
+        /**
+         * Convert multi-dimenision array into flat(one dimension) array
+         */
+        public static function flatten($array)
+        {
+            $flatternArray = array();
+            foreach ($array as $element)
+            {
+                if (is_array($element))
+                {
+                    $flatternArray = array_merge($flatternArray, self::flatten($element));
+                }
+                else
+                {
+                    $flatternArray[] = $element;
+                }
+            }
+            return $flatternArray;
+        }
     }
 ?>

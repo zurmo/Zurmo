@@ -54,6 +54,7 @@
                 'lastName'                     => 'Last Name',
                 'modifiedByUser'               => 'Modified By User',
                 'modifiedDateTime'             => 'Modified Date Time',
+                'multiDropDown'                => 'Multi Drop Down',
                 'owner'                        => 'Owner',
                 'phone'                        => 'Phone',
                 'primaryAddress__city'         => 'Primary Address - City',
@@ -73,6 +74,7 @@
                 'secondaryEmail__isInvalid'    => 'Secondary Email - Is Invalid',
                 'secondaryEmail__optOut'       => 'Secondary Email - Opt Out',
                 'string'                       => 'String',
+                'tagCloud'                     => 'Tag Cloud',
                 'textArea'                     => 'Text Area',
                 'url'                          => 'Url',
             );
@@ -95,6 +97,7 @@
                 'ImportModelTestItem3Derived'  => 'ImportModelTestItem3',
                 'integer'                      => 'Integer',
                 'lastName'                     => 'Last Name',
+                'multiDropDown'                => 'Multi Drop Down',
                 'owner'                        => 'Owner',
                 'phone'                        => 'Phone',
                 'primaryAddress__city'         => 'Primary Address - City',
@@ -114,6 +117,7 @@
                 'secondaryEmail__isInvalid'    => 'Secondary Email - Is Invalid',
                 'secondaryEmail__optOut'       => 'Secondary Email - Opt Out',
                 'string'                       => 'String',
+                'tagCloud'                     => 'Tag Cloud',
                 'textArea'                     => 'Text Area',
                 'url'                          => 'Url',
             );

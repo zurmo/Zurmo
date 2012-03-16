@@ -26,6 +26,8 @@
 
     class AuditEvent extends RedBeanModel
     {
+        public static $isTableOptimized = false;
+
         public static function getSinceTimestamp($timestamp)
         {
             assert('is_int($timestamp)');
@@ -84,7 +86,7 @@
                     throw new NoCurrentUserSecurityException();
                 }
             }
-            if (!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen())
+            if (!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen() || !AuditEvent::$isTableOptimized)
             {
                 $tableName  = self::getTableName('AuditEvent');
                 RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, strtolower('modelId'));
@@ -97,6 +99,7 @@
                 $auditEvent->modelId        = $model !== null ? $model->id        : null;
                 $auditEvent->serializedData = serialize($data);
                 $saved = $auditEvent->save();
+                AuditEvent::$isTableOptimized = true;
             }
             else
             {
@@ -150,8 +153,8 @@
             $metadata[__CLASS__] = array(
                 'members' => array(
                     'dateTime',
-                    'moduleName',
                     'eventName',
+                    'moduleName',
                     'modelClassName',
                     'modelId',
                     'serializedData',
@@ -162,12 +165,12 @@
                 'rules' => array(
                     array('dateTime',       'required'),
                     array('dateTime',       'type', 'type' => 'datetime'),
-                    array('moduleName',     'required'),
-                    array('moduleName',     'type',   'type' => 'string'),
-                    array('moduleName',     'length', 'min'  => 3, 'max' => 64),
                     array('eventName',      'required'),
                     array('eventName',      'type',   'type' => 'string'),
                     array('eventName',      'length', 'min'  => 3, 'max' => 64),
+                    array('moduleName',     'required'),
+                    array('moduleName',     'type',   'type' => 'string'),
+                    array('moduleName',     'length', 'min'  => 3, 'max' => 64),
                     array('modelClassName', 'type', 'type' => 'string'),
                     array('modelClassName', 'length', 'min'  => 3, 'max' => 64),
                     array('modelId',        'type', 'type' => 'integer'),

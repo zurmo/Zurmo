@@ -35,24 +35,24 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'textContent',
                     'htmlContent',
+                    'textContent',
                 ),
                 'relations' => array(
                     'notifications' => array(RedBeanModel::HAS_MANY, 'Notification'),
                 ),
                 'rules' => array(
-                    array('textContent',   'type',    'type' => 'string'),
                     array('htmlContent',   'type',    'type' => 'string'),
+                    array('textContent',   'type',    'type' => 'string'),
                 ),
                 'elements' => array(
-                    'textContent'     => 'TextArea',
                     'htmlContent'     => 'TextArea',
+                    'textContent'     => 'TextArea',
                 ),
                 'defaultSortAttribute' => null,
                 'noAudit' => array(
-                    'textContent',
                     'htmlContent',
+                    'textContent',
                 )
             );
             return $metadata;

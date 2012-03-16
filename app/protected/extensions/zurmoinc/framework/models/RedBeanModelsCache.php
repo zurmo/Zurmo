@@ -68,7 +68,13 @@
                     throw new NotFoundException();
                 }
                 assert('serialize($model) == $serializedModel');
-                assert('crc32(serialize($model)) == $checksum');
+                if (YII_DEBUG)
+                {
+                    if (crc32(serialize($model)) != $checksum)
+                    {
+                        throw new ChecksumMismatchException();
+                    }
+                }
                 assert('$model instanceof RedBeanModel');
                 self::$modelIdentifiersToModels[$modelIdentifier] = $model;
                 return $model;

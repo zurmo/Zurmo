@@ -210,6 +210,44 @@
             $this->assertEquals($expectedVersion, $actualVersion);
         }
 
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckSoap()
+        {
+            $this->assertNotNull(InstallUtil::checkSoap());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckSPL()
+        {
+            $this->assertNotNull(InstallUtil::checkSPL());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckCtype()
+        {
+            $this->assertNotNull(InstallUtil::checkCtype());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckPCRE()
+        {
+            $this->assertNotNull(InstallUtil::checkPCRE());
+        }
+
+        public function testCheckServerVariable()
+        {
+            $error = null;
+            $this->assertNotNull(InstallUtil::checkServerVariable($error));
+        }
+
         public function testCheckYii()
         {
             InstallUtil::checkYii('10.1.8', $expectedVersion);
@@ -308,6 +346,19 @@
                                                                 $this->rootPassword,
                                                                 $minimumRequiredThreadStackValue,
                                                                 $threadStackValue));
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckDatabaseOptimizerSearchDepthValue()
+        {
+            $threadStackValue                = null;
+            $this->assertNotNull(InstallUtil::checkDatabaseOptimizerSearchDepthValue('mysql',
+                                                            $this->hostname,
+                                                            $this->rootUsername,
+                                                            $this->rootPassword,
+                                                            $optimizerSearchDepth));
         }
 
         /**
@@ -527,6 +578,19 @@
         public function testRunInstallation()
         {
             $this->runInstallation(true);
+        }
+
+        /**
+        * @depends testRunInstallation
+        */
+        public function testRunAutoBuildFromUpdateSchemaCommand()
+        {
+            $this->runInstallation(true);
+            $messageLogger = new MessageLogger();
+            $messageLogger->addInfoMessage(Yii::t('Default', 'Starting schema update process.'));
+            $result = InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+            $messageLogger->addInfoMessage(Yii::t('Default', 'Schema update complete.'));
+            $this->assertTrue($result);
         }
 
         public function testRunInstallationWithoutMemCacheOn()

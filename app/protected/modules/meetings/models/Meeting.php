@@ -28,11 +28,18 @@
     {
         public function __toString()
         {
-            if (trim($this->name) == '')
+            try
             {
-                return Yii::t('Default', '(Unnamed)');
+                if (trim($this->name) == '')
+                {
+                    return Yii::t('Default', '(Unnamed)');
+                }
+                return $this->name;
             }
-            return $this->name;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
         public static function getModuleClassName()
@@ -68,33 +75,33 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'name',
-                    'startDateTime',
+                    'description',
                     'endDateTime',
                     'location',
-                    'description',
+                    'name',
+                    'startDateTime',
                 ),
                 'rules' => array(
+                    array('description',      'type', 'type' => 'string'),
+                    array('endDateTime',      'type', 'type' => 'datetime'),
+                    array('endDateTime',      'RedBeanModelCompareDateTimeValidator', 'type' => 'after',
+                                              'compareAttribute' => 'startDateTime'),
+                    array('location',         'type',    'type' => 'string'),
+                    array('location',         'length',  'min'  => 3, 'max' => 64),
                     array('name',             'required'),
                     array('name',             'type',    'type' => 'string'),
                     array('name',             'length',  'min'  => 3, 'max' => 64),
-                    array('location',         'type',    'type' => 'string'),
-                    array('location',         'length',  'min'  => 3, 'max' => 64),
                     array('startDateTime',    'required'),
                     array('startDateTime',    'type', 'type' => 'datetime'),
                     array('startDateTime',    'RedBeanModelCompareDateTimeValidator', 'type' => 'before',
                                               'compareAttribute' => 'endDateTime'),
-                    array('endDateTime',      'type', 'type' => 'datetime'),
-                    array('endDateTime',      'RedBeanModelCompareDateTimeValidator', 'type' => 'after',
-                                              'compareAttribute' => 'startDateTime'),
-                    array('description',      'type', 'type' => 'string'),
                 ),
                 'relations' => array(
                     'category'             => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
                 ),
                 'elements' => array(
-                    'startDateTime' => 'DateTime',
                     'endDateTime'   => 'DateTime',
+                    'startDateTime' => 'DateTime',
                 ),
                 'customFields' => array(
                     'category'     => 'MeetingCategories',
@@ -111,8 +118,8 @@
         {
             return array_merge(parent::untranslatedAttributeLabels(),
                 array(
-                    'startDateTime' => 'Start Time',
                     'endDateTime'   => 'End Time',
+                    'startDateTime' => 'Start Time',
                 )
             );
         }

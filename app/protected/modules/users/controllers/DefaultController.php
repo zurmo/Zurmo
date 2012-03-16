@@ -39,7 +39,7 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, profile, edit, changePassword, configurationEdit, securityDetails',
+                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -90,6 +90,12 @@
             $view = new UsersPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
+        }
+
+        public function actionAuditEventsModalList($id)
+        {
+            $this->resolveCanCurrentUserAccessAction(intval($id));
+            parent::actionAuditEventsModalList($id);
         }
 
         public function actionCreate()
@@ -180,7 +186,8 @@
                 }
                 $savedSucessfully   = false;
                 $modelToStringValue = null;
-                $model            = ZurmoControllerUtil::saveModelFromPost($sanitizedPostdata, $model,
+                $oldUsername        = $model->username;
+                $model              = ZurmoControllerUtil::saveModelFromPost($sanitizedPostdata, $model,
                                                                            $savedSucessfully, $modelToStringValue);
                 if ($savedSucessfully)
                 {
@@ -194,6 +201,14 @@
                         {
                             UserStatusUtil::resolveUserStatus($model, $userStatus);
                         }
+                    }
+                    if ($model->id == Yii::app()->user->userModel->id &&
+                        $model->username != $oldUsername)
+                    {
+                        //If the logged in user changes their username, a logout must occur to properly to properly
+                        //restart the session.
+                        Yii::app()->getSession()->destroy();
+                        $this->redirect(Yii::app()->homeUrl);
                     }
                     $this->actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
                 }

@@ -63,8 +63,8 @@
                     array('latestDateTime', 'type', 'type' => 'datetime'),
                 ),
                 'elements' => array(
-                    'latestDateTime' => 'DateTime',
-                    'activityItems' => 'ActivityItem'
+                    'activityItems' => 'ActivityItem',
+                    'latestDateTime' => 'DateTime'
                 ),
                 'activityItemsModelClassNames' => array(
                     'Account',

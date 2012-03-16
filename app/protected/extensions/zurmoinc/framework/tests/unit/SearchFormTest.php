@@ -77,10 +77,13 @@
                                  'differentOperatorA',
                                  'differentOperatorB',
                                  'anyMixedAttributes',
+                                 'dateDateTimeADate__Date',
+                                 'dateDateTimeADateTime__DateTime',
                                  'date__Date',
                                  'date2__Date',
                                  'dateTime__DateTime',
-                                 'dateTime2__DateTime');
+                                 'dateTime2__DateTime',
+            );
             $this->assertEquals($compareData, $searchForm->attributeNames());
 
             //Check some other methods to make sure they work ok.
@@ -101,6 +104,8 @@
                 array('ABName', 'safe'),
                 array('differentOperatorA', 'safe'),
                 array('differentOperatorB', 'boolean'),
+                array('dateDateTimeADate__Date', 'safe'),
+                array('dateDateTimeADateTime__DateTime', 'safe'),
             );
             $this->assertEquals($compareData, $searchForm->rules());
 
@@ -111,7 +116,7 @@
             $this->assertEquals('MixedDateTypes', $mappingRulesType);
 
             //Test that the correct elements are used for the dynamic date attribute.
-            $elementType = ModelAttributeToDesignerTypeUtil::getDesignerType($searchForm, 'date__Date');
+            $elementType = ModelAttributeToMixedTypeUtil::getType($searchForm, 'date__Date');
             $this->assertEquals('MixedDateTypesForSearch', $elementType);
         }
 
@@ -141,7 +146,7 @@
             $this->assertEquals('MixedDateTimeTypes', $mappingRulesType);
 
             //Test that the correct elements are used for the dynamic date attribute.
-            $elementType = ModelAttributeToDesignerTypeUtil::getDesignerType($searchForm, 'dateTime__DateTime');
+            $elementType = ModelAttributeToMixedTypeUtil::getType($searchForm, 'dateTime__DateTime');
             $this->assertEquals('MixedDateTypesForSearch', $elementType);
         }
 

@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Inform u.
+     * Inform user to remove the api test entry script for production use.
      */
     class RemoveApiTestEntryScriptFileNotificationRules extends JobsManagerAccessNotificationRules
     {

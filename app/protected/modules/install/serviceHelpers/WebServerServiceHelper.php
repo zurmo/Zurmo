@@ -29,7 +29,7 @@
      */
     class WebServerServiceHelper extends ServiceHelper
     {
-        protected $minimumVersion = array('microsoft-iis' => '5.0.0', 'apache' => '2.2.16');
+        protected $minimumVersion = array('microsoft-iis' => '5.0.0', 'apache' => '2.2.1');
 
         protected function checkService()
         {

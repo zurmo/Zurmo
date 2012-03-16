@@ -30,6 +30,12 @@
         {
             if (Yii::app()->apiRequest->isApiRequest())
             {
+                $owner->detachEventHandler('onBeginRequest', array(Yii::app()->request, 'validateCsrfToken'));
+            }
+
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
+            if (Yii::app()->apiRequest->isApiRequest())
+            {
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
@@ -43,7 +49,6 @@
                 if (!Yii::app()->isApplicationInstalled())
                 {
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstanceFolderCheck'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleTidyCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
@@ -66,6 +71,34 @@
         }
 
         /**
+        * Import all files that need to be included(for lazy loading)
+        * @param $event
+        */
+        public function handleImports($event)
+        {
+            try
+            {
+                $filesToInclude = GeneralCache::getEntry('filesToInclude');
+            }
+            catch (NotFoundException $e)
+            {
+                $filesToInclude   = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
+                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/extensions/zurmoinc/framework', Yii::app()->basePath . '/extensions/zurmoinc/framework', 'application.extensions.zurmoinc.framework');
+                $totalFilesToIncludeFromModules = count($filesToInclude);
+
+                foreach ($filesToIncludeFromFramework as $key => $file)
+                {
+                    $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
+                }
+                GeneralCache::cacheEntry('filesToInclude', $filesToInclude);
+            }
+            foreach ($filesToInclude as $file)
+            {
+                Yii::import($file);
+            }
+        }
+
+        /**
         * This check is required during installation since if runtime, assets and data folders are missing
         * yii web application can not be started correctly.
         * @param $event
@@ -76,23 +109,6 @@
             if (!$instanceFoldersServiceHelper->runCheckAndGetIfSuccessful())
             {
                 echo $instanceFoldersServiceHelper->getMessage();
-                Yii::app()->end(0, false);
-            }
-        }
-
-        /**
-        * This check is required during installation since if you do not have the extension for tidy installed,
-        * the page will not load properly to install the application since debug is true before the install is
-        * complete.
-        * @param $event
-        */
-        public function handleTidyCheck($event)
-        {
-            $tidyServiceHelper = new TidyServiceHelper();
-            if (!$tidyServiceHelper->runCheckAndGetIfSuccessful())
-            {
-                echo $tidyServiceHelper->getMessage() . "<br/>";
-                echo 'http://php.net/manual/en/book.tidy.php';
                 Yii::app()->end(0, false);
             }
         }

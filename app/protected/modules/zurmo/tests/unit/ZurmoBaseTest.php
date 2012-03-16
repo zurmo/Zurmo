@@ -34,6 +34,7 @@
             PermissionsCache::forgetAll();
             RightsCache::forgetAll();
             PoliciesCache::forgetAll();
+            Currency::resetCaches();  //php only cache
         }
 
         public static function tearDownAfterClass()

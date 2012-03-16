@@ -28,12 +28,19 @@
     {
         public function __toString()
         {
-            $fullName = $this->getFullName();
-            if ($fullName == '')
+            try
             {
-                return Yii::t('Default', '(Unnamed)');
+                $fullName = $this->getFullName();
+                if ($fullName == '')
+                {
+                    return Yii::t('Default', '(Unnamed)');
+                }
+                return $fullName;
             }
-            return $fullName;
+            catch (AccessDeniedSecurityException $e)
+            {
+                return '';
+            }
         }
 
         public function getFullName()
@@ -70,40 +77,40 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'firstName',
-                    'lastName',
-                    'jobTitle',
                     'department',
-                    'officePhone',
+                    'firstName',
+                    'jobTitle',
+                    'lastName',
                     'mobilePhone',
+                    'officePhone',
                     'officeFax',
                 ),
                 'relations' => array(
-                    'title'          => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
                     'primaryAddress' => array(RedBeanModel::HAS_ONE, 'Address',          RedBeanModel::OWNED),
                     'primaryEmail'   => array(RedBeanModel::HAS_ONE, 'Email',            RedBeanModel::OWNED),
+                    'title'          => array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED),
                 ),
                 'rules' => array(
+                    array('department',     'type',   'type' => 'string'),
+                    array('department',     'length', 'min'  => 3, 'max' => 64),
                     array('firstName',      'type',   'type' => 'string'),
                     array('firstName',      'length', 'min'  => 1, 'max' => 32),
+                    array('jobTitle',       'type',   'type' => 'string'),
+                    array('jobTitle',       'length', 'min'  => 3, 'max' => 64),
                     array('lastName',       'required'),
                     array('lastName',       'type',   'type' => 'string'),
                     array('lastName',       'length', 'min'  => 2, 'max' => 32),
-                    array('jobTitle',       'type',   'type' => 'string'),
-                    array('jobTitle',       'length', 'min'  => 3, 'max' => 64),
-                    array('department',     'type',   'type' => 'string'),
-                    array('department',     'length', 'min'  => 3, 'max' => 64),
+                    array('mobilePhone',    'type',   'type' => 'string'),
+                    array('mobilePhone',    'length', 'min'  => 1, 'max' => 16),
                     array('officePhone',    'type',   'type' => 'string'),
                     array('officePhone',    'length', 'min'  => 1, 'max' => 16),
                     array('officeFax',      'type',   'type' => 'string'),
                     array('officeFax',      'length', 'min'  => 1, 'max' => 16),
-                    array('mobilePhone',    'type',   'type' => 'string'),
-                    array('mobilePhone',    'length', 'min'  => 1, 'max' => 16),
                 ),
                 'elements' => array(
+                    'mobilePhone'    => 'Phone',
                     'officePhone'    => 'Phone',
                     'officeFax'      => 'Phone',
-                    'mobilePhone'    => 'Phone',
                     'primaryEmail'   => 'EmailAddressInformation',
                     'primaryAddress' => 'Address',
                 ),

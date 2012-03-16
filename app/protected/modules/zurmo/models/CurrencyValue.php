@@ -59,19 +59,19 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'value',
                     'rateToBase',
+                    'value',
                 ),
                 'relations' => array(
                     'currency' => array(RedBeanModel::HAS_ONE, 'Currency'),
                 ),
                 'rules' => array(
+                    array('currency',    'required'),
+                    array('rateToBase',  'required'),
+                    array('rateToBase',  'type', 'type' => 'float'),
                     array('value',       'required'),
                     array('value',       'type',    'type' => 'float'),
                     array('value',       'default', 'value' => 0),
-                    array('rateToBase',  'required'),
-                    array('rateToBase',  'type', 'type' => 'float'),
-                    array('currency',    'required'),
                 ),
                 'defaultSortAttribute' => 'value'
             );
@@ -83,6 +83,11 @@
             return true;
         }
 
+        /**
+         * Given an id of a currency model, determine if any currency values are using this currency.
+         * @return true if at least one currency value model is using this currency.
+         * @param integer $currencyId
+         */
         public static function isCurrencyInUseById($currencyId)
         {
             assert('is_int($currencyId)');

@@ -104,7 +104,7 @@
          */
         public static function resolveValueDataForBetweenIntoUsableFirstDateValue($value)
         {
-            if($value['type'] != self::TYPE_BETWEEN)
+            if ($value['type'] != self::TYPE_BETWEEN)
             {
                 throw new NotSupportedException();
             }
@@ -121,7 +121,7 @@
          */
         public static function resolveValueDataForBetweenIntoUsableSecondDateValue($value)
         {
-            if($value['type'] != self::TYPE_BETWEEN)
+            if ($value['type'] != self::TYPE_BETWEEN)
             {
                 throw new NotSupportedException();
             }

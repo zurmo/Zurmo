@@ -162,7 +162,7 @@
                     }
                     else
                     {
-                        $inPart .= "lower('" . DatabaseCompatibilityUtil::escape($theValue) . "')";
+                        $inPart .= "'" . DatabaseCompatibilityUtil::escape($theValue) . "'";
                     }
                 }
                 elseif (is_numeric($theValue))

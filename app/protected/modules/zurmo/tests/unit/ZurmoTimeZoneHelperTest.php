@@ -70,24 +70,38 @@
 
         /**
          * @depends testGetAndSetByUser
-         * @expectedException Exception
          */
         public function testSettingMalformedTimeZone()
         {
-            $timeZoneHelper = new ZurmoTimeZoneHelper();
-            $timeZoneHelper->setTimeZone('AFakeTimeZone');
+            try
+            {
+                $timeZoneHelper = new ZurmoTimeZoneHelper();
+                $timeZoneHelper->setTimeZone('AFakeTimeZone');
+                $this->assertFail();
+            }
+            catch (Exception $e)
+            {
+                //ok good, an Exception is expected to be thrown.
+            }
         }
 
         /**
          * @depends testSettingMalformedTimeZone
-         * @expectedException Exception
          */
         public function testSettingMalformedTimeZoneByUser()
         {
-            $timeZoneHelper = new ZurmoTimeZoneHelper();
-            $billy =  User::getByUsername('billy');
-            $billy->timeZone = 'AnotherFakePlace';
-            $this->assertFalse($billy->save());
+            try
+            {
+                $timeZoneHelper = new ZurmoTimeZoneHelper();
+                $billy =  User::getByUsername('billy');
+                $billy->timeZone = 'AnotherFakePlace';
+                $this->assertFalse($billy->save());
+                $this->assertFail();
+            }
+            catch (Exception $e)
+            {
+                //ok good, an Exception is expected to be thrown.
+            }
         }
 
         public function testSetGetGlobalValue()

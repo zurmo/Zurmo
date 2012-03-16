@@ -77,7 +77,9 @@
                 'EmailAddressInformation',
                 'Address',
                 'Date',
-                'DateTime'
+                'DateTime',
+                'CalculatedNumber',
+                'DropDownDependency'
             );
         }
 
@@ -131,6 +133,11 @@
                     }
                 }
             }
+            return true;
+        }
+
+        public function requireOnlyUniqueFieldsInLayout()
+        {
             return true;
         }
     }

@@ -39,5 +39,6 @@
             RightsCache::forgetAll();
             PoliciesCache::forgetAll();
             GeneralCache::forgetAll();
+            Currency::resetCaches(); //php only cache
         }
     }

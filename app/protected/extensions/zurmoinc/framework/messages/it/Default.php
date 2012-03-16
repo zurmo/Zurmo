@@ -43,12 +43,16 @@
             => 'Dopo',
         'All'
             => 'Tutti',
+        'and'
+            => 'e',
         'Basic Search'
             => 'Ricerca',
         'Before'
             => 'Prima',
+        'Between'
+            => 'fra',
         'Bulk insert failed. There was a row with an incorrect column quantity'
-            => '',
+            => 'Errore con il funzionamento BULK INSERT.  Una riga contiene una quantità di colonne sbagliata.',
         'by'
             => 'da',
         'Cancel'
@@ -99,6 +103,10 @@
             => 'Fahrenheit',
         'Filtered Lists'
             => 'Liste filtrate',
+        'First character must be a lower case letter'
+            => 'Il primo carattere deve essere una lettere minuscola.',
+        'First select the {attributeLabel}'
+            => 'Primo, selezione il {attributeLabel}',
         'firstDateTime must occur after secondDateTime'
             => 'firstDateTime deve essere dopo secondDateTime',
         'firstDateTime must occur before secondDateTime'
@@ -139,6 +147,8 @@
             => 'Caricamento massimo: {maxSize}',
         'Minute'
             => 'Minuto',
+        'Missing the attribute labels.'
+            => 'Mancate le etichette dei attributi.',
         'Model Class Name'
             => 'Nome della classe modello',
         'Model Id'
@@ -157,6 +167,8 @@
             => 'La mia vista elenco',
         'Name'
             => 'Nome',
+        'Name must not contain spaces or special characters'
+            => 'Il nome non può contenere spazi o caratteri speciali.',
         'Next 7 Days'
             => 'Prossimi 7 giorni',
         'No'
@@ -169,6 +181,8 @@
             => 'Adesso',
         'of'
             => 'de',
+        'On'
+            => 'Il',
         'Opted Out'
             => 'Opt out',
         'or'
@@ -239,6 +253,8 @@
             => 'totale',
         'Type'
             => 'Tipo',
+        'Type to find a tag'
+            => 'Digitare per trovare un tag.',
         'Unknown'
             => 'Ignoto ',
         'Update Selected'

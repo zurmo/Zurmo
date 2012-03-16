@@ -202,7 +202,7 @@
             return null;
         }
 
-        private function getModelClassName()
+        public function getModelClassName()
         {
             $moduleClassName = $this->getActionModuleClassName();
             return $moduleClassName::getPrimaryModelName();

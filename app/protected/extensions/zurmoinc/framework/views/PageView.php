@@ -70,7 +70,6 @@
                 if ($this->validate($content))
                 {
                     $content = $this->tidy($content);
-                    $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div>';
                 }
                 else
                 {
@@ -119,19 +118,29 @@
          */
         protected static function tidy($content)
         {
-            $tidy = new Tidy();
-            $tidyConfig = array(
-                'accessibility-check' => 3,
-                'indent'              => defined('YII_DEBUG'),
-                'newline'             => 'LF',
-                'numeric-entities'    => true,
-                'output-xhtml'        => true,
-                'quote-ampersand'     => false,
-                'wrap'                => 0,
-            );
-            $tidy->parseString($content, $tidyConfig);
-            $content = $tidy->root()->value;
-            return $content;
+            $tidyServiceHelper = new TidyServiceHelper();
+            if (!$tidyServiceHelper->runCheckAndGetIfSuccessful())
+            {
+                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has not been tidied, because tidy extension is not loaded.</div>';
+                return $content;
+            }
+            else
+            {
+                $tidy = new Tidy();
+                $tidyConfig = array(
+                    'accessibility-check' => 3,
+                    'indent'              => defined('YII_DEBUG'),
+                    'newline'             => 'LF',
+                    'numeric-entities'    => true,
+                    'output-xhtml'        => true,
+                    'quote-ampersand'     => false,
+                    'wrap'                => 0,
+                );
+                $tidy->parseString($content, $tidyConfig);
+                $content = $tidy->root()->value;
+                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div>';
+                return $content;
+            }
         }
 
         /**

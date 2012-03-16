@@ -51,7 +51,16 @@
                 {
                     continue;
                 }
-                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues))
+                if ($missingDropDowns != null)
+                {
+                    $lowerCaseMissingValuesToMap = ArrayUtil::resolveArrayToLowerCase($missingDropDowns);
+                }
+                else
+                {
+                    $lowerCaseMissingValuesToMap = array();
+                }
+                if (!in_array(strtolower($valueCountData[$columnName]), $dropDownValues) &&
+                   !in_array(strtolower($valueCountData[$columnName]), $lowerCaseMissingValuesToMap))
                 {
                     $missingDropDowns[] = $valueCountData[$columnName];
                     $count++;
