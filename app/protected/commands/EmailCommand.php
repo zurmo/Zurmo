@@ -34,19 +34,19 @@
         {
             return <<<EOD
     USAGE
-      zurmoc email <action-name>   --username=user
-                                   --toAddress=address
-                                   --subject=subject
-                                   --textContent=content
-                                   --htmlContent=content
-                                   --host=host
-                                   --port=port
-                                   --outboundUsername=username
-                                   --outboundPassword=password
+      zurmoc email <action-name>   --username=user             // Not Coding Standard
+                                   --toAddress=address         // Not Coding Standard
+                                   --subject=subject           // Not Coding Standard
+                                   --textContent=content       // Not Coding Standard
+                                   --htmlContent=content       // Not Coding Standard
+                                   --host=host                 // Not Coding Standard
+                                   --port=port                 // Not Coding Standard
+                                   --outboundUsername=username // Not Coding Standard
+                                   --outboundPassword=password // Not Coding Standard
 
     DESCRIPTION
       Send an email messages.  Use double quotes to to make a sentence for a subject or content
-      An example is --subject="Welcome to Zurmo"
+      An example is --subject="Welcome to Zurmo"               // Not Coding Standard
 
     PARAMETERS
      * action-name: The action to use. Currently supports 'send'
