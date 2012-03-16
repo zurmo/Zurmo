@@ -84,5 +84,10 @@
         {
             return 'ModalSearchView';
         }
+
+        public static function getModelForMetadataClassName()
+        {
+            return 'UsersSearchForm';
+        }
     }
 ?>

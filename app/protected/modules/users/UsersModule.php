@@ -115,6 +115,11 @@
                         'right' => self::RIGHT_ACCESS_USERS,
                     ),
                 ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'username',
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
@@ -215,6 +220,11 @@
         public static function getDemoDataMakerClassName()
         {
             return 'UsersDemoDataMaker';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'OpportunitiesSearchForm';
         }
     }
 ?>

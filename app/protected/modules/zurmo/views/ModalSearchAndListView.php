@@ -24,16 +24,36 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AccountsModalSearchAndListView extends ModalSearchAndListView
+    /**
+     * Base class to be extended for modal search and list views.
+     */
+    abstract class ModalSearchAndListView extends GridView
     {
+        public function __construct($controllerId, $moduleId, $modalListLinkProvider,
+                                    ModelForm $searchForm,  RedBeanModel $model, CDataProvider $dataProvider, $gridIdSuffix = null)
+        {
+            assert('$modalListLinkProvider instanceof ModalListLinkProvider');
+            parent::__construct(2, 1);
+            $searchViewClassName = static::getSearchViewClassName();
+            $listViewClassName   = static::getListViewClassName();
+            $this->setView(new $searchViewClassName($searchForm, get_class($model), $gridIdSuffix), 0, 0);
+            $this->setView(new $listViewClassName(   $controllerId, $moduleId, get_class($model),
+                                                        $modalListLinkProvider, $dataProvider, $gridIdSuffix), 1, 0);
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
+        }
+
         public static function getListViewClassName()
         {
-            return 'AccountsModalListView';
+            return NotImplementedException();
         }
 
         public static function getSearchViewClassName()
         {
-            return 'AccountsModalSearchView';
+            return NotImplementedException();
         }
     }
 ?>
