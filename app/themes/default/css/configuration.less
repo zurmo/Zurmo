@@ -100,19 +100,19 @@
 }
 
 .configuration-list{
-	.clearfix();
 	list-style:none;
+	.clearfix;
 	li{
-		padding:15px 0;
-		margin-bottom:0;
-		padding-bottom:0;
+		.clearfix;
+		.box-sizing();
+		width:100%;
+		float:left;
+		position: relative;
+		margin:0;
+		padding:20px 15px;
 		border-top:1px solid #ccc;
 		border-bottom:1px solid #fff;
 		font-size:11px;
-		.clearfix();
-		float:left;
-		width:100%;
-		vertical-align:middle;
 		&:last-child{
 			border-bottom:none;
 			margin-bottom:none;
@@ -121,14 +121,17 @@
 			border-top:none;
 			margin-top:none;
 		}
+		
 		h4{
-			margin:5px 0 0 18px;
+			margin:0 0 0 0;
 			display:inline-block;
 		}
 		a{
 			.zButton();
-			margin:0 15px 13px 15px;
 			float:right;
+			position: absolute;
+			right:15px;
+			top:14px;
 			&:before{
 				content: "n";
 				.symbly(16px);
@@ -184,6 +187,9 @@ td.level-20{ padding-left:210px !important;}
 			width:100%;
 			float:none;
 		}
+	}
+	.view-toolbar{
+		margin-top:0;
 	}
 }
 
@@ -371,4 +377,53 @@ td.level-20{ padding-left:210px !important;}
 	border:none;
 	.b-shadow(none);
 	background:none;
+}
+
+
+/*Breadcrumbs*/
+.breadcrumbs{
+	padding:0 0 15px 0;
+	font-size:11px;
+	a{
+		color: @themeColor !important;
+	}
+}
+
+/*designer*/
+.ModuleEditView{
+	#edit-form{
+		label{
+			text-align: left;
+		}
+	}
+}
+.multi-select-checkbox-input{
+	.clearfix;
+	width:100%;
+	display:block;
+	margin-top:10px;
+	.hasCheckBox{
+		margin:-6px 10px 0 0 !important;
+	}
+	label{
+		margin:0 !important;
+	}
+}
+.has-lang-label{
+	input{
+		position: relative;
+		padding-left:80px;
+	}
+	input + span{
+		background:url(../images/lang-label.png) left top no-repeat;
+		position: relative;
+		top:-25px;
+		left:1px;
+		line-height:24px;
+		float:left;
+		width:80px;
+		text-align:center;
+		border-right:1px solid #cccccc;
+		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+	}
 }
