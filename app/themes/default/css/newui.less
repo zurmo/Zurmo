@@ -120,6 +120,20 @@ CLEARFIX
 */
 
 /* For modern browsers */
+
+.clearfix{
+	&:before{
+		content:"";
+    	display:table;
+	}
+	&:after{
+		content:"";
+    	display:table;
+    	clear:both;
+	}
+	zoom:1;
+}
+/*
 .clearfix:before,
 .clearfix:after {
     content:"";
@@ -129,11 +143,11 @@ CLEARFIX
 .clearfix:after {
     clear:both;
 }
-
-/* For IE 6/7 (trigger hasLayout) */
+*/
+/* For IE 6/7 (trigger hasLayout) 
 .clearfix {
     zoom:1;
-}
+}*/
 
 
 
@@ -1171,6 +1185,25 @@ table.items thead tr:hover{
 	border:1px solid #CCCCCC;
 	background:#fff;
 	.b-shadow(0 0 11px 5px rgba(51, 51, 51, 0.40)); /*33*/
+	
+	.wide.form{
+		padding:0;
+		margin:0;
+		border:none;
+		.b-shadow(none); 
+		form{
+			border:none;
+			.b-shadow(none); 
+		}
+		label{
+			font-size: 12px !important;
+			color: #666;
+			font-weight: 400 !important;
+			margin-bottom: 4px;
+		}
+	}
+	
+	
 	.ui-dialog-title{
 		padding:0 !important;
 		margin:0 !important;
