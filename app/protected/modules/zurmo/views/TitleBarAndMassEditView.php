@@ -37,11 +37,12 @@
             $alertMessage = null
         )
         {
-            parent::__construct(2, 1);
+            parent::__construct(1, 1);
             $moduleClassName = $moduleName . 'Module';
-            $this->setView(new TitleBarView (Yii::t('Default', 'Mass Update'), $title, 1), 0, 0);
+            $title = Yii::t('Default', 'Mass Update') . ': ' . $title;
             $massEditViewClassName = $moduleName . 'MassEditView';
-            $this->setView(new $massEditViewClassName($controllerId, $moduleId, $model, $activeAttributes, $selectedRecordCount, $alertMessage), 1, 0);
+            $this->setView(new $massEditViewClassName($controllerId, $moduleId, $model, $activeAttributes, 
+                                                      $selectedRecordCount, $title, $alertMessage), 0, 0);
         }
     }
 ?>

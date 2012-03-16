@@ -55,9 +55,17 @@
                         {
                             url : $.fn.yiiGridView.getUrl('" . $gridId . "')
                         }
+                        if(options.url.split( '?' ).length == 2)
+                        {
+                            options.url.split( '?' )[0];
+                            options.url = options.url.split( '?' )[0] +'/'+ 'massEdit' + '?' + options.url.split( '?' )[1];
+                        }
+                        else
+                        {
+                            options.url = options.url +'/'+ 'massEdit';
+                        }
                         addListViewSelectedIdsAndSelectAllToUrl('" . $gridId . "', options);
-                        var data = 'ajax=&r=" . $this->route // Not Coding Standard
-                        . "&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
+                        var data = '' + 'massEdit=' + '&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);
                         window.location.href = url;
                         return false;

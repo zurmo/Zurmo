@@ -40,13 +40,16 @@
 
         protected $selectedRecordCount;
 
+        protected $title;
+
         /**
          * Constructs a detail view specifying the controller as
          * well as the model that will have its mass edit displayed.
          */
-        public function __construct($controllerId, $moduleId, RedBeanModel $model, $activeAttributes, $selectedRecordCount, $alertMessage = null)
+        public function __construct($controllerId, $moduleId, RedBeanModel $model, $activeAttributes, $selectedRecordCount, $title, $alertMessage = null)
         {
             assert('is_array($activeAttributes)');
+            assert('is_string($title)');
             $this->controllerId        = $controllerId;
             $this->moduleId            = $moduleId;
             $this->model               = $model;
@@ -54,12 +57,15 @@
             $this->modelId             = $model->id;
             $this->activeAttributes    = $activeAttributes;
             $this->selectedRecordCount = $selectedRecordCount;
+            $this->title               = $title;
             $this->alertMessage        = $alertMessage;
         }
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -71,14 +77,19 @@
                 $content .= HtmlNotifyUtil::renderAlertBoxByMessage($this->alertMessage);
             }
             $content .= $this->renderHighlightBox();
-            $content .= '<div>';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
             $content .= $this->renderFormLayout($form);
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderActionElementBar(true);
+            $content .= '</div></div>';
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         protected function renderHighlightBox()
