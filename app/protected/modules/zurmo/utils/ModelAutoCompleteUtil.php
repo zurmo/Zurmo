@@ -139,7 +139,8 @@
             foreach ($modules as $module)
             {
                 $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
-                if ($globalSearchFormClassName != null &&
+                if (GlobalSearchUtil::resolveIfModuleShouldBeGloballySearched($module) &&
+                    $globalSearchFormClassName != null &&
                     RightsUtil::canUserAccessModule(get_class($module), $user) &&
                     ($scopeData == null || in_array($module->getName(), $scopeData)))
                 {

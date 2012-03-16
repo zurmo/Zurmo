@@ -224,7 +224,7 @@
 
         public static function getGlobalSearchFormClassName()
         {
-            return 'OpportunitiesSearchForm';
+            return 'UsersSearchForm';
         }
     }
 ?>

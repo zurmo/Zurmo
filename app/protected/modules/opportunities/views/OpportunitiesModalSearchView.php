@@ -38,6 +38,21 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            ),
+                        ),
+                        array(
+                            'title' => 'Advanced Search',
+                            'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
@@ -48,11 +63,6 @@
                                         ),
                                     )
                                 ),
-                            ),
-                        ),
-                        array(
-                            'title' => 'Advanced Search',
-                            'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
@@ -78,6 +88,11 @@
         public static function getDesignerRulesType()
         {
             return 'ModalSearchView';
+        }
+
+        public static function getModelForMetadataClassName()
+        {
+            return 'OpportunitiesSearchForm';
         }
     }
 ?>

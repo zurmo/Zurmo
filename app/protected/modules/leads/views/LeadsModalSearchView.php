@@ -44,12 +44,8 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'firstName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'lastName', 'type' => 'Text'),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
@@ -59,6 +55,20 @@
                         array(
                             'title' => 'Advanced Search',
                             'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'fullName', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                                 array('cells' =>
                                     array(
                                         array(
@@ -84,6 +94,11 @@
         public static function getDesignerRulesType()
         {
             return 'ModalSearchView';
+        }
+
+        public static function getModelForMetadataClassName()
+        {
+            return 'LeadsSearchForm';
         }
     }
 ?>

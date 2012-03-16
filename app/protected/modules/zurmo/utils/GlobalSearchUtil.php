@@ -57,11 +57,12 @@
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
-                $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
-                if ($globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
-                {
-                    $moduleNamesAndLabels[$module->getName()] = $module::getModuleLabelByTypeAndLanguage('Plural');
-                }
+                    $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
+                    if (GlobalSearchUtil::resolveIfModuleShouldBeGloballySearched($module) &&
+                        $globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
+                    {
+                        $moduleNamesAndLabels[$module->getName()] = $module::getModuleLabelByTypeAndLanguage('Plural');
+                    }
             }
             return $moduleNamesAndLabels;
         }
@@ -103,6 +104,22 @@
             {
                 return $get['globalSearchScope'];
             }
+        }
+
+        /**
+         * Given a module, return true/false if it should be able to be globally searched.  This is just an initial
+         * safety pass as the module will still need to return a class for $module::getGlobalSearchFormClassName();
+         * This handles the exception of the UsersModule which can have module scoping for UsersListView, but we do not
+         * want this to be globally searched.
+         * @param Module $module
+         */
+        public static function resolveIfModuleShouldBeGloballySearched(Module $module)
+        {
+            if(get_class($module) == 'UsersModule')
+            {
+                return false;
+            }
+            return true;
         }
     }
 ?>

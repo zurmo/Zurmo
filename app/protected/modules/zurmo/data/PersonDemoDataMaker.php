@@ -38,18 +38,21 @@
             $jobTitlesAndDepartments = RandomDataUtil::
                                        getRandomValueFromArray($personRandomData['jobTitlesAndDepartments']);
             $lastName                = RandomDataUtil::getRandomValueFromArray($personRandomData['lastNames']);
-            if (RandomDataUtil::getRandomBooleanValue())
+            if ($model->firstName == null && RandomDataUtil::getRandomBooleanValue())
             {
                 $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleFirstNames']);
                 $title = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleTitles']);
             }
-            else
+            elseif($model->firstName == null)
             {
                 $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['maleFirstNames']);
                 $title = RandomDataUtil::getRandomValueFromArray($personRandomData['maleTitles']);
             }
+            if($model->lastName == null)
+            {
+                $model->lastName   = $lastName;
+            }
             $model->title->value   = $title;
-            $model->lastName       = $lastName;
             $model->jobTitle       = $jobTitlesAndDepartments[0];
             $model->department     = $jobTitlesAndDepartments[1];
             $model->officePhone    = RandomDataUtil::makeRandomPhoneNumber();
