@@ -91,7 +91,6 @@
                         'right' => self::RIGHT_CREATE_OPPORTUNITIES,
                     ),
                 ),
-                )
             );
             return $metadata;
         }
