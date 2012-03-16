@@ -40,7 +40,7 @@
          */
         protected $pageTitle;
 
-        public $height = 480;
+        public $height = null;
 
         public $width  = 700;
 

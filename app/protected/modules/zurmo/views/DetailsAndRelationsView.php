@@ -84,21 +84,13 @@
             $leftVerticalGridView  = new GridView(2, 1);
             $leftVerticalGridView->setView($leftTopView, 0, 0);
             $leftVerticalGridView->setView($leftBottomView, 1, 0);
-
-            $content  = '<table>' . "\n";
-            $content .= '<tr><td>' . "\n";
-            $content .= $leftVerticalGridView->render();
-            $content .= '</td>'. "\n";
+            $content = $leftVerticalGridView->render();
             if ($renderRightSide)
             {
-                $content .= '<td width="300px">' . "\n";
                 $rightVerticalGridView  = new GridView(1, 1);
                 $rightVerticalGridView->setView($rightTopView, 0, 0);
                 $content .= $rightVerticalGridView->render();
-                $content .= '</td>'. "\n";
             }
-            $content .= '</tr>' . "\n";
-            $content .= '</table>' . "\n";
             return $content;
         }
     }
