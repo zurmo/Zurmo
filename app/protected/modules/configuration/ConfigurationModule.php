@@ -44,6 +44,7 @@
                     array(
                         'label' => 'Settings',
                         'url'   => array('/configuration/default'),
+                        'right' => ZurmoModule::RIGHT_ACCESS_ADMINISTRATION
                     ),
                 ),
             );

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -25,37 +25,37 @@
      ********************************************************************************/
 
     /**
-     * Simple view that renders the user's action toolbar.
-     * This view is designed to be used as part of the user's
-     * security view.
-     * @see UserActionBarAndSecurityDetailsView
+     * Renders an action bar specifically for the search and listview.
      */
-    class UserSecurityDetailsView extends MetadataView
+    class ActionBarForUserEditAndDetailsView extends ConfigurableMetadataView
     {
         protected $controllerId;
 
         protected $moduleId;
 
-        public function __construct($controllerId, $moduleId, $modelId)
+        protected $model;
+
+        public function __construct($controllerId, $moduleId, User $model)
         {
-            assert('$controllerId != null');
-            assert('$moduleId     != null');
-            assert('$modelId      != null');
-            $this->controllerId   = $controllerId;
-            $this->moduleId       = $moduleId;
-            $this->modelId        = $modelId;
+            assert('is_string($controllerId)');
+            assert('is_string($moduleId)');
+            $this->controllerId              = $controllerId;
+            $this->moduleId                  = $moduleId;
+            $this->modelId                   = $model->id;
+            $this->model                     = $model;
         }
 
-        /**
-         * Renders content for a view including a toolbar.
-         * @return A string containing the view's content.
-         */
         protected function renderContent()
         {
-            $content = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementBar(false);
             $content .= '</div></div>';
             return $content;
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
         }
 
         public static function getDefaultMetadata()

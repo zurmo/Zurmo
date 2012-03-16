@@ -58,19 +58,24 @@
 
         public function actionList()
         {
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+            $pageSize     = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'listPageSize', get_class($this->getModule()));
-            $searchFilterListView = $this->makeSearchAndListView(
-                new UsersSearchForm(new User(false)),
-                new User(false),
-                'SearchAndListView',
-                'Users',
+            $searchForm   = new UsersSearchForm(new User(false));
+            $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                $searchForm,
+                'User',
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
-            $searchFilterListView->setCssClasses(array( 'AdministrativeArea' ));
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
+                $searchForm,
+                $pageSize,
+                UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
+                Yii::app()->user->userModel->id,
+                $dataProvider
+            );
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 
@@ -87,7 +92,7 @@
             $detailsAndRelationsView = new UserDetailsAndRelationsView($this->getId(),
                                                                        $this->getModule()->getId(),
                                                                        $user, $params);
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
@@ -111,7 +116,7 @@
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),
-                                                    'UserTitleBarAndCreateView')));
+                                                    'UserCreateView')));
             echo $view->render();
         }
 
@@ -138,11 +143,11 @@
             {
                 $redirectUrlParams = null;
             }
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($user, $redirectUrlParams),
-                                                    'UserTitleBarAndEditView')));
+                                                    'UserActionBarAndEditView')));
             echo $view->render();
         }
 
@@ -154,11 +159,11 @@
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('changePassword');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),
-                                                'UserTitleBarAndChangePasswordView')));
+                                                'UserActionBarAndChangePasswordView')));
             echo $view->render();
         }
 
@@ -257,7 +262,7 @@
                 $selectedRecordCount,
                 UsersModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
             echo $view->render();
         }
@@ -290,7 +295,7 @@
 
         public function actionProfile()
         {
-            $this->actionDetails(Yii::app()->user->userModel->id);
+            $this->actionEdit(Yii::app()->user->userModel->id);
         }
 
         public function actionModalList()
@@ -325,7 +330,7 @@
                 PoliciesEditAndDetailsView::getMetadata());
             $groupMembershipAdapter = new UserGroupMembershipToViewAdapter($user);
             $groupMembershipViewData = $groupMembershipAdapter->getViewData();
-            $securityDetailsView = new UserTitleBarAndSecurityDetailsView(
+            $securityDetailsView = new UserActionBarAndSecurityDetailsView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 $user,
@@ -337,7 +342,7 @@
                 $policiesViewMetadata,
                 $groupMembershipViewData
             );
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $securityDetailsView));
             echo $view->render();
         }
@@ -367,13 +372,13 @@
                     $this->redirect(array($this->getId() . '/index'));
                 }
             }
-            $titleBarAndEditView = new UserTitleBarAndConfigurationEditView(
+            $titleBarAndEditView = new UserActionBarAndConfigurationEditView(
                                     $this->getId(),
                                     $this->getModule()->getId(),
                                     $user,
                                     $configurationForm
             );
-            $view = new UsersPageView(ZurmoDefaultViewUtil::
+            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }

@@ -364,7 +364,7 @@
                 $this->actionModuleSave($moduleForm, $module);
             }
             $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
-                               ': ' . Yii::t('Default', 'General Edit');
+                               ': ' . Yii::t('Default', 'General');
             $breadcrumbLinks = array($title);
             $canvasView = new ActionBarAndModuleEditView(
                         $this->getId(),

@@ -56,7 +56,6 @@
             );
             $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'AccountsFilteredList',
                 $pageSize,
                 AccountsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,

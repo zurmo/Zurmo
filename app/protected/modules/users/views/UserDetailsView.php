@@ -30,17 +30,6 @@
         {
             $metadata = array(
                 'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type' => 'ListLink',
-                                  'label' => "eval:Yii::t('Default', 'Return to List')"),
-                            array('type' => 'EditLink'),
-                            array('type' => 'AuditEventsModalListLink'),
-                            array('type' => 'ChangePasswordLink'),
-                            array('type' => 'UserConfigurationEditLink'),
-                            array('type' => 'SecurityDetailsLink'),
-                        ),
-                    ),
                     'derivedAttributeTypes' => array(
                         'DateTimeCreatedUser',
                         'DateTimeModifiedUser',
@@ -63,6 +52,10 @@
                                                 array('attributeName' => 'null', 'type' => 'TitleFullName'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'role', 'type' => 'Role'),
@@ -77,6 +70,10 @@
                                                 array('attributeName' => 'username', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'officePhone', 'type' => 'Phone'),
@@ -84,13 +81,17 @@
                                         ),
                                     )
                                 ),
-                            array('cells' =>
+                                array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'manager', 'type' => 'User'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'mobilePhone', 'type' => 'Phone'),
@@ -105,6 +106,10 @@
                                                 array('attributeName' => 'department', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'jobTitle', 'type' => 'Text'),
@@ -119,11 +124,6 @@
                                                 array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
                                             ),
                                         ),
-                                    array(
-                                            'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
-                                            ),
-                                        ),
                                     )
                                 ),
                                 array('cells' =>
@@ -131,25 +131,6 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'primaryAddress', 'type' => 'Address'),
-                                            ),
-                                        ),
-                                    array(
-                                            'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
                                             ),
                                         ),
                                     )
@@ -161,6 +142,10 @@
                                                 array('attributeName' => 'language', 'type' => 'LanguageStaticDropDown'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'timeZone', 'type' => 'TimeZoneStaticDropDown'),
@@ -175,6 +160,10 @@
                                                 array('attributeName' => 'currency', 'type' => 'CurrencyDropDown'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'DerivedUserStatus'), // Not Coding Standard
@@ -188,6 +177,35 @@
                 ),
             );
             return $metadata;
+        }
+
+        protected function renderTitleContent()
+        {
+            if($this->model->id > 0)
+            {
+                return '<h1>' . strval($this->model) . '</h1>';
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        protected function renderAfterFormLayoutForDetailsContent()
+        {
+            $content = parent::renderAfterFormLayoutForDetailsContent();
+            if($content != null)
+            {
+                $content .= '<br/>';
+            }
+            $element  = new DateTimeModifiedUserElement($this->getModel(), 'null');
+            $element->nonEditableTemplate = '{label} {content}';
+            $content .= $element->render();
+            $content .= '&#160;|&#160;';
+            $element  = new DateTimeCreatedUserElement($this->getModel(), 'null');
+            $element->nonEditableTemplate = '{label} {content}';
+            $content .= $element->render();
+            return $content;
         }
     }
 ?>

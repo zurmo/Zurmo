@@ -38,24 +38,27 @@
 
         protected $userId;
 
-        public function __construct($controllerId, $moduleId, array $groupMembership, $userId)
+        public function __construct($controllerId, $moduleId, array $groupMembership, $userId, $title = null)
         {
             assert('is_string($controllerId) && $controllerId != null');
             assert('is_string($moduleId) && $moduleId != null');
             assert('is_int($userId) && $controllerId != null');
+            assert('$title == null || is_string($title)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->groupMembership        = $groupMembership;
             $this->userId                 = $userId;
+            $this->title                  = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
             $content .= '</div></div>';
             $content .= '<table>';
             $content .= '<colgroup>';
-            //$content .= '<col style="width:80%" /><col style="width:20%" />';
             $content .= '<col style="width:100%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
@@ -85,7 +88,16 @@
             }
             $content .= '</tbody>';
             $content .= '</table>';
+            $content .= '</div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            if($this->title != null)
+            {
+                return '<h1>' . $this->title . "</h1>";
+            }
         }
 
         public function isUniqueToAPage()

@@ -24,8 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UserTitleBarAndEditView extends TitleBarAndEditView
+    class UserActionBarAndEditView extends GridView
     {
         protected $cssClasses =  array( 'AdministrativeArea' );
+
+            public function __construct($controllerId, $moduleId, RedBeanModel $model, $moduleName)
+        {
+            parent::__construct(2, 1);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $model), 0, 0);
+            $editViewClassName = get_class($model) . 'EditView';
+            $this->setView(new $editViewClassName($controllerId, $moduleId, $model), 1, 0);
+        }
     }
 ?>

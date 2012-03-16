@@ -113,7 +113,6 @@
 
         protected function makeActionBarSearchAndListView(
             $searchModel,
-            $filteredListModelClassName,
             $pageSize,
             $title,
             $userId,

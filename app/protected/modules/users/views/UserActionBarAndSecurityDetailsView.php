@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UserTitleBarAndSecurityDetailsView extends GridView
+    class UserActionBarAndSecurityDetailsView extends GridView
     {
         protected $cssClasses =  array( 'AdministrativeArea' );
 
@@ -41,21 +41,20 @@
             array $groupMembershipViewData
             )
         {
-            parent::__construct(10, 1);
+            parent::__construct(6, 1);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user), 0, 0);
             $titleBar = new TitleBarView (
-                                    UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                    $user . '&#160;-&#160;' . Yii::t('Default', 'Security') . '&#160;',
-                                    1);
-            $this->setView($titleBar, 0, 0);
-            $this->setView(new UserSecurityDetailsView($controllerId, $moduleId, $user->id), 1, 0);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Groups')), 2, 0);
-            $this->setView(new UserGroupMembershipView($controllerId, $moduleId, $groupMembershipViewData, $user->id), 3, 0);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Rights')), 4, 0);
-            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm, $user->id, $rightsViewMetadata), 5, 0);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Policies')), 6, 0);
-            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId, $policiesForm, $user->id, $policiesViewMetadata), 7, 0);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Module Permissions')), 8, 0);
-            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm, $user->id, $modulePermissionsViewMetadata), 9, 0);
+                                    strval($user), Yii::t('Default', 'Security'));
+            $this->setView($titleBar, 1, 0);
+            //$this->setView(new UserSecurityDetailsView($controllerId, $moduleId, $user->id), 1, 0);
+            $userGroupMembershipView = new UserGroupMembershipView($controllerId, $moduleId,
+                                                                   $groupMembershipViewData, $user->id,
+                                                                   Yii::t('Default', 'Groups'));
+            $userGroupMembershipView->setCssClasses(array('DetailsView'));
+            $this->setView($userGroupMembershipView, 2, 0);
+            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm, $user->id, $rightsViewMetadata), 3, 0);
+            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId, $policiesForm, $user->id, $policiesViewMetadata), 4, 0);
+            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm, $user->id, $modulePermissionsViewMetadata), 5, 0);
         }
     }
 ?>

@@ -31,9 +31,7 @@
         public function __construct($controllerId, $moduleId, User $user, $params)
         {
             parent::__construct(2, 1);
-            $titleBarView = new TitleBarView (  UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                                                $user, 1);
-            $this->setView($titleBarView, 0, 0);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user), 0, 0);
             $this->setView(new UserDetailsView ($controllerId, $moduleId, $user), 1, 0);
         }
     }
