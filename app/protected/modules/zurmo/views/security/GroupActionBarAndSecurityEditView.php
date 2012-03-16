@@ -41,7 +41,7 @@
                     $form instanceof RightsForm ||
                     $form instanceof PoliciesForm');
             parent::__construct(2, 1);
-            $this->setView(new ActionBarForGroupsEditAndDetailsView ($controllerId, $moduleId, $model), 0, 0);
+            $this->setView(new ActionBarForGroupEditAndDetailsView ($controllerId, $moduleId, $model), 0, 0);
             $this->setView(new $editViewClassName('Edit', $controllerId, $moduleId, $form, $model->id, $metadata), 1, 0);
         }
     }

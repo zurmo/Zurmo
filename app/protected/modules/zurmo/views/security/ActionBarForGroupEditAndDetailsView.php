@@ -27,7 +27,7 @@
     /**
      * Renders an action bar specifically for the search and listview.
      */
-    class ActionBarForGroupsEditAndDetailsView extends ConfigurableMetadataView
+    class ActionBarForGroupEditAndDetailsView extends ConfigurableMetadataView
     {
         protected $controllerId;
 
