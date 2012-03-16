@@ -26,12 +26,13 @@
 
     abstract class AttributeEditView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
+        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, $title)
         {
             $this->controllerId = $controllerId;
             $this->moduleId     = $moduleId;
             $this->model        = $model;
             $this->modelId      = null;
+            $this->title        = $title;
         }
 
         public function isUniqueToAPage()
@@ -67,16 +68,7 @@
 
         protected function renderTitleContent()
         {
-            $model = $this->model;
-            if (empty($this->model->attributeName))
-            {
-                $title = Yii::t('Default', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
-            }
-            else
-            {
-                $title = Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
-            }
-            return '<h1>' . $title . '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
     }
 ?>

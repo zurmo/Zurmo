@@ -26,19 +26,19 @@
 
     abstract class ModuleEditView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, Module $module)
+        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, $title)
         {
+            assert('is_string($title)');
             $this->controllerId          = $controllerId;
             $this->moduleId              = $moduleId;
             $this->model                 = $model;
             $this->modelId               = null;
-            $this->module                = $module;
+            $this->title                 = $title;
         }
 
         protected function renderTitleContent()
         {
-            $moduleClassName = $this->module;
-            return '<h1>' . $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'General Edit') . '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

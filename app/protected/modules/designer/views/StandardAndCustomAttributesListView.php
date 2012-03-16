@@ -35,13 +35,11 @@
             $moduleDisplayName,
             $standardAttributesCollection,
             $customAttributesCollection,
-            $modelClassName,
-            $breadcrumbLinks
+            $modelClassName
         )
         {
-            parent::__construct(4, 1);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
-            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
+            parent::__construct(3, 1);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 0, 0);
             $title = Yii::t('Default', $moduleDisplayName) . ': ' .  Yii::t('Default', 'Custom Fields');
             $this->setView(new CustomAttributesCollectionView(
                 $controllerId,
@@ -50,7 +48,7 @@
                 get_class($module),
                 $modelClassName,
                 $title
-            ), 2, 0);
+            ), 1, 0);
             $title = Yii::t('Default', $moduleDisplayName) . ': ' .  Yii::t('Default', 'Standard Fields');
             $this->setView(new AttributesCollectionView(
                 $controllerId,
@@ -59,7 +57,7 @@
                 get_class($module),
                 $modelClassName,
                 $title
-            ), 3, 0);
+            ), 2, 0);
 
         }
 

@@ -38,14 +38,16 @@
 
         protected $modelClassName;
 
-        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName , Module $module)
+        protected $title;
+
+        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName , $title)
         {
             $this->controllerId                 = $controllerId;
             $this->moduleId                     = $moduleId;
             $this->editableMetadataCollection   = $editableMetadataCollection;
             $this->moduleClassName              = $moduleClassName;
             $this->modelId                      = null;
-            $this->module                       = $module;
+            $this->title                        = $title;
         }
 
         protected function renderContent()
@@ -77,8 +79,7 @@
 
         protected function renderTitleContent()
         {
-            $moduleClassName = $this->module;
-            return '<h1>' . $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Layouts') . '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

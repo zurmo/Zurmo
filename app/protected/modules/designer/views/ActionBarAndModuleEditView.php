@@ -33,19 +33,18 @@
             $moduleId,
             $module,
             ModuleForm $moduleForm,
-            $breadcrumbLinks
+            $title
         )
         {
-            parent::__construct(3, 1);
-            $this->setView(new DesignerBreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 0, 0);
-            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 1, 0);
+            parent::__construct(2, 1);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 0, 0);
             $moduleEditViewClassName = get_class($module) . 'EditView';
             $this->setView(new $moduleEditViewClassName(
                 $controllerId,
                 $moduleId,
                 $moduleForm,
-                $module
-            ), 2, 0);
+                $title
+            ), 1, 0);
         }
 
         public function isUniqueToAPage()

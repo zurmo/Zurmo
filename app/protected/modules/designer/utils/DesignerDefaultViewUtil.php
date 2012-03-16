@@ -36,12 +36,13 @@
          * @param View $containedView
          * @param mixed $activeNodeModuleClassName (null or string)
          */
-        public static function makeStandardViewForCurrentUser(CController $controller, View $containedView, $activeNodeModuleClassName)
+        public static function makeStandardViewForCurrentUser(CController $controller, View $containedView, $breadcrumbLinks)
         {
-            assert('is_string($activeNodeModuleClassName) || $activeNodeModuleClassName == null');
-            $gridView    = new GridView(1, 1);
+            assert('is_array($breadcrumbLinks)');
+            $gridView    = new GridView(2, 1);
             $gridView->setCssClasses(array( 'AdministrativeArea' ));
-            $gridView->setView($containedView, 0, 0);
+            $gridView->setView(new DesignerBreadCrumbView($controller->getId(), $controller->getModule()->getId(), $breadcrumbLinks), 0, 0);
+            $gridView->setView($containedView, 1, 0);
             return ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($controller, $gridView);
         }
     }

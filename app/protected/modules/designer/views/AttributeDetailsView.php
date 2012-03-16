@@ -32,7 +32,8 @@
             $controllerId,
             $moduleId,
             AttributeForm $model,
-            $moduleClassName
+            $moduleClassName,
+            $title
         )
         {
             $this->controllerId    = $controllerId;
@@ -40,6 +41,7 @@
             $this->model           = $model;
             $this->moduleClassName = $moduleClassName;
             $this->modelId         = null;
+            $this->title           = $title;
         }
 
         public function isUniqueToAPage()
@@ -58,9 +60,7 @@
 
         protected function renderTitleContent()
         {
-            $model = $this->model;
-            $title = Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
-            return '<h1>' . $title . '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
     }
 ?>

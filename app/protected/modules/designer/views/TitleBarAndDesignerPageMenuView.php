@@ -28,10 +28,11 @@
     {
         protected $cssClasses =  array( 'AdministrativeArea', 'DetailsView');
 
-        public function __construct($controllerId, $moduleId)
+        public function __construct($controllerId, $moduleId, $title)
         {
+            assert('is_string($title)');
             parent::__construct(1, 1);
-            $this->setView(new DesignerPageMenuView($controllerId, $moduleId), 0, 0);
+            $this->setView(new DesignerPageMenuView($controllerId, $moduleId, $title), 0, 0);
         }
 
         public function isUniqueToAPage()

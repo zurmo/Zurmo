@@ -28,12 +28,17 @@
     {
         public function actionIndex()
         {
+            $title           = Yii::t('Default', 'Available Modules');
+            $breadcrumbLinks = array(
+                 $title,
+            );
             $canvasView = new TitleBarAndDesignerPageMenuView(
                         $this->getId(),
-                        $this->getModule()->getId()
+                        $this->getModule()->getId(),
+                        $title
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, null));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 
@@ -66,11 +71,9 @@
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
             $module          = new $_GET['moduleClassName'](null, null);
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Fields'),
-            );
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'Fields');
+            $breadcrumbLinks = array($title);
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
                                  $moduleClassName::getDirectoryName() .
@@ -78,7 +81,7 @@
             if (is_file($overrideClassFile) && class_exists($overrideClassName))
             {
                 $viewClassName = $moduleClassName . 'AttributesListView';
-                $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId(), $breadcrumbLinks);
+                $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId());
             }
             else
             {
@@ -92,12 +95,11 @@
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                             $adapter->getStandardAttributes(),
                             $adapter->getCustomAttributes(),
-                            $modelClassName,
-                            $breadcrumbLinks
+                            $modelClassName
                 );
             }
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 
@@ -128,12 +130,11 @@
             {
                 $this->actionAttributeSave($attributeForm, $model);
             }
+            $title           = static::resolveAttributeEditTitle($attributeForm);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
-                strval($attributeForm),
+                $title,
             );
             $canvasView = new ActionBarAndAttributeEditView(
                         $this->getId(),
@@ -142,11 +143,28 @@
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
-                        $breadcrumbLinks
+                        $title
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
+        }
+
+        protected static function resolveAttributeEditTitle(AttributeForm $model)
+        {
+            if (empty($model->attributeName))
+            {
+                return Yii::t('Default', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
+            }
+            else
+            {
+                return Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
+            }
+        }
+
+        protected static function resolveAttributeDetailsTitle(AttributeForm $model)
+        {
+            return Yii::t('Default', 'Field')   . ': ' .strval($model);
         }
 
         protected function actionAttributeValidate($attributeForm)
@@ -165,12 +183,11 @@
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             $model           = new $modelClassName();
             $attributeForm   = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
+            $title           = static::resolveAttributeDetailsTitle($attributeForm);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
-                $attributeForm,
+                $title,
             );
             $canvasView = new ActionBarAndAttributeDetailsView(
                         $this->getId(),
@@ -179,10 +196,10 @@
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
-                        $breadcrumbLinks
+                        $title
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 
@@ -241,21 +258,19 @@
                     }
                 }
             }
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Layouts'),
-            );
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'Layouts');
+            $breadcrumbLinks = array($title);
             $canvasView = new ActionBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
                         $this->getModule()->getId(),
                         $module,
                         $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                         $editableViewsCollection,
-                        $breadcrumbLinks
+                        $title
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 
@@ -309,12 +324,11 @@
                 }
                 Yii::app()->end(0, false);
             }
+            $title           = Yii::t('Default', 'Edit Layout') . ': ' . $designerRules->resolveDisplayNameByView($_GET['viewClassName']);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Layouts') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Layouts') =>
                     array('default/moduleLayoutsList',  'moduleClassName' => $_GET['moduleClassName']),
-                 $designerRules->resolveDisplayNameByView($_GET['viewClassName']),
+                $title,
             );
             $canvasView = new MetadataViewEditView(
                         $this->getId(),
@@ -325,20 +339,22 @@
                         $designerRules,
                         $attributeCollection,
                         $attributesLayoutAdapter->makeDesignerLayoutAttributes(),
-                        $breadcrumbLinks
+                        $title
+
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 
         public function actionModuleEdit()
         {
             assert('!empty($_GET["moduleClassName"])');
-            $module = new $_GET['moduleClassName'](null, null);
-            $metadata = $module::getMetadata();
-            $adapter = new ModuleMetadataToFormAdapter($metadata['global'], get_class($module));
-            $moduleForm = $adapter->getModuleForm();
+            $module          = new $_GET['moduleClassName'](null, null);
+            $moduleClassName = get_class($module);
+            $metadata        = $module::getMetadata();
+            $adapter         = new ModuleMetadataToFormAdapter($metadata['global'], get_class($module));
+            $moduleForm      = $adapter->getModuleForm();
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'edit-form')
             {
                 $this->actionModuleValidate($moduleForm);
@@ -347,20 +363,18 @@
             {
                 $this->actionModuleSave($moduleForm, $module);
             }
-            $breadcrumbLinks = array(
-                $module::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                    Yii::t('Default', 'General Edit'),
-            );
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'General Edit');
+            $breadcrumbLinks = array($title);
             $canvasView = new ActionBarAndModuleEditView(
                         $this->getId(),
                         $this->getModule()->getId(),
                         $module,
                         $moduleForm,
-                        $breadcrumbLinks
+                        $title
             );
             $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $_GET['moduleClassName']));
+                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
             echo $view->render();
         }
 

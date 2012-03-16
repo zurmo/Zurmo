@@ -30,10 +30,14 @@
 
         protected $moduleId;
 
-        public function __construct($controllerId, $moduleId)
+        protected $title;
+
+        public function __construct($controllerId, $moduleId, $title)
         {
+            assert('is_string($title)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
+            $this->title                  = $title;
         }
 
         protected function renderContent()
@@ -65,7 +69,7 @@
 
         protected function renderTitleContent()
         {
-            return '<h1>' . Yii::t('Default', 'Designer') . ': ' . Yii::t('Default', 'Modules') . '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()
