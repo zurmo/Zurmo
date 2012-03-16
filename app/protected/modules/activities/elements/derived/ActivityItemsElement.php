@@ -31,6 +31,10 @@
      */
     class ActivityItemsElement extends ModelsElement implements DerivedElementInterface, ElementActionTypeInterface
     {
+        public $editableTemplate = '<th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td></tr>{content}{error}<tr><th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td>';
+
+        public $nonEditableTemplate = '<th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td></tr>{content}<tr><th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td>';
+
         /**
          * The action type of the related model
          * for which the autocomplete/select popup are calling.
@@ -54,7 +58,7 @@
 
         protected function renderElementsForRelationsByRelationsData($relationModelClassNames)
         {
-            $content = '';// "<table> \n";
+            $content = null;
             foreach ($relationModelClassNames as $relationModelClassName)
             {
                 $activityItemForm = null;
@@ -89,13 +93,12 @@
                     $content .= $element->render();
                 }
             }
-           // $content     .= "</table> \n";
             return $content;
         }
 
         protected function renderNonEditableElementsForRelationsByRelationsData($relationModelClassNames)
         {
-            $content = '';//"<table> \n";
+            $content = null;
             foreach ($relationModelClassNames as $relationModelClassName)
             {
                 $activityItemForm = null;
@@ -127,7 +130,6 @@
                     }
                 }
             }
-           // $content     .= "</table> \n";
             return $content;
         }
 
@@ -135,7 +137,7 @@
         {
             $template  = "<tr><th>\n";
             $template .=  $this->renderLabel(); //we should put this INSIDE the label, not as another label
-			$template .=  "{label}";
+            $template .=  "{label}";
             $template .= "</th><td colspan=\"3\">\n";
             $template .= '{content}{error}';
             $template .= "</td></tr>\n";
@@ -144,7 +146,9 @@
 
         protected function getActivityItemNonEditableTemplate()
         {
-            $template  = "<tr><td colspan=\"3\">\n";
+            $template  = "<tr><th>\n";
+            $template .=  "{label}";
+            $template .= "</th><td colspan=\"3\">\n";
             $template .= '{content}';
             $template .= "</td></tr>\n";
             return $template;
