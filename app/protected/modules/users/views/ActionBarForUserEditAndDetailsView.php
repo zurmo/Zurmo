@@ -64,12 +64,24 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'DetailsLink'),
-                            array('type' => 'EditLink'),
-                            array('type' => 'AuditEventsModalListLink'),
-                            array('type' => 'ChangePasswordLink'),
-                            array('type' => 'UserConfigurationEditLink'),
-                            array('type' => 'SecurityDetailsLink'),
+                            array('type' => 'DetailsLink',
+								'htmlOptions' => array( 'class' => 'icon-user-details' )
+							),
+                            array('type' => 'EditLink',
+								'htmlOptions' => array( 'class' => 'icon-edit' )
+							),
+                            array('type' => 'AuditEventsModalListLink',
+								'htmlOptions' => array( 'class' => 'icon-audit' )
+							),
+                            array('type' => 'ChangePasswordLink',
+								'htmlOptions' => array( 'class' => 'icon-password' )
+							),
+                            array('type' => 'UserConfigurationEditLink',
+								'htmlOptions' => array( 'class' => 'icon-user-config' )
+							),
+                            array('type' => 'SecurityDetailsLink',
+								'htmlOptions' => array( 'class' => 'icon-security' )
+							),
                         ),
                     ),
                 ),

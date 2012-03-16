@@ -42,7 +42,7 @@
 
         public $height = 'auto';
 
-        public $width  = 550;
+        public $width  = 600;
 
         /**
          * TODO

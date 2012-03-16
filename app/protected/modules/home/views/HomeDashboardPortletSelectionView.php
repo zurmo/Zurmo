@@ -66,10 +66,10 @@
                                 );
                                 $onClick = 'window.location.href = "' . $url . '"';
                                 $content .= '<li>';
-                                $content .= CHtml::button(Yii::t('Default', 'Y'), array('onClick' => $onClick));
-                                $title    = $metadata['perUser']['title'];
+								$title    = $metadata['perUser']['title'];
                                 MetadataUtil::resolveEvaluateSubString($title);
-                                $content .= '&#160;' . $title;
+								$label    = '<span>Y</span>' . $title;
+                                $content .= CHtml::link(Yii::t('Default', $label ), array('onClick' => $onClick));
                                 $content .= '</li>';
                             }
                         }

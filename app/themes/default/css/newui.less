@@ -149,7 +149,10 @@ CLEARFIX
     zoom:1;
 }*/
 
-
+.hidden-element{
+	display:none !important;
+	visibility:hidden !important;
+}
 
 
 
@@ -875,7 +878,31 @@ footer, header, hgroup, menu, nav, section {
 	top:3px;
 }
 
-
+.icon-user-details:before{
+	content: "e";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-password:before{
+	content: "J";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-audit:before{
+	content: "I";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-user-config:before{
+	content: "n";
+	.view-toolbar-icons();
+	top:3px;
+}
+.icon-security:before{
+	content: "F";
+	.view-toolbar-icons();
+	top:3px;
+}
 
 
 
@@ -885,6 +912,7 @@ footer, header, hgroup, menu, nav, section {
 #FooterView{
 	margin:20px 40px;
 }
+.xhtml-validation-info,
 .performance-info{
 	float: right;
 	margin-top: -38px;
@@ -1298,6 +1326,7 @@ label.hasCheckBox{
 .ui-multiselect-checkboxes label {
 	padding-left: 25px;
 	background: url(../images/checkbox.png) left 4px no-repeat;
+	margin-left:0px;
 }
 .ui-multiselect-checkboxes label.c_on {
 	background: url(../images/checkbox.png) left -21px no-repeat;
@@ -1681,6 +1710,7 @@ label.hasCheckBox{
 		font-style:italic;
 		color:#999999;
 		text-align:center;
+		margin-bottom:10px;
 	}
 	table{
 		tr{
@@ -2261,11 +2291,11 @@ div.hasHalfs{
 #UsersModalSearchView{
 	.search-view-0{
 		.clearfix();
-		width:auto !important;
+		width:230px !important;
 		input[type="text"]{
 			float:left;
-			margin-right:10px;
-			border-left:1px solid #ccc;
+			margin-right:0;
+			//border-left:1px solid #ccc;
 		}
 	}
 	.search-form-tools{
@@ -2510,3 +2540,11 @@ div.hasHalfs{
 		  visibility: hidden;
 	}
 }*/
+
+/*MAss Edit view*/
+.AppContent.TitleBarAndMassEditView{
+	padding-right:0;
+	#edit-form table{
+		width:100%;
+	}
+}
