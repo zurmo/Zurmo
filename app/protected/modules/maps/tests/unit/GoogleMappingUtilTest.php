@@ -57,11 +57,11 @@
             unset($account1);
 
             $address = array();
-            $address['street1']    = '1600 Amphitheatre Parkway';
+            $address['street1']    = '18367 South Oak Creek';
             $address['street2']    = '';
-            $address['city']       = 'Mountain View';
+            $address['city']       = 'San Jose';
             $address['state']      = 'California';
-            $address['postalCode'] = '94043';
+            $address['postalCode'] = '95131';
             $address['country']    = 'USA';
             $account2              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
             $accountId2            = $account2->id;
@@ -96,9 +96,9 @@
             $this->assertEquals('-87.9763703', $account1->billingAddress->longitude);
             $this->assertEquals(0,             $account1->billingAddress->invalid);
 
-            $account2 = Account::getById($accountId2);
-            $this->assertEquals('37.4220761',   $account2->billingAddress->latitude);
-            $this->assertEquals('-122.0845187', $account2->billingAddress->longitude);
+            $account2 = Account::getById($accountId2);,
+            $this->assertEquals('37.38926',   $account2->billingAddress->latitude);
+            $this->assertEquals('-121.873247', $account2->billingAddress->longitude);
             $this->assertEquals(0,              $account1->billingAddress->invalid);
 
             $account3 = Account::getById($accountId3);
@@ -138,14 +138,14 @@
             $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData3);
             $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData4);
 
-            $this->assertEquals('42.1153153',   $geoCodeResultObj1->latitude);
-            $this->assertEquals('-87.9763703',  $geoCodeResultObj1->longitude);
-            $this->assertEquals('37.4220761',   $geoCodeResultObj2->latitude);
-            $this->assertEquals('-122.0845187', $geoCodeResultObj2->longitude);
-            $this->assertEquals('40.7274969',   $geoCodeResultObj3->latitude);
-            $this->assertEquals('-73.9601597',  $geoCodeResultObj3->longitude);
-            $this->assertEquals('43.06132',     $geoCodeResultObj4->latitude);
-            $this->assertEquals('-87.8880352',  $geoCodeResultObj4->longitude);
+            $this->assertEquals('42.1153153',  $geoCodeResultObj1->latitude);
+            $this->assertEquals('-87.9763703', $geoCodeResultObj1->longitude);
+            $this->assertEquals('37.38926',    $geoCodeResultObj2->latitude);
+            $this->assertEquals('-121.873247', $geoCodeResultObj2->longitude);
+            $this->assertEquals('40.7274969',  $geoCodeResultObj3->latitude);
+            $this->assertEquals('-73.9601597', $geoCodeResultObj3->longitude);
+            $this->assertEquals('43.06132',    $geoCodeResultObj4->latitude);
+            $this->assertEquals('-87.8880352', $geoCodeResultObj4->longitude);
         }
     }
 ?>
