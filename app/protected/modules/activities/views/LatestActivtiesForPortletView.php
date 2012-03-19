@@ -64,6 +64,12 @@
 
         public static function getDefaultMetadata()
         {
+            $metadata = array(
+                'perUser' => array(
+                    'title' => "eval:Yii::t('Default', 'Latest Activities')",
+                ),
+            );
+            return $metadata;
         }
 
         public function getTitle()

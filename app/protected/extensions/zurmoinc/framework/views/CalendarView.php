@@ -130,7 +130,6 @@
 
         public static function getDesignerRulesType()
         {
-            return 'CalendarView';
         }
 
         /**

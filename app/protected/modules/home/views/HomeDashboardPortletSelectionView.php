@@ -66,17 +66,17 @@
                                 );
                                 $onClick = 'window.location.href = "' . $url . '"';
                                 $content .= '<li>';
-								$title    = $metadata['perUser']['title'];
+                                $title    = $metadata['perUser']['title'];
                                 MetadataUtil::resolveEvaluateSubString($title);
-								$label    = '<span>Y</span>' . $title;
-                                $content .= CHtml::link(Yii::t('Default', $label ), array('onClick' => $onClick));
+                                $label    = '<span>Y</span>' . $title;
+                                $content .= CHtml::link(Yii::t('Default', $label ), null, array('onClick' => $onClick));
                                 $content .= '</li>';
                             }
                         }
                     }
                 }
             }
-			$content .= '</ul>';
+            $content .= '</ul>';
             return $content;
         }
     }

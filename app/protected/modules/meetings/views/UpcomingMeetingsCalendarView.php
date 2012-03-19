@@ -29,6 +29,15 @@
      */
     abstract class UpcomingMeetingsCalendarView extends CalendarView
     {
+        /**
+         * What kind of PortletRules this view follows.
+         * @return PortletRulesType as string.
+         */
+        public static function getPortletRulesType()
+        {
+            return 'RelatedCalendar';
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
