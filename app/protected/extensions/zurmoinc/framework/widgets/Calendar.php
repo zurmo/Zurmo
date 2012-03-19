@@ -121,7 +121,7 @@
                 $script .= "var calendarEvents = {};";
                 foreach($this->dayEvents as $event)
                 {
-                    $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent(" . $event['label'] . ", '" . $event['className'] . "');";
+                    $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "');";
                 }
             }
             $cs = Yii::app()->getClientScript();
