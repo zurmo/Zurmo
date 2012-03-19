@@ -66,7 +66,15 @@
                     $label = Yii::t('Default', '{quantity} Meetings', array('{quantity}' => $item['quantity']));
                 }
                 $data[$key]['label']     = $label;
-                $data[$key]['className'] = 'calendar-events-' . $item['quantity'];
+                if($item['quantity'] > 5)
+                {
+                    $quantityClassSuffix = 6;
+                }
+                else
+                {
+                    $quantityClassSuffix = $item['quantity'];
+                }
+                $data[$key]['className'] = 'calendar-events-' . $quantityClassSuffix;
             }
             return $data;
         }

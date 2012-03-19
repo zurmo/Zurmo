@@ -64,8 +64,8 @@
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.Calendar', array(
                 'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
                 'htmlOptions'         => array(
-                    'id'              => 'someId', //todo: fix
-                    'name'            => 'todoName', //todo: fix
+                    'id'              => 'calendar' . $this->uniqueLayoutId,
+                    'name'            => 'calendar' . $this->uniqueLayoutId,
                 ),
                 'options'             => array(
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(

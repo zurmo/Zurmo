@@ -136,7 +136,6 @@
         protected function getActivityItemEditableTemplate()
         {
             $template  = "<tr><th>\n";
-            $template .=  $this->renderLabel(); //we should put this INSIDE the label, not as another label
             $template .=  "{label}";
             $template .= "</th><td colspan=\"3\">\n";
             $template .= '{content}{error}';

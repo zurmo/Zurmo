@@ -43,7 +43,7 @@
         protected function renderTreeListView($data)
         {
             assert('is_array($data)');
-            $content  = '<table>';
+            $content  = '<table class="configuration-list">';
             $content .= '<colgroup>';
             $content .= '<col style="width:50%" />';
             $content .= '</colgroup>';
