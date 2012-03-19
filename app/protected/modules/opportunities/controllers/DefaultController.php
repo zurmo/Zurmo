@@ -54,16 +54,15 @@
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'OpportunitiesFilteredList',
                 $pageSize,
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
             $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 

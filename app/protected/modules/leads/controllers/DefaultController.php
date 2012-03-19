@@ -58,16 +58,15 @@
                 Yii::app()->user->userModel->id,
                 'LeadsStateMetadataAdapter'
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'LeadsFilteredList',
                 $pageSize,
-                Yii::t('Default', 'Leads'),
+                LeadsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
             $view = new LeadsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 

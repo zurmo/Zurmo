@@ -113,6 +113,18 @@
                         'label' => 'Users',
                         'url'   => array('/users/default'),
                         'right' => self::RIGHT_ACCESS_USERS,
+                        'items' => array(
+                            array(
+                                'label' => 'Create User',
+                                'url'   => array('/users/default/create'),
+                                'right' => self::RIGHT_CREATE_USERS
+                            ),
+                            array(
+                                'label' => 'Users',
+                                'url'   => array('/users/default'),
+                                'right' => self::RIGHT_ACCESS_USERS
+                            ),
+                        ),
                     ),
                 ),
                 'globalSearchAttributeNames' => array(

@@ -55,16 +55,15 @@
                 Yii::app()->user->userModel->id,
                 'ContactsStateMetadataAdapter'
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'ContactsFilteredList',
                 $pageSize,
                 ContactsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
             $view = new ContactsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $searchFilterListView));
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 

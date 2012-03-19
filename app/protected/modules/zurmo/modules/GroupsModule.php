@@ -54,6 +54,18 @@
                         'label' => 'Groups',
                         'url'   => array('/zurmo/group'),
                         'right' => self::RIGHT_ACCESS_GROUPS,
+                        'items' => array(
+                            array(
+                                'label' => 'Create Group',
+                                'url'   => array('/zurmo/group/create'),
+                                'right' => self::RIGHT_CREATE_GROUPS
+                            ),
+                            array(
+                                'label' => 'Groups',
+                                'url'   => array('/zurmo/group'),
+                                'right' => self::RIGHT_ACCESS_GROUPS
+                            ),
+                        ),
                     ),
                 ),
                 'configureMenuItems' => array(
