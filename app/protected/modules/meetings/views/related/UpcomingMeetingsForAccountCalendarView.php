@@ -24,7 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UpcomingMeetingsForAccountRelatedListView extends UpcomingMeetingsRelatedListView
+    /**
+     * For a given account, display the meetings in a calendar.
+     */
+    class UpcomingMeetingsForAccountCalendarView extends UpcomingMeetingsCalendarView
     {
         protected function getRelationAttributeName()
         {

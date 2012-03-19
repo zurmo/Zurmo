@@ -58,7 +58,7 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'UpcomingMeetingsForContactRelatedList',
+                                        'type' => 'UpcomingMeetingsForContactCalendar',
                                     ),
                                     array(
                                         'type' => 'OpenTasksForContactRelatedList',

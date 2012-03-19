@@ -202,9 +202,9 @@
 
         protected function registerScripts()
         {
-            $baseJuiPortletsScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
+            $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
             $cs = Yii::app()->getClientScript();
-            $cs->registerScriptFile($baseJuiPortletsScriptUrl . '/designer/Designer.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseScriptUrl . '/designer/Designer.js', CClientScript::POS_END);
         }
 
         protected function renderLayout()

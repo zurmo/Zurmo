@@ -238,5 +238,21 @@
                                  DateTimeUtil::convertDbFormatDateTimeToTimestamp($lessThanValue));
             return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
         }
+
+        public static function getFirstDayOfThisMonthDate()
+        {
+            $dateTime = new DateTime();
+            $dateTime->modify('first day of this month');
+            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                        $dateTime->getTimestamp());
+        }
+
+        public static function getLastDayOfThisMonthDate()
+        {
+            $dateTime = new DateTime();
+            $dateTime->modify('last day of this month');
+            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+                        $dateTime->getTimestamp());
+        }
     }
 ?>

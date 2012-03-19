@@ -24,16 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UpcomingMeetingsForContactRelatedListView extends UpcomingMeetingsRelatedListView
+    /**
+     * For a given opportunity, display the meetings in a calendar.
+     */
+    class UpcomingMeetingsForOpportunityCalendarView extends UpcomingMeetingsCalendarView
     {
         protected function getRelationAttributeName()
         {
-            return 'Contact';
+            return 'Opportunity';
         }
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'MeetingsModulePluralLabel For ContactsModuleSingularLabel',
+            return Yii::t('Default', 'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
     }
