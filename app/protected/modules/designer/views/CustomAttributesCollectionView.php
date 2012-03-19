@@ -30,8 +30,8 @@
         {
             $dropDownContent = CHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
 
-            $linkContent     = '&#160;' . CHtml::button(Yii::t('Default', 'Configure'),
-                                                        array('id' => 'attributeTypeNameButton'));
+            $linkContent     = CHtml::button(Yii::t('Default', 'Configure'),
+                                                        array('id' => 'attributeTypeNameButton', 'class' => 'configure-custom-field-button'));
             $url             = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeEdit/',
                                                      array('moduleClassName' => $this->moduleClassName));
             Yii::app()->clientScript->registerScript('attributeTypeCreateLink', "
@@ -47,7 +47,13 @@
                     }
                 }
             );");
-            return Yii::t('Default', 'Add a Custom Field') . ' ' . $dropDownContent . ' ' . $linkContent;
+			$content = null;
+			$content .= '<div class="add-custom-field">';
+			$content .= '<h1>' . Yii::t('Default', 'Add a Custom Field') . '</h1>';
+			$content .= '<div>';
+			$content .= $dropDownContent . $linkContent;
+			$content .= '</div></div>';
+			return $content;
         }
 
         protected static function getValueTypeDropDownArray()

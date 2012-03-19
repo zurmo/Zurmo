@@ -378,6 +378,7 @@
                                     $user,
                                     $configurationForm
             );
+			$titleBarAndEditView->setCssClasses(array('AdministrativeArea'));
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();

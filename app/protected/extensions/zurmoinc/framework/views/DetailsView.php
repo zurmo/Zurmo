@@ -212,7 +212,7 @@
 
         protected function getMaxCellsPerRow()
         {
-            $designerRulesType      = static::getDesignerRulesType();
+            $designerRulesType      = self::getDesignerRulesType();
             if($designerRulesType == null)
             {
                 $designerRulesType      = self::getDesignerRulesType();
