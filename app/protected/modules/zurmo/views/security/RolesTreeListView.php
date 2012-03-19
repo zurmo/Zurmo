@@ -48,10 +48,12 @@
             $content .= '<col style="width:50%" />';
             $content .= '</colgroup>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:50%" />';
+            $content .= '<col style="width:25%" />';
+            $content .= '</colgroup>';
+            $content .= '<col style="width:25%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Role Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th></tr>';
+            $content .= '<tr><th>' . Yii::t('Default', 'Role Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th><th></th></tr>';
             static::renderTreeListViewNode($content, $data, 0);
             $content .= '</tbody>';
             $content .= '</table>';

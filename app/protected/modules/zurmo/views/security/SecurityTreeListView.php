@@ -62,19 +62,22 @@
                 {
                     if ($this->resolveIsNodeLinkableById($item->id, strval($item)))
                     {
-                        $text = $this->makeTreeMenuNodeLink(
+                        $text  = $this->makeTreeMenuNodeLink(
                                          strval($item),
                                         'details',
                                         $item->id);
+                        $route = $this->makeTreeMenuNodeRoute('details', $item->id);
                     }
                     else
                     {
-                        $text = strval($item);
+                        $text  = strval($item);
+                        $route = null;
                     }
 
                     $userCount        = $this->resolveUserCountForItem($item);
-                    $node             = array('link' => $text,
-                                              'userCount' => $userCount);
+                    $node             = array('link'      => $text,
+                                              'userCount' => $userCount,
+                                              'route'     => $route);
                     $node['children'] = $this->makeChildrenNodes($this->items, $item, $nodeRelationName);
                     $itemNodes[]      = $node;
                 }
@@ -105,6 +108,13 @@
                 $content .= '</td>';
                 $content .= '<td>';
                 $content .= $node['userCount'];
+                $content .= '</td>';
+                $content .= '<td>';
+                if(isset($node['route']) && $node['route'] != null)
+                {
+                    $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                                            $node['route']);
+                }
                 $content .= '</td>';
                 $content .= '</tr>';
                 if(isset($node['children']))
@@ -141,14 +151,17 @@
                                         strval($item),
                                         'details',
                                         $item->id);
+                       $route = $this->makeTreeMenuNodeRoute('details', $item->id);
                     }
                     else
                     {
-                        $text = strval($item);
+                        $text  = strval($item);
+                        $route = null;
                     }
                     $userCount        = $this->resolveUserCountForItem($item);
-                    $node             = array('link' => $text,
-                                              'userCount' => $userCount);
+                    $node             = array('link'      => $text,
+                                              'userCount' => $userCount,
+                                              'route'     => $route);
                     $node['children'] = $this->makeChildrenNodes($items, $item, $nodeRelationName, $isLink);
                     $itemNodes[]      = $node;
                 }
@@ -168,12 +181,12 @@
 
         protected function makeTreeMenuNodeLink($label, $action, $id)
         {
-            return CHtml::Link($label,
-                Yii::app()->createUrl(
-                    $this->moduleId . '/' . $this->controllerId . '/' . $action . '/',
-                    array('id' => $id)
-                )
-            );
+            return CHtml::Link($label, $this->makeTreeMenuNodeRoute($action, $id));
+        }
+
+        protected function makeTreeMenuNodeRoute($action, $id)
+        {
+            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $action . '/', array('id' => $id));
         }
 
         public static function getDefaultMetadata()
