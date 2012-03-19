@@ -119,9 +119,6 @@
             if(count($this->dayEvents) > 0)
             {
                 $script .= "var calendarEvents = {};";
-                echo "<pre>";
-                print_r($this->dayEvents);
-                echo "</pre>";
                 foreach($this->dayEvents as $event)
                 {
                     $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent(" . $event['label'] . ", '" . $event['className'] . "');";

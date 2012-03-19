@@ -44,7 +44,7 @@
                     'derivedAttributeTypes' => array(
                         'NoteActivityItems',
                         'DerivedExplicitReadWriteModelPermissions',
-                        'FilesElement'
+                        'Files'
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',

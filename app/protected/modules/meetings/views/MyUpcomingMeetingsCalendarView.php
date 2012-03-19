@@ -25,46 +25,45 @@
      ********************************************************************************/
 
     /**
-     * Base class for displaying meetings on a calendar
+     * Class for displaying user's upcoming meetings on home page.
      */
-    abstract class UpcomingMeetingsCalendarView extends CalendarView
+    class MyUpcomingMeetingsCalendarView extends UpcomingMeetingsCalendarView
     {
-        protected function makeDayEvents()
+        public function __construct($viewData, $params, $uniqueLayoutId)
         {
-            return $this->getDataProvider()->getData();
+            assert('isset($params["controllerId"])');
+            assert('isset($params["relationModuleId"])');
+            assert('$params["relationModel"] instanceof RedBeanModel || $params["relationModel"] instanceof ModelForm');
+            assert('isset($params["portletId"])');
+            assert('$this->getRelationAttributeName() != null');
+            parent::__construct($viewData, $params, $uniqueLayoutId);
         }
 
-        protected function makeDataProvider()
+        public static function getDefaultMetadata()
         {
-            return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData());
+            $metadata = array(
+                'perUser' => array(
+                    'title' => "eval:Yii::t('Default', 'My Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                ),
+                'global' => array(
+                    'panels' => array(),
+                ),
+            );
+            return $metadata;
         }
 
         protected function makeSearchAttributeData()
         {
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'startDateTime',
-                    'operatorType'         => 'greaterThan',
-                    'value'                => DateTimeUtil::
-                                              convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay(
-                                              DateTimeUtil::getFirstDayOfThisMonthDate())
-                ),
-                2 => array(
-                    'attributeName'        => 'startDateTime',
-                    'operatorType'         => 'lessThan',
-                    'value'                => DateTimeUtil::
-                                              convertDateIntoTimeZoneAdjustedDateTimeEndOfDay(
-                                              DateTimeUtil::getLastDayOfThisMonthDate())
-                )
-                );
-            $searchAttributeData['structure'] = '(1 and 2)';
+            $searchAttributeData = parent::makeSearchAttributeData();
+            assert("count(\$searchAttributeData['clauses']) == 2");
+            $searchAttributeData['clauses'][3] =
+            array(
+                'attributeName'        => 'owner',
+                'operatorType'         => 'equals',
+                'value'                => Yii::app()->user->userModel->id,
+            );
+            $searchAttributeData['structure'] = '(1 and 2 and 3)';
             return $searchAttributeData;
-        }
-
-        public static function getModuleClassName()
-        {
-            return 'MeetingsModule';
         }
     }
 ?>

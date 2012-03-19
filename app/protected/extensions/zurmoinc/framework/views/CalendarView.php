@@ -44,11 +44,6 @@
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
-            assert('isset($params["relationModuleId"])');
-            assert('$params["relationModel"] instanceof RedBeanModel || $params["relationModel"] instanceof ModelForm');
-            assert('isset($params["portletId"])');
-            assert('isset($params["redirectUrl"])');
-            assert('$this->getRelationAttributeName() != null');
             $this->modelClassName    = $this->getModelClassName();
             $this->viewData          = $viewData;
             $this->params            = $params;
@@ -91,16 +86,6 @@
         public function isUniqueToAPage()
         {
             return true;
-        }
-
-        protected function getCreateLinkRouteParameters()
-        {
-            return array(
-                'relationAttributeName' => $this->getRelationAttributeName(),
-                'relationModelId'       => $this->params['relationModel']->id,
-                'relationModuleId'      => $this->params['relationModuleId'],
-                'redirectUrl'           => $this->params['redirectUrl'],
-            );
         }
 
         public function getTitle()
@@ -182,8 +167,6 @@
             $calledClass = get_called_class();
             return $calledClass::getModuleClassName();
         }
-
-        abstract protected function getRelationAttributeName();
 
         protected function getDataProvider()
         {

@@ -58,6 +58,9 @@
                     'columns' => array(
                         array(
                             'rows' => array(
+                               array(
+                                    'type' => 'MyUpcomingMeetingsCalendar',
+                                ),
                                 array(
                                     'type' => 'AllLatestActivtiesForPortlet',
                                 ),

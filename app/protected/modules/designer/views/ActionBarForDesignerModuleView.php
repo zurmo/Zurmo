@@ -39,7 +39,6 @@
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
-            assert('is_string($moduleClassName)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
             $this->module                    = $module;

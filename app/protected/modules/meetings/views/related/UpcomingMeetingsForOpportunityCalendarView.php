@@ -27,7 +27,7 @@
     /**
      * For a given opportunity, display the meetings in a calendar.
      */
-    class UpcomingMeetingsForOpportunityCalendarView extends UpcomingMeetingsCalendarView
+    class UpcomingMeetingsForOpportunityCalendarView extends UpcomingMeetingsRelatedCalendarView
     {
         protected function getRelationAttributeName()
         {

@@ -40,7 +40,6 @@
             $sql        = $this->makeSqlQuery();
             $rows       = R::getAll($sql);
             $data       = array();
-
             foreach ($rows as $row)
             {
                 $localTimeZoneAdjustedDate = DateTimeUtil::

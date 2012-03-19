@@ -27,7 +27,7 @@
     /**
      * For a given account, display the meetings in a calendar.
      */
-    class UpcomingMeetingsForAccountCalendarView extends UpcomingMeetingsCalendarView
+    class UpcomingMeetingsForAccountCalendarView extends UpcomingMeetingsRelatedCalendarView
     {
         protected function getRelationAttributeName()
         {
