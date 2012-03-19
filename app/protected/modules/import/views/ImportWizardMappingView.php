@@ -50,7 +50,8 @@
                                     $mappingDataMetadata,
                                     $mappingDataMappingRuleFormsAndElementTypes,
                                     $mappableAttributeIndicesAndDerivedTypes,
-                                    $requiredAttributesLabelsData)
+                                    $requiredAttributesLabelsData,
+                                    $title)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -67,6 +68,7 @@
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
             $this->mappableAttributeIndicesAndDerivedTypes    = $mappableAttributeIndicesAndDerivedTypes;
             $this->requiredAttributesLabelsData               = $requiredAttributesLabelsData;
+            $this->title                                      = $title;
         }
 
         /**
@@ -124,7 +126,6 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= $this->renderActionLinksContent();
             return $content;
         }
 

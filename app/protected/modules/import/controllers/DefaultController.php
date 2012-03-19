@@ -62,14 +62,12 @@
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step2');
             }
-            $importView = new GridView(2, 1);
-            $importView->setCssClasses(array( 'AdministrativeArea' ));
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 1 of 6')), 0, 0);
-            $importView->setView(new ImportWizardImportRulesView($this->getId(),
-                                                                       $this->getModule()->getId(),
-                                                                       $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $importView));
+            $title = Yii::t('Default', 'Import Wizard: Step 1 of 6');
+            $importView = new ImportWizardImportRulesView($this->getId(),
+                                                          $this->getModule()->getId(),
+                                                          $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -116,14 +114,11 @@
                     $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $nextStep);
                 }
             }
-            $importView = new GridView(2, 1);
-            $importView->setCssClasses(array( 'AdministrativeArea' ));
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 2 of 6')), 0, 0);
-            $importView->setView(new ImportWizardUploadFileView($this->getId(),
-                                                                $this->getModule()->getId(),
-                                                                $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $importView));
+            $title = Yii::t('Default', 'Import Wizard: Step 2 of 6');
+            $importView = new ImportWizardUploadFileView($this->getId(), $this->getModule()->getId(),
+                                                         $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -139,14 +134,12 @@
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step4');
             }
-            $importView = new GridView(2, 1);
-            $importView->setCssClasses(array( 'AdministrativeArea' ));
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 3 of 6')), 0, 0);
-            $importView->setView(new ImportWizardSetModelPermissionsView($this->getId(),
-                                                                         $this->getModule()->getId(),
-                                                                         $importWizardForm), 1, 0);
-            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $importView));
+            $title      = Yii::t('Default', 'Import Wizard: Step 3 of 6');
+            $importView = new ImportWizardSetModelPermissionsView($this->getId(),
+                                                                  $this->getModule()->getId(),
+                                                                  $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -219,20 +212,18 @@
                                                               $sample, $headerRow);
             $mappableAttributeIndicesAndDerivedTypes        = $importRulesClassName::
                                                               getMappableAttributeIndicesAndDerivedTypes();
-            $importView                                     = new GridView(2, 1);
-            $importView->setCssClasses(array( 'AdministrativeArea' ));
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
-            $importView->setView(new ImportWizardMappingView($this->getId(),
-                                                             $this->getModule()->getId(),
-                                                             $importWizardForm,
-                                                             $pagerContent,
-                                                             $mappingDataMetadata,
-                                                             $mappingDataMappingRuleFormsAndElementTypes,
-                                                             $mappableAttributeIndicesAndDerivedTypes,
-                                                             $importRulesClassName::getRequiredAttributesLabelsData()),
-                                                             1, 0);
-            $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $importView));
+            $title                                          = Yii::t('Default', 'Import Wizard: Step 4 of 6');
+            $importView                                     = new ImportWizardMappingView($this->getId(),
+                                                              $this->getModule()->getId(),
+                                                              $importWizardForm,
+                                                              $pagerContent,
+                                                              $mappingDataMetadata,
+                                                              $mappingDataMappingRuleFormsAndElementTypes,
+                                                              $mappableAttributeIndicesAndDerivedTypes,
+                                                              $importRulesClassName::getRequiredAttributesLabelsData(),
+                                                              $title);
+            $view                                           = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                                              makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -285,14 +276,13 @@
             }
             if ($step == null)
             {
-                $gridView     = new GridView(2, 1);
-                $gridView->setCssClasses(array( 'AdministrativeArea' ));
-                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
-                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
-                $gridView->setView($titleBarView, 0, 0);
-                $gridView->setView($wrapperView, 1, 0);
-                $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $gridView));
+                $title = Yii::t('Default', 'Import Wizard: Step 5 of 6');
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView,
+                                                                         $sequentialProcess->getAllStepsMessage(),
+                                                                         $title);
+                $wrapperView->setCssClasses(array('DetailsView'));
+                $view         = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                       makeStandardViewForCurrentUser($this, $wrapperView));
             }
             else
             {
@@ -350,14 +340,11 @@
             }
             if ($step == null)
             {
-                $gridView     = new GridView(2, 1);
-                $gridView->setCssClasses(array( 'AdministrativeArea' ));
-                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 6 of 6'));
-                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
-                $gridView->setView($titleBarView, 0, 0);
-                $gridView->setView($wrapperView, 1, 0);
+                $title = Yii::t('Default', 'Import Wizard: Step 6 of 6');
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage(), $title);
+                $wrapperView->setCssClasses(array('DetailsView'));
                 $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $gridView));
+                                       makeStandardViewForCurrentUser($this, $wrapperView));
             }
             else
             {

@@ -77,11 +77,16 @@
             $content .= '</tbody>'     . "\n";
             $content .= '</table>'     . "\n";
             $content .= $this->renderErrorListContent();
+            return $content;
+        }
+
+        protected function renderActionElementBar($renderedInForm)
+        {
+            assert('$renderedInForm == true');
             if ($this->rowsWithErrors > 0)
             {
-                $content .= $this->renderActionLinksContent();
+                return $this->renderActionLinksContent();
             }
-            return $content;
         }
 
         protected function renderErrorListContent()

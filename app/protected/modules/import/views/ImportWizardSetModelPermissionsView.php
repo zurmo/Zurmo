@@ -55,7 +55,6 @@
             $content .= '</td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";
             $content .= '</table>'    . "\n";
-            $content .= $this->renderActionLinksContent();
             return $content;
         }
 

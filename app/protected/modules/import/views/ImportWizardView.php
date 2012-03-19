@@ -29,13 +29,21 @@
      */
     abstract class ImportWizardView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ImportWizardForm $model)
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model, $title = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
+            assert('is_string($title) || $title == null');
             $this->controllerId = $controllerId;
             $this->moduleId     = $moduleId;
             $this->model        = $model;
+            $this->title        = $title;
+        }
+
+        protected function renderActionElementBar($renderedInForm)
+        {
+            assert('$renderedInForm == true');
+            return $this->renderActionLinksContent();
         }
 
         /**
@@ -47,18 +55,15 @@
         {
             $previousPageLinkContent = $this->renderPreviousPageLinkContent();
             $nextPageLinkContent     = $this->renderNextPageLinkContent();
-            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">'; //change to different class?
+            $content                 = null;
             if ($previousPageLinkContent)
             {
-                $content .= '<div id="previous-page-link" class="import-previous-page-link">' .
-                $previousPageLinkContent . '</div>';
+                $content .= $previousPageLinkContent;
             }
             if ($nextPageLinkContent)
             {
-                $content .= '<div id="next-page-link" class="import-next-page-link">' .
-                $nextPageLinkContent . '</div>';
+                $content .= $nextPageLinkContent;
             }
-            $content .= '</div></div>';
             return $content;
         }
 
