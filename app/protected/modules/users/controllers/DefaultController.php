@@ -58,10 +58,14 @@
 
         public function actionList()
         {
-            $pageSize     = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                            'listPageSize', get_class($this->getModule()));
-            $searchForm   = new UsersSearchForm(new User(false));
-            $dataProvider = $this->makeRedBeanDataProviderFromGet(
+            $title           = Yii::t('Default', 'Users');
+            $breadcrumbLinks = array(
+                 $title,
+            );
+            $pageSize        = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                               'listPageSize', get_class($this->getModule()));
+            $searchForm      = new UsersSearchForm(new User(false));
+            $dataProvider    = $this->makeRedBeanDataProviderFromGet(
                 $searchForm,
                 'User',
                 $pageSize,
@@ -75,7 +79,7 @@
                 $dataProvider
             );
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $actionBarSearchAndListView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
@@ -83,6 +87,8 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
+            $title           = Yii::t('Default', 'Details');
+            $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($user), $user);
             $params = array(
                 'controllerId'     => $this->getId(),
@@ -93,7 +99,7 @@
                                                                        $this->getModule()->getId(),
                                                                        $user, $params);
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $detailsAndRelationsView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
@@ -105,6 +111,8 @@
 
         public function actionCreate()
         {
+            $title           = Yii::t('Default', 'Create User');
+            $breadcrumbLinks = array($title);
             $user             = new User();
             $user->language   = Yii::app()->language;
             $user->currency   = Yii::app()->currencyHelper->getActiveCurrencyForCurrentUser();
@@ -113,17 +121,19 @@
             $userPasswordForm->setScenario('createUser');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this,
+                                         makeViewWithBreadcrumbsForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),
-                                                    'UserCreateView')));
+                                                    'UserCreateView'), $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
-            $user = User::getById(intval($id));
+            $user            = User::getById(intval($id));
+            $title           = Yii::t('Default', 'Details');
+            $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $this->attemptToValidateAjaxFromPost($user, 'User');
             if ($user == Yii::app()->user->userModel)
             {
@@ -144,10 +154,10 @@
                 $redirectUrlParams = null;
             }
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this,
+                                         makeViewWithBreadcrumbsForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($user, $redirectUrlParams),
-                                                    'UserActionBarAndEditView')));
+                                                    'UserActionBarAndEditView'), $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
@@ -155,15 +165,17 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
+            $title           = Yii::t('Default', 'Change Password');
+            $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $user->setScenario('changePassword');
             $userPasswordForm = new UserPasswordForm($user);
             $userPasswordForm->setScenario('changePassword');
             $this->attemptToValidateAjaxFromPost($userPasswordForm, 'UserPasswordForm');
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this,
+                                         makeViewWithBreadcrumbsForCurrentUser($this,
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),
-                                                'UserActionBarAndChangePasswordView')));
+                                                'UserActionBarAndChangePasswordView'), $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
@@ -312,6 +324,8 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
+            $title           = Yii::t('Default', 'Security');
+            $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $modulePermissionsData =  PermissionsUtil::getAllModulePermissionsDataByPermitable($user);
             $modulePermissionsForm = ModulePermissionsFormUtil::makeFormFromPermissionsData($modulePermissionsData);
             $viewReadyModulePermissionsData = GroupModulePermissionsDataToEditViewAdapater::resolveData($modulePermissionsData);
@@ -343,7 +357,7 @@
                 $groupMembershipViewData
             );
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $securityDetailsView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $securityDetailsView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 
@@ -351,6 +365,8 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
+            $title           = Yii::t('Default', 'Configuration');
+            $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $configurationForm = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($user);
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
@@ -378,9 +394,9 @@
                                     $user,
                                     $configurationForm
             );
-			$titleBarAndEditView->setCssClasses(array('AdministrativeArea'));
+            $titleBarAndEditView->setCssClasses(array('AdministrativeArea'));
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
         }
 

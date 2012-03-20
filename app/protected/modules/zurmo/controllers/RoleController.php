@@ -48,13 +48,17 @@
 
         public function actionList()
         {
+            $title           = Yii::t('Default', 'Roles');
+            $breadcrumbLinks = array(
+                 $title,
+            );
             $actionBarAndTreeView = new RolesActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Role::getAll('name')
             );
             $view = new RolesPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $actionBarAndTreeView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $actionBarAndTreeView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
@@ -65,23 +69,30 @@
 
         public function actionCreate()
         {
+            $title           = Yii::t('Default', 'Create Role');
+            $breadcrumbLinks = array($title);
             $editView = new RoleEditAndDetailsView('Edit',
                                                    $this->getId(),
                                                    $this->getModule()->getId(),
                                                    $this->attemptToSaveModelFromPost(new Role()));
-			$editView->setCssClasses(array('AdministrativeArea'));
-            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
+            $editView->setCssClasses(array('AdministrativeArea'));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
+            $role            = Role::getById(intval($id));
+            $title           = Yii::t('Default', 'Edit');
+            $breadcrumbLinks = array(strval($role) => array('role/edit',  'id' => $id), $title);
             $editView = new RoleEditAndDetailsView('Edit',
                                                    $this->getId(),
                                                    $this->getModule()->getId(),
-                                                   $this->attemptToSaveModelFromPost(Role::getById(intval($id))));
-			$editView->setCssClasses(array('AdministrativeArea'));
-            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($this, $editView));
+                                                   $this->attemptToSaveModelFromPost($role));
+            $editView->setCssClasses(array('AdministrativeArea'));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
