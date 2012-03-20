@@ -144,9 +144,12 @@
 
 .juiportlet-widget-content table.items{
 	width:100%;
-	border-right:none;
-	border-left:none;
-	border-bottom:none;
+	border:none !important;
+	thead > tr{
+		th, td{
+			border-top:none !important;
+		}
+    }
 }
 .juiportlet-widget-content table.items tbody tr:last-child td{
 	border-bottom:none;

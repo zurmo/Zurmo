@@ -2098,7 +2098,7 @@ div.hasHalfs{
         }
     }
     .next a, .previous a{
-        .symbly(22px);
+        .symbly(16px);
     }
     .next a:after{
         content:"7";
@@ -2145,6 +2145,7 @@ div.hasHalfs{
     color:#666 !important;
     .symbly(42px);
 }
+.LatestActivitiesListView,
 .LatestActivitiesView{
     form{
         position: relative;
@@ -2195,6 +2196,9 @@ div.hasHalfs{
             margin:0;
         }
     }
+    .items{
+    	border-top:none !important;
+    }
     td, th{
         padding:10px 0;
         border-bottom: 1px solid #DFDFDF;
@@ -2203,16 +2207,24 @@ div.hasHalfs{
         &:last-child{
             td, th{
                 border-bottom:none;
-                padding:0 !important;
+                //padding:0 !important;
             }
             td:first-child{
-                padding:0 !important;
+                //padding:0 !important;
             }
         }
     }
+    
     tr td:first-child{
+    	border-top:none !important;
         padding-left:15px !important;
         padding-right:15px;
+    }
+    .items span{
+    	display:inline-block;
+    	height:100%;
+    	padding-right:15px;
+    	float:left;
     }
     .Note:after{
         content: "3";
