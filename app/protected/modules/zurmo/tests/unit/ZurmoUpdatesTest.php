@@ -24,23 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // fix for fcgi
-    defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-    require_once('roots.php');
+    class ZurmoUpdatesTest extends BaseTest
+    {
+        public function testZurmoUpdatesApiCall()
+        {
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $data = array(
+                'zurmoToken' => '11111111111',
+                'serverIpAddress' => '127.0.0.1',
+                'serverName' => 'zurmo.com',
+                'serverSoftware' => 'Apache 2.2.16',
+                'zurmoVersion' => VERSION,
+                'serializedData' => ''
+            );
 
-    chdir(COMMON_ROOT);
-    $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
-    // Debug is used per instance.
-    $debug = INSTANCE_ROOT . '/protected/config/debug.php';
-    //Console configuration file
-    $config = INSTANCE_ROOT . '/protected/config/console.php';
-
-    require_once(COMMON_ROOT   . "/version.php");
-    require_once($debug);
-    require_once($yii);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
-    //Including web application, because in console application, there is a reference to a method here.
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    $app = Yii::createApplication('ConsoleApplication', $config);
-    $app->run();
+            $response = ApiRestHelper::createApiCall('http://updates.zurmo.com/app/index.php/updatesManager/api/create', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $version = $response['data']['latestStableZurmoVersion'];
+            $this->assertTrue(is_string($version));
+        }
+    }
 ?>

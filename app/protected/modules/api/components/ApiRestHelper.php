@@ -23,24 +23,43 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
+    /**
+    * REST API helper class.
+    */
+    class ApiRestHelper
+    {
+        public static function createApiCall($url, $method, $headers, $data = array())
+        {
+            if ($method == 'PUT')
+            {
+                $headers[] = 'X-HTTP-Method-Override: PUT';
+            }
 
-    // fix for fcgi
-    defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-    require_once('roots.php');
+            $handle = curl_init();
+            curl_setopt($handle, CURLOPT_URL, $url);
+            curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
 
-    chdir(COMMON_ROOT);
-    $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
-    // Debug is used per instance.
-    $debug = INSTANCE_ROOT . '/protected/config/debug.php';
-    //Console configuration file
-    $config = INSTANCE_ROOT . '/protected/config/console.php';
-
-    require_once(COMMON_ROOT   . "/version.php");
-    require_once($debug);
-    require_once($yii);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
-    //Including web application, because in console application, there is a reference to a method here.
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    $app = Yii::createApplication('ConsoleApplication', $config);
-    $app->run();
+            switch($method)
+            {
+                case 'GET':
+                    break;
+                case 'POST':
+                    curl_setopt($handle, CURLOPT_POST, true);
+                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+                case 'PUT':
+                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+                    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+                    break;
+                case 'DELETE':
+                    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                    break;
+            }
+            $response = curl_exec($handle);
+            return $response;
+        }
+    }
 ?>
