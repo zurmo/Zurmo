@@ -276,8 +276,27 @@ table.configuration-list{
 	}
 	
 	td.level-0{ padding-left:10px !important;}
-	td.level-1{ padding-left:20px !important;}
-	td.level-2{ padding-left:30px !important;}
+	td.level-1{
+		padding-left:44px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 15px;
+			top:-1px;
+		}
+	}
+	td.level-2{ 
+		padding-left:88px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 59px;
+			top:-1px;
+		}	
+	}
+	
 	td.level-3{ padding-left:40px !important;}
 	td.level-4{ padding-left:50px !important;}
 	td.level-5{ padding-left:60px !important;}
@@ -431,25 +450,26 @@ table.configuration-list{
 .add-custom-field{
 	
 	> div{
-		padding:15px 15px 30px 15px;
-		display:block;
-		.clearfix();
+		padding:15px 15px 15px 15px;
+		//display:block;
+		//.clearfix();
 		position:relative;
-		//float:left;
 		&:after{
 			//display:none;
 		}
 	}
 	.dk_container{
 		width:75%;
-		float:left;
+		margin-right:10px;
+		//float:left;
 	}
 	.configure-custom-field-button{
 		.zButton();
-		float:right;
-		position: absolute;
-		right:15px;
-		top:14px;
+		//float:right;
+		//clear:both;
+		//position: absolute;
+		//right:15px;
+		//top:14px;
 		&:before{
 			content: "n";
 			.symbly(16px);
