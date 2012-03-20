@@ -175,10 +175,11 @@ $(window).ready(function(){
 	});
 	
 	
-	/*Form errors*/
+	/*Form errors
 	$('.form .errorMessage').each(function(){
-		$(this).css({ right: -$(this).width() -20 });
+		$(this).css({ top: -$(this).height() -20 });
 	});
+	*/
 	
 	
 	 window.setTimeout(
