@@ -27,7 +27,7 @@
     /**
      * Latest activity view.
      */
-    class LatestActivitiesView extends MetadataView
+    class LatestActivitiesView extends ListView
     {
         /**
          * View type for a latest activity list view.
@@ -103,6 +103,14 @@
         protected function renderContent()
         {
             $content  = $this->renderConfigurationForm();
+            /**
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("ListView");
+            $cClipWidget->widget($this->getGridViewWidgetPath(), $this->getCGridViewParams());
+            $cClipWidget->endClip();
+            $content = $cClipWidget->getController()->clips['ListView'] . "\n";
+            return $content;
+            **/
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("LatestActivtiesViewLayout");
             $cClipWidget->widget($this->getViewLayoutWidgetPath(), array(
