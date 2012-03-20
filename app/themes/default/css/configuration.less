@@ -142,6 +142,31 @@
 		}
 	}
 }
+table.configuration-list{
+	.clearfix;
+	h4{
+		margin:0 0 0 0;
+		display:inline-block;
+	}
+	tbody > tr > td{
+		padding:20px 15px !important;
+		position:relative;
+	}
+	tr td:last-child a{
+		.zButton();
+		float:right;
+		position: absolute;
+		right:15px;
+		top:14px;
+		&:before{
+			content: "n";
+			.symbly(16px);
+			margin-right:5px;
+			position:relative;
+			top:0px;
+		}
+	}
+}
 
 /*Groups*/
 
