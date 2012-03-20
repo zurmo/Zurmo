@@ -34,5 +34,17 @@
          * @var boolean
          */
         protected $showRollUpToggle = false;
+
+        protected function getCGridViewPagerParams()
+        {
+            return array(
+                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
+                    'prevPageLabel'    => '<span>previous</span>',
+                    'nextPageLabel'    => '<span>next</span>',
+                    'class'            => 'SimpleListLinkPager',
+                    'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
+                    'route'            => 'defaultPortlet/myListDetails',
+                );
+        }
     }
 ?>

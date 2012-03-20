@@ -206,15 +206,11 @@
         }
 
         /**
-         * @return CSort the sorting object. If this is false, it means the sorting is disabled.
+         * @return CSort the sorting object. Sorting using getSort is disabled.
          */
         public function getSort()
         {
-            if (($sort = parent::getSort()) !== false)
-            {
-                $sort->modelClass = $this->modelClassName;
-            }
-            return $sort;
+            return false;
         }
 
         /**

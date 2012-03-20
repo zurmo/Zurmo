@@ -52,13 +52,6 @@
         const OWNED_BY_FILTER_USER = 'user';
 
         /**
-         * The type of view layout to use in the user interface. Currently support list view and summary view.
-         * @see LatestActivitiesView
-         * @var integer
-         */
-        public $viewType = LatestActivitiesView::VIEW_TYPE_LISTVIEW;
-
-        /**
          * Should the latest activity feed rollup data beyond just the related model.
          * @var boolean
          */
@@ -91,7 +84,6 @@
         public function rules()
         {
             return array(
-                array('viewType',            'type', 'type' => 'integer'),
                 array('filteredByModelName', 'type',    'type' => 'string'),
                 array('rollup',              'boolean'),
                 array('ownedByFilter', 		 'type',    'type' => 'string')

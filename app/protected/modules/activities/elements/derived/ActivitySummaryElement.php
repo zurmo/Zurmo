@@ -25,48 +25,47 @@
      ********************************************************************************/
 
     /**
-     * Modal list view display.
+     * Display the details of an activity.
      */
-    class ModalListView extends ListView
+    class ActivitySummaryElement extends Element implements DerivedElementInterface
     {
-        protected $modalListLinkProvider;
-
-        public function __construct($controllerId, $moduleId, $modelClassName, $modalListLinkProvider, $dataProvider, $gridIdSuffix = null)
+        protected function renderEditable()
         {
-            assert('$modalListLinkProvider instanceof ModalListLinkProvider');
-            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), false, $gridIdSuffix);
-            $this->modalListLinkProvider = $modalListLinkProvider;
-            $this->rowsAreSelectable     = false;
+            throw NotSupportedException();
+        }
+
+        protected function renderControlEditable()
+        {
+            throw NotSupportedException();
         }
 
         /**
-         * Override to remove action buttons.
+         * Render the activity as a non-editable display
+         * @return The element's content.
          */
-        protected function getCGridViewLastColumn()
+        protected function renderControlNonEditable()
+        {
+            throw NotSupportedException();
+        }
+
+        protected function renderLabel()
+        {
+            return Yii::t('Default', 'Activity');
+        }
+
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'Activity Summary');
+        }
+
+        /**
+         * Get the attributeNames of attributes used in
+         * the derived element.
+         * @return array of model attributeNames used.
+         */
+        public static function getModelAttributeNames()
         {
             return array();
-        }
-
-        protected function getCGridViewPagerParams()
-        {
-            return array(
-                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'prevPageLabel'    => '<span>previous</span>',
-                    'nextPageLabel'    => '<span>next</span>',
-                    'paginationParams' => GetUtil::getData(),
-                    'route'            => $this->getGridViewActionRoute('modalList', $this->moduleId),
-                    'class'            => 'SimpleListLinkPager',
-                );
-        }
-
-        public function getLinkString($attributeString)
-        {
-            return $this->modalListLinkProvider->getLinkString($attributeString);
-        }
-
-        public static function getDesignerRulesType()
-        {
-            return 'ModalListView';
         }
     }
 ?>

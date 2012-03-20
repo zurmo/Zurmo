@@ -107,7 +107,6 @@
         {
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ListView");
-            ;
             $cClipWidget->widget($this->getGridViewWidgetPath(), $this->getCGridViewParams());
             $cClipWidget->endClip();
             $content = $this->renderViewToolBar();
@@ -151,19 +150,19 @@
                 'nullDisplay' => '&#160;',
                 'showTableOnEmpty' => $this->getShowTableOnEmpty(),
                 'emptyText'		   => $this->getEmptyText(),
-                'template'         => "\n{items}\n{pager}"
+                'template'         => "\n{items}\n{pager}",
             );
         }
 
         protected function getCGridViewPagerParams()
         {
             return array(
-                    'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'prevPageLabel' => '<span>previous</span>',
-                    'nextPageLabel' => '<span>next</span>',
-                    'class'          => 'EndlessListLinkPager',
-                    'paginationParams' => $_GET,
-                    'route'         => $this->getGridViewActionRoute('list', $this->moduleId),
+                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
+                    'prevPageLabel'    => '<span>previous</span>',
+                    'nextPageLabel'    => '<span>next</span>',
+                    'class'            => 'EndlessListLinkPager',
+                    'paginationParams' => GetUtil::getData(),
+                    'route'            => $this->getGridViewActionRoute('list', $this->moduleId),
                 );
         }
 

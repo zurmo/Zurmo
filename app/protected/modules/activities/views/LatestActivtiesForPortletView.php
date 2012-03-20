@@ -103,7 +103,8 @@
                                                                  'latestActivities', 'activities',
                                                                  $this->getPortletDetailsUrl(),
                                                                  $this->getNonAjaxRedirectUrl(),
-                                                                 $uniquePageId);
+                                                                 $uniquePageId,
+                                                                 $this->params);
                 return $latestView->render();
             }
         }

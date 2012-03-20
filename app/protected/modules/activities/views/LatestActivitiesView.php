@@ -25,22 +25,10 @@
      ********************************************************************************/
 
     /**
-     * Latest activity view.
+     * Latest activity list view.
      */
     class LatestActivitiesView extends ListView
     {
-        /**
-         * View type for a latest activity list view.
-         * @var integer
-         */
-        const VIEW_TYPE_LISTVIEW = 1;
-
-        /**
-         * View type for a latest activity summary view.
-         * @var intger
-         */
-        const VIEW_TYPE_SUMMARY  = 2;
-
         protected $controllerId;
 
         protected $moduleId;
@@ -78,19 +66,23 @@
          */
         protected $showRollUpToggle = true;
 
+        protected $params;
+
         public function __construct(RedBeanModelsDataProvider $dataProvider,
                                     LatestActivitiesConfigurationForm $configurationForm,
                                     $controllerId,
                                     $moduleId,
                                     $portletDetailsUrl,
                                     $redirectUrl,
-                                    $uniquePageId)
+                                    $uniquePageId,
+                                    $params)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_string($portletDetailsUrl)');
             assert('is_string($redirectUrl)');
             assert('is_string($uniquePageId)');
+            assert('is_array($params)');
             $this->dataProvider           = $dataProvider;
             $this->configurationForm      = $configurationForm;
             $this->controllerId           = $controllerId;
@@ -98,30 +90,67 @@
             $this->portletDetailsUrl      = $portletDetailsUrl;
             $this->redirectUrl            = $redirectUrl;
             $this->uniquePageId           = $uniquePageId;
+            $this->gridIdSuffix           = $uniquePageId;
+            $this->gridId                 = 'list-view';
+            $this->params                 = $params;
         }
 
         protected function renderContent()
         {
             $content  = $this->renderConfigurationForm();
-            /**
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ListView");
             $cClipWidget->widget($this->getGridViewWidgetPath(), $this->getCGridViewParams());
             $cClipWidget->endClip();
-            $content = $cClipWidget->getController()->clips['ListView'] . "\n";
+            $content .= $cClipWidget->getController()->clips['ListView'] . "\n";
             return $content;
-            **/
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("LatestActivtiesViewLayout");
-            $cClipWidget->widget($this->getViewLayoutWidgetPath(), array(
-                'id'            => $this->uniquePageId,
-                'dataProvider'  => $this->dataProvider,
-                'url'           => $this->portletDetailsUrl,
-                'redirectUrl'   => $this->redirectUrl,
-            ));
-            $cClipWidget->endClip();
-            $content .= $cClipWidget->getController()->clips['LatestActivtiesViewLayout'];
-            return $content;
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = array(
+                'global' => array(
+                    'panels' => array(
+                        array(
+                            'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'ActivitySummary'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+
+            );
+            return $metadata;
+        }
+
+        protected function getCGridViewParams()
+        {
+            return array_merge(parent::getCGridViewParams(), array('hideHeader' => true));
+        }
+
+        protected function getCGridViewLastColumn()
+        {
+            return array();
+        }
+
+        protected function getCGridViewPagerParams()
+        {
+            return array(
+                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
+                    'prevPageLabel'    => '<span>previous</span>',
+                    'nextPageLabel'    => '<span>next</span>',
+                    'class'            => 'SimpleListLinkPager',
+                    'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
+                    'route'            => 'defaultPortlet/details',
+                );
         }
 
         protected function renderConfigurationForm()
@@ -195,22 +224,6 @@
         public function isUniqueToAPage()
         {
             return false;
-        }
-
-        protected function getViewLayoutWidgetPath()
-        {
-            if ($this->configurationForm->viewType == self::VIEW_TYPE_LISTVIEW)
-            {
-                return 'application.modules.activities.widgets.LatestActivitiesListViewLayout';
-            }
-            elseif ($this->configurationForm->viewType == self::VIEW_TYPE_SUMMARY)
-            {
-                return 'application.modules.activities.widgets.LatestActivitiesSummaryViewLayout';
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
         }
     }
 ?>

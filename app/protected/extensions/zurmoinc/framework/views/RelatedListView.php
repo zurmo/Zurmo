@@ -138,7 +138,7 @@
                     'prevPageLabel' => '<span>previous</span>',
                     'nextPageLabel' => '<span>next</span>',
                     'class'          => 'SimpleListLinkPager',
-                    'paginationParams' => array_merge($_GET, array('portletId' => $this->params['portletId'])),
+                    'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',
                 );
         }

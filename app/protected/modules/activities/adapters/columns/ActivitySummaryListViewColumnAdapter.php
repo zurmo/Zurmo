@@ -24,21 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Element for displaying the available view types for the latest activity view.
-     */
-    class LatestActivitiesViewTypeStaticDropDownElement extends StaticDropDownFormElement
+    class ActivitySummaryListViewColumnAdapter extends ListViewColumnAdapter
     {
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected function getDropDownArray()
+        public function renderGridViewData()
         {
             return array(
-                LatestActivitiesView::VIEW_TYPE_LISTVIEW    => Yii::t('Default', 'List View'),
-                LatestActivitiesView::VIEW_TYPE_SUMMARY     => Yii::t('Default', 'Summary'),
+                    'name' => 'summary',
+                    'header' => Yii::t('Default', 'Summary'),
+                    'type'  => 'raw',
+                    'value'  => 'ActivitiesUtil::renderSummaryContent($data, "' . $this->view->redirectUrl . '")',
             );
         }
     }
