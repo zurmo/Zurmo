@@ -35,15 +35,19 @@
 
         protected $model;
 
-        public function __construct($controllerId, $moduleId, Group $model)
+        protected $activeActionElementType;
+
+        public function __construct($controllerId, $moduleId, Group $model, $activeActionElementType)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_int($modelId)');
+            assert('is_string($activeActionElementType)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
             $this->modelId                   = $model->id;
             $this->model                     = $model;
+            $this->activeActionElementType   = $activeActionElementType;
         }
 
         protected function renderContent()
@@ -100,6 +104,15 @@
                 ),
             );
             return $metadata;
+        }
+
+        protected function resolveActionElementInformationDuringRender(& $elementInformation)
+        {
+            parent::resolveActionElementInformationDuringRender($elementInformation);
+            if($elementInformation['type'] == $this->activeActionElementType)
+            {
+                $elementInformation['htmlOptions']['class'] .= ' active';
+            }
         }
 
         /**

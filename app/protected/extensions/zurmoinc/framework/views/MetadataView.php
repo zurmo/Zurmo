@@ -59,14 +59,14 @@
         protected function renderViewToolBar($renderInForm = true)
         {
             if ( $renderInForm == true ){
-            	$content = '<div class="view-toolbar-container clearfix"><div class="portlet-toolbar">';
-	            $content .= $this->renderActionElementBar($renderInForm);
-	            $content .= '</div></div>';
-	            return $content;
+                $content = '<div class="view-toolbar-container clearfix"><div class="portlet-toolbar">';
+                $content .= $this->renderActionElementBar($renderInForm);
+                $content .= '</div></div>';
+                return $content;
             } else {
-            	return null;
+                return null;
             }
-            
+
         }
 
         /**
@@ -83,6 +83,7 @@
             {
                 foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
                 {
+                    $this->resolveActionElementInformationDuringRender($elementInformation);
                     $elementclassname = $elementInformation['type'] . 'ActionElement';
                     $params = array_slice($elementInformation, 1);
                     array_walk($params, array($this, 'resolveEvaluateSubString'));
@@ -105,6 +106,14 @@
                 }
             }
             return $content;
+        }
+
+        /**
+         * Override if any manipulation is needed on the $elementInformaiton prior to rendering
+         * @param array $elementInformation
+         */
+        protected function resolveActionElementInformationDuringRender(& $elementInformation)
+        {
         }
 
         /**
