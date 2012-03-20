@@ -129,7 +129,7 @@
                                     $this->getId(),
                                     $this->getModule()->getId(),
                                     $configurationForm);
-			$editView->setCssClasses( array('AdministrativeArea') );
+            $editView->setCssClasses( array('AdministrativeArea') );
             $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
@@ -172,6 +172,19 @@
                 );
             }
             echo CJSON::encode($autoCompleteResults);
+        }
+
+        /**
+         * Special method to load demo data for testing user interface pagination.  This will load enough data to
+         * test each type of pagination.  Use this for development only.
+         */
+        public function actionLoadPaginationDemoData()
+        {
+            if(Yii::app()->user->userModel->username != 'super')
+            {
+                throw new NotSupportedException();
+            }
+            UserInterfaceDevelopmentUtil::makePaginationData();
         }
     }
 ?>

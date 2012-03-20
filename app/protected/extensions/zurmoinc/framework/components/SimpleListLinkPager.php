@@ -25,9 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Provides a pager used for displaying related lists
+     * Provides a pager used for displaying lists with a simple pagination of previous and next.
      */
-    class RelatedListLinkPager extends LinkPager
+    class SimpleListLinkPager extends LinkPager
     {
         /**
          * Set the header to empty

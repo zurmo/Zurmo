@@ -150,8 +150,21 @@
                 'columns' => $columns,
                 'nullDisplay' => '&#160;',
                 'showTableOnEmpty' => $this->getShowTableOnEmpty(),
-                'emptyText'		   => $this->getEmptyText()
+                'emptyText'		   => $this->getEmptyText(),
+                'template'         => "\n{items}\n{pager}"
             );
+        }
+
+        protected function getCGridViewPagerParams()
+        {
+            return array(
+                    'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
+                    'prevPageLabel' => '<span>previous</span>',
+                    'nextPageLabel' => '<span>next</span>',
+                    'class'          => 'EndlessListLinkPager',
+                    'paginationParams' => $_GET,
+                    'route'         => $this->getGridViewActionRoute('list', $this->moduleId),
+                );
         }
 
         protected function getShowTableOnEmpty()
@@ -167,17 +180,6 @@
         public function getGridViewId()
         {
             return $this->gridId . $this->gridIdSuffix;
-        }
-
-        protected function getCGridViewPagerParams()
-        {
-            return array(
-                    'cssFile' => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'firstPageLabel' => '&lt;&lt;',
-                    'prevPageLabel' => '&lt;',
-                    'nextPageLabel' => '&gt;',
-                    'lastPageLabel' => '&gt;&gt;',
-                );
         }
 
         /**
