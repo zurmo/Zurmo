@@ -231,7 +231,7 @@
         {
             $lastAttemptedInfoUpdateTimeStamp = self::getLastAttemptedInfoUpdateTimeStamp();
             if ( $forceCheck || $lastAttemptedInfoUpdateTimeStamp == null ||
-            (time() - $lastAttemptedInfoUpdateTimeStamp) > (0 * 60 * 60))
+            (time() - $lastAttemptedInfoUpdateTimeStamp) > (7 * 24 * 60 * 60))
             {
                 $headers = array(
                             'Accept: application/json',
