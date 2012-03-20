@@ -735,7 +735,7 @@ footer, header, hgroup, menu, nav, section {
     line-height:30px;
     display:inline-block;
     border-left:1px solid #bababa;
-    &:hover{
+    &:hover, &.active{
         color:@themeColor2 !important;
     }
     &:active{
@@ -2068,6 +2068,7 @@ div.hasHalfs{
         border:1px solid #e7e7e7;
         width:100%;
         .box-sizing();
+        list-style: none;
     }
 
     li{
@@ -2118,6 +2119,23 @@ div.hasHalfs{
     }
 }
 
+.SecuredListView{
+	.pager{
+		float:left;
+		width:100%;
+		.clearfix();
+		ul{
+			border-top:none;
+			list-style:none;
+			float:left;
+			li{
+				float:none;
+				width:100%;
+				border-right:none;
+			}
+		}
+	}
+}
 
 
 /*Latest Activity*/
@@ -2279,11 +2297,9 @@ div.hasHalfs{
         }
     }
     .pager{
-        text-align:left;
-        li{
-            list-style:none;
-            float:left;
-            width: auto;
+        ul{
+        	border-top:none;
+        	float:left;
         }
     }
 }
