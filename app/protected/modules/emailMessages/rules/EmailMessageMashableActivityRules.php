@@ -71,7 +71,7 @@
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 
-        protected function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
+        public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
             return $searchAttributeData;
