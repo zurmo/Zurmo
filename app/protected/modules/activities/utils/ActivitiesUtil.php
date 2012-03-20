@@ -56,21 +56,20 @@
             $mashableActivityRules = MashableActivityRulesFactory::createMashableActivityRulesByModel(
                                          get_class($model));
             $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
-            $content  = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                            $model->{$orderByAttributeName}, 'short', null);
-            $content .= '<br/>';
-            $content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
-            $content .= '<br/>';
+            $content  = '<span class="'.get_class($model).'"></span>';
+            $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                            $model->{$orderByAttributeName}, 'long', null) . '</strong><br/>';
             $modelDisplayString = strval($model);
-            if (strlen($modelDisplayString) > 500)
+            if (strlen($modelDisplayString) > 200)
             {
-                $modelDisplayString = substr($modelDisplayString, 0, 500) . '...';
+                $modelDisplayString = substr($modelDisplayString, 0, 200) . '...';
             }
-            $params = array('label' => Yii::app()->format->text($modelDisplayString), 'redirectUrl' => $redirectUrl);
+            $params = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl);
             $moduleClassName = $model->getModuleClassName();
             $moduleId        = $moduleClassName::getDirectoryName();
             $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);
             $content .= $element->render() . '<br/>';
+            //$content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
             $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
             if ($extraContent)
             {
