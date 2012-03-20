@@ -11,6 +11,11 @@
 @import 'notifications.less';
 
 
+*{
+    margin:0;
+    padding:0;
+}
+
 
 @font-face {
     font-family: 'ZurmoSymblyRegular';
@@ -88,37 +93,6 @@
             transition: all @time ease-out;
 }
 
-/*
-.clearfix() {
-  *zoom: 1;
-  //&:before,
-  &:after {
-    display: table;
-    content: "";
-    zoom: 1;
-  }
-  &:after {
-    clear: both;
-  }
-}
-CLEARFIX
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-.clearfix {
-    height: 1%;
-}
-
-*:first-child + html .clearfix {
-    min-height: 1px;
-}
-*/
-
 /* For modern browsers */
 
 .clearfix{
@@ -133,33 +107,12 @@ CLEARFIX
     }
     zoom:1;
 }
-/*
-.clearfix:before,
-.clearfix:after {
-    content:"";
-    display:table;
-}
-
-.clearfix:after {
-    clear:both;
-}
-*/
-/* For IE 6/7 (trigger hasLayout)
-.clearfix {
-    zoom:1;
-}*/
 
 .hidden-element{
     display:none !important;
     visibility:hidden !important;
 }
 
-
-
-*{
-    margin:0;
-    padding:0;
-}
 
 html, body{
     background:#DDDEDE;
@@ -904,10 +857,6 @@ footer, header, hgroup, menu, nav, section {
     top:3px;
 }
 
-
-
-
-
 /*Footer*/
 #FooterView{
     margin:20px 40px;
@@ -929,6 +878,13 @@ footer, header, hgroup, menu, nav, section {
 
         margin-left:70px;
     }
+}
+
+/*Forms with clearfix issues*/
+#AccountsMassEditView{
+	#edit-form:after{
+		display:none;
+	}
 }
 
 /*General table style, tables still need 'cellspacing="0"' in the markup */
@@ -1335,9 +1291,6 @@ label.hasCheckBox{
     position: absolute;
     left: -9999px;
 }
-
-
-
 
 #FilteredListView, .select-all-options, .summary{
     /*@TODO check what this component do - for now its hidden cause its not in design*/
