@@ -27,7 +27,7 @@
     /**
      * Latest activities view used specifically for activities related to a contact.
      */
-    class LatestActivitiesForContactView extends LatestActivitiesView
+    class LatestActivitiesForContactListView extends LatestActivitiesListView
     {
     }
 ?>

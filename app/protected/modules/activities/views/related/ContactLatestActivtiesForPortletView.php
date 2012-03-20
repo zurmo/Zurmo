@@ -31,7 +31,7 @@
     {
         public function getLatestActivitiesViewClassName()
         {
-            return 'LatestActivitiesForContactView';
+            return 'LatestActivitiesForContactListView';
         }
     }
 ?>

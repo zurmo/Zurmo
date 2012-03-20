@@ -25,26 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Latest activities view used specifically for showing all latest activities
+     * Latest activities view used specifically for activities related to an account.
      */
-    class AllLatestActivitiesView extends LatestActivitiesView
+    class LatestActivitiesForAccountListView extends LatestActivitiesListView
     {
-        /**
-         * Rollup is not shown when showing all latest activities
-         * @var boolean
-         */
-        protected $showRollUpToggle = false;
-
-        protected function getCGridViewPagerParams()
-        {
-            return array(
-                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
-                    'prevPageLabel'    => '<span>previous</span>',
-                    'nextPageLabel'    => '<span>next</span>',
-                    'class'            => 'SimpleListLinkPager',
-                    'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
-                    'route'            => 'defaultPortlet/myListDetails',
-                );
-        }
     }
 ?>

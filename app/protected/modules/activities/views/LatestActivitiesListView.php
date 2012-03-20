@@ -27,7 +27,7 @@
     /**
      * Latest activity list view.
      */
-    class LatestActivitiesView extends ListView
+    class LatestActivitiesListView extends ListView
     {
         protected $controllerId;
 

@@ -98,7 +98,7 @@
 
         public function getLatestActivitiesViewClassName()
         {
-            return 'AllLatestActivitiesView';
+            return 'AllLatestActivitiesListView';
         }
 
         /**

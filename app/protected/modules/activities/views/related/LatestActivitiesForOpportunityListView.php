@@ -25,9 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Latest activities view used specifically for activities related to an account.
+     * Latest activities view used specifically for activities related to an opportunity.
      */
-    class LatestActivitiesForAccountView extends LatestActivitiesView
+    class LatestActivitiesForOpportunityListView extends LatestActivitiesListView
     {
     }
 ?>
