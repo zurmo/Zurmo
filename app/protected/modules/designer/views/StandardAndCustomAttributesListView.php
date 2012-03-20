@@ -39,7 +39,7 @@
         )
         {
             parent::__construct(3, 1);
-            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module, 'DesignerFieldsLink'), 0, 0);
             $title = Yii::t('Default', $moduleDisplayName) . ': ' .  Yii::t('Default', 'Custom Fields');
             $this->setView(new CustomAttributesCollectionView(
                 $controllerId,

@@ -37,7 +37,7 @@
         )
         {
             parent::__construct(2, 1);
-            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module), 0, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module, 'DesignerFieldsLink'), 0, 0);
             $attributeTypeEditViewClassName = $attributeTypeName. 'AttributeDetailsView';
             $this->setView(new $attributeTypeEditViewClassName($controllerId, $moduleId, $attributeForm,
                                                                get_class($module), $title), 1, 0);

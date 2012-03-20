@@ -31,7 +31,7 @@
         public function __construct($controllerId, $moduleId, UserPasswordForm $userForm)
         {
             parent::__construct(2, 1);
-            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $userForm->getModel()), 0, 0);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $userForm->getModel(), 'ChangePasswordLink'), 0, 0);
             $title = strval($userForm) . ': ' . Yii::t('Default', 'Change Password');
             $this->setView(new UserChangePasswordView($controllerId, $moduleId, $userForm, $title), 1, 0);
         }

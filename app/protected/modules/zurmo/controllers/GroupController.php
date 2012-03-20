@@ -183,7 +183,8 @@
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName(),
                                             $metadata,
-                                            'ModulePermissionsEditAndDetailsView');
+                                            'ModulePermissionsEditAndDetailsView',
+                                            'GroupModulePermissionsEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
@@ -218,7 +219,8 @@
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName(),
                                             $metadata,
-                                            'RightsEditAndDetailsView');
+                                            'RightsEditAndDetailsView',
+                                            'GroupRightsEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
@@ -257,7 +259,8 @@
                                         $group,
                                         $this->getModule()->getPluralCamelCasedName(),
                                         $metadata,
-                                        'PoliciesEditAndDetailsView');
+                                        'PoliciesEditAndDetailsView',
+                                        'GroupPoliciesEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();

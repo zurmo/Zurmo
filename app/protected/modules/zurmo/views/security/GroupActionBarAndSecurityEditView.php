@@ -35,13 +35,15 @@
             Group $model,
             $moduleName,
             $metadata,
-            $editViewClassName)
+            $editViewClassName,
+            $activeActionElementType)
         {
             assert('$form instanceof ModulePermissionsForm ||
                     $form instanceof RightsForm ||
                     $form instanceof PoliciesForm');
+            assert('is_string($activeActionElementType)');
             parent::__construct(2, 1);
-            $this->setView(new ActionBarForGroupEditAndDetailsView ($controllerId, $moduleId, $model), 0, 0);
+            $this->setView(new ActionBarForGroupEditAndDetailsView ($controllerId, $moduleId, $model, $activeActionElementType), 0, 0);
             $this->setView(new $editViewClassName('Edit', $controllerId, $moduleId, $form, $model->id, $metadata), 1, 0);
         }
     }

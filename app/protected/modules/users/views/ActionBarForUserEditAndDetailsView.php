@@ -35,14 +35,18 @@
 
         protected $model;
 
-        public function __construct($controllerId, $moduleId, User $model)
+        protected $activeActionElementType;
+
+        public function __construct($controllerId, $moduleId, User $model, $activeActionElementType)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
+            assert('is_string($activeActionElementType)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
             $this->modelId                   = $model->id;
             $this->model                     = $model;
+            $this->activeActionElementType   = $activeActionElementType;
         }
 
         protected function renderContent()
@@ -65,28 +69,37 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'DetailsLink',
-								'htmlOptions' => array( 'class' => 'icon-user-details' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-user-details' )
+                            ),
                             array('type' => 'EditLink',
-								'htmlOptions' => array( 'class' => 'icon-edit' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-edit' )
+                            ),
                             array('type' => 'AuditEventsModalListLink',
-								'htmlOptions' => array( 'class' => 'icon-audit' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-audit' )
+                            ),
                             array('type' => 'ChangePasswordLink',
-								'htmlOptions' => array( 'class' => 'icon-password' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-password' )
+                            ),
                             array('type' => 'UserConfigurationEditLink',
-								'htmlOptions' => array( 'class' => 'icon-user-config' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-user-config' )
+                            ),
                             array('type' => 'SecurityDetailsLink',
-								'htmlOptions' => array( 'class' => 'icon-security' )
-							),
+                                'htmlOptions' => array( 'class' => 'icon-security' )
+                            ),
                         ),
                     ),
                 ),
             );
             return $metadata;
+        }
+
+        protected function resolveActionElementInformationDuringRender(& $elementInformation)
+        {
+            parent::resolveActionElementInformationDuringRender($elementInformation);
+            if($elementInformation['type'] == $this->activeActionElementType)
+            {
+                $elementInformation['htmlOptions']['class'] .= ' active';
+            }
         }
     }
 ?>

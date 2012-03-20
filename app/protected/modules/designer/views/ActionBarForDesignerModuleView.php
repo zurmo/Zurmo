@@ -35,13 +35,17 @@
 
         protected $module;
 
-        public function __construct($controllerId, $moduleId, Module $module)
+        protected $activeActionElementType;
+
+        public function __construct($controllerId, $moduleId, Module $module, $activeActionElementType)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
+            assert('is_string($activeActionElementType)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
             $this->module                    = $module;
+            $this->activeActionElementType   = $activeActionElementType;
         }
 
         protected function renderContent()

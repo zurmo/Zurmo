@@ -42,7 +42,7 @@
             )
         {
             parent::__construct(6, 1);
-            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user), 0, 0);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user, 'SecurityDetailsLink'), 0, 0);
             $titleBar = new TitleBarView (
                                     strval($user), Yii::t('Default', 'Security'));
             $this->setView($titleBar, 1, 0);
