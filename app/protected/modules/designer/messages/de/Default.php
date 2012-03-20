@@ -141,8 +141,6 @@
             => 'Formel Name',
         'General'
             => 'Allgemein',
-        'General Edit'
-            => 'Allgemein bearbeiten',
         'How does this work?'
             => 'Wie funktioniert das?',
         'Invalid panel configuration type'

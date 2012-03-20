@@ -193,8 +193,6 @@
             => 'Paramètres du panneau',
         'Panel Title'
             => 'Titre du panneau',
-        'Perform Action'
-            => 'Sélectionner',
         'Radio Drop Down'
             => 'Éléments du bouton radio',
         'record'

@@ -43,8 +43,11 @@
                 'template'        => '{update}',
                 'buttons' => array(
                     'update' => array(
-                    'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                        'url' => $url,
+                        'imageUrl' => false,
+                        'visible'  => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                        'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                        'label'           => '!'
                     ),
                 ),
             );

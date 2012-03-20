@@ -132,8 +132,6 @@
                 'redirectUrl'      => $redirectUrl,
             );
             $gridView = new GridView(1, 1);
-            //$gridView->setView(new TitleBarView (
-            //                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'), strval($model)), 0, 0);
             $gridView->setView(new $viewClassName(  $this->getId(),
                                                     $this->getModule()->getId(),
                                                     $params), 0, 0);

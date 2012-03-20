@@ -141,8 +141,6 @@
             => 'Nombre de fÃ³rmula',
         'General'
             => 'General',
-        'General Edit'
-            => 'ModificaciÃ³n general',
         'How does this work?'
             => 'Â¿CÃ³mo funciona?',
         'Invalid panel configuration type'

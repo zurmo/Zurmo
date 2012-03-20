@@ -33,6 +33,7 @@
                     'title' => "eval:Yii::t('Default', 'Related AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
+                    'gridViewType' => RelatedListView::GRID_VIEW_TYPE_NORMAL,
                     'panels' => array(
                         array(
                             'rows' => array(

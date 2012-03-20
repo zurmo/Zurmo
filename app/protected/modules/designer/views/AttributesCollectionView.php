@@ -53,41 +53,44 @@
         {
             $content  = null;
             $content .= $this->renderBeforeTableContent();
-            $content .= '<div>';
-            $content .= $this->renderTitleContent();
-            $content .= '<ul class="configuration-list">';
-            foreach ($this->attributesCollection as $attributeName => $information)
+            if(count($this->attributesCollection) > 0)
             {
-                $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
-                $content .= '<tr>';
-                $content .= '<td>';
-                $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
-                if ($information['elementType'] == 'EmailAddressInformation' ||
-                    $information['elementType'] == 'Address' ||
-                    $information['elementType'] == 'User' ||
-                    $information['isReadOnly'])
+                $content .= '<div>';
+                $content .= $this->renderTitleContent();
+                $content .= '<ul class="configuration-list">';
+                foreach ($this->attributesCollection as $attributeName => $information)
                 {
-                    //temporary until we figure out how to handle these types.
-                    $linkContent = null;
+                    $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
+                    $content .= '<tr>';
+                    $content .= '<td>';
+                    $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
+                    if ($information['elementType'] == 'EmailAddressInformation' ||
+                        $information['elementType'] == 'Address' ||
+                        $information['elementType'] == 'User' ||
+                        $information['isReadOnly'])
+                    {
+                        //temporary until we figure out how to handle these types.
+                        $linkContent = null;
+                    }
+                    else
+                    {
+                        $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
+                            array(
+                                'moduleClassName' => $this->moduleClassName,
+                                'attributeTypeName' => $information['elementType'],
+                                'attributeName' => $attributeName,
+                            )
+                        ));
+                    }
+                    $content .= '<li>';
+                    $content .= '<h4>' . $information['attributeLabel'] . '</h4>';
+                    $content .= ' - ' . $attributeFormClassName::getAttributeTypeDisplayName();
+                    $content .= $linkContent;
+                    $content .= '</li>';
                 }
-                else
-                {
-                    $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
-                        array(
-                            'moduleClassName' => $this->moduleClassName,
-                            'attributeTypeName' => $information['elementType'],
-                            'attributeName' => $attributeName,
-                        )
-                    ));
-                }
-                $content .= '<li>';
-                $content .= '<h4>' . $information['attributeLabel'] . '</h4>';
-                $content .= ' - ' . $attributeFormClassName::getAttributeTypeDisplayName();
-                $content .= $linkContent;
-                $content .= '</li>';
+                $content .= '</ul>';
+                $content .= '</div>';
             }
-            $content .= '</ul>';
-            $content .= '</div>';
             return $content;
         }
 

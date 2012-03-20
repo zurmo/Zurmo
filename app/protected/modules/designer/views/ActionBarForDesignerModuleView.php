@@ -89,6 +89,15 @@
             return $metadata;
         }
 
+        protected function resolveActionElementInformationDuringRender(& $elementInformation)
+        {
+            parent::resolveActionElementInformationDuringRender($elementInformation);
+            if($elementInformation['type'] == $this->activeActionElementType)
+            {
+                $elementInformation['htmlOptions']['class'] .= ' active';
+            }
+        }
+
         /**
          * Override to check if the General, Fields, and Layouts link should show for the given module
          * @return boolean

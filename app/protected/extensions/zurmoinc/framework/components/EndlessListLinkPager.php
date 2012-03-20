@@ -29,6 +29,11 @@
      */
     class EndlessListLinkPager extends LinkPager
     {
+        public function init()
+        {
+            parent::init();
+            $this->htmlOptions['class'] = 'endless-list-pager';
+        }
         /**
          * Set the header to empty
          * @var string
@@ -85,7 +90,7 @@
                                 $.each(settings.ajaxUpdate, function(i,v) {
                                     var id='#'+v;
                                     $(id).find('tbody').append($(id, data).find('tbody').html());
-                                    $(id).find('.pager').replaceWith($(id, data).find('.pager'));
+                                    $(id).find('.endless-list-pager').replaceWith($(id, data).find('.endless-list-pager'));
                                 });
                                 var \$data = $(data);
                                 jQuery.globalEval(\$data.filter('script').last().text());
