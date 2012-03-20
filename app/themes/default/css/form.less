@@ -110,10 +110,10 @@ div.form .errorMessage {
 	color: #CC0000;
 	font-size: 11px;
 	font-weight: normal;
-	margin-top: 4px;
+	//margin-top: -40px;
 	position: absolute;
-	right: 0;
-	top: -4px;
+	left:0;
+	top: -35px;
 	border: 1px solid #CC0000;
 	padding: 6px;
 	background: #FFBCB9;
@@ -122,14 +122,19 @@ div.form .errorMessage {
 	&:before{
 		content:"";
 		font-size:0;
-		width: 0;
-		height: 0;
-		border-top: 6px solid transparent;
+		width: 12px;
+		height: 9px;
+		display:block;
+		/*border-top: 6px solid transparent;
 		border-bottom: 6px solid transparent; 
 		border-right:6px solid #CC0000;
 		position:relative;
 		top:-4px;
-		left:-9px;
+		left:-9px;*/
+		position: absolute;
+		left:4px;
+		bottom:-7px;
+		background:url(../images/error-tip.png) left bottom no-repeat;
 	}
 }
 div.form .errorSummary p {
