@@ -24,23 +24,42 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // fix for fcgi
-    defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-    require_once('roots.php');
+    /**
+     * A job for checking if there is newer stable version of zurmo.
+     */
+    class CheckZurmoUpdatesJob extends BaseJob
+    {
+        /**
+         * @returns Translated label that describes this job type.
+         */
+        public static function getDisplayName()
+        {
+           return Yii::t('Default', 'Check if there is newer Zurmo version available Job');
+        }
 
-    chdir(COMMON_ROOT);
-    $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
-    // Debug is used per instance.
-    $debug = INSTANCE_ROOT . '/protected/config/debug.php';
-    //Console configuration file
-    $config = INSTANCE_ROOT . '/protected/config/console.php';
+        /**
+         * @return The type of the NotificationRules
+         */
+        public static function getType()
+        {
+            return 'CheckZurmoUpdates';
+        }
 
-    require_once(COMMON_ROOT   . "/version.php");
-    require_once($debug);
-    require_once($yii);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
-    //Including web application, because in console application, there is a reference to a method here.
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    $app = Yii::createApplication('ConsoleApplication', $config);
-    $app->run();
+        public static function getRecommendedRunFrequencyContent()
+        {
+            return Yii::t('Default', 'Once a week, early in the morning.');
+        }
+
+        /**
+         * Check if there are new zurmo updates.
+         * Then delete these logs.
+         *
+         * @see BaseJob::run()
+         */
+        public function run()
+        {
+            ZurmoModule::checkAndUpdateZurmoInfo(true);
+            return true;
+        }
+    }
 ?>

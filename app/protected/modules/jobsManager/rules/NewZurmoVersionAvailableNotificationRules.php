@@ -24,23 +24,21 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // fix for fcgi
-    defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-    require_once('roots.php');
+    /**
+     * A  NotificationRules to manage when there is new zurmo stable release.
+     */
+    class NewZurmoVersionAvailableNotificationRules extends JobsManagerAccessNotificationRules
+    {
+        protected $critical    = true;
 
-    chdir(COMMON_ROOT);
-    $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
-    // Debug is used per instance.
-    $debug = INSTANCE_ROOT . '/protected/config/debug.php';
-    //Console configuration file
-    $config = INSTANCE_ROOT . '/protected/config/console.php';
+        public static function getDisplayName()
+        {
+            return Yii::t('Default', 'new stable Zurmo release available');
+        }
 
-    require_once(COMMON_ROOT   . "/version.php");
-    require_once($debug);
-    require_once($yii);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
-    //Including web application, because in console application, there is a reference to a method here.
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
-    $app = Yii::createApplication('ConsoleApplication', $config);
-    $app->run();
+        public static function getType()
+        {
+            return 'NewZurmoVersionAvailable';
+        }
+    }
 ?>
