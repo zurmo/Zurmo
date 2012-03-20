@@ -25,13 +25,13 @@
      ********************************************************************************/
 
     /**
-     * View that renders designer module breadcrumb content
+     * View that renders group module breadcrumb content
      */
-    class DesignerBreadCrumbView extends BreadCrumbView
+    class GroupBreadCrumbView extends BreadCrumbView
     {
             protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Designer Home');
+            return Yii::t('Default', 'Groups Home');
         }
     }
 ?>

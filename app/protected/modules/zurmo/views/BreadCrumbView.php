@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -25,24 +25,44 @@
      ********************************************************************************/
 
     /**
-     * Helper class for constructing the default view used by the DesignerPageView.
+     * View that renders breadcrumb content
      */
-    class DesignerDefaultViewUtil
+    class BreadCrumbView extends View
     {
-        /**
-         * Given a controller, contained view and an $activeNodeModuleClassName, construct the gridview
-         * used by the designer page view.
-         * @param CController $controller
-         * @param View $containedView
-         * @param mixed $activeNodeModuleClassName (null or string)
-         */
-        public static function makeStandardViewForCurrentUser(CController $controller, View $containedView, $breadcrumbLinks)
+        protected $controllerId;
+        protected $moduleId;
+        protected $breadcrumbLinks;
+
+        public function __construct($controllerId, $moduleId, $breadcrumbLinks)
         {
-            assert('is_array($breadcrumbLinks)');
-            $gridView    = new GridView(2, 1);
-            $gridView->setCssClasses(array( 'AdministrativeArea' ));
-            $gridView->setView(new DesignerBreadCrumbView($controller->getId(), $controller->getModule()->getId(), $breadcrumbLinks), 0, 0);
-            $gridView->setView($containedView, 1, 0);
-            return ZurmoDefaultAdminViewUtil::makeStandardViewForCurrentUser($controller, $gridView);
+            $this->controllerId    = $controllerId;
+            $this->moduleId        = $moduleId;
+            $this->breadcrumbLinks = $breadcrumbLinks;
+        }
+
+        public function isUniqueToAPage()
+        {
+            return true;
+        }
+
+        protected function renderContent()
+        {
+            $homeUrl = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/index');
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("Breadcrumbs");
+            $cClipWidget->widget('zii.widgets.CBreadcrumbs', array(
+                'homeLink'  => CHtml::link($this->getHomeLinkLabel(), $homeUrl),
+                'links'     => $this->breadcrumbLinks,
+                'separator' => ' &#47; ',
+            ));
+            $cClipWidget->endClip();
+            $content = $cClipWidget->getController()->clips['Breadcrumbs'];
+            return $content;
+        }
+
+        protected function getHomeLinkLabel()
+        {
+            throw new NotImplementedException();
         }
     }
+?>

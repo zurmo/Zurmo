@@ -37,8 +37,8 @@
                         $this->getModule()->getId(),
                         $title
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -98,8 +98,8 @@
                             $modelClassName
                 );
             }
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -145,8 +145,8 @@
                         $attributeForm,
                         $title
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -198,8 +198,8 @@
                         $attributeForm,
                         $title
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -269,8 +269,8 @@
                         $editableViewsCollection,
                         $title
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -342,8 +342,8 @@
                         $title
 
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -373,8 +373,8 @@
                         $moduleForm,
                         $title
             );
-            $view = new DesignerPageView(DesignerDefaultViewUtil::
-                            makeStandardViewForCurrentUser($this, $canvasView, $breadcrumbLinks));
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 

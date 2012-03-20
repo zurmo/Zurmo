@@ -48,13 +48,17 @@
 
         public function actionList()
         {
+            $title           = Yii::t('Default', 'Groups');
+            $breadcrumbLinks = array(
+                 $title,
+            );
             $treeView = new GroupsActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Group::getAll('name')
             );
             $view             = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $treeView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $treeView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
@@ -74,22 +78,26 @@
 
         public function actionCreate()
         {
+            $title           = Yii::t('Default', 'Create a New Group');
+            $breadcrumbLinks = array($title);
             $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(),
                                                                    $this->attemptToSaveModelFromPost(new Group()));
             $view                  = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndCreateView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndCreateView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
             $group               = Group::getById(intval($id));
+            $title           = Yii::t('Default', 'Edit');
+            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
             $this->resolveCanGroupBeEdited($group);
             $titleBarAndEditView = new GroupActionBarAndEditView($this->getId(),
                                                                  $this->getModule()->getId(),
                                                                  $this->attemptToSaveModelFromPost($group));
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                       makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                       makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
@@ -125,6 +133,8 @@
         public function actionEditUserMembership($id)
         {
             $group              = Group::getById(intval($id));
+            $title           = Yii::t('Default', 'User Membership');
+            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
             $membershipForm     = GroupUserMembershipFormUtil::makeFormFromGroup($group);
             $postVariableName   = get_class($membershipForm);
             if (isset($_POST[$postVariableName]))
@@ -147,13 +157,15 @@
                                             $group,
                                             $this->getModule()->getPluralCamelCasedName());
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEditModulePermissions($id)
         {
             $group            = Group::getById(intval($id));
+            $title           = Yii::t('Default', 'Module Permissions');
+            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
             $data             =  PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
             $permissionsForm  = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
             $postVariableName = get_class($permissionsForm);
@@ -186,13 +198,15 @@
                                             'ModulePermissionsEditAndDetailsView',
                                             'GroupModulePermissionsEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEditRights($id)
         {
             $group              = Group::getById(intval($id));
+            $title           = Yii::t('Default', 'Rights');
+            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
             $rightsData         = RightsUtil::getAllModuleRightsDataByPermitable($group);
             $rightsForm         = RightsFormUtil::makeFormFromRightsData($rightsData);
             $postVariableName   = get_class($rightsForm);
@@ -222,13 +236,15 @@
                                             'RightsEditAndDetailsView',
                                             'GroupRightsEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEditPolicies($id)
         {
             $group              = Group::getById(intval($id));
+            $title           = Yii::t('Default', 'Policies');
+            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
             $data               = PoliciesUtil::getAllModulePoliciesDataByPermitable($group);
             $policiesForm       = PoliciesFormUtil::makeFormFromPoliciesData($data);
             $postVariableName   = get_class($policiesForm);
@@ -262,7 +278,7 @@
                                         'PoliciesEditAndDetailsView',
                                         'GroupPoliciesEditLink');
             $view                = new GroupsPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'GroupBreadCrumbView'));
             echo $view->render();
         }
 
