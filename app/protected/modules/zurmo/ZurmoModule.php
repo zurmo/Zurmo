@@ -302,7 +302,7 @@
          */
         public static function setZurmoToken()
         {
-            $zurmoToken = mt_rand( 10000000000 , 99999999999 );
+            $zurmoToken = mt_rand( 1000000000 , 9999999999 );
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'zurmoToken', $zurmoToken);
             return $zurmoToken;
         }
