@@ -140,13 +140,14 @@
             $baseLanguage           = $this->getBaseLanguage();
             return '<li class="ui-state-default" id="editableDropDown_{id}">
                         <span class="ui-icon ui-icon-arrowthick-2-n-s">&#160;</span>
+                        <div class="has-lang-label">
                         <input name = "' . $this->getNameForInputField() .
                         '" id = "' . $this->getIdForInputField('{id}') .
                         '" type = "text" value = "{content}" size="50"/>
                         <input name = "' . $this->getNameForExistingValueHiddenField() . '" type = "hidden" value = "{content}"/>
 
                         ' . static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]) .
-                        '&#160;{removalContent}' .
+                        '</div>&#160;{removalContent}' .
                         $this->renderSortableLanguageLabelInputsForAddingNewValuesJuiSortableContent() .
                         '</li>';
         }

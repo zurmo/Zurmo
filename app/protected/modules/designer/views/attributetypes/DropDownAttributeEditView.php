@@ -108,7 +108,7 @@
 
         protected function renderAfterFormLayout($form)
         {
-            $titleBar = new TitleBarView ($this->getAfterFormLayoutTranslatedTitleContent());
+            $titleBar = new TitleBarView ($this->getAfterFormLayoutTranslatedTitleContent(), null, 3);
             $content  = $titleBar->render();
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
