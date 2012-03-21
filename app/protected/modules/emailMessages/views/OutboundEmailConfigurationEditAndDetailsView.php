@@ -29,6 +29,11 @@
      */
     class OutboundEmailConfigurationEditAndDetailsView extends EditAndDetailsView
     {
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Outbound Email Configuration (SMTP)') . '</h1>';
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

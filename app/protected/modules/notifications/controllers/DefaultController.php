@@ -97,7 +97,7 @@
         }
 
         /**
-         * Method for testing creating a simple notification to the current user.
+         * Method for testing creating a simple notification for the current user.
          */
         public function actionCreateTest()
         {
