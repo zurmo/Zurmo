@@ -38,5 +38,14 @@
         {
             return true;
         }
+
+        /**
+         * (non-PHPdoc)
+         * @see PortletRules::allowMultiplePlacementOnDashboard()
+         */
+        public function allowMultiplePlacementOnDashboard()
+        {
+            return false;
+        }
     }
 ?>

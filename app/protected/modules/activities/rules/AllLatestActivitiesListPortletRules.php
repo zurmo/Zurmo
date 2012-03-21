@@ -24,54 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    abstract class PortletRules
+    /**
+     * Class defines rules for the all latest activities portlet
+     */
+    class AllLatestActivitiesListPortletRules extends MyListPortletRules
     {
-        protected $viewClassName;
-
-        public function __construct($viewClassName)
-        {
-            assert('is_string($viewClassName)');
-            $this->viewClassName = $viewClassName;
-        }
-
         /**
-         * @returns the first part of the view name for example 'WorldClock'
-         * would be returned if the view was 'WorldClockView'
-         */
-        public function getType()
-        {
-            return substr($this->viewClassName, 0, strlen($this->viewClassName) - strlen('View'));
-        }
-
-        /**
-         * Views following this rule, are they
-         * able to be shown on a Dashboard
-         * @return boolean true/false
-         */
-        public function allowOnDashboard()
-        {
-            return false;
-        }
-
-        /**
-         * Views following this rule, are they
-         * able to be shown more than once on a dashboard
-         * @return boolean true/false
+         * (non-PHPdoc)
+         * @see PortletRules::allowMultiplePlacementOnDashboard()
          */
         public function allowMultiplePlacementOnDashboard()
         {
-            return true;
-        }
-
-
-        /**
-         * Views following this rule, are they
-         * able to be shown on a relation view
-         * @return boolean true/false
-         */
-        public function allowOnRelationView()
-        {
             return false;
         }
+
     }
 ?>

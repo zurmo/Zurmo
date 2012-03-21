@@ -107,7 +107,7 @@
          */
         public static function getPortletRulesType()
         {
-            return 'MyList';
+            return 'AllLatestActivitiesList';
         }
     }
 ?>
