@@ -168,9 +168,9 @@
         'Minimum Value'
             => 'valor mÃ­nimo',
         'Module'
-            => 'MÃ³dulo',
+            => 'Módulo',
         'Modules'
-            => 'MÃ³dulos',
+            => 'Módulos',
         'Multi-Select Pick List'
             => 'Pick list de selecciÃ³n mÃºltiple',
         'Name must not contain spaces or special characters'
