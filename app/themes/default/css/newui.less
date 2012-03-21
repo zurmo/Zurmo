@@ -9,7 +9,7 @@
 @import 'datepicker.less';
 @import 'token-input.less';
 @import 'notifications.less';
-
+@import 'designer.less';
 
 *{
     margin:0;
@@ -1629,6 +1629,7 @@ label.hasCheckBox{
         top:8px;
     }
 }
+#MetadataViewEditView,
 .TableOfContentsView,
 .DetailsView,
 .EditAndDetailsView{
@@ -1637,7 +1638,6 @@ label.hasCheckBox{
     > div{
         margin-right:20px;
         margin-bottom:20px;
-        //padding-bottom:8px;
         border:1px solid #ccc;
         //.b-shadow( inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) );
         box-shadow:inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
@@ -1655,7 +1655,6 @@ label.hasCheckBox{
         line-height: 40px;
         #gradient > .vertical(#f6f6f6, #ededed);
         box-shadow:inset 0 1px 0 0 #ffffff;
-        //background: url(../images/portlet-header-gradient.png) left 1px repeat-x;
         border-bottom:1px solid #ccc;
     }
     p{
@@ -1679,8 +1678,6 @@ label.hasCheckBox{
         th, td{
             padding:7px;
             font-weight:600;
-            //line-height:140%;
-            //vertical-align:top;
         }
     }
     form{
