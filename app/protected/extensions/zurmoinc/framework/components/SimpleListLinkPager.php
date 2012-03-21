@@ -44,19 +44,26 @@
             if(($pageCount=$this->getPageCount())<=1)
                 return array();
 
-            list($beginPage,$endPage)=$this->getPageRange();
-            $currentPage=$this->getCurrentPage(false); // currentPage is calculated in getPageRange()
-            $buttons=array();
+            list($beginPage,$endPage) = $this->getPageRange();
+            $currentPage = $this->getCurrentPage(false); // currentPage is calculated in getPageRange()
+            $buttons = array();
+
+            //hidden first page link that can be used to refresh the list from an external event
+            $buttons[] = $this->createPageButton($this->firstPageLabel, 0, self::CSS_FIRST_PAGE, $currentPage <= 0, true);
 
             // prev page
-            if(($page=$currentPage-1)<0)
-                $page=0;
-            $buttons[]=$this->createPageButton($this->prevPageLabel,$page,self::CSS_PREVIOUS_PAGE,$currentPage<=0,false);
+            if(($page = $currentPage-1)<0)
+            {
+                $page = 0;
+            }
+            $buttons[]= $this->createPageButton($this->prevPageLabel, $page, self::CSS_PREVIOUS_PAGE, $currentPage <= 0, false);
 
             // next page
             if(($page=$currentPage+1)>=$pageCount-1)
-                $page=$pageCount-1;
-            $buttons[]=$this->createPageButton($this->nextPageLabel,$page,self::CSS_NEXT_PAGE,$currentPage>=$pageCount-1,false);
+            {
+                $page = $pageCount-1;
+            }
+            $buttons[]= $this->createPageButton($this->nextPageLabel, $page, self::CSS_NEXT_PAGE, $currentPage >= $pageCount-1, false);
 
             return $buttons;
         }

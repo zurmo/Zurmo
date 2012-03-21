@@ -136,5 +136,25 @@
                 $element->editableTemplate = '<td colspan="{colspan}">{label}<br/>{content}{error}</td>';
             }
         }
+
+        /**
+         * Override to allow the latest activities portlet, if it exists to be refreshed.
+         * (non-PHPdoc)
+         * @see InlineEditView::renderConfigSaveAjax()
+         */
+        protected function renderConfigSaveAjax($formName)
+        {
+            return CHtml::ajax(array(
+                    'type' => 'POST',
+                    'data' => 'js:$("#' . $formName . '").serialize()',
+                    'url'  =>  $this->getValidateAndSaveUrl(),
+                    'update' => '#' . $this->uniquePageId,
+                    'complete' => "function(XMLHttpRequest, textStatus){
+                        //find if there is a latest activities portlet
+                        $('.LatestActivtiesForPortletView').each(function(){
+                            $(this).find('.pager').find('.first').find('a').click();
+                        });}"
+                ));
+        }
     }
 ?>

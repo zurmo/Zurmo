@@ -60,7 +60,10 @@
                             dataType : 'json',
                             success : function(data)
                             {
-                                //todo: move strikethrough here?
+                                //find if there is a latest activities portlet
+                                $('.LatestActivtiesForPortletView').each(function(){
+                                    $(this).find('.pager').find('.first').find('a').click();
+                                });
                             },
                             error : function()
                             {
