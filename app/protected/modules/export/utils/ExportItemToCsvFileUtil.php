@@ -26,5 +26,9 @@
 
     class ExportItemToCsvFileUtil extends ExportItemToOutputUtil
     {
+        public function export(& $data)
+        {
+
+        }
     }
 ?>

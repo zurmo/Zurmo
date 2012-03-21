@@ -28,6 +28,10 @@
     {
         const RIGHT_ACCESS_EXPORT = 'Access Export Tool';
 
+        // Used to determine if data will be exported directly in browser
+        // or to be exported via asynchronous via background job.
+        const ASYNCHRONOUS_THRESHOLD = 1;
+
         public function getDependencies()
         {
            return array('zurmo');
@@ -35,7 +39,7 @@
 
         public function getRootModelNames()
         {
-            return array('Export');
+            return array('ExportItem');
         }
 
         public static function getDefaultMetadata()

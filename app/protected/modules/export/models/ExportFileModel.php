@@ -24,7 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ExportFileModel extends Item
+    class ExportFileModel extends FileModel
     {
+        public static function getModuleClassName()
+        {
+            return 'ExportModule';
+        }
     }
 ?>

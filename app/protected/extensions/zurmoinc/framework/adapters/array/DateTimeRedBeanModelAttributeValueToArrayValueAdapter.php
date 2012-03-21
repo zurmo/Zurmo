@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class IntegerRedBeanModelAttributeValueToApiValueAdapter extends TextRedBeanModelAttributeValueToApiValueAdapter
+    class DateTimeRedBeanModelAttributeValueToArrayValueAdapter extends TextRedBeanModelAttributeValueToArrayValueAdapter
     {
     }
 ?>

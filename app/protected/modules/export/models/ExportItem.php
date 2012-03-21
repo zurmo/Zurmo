@@ -26,5 +26,47 @@
 
     class ExportItem extends Item
     {
+        public function __toString()
+        {
+            return Yii::t('Default', '(Unnamed)');
+        }
+
+        public static function getModuleClassName()
+        {
+            return 'ExportModule';
+        }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'isCompleted',
+                    'exportFileType',
+                    'serializedData'
+                ),
+                'relations' => array(
+                    'file' => array(RedBeanModel::HAS_ONE,  'FileModel', RedBeanModel::OWNED),
+                ),
+                'rules' => array(
+                    array('isCompleted',    'required'),
+                    array('isCompleted',     'type',   'type' => 'boolean'),
+                    array('exportFileType',   'required'),
+                    array('exportFileType',   'type', 'type' => 'string'),
+                    array('serializedData',   'required'),
+                    array('serializedData',   'type', 'type' => 'string'),
+                ),
+                'defaultSortAttribute' => 'modifiedDateTime',
+                'noAudit' => array(
+                    'serializedData'
+                )
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
+        }
     }
 ?>

@@ -28,7 +28,7 @@
      * Helper functionality for finding the element or
      * form type associated with a model's attribute.
      */
-    class ModelAttributeToMixedApiTypeUtil extends ModelAttributeToMixedTypeUtil
+    class ModelAttributeToMixedArrayTypeUtil extends ModelAttributeToMixedTypeUtil
     {
         /**
          * Returns the a type that is derived by looking at several different components of an attribute.  This

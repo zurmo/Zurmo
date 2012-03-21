@@ -30,7 +30,7 @@
      * that can be translated into one of the available
      * GridView widgets in Yii.
      */
-    abstract class RedBeanModelAttributeValueToApiValueAdapter
+    abstract class RedBeanModelAttributeValueToArrayValueAdapter
     {
         protected $model;
 

@@ -34,7 +34,9 @@
     {
         protected $selectAllOptionsCssClass = 'select-all-options';
 
-        protected $MassActionsCssClass = 'mass-action';
+        protected $massActionsCssClass = 'mass-action';
+
+        protected $ExportCssClass = 'export-action';
 
         public $template = "{selectRowsSelectors}{summary}\n{items}\n{massActionSelector}{pager}";
 
@@ -51,6 +53,8 @@
         public $blankDisplay = '&#160;';
 
         public $massActionMenu = array();
+
+        public $exportActionMenu = array();
 
         /**
          * Override to display select all/none optional
@@ -102,7 +106,11 @@
             }
             if ($this->selectableRows > 0 && $this->massActionMenu > 0)
             {
-                echo '&#160;<div class="' . $this->MassActionsCssClass . '">' . $this->renderMassActionDropDownElement() . '</div>' . "\n";
+                echo '&#160;<div class="' . $this->massActionsCssClass . '">' . $this->renderMassActionDropDownElement() . '</div>' . "\n";
+            }
+            if ($this->exportActionMenu > 0)
+            {
+                echo '<br />&#160;<div class="' . $this->ExportCssClass . '">' . $this->renderExportActionDropDownElement() . '</div>' . "\n";
             }
         }
 
@@ -151,6 +159,43 @@
                 );
             ");
             return CHtml::dropDownList($name, '', $this->massActionMenu, $htmlOptions);
+        }
+
+        protected function renderExportActionDropDownElement()
+        {
+            $name = $this->id . '-exportAction';
+            $htmlOptions = array(
+                        'name' => $name,
+                        'id'   => $name,
+            );
+            Yii::app()->clientScript->registerScript($this->id . '-listViewExportActionDropDown', "
+                        $('#" . $this->id . "-exportAction').live('change', function()
+                            {
+                                if ($(this).val() == '')
+                                {
+                                    return false;
+                                }
+                                var options =
+                                {
+                                    url : $.fn.yiiGridView.getUrl('" . $this->id . "')
+                                }
+                                if (options.url.split( '?' ).length == 2)
+                                {
+                                    options.url.split( '?' )[0];
+                                    options.url = options.url.split( '?' )[0] +'/'+ $(this).val() + '?' + options.url.split( '?' )[1];
+                                }
+                                else
+                                {
+                                    options.url = options.url +'/'+ $(this).val();
+                                }
+                                var data = '' + $(this).val() + '&ajax=&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
+                                "url = $.param.querystring(options.url, data);
+                                window.location.href = url;
+                                return false;
+                            }
+                        );
+                    ");
+            return CHtml::dropDownList($name, '', $this->exportActionMenu, $htmlOptions);
         }
     }
 ?>

@@ -24,7 +24,14 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class RadioDropDownRedBeanModelAttributeValueToApiValueAdapter extends DropDownRedBeanModelAttributeValueToApiValueAdapter
+    class TextAreaRedBeanModelAttributeValueToArrayValueAdapter extends TextRedBeanModelAttributeValueToArrayValueAdapter
     {
+        public function renderGridViewData()
+        {
+            return array(
+                'name' => $this->attribute,
+                'type' => 'Ntext',
+            );
+        }
     }
 ?>

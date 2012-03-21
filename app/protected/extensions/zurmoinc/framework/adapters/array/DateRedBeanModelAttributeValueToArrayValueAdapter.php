@@ -24,20 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CurrencyRedBeanModelAttributeValueToApiValueAdapter extends RedBeanModelAttributeValueToApiValueAdapter
+    class DateRedBeanModelAttributeValueToArrayValueAdapter extends TextRedBeanModelAttributeValueToArrayValueAdapter
     {
-        public function resolveData(& $data)
-        {
-            assert('$this->model->{$this->attribute} instanceof Currency');
-            $currency = $this->model->{$this->attribute};
-            if ($currency->id > 0)
-            {
-                $data[$this->attribute] = array('id'         => $currency->id);
-            }
-            else
-            {
-                $data[$this->attribute] = null;
-            }
-        }
     }
 ?>

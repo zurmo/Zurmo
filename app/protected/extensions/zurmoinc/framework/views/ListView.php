@@ -137,6 +137,7 @@
                 'columns' => $columns,
                 'nullDisplay' => '&#160;',
                 'massActionMenu' => $this->getMassActionMenuForCurrentUser(),
+                'exportActionMenu' => $this->getExportActionMenuForCurrentUser(),
             );
         }
 
@@ -325,6 +326,18 @@
                 return array(
                     ''           => Yii::t('Default', 'Perform Action'),
                     'massEdit'   => Yii::t('Default', 'Update Selected'),
+                );
+            }
+        }
+
+        protected function getExportActionMenuForCurrentUser()
+        {
+            if (Right::ALLOW == Yii::app()->user->userModel->getEffectiveRight(
+                    'ExportModule', ExportModule::RIGHT_ACCESS_EXPORT))
+            {
+                return array(
+                    ''           => Yii::t('Default', 'Perform Export Action'),
+                    'export'     => Yii::t('Default', 'Export'),
                 );
             }
         }
