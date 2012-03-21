@@ -42,12 +42,25 @@
                     'searchAttributes' => array('ownedItemsOnly' => true, 'completed' => false),
                 ),
                 'global' => array(
+                    'derivedAttributeTypes' => array(
+                        'CloseTaskCheckBox',
+                    ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
                     ),
+                    'gridViewType' => RelatedListView::GRID_VIEW_TYPE_STACKED,
                     'panels' => array(
                         array(
                             'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'CloseTaskCheckBox'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                                 array('cells' =>
                                     array(
                                         array(

@@ -72,7 +72,7 @@
                             }
                         });
                        ';
-            /// End Not Coding Standard
+            // End Not Coding Standard
             return $script;
         }
     }

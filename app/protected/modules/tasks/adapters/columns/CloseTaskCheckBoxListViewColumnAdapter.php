@@ -29,10 +29,51 @@
         public function renderGridViewData()
         {
             return array(
-                'name'  => $this->attribute,
-                'value' => 'CHtml::checkBox("closeTask" . $data->id)',
-                'type'  => 'raw', //could do Boolean and remove value line above. would render true/false instead.
+                'name'   => $this->attribute,
+                'header' => Yii::t('Default' , 'Close'),
+                'value'  => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
+                'type'   => 'raw',
             );
         }
+
+        protected function resolveToRenderCheckBox($modelClassName, $modelId)
+        {
+            if(!ActionSecurityUtil::canCurrentUserPerformAction( 'Edit', new $modelClassName(false)))
+            {
+                return '';
+            }
+            $checkboxId = 'closeTask' . $modelId;
+            $content    = 'CHtml::checkBox("' . $checkboxId . '", false,
+                                       array("class" => "close-task-checkbox",
+                                             "onClick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')"))';
+
+            Yii::app()->clientScript->registerScript('closeTaskCheckBoxScript', "
+                function closeOpenTaskByCheckBoxClick(checkboxId, modelId)
+                {
+                    if($('#' + checkboxId).attr('checked') == 'checked')
+                    {
+                        $('#' + checkboxId).attr('disabled', true);
+                        $('#' + checkboxId).parent().parent().children().css('text-decoration', 'line-through');
+                        $.ajax({
+                            url : '" . Yii::app()->createUrl('tasks/default/closeTask') . "?id=' + modelId,
+                            type : 'GET',
+                            dataType : 'json',
+                            success : function(data)
+                            {
+                                //todo: move strikethrough here?
+                            },
+                            error : function()
+                            {
+                                //todo: error call
+                            }
+                        });
+                    }
+                }
+            ", CClientScript::POS_END);
+            return $content;
+        }
+
+        //todo make sure live actually works on paged tassks
+
     }
 ?>
