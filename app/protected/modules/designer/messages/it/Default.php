@@ -215,6 +215,8 @@
             => 'Textarea',
         'The formula is invalid.'
             => 'La formula non è valida.',
+        'The requested {moduleClassName} module does not exist'
+            => 'Il modulo {moduleClassName} non esiste.',
         'There are no fields in this module to be used in a formula.'
             => 'Non esiste campi per utilizzare nella formula.',
         'There was an error processing your request.'
