@@ -26,10 +26,31 @@
 
     class AccountConvertToView extends EditView
     {
+        /**
+         * Override to pass in the relation Id as the modelId. In the case of lead conversion, the lead->id is the
+         * $modelId. This can then be used for a cancel button to return to the lead detailview.
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param RedsBeanModel $model
+         * @param integer $modelId
+         */
+        public function __construct($controllerId, $moduleId, $model, $modelId)
+        {
+            assert('is_int($modelId)');
+            parent::__construct($controllerId, $moduleId, $model);
+            $this->modelId = $modelId;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'  => 'CancelConvertLink'),
+                            array('type'  => 'SaveButton', 'label' => "eval:Yii::t('Default', 'Complete Conversion')"),
+                        ),
+                    ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
@@ -49,19 +70,6 @@
                 ),
             );
             return $metadata;
-        }
-
-        /**
-         * Override to remove any remnants of the BiewToolBar.
-         */
-        protected function renderViewToolBar($renderInForm = true)
-        {
-            return;
-        }
-
-        protected function renderAfterFormLayout($form)
-        {
-            return CHtml::submitButton(Yii::t('Default', 'Complete Conversion'));
         }
     }
 ?>

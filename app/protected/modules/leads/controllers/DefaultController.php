@@ -319,5 +319,13 @@
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'LeadsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
         }
+
+        protected function makeEditAndDetailsView($model, $renderType)
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit" || $renderType == "Details"');
+            $editViewClassName = 'LeadEditAndDetailsView';
+            return new $editViewClassName($renderType, $this->getId(), $this->getModule()->getId(), $model);
+        }
     }
 ?>

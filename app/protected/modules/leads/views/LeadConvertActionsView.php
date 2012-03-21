@@ -35,7 +35,9 @@
 
         protected $convertToAccountSetting;
 
-        public function __construct($controllerId, $moduleId, $modelId, $convertToAccountSetting, $userCanCreateAccount)
+        protected $title;
+
+        public function __construct($controllerId, $moduleId, $modelId, $convertToAccountSetting, $userCanCreateAccount, $title)
         {
             assert('is_int($convertToAccountSetting)');
             assert('is_string($controllerId)');
@@ -46,6 +48,7 @@
             $this->modelId                 = $modelId;
             $this->convertToAccountSetting = $convertToAccountSetting;
             $this->userCanCreateAccount    = $userCanCreateAccount;
+            $this->title                   = $title;
         }
 
         /**
@@ -89,17 +92,14 @@
                     }
                 );
             ");
-
-            $cancelLink = new CancelConvertLinkActionElement($this->controllerId, $this->moduleId, $this->modelId);
             $createLink = CHtml::link(Yii::t('Default', 'Create AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-create-link'));
             $selectLink = CHtml::link(Yii::t('Default', 'Select AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-select-link'));
             $skipLink   = CHtml::link(Yii::t('Default', 'Skip AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-skip-link'));
-            $content    = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
-            $content   .= $cancelLink->render() . '&#160;';
-            $content .= '</div></div>';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<div id="account-select-title" style="margin-bottom:5px;">';
             if ($this->userCanCreateAccount)
             {
@@ -134,6 +134,11 @@
                 $content .= '</div>';
             }
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title. '</h1>';
         }
     }
 ?>

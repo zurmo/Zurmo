@@ -30,8 +30,15 @@
      */
     class LeadConvertAccountSkipView extends MetadataView
     {
-        public function __construct()
+        protected $controllerId;
+
+        protected $moduleId;
+
+        public function __construct($controllerId, $moduleId, $modelId)
         {
+            $this->controllerId   = $controllerId;
+            $this->moduleId       = $moduleId;
+            $this->modelId        = $modelId;
         }
 
         /**
@@ -68,7 +75,11 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
+            $cancelLink = new CancelConvertLinkActionElement($this->controllerId, $this->moduleId, $this->modelId);
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $cancelLink->render() . '&#160;';
             $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'), array('name' => 'AccountSkip'));
+            $content .= '</div></div>';
             return $content;
         }
     }

@@ -26,6 +26,8 @@
 
     class LeadConvertView extends GridView
     {
+        protected $cssClasses =  array('DetailsView');
+
         public function __construct(
                 $controllerId,
                 $moduleId,
@@ -85,23 +87,23 @@
             }
             if ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $gridSize = 5;
+                $gridSize = 4;
             }
             else
             {
-                $gridSize = 4;
+                $gridSize = 3;
             }
+            $title = Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
+                                                LabelUtil::getTranslationParamsForAllModules()) . ': ' . $title;
             parent::__construct($gridSize, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
-                                                LabelUtil::getTranslationParamsForAllModules()), $title), 0, 0);
             $this->setView(new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
-                                                      $userCanCreateAccount), 1, 0);
-            $this->setView(new AccountSelectView($selectAccountform), 2, 0);
-            $this->setView(new AccountConvertToView($controllerId, $moduleId, $account), 3, 0);
+                                                      $userCanCreateAccount, $title), 0, 0);
+            $this->setView(new AccountSelectView($controllerId, $moduleId, $modelId, $selectAccountform), 1, 0);
+            $this->setView(new AccountConvertToView($controllerId, $moduleId, $account, $modelId), 2, 0);
 
             if ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $this->setView(new LeadConvertAccountSkipView(), 4, 0);
+                $this->setView(new LeadConvertAccountSkipView($controllerId, $moduleId, $modelId), 3, 0);
             }
         }
 
