@@ -89,7 +89,7 @@
             $horizontalGridView = new GridView(2, 1);
             $horizontalGridView->setCssClasses(array('AppContainer', 'clearfix'));
             $horizontalGridView->setView($aVerticalGridView, 0, 0);
-            $containedView->setCssClasses(array_merge($containedView->getCssClasses(), array('AppContent'))); //the app itself to the right
+            $containedView->setCssClasses(array_merge($containedView->getCssClasses(), array('AppContent', 'ErrorView'))); //the app itself to the right
             $horizontalGridView->setView($containedView, 1, 0);
 
             $verticalGridView   = new GridView(3, 1);
