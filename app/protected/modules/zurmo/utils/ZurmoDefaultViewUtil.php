@@ -82,13 +82,20 @@
          */
         public static function makeErrorViewForCurrentUser(CController $controller, View $containedView)
         {
-            $horizontalGridView = new GridView(1, 1);
-            $horizontalGridView->setView($containedView, 0, 0);
-            $verticalGridView   = new GridView(4, 1);
+            $aVerticalGridView   = new GridView(1, 1);
+            $aVerticalGridView->setCssClasses( array('AppNavigation', 'clearfix')); //navigation left column
+            $aVerticalGridView->setView(static::makeMenuView($controller), 0, 0);
+
+            $horizontalGridView = new GridView(2, 1);
+            $horizontalGridView->setCssClasses(array('AppContainer', 'clearfix'));
+            $horizontalGridView->setView($aVerticalGridView, 0, 0);
+            $containedView->setCssClasses(array_merge($containedView->getCssClasses(), array('AppContent'))); //the app itself to the right
+            $horizontalGridView->setView($containedView, 1, 0);
+
+            $verticalGridView   = new GridView(3, 1);
             $verticalGridView->setView(static::makeHeaderView($controller),         0, 0);
-            $verticalGridView->setView(static::makeMenuView(),                      1, 0);
-            $verticalGridView->setView($horizontalGridView,                         2, 0);
-            $verticalGridView->setView(static::makeFooterView(),                    3, 0);
+            $verticalGridView->setView($horizontalGridView,                         1, 0);
+            $verticalGridView->setView(static::makeFooterView(),                    2, 0);
             return $verticalGridView;
         }
 
