@@ -33,7 +33,7 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
             $data = array(
-                'zurmoToken' => '11111111111',
+                'zurmoToken' => '1111111111',
                 'serverIpAddress' => '127.0.0.1',
                 'serverName' => 'zurmo.com',
                 'serverSoftware' => 'Apache 2.2.16',
