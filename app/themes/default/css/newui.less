@@ -401,9 +401,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 #app-search{
-    //margin:0 40px 0 40px;
     margin-left:40px;
-    //border:1px solid red;
     width:341px;
     .ui-autocomplete{
 
@@ -431,7 +429,6 @@ footer, header, hgroup, menu, nav, section {
 }
 
 #global-search-loopa{
-    //display: none;
     padding:0;
     margin:0;
     position:relative;
@@ -453,7 +450,6 @@ footer, header, hgroup, menu, nav, section {
     height:100%;
     margin:0 40px 0 40px;
     background:#fff url(../images/nav.png) left top repeat-y;
-    //background:#fff url(../images/content-gradient.png) left top repeat-x;
     -webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
     -webkit-border-radius: 0 0 5px 5px;
     z-index: 0;
@@ -462,8 +458,6 @@ footer, header, hgroup, menu, nav, section {
 #HeaderView{
     position:relative;
     z-index:9999;
-    /*position: fixed;
-    width:100%;*/
 }
 
 
@@ -1062,7 +1056,6 @@ table.items thead tr:hover{
     font-size:12px !important;
     color:#666;
     font-weight:400 !important;
-    /*padding-top:8px;*/
     margin-bottom:4px;
 }
 
@@ -1103,8 +1096,6 @@ table.items thead tr:hover{
     }
     input{
         color:#FFF;
-        //line-height: 25px !important;
-        //border:none;
         .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
         .b-shadow(inset 0 1px 1px 1px rgba(255, 255, 255, 0.8));
         background: #97c43d;
@@ -1471,32 +1462,8 @@ label.hasCheckBox{
             .has-model-select a{
                 top:23px;
             }
-            /*
-            input + span{
-                background: url(../images/dropdown-general.png) left top no-repeat;
-                width:28px;
-                height:24px;
-                display:block;
-                float:right;
-                z-index:5000;
-                position: absolute;
-                right:0;
-                top:23px;
-                margin-right:1px;
-                a{
-                    display:block;
-                    text-indent:-9999px;
-                    &:before{
-                        content:"Y";
-                        .symbly(32px);
-                        margin-top:-1px;
-                        margin-left:5px;
-                    }
-                }
-            }*/
         }
         input[type="text"]{
-            //width:200px;
             margin-bottom: 4px;
         }
 
@@ -1520,7 +1487,6 @@ label.hasCheckBox{
                 vertical-align: middle;
             }
             select, .dk_container{
-                //display:block;
                 margin-top:8px;
                 margin-left:30px;
                 margin-bottom:0;
@@ -1620,8 +1586,8 @@ label.hasCheckBox{
         font-size:15px;
     }
 }
-/*For single meeting, contact etc..*/
 
+/*For single meeting, contact etc..*/
 .AppContent.TableOfContentsView,
 .AppContent.SecuredEditAndDetailsView{
     padding-right:0;
@@ -1633,13 +1599,11 @@ label.hasCheckBox{
 .TableOfContentsView,
 .DetailsView,
 .EditAndDetailsView{
-/*.SecuredEditAndDetailsView{*/
     position: relative;
     > div{
         margin-right:20px;
         margin-bottom:20px;
         border:1px solid #ccc;
-        //.b-shadow( inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) );
         box-shadow:inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
         #gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );
         .form form{
@@ -1710,24 +1674,19 @@ label.hasCheckBox{
     position: relative;
 }
 .toolbar-mbmenu{
-        position:absolute;
-        top:-12px;
-        right:30px;
-        margin:0;
-        .view-toolbar{
-            float:right;
-            border:none;
-            .b-shadow(none);
-        }
-        ul{
-            list-style: none;
-        }
-   
-    #OptionsMenu{
-        /*position:absolute;
-        top:-35px;
-        right:8px;*/
+    position:absolute;
+    top:-12px;
+    right:30px;
+    margin:0;
+    .view-toolbar{
+        float:right;
+        border:none;
+        .b-shadow(none);
     }
+    ul{
+        list-style: none;
+    }
+    #OptionsMenu{ }
     #OptionsMenu > li > a{
         width: auto;
         .zButton();
@@ -1760,6 +1719,7 @@ label.hasCheckBox{
         }
     }
 }
+
 .AttributeDetailsView{
 	.toolbar-mbmenu{
 		top:8px;
@@ -1773,6 +1733,7 @@ label.hasCheckBox{
         }
     }
 }
+
 .DetailsAndRelationsView,
 #AccountDetailsAndRelationsView{
     .clearfix();
@@ -1877,12 +1838,7 @@ label.hasCheckBox{
         }
     }
 }
-/*
-.hasDatepicker{
-    width:92% !important;
-    margin-right:3% !important;
-}
-*/
+
 #inline-edit-form{
     table + table{
         float:left;
@@ -1983,11 +1939,7 @@ label.hasCheckBox{
 }
 
 
-
-
-
 /*Temp Addreess Fields*/
-
 
 div.overlay-label-field{
     position:relative;
@@ -2032,9 +1984,6 @@ div.hasHalfs{
         .clearfix();
         padding-left:0 !important;
         div{
-            /*float:left;
-            display: block;
-            width:100%;*/
             margin-left:25px;
             line-height: 140%;
         }
@@ -2053,16 +2002,12 @@ div.hasHalfs{
     }
 }
 
-
-
 .juiportlet-widget.OpportunitiesForAccountRelatedListView,
 .juiportlet-widget.ContactsForAccountRelatedListView{
     div.button-column{
         padding-top:4px;
     }
 }
-
-
 
 /*Upcoming Meeting Pager*/
 .pager{
@@ -2109,6 +2054,9 @@ div.hasHalfs{
     }
     .previous a:after{
         content:"8";
+    }
+    #list-view-endless-page:after{
+    	 content:"6" !important;
     }
     .hidden{
         a{
@@ -2159,8 +2107,6 @@ div.hasHalfs{
         position: absolute;
         top:-27px;
         left:150px;
-        //right:10px;
-        //width:65%;
         > div{
             float:left;
         }
@@ -2267,15 +2213,7 @@ div.hasHalfs{
     }
 }
 
-
-/*
-#AccountLatestActivtiesForPortletView-list-view{
-    td{
-        padding-left:15px;
-    }
-}
-*/
-/*Search User Modal*/
+/*=Search User Modal*/
 #UsersModalSearchView{
     .search-view-0{
         .clearfix();
@@ -2306,6 +2244,7 @@ div.hasHalfs{
         }
     }
 }
+
 #UsersModalListView{
     .items{
         tbody td:first-child,
@@ -2323,7 +2262,7 @@ div.hasHalfs{
 
 
 
-/*Auto Complete*/
+/*=Auto Complete*/
 .ui-autocomplete{
     .flyout();
     padding-top:3px;
@@ -2346,7 +2285,7 @@ div.hasHalfs{
 }
 
 
-/*Flash Message View*/
+/*=Flash Message View*/
 #FlashMessageView{
     position: relative;
     margin-left:192px;
@@ -2354,7 +2293,6 @@ div.hasHalfs{
     .jnotify-item{
         margin:0 20px 20px 0;
         padding:10px;
-        //.radius(5px);
         border-radius:5px !important;
         border:1px solid #FFCC00;
         background:#FFFCB5;
@@ -2416,9 +2354,6 @@ div.hasHalfs{
   }
 
 .dk_open {
-  /*box-shadow: 0 0 5px #40b5e2;
-  -moz-box-shadow: 0 0 5px #40b5e2;
-  -webkit-box-shadow: 0 0 5px #40b5e2;*/
  .b-shadow(0 0 1px 1px @themeColor);
   z-index: 10;
 }
@@ -2527,10 +2462,42 @@ div.hasHalfs{
     }
 }*/
 
-/*MAss Edit view*/
+/*=Mass Edit view*/
 .AppContent.TitleBarAndMassEditView{
     padding-right:0;
     #edit-form table{
         width:100%;
     }
+}
+
+/*=Lead Conversion*/
+
+
+#LeadConvertActionsView{
+	margin-right:0;
+	.DetailsView > div{
+		border:none !important;
+		background:none !important;
+		.b-shadow(none);
+	}
+	#edit-form{
+		border:none !important;
+		background:none !important;
+		.b-shadow(none);
+		table{
+			width:100%;
+		}
+	}
+	#account-skip-form{
+		th{
+			text-align:center !important;
+			font-weight:normal;
+		}
+	}
+}
+.lead-conversion-actions{
+	padding:10px;
+	a{
+		.zLink;
+	}
 }

@@ -98,23 +98,24 @@
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-select-link'));
             $skipLink   = CHtml::link(Yii::t('Default', 'Skip AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-skip-link'));
-            $content  = '<div>';
-            $content .= $this->renderTitleContent();
-            $content .= '<div id="account-select-title" style="margin-bottom:5px;">';
+            $content = $this->renderTitleContent();
+            $content .= '<div class="lead-conversion-actions">';
+            $content .= '<div id="account-select-title">';
             if ($this->userCanCreateAccount)
             {
                 $content .= $createLink .  '&#160;' . Yii::t('Default', 'or') . '&#160;';
             }
-            $content .= '<b>' . Yii::t('Default', 'Select AccountsModuleSingularLabel',
-                                    LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
+            $content .= Yii::t('Default', 'Select AccountsModuleSingularLabel',
+                                    LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
+									
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
                 $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
             }
             $content .= '</div>';
-            $content .= '<div id="account-create-title" style="margin-bottom:5px;">';
-            $content .= '<b>' . Yii::t('Default', 'Create AccountsModuleSingularLabel',
-                                    LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
+            $content .= '<div id="account-create-title">';
+            $content .= Yii::t('Default', 'Create AccountsModuleSingularLabel',
+                                    LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
             $content .= Yii::t('Default', 'or') . '&#160;' . $selectLink . '&#160;';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
@@ -123,16 +124,17 @@
             $content .= '</div>';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $content .= '<div id="account-skip-title" style="margin-bottom:5px;">';
+                $content .= '<div id="account-skip-title">';
                 if ($this->userCanCreateAccount)
                 {
                     $content .= $createLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
                 }
                 $content .= $selectLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
-                $content .= '<b>' . Yii::t('Default', 'Skip AccountsModuleSingularLabel',
-                                        LabelUtil::getTranslationParamsForAllModules()) . '</b>&#160;';
+                $content .= Yii::t('Default', 'Skip AccountsModuleSingularLabel',
+                                        LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
                 $content .= '</div>';
             }
+			$content .= '</div>'; //this was missing..
             return $content;
         }
 
