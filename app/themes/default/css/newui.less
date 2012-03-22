@@ -1686,8 +1686,12 @@ label.hasCheckBox{
     top:-12px;
     right:30px;
     margin:0;
+    float:right;
+    width:auto;
     .view-toolbar{
-        float:right;
+      	position:absolute;
+      	right:0;
+      	top:0;
         border:none;
         .b-shadow(none);
     }
@@ -1696,7 +1700,8 @@ label.hasCheckBox{
     }
     #OptionsMenu{ }
     #OptionsMenu > li > a{
-        width: auto;
+    	text-align:center;
+        width: 60px;
         .zButton();
         font-size:11px;
         &:after{
@@ -2066,6 +2071,9 @@ div.hasHalfs{
     #list-view-endless-page:after{
     	 content:"6" !important;
     }
+    .first, .last{
+    	display:none;
+    }
     .hidden{
         a{
             color:#ddd;
@@ -2127,6 +2135,11 @@ div.hasHalfs{
         }
         .latest-activity-rollup{
             float:right;
+            margin-top:1px;
+            margin-left:50px;
+            .hasCheckBox{
+            	display:none;
+            }
         }
         label{
             padding-top:0;
