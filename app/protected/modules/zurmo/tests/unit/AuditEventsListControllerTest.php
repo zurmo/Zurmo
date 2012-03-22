@@ -40,6 +40,13 @@
         {
             parent::setUp();
             Yii::app()->user->userModel = User::getByUsername('super');
+            AuditEvent::$isTableOptimized = false;
+        }
+
+        public function teardown()
+        {
+            AuditEvent::$isTableOptimized = false;
+            parent::teardown();
         }
 
         public function testMakeSearchAttributeDataByAuditedModel()

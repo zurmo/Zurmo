@@ -26,6 +26,18 @@
 
     class AuditEventsRecentlyViewedUtilTest extends BaseTest
     {
+        public function setUp()
+        {
+            parent::setUp();
+            AuditEvent::$isTableOptimized = false;
+        }
+
+        public function teardown()
+        {
+            AuditEvent::$isTableOptimized = false;
+            parent::teardown();
+        }
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();

@@ -300,9 +300,13 @@
         /**
          * Set Zurmo token.
          */
-        public static function setZurmoToken()
+        public static function setZurmoToken($zurmoToken = null)
         {
-            $zurmoToken = mt_rand( 1000000000 , 9999999999 );
+            if (!isset($zurmoToken) || !is_int($zurmoToken))
+            {
+                $zurmoToken = mt_rand( 1000000000 , 9999999999 );
+            }
+
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'zurmoToken', $zurmoToken);
             return $zurmoToken;
         }
