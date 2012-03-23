@@ -566,7 +566,66 @@ table.configuration-list{
 /*Import window*/
 .AppContent.ImportWizardView{
 	padding-right:0;
+	#edit-form{
+		table{
+			width:100%;
+			td{
+				padding-left:0;
+			}
+		}
+	} 
+	h3{
+		margin-bottom:15px;
+	}
+	#permissions-module {
+		width: 60% !important;
+		float: none !important;
+	}
+	#addExtraColumnButton{
+		.zButton;
+	}
+	.required-fields{
+		font-size:12px;
+		line-height: 18px;
+		padding-left:10px;
+		strong{
+			margin-bottom:4px;
+			margin-left:-10px;
+		}
+	}
 }
+
+
+
+#ImportWizardMappingView{
+	table tr:first-child{
+		th{
+			padding-left:15px;
+			font-weight:bold !important;
+			color:@themeColor;
+			&:first-child{
+				padding-left:0;
+			}
+		}
+	}
+	td{
+		text-align:left;
+		padding-left:15px !important;
+		
+	}
+	tr td:first-child{
+		padding-left:0 !important;
+	}
+	th{
+		text-align:left;
+		font-size: 12px !important;
+		color: #666;
+		font-weight: 400 !important;
+	}
+}
+
+
+
 #ImportWizardImportRulesView{
 	.radio-input{
 		margin-top:20px;
@@ -577,4 +636,5 @@ table.configuration-list{
 			margin-top:1px;
 		}
 	}
+	
 }

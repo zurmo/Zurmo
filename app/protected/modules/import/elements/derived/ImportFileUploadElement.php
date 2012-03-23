@@ -72,10 +72,10 @@
                 'existingFiles'        => $existingFilesInformation,
                 'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize(),
                 'beforeUploadAction'   => $beforeUploadAction,
-                'afterDeleteAction'    => $afterDeleteAction,
+                'afterDeleteAction'    => $afterDeleteAction
             ));
             $cClipWidget->endClip();
-            $content .= '<tr><td></td><td colspan="3">' . $cClipWidget->getController()->clips['filesElement'] . '</td></tr>';
+            $content .= '<tr><td></td><td colspan="3"><div class="file-upload-box">' . $cClipWidget->getController()->clips['filesElement'] . '</div></td></tr>';
             return $content;
         }
 
@@ -106,7 +106,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Please select the CSV to upload');
+            return Yii::t('Default', '<h3>Please select the CSV to upload</h3>');
         }
     }
 ?>
