@@ -129,5 +129,31 @@
             }
             return implode($separator, $items);
         }
+
+        public static function activeCheckBox($model, $attribute, $htmlOptions = array())
+        {
+            self::resolveNameID($model,$attribute,$htmlOptions);
+            if(!isset($htmlOptions['value']))
+            {
+                $htmlOptions['value']=1;
+            }
+            if(!isset($htmlOptions['checked']) && self::resolveValue($model,$attribute)==$htmlOptions['value'])
+            {
+                $htmlOptions['checked']='checked';
+            }
+            self::clientChange('click',$htmlOptions);
+            if(array_key_exists('uncheckValue',$htmlOptions))
+            {
+                $uncheck=$htmlOptions['uncheckValue'];
+                unset($htmlOptions['uncheckValue']);
+            }
+            else
+            {
+                $uncheck = '0';
+            }
+            $hiddenOptions = isset($htmlOptions['id']) ? array('id'=>self::ID_PREFIX.$htmlOptions['id']) : array('id'=>false);
+            $hidden = $uncheck !== null ? self::hiddenField($htmlOptions['name'],$uncheck,$hiddenOptions) : '';
+            return $hidden . CHtml::tag("label", array("class" => "hasCheckBox"), self::activeInputField('checkbox',$model,$attribute,$htmlOptions));
+        }
     }
 ?>

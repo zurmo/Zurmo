@@ -51,7 +51,7 @@
                     $htmlOptions['uncheckValue'] = 1;
                 }
             }
-            return CHtml::tag("label", array("class" => "hasCheckBox"), $this->form->checkBox($this->model, $this->attribute, $htmlOptions));
+            return $this->form->checkBox($this->model, $this->attribute, $htmlOptions);
         }
 
         /**
