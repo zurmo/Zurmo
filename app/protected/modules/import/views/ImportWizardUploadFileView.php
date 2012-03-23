@@ -39,16 +39,16 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $fileUploadElement                         = new ImportFileUploadElement($this->model, null, $form);
-            $fileUploadElement->editableTemplate       = '{label}<br/>{content}';
+            $fileUploadElement->editableTemplate       = '{label}{content}';
 
             $firstRowIsHeaderElement                   = new CheckBoxElement($this->model, 'firstRowIsHeaderRow', $form);
             $firstRowIsHeaderElement->editableTemplate = '{content}{label}';
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td>'    . "\n";
+            //$content .= '<tr><td>ZZZZZ'    . "\n";
             $content .= $fileUploadElement->render();
-            $content .= '</td></tr>'  . "\n";
+            //$content .= '</td></tr>'  . "\n";
             $content .= '<tr><td>'    . "\n";
             $content .= $firstRowIsHeaderElement->render();
             $content .= '</td></tr>'  . "\n";

@@ -882,6 +882,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 /*=Forms with clearfix issues*/
+#MapConfigurationView,
 #AccountConvertToView,
 #AccountsMassEditView{
 	#edit-form:after{
@@ -1268,16 +1269,20 @@ label.hasCheckBox{
     background: url(../images/checkbox.png) left 4px no-repeat;
     width:16px;
     height:20px;
-    margin-left:15px;
+    padding:0;
+    margin:0 0 0 15px;
+    //.clearfix;
+    
     &.c_on {
         background: url(../images/checkbox.png) left -21px no-repeat;
     }
     input {
         position: absolute;
-        //margin-left:-50px;
         left: -9999px;
     }
 }
+
+
 .ui-multiselect-checkboxes label {
     padding-left: 25px;
     background: url(../images/checkbox.png) left 4px no-repeat;
@@ -1290,6 +1295,10 @@ label.hasCheckBox{
     position: absolute;
     left: -9999px;
 }
+
+
+
+
 
 #FilteredListView, .select-all-options, .summary{
     /*@TODO check what this component do - for now its hidden cause its not in design*/

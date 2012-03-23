@@ -15,7 +15,6 @@ $(window).ready(function(){
 		}
 	);
 	
-	
 	//Main nav hover
 	$('#MenuView a span').hover(
 		function(){
@@ -28,8 +27,6 @@ $(window).ready(function(){
 			}
 		}
 	);
-	
-	
 	
 	/*Resizes the app to fill the browser's window case smaller'*/
 	var viewportHeight = $(window).height();
@@ -53,30 +50,67 @@ $(window).ready(function(){
 		}
 	}
 	
-	
-	
-	
-	
 	/*Dropdowns - Dropkick*/
-	 
-	//$('#edit-form select, .search-view-1 select, #inline-edit-form select').dropkick();
-
 	$('select:not(.ignore-style)').dropkick();
-
 	$('html').click(function(e) {
-		$.each($('td > select'), function(index, value) {
+		$.each($('select:not(.ignore-style)'), function(index, value) {
 			$(value).dropkick('close');
 		});
 	});
+	
+	/*Label overlays input, address fields*/
+	$(".overlay-label-field input").live('focus', function(){
+		$(this).prev().fadeOut(100);
+	});
+	
+	$(".overlay-label-field > input").live('blur', function(){
+		if($(this).val() == "") {
+			$(this).prev().fadeIn(250);
+		}
+	});
+	$(".overlay-label-field > input").each( function(){
+		if($(this).val() == "") {
+			$('label', $(this)).fadeIn(250);
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/*Checkboxes
 	 from: http://webdesign.maratz.com/lab/fancy-checkboxes-and-radio-buttons/jquery.html
 	 * */
+	
+	
+	$('input:checkbox').each(function(){
+		log( $(this).is(':checked')   );
+		if ( $( this ).is(':checked') ) {
+			$(this).parent().addClass('c_on');
+		}
+		$(this).bind( 'change', checkMyState );
+	});
+	
 
+	function checkMyState(event){
+		if (  $(event.target).is('input')  ){
+			if (  $(event.target).is(':checked')  ){
+				$(this).parent().addClass('c_on');
+			} else {
+				$(this).parent().removeClass('c_on');
+			}
+		}
+	}
+	
 
 	function setupCheckboxes( $context ) {
-		
 		if ( $('input:checkbox', $context ).length ) {	
 			$('input:checkbox', $context ).each(function(){ 
 				$(this).parent().removeClass('c_on');
@@ -100,96 +134,15 @@ $(window).ready(function(){
 			});
 	}
 	
-	function testme(){
-		log('hi');
-	}
-	
-	//Still buggy...
-	/*
-	var $tableItems = $('.items')[0];
-	
-	$('label.hasCheckBox', $tableItems ).each(function(){
-		
-		$(this).bind('click', { $inputContext:$(this).content  },
-			function( event ){
-				
-		        if ( $('input:checkbox', $tableItems ).length ) {	
-		        		
-					$('input:checkbox', $tableItems ).each(function(){ 
-						$(this).parent().removeClass('c_on');
-					});
-					
-					$('label input:checked', $tableItems ).each(function(){ 
-						$(this).parent('label').addClass('c_on');
-				    });
-				    
-				}
-		});
-	});
-	*/
     
     //we're doing that because the multiselect widget isn't generated yet..
     window.setTimeout(
     	function setCheckboxes(){
     		setupCheckboxes( $('#search-form') );
     		setupCheckboxes( $('#app-search') );
-    		//setupCheckboxes( $('.checkbox-column') );
     	},
     1000 );
 	
-	
-	
-	$('input:checkbox').live('change', function(event){
-		//log( $(this).attr('id') );
-		//log( $(this).is(':checked'));
-		//log('----');
-	    //checkall();
-	});
-	
-	function checkall(){
-		$('input:checkbox', '.items').each(function(){
-			log( $(this).attr('id') );
-			log( $(this).is(':checked'));
-			log('----');
-		});
-	}
-	
-	
-	
-	
-	
-	/*Label overlays input, address fields*/
-	$(".overlay-label-field input").live('focus', function(){
-		$(this).prev().fadeOut(100);
-	});
-	
-	$(".overlay-label-field > input").live('blur', function(){
-		if($(this).val() == "") {
-			$(this).prev().fadeIn(250);
-		}
-	});
-	$(".overlay-label-field > input").each( function(){
-		if($(this).val() == "") {
-			$('label', $(this)).fadeIn(250);
-		}
-	});
-	
-	
-	/*Form errors
-	$('.form .errorMessage').each(function(){
-		$(this).css({ top: -$(this).height() -20 });
-	});
-	*/
-	
-	
-	 window.setTimeout(
-    	function do1(){
-    		//$('.ui-datepicker-trigger').trigger('click');
-    	}, 10 );
-	
-	
-	
-
 
 });
 

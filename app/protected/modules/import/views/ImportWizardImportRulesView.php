@@ -39,7 +39,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $element                   = new ImportRulesTypeRadioDropDownElement($this->model, 'importRulesType', $form);
-            $element->editableTemplate = '{label}<br/>{content}';
+            $element->editableTemplate = '{label}{content}';
 
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
