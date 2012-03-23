@@ -75,7 +75,7 @@
                 'afterDeleteAction'    => $afterDeleteAction,
             ));
             $cClipWidget->endClip();
-            $content .= $cClipWidget->getController()->clips['filesElement'];
+            $content .= '<tr><td></td><td colspan="3">' . $cClipWidget->getController()->clips['filesElement'] . '</td></tr>';
             return $content;
         }
 
