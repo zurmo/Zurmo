@@ -61,7 +61,7 @@
             $content  = '<div>';
             $content .= $this->renderTitleContent();
             $content .= '<div class="process-container-view">';
-            $content .= "<h2>" . $this->allStepsMessage . '</h2>';
+            $content .= "<h3>" . $this->allStepsMessage . '</h3>';
             $content .= $this->renderProgressBarContent();
             $content .= '</div>';
             $content .= '<div id="' . $this->containerViewId . '" class="process-container-view">';

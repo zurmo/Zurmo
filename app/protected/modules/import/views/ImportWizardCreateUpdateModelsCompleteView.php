@@ -62,20 +62,13 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $content  = '<table>'      . "\n";
-            $content .= '<tbody>'      . "\n";
-            $content .= '<tr><td><h3>' . "\n";
-            $content .= Yii::t('Default', 'Congratulations! Your import is complete.  Below is a summary of the results.');
-            $content .= '</h3><br/>'   . "\n";
-            $content .= Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated))
-                         . '<br/>' . "\n";
-            $content .= Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated))
-                         . '<br/>' . "\n";
-            $content .= Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors))
-                         . '<br/>' . "\n";
-            $content .= '</td></tr>'   . "\n";
-            $content .= '</tbody>'     . "\n";
-            $content .= '</table>'     . "\n";
+            $content  = null;
+            $content .= Yii::t('Default', '<h3>Congratulations! Your import is complete.  Below is a summary of the results.</h3>');
+            $content .= '<span>'   . "\n";
+            $content .= Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . "\n";
+            $content .= Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . "\n";
+            $content .= Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . "\n";
+            $content .= '</span>' . "\n";
             $content .= $this->renderErrorListContent();
             return $content;
         }
@@ -91,7 +84,7 @@
 
         protected function renderErrorListContent()
         {
-            $content  = '<br/>';
+            $content  = null;
             $content .= '<h3>' . "\n";
             $content .= Yii::t('Default', 'Information about the rows with errors');
             $content .= '</h3>'   . "\n";

@@ -595,8 +595,6 @@ table.configuration-list{
 	}
 }
 
-
-
 #ImportWizardMappingView{
 	table tr:first-child{
 		th{
@@ -635,6 +633,63 @@ table.configuration-list{
 			margin-right:10px;
 			margin-top:1px;
 		}
+	}	
+}
+
+.process-container-view{
+	padding:15px;
+}
+
+#ImportSequentialProcessContainerView{
+	padding-right:0;
+	#edit-form{
+		padding:0 !important;
+		border:0 !important;
+		background:none !important;
+		.b-shadow(none);
+		table{
+			width:100%;
+			td{
+				padding-left:0;
+			}
+		}
+	} 
+	h3, h3 + span{
+		margin-bottom:15px;
+		display:block;
 	}
-	
+}
+#ImportWizardCreateUpdateModelsCompleteView{
+	> div{
+		padding:0 !important;
+		margin:0;
+		border:0 !important;
+		background:none !important;
+		.b-shadow(none);
+	}
+	table{
+		margin-top:15px;
+		border-bottom:1px solid #DFDFDF !important;
+	}
+	table tr:first-child{
+		th{
+			padding:0 0 0 15px !important;
+			
+			font-weight:bold !important;
+		}
+	}
+	td{
+		text-align:left;
+		padding:10px 15px !important;
+		font-weight:normal !important;
+	}
+	tr td:first-child{
+		//padding-left:0 !important;
+	}
+	th{
+		text-align:left;
+		font-size: 12px !important;
+		color: #666;
+		font-weight: 400 !important;
+	}
 }
