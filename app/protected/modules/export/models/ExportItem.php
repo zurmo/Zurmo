@@ -24,8 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ExportItem extends Item
+    class ExportItem extends OwnedSecurableItem
     {
+        public static function getUncompletedItems()
+        {
+            return self::getSubset(null, null, null, "isCompleted = 0");
+        }
+
         public function __toString()
         {
             return Yii::t('Default', '(Unnamed)');
@@ -46,11 +51,10 @@
                     'serializedData'
                 ),
                 'relations' => array(
-                    'file' => array(RedBeanModel::HAS_ONE,  'FileModel', RedBeanModel::OWNED),
+                    'exportFileModel' => array(RedBeanModel::HAS_ONE,  'ExportFileModel'),
                 ),
                 'rules' => array(
-                    array('isCompleted',    'required'),
-                    array('isCompleted',     'type',   'type' => 'boolean'),
+                    array('isCompleted',    'boolean'),
                     array('exportFileType',   'required'),
                     array('exportFileType',   'type', 'type' => 'string'),
                     array('serializedData',   'required'),

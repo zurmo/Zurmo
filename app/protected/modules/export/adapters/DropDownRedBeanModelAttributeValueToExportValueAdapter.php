@@ -24,44 +24,19 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ExportModule extends SecurableModule
+    class DropDownRedBeanModelAttributeValueToExportValueAdapter extends RedBeanModelAttributeValueToExportValueAdapter
     {
-        const RIGHT_ACCESS_EXPORT = 'Access Export Tool';
-
-        // Used to determine if data will be exported directly in browser
-        // or to be exported via asynchronous via background job.
-        const ASYNCHRONOUS_THRESHOLD = 1;
-
-        public function getDependencies()
+        public function resolveData(& $data)
         {
-           return array('zurmo');
-        }
-
-        public function getRootModelNames()
-        {
-            return array('ExportItem', 'ExportFileModel');
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = array();
-            $metadata['global'] = array(
-                'configureMenuItems' => array(
-                    array(
-                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Export',
-                        'descriptionLabel' => 'Export data from Zurmo',
-                        'route'            => '/export/default',
-                        'right'            => self::RIGHT_ACCESS_EXPORT,
-                    ),
-                ),
-            );
-            return $metadata;
-        }
-
-        public static function getAccessRight()
-        {
-            return self::RIGHT_ACCESS_EXPORT;
+            assert('$this->model->{$this->attribute} instanceof CustomField');
+            if ($this->model->{$this->attribute}->id > 0)
+            {
+                $data[$this->attribute] = $this->model->{$this->attribute}->value;
+            }
+            else
+            {
+                $data[$this->attribute] = null;
+            }
         }
     }
 ?>

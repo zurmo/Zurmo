@@ -44,28 +44,21 @@
                 $type             = ModelAttributeToMixedArrayTypeUtil::getType($this->model, $attributeName);
                 $adapterClassName = $type . 'RedBeanModelAttributeValueToExportValueAdapter';
                 if ($type != null && @class_exists($adapterClassName) &&
-                    !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
-                      RedBeanModel::HAS_ONE))
+                !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
+                RedBeanModel::HAS_ONE))
                 {
                     $adapter = new $adapterClassName($this->model, $attributeName);
                     $adapter->resolveData($data);
                 }
                 elseif ($this->model->isOwnedRelation($attributeName) &&
-                    ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
-                      $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
+                ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
+                $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
                 {
                     if ($this->model->{$attributeName}->id > 0)
                     {
                         $util = new RedBeanModelToExportAdapter($this->model->{$attributeName});
                         $relatedData          = $util->getData();
-                        foreach ($relatedData as $relatedDataAttribute => $relatedDataValue)
-                        {
-                            if ($relatedDataAttribute != 'id')
-                            {
-                                $parentAttributeName = $attributeName . '__' . $relatedDataAttribute;
-                                $data[$parentAttributeName] = $relatedDataValue;
-                            }
-                        }
+                        $data[$attributeName] = $relatedData;
                     }
                     else
                     {
@@ -75,7 +68,7 @@
                 //We don't want to list properties from CustomFieldData objects
                 //This is also case fo related models, not only for custom fields
                 elseif ($this->model->isRelation($attributeName) &&
-                    $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
+                $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                 {
                     if ($this->model->{$attributeName}->id > 0)
                     {

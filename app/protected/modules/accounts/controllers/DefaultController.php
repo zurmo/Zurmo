@@ -218,6 +218,7 @@
                         $data[] = $redBeanModelToExportAdapter->getData();
                     }
                     // Output data
+                    $output = ExportItemToCsvFileUtil::export($data);
                 }
                 else
                 {
@@ -233,11 +234,6 @@
             {
                 // No data to export
             }
-
-
-            $totalItems = $dataProvider->getTotalItemCount();
-            echo $totalItems;
-            exit;
         }
     }
 ?>

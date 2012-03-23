@@ -26,6 +26,12 @@
 
     abstract class ExportItemToOutputUtil
     {
-        abstract public function export(& $data);
+        public static function export(& $data)
+        {
+        }
+
+        protected static function createHeader($filename, $fileSize)
+        {
+        }
     }
 ?>

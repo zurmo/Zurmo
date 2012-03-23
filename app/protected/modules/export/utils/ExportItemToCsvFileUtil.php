@@ -26,9 +26,69 @@
 
     class ExportItemToCsvFileUtil extends ExportItemToOutputUtil
     {
-        public function export(& $data)
+        public static function export(& $data, $showOutput = false)
         {
+            $output = '';
 
+            if (count($data) > 0)
+            {
+                $headerRow = array();
+                foreach ($data[0] as $key => $value)
+                {
+                    $headerRow[] = $key;
+                }
+                $output = self::arraytoCsv($headerRow);
+
+                foreach ($data as $row)
+                {
+                    $output .= self::arraytoCsv($row);
+                }
+            }
+
+            if ($showOutput)
+            {
+                self::output($output);
+            }
+            else
+            {
+                return $output;
+            }
+        }
+
+        protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"', $eol = "\n")
+        {
+            $fp = fopen('php://temp', 'r+');
+
+            if (fputcsv($fp, $row, $delimiter, $enclosure) === false)
+            {
+                return false;
+            }
+
+            rewind($fp);
+            $csv = fgets($fp);
+
+            if ($eol != PHP_EOL)
+            {
+                $csv = substr($csv, 0, (0 - strlen(PHP_EOL))) . $eol;
+            }
+            return $csv;
+        }
+
+        protected static function createHeader($filename, $fileSize)
+        {
+            header("Pragma: no-cache");
+            header("Content-type: application/octet-stream; charset=UTF8");
+            header("Content-Disposition: attachment; filename=" . $filename);
+            header("Content-transfer-encoding: binary");
+            header("Expires: 0" );
+            header("Last-Modified: " . time());
+            header("Content-Length: " . $fileSize);
+        }
+
+        public static function showOutput(& $output)
+        {
+            self::createHeader('export.csv', strlen($output));
+            echo $output;
         }
     }
 ?>

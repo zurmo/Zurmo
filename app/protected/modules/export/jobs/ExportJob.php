@@ -50,8 +50,56 @@
             return Yii::t('Default', 'Every 5 minutes.');
         }
 
+        /**
+        * @returns the threshold for how long a job is allowed to run. This is the 'threshold'. If a job
+        * is running longer than the threshold, the monitor job might take action on it since it would be
+        * considered 'stuck'.
+        */
+        public static function getRunTimeThresholdInSeconds()
+        {
+            return 30;
+        }
+
         public function run()
         {
+            $exportItems = ExportItem::getUncompletedItems();
+            foreach ($exportItems as $exportItem)
+            {
+                if (isset($exportItem->exportFileModel))
+                {
+                    //continue;
+                }
+
+                $dataProvider = unserialize($exportItem->serializedData);
+                $formattedData = $dataProvider->getData();
+                if ($exportItem->exportFileType == 'csv')
+                {
+                    foreach ($formattedData as $model)
+                    {
+                        $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
+                        $data[] = $redBeanModelToExportAdapter->getData();
+                    }
+                    $output = ExportItemToCsvFileUtil::export($data);
+
+                    $fileContent          = new FileContent();
+                    $fileContent->content = $output;
+
+                    $exportFileModel = new ExportFileModel();
+                    $exportFileModel->exportItem = $exportItem;
+                    $exportFileModel->fileContent = $fileContent;
+                    $exportFileModel->name = "export.csv";
+                    $exportFileModel->type    = 'application/octet-stream';
+                    $exportFileModel->size    = strlen($output);
+                    $saved         = $exportFileModel->save();
+
+                    if ($saved)
+                    {
+                        $exportItem->isCompleted = 1;
+                        $exportItem->exportFileModel = $exportFileModel;
+                        $exportItem->save();
+                    }
+                }
+            }
         }
     }
 ?>
