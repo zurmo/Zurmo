@@ -131,16 +131,17 @@
 
         protected function renderRequiredAttributesLabelsDataContent()
         {
-            $content = null;
+            $content = '<div class="required-fields">';
             if (count($this->requiredAttributesLabelsData) > 0)
             {
-                $content .= '<b>' . Yii::t('Default', 'Required Fields') . '</b>' . '<br/>';
+                $content .= '<strong>' . Yii::t('Default', 'Required Fields') . ':</strong>' . '<br/>';
                 foreach ($this->requiredAttributesLabelsData as $label)
                 {
                     $content .= $label. '<br/>';
                 }
                 $content .= '<br/>';
             }
+			$content .= '</div>';
             return $content;
         }
 
