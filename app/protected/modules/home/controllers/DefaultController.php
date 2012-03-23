@@ -105,6 +105,7 @@
                 assert('in_array($dashboard->layoutType, array_keys(Dashboard::getLayoutTypesData()))');
                 if ($dashboard->save())
                 {
+                    GeneralCache::forgetAll(); //Ensure menu refreshes
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
@@ -137,6 +138,7 @@
                         $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($uniqueLayoutId, Yii::app()->user->userModel->id, array());
                         Portlet::shiftPositionsBasedOnColumnReduction($portletCollection, 1);
                     }
+                    GeneralCache::forgetAll(); //Ensure menu refreshes
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
