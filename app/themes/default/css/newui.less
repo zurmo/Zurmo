@@ -411,36 +411,34 @@ footer, header, hgroup, menu, nav, section {
     margin-left:40px;
     width:341px;
     .ui-autocomplete{
-
-
     }
 }
 
 #globalSearchInput{
     font-style:italic;
     color:#999;
+    height:23px;
     text-indent:10px;
     line-height:23px;
-    height:23px;
     width:300px;
     border:1px solid #d5d4d4;
     border-left:none;
     margin:7px 0 0 -3px;
+    float:left;
     background: url(../images/search-bar-gradient.png) left top repeat-x;
+    &:focus{
+	    outline: 0;
+	    color:#545454;
+	    font-style:normal;
+	}
 }
 
-#globalSearchInput:focus{
-    outline: 0;
-    color:#545454;
-    font-style:normal;
-}
 
 #global-search-loopa{
     padding:0;
-    margin:0;
-    position:relative;
-    top:8px;
+    margin:7px 0 0 0;
     height:25px;
+    float:left;
     line-height:23px;
     width:40px;
     border:1px solid #d5d4d4;
@@ -1016,7 +1014,8 @@ table.items thead tr:hover{
         font-size:12px;
         color:#999;
         text-indent:6px;
-        line-height: 24px;
+        //line-height: 24px;
+        height:26px;
         .b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
         width:100%;
         .box-sizing();
@@ -1340,6 +1339,7 @@ label.hasCheckBox{
     #global-search-loopa{
         position: relative;
         top:0;
+        margin-top:0;
         float:left;
     }
     input[type="text"]{
