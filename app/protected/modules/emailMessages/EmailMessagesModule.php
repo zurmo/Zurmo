@@ -78,12 +78,6 @@
                         'right'            => self::RIGHT_ACCESS_CONFIGURATION,
                     ),
                 ),
-                'designerMenuItems' => array(
-                    'showFieldsLink' => false,
-                    'showGeneralLink' => false,
-                    'showLayoutsLink' => false,
-                    'showMenusLink' => false,
-                ),
             );
             return $metadata;
         }

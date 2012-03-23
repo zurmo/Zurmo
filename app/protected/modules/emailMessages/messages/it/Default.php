@@ -29,5 +29,83 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'A test email address must be entered before you can send a test email.'
+            => 'Si prega di inserire un indirizzo e-mail per inviare una email di prova.',
+        'A test email from Zurmo'
+            => 'Un messaggio di prova da Zurmo',
+        'A test text message from Zurmo'
+            => 'Un messaggio SMS di prova da Zurmo',
+        'Access Email Configuration'
+            => 'Accesso alla configurazione di mail',
+        'Access EmailMessagesModulePluralLabel Tab'
+            => 'Accesso ai EmailMessagesModulePluralLabel Tab',
+        'Clear Old Sent Notifications Email Job'
+            => 'Cancellare le vecchie notificazioni inviati',
+        'Create EmailMessagesModulePluralLabel'
+            => 'Creare EmailMessagesModulePluralLabel',
+        'Delete EmailMessagesModulePluralLabel'
+            => 'Cancellare EmailMessagesModulePluralLabel',
+        'Draft'
+            => 'Bozza',
+        'Email Configuration'
+            => 'Configurazione di mail',
+        'Error Code:'
+            => 'Codici d\'errore',
+        'Error Message:'
+            => 'Messaggio d\'errore',
+        'Every 1 minute.'
+            => 'Ogni minuto',
+        'From Address'
+            => 'Indirizzo email mittente',
+        'From Name'
+            => 'Nome mittente',
+        'Host'
+            => 'Host',
+        'Html Content'
+            => 'Contenuto HTML',
+        'Inbox'
+            => 'Posta in arrivo',
+        'Manage Email Configuration'
+            => 'Gestione email',
+        'Message failed to send'
+            => 'Messaggio non inviato',
+        'Message successfully sent'
+            => 'Messaggio inviato con successo',
+        'Outbound Email Configuration (SMTP)'
+            => 'Server di posta in uscita (SMTP)',
+        'Outbound email configuration saved successfully.'
+            => 'Server di posta in uscita (SMTP) salvato.',
+        'Outbox'
+            => 'Posta in uscita',
+        'Outbox Error'
+            => 'Errore con la posta in uscita',
+        'Person'
+            => 'Persona',
+        'Port'
+            => 'Porta',
+        'Process Outbound Email Job'
+            => 'Inizia il processo de posta in uscita',
+        'Response from Server'
+            => 'Risposta del server',
+        'Send a test email to'
+            => 'Inviare una prova di email a ',
+        'Send system notifications from'
+            => 'Invia notificazioni dall\'utente',
+        'Send Test Email'
+            => 'Invia email di test',
+        'Sent'
+            => 'Inviata',
+        'Test Message Results'
+            => 'Risultati del messaggio di prova',
+        'Testing Outbound Email Connection Job'
+            => 'Prova Server di posta in uscita (SMTP)',
+        'Text Content'
+            => 'Messaggio',
+        'To Address'
+            => 'Indirizzo Destinatario',
+        'To Name'
+            => 'Nome Destinatario',
+        'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
+            => 'Notificazioni del sistema.  Le notificazioni devono mandare di un utente super admin.',
     );
 ?>

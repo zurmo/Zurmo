@@ -52,6 +52,7 @@
                 $freeze = true;
             }
             $this->freeze = $freeze;
+            ZurmoModule::setZurmoToken(1111111111);
         }
 
         public function teardown()

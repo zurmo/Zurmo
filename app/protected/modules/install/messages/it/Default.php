@@ -58,6 +58,10 @@
             => 'Servizi installati correttamente',
         'Creating super user.'
             => 'Creazione del utente super.',
+        'Ctype extension is loaded.'
+            => 'L\'estensione Ctype è stata caricata.',
+        'Ctype extension is not loaded.'
+            => 'L\'estensione Ctype non è stata caricata.',
         'Curl'
             => 'Curl',
         'Database admin password'
@@ -184,6 +188,10 @@
             => 'Oh no!',
         'PASS'
             => 'PASS',
+        'PCRE extension is loaded.'
+            => 'L\'estensione PCRE è stata caricata.',
+        'PCRE extension is not loaded.'
+            => 'L\'estensione PCRE non è stata caricata.',
         'PHP'
             => 'PHP',
         'PHP date.timezone is not set.'
@@ -232,6 +240,10 @@
             => 'SOAP è installato.',
         'SOAP is not installed.'
             => 'SOAP non è installato.',
+        'SPL extension is loaded.'
+            => 'L\'estensione SPL è stata caricata.',
+        'SPL extension is not loaded.'
+            => 'L\'estensione SPL non è stata caricata.',
         'Starting database schema creation.'
             => 'Creazione del schema del database.',
         'Starting schema update process.'

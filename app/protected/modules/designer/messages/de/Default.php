@@ -215,6 +215,8 @@
             => 'Textbereich',
         'The formula is invalid.'
             => 'Die Formel ist nicht gültig',
+        'The requested {moduleClassName} module does not exist'
+            => 'Das Modul {moduleClassName} existiert nicht.',
         'There are no fields in this module to be used in a formula.'
             => 'Es gibt keine Felder zur Verwendung in der Formulierung.',
         'There was an error processing your request.'

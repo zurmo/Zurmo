@@ -57,9 +57,12 @@
             }
             catch (NotFoundException $e)
             {
-                //Perhaps the username has changed, clear session and logout user.
-                Yii::app()->getSession()->destroy();
-                $this->redirect(Yii::app()->homeUrl);
+                if (Yii::app()->isApplicationInstalled())
+                {
+                    //Perhaps the username has changed, clear session and logout user.
+                    Yii::app()->getSession()->destroy();
+                    $this->redirect(Yii::app()->homeUrl);
+                }
             }
             catch (CException $e)
             {
