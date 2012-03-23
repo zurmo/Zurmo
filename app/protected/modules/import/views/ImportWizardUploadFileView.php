@@ -46,7 +46,7 @@
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
-            //$content .= '<tr><td>ZZZZZ'    . "\n";
+            //$content .= '<tr><td>'    . "\n";
             $content .= $fileUploadElement->render();
             //$content .= '</td></tr>'  . "\n";
             $content .= '<tr><td>'    . "\n";

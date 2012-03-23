@@ -96,7 +96,7 @@
                                                          $this->form, $params);
             $enclosureElement->editableTemplate        = '<tr><td>{label}</td><td colspan="3">{content}</td></tr>';
             $content  = $delimiterElement->render();
-            //$content .= $enclosureElement->render();
+            $content .= $enclosureElement->render();
             return $content;
         }
 
