@@ -215,6 +215,8 @@
             => 'Zone de texte',
         'The formula is invalid.'
             => 'La formule est invalide.',
+        'The requested {moduleClassName} module does not exist'
+            => 'Le module {moduleClassName} n\'éxiste pas.',
         'There are no fields in this module to be used in a formula.'
             => 'Aucun champ existe pour utiliser dans une formule.',
         'There was an error processing your request.'

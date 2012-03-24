@@ -30,7 +30,7 @@
     // DON'T MAKE A MESS!
     return array(
         'A calculated number based on other field values'
-            => 'UnaÂ cifra calculada',
+            => 'Una cifra calculada',
         'A check box'
             => 'Un check box',
         'A currency field'
@@ -48,15 +48,15 @@
         'A field with this name is already used.'
             => 'Un campo con este nombre ya se utiliza.',
         'A phone field'
-            => 'Un campo de telÃ©fono',
+            => 'Un campo de teléfono',
         'A pick list that can have multiple selections'
             => 'Un pick list que puede tener varias selecciones',
         'A pick list with specific values to select from'
-            => 'Un pick list con valores especÃ­ficos para seleccionar',
+            => 'Un pick list con valores específicos para seleccionar',
         'A radio button pick list'
-            => 'Un botÃ³n de radio pick list',
+            => 'Un botón de radio pick list',
         'A set of dependent pick lists'
-            => 'DesplegablesÂ dependientes',
+            => 'Desplegables dependientes',
         'A tag cloud'
             => 'Una Nube de palabras',
         'A text field'
@@ -64,17 +64,17 @@
         'Access Designer Tool'
             => 'Acceso a Designer',
         'Address fields'
-            => 'Campos de direcciÃ³n',
+            => 'Campos de dirección',
         'All fields placed must be unique. Two of the placed fields: {field1Label} and {field2Label} contain the same fields.'
-            => 'UnÂ campo se puede establecerÂ una sola vez.Â Los siguientes camposÂ contienenÂ el mismo campo: {field1Label} y {field2Label}.',
+            => 'Un campo se puede establecer una sola vez. Los siguientes campos contienen el mismo campo: {field1Label} y {field2Label}.',
         'All panels visible'
             => 'Todos los paneles visibles',
         'All required fields must be placed in this layout.'
-            => 'Todos los campos requeridos deben colocarse en este diseÃ±o.',
+            => 'Todos los campos requeridos deben colocarse en este diseño.',
         'An integer field'
-            => 'Un campo de nÃºmero entero',
+            => 'Un campo de número entero',
         'At least one pick-list value must be mapped for each used level.'
-            => 'Por lo menos unÂ valor se debe asignar para cada nivel',
+            => 'Por lo menos un valor se debe asignar para cada nivel',
         'Available Fields:'
             => 'Campos disponibles:',
         'Calculated Number'
@@ -82,19 +82,19 @@
         'Check Box'
             => 'Check box',
         'Create a math formula that is calculated from other fields. Use the Formula Name from the Available Fields grid below to create your formula. Example formula (field1 x field2) / field3'
-            => 'Crear una fÃ³rmula de cÃ¡lculo de los valores de otros campos. Use el nombre de la columna en los Campos de fÃ³rmula disponibles para crear la fÃ³rmula. Por ejemplo: (campo1 x campo2) / campo3',
+            => 'Crear una fórmula de cálculo de los valores de otros campos. Use el nombre de la columna en los Campos de fórmula disponibles para crear la fórmula. Por ejemplo: (campo1 x campo2) / campo3',
         'Create Field'
             => 'Crear campo',
         'Custom Fields'
             => 'campos personalizados',
         'Decimal'
-            => 'DiseÃ±ador',
+            => 'Decimal',
         'Dependency Mapping'
             => 'Mapping dependiente',
         'Dependent Pick Lists'
             => 'Listas desplegables dependientes',
         'Designer'
-            => 'DiseÃ±ador',
+            => 'Diseñador',
         'Designer Home'
             => 'Inicio de designer',
         'Designer Tool'
@@ -110,17 +110,17 @@
         'Each item must be uniquely named'
             => 'Cada elemento debe tener un nombre exclusivo',
         'Each value must not contain a comma.'
-            => 'El valorÂ no puede contenerÂ una coma.',
+            => 'El valor no puede contener una coma.',
         'Edit Field'
             => 'Editar campo',
         'Edit Layout'
-            => 'Editar diseÃ±o',
+            => 'Editar diseño',
         'Edit View'
-            => 'Formulario de inscripciÃ³n',
+            => 'Formulario de inscripción',
         'Email address fields'
             => 'Campos de direcciones de email',
         'Email Address Information'
-            => 'InformaciÃ³n de direcciÃ³n email',
+            => 'Información de dirección email',
         'Field'
             => 'Campo',
         'Field Name'
@@ -130,57 +130,57 @@
         'Fields'
             => 'Campos',
         'First character must be a lower case letter'
-            => 'Primer carÃ¡cter debe ser una letra minÃºscula',
+            => 'Primer carácter debe ser una letra minúscula',
         'First panel visible, then `show more` link'
-            => 'Primer panel visible, despuÃ©s `mostrar mÃ¡s` link',
+            => 'Primer panel visible, después `mostrar más` link',
         'First select level {number}'
             => 'Primero seleccionar el nivel {number}',
         'Formula'
-            => 'FÃ³rmula',
+            => 'Fórmula',
         'Formula Name'
-            => 'Nombre de fÃ³rmula',
+            => 'Nombre de fórmula',
         'General'
             => 'General',
         'General Edit'
-            => 'ModificaciÃ³n general',
+            => 'Modificación general',
         'How does this work?'
-            => 'Â¿CÃ³mo funciona?',
+            => '¿Cómo funciona?',
         'Invalid panel configuration type'
-            => 'Tipo de configuraciÃ³n de panel invÃ¡lido',
+            => 'Tipo de configuración de panel inválido',
         'Layout saved successfully.'
-            => 'DiseÃ±o guardado con Ã©xito',
+            => 'Diseño guardado con éxito',
         'Layouts'
-            => 'Presentaciones de pÃ¡gina',
+            => 'Presentaciones de página',
         'Level: {number}'
             => 'Nivel: {number}',
         'Manage module fields, layouts, and labels.'
-            => 'Administrar campos de mÃ³dulo, diseÃ±os y etiquetas',
+            => 'Administrar campos de módulo, diseños y etiquetas',
         'Mass Edit View'
-            => 'Vista de modificaciÃ³n de masa',
+            => 'Vista de modificación de masa',
         'Maximum Length'
-            => 'Longitud mÃ¡xima',
+            => 'Longitud máxima',
         'Maximum Value'
-            => 'Valor mÃ¡ximo',
+            => 'Valor máximo',
         'Maximum Value must be larger than the minimum value'
-            => 'Valor mÃ¡ximo debe ser mayor que el valor mÃ­nimo',
+            => 'Valor máximo debe ser mayor que el valor mÃ­nimo',
         'Menus'
-            => 'menÃºs',
+            => 'menús',
         'Minimum Value'
-            => 'valor mÃ­nimo',
+            => 'valor mínimo',
         'Module'
             => 'Módulo',
         'Modules'
             => 'Módulos',
         'Multi-Select Pick List'
-            => 'Pick list de selecciÃ³n mÃºltiple',
+            => 'Pick list de selección múltiple',
         'Name must not contain spaces or special characters'
             => 'Nombre no debe contener espacios ni caracteres especiales',
         'Panels are tabbed'
-            => 'Los paneles son pestaÃ±as',
+            => 'Los paneles son pestañas',
         'Panels Configuration'
-            => 'ConfiguraciÃ³n de paneles',
+            => 'Configuración de paneles',
         'Phone'
-            => 'TelÃ©fono',
+            => 'Teléfono',
         'Pick List'
             => 'Pick list',
         'Pick List Value Translations'
@@ -190,9 +190,9 @@
         'Popup List View'
             => 'Vista de lista popup',
         'Popup Search View'
-            => 'BÃºsquada de lista popup',
+            => 'Búsquada de lista popup',
         'Precision'
-            => 'precisiÃ³n',
+            => 'precisión',
         'Radio Pick List'
             => 'Radio Pick List',
         'Related List View'
@@ -202,7 +202,7 @@
         'Save Layout'
             => 'Publicar',
         'Search View'
-            => 'Vista de bÃºsqueda',
+            => 'Vista de búsqueda',
         'Show If'
             => 'Valor depende',
         'Tag Cloud'
@@ -212,11 +212,13 @@
         'Text'
             => 'Texto',
         'Text Area'
-            => 'Ã�rea de texto',
+            => 'Área de texto',
         'The formula is invalid.'
-            => 'La fÃ³rmulaÂ no es vÃ¡lida',
+            => 'La fórmulaÂ no es válida',
+        'The requested {moduleClassName} module does not exist'
+            => 'El módulo {moduleClassName} no existe.',
         'There are no fields in this module to be used in a formula.'
-            => 'No hay campos para uso en la fÃ³rmula.',
+            => 'No hay campos para uso en la fórmula.',
         'There was an error processing your request.'
             => 'Hubo un error al procesar su pedido.',
         'Track Audit Log'
@@ -224,12 +226,12 @@
         'URL'
             => 'URL',
         'You can only have at most 4 pick-lists selected.'
-            => 'PuedeÂ tener hasta 4Â listas desplegables.',
+            => 'Puede tener hasta 4 listas desplegables.',
         'You must have at least one field placed in order to save a layout.'
-            => 'El diseÃ±oÂ debe contener al menosÂ un campo.',
+            => 'El diseño debe contener al menos un campo.',
         'You must have at least one panel in order to save a layout.'
-            => 'Debe tener al menos un panel para guardar un diseÃ±o.',
+            => 'Debe tener al menos un panel para guardar un diseño.',
         'You must select at least 2 pick-lists.'
-            => 'Debe elegir alÂ menos 2Â listas desplegables.',
+            => 'Debe elegir al menos 2 listas desplegables.',
     );
 ?>
