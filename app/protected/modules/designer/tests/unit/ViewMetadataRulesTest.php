@@ -118,7 +118,7 @@
             $elementInformation['type'] = 'RadioDropDown';
             DropDownAsMultiSelectViewMetadataRules::resolveElementMetadata($elementInformation, $elementMetadata);
             $this->assertTrue($elementMetadata['addBlank']);
-            $this->assertEquals('MultiSelectDropDown', $elementMetadata['type']);
+            $this->assertEquals('DropDownAsMultiSelect', $elementMetadata['type']);
 
             $elementMetadata = array();
             $elementInformation = array();

@@ -26,6 +26,10 @@
 
     class DropDownAsMultiSelectViewMetadataRules
     {
+        /**
+         * Renders dropdowns as multi-select except for contact/lead state.  Temporary until attributes that
+         * rely on 'states' such as LeadState or ContactState can allow for multi-select search.
+         */
         public static function resolveElementMetadata($elementInformation, & $elementMetadata)
         {
             $elementclassname = $elementInformation['type'] . 'Element';
@@ -35,8 +39,12 @@
                 !is_subclass_of($elementclassname, 'MultiSelectDropDownElement')
                 )
             {
-                $elementMetadata['type'] = 'DropDownAsMultiSelect';
-                $elementMetadata['addBlank'] = true;
+                if(!is_subclass_of($elementclassname, 'ContactStateDropDownElement') &&
+                    $elementclassname != 'ContactStateDropDownElement')
+                {
+                    $elementMetadata['type']     = 'DropDownAsMultiSelect';
+                    $elementMetadata['addBlank'] = true;
+                }
             }
         }
     }

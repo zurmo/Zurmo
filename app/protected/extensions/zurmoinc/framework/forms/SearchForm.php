@@ -239,7 +239,7 @@
             //multiple values in the dropdown.
             foreach ($values as $name => $value)
             {
-                if($value != null && $this->model->isRelation($name))
+                if($value != null && $this->model->isAttribute($name) && $this->model->isRelation($name))
                 {
                     $relationModelClassName = $this->model->getRelationModelClassName($name);
                     if(($relationModelClassName == 'CustomField' ||
