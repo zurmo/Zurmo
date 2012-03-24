@@ -183,6 +183,20 @@
                         {
                             //Continue on using relatedValue as is.
                         }
+                        elseif($this->model->$attributeName instanceof CustomField && count($relatedValue) > 0)
+                        {
+                            //Handle scenario where the UI posts or sends a get string with an empty value from
+                            //a multi-select field.
+                            if(count($relatedValue) == 1 && $relatedValue[0] == null)
+                            {
+                                break;
+                            }
+                            //Continue on using relatedValue as is.
+                            if ($operatorType == null)
+                            {
+                                $operatorType = 'oneOf';
+                            }
+                        }
                         else
                         {
                             break;
@@ -207,8 +221,15 @@
                                 $operatorType = ModelAttributeToOperatorTypeUtil::getOperatorType(
                                                 $modelForTypeOperations, $relatedAttributeName);
                             }
-                            $relatedValue  = ModelAttributeToCastTypeUtil::resolveValueForCast(
-                                                $modelForTypeOperations, $relatedAttributeName, $relatedValue);
+                            if(is_array($relatedValue) && $this->model->$attributeName instanceof CustomField)
+                            {
+                                //do nothing, the cast is fine as is. Maybe eventually remove this setting of cast.
+                            }
+                            else
+                            {
+                                $relatedValue  = ModelAttributeToCastTypeUtil::resolveValueForCast(
+                                                 $modelForTypeOperations, $relatedAttributeName, $relatedValue);
+                            }
                             if ($this->model->$attributeName instanceof RedBeanModel)
                             {
                                 $mixedType = ModelAttributeToMixedTypeUtil::getType(

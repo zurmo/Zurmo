@@ -57,12 +57,12 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'industry', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'type', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'type', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                     )

@@ -34,6 +34,51 @@
             Yii::app()->user->userModel = $super;
         }
 
+        public function testSearchingOnACustomFieldWithMultipleValues()
+        {
+            $searchAttributes = array(
+                'industry' => array(
+                    'value'    => array('A', 'B', 'C'),
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'industry',
+                    'relatedAttributeName' => 'value',
+                    'operatorType'         => 'oneOf',
+                    'value'                => array('A', 'B', 'C'),
+                ),
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testSearchingOnACustomFieldWithMultipleValuesWhereWithEmptyValueSpecified()
+        {
+            $searchAttributes = array(
+                'industry' => array(
+                    'value'    => array(''),
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array();
+            $compareStructure = null;
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testGetAdaptedMetadataForhasManyRelationAttributes()
         {
             $super = User::getByUsername('super');
