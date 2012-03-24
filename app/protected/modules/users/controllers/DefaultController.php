@@ -89,7 +89,7 @@
             $user = User::getById(intval($id));
             $title           = Yii::t('Default', 'Details');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($user), $user);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($user), 'UsersModule'), $user);
             $params = array(
                 'controllerId'     => $this->getId(),
                 'relationModuleId' => $this->getModule()->getId(),

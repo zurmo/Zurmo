@@ -57,7 +57,7 @@
                 1 => array(
                     'attributeName'        => 'sender',
                     'relatedAttributeName' => 'person',
-                    'operatorType'         => 'onfOf',
+                    'operatorType'         => 'oneOf',
                     'value'                => $relationItemIds,
                 ),
                 2 => array(

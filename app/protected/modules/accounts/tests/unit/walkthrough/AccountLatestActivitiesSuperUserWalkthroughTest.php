@@ -69,7 +69,7 @@
                 }
             }
             $this->assertNotNull($portletToUse);
-            $this->assertEquals('AccountLatestActivtiesForPortlet', get_class($portletToUse->getView()));
+            $this->assertEquals('AccountLatestActivtiesForPortletView', get_class($portletToUse->getView()));
 
             //Load the portlet details for latest activity
             $getData = array('id' => $superAccountId,

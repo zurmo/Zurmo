@@ -215,10 +215,15 @@
         {
             $themeUrl = Yii::app()->baseUrl . '/themes';
             $theme    = Yii::app()->theme->name;
-
-            Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/less-1.2.0.min.js');
-            Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/interactions.js');
-            Yii::app()->getClientScript()->registerScriptFile($themeUrl . '/' . $theme . '/js/jquery.dropkick-1.0.0.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/less-1.2.0.min.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/interactions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
             return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
                    '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';

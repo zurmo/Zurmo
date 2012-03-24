@@ -49,10 +49,9 @@
                     $unserializedData = unserialize($auditEvent->serializedData);
                     if ($unserializedData)
                     {
-                        $model           = $modelClassName::getById((int)$auditEvent->modelId);
-                        $moduleClassName = ModelStateUtil::resolveModuleClassNameByStateOfModel($model);
+                        $moduleClassName = $unserializedData[1];
                         $linkHtmlOptions = array('style' => 'text-decoration:underline;');
-                        $content .= CHtml::link($unserializedData,
+                        $content .= CHtml::link($unserializedData[0],
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
                         $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span><br/>';
@@ -87,10 +86,8 @@
                     if ($unserializedData)
                     {
                         $recentlyViewedItem                    = array();
-                        $model                                 = $modelClassName::getById((int)$auditEvent->modelId);
-                        $moduleClassName                       = ModelStateUtil::
-                                                                    resolveModuleClassNameByStateOfModel($model);
-                        $recentlyViewedItem['link']            = CHtml::link($unserializedData,
+                        $moduleClassName                       = $unserializedData[1];
+                        $recentlyViewedItem['link']            = CHtml::link($unserializedData[0],
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName));
                         $recentlyViewedItem['moduleClassName'] = $moduleClassName;
                         $recentlyViewedItems[]                 = $recentlyViewedItem;

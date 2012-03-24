@@ -297,7 +297,8 @@
                         );
                         if ($selectedRecordCount > $pageSize)
                         {
-                            $view = new $pageViewClassName($this,
+                            $view = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
                                 $this->makeMassEditProgressView(
                                     $listModel,
                                     1,
@@ -306,7 +307,7 @@
                                     $pageSize,
                                     $title,
                                     null)
-                            );
+                            ));
                             echo $view->render();
                             Yii::app()->end(0, false);
                         }
