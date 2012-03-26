@@ -102,9 +102,9 @@
                 assert('is_bool($languageData["canInactivate"])');
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $language,
+                $content .= '<td><label class="hasCheckBox">' . self::renderActiveCheckBoxContent($form, $language,
                                                                        $languageData['active'],
-                                                                       $languageData['canInactivate']) . '</td>';
+                                                                       $languageData['canInactivate']) . '</label></td>';
                 $content .= '<td>' . $languageData['label'] . '</td>';
                 $content .= '</tr>';
             }

@@ -46,6 +46,7 @@
                                         'update'  => '#modalContainer',
                                     ),
                                     'htmlOptions' => array( 'id' => 'SelectContactsForOpportunityFromRelatedListLink',
+                                    						'class' => 'simple-select',
                                                             'live' => false) //This is there are no double bindings
             );
             $metadata['global']['panels'] = array(

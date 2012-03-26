@@ -115,7 +115,7 @@
             $massEditScript = '';
             $content = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col class="col-checkbox"/><col style="width:20%" /><col style="width:80%" />';
+            $content .= '<col class="col-checkbox" style="width:36px"/><col style="width:20%" /><col/>';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             //loop through each panel
@@ -209,7 +209,7 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
 $disableTagCloudInputsScript
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
-            return "<th>" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
+            return "<th><label class=\"hasCheckBox\">" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</label></th>  \n";
         }
 
         public static function getDesignerRulesType()

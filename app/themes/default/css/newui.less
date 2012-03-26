@@ -1179,6 +1179,19 @@ table.items thead tr:hover{
         }
     }
 }
+a.simple-select{
+	color:@themeColor !important;
+	background:none !important;
+	.b-shadow( ~"none  !important" );
+	.radius(~"0 !important");
+	padding:0  !important;
+	border: none !important;
+	margin-left:10px;
+	text-decoration:underline;
+	&:before{
+		content:""  !important;
+	}
+}
 
 /*Popup Modals*/
 .ui-dialog-titlebar {
@@ -2155,14 +2168,14 @@ div.hasHalfs{
             margin-left:20px;
             float:left;
             label{
-                margin-right:6px;
+               // margin-right:6px;
             }
         }
         #LatestActivitiesConfigurationForm_rollup{
             margin-left:20px;
             float:left;
             label{
-                margin-right:6px;
+               // margin-right:6px;
             }
         }
         label{
@@ -2171,6 +2184,7 @@ div.hasHalfs{
             background:none;
             font-size:11px !important;
             padding:4px;
+            margin:0 3px;
             &:hover{
                 background:@themeColor;
                 color:#FFF;
@@ -2180,6 +2194,7 @@ div.hasHalfs{
         }
         input[type="radio"], input[type="checkbox"]{
             visibility:hidden;
+            display:none;
         }
         .ui-state-active{
             background:@themeColor;
@@ -2513,11 +2528,28 @@ div.hasHalfs{
     #edit-form table{
         width:100%;
     }
+    
+    .hasCheckBox{
+    	margin-top:0 !important;
+    	position:relative;
+    	top:-8px;
+    }
+    tr th:first-child{
+    	padding:0 !important;
+    }
+    .ui-state-highlight p{
+    	text-align:left;
+    	color:@themeColor;
+    	font-size:13px;
+    	font-style:normal;
+    	font-weight:bold;
+    	padding-left:0;
+    	margin-bottom:30px;
+    	margin-left:-8px;
+    }
 }
 
 /*=Lead Conversion*/
-
-
 #LeadConvertView{
     padding-right:0;
     .DetailsView > div{

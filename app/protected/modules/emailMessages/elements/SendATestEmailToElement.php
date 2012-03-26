@@ -42,8 +42,10 @@
             $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
             $htmlOptions             = array_merge($this->getHtmlOptions(), $htmlOptions);
-            $content                 = $this->form->textField($this->model, $this->attribute, $htmlOptions);
-            $content                .= ' ' . $this->renderTestButton();
+            $content                 = '<div id="send-test-email-field">';
+            $content                .= $this->form->textField($this->model, $this->attribute, $htmlOptions);
+            $content                .= $this->renderTestButton();
+			$content                .= '</div>';
             return $content;
         }
 
