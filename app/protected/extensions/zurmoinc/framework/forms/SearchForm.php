@@ -239,17 +239,16 @@
             //multiple values in the dropdown.
             foreach ($values as $name => $value)
             {
-                if($value != null && $this->model->isAttribute($name) && $this->model->isRelation($name))
+                if ($value != null && $this->model->isAttribute($name) && $this->model->isRelation($name))
                 {
                     $relationModelClassName = $this->model->getRelationModelClassName($name);
-                    if(($relationModelClassName == 'CustomField' ||
+                    if (($relationModelClassName == 'CustomField' ||
                        is_subclass_of($relationModelClassName, 'CustomField') && isset($value['value']) &&
                        is_array($value['value']) && count($value['value']) > 0))
                     {
                         $this->model->$name->value = $value['value'];
                     }
                 }
-
             }
             parent::setAttributes($nonDyanmicAttributeValues, $safeOnly);
         }

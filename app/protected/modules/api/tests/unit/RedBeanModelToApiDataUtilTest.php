@@ -313,7 +313,7 @@
 
             $testItem    = ApiTestModelItem::getById($id);
             $adapter     = new RedBeanModelToApiDataUtil($testItem);
-            $data        = $adapter->getData();;
+            $data        = $adapter->getData();
             $compareData = array(
                         'id'                => $id,
                         'firstName'         => 'Bob3',
@@ -337,6 +337,8 @@
                         ),
                         'dropDown'          => null,
                         'radioDropDown'     => null,
+                        'multiDropDown'    => array('values' => null),
+                        'tagCloud'         => array('values' => null),
                         'hasOne'            => array('id' => $testItem2->id),
                         'hasOneAlso'        => array('id' => $testItem4->id),
                         'primaryEmail'      => null,
@@ -356,8 +358,6 @@
                             'id' => $super->id,
                             'username' => 'super'
                         ),
-                        'multiDropDown'    => array('values' => null),
-                        'tagCloud'         => array('values' => null),
             );
             $this->assertEquals($compareData, $data);
         }

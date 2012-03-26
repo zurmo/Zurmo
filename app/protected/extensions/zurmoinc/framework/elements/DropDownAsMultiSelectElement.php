@@ -43,7 +43,6 @@
             );
         }
 
-
         protected function getEditableHtmlOptions()
         {
             $htmlOptions = parent::getEditableHtmlOptions();

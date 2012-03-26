@@ -39,7 +39,7 @@
                 !is_subclass_of($elementclassname, 'MultiSelectDropDownElement')
                 )
             {
-                if(!is_subclass_of($elementclassname, 'ContactStateDropDownElement') &&
+                if (!is_subclass_of($elementclassname, 'ContactStateDropDownElement') &&
                     $elementclassname != 'ContactStateDropDownElement')
                 {
                     $elementMetadata['type']     = 'DropDownAsMultiSelect';
