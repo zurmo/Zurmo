@@ -111,6 +111,30 @@
             $this->assertTrue(!isset($elementMetadata['type']));
         }
 
+        public function testDropDownAsMultiSelectViewMetadataRules()
+        {
+            $elementMetadata = array();
+            $elementInformation = array();
+            $elementInformation['type'] = 'RadioDropDown';
+            DropDownAsMultiSelectViewMetadataRules::resolveElementMetadata($elementInformation, $elementMetadata);
+            $this->assertTrue($elementMetadata['addBlank']);
+            $this->assertEquals('DropDownAsMultiSelect', $elementMetadata['type']);
+
+            $elementMetadata = array();
+            $elementInformation = array();
+            $elementInformation['type'] = 'DropDown';
+            DropDownAsMultiSelectViewMetadataRules::resolveElementMetadata($elementInformation, $elementMetadata);
+            $this->assertTrue($elementMetadata['addBlank']);
+            $this->assertEquals('DropDownAsMultiSelect', $elementMetadata['type']);
+
+            $elementMetadata = array();
+            $elementInformation = array();
+            $elementInformation['type'] = 'Phone';
+            DropDownAsMultiSelectViewMetadataRules::resolveElementMetadata($elementInformation, $elementMetadata);
+            $this->assertTrue(!isset($elementMetadata['addBlank']));
+            $this->assertTrue(!isset($elementMetadata['type']));
+        }
+
         public function testTextAreaAsTextViewMetadataRules()
         {
             $elementMetadata = array();

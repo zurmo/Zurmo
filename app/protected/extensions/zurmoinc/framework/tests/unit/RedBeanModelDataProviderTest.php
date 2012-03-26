@@ -57,8 +57,77 @@
             $customFieldData->serializedData = serialize($values);
             $saved = $customFieldData->save();
             assert($saved);    // Not Coding Standard
+
+            $values = array(
+                'A1',
+                'B2',
+                'C3',
+                'D4',
+            );
+            $customFieldData = CustomFieldData::getByName('Industries');
+            $customFieldData->serializedData = serialize($values);
+            $saved = $customFieldData->save();
+            assert($saved);    // Not Coding Standard
         }
 
+        public function testSearchByCustomFieldWithMultipleValues()
+        {
+            //Save a sample model.
+            $model = new TestCustomFieldsModel();
+            $model->industry->value = 'A1';
+            $this->assertTrue($model->save());
+
+            //Save a second and third sample model
+            $model = new TestCustomFieldsModel();
+            $model->industry->value = 'B2';
+            $this->assertTrue($model->save());
+
+            $model = new TestCustomFieldsModel();
+            $model->industry->value = 'D4';
+            $this->assertTrue($model->save());
+
+            //Save a second model with nothing.
+            $model = new TestCustomFieldsModel();
+            $this->assertTrue($model->save());
+
+            $quote        = DatabaseCompatibilityUtil::getQuote();
+            //Test where relatioon id is in a joining table.  Many to Many relationship
+            $_FAKEPOST['TestCustomFieldsModel'] = array();
+            $_FAKEPOST['TestCustomFieldsModel']['industry']['value'] = array('A1', 'B2', 'C3');
+            $metadataAdapter     = new SearchDataProviderMetadataAdapter(
+                                        new TestCustomFieldsModel(false), 1, $_FAKEPOST['TestCustomFieldsModel']);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('TestCustomFieldsModel');
+            $where        = RedBeanModelDataProvider::makeWhere('TestCustomFieldsModel', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere = "({$quote}customfield{$quote}.{$quote}value{$quote} IN('A1','B2','C3'))"; // Not Coding Standard
+            $this->assertEquals($compareWhere, $where);
+            //Now test that the joinTablesAdapter has correct information.
+            $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
+            $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
+            $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('customfield', $leftTables[0]['tableName']);
+
+            //Now test that the subsetSQL query produced is correct.
+            $subsetSql         = TestCustomFieldsModel::
+                                 makeSubsetOrCountSqlQuery('testcustomfieldsmodel', $joinTablesAdapter, 1, 5, $where, null);
+            $compareSubsetSql  = "select {$quote}testcustomfieldsmodel{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql .= "from {$quote}testcustomfieldsmodel{$quote} ";
+            $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
+            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = ";
+            $compareSubsetSql .= "{$quote}testcustomfieldsmodel{$quote}.{$quote}industry_customfield_id{$quote} ";
+            $compareSubsetSql .= "where " . $compareWhere . ' ';
+            $compareSubsetSql .= 'limit 5 offset 1';
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+
+            //Make sure the sql runs properly.
+            $dataProvider = new RedBeanModelDataProvider('TestCustomFieldsModel', null, false, $searchAttributeData);
+            $data = $dataProvider->getData();
+            $this->assertEquals(2, count($data));
+        }
+
+       /**
+         * @depends testSearchByCustomFieldWithMultipleValues
+         */
         public function testSearchByMultipleValuesCustomField()
         {
             //Save a sample model.
