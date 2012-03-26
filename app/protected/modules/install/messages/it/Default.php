@@ -30,9 +30,9 @@
     // DON'T MAKE A MESS!
     return array(
         'Apache'
-            => 'Apache',
+            => 'Apache', // Same Word Translated
         'APC'
-            => 'APC',
+            => 'APC', // Same Word Translated
         'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'
