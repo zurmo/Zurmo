@@ -70,9 +70,11 @@
                 $content .= '</li>';
             }
             $content .= '</ul>';
-            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div></div>';
+            /*Do we need those if anyhow we dont render anything to page? in terms of css, teh empty container has a white border
+			 * I want to NOT have..*/
+            //$content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            //$content .= $this->renderActionElementBar(false);
+            //$content .= '</div></div>';
             $content .= '</div>';
             return $content;
         }
