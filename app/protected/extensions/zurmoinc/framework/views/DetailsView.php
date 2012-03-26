@@ -60,7 +60,7 @@
          */
         protected function renderContent()
         {
-            $content  = '<div>'; // class="account-details"
+            $content  = '<div>';
             $content .= $this->renderTitleContent();
             $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
             $content .= $this->renderActionElementMenu();
