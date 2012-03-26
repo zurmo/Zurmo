@@ -561,12 +561,22 @@ table.configuration-list{
 /*Email Config*/
 #SendATestEmailToButton{
 	.zButton;
-	margin:15px 0 0 -70px;
-	position:relative;
-	left:50%;
+	//margin:15px 0 0 -70px;
+	//position:relative;
+	//left:50%;
 }
 #TestEmailMessageView{
 	padding:15px;
+}
+#send-test-email-field{
+	> input{
+		float:left;
+		margin-right:15px;
+		width:auto !important;
+	}
+	span{
+		float:left;
+	}
 }
 
 /*Import window*/
@@ -599,6 +609,16 @@ table.configuration-list{
 			margin-left:-10px;
 		}
 	}
+}
+/*step 2*/
+#ImportWizardUploadFileView{
+	.hasCheckBox{
+		margin: 0 !important;
+		& + label{
+			margin:5px 0 0 10px !important;
+		}
+	}
+	
 }
 
 #ImportWizardMappingView{
