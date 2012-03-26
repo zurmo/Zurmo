@@ -150,5 +150,37 @@
                 echo '</div>';
             }
         }
+
+        /**
+         * Override to always render pager div if paging is enabled.
+         * (non-PHPdoc)
+         * @see CBaseListView::renderPager()
+         */
+        public function renderPager()
+        {
+            if(!$this->enablePagination)
+            {
+                return;
+            }
+            $pager = array();
+            $class = 'CLinkPager';
+            if(is_string($this->pager))
+            {
+                $class=$this->pager;
+            }
+            elseif(is_array($this->pager))
+            {
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    $class=$pager['class'];
+                    unset($pager['class']);
+                }
+            }
+            $pager['pages']=$this->dataProvider->getPagination();
+            echo '<div class="'.$this->pagerCssClass.'">';
+            $this->widget($class,$pager);
+            echo '</div>';
+        }
     }
 ?>

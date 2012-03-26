@@ -25,10 +25,9 @@
      ********************************************************************************/
 
     /**
-     * Element for displaying a owned by filter for a latest activity view.  You can either
-     * view all or 'owned' activities.
+     * Element for displaying a roll up filter for a latest activity view.
      */
-    class LatestActivitiesOwnedByFilterRadioElement extends Element
+    class LatestActivitiesRollUpFilterRadioElement extends Element
     {
         /**
          * Renders the setting as a radio list.
@@ -43,7 +42,7 @@
                 $this->getArray(),
                 $this->getEditableHtmlOptions()
             );
-            return Yii::t('Default', 'View') . ':' . $content;
+            return Yii::t('Default', 'Roll up') . ':' . $content . ' ' . self::renderHelpContent();
         }
 
         protected function renderControlNonEditable()
@@ -79,11 +78,22 @@
         protected function getArray()
         {
             $data = array(
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER => Yii::t('Default', 'Mine'),
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'All Activities')
+                        '' => Yii::t('Default', 'Off'),
+                        1  => Yii::t('Default', 'On')
                     );
 
             return $data;
+        }
+
+        protected static function renderHelpContent()
+        {
+            $title       = Yii::t('Default', 'Turn roll up on to see activities from related records.');
+            $content     = '<span id="activities-rollup-tooltip" class="tooltip" title="' . $title . '">';
+            $content    .= '?</span>';
+            Yii::import('application.extensions.qtip.QTip');
+            $qtip = new QTip();
+            $qtip->addQTip("#activities-rollup-tooltip");
+            return $content;
         }
     }
 ?>

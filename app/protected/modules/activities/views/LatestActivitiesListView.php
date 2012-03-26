@@ -184,12 +184,16 @@
             $content .= $ownedByFilterContent;
             if($this->showRollUpToggle)
             {
-                $element                   = new LatestActivitiesRollUpCheckBoxElement($this->configurationForm,
+                $element                   = new LatestActivitiesRollUpFilterRadioElement($this->configurationForm,
                                                                                        'rollup', $form);
-                $element->editableTemplate = '{content}{label}';
+                $element->editableTemplate = '{content}';
                 $rollupElementContent      = $element->render();
-                $content .= '<div class="latest-activity-rollup">' . $rollupElementContent . '</div>';
+                $content .= '<div id="LatestActivitiesConfigurationForm_rollup">' . $rollupElementContent . '</div>';
             }
+            $content .= CHtml::link(Yii::t('Default', 'Filter'), '#', array('id' => 'filter-latest-activities-link'));
+            $content .= '</div>' . "\n";
+            $content .= '<div class="filter-latest-activities-bar" style="display:none">';
+            $content .= 'All Activities, Notes, Meetings, Tasks Links, Eventually search';
             $content .= '</div>' . "\n";
             return $content;
         }
@@ -206,9 +210,9 @@
                     'update' => '#' . $this->uniquePageId,
             ));
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
-            $('#LatestActivitiesConfigurationForm_rollup').button();
+            $('#LatestActivitiesConfigurationForm_rollup').buttonset();
             $('#LatestActivitiesConfigurationForm_ownedByFilter').buttonset();
-            $('#LatestActivitiesConfigurationForm_rollup').click(function()
+            $('#LatestActivitiesConfigurationForm_rollup').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }
@@ -216,6 +220,12 @@
             $('#LatestActivitiesConfigurationForm_ownedByFilter').change(function()
                 {
                     " . $ajaxSubmitScript . "
+                }
+            );
+            $('#filter-latest-activities-link').click( function()
+                {
+                    $('.filter-latest-activities-bar').toggle();
+                    return false;
                 }
             );
             ");
