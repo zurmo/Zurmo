@@ -68,8 +68,9 @@
                 'htmlOptions' => $htmlOptions,
                 'options'     => array('select' => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
                                                    '{window.location = ui.item.href;} return false;}',
-                                                   'appendTo' => '#app-search')
-            ));
+                                       'appendTo' => '#app-search',
+                                       'position' => array('my' =>  'right top', 'at' => 'right bottom')
+            )));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['GlobalSearchElement'];
             // Begin Not Coding Standard

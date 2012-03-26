@@ -136,7 +136,8 @@
                 'source'  => Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getAutoCompleteControllerId()
                                                         . '/' . static::$autoCompleteActionId),
                 'options' => array(
-                    'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}' // Not Coding Standard
+                    'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}', // Not Coding Standard
+                    'appendTo'       => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()'
                 ),
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
