@@ -102,9 +102,9 @@
                 assert('is_bool($languageData["canInactivate"])');
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td><label class="hasCheckBox">' . self::renderActiveCheckBoxContent($form, $language,
+                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $language,
                                                                        $languageData['active'],
-                                                                       $languageData['canInactivate']) . '</label></td>';
+                                                                       $languageData['canInactivate']) . '</td>';
                 $content .= '<td>' . $languageData['label'] . '</td>';
                 $content .= '</tr>';
             }
@@ -149,7 +149,7 @@
                 $htmlOptions['disabled'] = 'disabled';
                 $htmlOptions['uncheckValue'] = '1';
             }
-            return CHtml::checkBox($name, $active, $htmlOptions);
+            return ZurmoHtml::checkBox($name, $active, $htmlOptions);
         }
 
         protected static function renderActiveHeaderContent()

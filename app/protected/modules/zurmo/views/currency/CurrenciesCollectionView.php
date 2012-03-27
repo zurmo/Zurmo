@@ -100,7 +100,7 @@
             {
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td><label class="hasCheckBox">' . self::renderActiveCheckBoxContent($form, $currency) . '</label></td>';
+                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $currency) . '</td>';
                 $content .= '<td>' . $currency->code . '</td>';
                 $content .= '<td>' . $currency->rateToBase . '</td>';
                 $content .= '<td>';
