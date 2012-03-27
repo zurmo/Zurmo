@@ -26,7 +26,15 @@
 
     class ExportItemToCsvFileUtil extends ExportItemToOutputUtil
     {
-        public static function export(& $data, $showOutput = false)
+        public static $mimeType = 'application/octet-stream';
+
+        /**
+         * Export data array into csv format and send generated file to web browser
+         * or return csv string, depending on $download parameter.
+         * @param array $data
+         * @param boolean $download
+         */
+        public static function export(& $data, $download = false)
         {
             $output = '';
 
@@ -45,9 +53,9 @@
                 }
             }
 
-            if ($showOutput)
+            if ($download)
             {
-                self::output($output);
+                Yii::app()->request->sendFile('export.csv', $output, self::$mimeType, false);
             }
             else
             {
@@ -55,6 +63,14 @@
             }
         }
 
+        /**
+         * Convert array into csv string.
+         * @param array $row
+         * @param boolean $isHeaderRow
+         * @param string $delimiter
+         * @param string $enclosure
+         * @param string $eol
+         */
         protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"', $eol = "\n")
         {
             $fp = fopen('php://temp', 'r+');
@@ -72,23 +88,6 @@
                 $csv = substr($csv, 0, (0 - strlen(PHP_EOL))) . $eol;
             }
             return $csv;
-        }
-
-        protected static function createHeader($filename, $fileSize)
-        {
-            header("Pragma: no-cache");
-            header("Content-type: application/octet-stream; charset=UTF8");
-            header("Content-Disposition: attachment; filename=" . $filename);
-            header("Content-transfer-encoding: binary");
-            header("Expires: 0" );
-            header("Last-Modified: " . time());
-            header("Content-Length: " . $fileSize);
-        }
-
-        public static function showOutput(& $output)
-        {
-            self::createHeader('export.csv', strlen($output));
-            echo $output;
         }
     }
 ?>

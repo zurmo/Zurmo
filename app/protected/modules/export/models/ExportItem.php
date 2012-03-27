@@ -24,6 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * For exporting large amount of data, we store export information in database,
+     * and ExportJob will use this data to regenerate dataprovider, get data, and
+     * finally generate export file in desired format.
+     */
     class ExportItem extends OwnedSecurableItem
     {
         public static function getUncompletedItems()
@@ -48,6 +53,7 @@
                 'members' => array(
                     'isCompleted',
                     'exportFileType',
+                    'exportFileName',
                     'serializedData'
                 ),
                 'relations' => array(
@@ -57,6 +63,8 @@
                     array('isCompleted',    'boolean'),
                     array('exportFileType',   'required'),
                     array('exportFileType',   'type', 'type' => 'string'),
+                    array('exportFileName',   'required'),
+                    array('exportFileName',   'type', 'type' => 'string'),
                     array('serializedData',   'required'),
                     array('serializedData',   'type', 'type' => 'string'),
                 ),

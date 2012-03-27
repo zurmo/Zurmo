@@ -192,7 +192,7 @@
 
         public function actionExport()
         {
-            // Set $pageSize to unlimited
+            // Set $pageSize to unlimited, because we don't want pagination
             $pageSize = 0;
             $account = new Account(false);
             $searchForm = new AccountsSearchForm($account);
@@ -218,7 +218,7 @@
                         $data[] = $redBeanModelToExportAdapter->getData();
                     }
                     // Output data
-                    $output = ExportItemToCsvFileUtil::export($data);
+                    $output = ExportItemToCsvFileUtil::export($data, true);
                 }
                 else
                 {
@@ -226,6 +226,7 @@
                     $exportItem = new ExportItem();
                     $exportItem->isCompleted = 0;
                     $exportItem->exportFileType = 'csv';
+                    $exportItem->exportFileName = 'accounts';
                     $exportItem->serializedData = serialize($dataProvider);
                     $exportItem->save();
                 }

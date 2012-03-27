@@ -30,16 +30,18 @@
         {
             $filters   = array();
             $filters[] = array(
-                         ZurmoBaseController::RIGHTS_FILTER_PATH,
-                         'moduleClassName' => 'ExportModule',
-                         'rightName' => ExportModule::getAccessRight(),
+                ZurmoBaseController::RIGHTS_FILTER_PATH,
+                'moduleClassName' => 'ExportModule',
+                'rightName' => ExportModule::getAccessRight(),
             );
             return $filters;
         }
 
-        public function actionIndex()
+        public function actionDownload($id)
         {
-            // Do something here
+            $exportItem = ExportItem::getById((int)$id);
+            $fileModel = $exportItem->exportFileModel;
+            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type, false);
         }
     }
 ?>

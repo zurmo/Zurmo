@@ -25,7 +25,9 @@
      ********************************************************************************/
 
     /**
-     * A job to generate export files.
+     * For exports with many records we create jobs that will generate export file
+     * in background, and send notification to user with export download link,
+     * when export job is completed.
      */
     class ExportJob extends BaseJob
     {
@@ -57,48 +59,66 @@
         */
         public static function getRunTimeThresholdInSeconds()
         {
-            return 30;
+            return 600;
         }
 
         public function run()
         {
             $exportItems = ExportItem::getUncompletedItems();
-            foreach ($exportItems as $exportItem)
+            if (count($exportItems) > 0)
             {
-                if (isset($exportItem->exportFileModel))
+                foreach ($exportItems as $exportItem)
                 {
-                    //continue;
-                }
-
-                $dataProvider = unserialize($exportItem->serializedData);
-                $formattedData = $dataProvider->getData();
-                if ($exportItem->exportFileType == 'csv')
-                {
-                    foreach ($formattedData as $model)
+                    if (isset($exportItem->exportFileModel))
                     {
-                        $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
-                        $data[] = $redBeanModelToExportAdapter->getData();
+                        //continue;
                     }
-                    $output = ExportItemToCsvFileUtil::export($data);
 
-                    $fileContent          = new FileContent();
-                    $fileContent->content = $output;
-
-                    $exportFileModel = new ExportFileModel();
-                    $exportFileModel->exportItem = $exportItem;
-                    $exportFileModel->fileContent = $fileContent;
-                    $exportFileModel->name = "export.csv";
-                    $exportFileModel->type    = 'application/octet-stream';
-                    $exportFileModel->size    = strlen($output);
-                    $saved         = $exportFileModel->save();
-
-                    if ($saved)
+                    $dataProvider = unserialize($exportItem->serializedData);
+                    $formattedData = $dataProvider->getData();
+                    if ($exportItem->exportFileType == 'csv')
                     {
-                        $exportItem->isCompleted = 1;
-                        $exportItem->exportFileModel = $exportFileModel;
-                        $exportItem->save();
+                        foreach ($formattedData as $model)
+                        {
+                            $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
+                            $data[] = $redBeanModelToExportAdapter->getData();
+                        }
+                        $output = ExportItemToCsvFileUtil::export($data);
+
+                        $fileContent          = new FileContent();
+                        $fileContent->content = $output;
+
+                        $exportFileModel = new ExportFileModel();
+                        $exportFileModel->exportItem = $exportItem;
+                        $exportFileModel->fileContent = $fileContent;
+                        $exportFileModel->name = $exportItem->exportFileName . ".csv";
+                        $exportFileModel->type    = 'application/octet-stream';
+                        $exportFileModel->size    = strlen($output);
+                        $saved         = $exportFileModel->save();
+
+                        if ($saved)
+                        {
+                            $exportItem->isCompleted = 1;
+                            $exportItem->exportFileModel = $exportFileModel;
+                            $exportItem->save();
+                            $message                    = new NotificationMessage();
+                            $message->htmlContent       = Yii::t('Default', 'Export of {fileName} requested on {dateTime} is completed. <a href="{url}">Click here</a> to download file!',
+                                array(
+                                    '{fileName}' => $exportItem->exportFileName,
+                                    '{url}'      => Yii::app()->createUrl('export/default/download', array('id' => $exportItem->id)),
+                                    '{dateTime}' => DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($exportItem->createdDateTime, 'long'),
+                                )
+                            );
+                            $rules                      = new ExportProcessCompletedNotificationRules();
+                            NotificationsUtil::submit($message, $rules);
+                            return true;
+                        }
                     }
                 }
+            }
+            else
+            {
+                return true;
             }
         }
     }

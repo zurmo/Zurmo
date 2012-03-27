@@ -26,11 +26,13 @@
 
     abstract class ExportItemToOutputUtil
     {
-        public static function export(& $data)
-        {
-        }
-
-        protected static function createHeader($filename, $fileSize)
+        /**
+        * Export data array into csv format and send generated file to web browser
+        * or return csv string, depending on $download parameter.
+        * @param array $data
+        * @param boolean $download
+        */
+        public static function export(& $data, $download = false)
         {
         }
     }

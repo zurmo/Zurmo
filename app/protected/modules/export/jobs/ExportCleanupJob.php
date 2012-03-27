@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * A job for removing old export models after the export are complete.
+     * A job for removing old export models from database.
      */
     class ExportCleanupJob extends BaseJob
     {
@@ -50,8 +50,32 @@
             return Yii::t('Default', 'Once a week, early in the morning.');
         }
 
+        /**
+        * Get all exportItems where the modifiedDateTime was more than 1 week ago.  Then
+        * delete these exports and related files(and ).
+        * (non-PHPdoc)
+        * @see BaseJob::run()
+        */
         public function run()
         {
+            $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'modifiedDateTime',
+                    'operatorType'         => 'lessThan',
+                    'value'                => $oneWeekAgoTimeStamp,
+            ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('ExportItem');
+            $where = RedBeanModelDataProvider::makeWhere('ExportItem', $searchAttributeData, $joinTablesAdapter);
+            $oldExportItems = ExportItem::getSubset($joinTablesAdapter, null, 1000, $where, null);
+            foreach ($oldExportItems as $exportItem)
+            {
+                $exportItem->delete();
+            }
+            return true;
         }
     }
 ?>

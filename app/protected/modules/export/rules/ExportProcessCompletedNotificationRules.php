@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Inform user that export process is completed.
+     * Inform user that export process is completed, and that user can download exported file.
      */
     class ExportProcessCompletedNotificationRules extends JobsManagerAccessNotificationRules
     {

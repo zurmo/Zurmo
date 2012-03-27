@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Module to manage exports
+     */
     class ExportModule extends SecurableModule
     {
         const RIGHT_ACCESS_EXPORT = 'Access Export Tool';
@@ -40,23 +43,6 @@
         public function getRootModelNames()
         {
             return array('ExportItem', 'ExportFileModel');
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = array();
-            $metadata['global'] = array(
-                'configureMenuItems' => array(
-                    array(
-                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Export',
-                        'descriptionLabel' => 'Export data from Zurmo',
-                        'route'            => '/export/default',
-                        'right'            => self::RIGHT_ACCESS_EXPORT,
-                    ),
-                ),
-            );
-            return $metadata;
         }
 
         public static function getAccessRight()

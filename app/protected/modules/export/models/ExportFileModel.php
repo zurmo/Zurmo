@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * ExportFileModel used to store exported data.
+     */
     class ExportFileModel extends FileModel
     {
         public static function getDefaultMetadata()
@@ -31,7 +34,7 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'relations' => array(
-                    'exportItem' => array(RedBeanModel::HAS_ONE_BELONGS_TO,  'ExportItem'),
+                    'exportItem' => array(RedBeanModel::HAS_ONE,  'ExportItem'),
                 ),
             );
             return $metadata;
