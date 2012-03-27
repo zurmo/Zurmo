@@ -85,9 +85,8 @@
     		font-weight:bold;
     		color:#656565;
     		vertical-align:top;
-    		display:block;
+    		display:inline-block;
     		width:100%;
-    		height:100%;
     		text-indent:5px;
     		.box-sizing();
     		padding-top:3px;
@@ -180,67 +179,40 @@
 	.calendar-events-4,
 	.calendar-events-5,
 	.calendar-events-6{
-		.meetings{
+		span{
 			position:relative !important;
 			float:left;
 			width:100%;
 			word-wrap:break-word;
+			padding: 0 !important;
+			text-align:left !important;
+			
+			font-size: 30px;
+			position: absolute;
+			letter-spacing: -4px;
+			vertical-align: middle;
+			color:@themeColor;
+			text-align: left;
 		}
 		
 	}
 	
-	.calendar-events-1 .meetings:before{
+	.calendar-events-1 span:before{
 		content:"‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
-	.calendar-events-2 .meetings:before{
+	.calendar-events-2 span:before{
 		content:"‧‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
-	.calendar-events-3 .meetings:before{
+	.calendar-events-3 span:before{
 		content:"‧‧‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
-	.calendar-events-4 .meetings:before{
+	.calendar-events-4 span:before{
 		content:"‧‧‧‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
-	.calendar-events-5 .meetings:before{
+	.calendar-events-5 span:before{
 		content:"‧‧‧‧‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
-	.calendar-events-6 .meetings:before{
+	.calendar-events-6 span:before{
 		content:"‧‧‧‧‧‧";
-		font-size: 50px;
-		position: absolute;
-		letter-spacing: -8px;
-		vertical-align: middle;
-		top:-8px;
-		color:@themeColor;
 	}
 }

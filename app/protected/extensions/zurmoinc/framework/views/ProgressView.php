@@ -133,12 +133,13 @@
             ));
             $cClipWidget->endClip();
             $progressBarContent =  $cClipWidget->getController()->clips['ProgressBar'];
-            $content = "<h1>" . Yii::t('Default', 'Mass Update') . '&#160;' . $this->title . '</h1>';
-            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">' . "\n";
+            $content = "<div><h1>" . Yii::t('Default', 'Mass Update') . '&#160;' . $this->title . '</h1>';
+            //$content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">' . "\n";
             $content .= "<h2><span id='" . $this->progressBarId . "-msg'>" . $this->getMessage() . "</span></h2>";
             $content .= $progressBarContent;
-            $content .= '</div></div>';
+            //$content .= '</div></div>';
             $content .= $this->renderFormLinks();
+			$content .= '</div>';
             return $content;
         }
 
