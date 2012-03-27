@@ -27,3 +27,13 @@ var CalendarEvent = function(text, className) {
     this.text = text;
     this.className = className;
 };
+
+function addSpansToDatesOnCalendar(id)
+{
+    $('#' + id).find('td').each(function(){
+        if($(this).find('a').html() != null)
+        {
+            $(this).find('a').after('<span></span>');
+        }
+    });
+}

@@ -66,9 +66,9 @@
             assert('is_string($eventName)');
             assert('is_int($count)');
             $sql = "select id
-                    from auditevent
-                    where _user_id = {$user->id} AND eventname = '{$eventName}' group by concat(modelclassname, modelid)
-                    order by id desc limit $count";
+                    from ( select id, modelclassname, modelid, datetime from auditevent where _user_id = {$user->id}
+                    AND eventname = '{$eventName}' order by id desc ) auditevent
+                    group by concat(modelclassname, modelid) order by datetime desc limit $count";
             $ids   = R::getCol($sql);
             $beans = R::batch ('auditevent', $ids);
             return self::makeModels($beans, __CLASS__);
