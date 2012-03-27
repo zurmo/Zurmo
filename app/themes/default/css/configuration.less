@@ -520,8 +520,6 @@ table.configuration-list{
 	
 	> div{
 		padding:15px 15px 15px 15px;
-		//display:block;
-		//.clearfix();
 		position:relative;
 		&:after{
 			//display:none;
@@ -530,15 +528,9 @@ table.configuration-list{
 	.dk_container{
 		width:75%;
 		margin-right:10px;
-		//float:left;
 	}
 	.configure-custom-field-button{
 		.zButton();
-		//float:right;
-		//clear:both;
-		//position: absolute;
-		//right:15px;
-		//top:14px;
 		&:before{
 			content: "n";
 			.symbly(16px);
@@ -550,6 +542,37 @@ table.configuration-list{
 }
 
 /*Users*/
+#UsersPageView{
+	.AdministrativeArea.AppContent {
+
+	}
+	.DetailsView{
+		table{
+			margin-left:8px;
+		}
+		table tr:first-child{
+			th{
+				font-weight:bold !important;
+				color:@themeColor;
+			}
+		}
+		td{
+			text-align:left;
+			padding-left:15px;
+		}
+		th{
+			text-align:left;
+			font-size: 12px !important;
+			color: #666;
+			font-weight: 400 !important;
+		}
+	}
+}
+.panelTitle{
+	padding-left:15px;
+	padding-top:30px;
+}
+
 #UserConfigurationEditView{
 	#edit-form{
 		table{
@@ -561,9 +584,6 @@ table.configuration-list{
 /*Email Config*/
 #SendATestEmailToButton{
 	.zButton;
-	//margin:15px 0 0 -70px;
-	//position:relative;
-	//left:50%;
 }
 #TestEmailMessageView{
 	padding:15px;
@@ -709,7 +729,6 @@ table.configuration-list{
 	table tr:first-child{
 		th{
 			padding:0 0 0 15px !important;
-			
 			font-weight:bold !important;
 		}
 	}
@@ -719,7 +738,7 @@ table.configuration-list{
 		font-weight:normal !important;
 	}
 	tr td:first-child{
-		//padding-left:0 !important;
+		
 	}
 	th{
 		text-align:left;

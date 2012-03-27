@@ -227,7 +227,7 @@
 								tmph += 'p';
 							}
 						}
-						html += '<td>' + tmph + '</td>';
+						html += '<td>' + tmph + '<span class="meetings"></span></td>';
 					}
 
 					html += '</tr></table></div>' +
@@ -249,7 +249,7 @@
 					for (var m = 0; m <= minMax; m += opts.minuteGrid)
 					{
 						minuteGridSize++;
-						html += '<td>' + ((m < 10) ? '0' : '') + m + '</td>';
+						html += '<td>' + ((m < 10) ? '0' : '') + m + '<span class="meetings"></span></td>';
 					}
 
 					html += '</tr></table></div>' +
@@ -271,7 +271,7 @@
 					for (var s = 0; s <= secMax; s += opts.secondGrid)
 					{
 						secondGridSize++;
-						html += '<td>' + ((s < 10) ? '0' : '') + s + '</td>';
+						html += '<td>' + ((s < 10) ? '0' : '') + s + '<span class="meetings"></span></td>';
 					}
 
 					html += '</tr></table></div>' +

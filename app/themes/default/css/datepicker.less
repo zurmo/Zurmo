@@ -2,7 +2,9 @@
 	&.ui-datepicker-inline{
 		margin:15px;
 	}
+	
 	#gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );	
+	
 	.b-shadow( 0 0 5px 0 rgba(0, 0, 0, 0.3) );
 	
 	.ui-datepicker-header{
@@ -106,12 +108,14 @@
 		}
 		
 		td{
-			width:30px;
+			min-width:30px;
 			height:30px;
-			border-color: #BBB;
+			
+    		#gradient > .vertical(#ededed, #dedede);
+    		
+    		border-color: #BBB;
     		border-style: solid;
     		border-width: 1px 1px 0 0;
-    		#gradient > .vertical(#ededed, #dedede);
     		
     		&.ui-datepicker-other-month{
     			#gradient > .vertical(#f5f5f5, #ececec);
@@ -169,16 +173,23 @@
 		.radius(2px) !important;
 	}
 	
+	
 	.calendar-events-1,
 	.calendar-events-2,
 	.calendar-events-3,
 	.calendar-events-4,
 	.calendar-events-5,
 	.calendar-events-6{
-		position:relative;
+		.meetings{
+			position:relative !important;
+			float:left;
+			width:100%;
+			word-wrap:break-word;
+		}
+		
 	}
 	
-	.calendar-events-1:after{
+	.calendar-events-1 .meetings:before{
 		content:"‧";
 		font-size: 50px;
 		position: absolute;
@@ -187,7 +198,7 @@
 		top:-8px;
 		color:@themeColor;
 	}
-	.calendar-events-2:after{
+	.calendar-events-2 .meetings:before{
 		content:"‧‧";
 		font-size: 50px;
 		position: absolute;
@@ -196,7 +207,7 @@
 		top:-8px;
 		color:@themeColor;
 	}
-	.calendar-events-3:after{
+	.calendar-events-3 .meetings:before{
 		content:"‧‧‧";
 		font-size: 50px;
 		position: absolute;
@@ -205,7 +216,7 @@
 		top:-8px;
 		color:@themeColor;
 	}
-	.calendar-events-4:after{
+	.calendar-events-4 .meetings:before{
 		content:"‧‧‧‧";
 		font-size: 50px;
 		position: absolute;
@@ -214,7 +225,7 @@
 		top:-8px;
 		color:@themeColor;
 	}
-	.calendar-events-5:after{
+	.calendar-events-5 .meetings:before{
 		content:"‧‧‧‧‧";
 		font-size: 50px;
 		position: absolute;
@@ -223,7 +234,7 @@
 		top:-8px;
 		color:@themeColor;
 	}
-	.calendar-events-6:after{
+	.calendar-events-6 .meetings:before{
 		content:"‧‧‧‧‧‧";
 		font-size: 50px;
 		position: absolute;
