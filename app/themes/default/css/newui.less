@@ -167,14 +167,11 @@ footer, header, hgroup, menu, nav, section {
     min-width:900px;
     height:100%;
     margin:0 40px 0 40px;
-
     #gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
-
-    -webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
-    -webkit-border-radius: 0 0 5px 5px;
+    .b-shadow(  0 0 12px 5px rgba(153, 153, 153, 0.3) ); /*999*/
+    .radius(0 0 5px 5px);
     padding:0;
-
-
+    
     .remember-me{
         label{
             margin:0 !important;
@@ -420,7 +417,7 @@ footer, header, hgroup, menu, nav, section {
 #GlobalSearchView{
     height:40px;
     background: url(../images/header-bar-2.png) left top repeat-x;
-    -webkit-box-shadow:  0 0 10px 2px rgba(102, 102, 102, 0.5);
+    .b-shadow(0 0 10px 2px rgba(102, 102, 102, 0.5));
 }
 
 #app-search{
@@ -471,8 +468,8 @@ footer, header, hgroup, menu, nav, section {
     height:100%;
     margin:0 40px 0 40px;
     background:#fff url(../images/nav.png) left top repeat-y;
-    -webkit-box-shadow:  0 0 12px 5px rgba(153, 153, 153, 0.3); /*999*/
-    -webkit-border-radius: 0 0 5px 5px;
+    .b-shadow(0 0 12px 5px rgba(153, 153, 153, 0.3)); /*999*/
+    .radius(0 0 5px 5px);
     z-index: 0;
     position:relative;
 }
@@ -527,7 +524,7 @@ footer, header, hgroup, menu, nav, section {
 .AppNavigation{
     width:170px;
     float:left;
-    background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(244,244,244,1) 100%);
+    #gradient > .vertical(#f6f6f6, #f4f4f4);
     border-right:1px solid #eee;
     border-left:1px solid #eee;
     height:100%;
@@ -586,15 +583,15 @@ footer, header, hgroup, menu, nav, section {
         line-height: 33px;
         text-indent:16px;
         display:block;
-        -webkit-border-radius: 4px;
-        text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+        .radius(4px);
+        .t-shadow(rgba(255, 255, 255, 0.8) 0px 1px);
         margin-left:5px;
     }
 }
 /*#MenuView .parent >*/
 #MenuView li.active > a span,
 #MenuView a:hover span{
-    text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
+    .t-shadow(rgba(156, 156, 156, 0.8) 0px 1px);
     background-image: url(../images/main-nav-selected.png);
     background-repeat: no-repeat;
     background-position-x: 0;
@@ -607,7 +604,8 @@ footer, header, hgroup, menu, nav, section {
 
 /*Recently Viewed*/
 #RecentlyViewedView{
-    background: -webkit-linear-gradient(top, rgba(220,220,220,1) 0%, rgba(227,227,227,1) 100%);
+    #gradient > .vertical(#dcdcdc, #e3e3e3);
+    
     border-top:1px solid #F9F9FA;
     padding:20px 5px;
     width:160px;
@@ -709,7 +707,10 @@ footer, header, hgroup, menu, nav, section {
     padding:20px 20px 20px 20px;
     margin-left:172px;
     margin-bottom:20px;
-    background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100px);
+    //background: -webkit-linear-gradient(top, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100px);
+    //#gradient > .vertical(#f6f6f6, #ffffff);
+    #gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #ffffff );
+
 }
 
 /*dashboard*/
@@ -1062,14 +1063,18 @@ table.items thead tr:hover{
         border:1px solid #CCC;
         .b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
         background: #ffffff;
+        /*
         background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F5F5F5));
         background: -webkit-linear-gradient(#ffffff, #F5F5F5);
         background: -moz-linear-gradient(#ffffff, #F5F5F5);
         background: -ms-linear-gradient(#ffffff, #F5F5F5);
         background: -o-linear-gradient(#ffffff, #F5F5F5);
         background: linear-gradient(#ffffff, #F5F5F5);
-        -pie-background: linear-gradient(#ffffff, #F5F5F5);
+        //-pie-background: linear-gradient(#ffffff, #F5F5F5);
         //behavior: url(/PIE.htc);
+        */
+       #gradient > .vertical(#ffffff, #F5F5F5);
+
     }
     label{
         /*padding-top:8px;*/
@@ -1115,13 +1120,14 @@ table.items thead tr:hover{
         }
         &:active{
             color:#656565;
-            box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+            .b-shadow(~"inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF");
         }
     }
     input{
         color:#FFF;
         .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
         .b-shadow(inset 0 1px 1px 1px rgba(255, 255, 255, 0.8));
+        /*
         background: #97c43d;
         background: -webkit-gradient(linear, 0 0, 0 bottom, from(#97c43d), to(#6FA82D));
         background: -webkit-linear-gradient(#97c43d, #6FA82D);
@@ -1131,13 +1137,16 @@ table.items thead tr:hover{
         background: linear-gradient(#97c43d, #6FA82D);
         -pie-background: linear-gradient(#97c43d, #6FA82D);
         //behavior: url(/PIE.htc);
+        */
+        #gradient > .vertical(#97c43d, #97c43d);
+
         cursor:pointer;
         &:hover{
             color:#656565 !important;
         }
         &:active{
             color:#FFF !important;
-            box-shadow: inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+            .b-shadow(~"inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
         }
     }
 }
@@ -1175,7 +1184,7 @@ table.items thead tr:hover{
         }
         &:active{
             color:#656565;
-            box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+            .b-shadow(~"inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF");
         }
     }
 }
@@ -1235,8 +1244,10 @@ a.simple-select{
         height: 40px;
         line-height: 40px;
         #gradient > .vertical(#f6f6f6, #ededed);
-        box-shadow:inset 0 1px 0 0 #ffffff;
+        .b-shadow(inset 0 1px 0 0 #ffffff);
+        
         //background: url(../images/portlet-header-gradient.png) left top repeat-x;
+        
         border-bottom:1px solid #dfdfdf;
         text-indent:15px;
         width: 100%;
@@ -1244,7 +1255,7 @@ a.simple-select{
         display: block;
     }
     .ui-dialog-titlebar {
-         padding:0 !important;
+        padding:0 !important;
         margin:0 !important;
         z-index:11000;
      }
@@ -1299,8 +1310,6 @@ label.hasCheckBox{
     height:20px;
     padding:0;
     margin:0 0 0 15px;
-    //.clearfix;
-
     &.c_on {
         background: url(../images/checkbox.png) left -21px no-repeat;
     }
@@ -1308,6 +1317,12 @@ label.hasCheckBox{
         position: absolute;
         left: -9999px;
     }
+    input[disabled] {
+	
+	}
+	&.disabled{
+		opacity:0.5;
+	}
 }
 
 
@@ -1451,7 +1466,7 @@ label.hasCheckBox{
 .flyout{
     border:1px solid #b6b6b6;
     #gradient > .vertical( #f5f5f5, #ebebeb );
-    box-shadow:inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+    .b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
 }
 
 /*Edit + Add Account View*/
@@ -1652,7 +1667,7 @@ label.hasCheckBox{
         margin-right:20px;
         margin-bottom:20px;
         border:1px solid #ccc;
-        box-shadow:inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+        .b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
         #gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );
         .form form{
             border:none;
@@ -1666,7 +1681,7 @@ label.hasCheckBox{
         height: 40px;
         line-height: 40px;
         #gradient > .vertical(#f6f6f6, #ededed);
-        box-shadow:inset 0 1px 0 0 #ffffff;
+        .b-shadow(inset 0 1px 0 0 #ffffff);
         border-bottom:1px solid #ccc;
     }
     p{
@@ -1871,7 +1886,7 @@ label.hasCheckBox{
             }
             &:active{
                 color:#656565;
-                box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+                .b-shadow(~"inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF");
             }
             &:before{
                 content: "Y";
@@ -1938,7 +1953,6 @@ label.hasCheckBox{
         }
     }
     input[type="text"]{
-        //width:200px;
         margin-bottom: 4px;
     }
 
@@ -2000,20 +2014,16 @@ div.overlay-label-field{
     font-weight: normal;
 }
 .overlay-label-field input{
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    .box-sizing();
 }
 .half{
-    width:48%;
+   width:48%;
    display:block;
    float:left;
-    input{
+   input{
         width:100%;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }
+        .box-sizing();
+   }
 }
 div.hasHalfs{
     .clearfix();
@@ -2026,7 +2036,6 @@ div.hasHalfs{
 /*@TODO: this class should be changes to something more specific, like juiportlet-with-editing or similar*/
 .juiportlet-widget{
     td{
-        .clearfix();
         padding-left:0 !important;
         div{
             margin-left:25px;
@@ -2144,6 +2153,7 @@ div.hasHalfs{
     top:-3px;
     color:#666 !important;
     .symbly(42px);
+    line-height:28px;
 }
 .LatestActivitiesListView,
 .LatestActivitiesView{
@@ -2157,20 +2167,40 @@ div.hasHalfs{
         left:150px;
         > div{
             float:left;
+        	&:first-child{
+        		border-right:2px solid @themeColor;
+        		padding-right:10px;
+        		margin-right:10px;
+        	}
         }
         #LatestActivitiesConfigurationForm_ownedByFilter{
-            margin-left:20px;
             float:left;
             label{
-               // margin-right:6px;
             }
         }
         #LatestActivitiesConfigurationForm_rollup{
-            margin-left:20px;
             float:left;
             label{
-               // margin-right:6px;
             }
+        }
+        #filter-latest-activities-link{
+        	margin-left:20px;
+        	
+        }
+        #activities-rollup-tooltip{
+        	width:15px;
+        	height:15px;
+        	line-height:14px;
+        	margin-top:-2px;
+        	display:inline-block;
+        	background:#fff;
+        	.radius(10px);
+        	border:1px solid #ccc;
+        	color:#545454;
+        	font-weight:bold;
+        	text-align:center;
+        	cursor:pointer;
+        	vertical-align:middle;
         }
         label{
             padding-top:0;
@@ -2179,6 +2209,7 @@ div.hasHalfs{
             font-size:11px !important;
             padding:4px;
             margin:0 3px;
+            color:@themeColor;
             &:hover{
                 background:@themeColor;
                 color:#FFF;
@@ -2212,10 +2243,8 @@ div.hasHalfs{
         &:last-child{
             td, th{
                 border-bottom:none;
-                //padding:0 !important;
             }
             td:first-child{
-                //padding:0 !important;
             }
         }
     }
@@ -2275,11 +2304,9 @@ div.hasHalfs{
         input[type="text"]{
             float:left;
             margin-right:0;
-            //border-left:1px solid #ccc;
         }
     }
     .search-form-tools{
-        //display:none; //temp
     }
     #search-formmodal{
         position: relative;
@@ -2288,7 +2315,7 @@ div.hasHalfs{
         border-bottom:none;
         #gradient > .vertical(#f6f6f6, #ededed);
         .b-shadow(none);
-        box-shadow:inset 0 1px 0 0 #ffffff;
+        .b-shadow(inset 0 1px 0 0 #ffffff);
         .clearfix();
         table{
             border-bottom:none;
@@ -2416,9 +2443,7 @@ div.hasHalfs{
 
 /* The outer container of the options */
 .dk_options {
-  box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
-  -moz-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
-  -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
+  .b-shadow(rgba(0, 0, 0, .2) 0 2px 8px);
   .radius(0 0 3px 3px);
 }
   .dk_options a {
@@ -2507,14 +2532,6 @@ div.hasHalfs{
   max-height: none;
   overflow: visible;
 }
-/*
-.dk_fouc{
-    select {
-          position: relative;
-          top: -99999em;
-          visibility: hidden;
-    }
-}*/
 
 /*=Mass Edit view*/
 .AppContent.TitleBarAndMassEditView{
