@@ -6,7 +6,7 @@
  *
  * &copy; 2011 Jamie Lottering <http://github.com/JamieLottering>
  *                        <http://twitter.com/JamieLottering>
- * 
+ *
  */
 (function ($, window, document) {
 
@@ -18,7 +18,7 @@
   } else {
     document.documentElement.className = document.documentElement.className + ' dk_fouc';
   }
-  
+
   var
     // Public methods exposed to $.fn.dropkick()
     methods = {},
@@ -185,12 +185,12 @@
       _updateFields($current, $dk, true);
     }
   };
-  
+
   // Close the dropdown manually
-	methods.close = function() {
-		_closeDropdown($(this).data('dropkick').$dk);
-	};	
-	
+    methods.close = function() {
+        _closeDropdown($(this).data('dropkick').$dk);
+    };
+
 
   // Expose the plugin
   $.fn.dropkick = function (method) {
@@ -229,7 +229,7 @@
         }
         e.preventDefault();
       break;
-      
+
       case keyMap.esc:
         if (open) {
           _closeDropdown($dk);
@@ -268,7 +268,7 @@
       default:
       break;
     }
-    
+
     //if typing a letter
     if (code >= keyMap.zero && code <= keyMap.z) {
       //update data
@@ -311,7 +311,7 @@
 
     $select = data.$select;
     $select.val(value);
-
+    $select.change();
     $dk.find('.dk_label').text(label);
 
     reset = reset || false;
@@ -413,11 +413,11 @@
         $dk     = $option.parents('.dk_container').first(),
         data    = $dk.data('dropkick')
       ;
-    
+
       _closeDropdown($dk);
       _updateFields($option, $dk);
       _setCurrent($option.parent(), $dk);
-    
+
       e.preventDefault();
       return false;
     });
