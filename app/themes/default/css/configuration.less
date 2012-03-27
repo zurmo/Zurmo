@@ -569,13 +569,22 @@ table.configuration-list{
 	padding:15px;
 }
 #send-test-email-field{
-	> input{
-		float:left;
-		margin-right:15px;
-		width:auto !important;
+	width:100%;
+	float:left;
+	> div{
+		margin-right:130px;
+		> input{
+			
+		}
 	}
-	span{
+	
+	& + span{
 		float:left;
+		width:130px;
+		margin-left: -130px;
+		input{
+			float:right;
+		}
 	}
 }
 
