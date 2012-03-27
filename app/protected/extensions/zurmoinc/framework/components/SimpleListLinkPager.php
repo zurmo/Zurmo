@@ -44,7 +44,7 @@
             $buttons = array();
             list($beginPage,$endPage) = $this->getPageRange();
             $currentPage = $this->getCurrentPage(false); // currentPage is calculated in getPageRange()
-            $buttons[] = $this->createPageButton($this->firstPageLabel, 0, self::CSS_FIRST_PAGE, $currentPage <= 0, true);
+            $buttons[] = $this->createPageButton($this->firstPageLabel, 0, self::CSS_FIRST_PAGE, true, true);
             if(($pageCount = $this->getPageCount())<=1)
             {
                 return $buttons;
