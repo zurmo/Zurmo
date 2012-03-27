@@ -65,9 +65,10 @@
             foreach ($this->metadata['global']['panels'] as $panelNumber => $panel)
             {
                 $content .= $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
-                $content .= '<table>';
+                $content .= $this->renderTableTagByPanelNumber($panelNumber);
                 $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels());
-                $content .= $this->renderTBodyTagByPanelNumber($panelNumber);
+				$content .= '<tbody>';
+                
                 foreach ($panel['rows'] as $row)
                 {
                     $cellsContent = null;
@@ -126,15 +127,15 @@
             }
         }
 
-        protected function renderTBodyTagByPanelNumber($panelNumber)
+        protected function renderTableTagByPanelNumber($panelNumber)
         {
             if ($panelNumber > 0 && $this->shouldHidePanelsAfterFirstPanel())
             {
-                return '<tbody class="view-panel-' . $this->uniqueId . '" style="display:none;">';
+                return '<table class="view-panel-' . $this->uniqueId . '" style="display:none;">';
             }
             else
             {
-                return '<tbody>';
+                return '<table>';
             }
         }
 
