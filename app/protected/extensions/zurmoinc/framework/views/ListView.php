@@ -323,6 +323,9 @@
                 'buttons' => array(
                     'update' => array(
                     'url' => $url,
+                    'imageUrl'	      => false,
+                    'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                    'label'           => '!'
                     ),
                 ),
             );

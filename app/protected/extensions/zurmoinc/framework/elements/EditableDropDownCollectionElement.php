@@ -420,7 +420,7 @@
 
         protected static function renderLanguageLabelHtmlContent($label)
         {
-            return '&#160;&#40;' . $label . '&#41;';
+            return '<span>' . $label . '</span>';
         }
     }
 ?>
