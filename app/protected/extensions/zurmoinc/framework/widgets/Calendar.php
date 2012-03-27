@@ -129,7 +129,6 @@
                     $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
                 }
             }
-            $script .= 'console.log(calendarEvents);';
             $cs = Yii::app()->getClientScript();
             $cs->registerScript(__CLASS__. '#' . $id . 'dayEvents', $script);
         }
