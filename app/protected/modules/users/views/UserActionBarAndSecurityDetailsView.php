@@ -41,20 +41,17 @@
             array $groupMembershipViewData
             )
         {
-            parent::__construct(6, 1);
+            parent::__construct(5, 1);
             $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user, 'SecurityDetailsLink'), 0, 0);
-            $titleBar = new TitleBarView (
-                                    strval($user), Yii::t('Default', 'Security'));
-            $this->setView($titleBar, 1, 0);
             //$this->setView(new UserSecurityDetailsView($controllerId, $moduleId, $user->id), 1, 0);
             $userGroupMembershipView = new UserGroupMembershipView($controllerId, $moduleId,
                                                                    $groupMembershipViewData, $user->id,
                                                                    Yii::t('Default', 'Groups'));
             $userGroupMembershipView->setCssClasses(array('DetailsView'));
-            $this->setView($userGroupMembershipView, 2, 0);
-            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm, $user->id, $rightsViewMetadata), 3, 0);
-            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId, $policiesForm, $user->id, $policiesViewMetadata), 4, 0);
-            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm, $user->id, $modulePermissionsViewMetadata), 5, 0);
+            $this->setView($userGroupMembershipView, 1, 0);
+            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm, $user->id, $rightsViewMetadata), 2, 0);
+            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId, $policiesForm, $user->id, $policiesViewMetadata), 3, 0);
+            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm, $user->id, $modulePermissionsViewMetadata), 4, 0);
         }
     }
 ?>
