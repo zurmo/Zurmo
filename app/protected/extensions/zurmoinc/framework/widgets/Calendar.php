@@ -81,11 +81,26 @@
             $id = $this->htmlOptions['id'] = $this->htmlOptions['id'].'_container';
             $this->htmlOptions['name'] = $this->htmlOptions['name'].'_container';
 
+
             echo CHtml::tag('div', $this->htmlOptions, '');
 
-            $options = CJavaScript::encode($this->options);
-            $js = "jQuery('#{$id}').datepicker($options);";
+            //renderEvents before the datePicker.
+            $this->renderEvents($id);
 
+            //Add beforeShowDate as options
+            $this->options['beforeShowDay'] = "js:function(date) {
+                var event = calendarEvents[date];
+                if (event) {
+                    return [true, event.className, event.text];
+                }
+                else {
+                    return [true, '', ''];
+                }
+            }";
+            $options = CJavaScript::encode($this->options);
+
+
+            $js = "jQuery('#{$id}').datepicker($options);";
             if ($this->language != '' && $this->language != 'en')
             {
                 $this->registerScriptFile($this->i18nScriptFile);
@@ -100,30 +115,20 @@
             $cs->registerScript(__CLASS__. '#' . $id, $js);
             $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
             $cs->registerScriptFile($baseScriptUrl . '/calendar/Calendar.js', CClientScript::POS_END);
-            $this->renderEvents($id);
+
         }
 
         protected function renderEvents($id)
         {
-            $script = "$('#" . $id . "').datepicker({
-                            beforeShowDay: function(date) {
-                                var event = calendarEvents[date];
-                                if (event) {
-                                    return [true, event.className, event.text];
-                                }
-                                else {
-                                    return [true, '', ''];
-                                }
-                            }
-                        });";
+            $script = "var calendarEvents = {}; \n";
             if(count($this->dayEvents) > 0)
             {
-                $script .= "var calendarEvents = {};";
                 foreach($this->dayEvents as $event)
                 {
-                    $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "');";
+                    $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
                 }
             }
+            $script .= 'console.log(calendarEvents);';
             $cs = Yii::app()->getClientScript();
             $cs->registerScript(__CLASS__. '#' . $id . 'dayEvents', $script);
         }

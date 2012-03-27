@@ -44,7 +44,7 @@
             {
                 $localTimeZoneAdjustedDate = DateTimeUtil::
                                              convertDbFormattedDateTimeToLocaleFormattedDisplay($row['startdatetime'],
-                                             DateTimeUtil::DATETIME_FORMAT_DATE_WIDTH,
+                                             'medium',
                                              null);
                 if(isset($data[$localTimeZoneAdjustedDate]))
                 {
