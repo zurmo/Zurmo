@@ -268,14 +268,14 @@
                 UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $user,
                 $activeAttributes,
                 $selectedRecordCount,
                 UsersModule::getModuleLabelByTypeAndLanguage('Plural')
             );
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
+                                         makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 

@@ -158,14 +158,14 @@
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $opportunity,
                 $activeAttributes,
                 $selectedRecordCount,
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural')
             );
             $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
+                                         makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 

@@ -159,14 +159,14 @@
                 Yii::t('Default', 'Leads'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $contact,
                 $activeAttributes,
                 $selectedRecordCount,
                 Yii::t('Default', 'Leads')
             );
             $view = new LeadsPageView(ZurmoDefaultViewUtil::
-                                     makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
+                                     makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 

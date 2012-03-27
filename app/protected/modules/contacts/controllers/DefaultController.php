@@ -151,14 +151,14 @@
                 ContactsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $contact,
                 $activeAttributes,
                 $selectedRecordCount,
                 ContactsModule::getModuleLabelByTypeAndLanguage('Plural')
             );
             $view = new ContactsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this, $titleBarAndMassEditView));
+                                         makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 

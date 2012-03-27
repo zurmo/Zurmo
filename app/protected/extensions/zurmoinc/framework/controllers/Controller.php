@@ -197,22 +197,20 @@
             }
         }
 
-        protected function makeTitleBarAndMassEditView(
+        protected function makeMassEditView(
             $model,
             $activeAttributes,
             $selectedRecordCount,
             $title)
         {
-            return new TitleBarAndMassEditView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $model,
-                $activeAttributes,
-                $selectedRecordCount,
-                $this->getModule()->getPluralCamelCasedName(),
-                $title,
-                $this->getMassEditAlertMessage(get_class($model))
-                );
+            $alertMessage          = $this->getMassEditAlertMessage(get_class($model));
+            $moduleName            = $this->getModule()->getPluralCamelCasedName();
+            $moduleClassName       = $moduleName . 'Module';
+            $title                 = Yii::t('Default', 'Mass Update') . ': ' . $title;
+            $massEditViewClassName = $moduleName . 'MassEditView';
+            $view  = new $massEditViewClassName($this->getId(), $this->getModule()->getId(), $model, $activeAttributes,
+                                                      $selectedRecordCount, $title, $alertMessage);
+            return $view;
         }
 
         protected function getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider)
