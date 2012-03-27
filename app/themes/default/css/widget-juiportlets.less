@@ -39,7 +39,7 @@
 	padding: 0;
 	border:1px solid #CCC;
 	.portlet-gradient();
-	-webkit-box-shadow:  0 0 9px 5px rgba(153, 153, 153, 0.12); /*999*/
+	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12)); /*999*/
 }
 
 
@@ -49,7 +49,7 @@
 	height: 40px;
 	line-height: 40px;
 	#gradient > .vertical(#f6f6f6, #ededed);
-	box-shadow:inset 0 1px 0 0 #ffffff;
+	.b-shadow(inset 0 1px 0 0 #ffffff);
 	position:relative;
 }
 
@@ -161,9 +161,7 @@
 .juiportlet-header-icon{
 	.symbly(32px);
 	color:#7A7A7A;
-	
 	text-indent:-30px;
-	
 	line-height: 100%;
 	position:absolute;
 	top:6px;
