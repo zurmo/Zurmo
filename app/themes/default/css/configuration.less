@@ -544,7 +544,9 @@ table.configuration-list{
 /*Users*/
 #UsersPageView{
 	.AdministrativeArea.AppContent {
-
+		#ActionBarSearchAndListView{
+			padding-right:20px;
+		}
 	}
 	.DetailsView{
 		table{
@@ -580,7 +582,18 @@ table.configuration-list{
 		}
 	}
 }
-
+/*Audit Modal*/
+#AuditEventsModalListView{
+	tr{
+		td:first-child, th:first-child{
+			padding-left:15px;
+			&:focus{
+				outline:none;
+			}
+		}
+	}
+}
+	
 /*Email Config*/
 #SendATestEmailToButton{
 	.zButton;
