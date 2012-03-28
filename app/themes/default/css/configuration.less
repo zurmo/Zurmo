@@ -662,31 +662,71 @@ table.configuration-list{
 	}
 	
 }
-
+/*=Step 4,Mapping view*/
 #ImportWizardMappingView{
+	#edit-form{
+		padding:0;
+	}
+	h3{
+		margin:15px 0 0 15px;
+	}
+	.required-fields{
+		margin:5px 0 0 15px;
+	}
 	table tr:first-child{
 		th{
-			padding-left:15px;
-			font-weight:bold !important;
-			color:@themeColor;
-			&:first-child{
-				padding-left:0;
-			}
+			color:#545454;
+			text-align:left;
+			font-weight: bold !important;
+			height: 35px;
+			line-height: 35px;
+			background: url(../images/table-items-header.png) left top repeat-x;
+			padding: 0 0 0 15px !important;
+			border-top:1px solid #DFDFDF;
+			border-bottom:1px solid #DFDFDF;
 		}
 	}
 	td{
 		text-align:left;
+		padding-top:15px;
 		padding-left:15px !important;
-		
+		border-bottom:1px solid #DFDFDF;
 	}
-	tr td:first-child{
-		padding-left:0 !important;
+	tr td:last-child{
+		padding-right:15px;
 	}
-	th{
-		text-align:left;
-		font-size: 12px !important;
-		color: #666;
-		font-weight: 400 !important;
+	
+	table tr:last-child{
+		td{
+			border-bottom: none;
+			padding-bottom:0;
+		}
+	}
+	.view-toolbar-container{
+		padding-bottom:15px;
+	}
+	
+	.mapping-rules{
+		table, td, th, input, label{
+			margin:0 !important;
+		}
+		td, th{
+			padding:0 !important;
+			background:none !important;
+			border:none !important;
+		}
+		th{
+			height:auto !important;
+			line-height: 100% !important;
+		}
+		label{
+			line-height: 26px;
+		}
+	}
+	#sample-column-header{
+		a{
+			.zLink();
+		}
 	}
 }
 
