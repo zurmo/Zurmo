@@ -185,7 +185,7 @@
                 }
                 elseif (isset($item['url']))
                 {
-                    echo CHtml::link('<span>' . $item['label'] . '</span>', $item['url'], $htmlOptions);
+                    echo CHtml::link('<span></span><span>' . $item['label'] . '</span>', $item['url'], $htmlOptions);
                 }
                 else
                 {
