@@ -186,13 +186,17 @@
 			word-wrap:break-word;
 			padding: 0 !important;
 			text-align:left !important;
-			
-			font-size: 30px;
-			position: absolute;
-			letter-spacing: -4px;
+			font-size: 46px;
+			letter-spacing: -6px;
 			vertical-align: middle;
 			color:@themeColor;
 			text-align: left;
+			vertical-align: top;
+			&:before{
+				position:absolute;
+				top:-1px;
+				line-height: 10px;
+			}
 		}
 		
 	}
@@ -207,12 +211,12 @@
 		content:"‧‧‧";
 	}
 	.calendar-events-4 span:before{
-		content:"‧‧‧‧";
+		content:"‧‧‧\202F‧";
 	}
 	.calendar-events-5 span:before{
-		content:"‧‧‧‧‧";
+		content:"‧‧‧\202F‧‧";
 	}
 	.calendar-events-6 span:before{
-		content:"‧‧‧‧‧‧";
+		content:"‧‧‧\202F‧‧‧";
 	}
 }
