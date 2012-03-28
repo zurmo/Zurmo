@@ -87,6 +87,7 @@
 
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderAfterFormLayout($form);
             $content .= '<div class="view-toolbar-container clearfix"><div class="modal-view-toolbar">';
             $content .= $this->renderActionElementBar(true);
             $content .= '</div></div>';

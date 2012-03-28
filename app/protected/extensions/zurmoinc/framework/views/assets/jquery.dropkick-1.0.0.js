@@ -392,7 +392,8 @@
   $(function () {
 
     // Handle click events on the dropdown toggler
-    $('.dk_toggle').live('click', function (e) {
+    //Zurmo needed to change this to 'bind' from live to ensure it would not add multiple events when using ajax
+    $('.dk_toggle').bind('click', function (e) {
       var $dk  = $(this).parents('.dk_container').first();
 
       _openDropdown($dk);
