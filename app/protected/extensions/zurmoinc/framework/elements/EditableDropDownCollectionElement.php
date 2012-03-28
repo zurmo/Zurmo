@@ -167,9 +167,9 @@
             $content .= '<tbody>';
             $content .= '<tr>';
             $content .= '<td>';
-            $content .= CHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
+            $content .= '<div class="has-lang-label">' . CHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
             $content .= static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]);
-            $content .= '&#160;&#160;';
+            $content .= '</div>';
             $content .= CHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
             $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
             $content .= '</td>';
@@ -245,10 +245,10 @@
             {
                 if ($language != $baseLanguage)
                 {
-                    $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
+                    $content .= "<div class=\"has-lang-label\"><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
                                 "' + ($('input[name=\"" . $this->getNameForLabelInputField($language) . "\"]').length + 1) +'\"" .
                                 " type=\"text\" value=\"' + $('#" . $this->attribute . "_AddInput').val() + '\" size=\"50\"/>";
-                    $content .= static::renderLanguageLabelHtmlContent($label);
+                    $content .= static::renderLanguageLabelHtmlContent($label) . "</div>";
                 }
             }
             return $content;
@@ -263,10 +263,10 @@
             {
                 if ($language != $baseLanguage)
                 {
-                    $content .= "<br/><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
+                    $content .= "<div class=\"has-lang-label\"><input name=\"" . $this->getNameForLabelInputField($language) . "\" id=\"" . $this->getLabelInputIdPrefix($language) .
                                 "{dataLengthPlusOne}\"" .
                                 " type=\"text\" value=\"{" . $language . "Label}\" size=\"50\"/>";
-                    $content .= static::renderLanguageLabelHtmlContent($label);
+                    $content .= static::renderLanguageLabelHtmlContent($label) . "</div>";
                 }
             }
             return $content;
