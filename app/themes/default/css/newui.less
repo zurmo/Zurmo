@@ -888,7 +888,7 @@ footer, header, hgroup, menu, nav, section {
 #credit-link{
     background:url(../images/Zurmo.png) left top no-repeat;
     line-height: 19px;
-    display:block;
+    display:inline-block;
     margin-left:10px;
     span{
 
@@ -2130,24 +2130,21 @@ div.hasHalfs{
     }
 }
 
-//.SecuredListView{
-    .pager{
+.pager{
+    float:left;
+    width:100%;
+    .clearfix();
+    ul.endless-list-pager{
+        border-top:none;
+        list-style:none;
         float:left;
-        width:100%;
-        .clearfix();
-        ul.endless-list-pager{
-            border-top:none;
-            list-style:none;
-            float:left;
-            li{
-                float:none;
-                width:100%;
-                border-right:none;
-            }
+        li{
+            float:none;
+            width:100%;
+            border-right:none;
         }
     }
-//}
-
+}
 
 /*Latest Activity*/
 .latest-activity-icon{
@@ -2593,4 +2590,17 @@ div.hasHalfs{
     a{
         .zLink;
     }
+}
+/*=Progress*/
+.AppContent.ProgressView{
+	padding-right:0;
+}
+.progress-counter{
+	padding:20px;
+}
+#progressBar-links{
+	margin-top:15px;
+	a{
+		.zButton();
+	}
 }
