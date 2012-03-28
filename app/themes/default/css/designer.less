@@ -303,5 +303,53 @@
 	    color:#212121;
 	     .b-shadow(0 0 1px 1px @themeColor);
 	}
+}
+
+/*Editing fields, DESIGNER >> FIELDS >> EDIT FIELD*/
+.AttributeEditView{
+	.ui-state-highlight p{
+		margin-top:10px;
+		font-size:11px;
+		text-align:left;
+		text-indent:0;
+		padding:0;
+		line-height: 150%;
+		font-style:normal;
+	}
+	.ui-icon-info{
+		margin-left:-6px;
+	}
+	.ui-icon-info:after{
+		content:"o";
+		.symbly(22px);
+		margin-right:3px;
+		position:relative;
+		top:1px;
+		color:@themeColor2;
+	}
 	
+	.sortable{
+		list-style: none;
+		li{
+			position: relative;
+		}
+		.remove-sortable-item-link{
+			position: absolute;
+			left: -32px;
+			top: -20px;
+		}
+	}
+	
+	div table{
+		border-top:1px solid #dedede;
+		padding-top:16px;
+		td{
+			padding-left:0 !important;
+		}
+		#customFieldDataData_AddInputButton{
+			.zButton();
+			margin:15px 0 0 -80px;
+			
+		}
+	}
 }
