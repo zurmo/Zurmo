@@ -44,6 +44,7 @@
             $content      = $spanContent . '<br/>' . $content;
             $content     .= '<br/>';
             $content     .= $this->renderAvailableAttributesContent();
+            Yii::import('application.extensions.qtip.QTip');
             $qtip = new QTip();
             $qtip->addQTip("#formula-tooltip");
             return $content;
