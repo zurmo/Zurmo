@@ -107,7 +107,7 @@
     }
     zoom:1;
 }
-
+.hidden,
 .hidden-element{
     display:none !important;
     visibility:hidden !important;
@@ -1374,6 +1374,7 @@ label.hasCheckBox{
 }
 .juiportlet-widget-content .cgrid-view{
     .b-shadow(none);
+    .clearfix();
 }
 .search-view-0{
     margin-left:10px;
@@ -2068,7 +2069,7 @@ div.hasHalfs{
     text-align:center;
     .clearfix();
     ul{
-        border:1px solid #e7e7e7;
+        //border:1px solid #e7e7e7;
         width:100%;
         .box-sizing();
         list-style: none;
@@ -2080,6 +2081,7 @@ div.hasHalfs{
         width:50%;
         padding:0;
         border:none;
+        border-top:1px solid #e7e7e7;
         &:first-child{
             border-right:1px solid #ccc;
         }
