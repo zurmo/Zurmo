@@ -24,35 +24,34 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownRedBeanModelAttributeValueToExportValueAdapter extends DropDownRedBeanModelAttributeValueToExportValueAdapter
+    /**
+    * Test model for Exports: ExportTestModelItem3
+    */
+    class ExportTestModelItem3 extends OwnedSecurableItem
     {
-        public function resolveData(& $data)
+        public static function getDefaultMetadata()
         {
-            assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');
-            $customFieldValues = $this->model->{$this->attribute}->values;
-            if (count($customFieldValues) > 0)
-            {
-                $valuesString = '';
-                foreach ($customFieldValues as $customFieldValue)
-                {
-                    if (isset($customFieldValue->value) && $customFieldValue->value != '')
-                    {
-                        $valuesString .= $customFieldValue->value . ', ';
-                    }
-                }
-                if ($valuesString == '')
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = null;
-                }
-                else
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = rtrim($valuesString, ', ');
-                }
-            }
-            else
-            {
-                $data[$this->model->getAttributeLabel($this->attribute)] = null;
-            }
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'name',
+                ),
+                'rules' => array(
+                    array('name',  'type',   'type' => 'string'),
+                    array('name',  'length', 'max' => 32),
+                ),
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
+        }
+
+        public static function getModuleClassName()
+        {
+            return 'ExportModule';
         }
     }
 ?>

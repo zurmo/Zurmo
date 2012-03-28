@@ -34,7 +34,7 @@
          * @param array $data
          * @param boolean $download
          */
-        public static function export(& $data, $download = false)
+        public static function export(& $data, $exportFilename = 'exports.csv', $download = false)
         {
             $output = '';
 
@@ -55,7 +55,7 @@
 
             if ($download)
             {
-                Yii::app()->request->sendFile('export.csv', $output, self::$mimeType, false);
+                Yii::app()->request->sendFile($exportFilename, $output, self::$mimeType, false);
             }
             else
             {

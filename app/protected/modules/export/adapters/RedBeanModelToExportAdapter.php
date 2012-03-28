@@ -37,7 +37,7 @@
         public function getData()
         {
             $data       = array();
-            $data['id'] = $this->model->id;
+            $data[$this->model->getAttributeLabel('id')] = $this->model->id;
             $retrievableAttributes = static::resolveRetrievableAttributesByModel($this->model);
             foreach ($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
             {
@@ -62,14 +62,14 @@
                         {
                             if ($relatedDataAttribute != 'id')
                             {
-                                $parentAttributeName = $attributeName . '__' . $relatedDataAttribute;
+                                $parentAttributeName = $this->model->getAttributeLabel($attributeName) . '__' . $relatedDataAttribute;
                                 $data[$parentAttributeName] = $relatedDataValue;
                             }
                         }
                     }
                     else
                     {
-                        $data[$attributeName] = null;
+                        $data[$this->model->getAttributeLabel($attributeName)] = null;
                     }
                 }
                 //We don't want to list properties from CustomFieldData objects
@@ -79,11 +79,11 @@
                 {
                     if ($this->model->{$attributeName}->id > 0)
                     {
-                        $data[$attributeName] = array('id' => $this->model->{$attributeName}->id);
+                        $data[$this->model->getAttributeLabel($attributeName) . "__id"] = $this->model->{$attributeName}->id;
                     }
                     else
                     {
-                        $data[$attributeName] = null;
+                        $data[$this->model->getAttributeLabel($attributeName)] = null;
                     }
                 }
             }

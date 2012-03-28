@@ -32,14 +32,11 @@
             $currencyValue = $this->model->{$this->attribute};
             if ($currencyValue->id > 0)
             {
-                $data[$this->attribute] = array('id'         => $currencyValue->id,
-                                                'value'      => $currencyValue->value,
-                                                'rateToBase' => $currencyValue->rateToBase,
-                                                'currency'   => array('id' => $currencyValue->currency->id));
+                $data[$this->model->getAttributeLabel($this->attribute)] = $currencyValue->value . " " . $currencyValue->currency->code;
             }
             else
             {
-                $data[$this->attribute] = null;
+                $data[$this->model->getAttributeLabel($this->attribute)] = null;
             }
         }
     }

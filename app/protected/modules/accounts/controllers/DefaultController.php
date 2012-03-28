@@ -218,7 +218,7 @@
                         $data[] = $redBeanModelToExportAdapter->getData();
                     }
                     // Output data
-                    $output = ExportItemToCsvFileUtil::export($data, true);
+                    $output = ExportItemToCsvFileUtil::export($data, 'accounts.csv', true);
                 }
                 else
                 {

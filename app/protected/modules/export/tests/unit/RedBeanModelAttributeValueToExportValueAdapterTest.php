@@ -24,35 +24,13 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownRedBeanModelAttributeValueToExportValueAdapter extends DropDownRedBeanModelAttributeValueToExportValueAdapter
+    /**
+     * Utilized by module views that extend ListView
+     * to provide abstracted column element information
+     * that can be translated into one of the available
+     * GridView widgets in Yii.
+     */
+    abstract class RedBeanModelAttributeValueToExportValueAdapterTest extends BaseTest
     {
-        public function resolveData(& $data)
-        {
-            assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');
-            $customFieldValues = $this->model->{$this->attribute}->values;
-            if (count($customFieldValues) > 0)
-            {
-                $valuesString = '';
-                foreach ($customFieldValues as $customFieldValue)
-                {
-                    if (isset($customFieldValue->value) && $customFieldValue->value != '')
-                    {
-                        $valuesString .= $customFieldValue->value . ', ';
-                    }
-                }
-                if ($valuesString == '')
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = null;
-                }
-                else
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = rtrim($valuesString, ', ');
-                }
-            }
-            else
-            {
-                $data[$this->model->getAttributeLabel($this->attribute)] = null;
-            }
-        }
     }
 ?>

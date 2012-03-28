@@ -26,5 +26,14 @@
 
     class TextRedBeanModelAttributeValueToExportValueAdapter extends RedBeanModelAttributeValueToExportValueAdapter
     {
+        /**
+        * Resolve data
+        * @param array $data
+        */
+        public function resolveData(& $data)
+        {
+            $data[$this->model->getAttributeLabel($this->attribute)] = $this->model->{$this->attribute};
+            return;
+        }
     }
 ?>

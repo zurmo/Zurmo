@@ -24,35 +24,38 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownRedBeanModelAttributeValueToExportValueAdapter extends DropDownRedBeanModelAttributeValueToExportValueAdapter
+    class EmailRedBeanModelAttributeValueToExportValueAdapterTest extends BaseTest
     {
-        public function resolveData(& $data)
+        public static function setUpBeforeClass()
         {
-            assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');
-            $customFieldValues = $this->model->{$this->attribute}->values;
-            if (count($customFieldValues) > 0)
-            {
-                $valuesString = '';
-                foreach ($customFieldValues as $customFieldValue)
-                {
-                    if (isset($customFieldValue->value) && $customFieldValue->value != '')
-                    {
-                        $valuesString .= $customFieldValue->value . ', ';
-                    }
-                }
-                if ($valuesString == '')
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = null;
-                }
-                else
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = rtrim($valuesString, ', ');
-                }
-            }
-            else
-            {
-                $data[$this->model->getAttributeLabel($this->attribute)] = null;
-            }
+            parent::setUpBeforeClass();
+            $super = SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function testGetExportValue()
+        {
+            $email = new Email();
+            $email->optOut = 1;
+            $email->emailAddress = 'a@a.com';
+
+            $data = array();
+            $model = new ExportTestModelItem();
+            $model->lastName = "Smith";
+            $model->string = "Some Test String";
+            $model->primaryEmail = $email;
+            $this->assertTrue($model->save());
+
+            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'primaryEmail');
+            $adapter->resolveData($data);
+            $compareData = array($model->getAttributeLabel('primaryEmail') => 'Sam Smith');
+            $this->assertEquals($compareData, $data);
+
+            $data = array();
+            $model = new ExportTestModelItem();
+            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'primaryEmail');
+            $adapter->resolveData($data);
+            $compareData = array($model->getAttributeLabel('primaryEmail') => '');
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

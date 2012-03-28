@@ -24,35 +24,30 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MultiSelectDropDownRedBeanModelAttributeValueToExportValueAdapter extends DropDownRedBeanModelAttributeValueToExportValueAdapter
+    class UrlRedBeanModelAttributeValueToExportValueAdapterTest extends BaseTest
     {
-        public function resolveData(& $data)
+        public static function setUpBeforeClass()
         {
-            assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');
-            $customFieldValues = $this->model->{$this->attribute}->values;
-            if (count($customFieldValues) > 0)
-            {
-                $valuesString = '';
-                foreach ($customFieldValues as $customFieldValue)
-                {
-                    if (isset($customFieldValue->value) && $customFieldValue->value != '')
-                    {
-                        $valuesString .= $customFieldValue->value . ', ';
-                    }
-                }
-                if ($valuesString == '')
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = null;
-                }
-                else
-                {
-                    $data[$this->model->getAttributeLabel($this->attribute)] = rtrim($valuesString, ', ');
-                }
-            }
-            else
-            {
-                $data[$this->model->getAttributeLabel($this->attribute)] = null;
-            }
+            parent::setUpBeforeClass();
+            $super = SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function testGetExportValue()
+        {
+            $data = array();
+            $model = new ExportTestModelItem();
+            $model->url = 'http://www.example.com';
+            $adapter = new UrlRedBeanModelAttributeValueToExportValueAdapter($model, 'url');
+            $adapter->resolveData($data);
+            $compareData = array($model->getAttributeLabel('url') => 'http://www.example.com');
+            $this->assertEquals($compareData, $data);
+
+            $data = array();
+            $model = new ExportTestModelItem();
+            $adapter = new UrlRedBeanModelAttributeValueToExportValueAdapter($model, 'url');
+            $adapter->resolveData($data);
+            $compareData = array($model->getAttributeLabel('url') => '');
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

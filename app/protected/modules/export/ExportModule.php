@@ -33,7 +33,7 @@
 
         // Used to determine if data will be exported directly in browser
         // or to be exported via asynchronous via background job.
-        const ASYNCHRONOUS_THRESHOLD = 1;
+        const ASYNCHRONOUS_THRESHOLD = 10000;
 
         public function getDependencies()
         {

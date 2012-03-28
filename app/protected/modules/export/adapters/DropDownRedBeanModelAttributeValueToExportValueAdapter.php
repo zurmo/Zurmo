@@ -31,11 +31,11 @@
             assert('$this->model->{$this->attribute} instanceof CustomField');
             if ($this->model->{$this->attribute}->id > 0)
             {
-                $data[$this->attribute] = $this->model->{$this->attribute}->value;
+                $data[$this->model->getAttributeLabel($this->attribute)] = $this->model->{$this->attribute}->value;
             }
             else
             {
-                $data[$this->attribute] = null;
+                $data[$this->model->getAttributeLabel($this->attribute)] = null;
             }
         }
     }

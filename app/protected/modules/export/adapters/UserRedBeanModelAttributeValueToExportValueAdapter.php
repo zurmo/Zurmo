@@ -31,11 +31,11 @@
             assert('$this->model->{$this->attribute} instanceof User');
             if ($this->model->{$this->attribute}->id > 0)
             {
-                $data[$this->attribute] = $this->model->{$this->attribute}->username;
+                $data[$this->model->getAttributeLabel($this->attribute)] = $this->model->{$this->attribute}->username;
             }
             else
             {
-                $data[$this->attribute] = null;
+                $data[$this->model->getAttributeLabel($this->attribute)] = null;
             }
         }
     }
