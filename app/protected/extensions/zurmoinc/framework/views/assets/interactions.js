@@ -16,15 +16,18 @@ $(window).ready(function(){
     );
 
     //Main nav hover
-    $('#MenuView a span').hover(
+
+	 $('#MenuView a').hover(
         function(){
-            $(this).stop(true, true).animate({ backgroundColor : '#7cb830', color: '#fff' }, 350);
+        	console.log($(this));
+            $('span:first-child', this).stop(true, true).fadeTo( 500, 1 );
+            //$('span', this).stop(true, true).animate({ color : '#555', color: '#fff' }, 250);
         },
         function(){
-            if ( $(this).parent().parent().hasClass('active') == false ){
-                $(this).stop(true, true).animate({ backgroundColor : 'transparent', color: '#555555' }, 250, null,
-                    function() { this.style.backgroundColor='transparent'; });
-            }
+        	if ( $(this).parent().hasClass('active') === false ){
+            	$('span:first-child',this).stop(true, true).fadeTo( 500, 0 );
+            	//$('span', this).stop(true, true).animate({ color : '#fff', color: '#555' }, 250);
+        	}
         }
     );
 
