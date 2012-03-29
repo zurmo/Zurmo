@@ -136,5 +136,82 @@
             echo AuditEventsListControllerUtil::renderList($this, $dataProvider,
                                                            strval($model) . ' ' . Yii::t('Default', 'Audit Trail'));
         }
+
+        protected function getModelName()
+        {
+            return $this->getModule()->getPrimaryModelName();
+        }
+
+        protected function getSearchFormClassName()
+        {
+            return null;
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return null;
+        }
+
+        protected function export()
+        {
+            $modelClassName        = $this->getModelName();
+            $searchFormClassName   = $this->getSearchFormClassName();
+            $filteredListClassName = $this->getModelFilteredListClassName();
+            // Set $pageSize to unlimited, because we don't want pagination
+            $pageSize = 0;
+            $model = new $modelClassName(false);
+
+            if (isset($searchFormClassName))
+            {
+                $searchForm = new $searchFormClassName($model);
+            }
+            else
+            {
+                $searchForm = null;
+            }
+
+            $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
+            $dataProvider = $this->makeSearchFilterListDataProvider(
+                $searchForm,
+                $modelClassName,
+                $filteredListClassName,
+                $pageSize,
+                Yii::app()->user->userModel->id,
+                $stateMetadataAdapterClassName
+            );
+            $totalItems = $dataProvider->getTotalItemCount();
+
+            $data = array();
+            if ($totalItems > 0)
+            {
+                if ($totalItems <= ExportModule::ASYNCHRONOUS_THRESHOLD)
+                {
+                    // Output csv file directly to user browser
+                    $formattedData = $dataProvider->getData();
+                    foreach ($formattedData as $model)
+                    {
+                        $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
+                        $data[] = $redBeanModelToExportAdapter->getData();
+                    }
+                    // Output data
+                    $fileName = $this->getModule()->getName() . ".csv";
+                    $output = ExportItemToCsvFileUtil::export($data, $fileName, true);
+                }
+                else
+                {
+                    // Create background job
+                    $exportItem = new ExportItem();
+                    $exportItem->isCompleted = 0;
+                    $exportItem->exportFileType = 'csv';
+                    $exportItem->exportFileName = $this->getModule()->getName();
+                    $exportItem->serializedData = serialize($dataProvider);
+                    $exportItem->save();
+                }
+            }
+            else
+            {
+                // No data to export
+            }
+        }
     }
 ?>

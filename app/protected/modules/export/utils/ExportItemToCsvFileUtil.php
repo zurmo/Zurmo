@@ -88,20 +88,26 @@
             return $csv;
         }
 
-        public static function csvToArray($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") {
-    $r = array();
-    $rows = explode($terminator,trim($csv));
-    $names = array_shift($rows);
-    $names = str_getcsv($names,$delimiter,$enclosure,$escape);
-    $nc = count($names);
-    foreach ($rows as $row) {
-        if (trim($row)) {
-            $values = str_getcsv($row,$delimiter,$enclosure,$escape);
-            if (!$values) $values = array_fill(0,$nc,null);
-            $r[] = array_combine($names,$values);
+        public static function csvToArray($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n")
+        {
+            $result = array();
+            $rows = explode($terminator, trim($csv));
+            $columnNames = array_shift($rows);
+            $columnNames = str_getcsv($columnNames, $delimiter, $enclosure, $escape);
+            $numberOfColumns = count($columnNames);
+            foreach ($rows as $row)
+            {
+                if (trim($row))
+                {
+                    $values = str_getcsv($row, $delimiter, $enclosure, $escape);
+                    if (!$values)
+                    {
+                        $values = array_fill(0, $numberOfColumns, null);
+                    }
+                    $result[] = array_combine($columnNames, $values);
+                }
+            }
+            return $result;
         }
-    }
-    return $r;
-}
     }
 ?>
