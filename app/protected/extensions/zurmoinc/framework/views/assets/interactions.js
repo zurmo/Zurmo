@@ -21,12 +21,12 @@ $(window).ready(function(){
         function(){
         	console.log($(this));
             $('span:first-child', this).stop(true, true).fadeTo( 500, 1 );
-            //$('span', this).stop(true, true).animate({ color : '#555', color: '#fff' }, 250);
+            $('span:last-child', this).stop(true, true).animate({ color : '#555', color: '#fff' }, 250);
         },
         function(){
         	if ( $(this).parent().hasClass('active') === false ){
             	$('span:first-child',this).stop(true, true).fadeTo( 500, 0 );
-            	//$('span', this).stop(true, true).animate({ color : '#fff', color: '#555' }, 250);
+            	$('span:last-child', this).stop(true, true).animate({ color : '#fff', color: '#555' }, 250);
         	}
         }
     );
