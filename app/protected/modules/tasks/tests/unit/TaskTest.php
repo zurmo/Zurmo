@@ -35,6 +35,31 @@
             AccountTestHelper::createAccountByNameForOwner('anAccount', $super);
         }
 
+
+        public function testCreateTaskWithZerosStampAndEditAgain()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $task                       = new Task();
+            $task->name                 = 'My Task';
+            $task->owner                = Yii::app()->user->userModel;
+            $task->completedDateTime    = '0000-00-00 00:00:00';
+            $saved = $task->save();
+            $this->assertTrue($saved);
+            $taskId = $task->id;
+            $task->forget();
+            unset($task);
+
+            $task       = Task::getById($taskId);
+            $task->name ='something new';
+            $saved      = $task->save();
+            $this->assertTrue($saved);
+
+            $task->delete();
+        }
+
+        /**
+         * @depends testCreateTaskWithZerosStampAndEditAgain
+         */
         public function testCreateAndGetTaskById()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
