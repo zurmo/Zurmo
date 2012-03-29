@@ -563,7 +563,7 @@ footer, header, hgroup, menu, nav, section {
     .b-shadow(0 0 5px 5px rgba(153, 153, 153, 0.25));
     z-index:9999;
     li{
-
+		
     }
     a span{
         margin-left:0;
@@ -571,8 +571,22 @@ footer, header, hgroup, menu, nav, section {
 }
 
 /*#MenuView .parent > a*/
+#MenuView .nav{
+	li{
+		
+		 .clearfix();
+    }
+}
 #MenuView a{
     display:block;
+    
+    height:35px;
+    width:100%;
+    display:block;
+    float:left;
+    position:relative;
+    
+    
     span{
         font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight:bold;
@@ -586,6 +600,19 @@ footer, header, hgroup, menu, nav, section {
         .radius(4px);
         .t-shadow(rgba(255, 255, 255, 0.8) 0px 1px);
         margin-left:5px;
+        z-index:100;
+        
+        position: absolute;
+        top:0;
+        left:0;
+        
+       
+        &:first-child{
+        	background-color:@themeColor2;
+        	width:160px;
+        	height:33px;
+        	opacity:0;
+        }
     }
 }
 /*#MenuView .parent >*/
