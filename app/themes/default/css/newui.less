@@ -1067,6 +1067,9 @@ table.items thead tr:hover{
             .b-shadow(0 0 1px 1px @themeColor);
         }
     }
+    textarea{
+    	height:auto;
+    }
     input[type="text"][disabled],
     input[type="password"][disabled],
     textarea[disabled] {
@@ -2070,16 +2073,34 @@ div.hasHalfs{
 .juiportlet-widget{
     td{
         padding-left:0 !important;
-        div{
-            margin-left:25px;
-            line-height: 140%;
+        &:first-child{
+        	border-top:none;
         }
+        
+        div{
+            //margin-left:25px;
+            line-height: 150%;
+            float:left
+            display:block;
+        }
+        
         div.button-column{
             float:left;
             display:block;
             margin-left:0px;
-            margin-top:1px;
+            margin-top:5px;
             line-height: 100%;
+            height:50px;
+        }
+        div.checkbox-column{
+        	height:50px;
+        	float:left;
+        	margin-left:0;
+        	margin-top:-3px;
+        	width:auto;
+        	label{
+        		margin:0 5px;
+        	}
         }
         input[type="checkbox"]{
             margin-right:10px;
@@ -2117,7 +2138,7 @@ div.hasHalfs{
         &:first-child{
             border-right:1px solid #ccc;
         }
-        a{
+        > a{
             font-weight:bold;
             display:block;
             padding:4px 0 4px 0 !important;
@@ -2134,13 +2155,13 @@ div.hasHalfs{
             }
         }
     }
-    .next a, .previous a{
+    .next a, .previous a, .hidden.next, .hidden.previous{
         .symbly(16px);
     }
-    .next a:after{
+    .next a:after, .hidden.next:after{
         content:"7";
     }
-    .previous a:after{
+    .previous a:after, .hidden.previous:after{
         content:"8";
     }
     .previous{
@@ -2154,15 +2175,15 @@ div.hasHalfs{
     	display:none;
     }
     .hidden{
-        a{
-            color:#ddd;
-            background:#efefef;
-            .b-shadow(~"inset 0 0 8px 2px #ccc !important");
-            //pointer-events:none;
-            &:hover{
-                color:#545454;
-            }
-        }
+    	span{
+    		text-indent:-9999px;
+    		display:none;
+    	}
+        color:#ddd;
+        background:#efefef;
+        .b-shadow(~"inset 0 0 8px 2px #ccc !important");
+        padding:4px 0 4px 0 !important;
+        pointer-events:none;
     }
 }
 
@@ -2180,6 +2201,9 @@ div.hasHalfs{
             border-right:none;
         }
     }
+}
+#ModalView .pager{
+	float:none;
 }
 
 /*Latest Activity*/
