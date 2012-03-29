@@ -78,9 +78,10 @@
 
         protected function renderContent()
         {
-            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">' . "\n";
-            $content .= "<h2><span id='" . $this->getProgressBarId() . "-msg'>" . $this->message . "</span></h2>";
-            $content .= '</div></div>';
+            $content  = '<div class="process-container-view">' . "\n";
+			$content .= "<h3>" . $this->message . '</h3>';
+            $content .= "<span id='" . $this->getProgressBarId() . "-msg'></span>";
+            $content .= '</div>';
             $this->registerAjaxScript();
             return $content;
         }
