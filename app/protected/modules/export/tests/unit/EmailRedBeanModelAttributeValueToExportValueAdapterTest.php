@@ -34,27 +34,20 @@
 
         public function testGetExportValue()
         {
-            $email = new Email();
-            $email->optOut = 1;
-            $email->emailAddress = 'a@a.com';
-
             $data = array();
             $model = new ExportTestModelItem();
-            $model->lastName = "Smith";
-            $model->string = "Some Test String";
-            $model->primaryEmail = $email;
-            $this->assertTrue($model->save());
+            $model->email = 'a@a.com';
 
-            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'primaryEmail');
+            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'email');
             $adapter->resolveData($data);
-            $compareData = array($model->getAttributeLabel('primaryEmail') => 'Sam Smith');
+            $compareData = array($model->getAttributeLabel('email') => 'a@a.com');
             $this->assertEquals($compareData, $data);
 
             $data = array();
             $model = new ExportTestModelItem();
-            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'primaryEmail');
+            $adapter = new EmailRedBeanModelAttributeValueToExportValueAdapter($model, 'email');
             $adapter->resolveData($data);
-            $compareData = array($model->getAttributeLabel('primaryEmail') => '');
+            $compareData = array($model->getAttributeLabel('email') => '');
             $this->assertEquals($compareData, $data);
         }
     }

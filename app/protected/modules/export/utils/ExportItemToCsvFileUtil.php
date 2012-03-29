@@ -26,13 +26,11 @@
 
     class ExportItemToCsvFileUtil extends ExportItemToOutputUtil
     {
-        public static $mimeType = 'application/octet-stream';
-
         /**
          * Export data array into csv format and send generated file to web browser
          * or return csv string, depending on $download parameter.
          * @param array $data
-         * @param boolean $download
+         * @param boolean $download. Should send generated csv string to output or not.
          */
         public static function export(& $data, $exportFilename = 'exports.csv', $download = false)
         {
@@ -89,5 +87,21 @@
             }
             return $csv;
         }
+
+        public static function csvToArray($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") {
+    $r = array();
+    $rows = explode($terminator,trim($csv));
+    $names = array_shift($rows);
+    $names = str_getcsv($names,$delimiter,$enclosure,$escape);
+    $nc = count($names);
+    foreach ($rows as $row) {
+        if (trim($row)) {
+            $values = str_getcsv($row,$delimiter,$enclosure,$escape);
+            if (!$values) $values = array_fill(0,$nc,null);
+            $r[] = array_combine($names,$values);
+        }
+    }
+    return $r;
+}
     }
 ?>

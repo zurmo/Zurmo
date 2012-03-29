@@ -24,15 +24,20 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Base class for all export types.
+     */
     abstract class ExportItemToOutputUtil
     {
+        public static $mimeType = 'application/octet-stream';
+
         /**
         * Export data array into csv format and send generated file to web browser
         * or return csv string, depending on $download parameter.
         * @param array $data
         * @param boolean $download
         */
-        public static function export(& $data, $download = false)
+        public static function export(& $data, $exportFilename = 'exports.csv', $download = false)
         {
         }
     }

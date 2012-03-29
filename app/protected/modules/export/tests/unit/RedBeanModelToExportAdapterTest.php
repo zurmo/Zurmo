@@ -93,6 +93,7 @@
             $testItem->string    = 'aString';
             $testItem->textArea  = 'Some Text Area';
             $testItem->url       = 'http://www.asite.com';
+            $testItem->email       = 'a@a.com';
             $testItem->owner     = $super;
 
             $customFieldValue = new CustomFieldValue();
@@ -134,6 +135,8 @@
                 $testItem->getAttributeLabel('string')            => 'aString',
                 $testItem->getAttributeLabel('textArea')          => 'Some Text Area',
                 $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
+                $testItem->getAttributeLabel('email')             => 'a@a.com',
+                $testItem->getAttributeLabel('currency')          => null,
                 $testItem->getAttributeLabel('currencyValue')     => null,
                 $testItem->getAttributeLabel('dropDown')          => null,
                 $testItem->getAttributeLabel('radioDropDown')     => null,
@@ -142,6 +145,7 @@
                 $testItem->getAttributeLabel('primaryEmail')      => null,
                 $testItem->getAttributeLabel('primaryAddress')    => null,
                 $testItem->getAttributeLabel('secondaryEmail')    => null,
+                $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
                 $testItem->getAttributeLabel('modifiedDateTime')  => $createStamp,
@@ -188,6 +192,7 @@
             $testItem->string        = 'aString';
             $testItem->textArea      = 'Some Text Area';
             $testItem->url           = 'http://www.asite.com';
+            $testItem->email       = 'a@a.com';
             $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
             $testItem->dropDown->value = $values[1];
@@ -213,6 +218,8 @@
                 $testItem->getAttributeLabel('string')            => 'aString',
                 $testItem->getAttributeLabel('textArea')          => 'Some Text Area',
                 $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
+                $testItem->getAttributeLabel('email')             => 'a@a.com',
+                $testItem->getAttributeLabel('currency')          => null,
                 $testItem->getAttributeLabel('currencyValue')     => '100' . ' ' . $currencies[0]->code,
                 $testItem->getAttributeLabel('dropDown')          => $values[1],
                 $testItem->getAttributeLabel('radioDropDown')     => null,
@@ -223,6 +230,7 @@
                 $testItem->getAttributeLabel('primaryEmail')      => null,
                 $testItem->getAttributeLabel('primaryAddress')    => null,
                 $testItem->getAttributeLabel('secondaryEmail')    => null,
+                $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
                 $testItem->getAttributeLabel('modifiedDateTime')  => $createStamp,
@@ -272,6 +280,7 @@
             $testItem->string        = 'aString';
             $testItem->textArea      = 'Some Text Area';
             $testItem->url           = 'http://www.asite.com';
+            $testItem->email       = 'a@a.com';
             $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
             $testItem->hasOne        = $testItem2;
@@ -300,16 +309,19 @@
                 $testItem->getAttributeLabel('string')            => 'aString',
                 $testItem->getAttributeLabel('textArea')          => 'Some Text Area',
                 $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
+                $testItem->getAttributeLabel('email')             => 'a@a.com',
+                $testItem->getAttributeLabel('currency')          => null,
                 $testItem->getAttributeLabel('currencyValue')     => '100' . ' ' . $currencies[0]->code,
                 $testItem->getAttributeLabel('dropDown')          => null,
                 $testItem->getAttributeLabel('radioDropDown')     => null,
                 $testItem->getAttributeLabel('multiDropDown')     => null,
                 $testItem->getAttributeLabel('tagCloud')          => null,
-                $testItem->getAttributeLabel('hasOne') . "__id"            => $testItem2->id,
-                $testItem->getAttributeLabel('hasOneAlso') . "__id"        => $testItem4->id,
+                $testItem->getAttributeLabel('hasOne') . "__id"   => $testItem2->id,
+                $testItem->getAttributeLabel('hasOneAlso') . "__id" => $testItem4->id,
                 $testItem->getAttributeLabel('primaryEmail')      => null,
                 $testItem->getAttributeLabel('primaryAddress')    => null,
                 $testItem->getAttributeLabel('secondaryEmail')    => null,
+                $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
                 $testItem->getAttributeLabel('modifiedDateTime')  => $createStamp,
