@@ -39,5 +39,10 @@
             return Yii::t('Default', 'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
+
+        public static function getModuleClassName()
+        {
+            return 'OpportunitiesModule';
+        }
     }
 ?>

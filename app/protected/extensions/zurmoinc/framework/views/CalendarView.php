@@ -70,16 +70,17 @@
                 'options'             => array(
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
-                    'onChangeMonthYear'   => $this->getOnChangeMonthYearScript()
+                    'onChangeMonthYear'   => $this->getOnChangeMonthScript(),
                 ),
                 'dayEvents'			  => $this->makeDayEvents(),
+
             ));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['Calendar'];
             return $content;
         }
 
-        protected function getOnChangeMonthYearScript()
+        protected function getOnChangeMonthScript()
         {
         }
 

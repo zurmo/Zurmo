@@ -81,9 +81,10 @@
             );
         }
 
-        protected function makeSearchAttributeData()
+        protected function makeSearchAttributeData($timeString = null)
         {
-            $searchAttributeData = parent::makeSearchAttributeData();
+            assert('is_string($stringTime) || $stringTime == null');
+            $searchAttributeData = parent::makeSearchAttributeData($timeString);
             assert("count(\$searchAttributeData['clauses']) == 2");
             $searchAttributeData['clauses'][3] =
             array(

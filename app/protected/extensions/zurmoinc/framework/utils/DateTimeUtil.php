@@ -247,17 +247,19 @@
             return               DateTimeUtil::convertTimestampToDbFormatDateTime($adjustedTimeStamp);
         }
 
-        public static function getFirstDayOfThisMonthDate()
+        public static function getFirstDayOfAMonthDate($stringTime = null)
         {
-            $dateTime = new DateTime();
+            assert('is_string($stringTime) || $stringTime == null');
+            $dateTime = new DateTime($stringTime);
             $dateTime->modify('first day of this month');
             return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                         $dateTime->getTimestamp());
         }
 
-        public static function getLastDayOfThisMonthDate()
+        public static function getLastDayOfAMonthDate($stringTime = null)
         {
-            $dateTime = new DateTime();
+            assert('is_string($stringTime) || $stringTime == null');
+            $dateTime = new DateTime($stringTime);
             $dateTime->modify('last day of this month');
             return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                         $dateTime->getTimestamp());

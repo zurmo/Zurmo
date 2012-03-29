@@ -34,13 +34,15 @@
             return $this->getDataProvider()->getData();
         }
 
-        protected function makeDataProvider()
+        protected function makeDataProvider($timeString = null)
         {
-            return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData());
+            assert('is_string($stringTime) || $stringTime == null');
+            return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData($timeString));
         }
 
-        protected function makeSearchAttributeData()
+        protected function makeSearchAttributeData($timeString = null)
         {
+            assert('is_string($stringTime) || $stringTime == null');
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(
@@ -48,14 +50,14 @@
                     'operatorType'         => 'greaterThan',
                     'value'                => DateTimeUtil::
                                               convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay(
-                                              DateTimeUtil::getFirstDayOfThisMonthDate())
+                                              DateTimeUtil::getFirstDayOfAMonthDate($timeString))
                 ),
                 2 => array(
                     'attributeName'        => 'startDateTime',
                     'operatorType'         => 'lessThan',
                     'value'                => DateTimeUtil::
                                               convertDateIntoTimeZoneAdjustedDateTimeEndOfDay(
-                                              DateTimeUtil::getLastDayOfThisMonthDate())
+                                              DateTimeUtil::getLastDayOfAMonthDate($timeString))
                 )
                 );
             $searchAttributeData['structure'] = '(1 and 2)';
@@ -67,12 +69,50 @@
             return 'MeetingsModule';
         }
 
-        protected function getOnChangeMonthYearScript()
+        protected function getOnChangeMonthScript()
         {
             return "js:function(year, month, inst) {
-                //call ajax, then on success eval? maybe do nothing since we can render these events in what is coming back in the ajax itself.
-                calendarEvents[new Date('Feb 19, 2012')] = new CalendarEvent('1 Meeting', 'calendar-events-1');
+                //Call to render new events
+                $.ajax({
+                    url      : $.param.querystring('" . $this->getPortletChangeMonthUrl() . "', '&month=' + month + '&year=' + year),
+                    async    : false,
+                    type     : 'GET',
+                    dataType : 'html',
+                    success  : function(data)
+                    {
+                        eval(data);
+                        //Since the home page for some reason cannot render this properly in beforeShow, we are using a trick.
+                        setTimeout('addSpansToDatesOnCalendar(\"' + inst.id + '\")', 100);
+                    },
+                    error : function()
+                    {
+                        //todo: error call
+                    }
+                });
             }";
+        }
+
+        protected function getPortletChangeMonthUrl()
+        {
+            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/viewAction',
+                                                        array_merge($_GET, array(
+                                                            'action'         => 'renderMonthEvents',
+                                                            'portletId'      => $this->params['portletId'],
+                                                            'uniqueLayoutId' => $this->uniqueLayoutId)));
+        }
+
+        /**
+         * Called by ajax action when the calendar month is changed.  Needed to render additional events.
+         */
+        public function renderMonthEvents()
+        {
+            $month     = str_pad($_GET['month'], 2, '0', STR_PAD_LEFT);
+            $year      = $_GET['year'];
+            $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();
+            foreach($dayEvents as $event)
+            {
+                echo "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
+            }
         }
     }
 ?>

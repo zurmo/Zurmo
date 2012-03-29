@@ -89,6 +89,50 @@
             echo $view->render();
         }
 
+       /**
+         * Used by my portlets to process or render actions on the portlet's view. An example is changing the
+         * month of the calendar, requires additional calendar events to be loaded.
+         * @param integer $id
+         */
+        public function actionViewAction($id, $action)
+        {
+            $id              = intval($id);
+            $modelName       = $this->getModule()->getPrimaryModelName();
+            $model           = $modelName::getById($id);
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model, true);
+            $portlet         = Portlet::getById(intval($_GET['portletId']));
+
+            $portlet->params = array(
+                    'controllerId' => 'default',
+                    'relationModuleId' => $this->getModule()->getId(),
+                    'relationModel'    => $model,
+                    'redirectUrl'      => Yii::app()->request->getRequestUri(),
+            );
+            $portletView = $portlet->getView();
+            if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(), Yii::app()->user->userModel))
+            {
+                Yii::app()->end(0, false);
+            }
+            $portletView->$action();
+        }
+
+
+       /**
+         * Used by my list portlets to process or render actions on the portlet's view. An example is changing the
+         * month of the calendar, requires additional calendar events to be loaded.
+         * @param integer $id
+         */
+        public function actionMyListViewAction($action)
+        {
+            $portlet         = Portlet::getById(intval($_GET['portletId']));
+            $portletView = $portlet->getView();
+            if (!RightsUtil::canUserAccessModule($portletView::getModuleClassName(), Yii::app()->user->userModel))
+            {
+                Yii::app()->end(0, false);
+            }
+            $portletView->$action();
+        }
+
         /**
          * In a detail view, after you hit select from a sub view a modal listview will appear. If you select a row
          * in that view, then this action is called. This action will relate the selected model to the detail view model.

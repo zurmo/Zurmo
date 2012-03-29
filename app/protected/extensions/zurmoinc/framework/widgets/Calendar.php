@@ -97,19 +97,14 @@
                     return [true, '', ''];
                 }
             }";
-            $this->options['beforeShow'] = "js:function(input, inst){
-                                addSpansToDatesOnCalendar(inst.id);
-            }
-            ";
             $options = CJavaScript::encode($this->options);
-
-
             $js = "jQuery('#{$id}').datepicker($options);";
             if ($this->language != '' && $this->language != 'en')
             {
                 $this->registerScriptFile($this->i18nScriptFile);
                 $js = "jQuery(function(){jQuery('#{$id}').datepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional['{$this->language}'], {$options}));})";
             }
+            $js .= 'addSpansToDatesOnCalendar("' . $id . '");';
             $cs = Yii::app()->getClientScript();
             if (isset($this->defaultOptions))
             {

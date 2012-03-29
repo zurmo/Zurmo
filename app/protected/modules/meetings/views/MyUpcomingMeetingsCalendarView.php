@@ -52,9 +52,10 @@
             return $metadata;
         }
 
-        protected function makeSearchAttributeData()
+        protected function makeSearchAttributeData($timeString = null)
         {
-            $searchAttributeData = parent::makeSearchAttributeData();
+            assert('is_string($stringTime) || $stringTime == null');
+            $searchAttributeData = parent::makeSearchAttributeData($timeString);
             assert("count(\$searchAttributeData['clauses']) == 2");
             $searchAttributeData['clauses'][3] =
             array(
@@ -64,6 +65,20 @@
             );
             $searchAttributeData['structure'] = '(1 and 2 and 3)';
             return $searchAttributeData;
+        }
+
+        /**
+         * Override to use myListViewAction.
+         * (non-PHPdoc)
+         * @see UpcomingMeetingsCalendarView::getPortletChangeMonthUrl()
+         */
+        protected function getPortletChangeMonthUrl()
+        {
+            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/myListViewAction',
+                                                        array_merge($_GET, array(
+                                                            'action'         => 'renderMonthEvents',
+                                                            'portletId'      => $this->params['portletId'],
+                                                            'uniqueLayoutId' => $this->uniqueLayoutId)));
         }
     }
 ?>
