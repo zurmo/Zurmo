@@ -160,12 +160,20 @@
 
         public static function isValidDbFormattedDate($date) // Basic version, feel free to enhance.
         {
+            if($date == '0000-00-00')
+            {
+                return true;
+            }
             return preg_match('/^[1-2][0-9][0-9][0-9]-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|[3][0-1])$/',
                         $date) == 1;
         }
 
         public static function isValidDbFormattedDateTime($datetime) // Basic version, feel free to enhance.
         {
+            if($datetime == '0000-00-00 00:00:00')
+            {
+                return true;
+            }
             return preg_match(  '/^[1-2][0-9][0-9][0-9]-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|[3][0-1]) ' .
                                 '(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/',
                                 $datetime) == 1;
