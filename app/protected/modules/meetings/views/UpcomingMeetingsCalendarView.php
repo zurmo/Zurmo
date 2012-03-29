@@ -66,5 +66,13 @@
         {
             return 'MeetingsModule';
         }
+
+        protected function getOnChangeMonthYearScript()
+        {
+            return "js:function(year, month, inst) {
+                //call ajax, then on success eval? maybe do nothing since we can render these events in what is coming back in the ajax itself.
+                calendarEvents[new Date('Feb 19, 2012')] = new CalendarEvent('1 Meeting', 'calendar-events-1');
+            }";
+        }
     }
 ?>

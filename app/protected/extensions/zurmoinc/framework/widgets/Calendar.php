@@ -97,6 +97,10 @@
                     return [true, '', ''];
                 }
             }";
+            $this->options['beforeShow'] = "js:function(input, inst){
+                                addSpansToDatesOnCalendar(inst.id);
+            }
+            ";
             $options = CJavaScript::encode($this->options);
 
 
@@ -113,7 +117,6 @@
                 $cs->registerScript(__CLASS__,     $this->defaultOptions !== null?'jQuery.datepicker.setDefaults('.CJavaScript::encode($this->defaultOptions).');':'');
             }
             $cs->registerScript(__CLASS__. '#' . $id, $js);
-            $cs->registerScript(__CLASS__. '#' . $id . 'cssHelper', 'addSpansToDatesOnCalendar("' . $id . '");');
             $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
             $cs->registerScriptFile($baseScriptUrl . '/calendar/Calendar.js', CClientScript::POS_END);
 
