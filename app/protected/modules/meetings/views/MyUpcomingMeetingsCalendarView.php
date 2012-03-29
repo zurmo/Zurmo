@@ -32,8 +32,6 @@
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
-            assert('isset($params["relationModuleId"])');
-            assert('$params["relationModel"] instanceof RedBeanModel || $params["relationModel"] instanceof ModelForm');
             assert('isset($params["portletId"])');
             assert('$this->getRelationAttributeName() != null');
             parent::__construct($viewData, $params, $uniqueLayoutId);
@@ -52,10 +50,10 @@
             return $metadata;
         }
 
-        protected function makeSearchAttributeData($timeString = null)
+        protected function makeSearchAttributeData($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');
-            $searchAttributeData = parent::makeSearchAttributeData($timeString);
+            $searchAttributeData = parent::makeSearchAttributeData($stringTime);
             assert("count(\$searchAttributeData['clauses']) == 2");
             $searchAttributeData['clauses'][3] =
             array(
@@ -74,11 +72,16 @@
          */
         protected function getPortletChangeMonthUrl()
         {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/myListViewAction',
+            return Yii::app()->createUrl('/' . $this->resolvePortletModuleId() . '/defaultPortlet/myListViewAction',
                                                         array_merge($_GET, array(
                                                             'action'         => 'renderMonthEvents',
                                                             'portletId'      => $this->params['portletId'],
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
+        }
+
+        public function resolvePortletModuleId()
+        {
+            return 'home';
         }
     }
 ?>

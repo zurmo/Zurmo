@@ -81,10 +81,10 @@
             );
         }
 
-        protected function makeSearchAttributeData($timeString = null)
+        protected function makeSearchAttributeData($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');
-            $searchAttributeData = parent::makeSearchAttributeData($timeString);
+            $searchAttributeData = parent::makeSearchAttributeData($stringTime);
             assert("count(\$searchAttributeData['clauses']) == 2");
             $searchAttributeData['clauses'][3] =
             array(
@@ -95,6 +95,11 @@
             );
             $searchAttributeData['structure'] = '(1 and 2 and 3)';
             return $searchAttributeData;
+        }
+
+        public function resolvePortletModuleId()
+        {
+            return $this->params['relationModuleId'];
         }
     }
 ?>

@@ -39,10 +39,5 @@
             return Yii::t('Default', 'MeetingsModulePluralLabel For ContactsModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
-
-        public static function getModuleClassName()
-        {
-            return 'ContactsModule';
-        }
     }
 ?>

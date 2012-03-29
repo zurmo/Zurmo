@@ -34,13 +34,13 @@
             return $this->getDataProvider()->getData();
         }
 
-        protected function makeDataProvider($timeString = null)
+        protected function makeDataProvider($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');
-            return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData($timeString));
+            return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData($stringTime));
         }
 
-        protected function makeSearchAttributeData($timeString = null)
+        protected function makeSearchAttributeData($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');
             $searchAttributeData = array();
@@ -50,14 +50,14 @@
                     'operatorType'         => 'greaterThan',
                     'value'                => DateTimeUtil::
                                               convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay(
-                                              DateTimeUtil::getFirstDayOfAMonthDate($timeString))
+                                              DateTimeUtil::getFirstDayOfAMonthDate($stringTime))
                 ),
                 2 => array(
                     'attributeName'        => 'startDateTime',
                     'operatorType'         => 'lessThan',
                     'value'                => DateTimeUtil::
                                               convertDateIntoTimeZoneAdjustedDateTimeEndOfDay(
-                                              DateTimeUtil::getLastDayOfAMonthDate($timeString))
+                                              DateTimeUtil::getLastDayOfAMonthDate($stringTime))
                 )
                 );
             $searchAttributeData['structure'] = '(1 and 2)';
@@ -94,7 +94,7 @@
 
         protected function getPortletChangeMonthUrl()
         {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/viewAction',
+            return Yii::app()->createUrl('/' . $this->resolvePortletModuleId() . '/defaultPortlet/viewAction',
                                                         array_merge($_GET, array(
                                                             'action'         => 'renderMonthEvents',
                                                             'portletId'      => $this->params['portletId'],
@@ -113,6 +113,14 @@
             {
                 echo "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
             }
+        }
+
+        /**
+         * Override and implement in children classes
+         */
+        public function resolvePortletModuleId()
+        {
+            throw new NotImplementedException();
         }
     }
 ?>
