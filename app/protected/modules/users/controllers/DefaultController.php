@@ -387,5 +387,20 @@
             echo $view->render();
             Yii::app()->end(0, false);
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'UsersSearchForm';
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return 'SearchAndListView';
+        }
+
+        public function actionExport()
+        {
+            $this->export();
+        }
     }
 ?>
