@@ -141,7 +141,7 @@
                 }
                 $content .= '<br/>';
             }
-			$content .= '</div>';
+            $content .= '</div>';
             return $content;
         }
 
