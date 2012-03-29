@@ -123,8 +123,7 @@
                 }
                 if (!$atLeastOneCurrencyIsActive)
                 {
-                    return HtmlNotifyUtil::renderAlertBoxByMessage(
-                                           Yii::t('Default', 'You must have at least one active currency.'));
+                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'You must have at least one active currency.'));
                 }
                 else
                 {
@@ -142,8 +141,7 @@
                         $saved = $currency->save();
                         assert('$saved');
                     }
-                    return HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                           Yii::t('Default', 'Changes to active currencies saved successfully.'));
+                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'Changes to active currencies saved successfully.'));
                 }
             }
         }
@@ -160,9 +158,7 @@
             }
             else
             {
-                Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'The currency was not removed because it is in use.')
-                );
+                Yii::app()->user->setFlash('notification', Yii::t('Default', 'The currency was not removed because it is in use.'));
             }
             $this->redirect(array($this->getId() . '/configurationList'));
         }

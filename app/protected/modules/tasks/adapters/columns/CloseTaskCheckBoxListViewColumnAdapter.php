@@ -29,10 +29,11 @@
         public function renderGridViewData()
         {
             return array(
-                'name'   => $this->attribute,
-                'header' => Yii::t('Default' , 'Close'),
-                'value'  => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
-                'type'   => 'raw',
+                'name'        => $this->attribute,
+                'header'      => Yii::t('Default' , 'Close'),
+                'value'       => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
+                'type'        => 'raw',
+                'htmlOptions' => array('class'=>'checkbox-column')
             );
         }
 

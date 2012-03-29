@@ -60,7 +60,7 @@
                 $content .= '<ul class="configuration-list">';
                 foreach ($this->attributesCollection as $attributeName => $information)
                 {
-                    $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
+                    $route = $this->moduleId . '/' . $this->controllerId . '/AttributeEdit/';
                     $content .= '<tr>';
                     $content .= '<td>';
                     $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
