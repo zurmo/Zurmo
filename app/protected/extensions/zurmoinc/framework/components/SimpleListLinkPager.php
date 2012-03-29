@@ -54,16 +54,43 @@
             {
                 $page = 0;
             }
-            $buttons[]= $this->createPageButton($this->prevPageLabel, $page, self::CSS_PREVIOUS_PAGE, $currentPage <= 0, false);
+            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->prevPageLabel, $page, self::CSS_PREVIOUS_PAGE, $currentPage <= 0, false);
 
             // next page
             if(($page=$currentPage+1)>=$pageCount-1)
             {
                 $page = $pageCount-1;
             }
-            $buttons[]= $this->createPageButton($this->nextPageLabel, $page, self::CSS_NEXT_PAGE, $currentPage >= $pageCount-1, false);
+            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->nextPageLabel, $page, self::CSS_NEXT_PAGE, $currentPage >= $pageCount-1, false);
 
             return $buttons;
+        }
+
+        /**
+         * Creates a page button.
+         * You may override this method to customize the page buttons.
+         * @param string $label the text label for the button
+         * @param integer $page the page number
+         * @param string $class the CSS class for the page button. This could be 'page', 'first', 'last', 'next' or 'previous'.
+         * @param boolean $hidden whether this page button is visible
+         * @param boolean $selected whether this page button is selected
+         * @return string the generated button
+         */
+        protected function createPageButtonNoLinkIfHidden($label, $page, $class, $hidden, $selected)
+        {
+            if($hidden || $selected)
+            {
+                $class .= ' ' . ($hidden ? self::CSS_HIDDEN_PAGE : self::CSS_SELECTED_PAGE);
+            }
+            if(!$hidden)
+            {
+                return '<li class="' . $class . '">' . CHtml::link($label, $this->createPageUrl($page)) . '</li>';
+            }
+            else
+            {
+                return '<li class="' . $class . '">' . $label . '</li>';
+            }
+
         }
     }
 ?>

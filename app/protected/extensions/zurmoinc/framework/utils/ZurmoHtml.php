@@ -133,6 +133,14 @@
         public static function activeCheckBox($model, $attribute, $htmlOptions = array())
         {
             self::resolveNameID($model,$attribute,$htmlOptions);
+            if(isset($htmlOptions['disabled']))
+            {
+                $disabledClass = ' disabled';
+            }
+            else
+            {
+                $disabledClass = '';
+            }
             if(!isset($htmlOptions['value']))
             {
                 $htmlOptions['value']=1;
@@ -153,7 +161,8 @@
             }
             $hiddenOptions = isset($htmlOptions['id']) ? array('id'=>self::ID_PREFIX.$htmlOptions['id']) : array('id'=>false);
             $hidden = $uncheck !== null ? self::hiddenField($htmlOptions['name'],$uncheck,$hiddenOptions) : '';
-            return $hidden . CHtml::tag("label", array("class" => "hasCheckBox"), self::activeInputField('checkbox',$model,$attribute,$htmlOptions));
+            return $hidden . CHtml::tag("label", array("class" => "hasCheckBox" . $disabledClass),
+                   self::activeInputField('checkbox',$model,$attribute,$htmlOptions));
         }
 
         /**
