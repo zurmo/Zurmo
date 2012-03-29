@@ -2070,16 +2070,34 @@ div.hasHalfs{
 .juiportlet-widget{
     td{
         padding-left:0 !important;
-        div{
-            margin-left:25px;
-            line-height: 140%;
+        &:first-child{
+        	border-top:none;
         }
+        
+        div{
+            //margin-left:25px;
+            line-height: 150%;
+            float:left
+            display:block;
+        }
+        
         div.button-column{
             float:left;
             display:block;
             margin-left:0px;
-            margin-top:1px;
+            margin-top:5px;
             line-height: 100%;
+            height:50px;
+        }
+        div.checkbox-column{
+        	height:50px;
+        	float:left;
+        	margin-left:0;
+        	margin-top:-3px;
+        	width:auto;
+        	label{
+        		margin:0 5px;
+        	}
         }
         input[type="checkbox"]{
             margin-right:10px;
