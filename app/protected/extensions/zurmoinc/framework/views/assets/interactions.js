@@ -15,7 +15,7 @@ $(window).ready(function(){
     );
 
     //Main nav hover
-	 $('#MenuView a').hover(
+	 $('#MenuView a, #RecentlyViewedView a').hover(
         function(){
         	console.log($(this));
             $('span:first-child', this).stop(true, true).fadeTo( 500, 1 );
