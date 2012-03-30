@@ -113,6 +113,17 @@
     visibility:hidden !important;
 }
 
+.disabled-select-element{
+	pointer-events:none;
+	//opacity:0.5;
+	&.dk_container{
+		background:#EFEFEF;
+	}
+}
+.disabled{
+	opacity:0.5;
+}
+
 
 html, body{
     background:#DDDEDE;
@@ -586,7 +597,6 @@ footer, header, hgroup, menu, nav, section {
     float:left;
     position:relative;
     
-    
     span{
         font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight:bold;
@@ -606,7 +616,6 @@ footer, header, hgroup, menu, nav, section {
         top:0;
         left:0;
         
-       
         &:first-child{
         	background-color:@themeColor2;
         	width:160px;
@@ -660,13 +669,37 @@ footer, header, hgroup, menu, nav, section {
             &:hover{
                 color:#fff !important;
                 text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
-                background:#7cb830 url(../images/main-nav-selected.png) left center no-repeat;
+                //background:#7cb830 url(../images/main-nav-selected.png) left center no-repeat;
                 em{
                     color:@themeColor !important;
                 }
             }
+            position: relative;
+            span{
+            	position: absolute;
+		        top:0;
+		        left:0;
+	        	width:160px;
+	        	height:33px;
+	        	z-index: 0;
+	        	text-indent:35px;
+            	&:first-child{
+	            	position: absolute;
+			        top:0;
+			        left:0;
+		        	background-color:@themeColor2;
+		        	width:160px;
+		        	height:33px;
+		        	 .radius( 4px );
+		        	opacity:0;
+		        	z-index: 0;
+		        	text-indent:0;
+		        }
+            }
         }
         em{
+        	z-index:9999;
+        	position:absolute;
             .box-sizing();
             width:24px;
             height:24px;
@@ -2132,7 +2165,7 @@ div.hasHalfs{
 
 /*Upcoming Meeting Pager*/
 .pager{
-	float:left;
+	//float:left;
 	width:100%;
     text-align:center;
     .clearfix();

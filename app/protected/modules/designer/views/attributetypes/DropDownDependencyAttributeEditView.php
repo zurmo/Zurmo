@@ -77,7 +77,7 @@
         protected function renderAfterFormLayout($form)
         {
             $content  = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
-            $content .= '<div class="horizontal-line"></div>' . "\n";
+            //$content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= $form->error($this->model, 'mappingData');
             $content .= $this->renderContainerAndMappingLayoutContent($this->model, $this->controllerId, $this->moduleId);
             return $content;
