@@ -2243,8 +2243,13 @@ div.hasHalfs{
             }
         }
         #filter-latest-activities-link{
+        	color:@themeColor !important;
         	margin-left:20px;
-        	
+        	text-decoration: underline;
+        	 .t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+        	 &:hover{
+        	 	color:@themeColor2  !important;
+        	 }
         }
         #activities-rollup-tooltip{
         	width:15px;
