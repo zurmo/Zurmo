@@ -109,7 +109,7 @@
         protected function renderAfterFormLayout($form)
         {
             $content  = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
-            $content .= '<div class="horizontal-line"></div>' . "\n";
+            //$content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";
             $element  = new EditableDropDownCollectionElement($this->model, 'customFieldDataData', $form,
                                 array('specificValueFromDropDownAttributeName' => 'defaultValueOrder',
