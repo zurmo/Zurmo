@@ -131,13 +131,13 @@
             $searchAttributeData['clauses'] = array(
                 1 => array(
                     'attributeName'        => 'startDateTime',
-                    'operatorType'         => 'greaterThan',
+                    'operatorType'         => 'greaterThanOrEqualTo',
                     'value'                => DateTimeUtil::
                                                 convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($this->stringTime)
                 ),
                 2 => array(
                     'attributeName'        => 'startDateTime',
-                    'operatorType'         => 'lessThan',
+                    'operatorType'         => 'lessThanOrEqualTo',
                     'value'                => DateTimeUtil::
                                                 convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($this->stringTime)
                 )
