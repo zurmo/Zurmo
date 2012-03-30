@@ -83,9 +83,8 @@
          */
         protected function renderFormBottomPanel()
         {
-            $searchButton = CHtml::submitButton(Yii::t('Default', 'Search'), array('name' => 'search'));
-            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced Search'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
-            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear Search'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
+            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
+            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
@@ -94,11 +93,6 @@
                 CClientScript::POS_END
             );
             Yii::app()->clientScript->registerScript('search', "
-                $('#more-search-link" . $this->gridIdSuffix . "').clearform(
-                    {
-                        form: '#" . $this->getSearchFormId() . "'
-                    }
-                );
                 $('#clear-search-link" . $this->gridIdSuffix . "').clearform(
                     {
                         form: '#" . $this->getSearchFormId() . "'
@@ -110,8 +104,19 @@
                         return false;
                     }
                 );
+                $('#cancel-advanced-search').click(function(){
+                    $('.search-view-1').hide();
+                });
                 $('#clear-search-link" . $this->gridIdSuffix . "').click( function()
                     {
+                        $(this).closest('form').submit();
+                        return false;
+                    }
+                );
+                $('#search-advanced-search').click( function()
+                    {
+                        $('.search-view-0').children(\"input[type='text']\").val('');
+                        $('.search-view-1').hide();
                         $(this).closest('form').submit();
                         return false;
                     }
@@ -137,7 +142,6 @@
                 $startingDivStyle = "style='display:none;'";
             }
             $content  = '<div class="search-form-tools">';
-            $content .= $searchButton . '&#160;';
             $content .= $moreSearchOptionsLink . '&#160;|&#160;';
             $content .= $clearSearchLink;
             $content .= $this->renderFormBottomPanelExtraLinks();
@@ -209,6 +213,14 @@
                         }
                     }
                     //$content .= '</tr>';
+                }
+                if($key == 1)
+                {
+                    $content .= '<div class="view-toolbar-container clearfix">';
+                    $content .= '<div class="form-toolbar">';
+                    $content .= CHtml::button(Yii::t('Default', 'Cancel'), array('id' => 'cancel-advanced-search'));
+                    $content .= CHtml::button(Yii::t('Default', 'Search'), array('id' => 'search-advanced-search'));
+                    $content .= '</div></div>';
                 }
                 $content .= '</div>';
             }

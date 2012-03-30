@@ -87,7 +87,6 @@
                 'options'        => array(
                                           'selectedText' => '',
                                           'noneSelectedText' => '', 'header' => false,
-                                          //'position' => array('my' =>  'right top', 'at' => 'right bottom')
                                           ),
                 'htmlOptions'    => array('class' => 'ignore-style')
             ));
@@ -109,15 +108,26 @@
             );
             $inputId = $this->getEditableInputId();
             $script   = " basicSearchQueued = 0;";
-            $script  .= "$('#" . $inputId . "').bind('change keyup', function(event) {
-                            if($(this).val() != '')
-                            {
-                                //todo: clear advancedSearch
-                                basicSearchQueued = basicSearchQueued  + 1;
-                                setTimeout('basicSearchQueued = basicSearchQueued - 1',900);
-                                setTimeout('searchByQueuedSearch(\"" . $inputId . "\")',1000);
-                            }
-                        });";
+            $script  .= " basicSearchOldValue = '';";
+            $script  .= "   $('#" . $inputId . "').clearform(
+                                {
+                                    form: '#" . $this->form->getId() . "',
+
+                                }
+                            );
+                            $('#" . $inputId . "').bind('change keyup', function(event) {
+                                if($(this).val() != '')
+                                {
+                                    if(basicSearchOldValue != $(\"" . $inputId . "\").val())
+                                    {
+                                        basicSearchOldValue = $(\"" . $inputId . "\").val();
+                                        basicSearchQueued = basicSearchQueued  + 1;
+                                        setTimeout('basicSearchQueued = basicSearchQueued - 1',900);
+                                        setTimeout('searchByQueuedSearch(\"" . $inputId . "\")',1000);
+                                    }
+                                }
+                            });
+                            ";
             Yii::app()->clientScript->registerScript('basicSearchAjaxSubmit', $script);
         }
     }
