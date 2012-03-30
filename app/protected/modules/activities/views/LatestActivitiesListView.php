@@ -190,10 +190,14 @@
                 $rollupElementContent      = $element->render();
                 $content .= '<div id="LatestActivitiesConfigurationForm_rollup">' . $rollupElementContent . '</div>';
             }
-            $content .= CHtml::link(Yii::t('Default', 'Filter'), '#', array('id' => 'filter-latest-activities-link'));
+            $content .= CHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
             $content .= '</div>' . "\n";
             $content .= '<div class="filter-latest-activities-bar" style="display:none">';
-            $content .= 'All Activities, Notes, Meetings, Tasks Links, Eventually search';
+            $element                       = new LatestActivitiesMashableFilterRadioElement($this->configurationForm,
+                                                                                      'filteredByModelName',
+                                                                                      $form);
+            $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_filteredByModelName">{content}</div>';
+            $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;
         }
@@ -212,12 +216,18 @@
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
             $('#LatestActivitiesConfigurationForm_rollup').buttonset();
             $('#LatestActivitiesConfigurationForm_ownedByFilter').buttonset();
+            $('#LatestActivitiesConfigurationForm_filteredByModelName').buttonset();
             $('#LatestActivitiesConfigurationForm_rollup').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }
             );
             $('#LatestActivitiesConfigurationForm_ownedByFilter').change(function()
+                {
+                    " . $ajaxSubmitScript . "
+                }
+            );
+            $('#LatestActivitiesConfigurationForm_filteredByModelName').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }

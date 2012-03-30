@@ -80,7 +80,7 @@
         {
             $data = array(
                         LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER => Yii::t('Default', 'Mine'),
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'All Activities')
+                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'Everyones')
                     );
 
             return $data;
