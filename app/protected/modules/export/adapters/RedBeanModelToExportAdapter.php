@@ -89,5 +89,31 @@
             }
             return $data;
         }
+
+        /**
+        * Return array of retrievable model attributes
+        * @return array
+        */
+        protected static function resolveRetrievableAttributesByModel($model)
+        {
+            $retrievableAttributeNames = array();
+            $metadata = $model->getMetadata();
+            foreach ($model->attributeNames() as $name)
+            {
+                if (isset($metadata[get_class($model)]['noExport']) && in_array($name, $metadata[get_class($model)]['noExport']))
+                {
+                    continue;
+                }
+                try
+                {
+                    $value = $model->{$name};
+                    $retrievableAttributeNames[] = $name;
+                }
+                catch (Exception $e)
+                {
+                }
+            }
+            return $retrievableAttributeNames;
+        }
     }
 ?>

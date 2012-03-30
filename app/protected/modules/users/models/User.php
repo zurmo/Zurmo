@@ -575,6 +575,9 @@
                 'elements' => array(
                 ),
                 'defaultSortAttribute' => 'lastName',
+                'noExport' => array(
+                    'hash'
+                ),
             );
             return $metadata;
         }
