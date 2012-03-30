@@ -113,6 +113,17 @@
     visibility:hidden !important;
 }
 
+.disabled-select-element{
+	pointer-events:none;
+	//opacity:0.5;
+	&.dk_container{
+		background:#EFEFEF;
+	}
+}
+.disabled{
+	opacity:0.5;
+}
+
 
 html, body{
     background:#DDDEDE;
@@ -663,7 +674,6 @@ footer, header, hgroup, menu, nav, section {
                     color:@themeColor !important;
                 }
             }
-            
             position: relative;
             span{
             	position: absolute;
@@ -686,9 +696,6 @@ footer, header, hgroup, menu, nav, section {
 		        	text-indent:0;
 		        }
             }
-            
-            
-            
         }
         em{
         	z-index:9999;
