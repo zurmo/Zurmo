@@ -131,6 +131,12 @@
       $dk.addClass('dk_theme_' + theme);
       data.theme = theme;
 
+      //Zurmo - Add disabled class if the select is disabled
+      if($select.attr('disabled') == 'disabled')
+      {
+          $dk.addClass('disabled-select-element');
+      }
+
       // Save the updated $dk reference into our data object
       data.$dk = $dk;
 

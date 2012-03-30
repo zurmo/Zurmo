@@ -78,6 +78,7 @@
             }
             $content .= $this->renderHighlightBox();
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderAfterFormLayout($form);
             $actionElementContent = $this->renderActionElementBar(true);
             if($actionElementContent != null)
             {
@@ -168,7 +169,15 @@
             $disableTagCloudInputsScript = "";
             foreach ($elementIds as $id)
             {
-                if ($elementInformation['type'] == 'TagCloud')
+                if ($elementInformation['type'] == 'DropDown' || $elementInformation['type'] == 'RadioDropDown')
+                {
+                    $enableInputsScript   .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                    $enableInputsScript   .= "$('#" . $id . "').prev().removeClass('disabled-select-element'); \n";
+                    $disableInputsScript  .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $disableInputsScript  .= "$('#" . $id . "').prev().addClass('disabled-select-element'); \n";
+
+                }
+                elseif ($elementInformation['type'] == 'TagCloud')
                 {
                     $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
                     $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
@@ -178,24 +187,26 @@
                         $disableTagCloudInputsScript = "$('#" . $id . "').attr('disabled', 'disabled');";
                     }
                 }
-
-                $enableInputsScript .= "$('#" . $id . "').removeAttr('disabled'); \n";
-                $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
+                else
                 {
-                    if ($('#" . $id . "').attr('href') != undefined)
+                    $enableInputsScript .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                    $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
                     {
-                        $('#" . $id . "').css('display', '');
-                    }
-                }; \n";
-                $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
-                $disableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
-                {
-                    if ($('#" . $id . "').attr('href') != undefined)
+                        if ($('#" . $id . "').attr('href') != undefined)
+                        {
+                            $('#" . $id . "').css('display', '');
+                        }
+                    }; \n";
+                    $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $disableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
                     {
-                        $('#" . $id . "').css('display', 'none');
-                    }
-                    $('#" . $id . "').val('');
-                }; \n";
+                        if ($('#" . $id . "').attr('href') != undefined)
+                        {
+                            $('#" . $id . "').css('display', 'none');
+                        }
+                        $('#" . $id . "').val('');
+                    }; \n";
+                }
             }
             $massEditScript = <<<END
 $('#{$checkBoxHtmlOptions['id']}').click(function()

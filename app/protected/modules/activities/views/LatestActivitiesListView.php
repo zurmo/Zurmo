@@ -192,7 +192,16 @@
             }
             $content .= CHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
             $content .= '</div>' . "\n";
-            $content .= '<div class="filter-latest-activities-bar" style="display:none">';
+
+            if($this->configurationForm->filteredByModelName == LatestActivitiesConfigurationForm::FILTERED_BY_ALL)
+            {
+                $startingStyle = "display:none";
+            }
+            else
+            {
+                $startingStyle = null;
+            }
+            $content .= '<div class="filter-latest-activities-bar" style="' . $startingStyle . '">';
             $element                       = new LatestActivitiesMashableFilterRadioElement($this->configurationForm,
                                                                                       'filteredByModelName',
                                                                                       $form);
