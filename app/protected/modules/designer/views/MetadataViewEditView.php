@@ -86,14 +86,15 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+            
+			$content .= '<div class="designer-toolbar">';
             $content .= $this->renderNotificationBar('NotificationBar');
             $content .= $this->renderSaveLayoutButton('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
-            }
-            $content .= '</div></div>';
+			}
+           	$content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
@@ -130,9 +131,9 @@
         {
             $formModel = PanelsDisplayTypeLayoutMetadataUtil::makeFormFromEditableMetadata($this->editableMetadata);
             //$this->editableMetadata populate if it exists.
-            $content = '&#160;&#160;&#160;';
+            $content = null;
             $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = Yii::t('Default', 'Panels Configuration') . ' {content}{error}';
+            $element->editableTemplate = Yii::t('Default', '<h3>Panels Configuration</h3>') . ' {content}{error}';
             $content .= $element->render();
             return $content;
         }
