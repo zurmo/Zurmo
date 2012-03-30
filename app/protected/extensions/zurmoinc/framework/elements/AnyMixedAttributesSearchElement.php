@@ -40,6 +40,7 @@
             assert('$this->attribute = "anyMixedAttributes"');
             $content  = $this->renderSearchScopingInputContent();
             $content .= parent::renderControlEditable();
+            $this->renderEditableScripts();
             return $content;
         }
 
@@ -93,6 +94,31 @@
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['ScopedJuiMultiSelect'];
             return $content;
+        }
+
+        /**
+         * On keyUp, the search should be conducted.
+         */
+        protected function renderEditableScripts()
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/FormUtils.js'
+                    ),
+                CClientScript::POS_END
+            );
+            $inputId = $this->getEditableInputId();
+            $script   = " basicSearchQueued = 0;";
+            $script  .= "$('#" . $inputId . "').bind('change keyup', function(event) {
+                            if($(this).val() != '')
+                            {
+                                //todo: clear advancedSearch
+                                basicSearchQueued = basicSearchQueued  + 1;
+                                setTimeout('basicSearchQueued = basicSearchQueued - 1',900);
+                                setTimeout('searchByQueuedSearch(\"" . $inputId . "\")',1000);
+                            }
+                        });";
+            Yii::app()->clientScript->registerScript('basicSearchAjaxSubmit', $script);
         }
     }
 ?>

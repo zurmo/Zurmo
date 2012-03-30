@@ -53,6 +53,20 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'name', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'industry', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
