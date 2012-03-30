@@ -1040,6 +1040,10 @@ table.items thead tr:hover{
         display:block;
     }
 }
+.empty{
+	padding-left:15px;
+	display:block;
+}
 /*forms*/
 .form{
     input[type="checkbox"]{
@@ -1402,7 +1406,9 @@ label.hasCheckBox{
     }
 }
 .SecuredListView{
-    //.b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
+   float:left;
+   width:100%;
+   margin-bottom:20px;
 }
 .cgrid-view{
     .b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
@@ -1448,7 +1454,6 @@ label.hasCheckBox{
 .search-form-tools{
     float:left;
     margin-left:20px;
-    margin-top:3px;
     color:@themeColor;
     #more-search-link{
         margin-left:10px;
@@ -1457,6 +1462,14 @@ label.hasCheckBox{
             content: "▾";
             margin-left:5px;
         }
+    }
+    input[type="submit"]{
+    	.zButton();
+    	/*
+    	&:before{
+    		content:"k";
+    		.symbly(22px);
+    	}*/
     }
 }
 .search-view-1{
@@ -2119,13 +2132,27 @@ div.hasHalfs{
 
 /*Upcoming Meeting Pager*/
 .pager{
+	float:left;
+	width:100%;
     text-align:center;
     .clearfix();
+    
     ul{
-        //border:1px solid #e7e7e7;
         width:100%;
         .box-sizing();
         list-style: none;
+    }
+    
+    ul.endless-list-pager{
+    	border: 1px solid #DFDFDF;
+        border-top:none;
+        list-style:none;
+        li{
+            float:none;
+            width:100%;
+            border-right:none;
+            border-top:none;
+        }
     }
 
     li{
@@ -2187,25 +2214,6 @@ div.hasHalfs{
     }
 }
 
-.pager{
-    float:left;
-    width:100%;
-    .clearfix();
-    ul.endless-list-pager{
-        border-top:none;
-        list-style:none;
-        float:left;
-        li{
-            float:none;
-            width:100%;
-            border-right:none;
-        }
-    }
-}
-#ModalView .pager{
-	float:none;
-}
-
 /*Latest Activity*/
 .latest-activity-icon{
     position:relative;
@@ -2243,14 +2251,19 @@ div.hasHalfs{
             }
         }
         #filter-latest-activities-link{
+        	color:@themeColor !important;
         	margin-left:20px;
-        	
+        	text-decoration: underline;
+        	 .t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+        	 &:hover{
+        	 	color:@themeColor2  !important;
+        	 }
         }
         #activities-rollup-tooltip{
         	width:15px;
         	height:15px;
         	line-height:14px;
-        	margin-top:-2px;
+        	margin-top:-4px;
         	display:inline-block;
         	background:#fff;
         	.radius(10px);
@@ -2261,39 +2274,57 @@ div.hasHalfs{
         	cursor:pointer;
         	vertical-align:middle;
         }
-        label{
-            padding-top:0;
-            border:none;
-            background:none;
-            font-size:11px !important;
-            padding:4px;
-            margin:0 3px;
-            color:@themeColor;
-            &:hover{
-                background:@themeColor;
-                color:#FFF;
-                .radius(3px) !important;
-                border:none;
-            }
-        }
-        input[type="radio"], input[type="checkbox"]{
-            visibility:hidden;
-            display:none;
-        }
-        .ui-state-active{
-            background:@themeColor;
-            color:#FFF;
-            .radius(3px) !important;
-            border:none;
-        }
-        .ui-button-text{
-            padding:0;
-            margin:0;
-        }
     }
+    
+	.latest-activity-toolbar,
+	.filter-latest-activities-bar{ 
+	     label{
+	            padding-top:0;
+	            border:none;
+	            background:none;
+	            font-size:11px !important;
+	            padding:4px;
+	            margin:0 3px;
+	            color:@themeColor;
+	            &:hover{
+	                background:@themeColor;
+	                color:#FFF;
+	                .radius(3px) !important;
+	                border:none;
+	            }
+	        }
+	        input[type="radio"], input[type="checkbox"]{
+	            visibility:hidden;
+	            display:none;
+	        }
+	        .ui-state-active{
+	            background:@themeColor;
+	            color:#FFF;
+	            .radius(3px) !important;
+	            border:none;
+	        }
+	        .ui-button-text{
+	            padding:0;
+	            margin:0;
+	        }
+   		}
+    
+    
+    
+    
+    
     .filter-latest-activities-bar{
-    	padding:10px;
+    	
     	border-bottom:1px solid #DFDFDF;
+    	
+    	overflow: hidden;
+		padding:0 15px;
+		height: 40px;
+		line-height: 40px;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		.b-shadow(inset 0 1px 0 0 #ffffff);
+		position:relative;
+    	
     }
     .items{
         border-top:none !important;

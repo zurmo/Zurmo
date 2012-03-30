@@ -1,7 +1,6 @@
 $(window).ready(function(){
 
     //main menu flyouts or mbmenu releacment
-    //$( '#MenuView .parent, #HeaderLinksView .parent, #ShortcutsMenu .parent' ).hover(
     $( '.nav > .parent' ).hover(
         function(){
             if ( $(this).find('ul').length > 0 ){
@@ -16,7 +15,6 @@ $(window).ready(function(){
     );
 
     //Main nav hover
-
 	 $('#MenuView a').hover(
         function(){
         	console.log($(this));
@@ -30,28 +28,47 @@ $(window).ready(function(){
         	}
         }
     );
-
-    /*Resizes the app to fill the browser's window case smaller'*/
-    var viewportHeight = $(window).height();
-    var wrapperDivHeight = $('body > div').outerHeight(true)
-    var appChromeHeight = 0;
-    var bufferHeight = 0;
-    var recentlyViewedHeight = 0;
-
-    if ( $('#LoginPageView').length > 0 ) {
-        appChromeHeight = 38 + $('#FooterView').outerHeight(true);
-        if ( wrapperDivHeight < viewportHeight  ){
-            bufferHeight = viewportHeight - appChromeHeight;
-            $('#LoginView').height(  bufferHeight   );
-        }
-    } else {
-        recentlyViewedHeight = $('#RecentlyViewedView').outerHeight(true);
-        appChromeHeight = recentlyViewedHeight + $('#MenuView').outerHeight(true) + $('#HeaderView').outerHeight(true) + $('#FooterView').outerHeight(true);
-        if ( wrapperDivHeight < viewportHeight  ){
-            bufferHeight = viewportHeight - appChromeHeight;
-            $('#RecentlyViewedView').height( $('#RecentlyViewedView').height() + bufferHeight   );
-        }
+	
+	
+	function resizeWhiteArea(){
+		
+	    /*Resizes the app to fill the browser's window case smaller'*/
+	    var viewportHeight = $(window).height();
+	    var wrapperDivHeight = $('body > div').outerHeight(true)
+	    var appChromeHeight = 0;
+	    var bufferHeight = 0;
+	    var recentlyViewedHeight = 0;
+		
+		//if login
+	    if ( $('#LoginPageView').length > 0 ) {
+	        appChromeHeight = 40 + $('#FooterView').outerHeight(true);
+	        if ( wrapperDivHeight < viewportHeight  ){
+	            bufferHeight = viewportHeight - appChromeHeight;
+	            $('#LoginView').height(  bufferHeight   );
+	        }
+	   	//if admin area
+	    } else if ( $('.AdministrativeArea').length > 0 ) { 
+	    	appChromeHeight = 80 + $('#FooterView').outerHeight(true);
+	        if ( wrapperDivHeight < viewportHeight  ){
+	            bufferHeight = viewportHeight - appChromeHeight;
+	            $('.AppContainer').height(  bufferHeight   );
+	        }
+	    //rest of app
+	    } else {
+	        recentlyViewedHeight = $('#RecentlyViewedView').outerHeight(true);
+	        appChromeHeight = recentlyViewedHeight + $('#MenuView').outerHeight(true) + $('#HeaderView').outerHeight(true) + $('#FooterView').outerHeight(true);
+	        if ( wrapperDivHeight < viewportHeight  ){
+	            bufferHeight = viewportHeight - appChromeHeight;
+	            $('#RecentlyViewedView').height( $('#RecentlyViewedView').height() + bufferHeight   );
+	        }
+	    }
     }
+	
+	resizeWhiteArea();
+    
+    
+    
+    
     /*Label overlays input, address fields*/
     $(".overlay-label-field input").live('focus', function(){
         $(this).prev().fadeOut(100);
@@ -81,7 +98,6 @@ $(window).ready(function(){
 
 
     $('input:checkbox').each(function(){
-        log( $(this).is(':checked')   );
         if ( $( this ).is(':checked') ) {
             $(this).parent().addClass('c_on');
         }
