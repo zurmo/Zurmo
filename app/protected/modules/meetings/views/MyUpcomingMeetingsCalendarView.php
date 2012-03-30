@@ -79,6 +79,15 @@
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
         }
 
+        protected function getPortletSelectDayUrl()
+        {
+            return Yii::app()->createUrl('/meetings/default/daysMeetingsFromCalendarModalList',
+                                                        array_merge($_GET, array(
+                                                            'redirectUrl' => Yii::app()->request->getRequestUri(),
+                                                            'ownerOnly'   => true
+                                                            )));
+        }
+
         public function resolvePortletModuleId()
         {
             return 'home';

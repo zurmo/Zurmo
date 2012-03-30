@@ -92,6 +92,27 @@
             }";
         }
 
+        protected function getOnSelectScript()
+        {
+            return "js:function(dateText, inst) {
+                $.ajax({
+                    url      : $.param.querystring('" . $this->getPortletSelectDayUrl() . "', '&displayStringTime=' + dateText + '&stringTime=' + $('#calendarSelectedDate" . $this->uniqueLayoutId . "').val()),
+                    async    : false,
+                    type     : 'GET',
+                    success  : function(data)
+                    {
+                        jQuery('#calendarSelectedDate" . $this->uniqueLayoutId . "').html(data)
+                        //Since the home page for some reason cannot render this properly in beforeShow, we are using a trick.
+                        setTimeout('addSpansToDatesOnCalendar(\"' + inst.id + '\")', 100);
+                    },
+                    error : function()
+                    {
+                        //todo: error call
+                    }
+                });
+            }";
+        }
+
         protected function getPortletChangeMonthUrl()
         {
             return Yii::app()->createUrl('/' . $this->resolvePortletModuleId() . '/defaultPortlet/viewAction',
@@ -99,6 +120,11 @@
                                                             'action'         => 'renderMonthEvents',
                                                             'portletId'      => $this->params['portletId'],
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
+        }
+
+        protected function getPortletSelectDayUrl()
+        {
+            return Yii::app()->createUrl('/meetings/default/daysMeetingsFromCalendarModalList', $_GET);
         }
 
         /**

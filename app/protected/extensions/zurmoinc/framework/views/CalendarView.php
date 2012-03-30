@@ -71,16 +71,28 @@
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                     'onChangeMonthYear'   => $this->getOnChangeMonthScript(),
+                    'onSelect'		      => $this->getOnSelectScript(),
+                    'altFormat'           => 'yy-mm-dd',
+                    'altField'            => '#calendarSelectedDate' . $this->uniqueLayoutId
                 ),
                 'dayEvents'			  => $this->makeDayEvents(),
 
             ));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['Calendar'];
+            $content .= "<div id=\"dayMeetingsModalContainer\"></div>\n";
+            $content .= CHtml::textField('calendarSelectedDate' . $this->uniqueLayoutId,
+                                         null,
+                                         array('id'    => 'calendarSelectedDate' . $this->uniqueLayoutId,
+                                               'style' => 'display:none;'));
             return $content;
         }
 
         protected function getOnChangeMonthScript()
+        {
+        }
+
+        protected function getOnSelectScript()
         {
         }
 

@@ -97,6 +97,16 @@
             return $searchAttributeData;
         }
 
+        protected function getPortletSelectDayUrl()
+        {
+            return Yii::app()->createUrl('/meetings/default/daysMeetingsFromCalendarModalList',
+                                                        array_merge($_GET, array(
+                                                            'redirectUrl'			 => $this->params['redirectUrl'],
+                                                            'relationModelId'        => $this->params['relationModel']->id,
+                                                            'relationModelClassName' => get_class($this->params['relationModel'])
+                                                            )));
+        }
+
         public function resolvePortletModuleId()
         {
             return $this->params['relationModuleId'];

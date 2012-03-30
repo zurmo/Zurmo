@@ -103,5 +103,42 @@
             }
             return $attributeString;
         }
+
+        /**
+         * Resolve a link to a related model for editing.  Used by some modal views
+         * for example.  If the current user can Permission::WRITE
+         * the related model, then check if the current user has RIGHT_ACCESS_ to
+         * the model's related module.  If current user has access then
+         * return link, otherwise return text.  If current user cannot Permission::WRITE
+         * then return null.
+         * @param $attributeString
+         * @param $model
+         * @param $moduleClassName
+         * @param $linkRoute
+         * @return string content.
+         */
+        public static function resolveLinkToEditModelForCurrentUser(
+            $attributeString,
+            $model,
+            $moduleClassName,
+            $linkRoute,
+            $redirectUrl = null)
+        {
+            assert('is_string($attributeString)');
+            assert('$model instanceof Item');
+            assert('is_string($moduleClassName)');
+            assert('is_string($linkRoute)');
+            assert('is_string($redirectUrl) || $redirectUrl == null');
+            if (!ActionSecurityUtil::canCurrentUserPerformAction('Edit', $model))
+            {
+                return null;
+            }
+            if (RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
+            {
+                return CHtml::link($attributeString,
+                    Yii::app()->createUrl($linkRoute, array("id" => $model->id, 'redirectUrl' => $redirectUrl)));
+            }
+            return $attributeString;
+        }
     }
 ?>
