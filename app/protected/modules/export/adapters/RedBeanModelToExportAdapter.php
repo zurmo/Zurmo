@@ -30,6 +30,13 @@
     class RedBeanModelToExportAdapter extends RedBeanModelToArrayAdapter
     {
         /**
+        * Use when multiple attribute names
+        * need to be combined together into one string that can easily
+        * be parsed later.
+        */
+        const DELIMITER = ' - ';
+
+        /**
         *
         * Get model properties as array.
         * return array
@@ -47,6 +54,7 @@
                     !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
                       RedBeanModel::HAS_ONE))
                 {
+                    // Normal attribute
                     $adapter = new $adapterClassName($this->model, $attributeName);
                     $adapter->resolveData($data);
                 }
@@ -54,22 +62,26 @@
                     ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
                       $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
                 {
+                    // Owned relationship
                     if ($this->model->{$attributeName}->id > 0)
                     {
                         $util = new RedBeanModelToExportAdapter($this->model->{$attributeName});
                         $relatedData          = $util->getData();
                         foreach ($relatedData as $relatedDataAttribute => $relatedDataValue)
                         {
-                            if ($relatedDataAttribute != 'id')
+                            if (strtolower($relatedDataAttribute) != 'id')
                             {
-                                $parentAttributeName = $this->model->getAttributeLabel($attributeName) . '__' . $relatedDataAttribute;
-                                $data[$parentAttributeName] = $relatedDataValue;
+                                $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
+                                    $this->model->getAttributeLabel($attributeName),
+                                    $relatedDataAttribute);
+
+                                $data[$exportAttributeName] = $relatedDataValue;
                             }
                         }
                     }
                     else
                     {
-                        $data[$this->model->getAttributeLabel($attributeName)] = null;
+                        $data = array_merge($data, $this->getAtttributesForEmptyRelationships($attributeName));
                     }
                 }
                 //We don't want to list properties from CustomFieldData objects
@@ -77,12 +89,19 @@
                 elseif ($this->model->isRelation($attributeName) &&
                     $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                 {
+                    // Not owned relationship
                     if ($this->model->{$attributeName}->id > 0)
                     {
-                        $data[$this->model->getAttributeLabel($attributeName) . "__id"] = $this->model->{$attributeName}->id;
+                        $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
+                            $this->model->getAttributeLabel($attributeName),
+                            Yii::t('Default', 'name'));
+                        $data[$exportAttributeName] = strval($this->model->{$attributeName});
                     }
                     else
                     {
+                        $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
+                            $this->model->getAttributeLabel($attributeName),
+                            Yii::t('Default', 'name'));
                         $data[$this->model->getAttributeLabel($attributeName)] = null;
                     }
                 }
@@ -114,6 +133,26 @@
                 }
             }
             return $retrievableAttributeNames;
+        }
+
+        public static function getDerivedAttributeNameFromTwoStrings($string1, $string2)
+        {
+            return $string1 . RedBeanModelToExportAdapter::DELIMITER . $string2;
+        }
+
+        public function getAtttributesForEmptyRelationships($attributeName)
+        {
+            $data = array();
+            $metadata = $this->model->{$attributeName}->getMetadata();
+            foreach ($metadata[get_class($this->model->{$attributeName})]['members'] as $memberName)
+            {
+                $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
+                    $this->model->getAttributeLabel($attributeName),
+                    $this->model->{$attributeName}->getAttributeLabel($memberName)
+                );
+                $data[$exportAttributeName] = null;
+            }
+            return $data;
         }
     }
 ?>
