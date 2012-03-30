@@ -57,7 +57,7 @@
                     'serializedData'
                 ),
                 'relations' => array(
-                    'exportFileModel' => array(RedBeanModel::HAS_ONE,  'ExportFileModel'),
+                    'exportFileModel' => array(RedBeanModel::HAS_ONE,  'ExportFileModel', RedBeanModel::OWNED),
                 ),
                 'rules' => array(
                     array('isCompleted',    'boolean'),
@@ -70,7 +70,7 @@
                 ),
                 'defaultSortAttribute' => 'modifiedDateTime',
                 'noAudit' => array(
-                    'serializedData'
+                    'serializedData', 'exportFileModel'
                 )
             );
             return $metadata;

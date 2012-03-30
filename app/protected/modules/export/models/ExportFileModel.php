@@ -29,17 +29,6 @@
      */
     class ExportFileModel extends FileModel
     {
-        public static function getDefaultMetadata()
-        {
-            $metadata = parent::getDefaultMetadata();
-            $metadata[__CLASS__] = array(
-                'relations' => array(
-                    'exportItem' => array(RedBeanModel::HAS_ONE,  'ExportItem'),
-                ),
-            );
-            return $metadata;
-        }
-
         public static function getModuleClassName()
         {
             return 'ExportModule';
