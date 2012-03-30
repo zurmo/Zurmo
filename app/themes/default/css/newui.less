@@ -1040,6 +1040,10 @@ table.items thead tr:hover{
         display:block;
     }
 }
+.empty{
+	padding-left:15px;
+	display:block;
+}
 /*forms*/
 .form{
     input[type="checkbox"]{
@@ -1402,7 +1406,9 @@ label.hasCheckBox{
     }
 }
 .SecuredListView{
-    //.b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
+   float:left;
+   width:100%;
+   margin-bottom:20px;
 }
 .cgrid-view{
     .b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
@@ -1448,7 +1454,6 @@ label.hasCheckBox{
 .search-form-tools{
     float:left;
     margin-left:20px;
-    margin-top:3px;
     color:@themeColor;
     #more-search-link{
         margin-left:10px;
@@ -1457,6 +1462,14 @@ label.hasCheckBox{
             content: "▾";
             margin-left:5px;
         }
+    }
+    input[type="submit"]{
+    	.zButton();
+    	/*
+    	&:before{
+    		content:"k";
+    		.symbly(22px);
+    	}*/
     }
 }
 .search-view-1{
@@ -2119,6 +2132,7 @@ div.hasHalfs{
 
 /*Upcoming Meeting Pager*/
 .pager{
+	float:left;
 	width:100%;
     text-align:center;
     .clearfix();
