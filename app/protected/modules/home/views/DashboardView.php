@@ -64,9 +64,13 @@
 
         protected function renderContent()
         {
-            $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div></div>';
+            $actionElementContent = $this->renderActionElementBar(false);
+            if($actionElementContent != null)
+            {
+                $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $this->portlets = $this->getPortlets($this->uniqueLayoutId, self::getMetadata());
             $content .= $this->renderPortlets($this->uniqueLayoutId);
             return $content;

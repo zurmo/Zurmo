@@ -62,9 +62,13 @@
         {
             $content  = '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
-            $content .= $this->renderActionElementMenu();
-            $content .= '</div></div>';
+            $actionElementContent = $this->renderActionElementMenu();
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $content .= $this->renderFormLayout();
             $content .= '<p>'.$this->renderAfterFormLayoutForDetailsContent().'</p>';
             $content .= '</div>';

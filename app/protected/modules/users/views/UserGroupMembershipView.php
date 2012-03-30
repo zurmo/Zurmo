@@ -55,8 +55,6 @@
         {
             $content  = '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
-            $content .= '</div></div>';
             $content .= '<table>';
             $content .= '<colgroup>';
             $content .= '<col style="width:100%" />';

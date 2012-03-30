@@ -101,9 +101,13 @@
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderAfterFormLayout($form);
-            $content .= '<div class="view-toolbar-container clearfix">';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
+            $actionElementContent = $this->renderActionElementBar(true);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix">';
+                $content .= $actionElementContent;
+                $content .= '</div>';
+            }
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
             $content .= '</div>';
