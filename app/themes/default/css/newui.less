@@ -2119,13 +2119,26 @@ div.hasHalfs{
 
 /*Upcoming Meeting Pager*/
 .pager{
+	width:100%;
     text-align:center;
     .clearfix();
+    
     ul{
-        //border:1px solid #e7e7e7;
         width:100%;
         .box-sizing();
         list-style: none;
+    }
+    
+    ul.endless-list-pager{
+    	border: 1px solid #DFDFDF;
+        border-top:none;
+        list-style:none;
+        li{
+            float:none;
+            width:100%;
+            border-right:none;
+            border-top:none;
+        }
     }
 
     li{
@@ -2185,25 +2198,6 @@ div.hasHalfs{
         padding:4px 0 4px 0 !important;
         pointer-events:none;
     }
-}
-
-.pager{
-    float:left;
-    width:100%;
-    .clearfix();
-    ul.endless-list-pager{
-        border-top:none;
-        list-style:none;
-        float:left;
-        li{
-            float:none;
-            width:100%;
-            border-right:none;
-        }
-    }
-}
-#ModalView .pager{
-	float:none;
 }
 
 /*Latest Activity*/
