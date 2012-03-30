@@ -142,9 +142,25 @@
                 $testItem->getAttributeLabel('radioDropDown')     => null,
                 $testItem->getAttributeLabel('hasOne')            => null,
                 $testItem->getAttributeLabel('hasOneAlso')        => null,
-                $testItem->getAttributeLabel('primaryEmail')      => null,
-                $testItem->getAttributeLabel('primaryAddress')    => null,
-                $testItem->getAttributeLabel('secondaryEmail')    => null,
+
+                'Primary Email - Email Address' => null,
+                'Primary Email - Is Invalid' => null,
+                'Primary Email - Opt Out' => null,
+
+                'Primary Address - City' => null,
+                'Primary Address - Country' => null,
+                'Primary Address - Invalid' => null,
+                'Primary Address - Latitude' => null,
+                'Primary Address - Longitude' => null,
+                'Primary Address - Postal Code' => null,
+                'Primary Address - Street 1' => null,
+                'Primary Address - Street 2' => null,
+                'Primary Address - State' => null,
+
+                'Secondary Email - Email Address' => null,
+                'Secondary Email - Is Invalid' => null,
+                'Secondary Email - Opt Out' => null,
+
                 $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
@@ -227,9 +243,25 @@
                 $testItem->getAttributeLabel('tagCloud')          => null,
                 $testItem->getAttributeLabel('hasOne')            => null,
                 $testItem->getAttributeLabel('hasOneAlso')        => null,
-                $testItem->getAttributeLabel('primaryEmail')      => null,
-                $testItem->getAttributeLabel('primaryAddress')    => null,
-                $testItem->getAttributeLabel('secondaryEmail')    => null,
+
+                'Primary Email - Email Address' => null,
+                'Primary Email - Is Invalid' => null,
+                'Primary Email - Opt Out' => null,
+
+                'Primary Address - City' => null,
+                'Primary Address - Country' => null,
+                'Primary Address - Invalid' => null,
+                'Primary Address - Latitude' => null,
+                'Primary Address - Longitude' => null,
+                'Primary Address - Postal Code' => null,
+                'Primary Address - Street 1' => null,
+                'Primary Address - Street 2' => null,
+                'Primary Address - State' => null,
+
+                'Secondary Email - Email Address' => null,
+                'Secondary Email - Is Invalid' => null,
+                'Secondary Email - Opt Out' => null,
+
                 $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
@@ -296,6 +328,8 @@
             $testItem    = ExportTestModelItem::getById($id);
             $adapter     = new RedBeanModelToExportAdapter($testItem);
             $data        = $adapter->getData();
+
+            print_r($data);
             $compareData = array(
                 $testItem->getAttributeLabel('id')                => $id,
                 $testItem->getAttributeLabel('firstName')         => 'Bob3',
@@ -316,11 +350,27 @@
                 $testItem->getAttributeLabel('radioDropDown')     => null,
                 $testItem->getAttributeLabel('multiDropDown')     => null,
                 $testItem->getAttributeLabel('tagCloud')          => null,
-                $testItem->getAttributeLabel('hasOne') . "__id"   => $testItem2->id,
-                $testItem->getAttributeLabel('hasOneAlso') . "__id" => $testItem4->id,
-                $testItem->getAttributeLabel('primaryEmail')      => null,
-                $testItem->getAttributeLabel('primaryAddress')    => null,
-                $testItem->getAttributeLabel('secondaryEmail')    => null,
+                $testItem->getAttributeLabel('hasOne') . " - name"   => strval($testItem2),
+                $testItem->getAttributeLabel('hasOneAlso') . " - name" => strval($testItem4),
+
+                'Primary Email - Email Address' => null,
+                'Primary Email - Is Invalid' => null,
+                'Primary Email - Opt Out' => null,
+
+                'Primary Address - City' => null,
+                'Primary Address - Country' => null,
+                'Primary Address - Invalid' => null,
+                'Primary Address - Latitude' => null,
+                'Primary Address - Longitude' => null,
+                'Primary Address - Postal Code' => null,
+                'Primary Address - Street 1' => null,
+                'Primary Address - Street 2' => null,
+                'Primary Address - State' => null,
+
+                'Secondary Email - Email Address' => null,
+                'Secondary Email - Is Invalid' => null,
+                'Secondary Email - Opt Out' => null,
+
                 $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
                 $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
@@ -328,6 +378,7 @@
                 $testItem->getAttributeLabel('createdByUser')     => 'super',
                 $testItem->getAttributeLabel('modifiedByUser')    => 'super',
             );
+            print_r($compareData);
             $this->assertEquals($compareData, $data);
         }
     }

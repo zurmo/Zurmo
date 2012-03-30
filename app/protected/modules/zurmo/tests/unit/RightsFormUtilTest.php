@@ -125,6 +125,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'ExportModule'  => array(
+                    'RIGHT_ACCESS_EXPORT'   => array(
+                        'displayName' => ExportModule::RIGHT_ACCESS_EXPORT,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'HomeModule' => array(
                     'RIGHT_CREATE_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_CREATE_DASHBOARDS,
@@ -467,6 +475,14 @@
                     ),
                     'RIGHT_ACCESS_CONFIGURATION'   => array(
                         'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'ExportModule'  => array(
+                    'RIGHT_ACCESS_EXPORT'   => array(
+                        'displayName' => ExportModule::RIGHT_ACCESS_EXPORT,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -815,6 +831,14 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'ExportModule'  => array(
+                    'RIGHT_ACCESS_EXPORT'   => array(
+                        'displayName' => ExportModule::RIGHT_ACCESS_EXPORT,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'HomeModule' => array(
                     'RIGHT_CREATE_DASHBOARDS'   => array(
                         'displayName' => HomeModule::RIGHT_CREATE_DASHBOARDS,
@@ -1152,6 +1176,14 @@
                     ),
                     'RIGHT_ACCESS_CONFIGURATION'   => array(
                         'displayName' => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'ExportModule'  => array(
+                    'RIGHT_ACCESS_EXPORT'   => array(
+                        'displayName' => ExportModule::RIGHT_ACCESS_EXPORT,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

@@ -157,38 +157,12 @@
             $csvData = ExportItemToCsvFileUtil::export($data, '', false);
             $revertedData = ExportItemToCsvFileUtil::csvToArray($csvData);
 
-            $compareData = array(
-                $testItem->getAttributeLabel('id')                => $id,
-                $testItem->getAttributeLabel('firstName')         => 'Bob3',
-                $testItem->getAttributeLabel('lastName')          => 'Bob3',
-                $testItem->getAttributeLabel('boolean')           => 1,
-                $testItem->getAttributeLabel('date')              => '2002-04-03',
-                $testItem->getAttributeLabel('dateTime')          => '2002-04-03 02:00:43',
-                $testItem->getAttributeLabel('float')             => 54.22,
-                $testItem->getAttributeLabel('integer')           => 10,
-                $testItem->getAttributeLabel('phone')             => '21313213',
-                $testItem->getAttributeLabel('string')            => 'aString',
-                $testItem->getAttributeLabel('textArea')          => 'Some Text Area',
-                $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
-                $testItem->getAttributeLabel('email')             => 'a@a.com',
-                $testItem->getAttributeLabel('currency')          => null,
-                $testItem->getAttributeLabel('currencyValue')     => '100' . ' ' . $currencies[0]->code,
-                $testItem->getAttributeLabel('dropDown')          => null,
-                $testItem->getAttributeLabel('radioDropDown')     => null,
-                $testItem->getAttributeLabel('multiDropDown')     => 'Multi 1, Multi 3',
-                $testItem->getAttributeLabel('tagCloud')          => 'Cloud 2, Cloud 3',
-                $testItem->getAttributeLabel('hasOne') . "__id"   => $testItem2->id,
-                $testItem->getAttributeLabel('hasOneAlso') . "__id" => $testItem4->id,
-                $testItem->getAttributeLabel('primaryEmail')      => null,
-                $testItem->getAttributeLabel('primaryAddress')    => null,
-                $testItem->getAttributeLabel('secondaryEmail')    => null,
-                $testItem->getAttributeLabel('user')              => null,
-                $testItem->getAttributeLabel('owner')             => 'super',
-                $testItem->getAttributeLabel('createdDateTime')   => $createStamp,
-                $testItem->getAttributeLabel('modifiedDateTime')  => $createStamp,
-                $testItem->getAttributeLabel('createdByUser')     => 'super',
-                $testItem->getAttributeLabel('modifiedByUser')    => 'super',
-            );
+            // We are testing RedBeanModelToExportAdapter in details in another test
+            // so in this test we suppose that RedBeanModelToExportAdapter::getData
+            // return correct results
+            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $compareData        = $adapter->getData();
+
             $this->assertEquals($compareData, $revertedData[0]);
         }
     }
