@@ -87,7 +87,7 @@
                     {
                         $recentlyViewedItem                    = array();
                         $moduleClassName                       = $unserializedData[1];
-                        $recentlyViewedItem['link']            = CHtml::link($unserializedData[0],
+                        $recentlyViewedItem['link']            = CHtml::link('<span></span><em></em><span>' . $unserializedData[0] . '</span>',
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName));
                         $recentlyViewedItem['moduleClassName'] = $moduleClassName;
                         $recentlyViewedItems[]                 = $recentlyViewedItem;
