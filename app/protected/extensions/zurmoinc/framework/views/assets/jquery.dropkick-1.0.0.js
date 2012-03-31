@@ -149,6 +149,8 @@
       lists[lists.length] = $select;
 
       // Focus events
+      $dk.unbind('focus.dropkick');
+      $dk.unbind('blur.dropkick');
       $dk.bind('focus.dropkick', function (e) {
         $dk.addClass('dk_focus');
       }).bind('blur.dropkick', function (e) {
@@ -399,6 +401,7 @@
 
     // Handle click events on the dropdown toggler
     //Zurmo needed to change this to 'bind' from live to ensure it would not add multiple events when using ajax
+    $('.dk_toggle').unbind('click');
     $('.dk_toggle').bind('click', function (e) {
       var $dk  = $(this).parents('.dk_container').first();
 
@@ -414,7 +417,8 @@
     });
 
     // Handle click events on individual dropdown options
-    $('.dk_options a').live(($.browser.msie ? 'mousedown' : 'click'), function (e) {
+    $('.dk_options a').unbind($.browser.msie ? 'mousedown' : 'click');
+    $('.dk_options a').bind(($.browser.msie ? 'mousedown' : 'click'), function (e) {
       var
         $option = $(this),
         $dk     = $option.parents('.dk_container').first(),
@@ -430,6 +434,7 @@
     });
 
     // Setup keyboard nav
+    $(document).unbind('keydown.dk_nav');
     $(document).bind('keydown.dk_nav', function (e) {
       var
         // Look for an open dropdown...

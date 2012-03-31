@@ -49,8 +49,7 @@
                 $element->editableTemplate = $editableTemplate;
                 $content .= $element->render();
             }
-			 return CHtml::tag('div', array('class' => 'has-lang-label'), $content);
-            //return $content;
+             return CHtml::tag('div', array('class' => 'has-lang-label'), $content);
         }
 
         /**

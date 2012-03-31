@@ -154,7 +154,7 @@
 
         protected function renderRemoveLink()
         {
-            return CHtml::link(Yii::t('Default', 'Remove'), '#', array('class' => 'remove-sortable-item-link'));
+            return CHtml::link('<span></span>' . Yii::t('Default', 'Remove'), '#', array('class' => 'remove-sortable-item-link'));
         }
 
         protected function renderAddInputAndAddButton()
@@ -215,10 +215,11 @@
                         var currenInputCollectionLength = $('input[name=\"" . $this->getNameForInputField() . "\"]').length;
                         $('<li class=\"ui-state-default\" id=\"{id}\">' +
                         '<span class=\"ui-icon ui-icon-arrowthick-2-n-s\">&#160;</span>' +
+                        '<div class=\"has-lang-label\">' +
                         '<input name=\"" . $this->getNameForInputField() . "\" id=\"" . $inputIdPrefix .
                         "' + ($('input[name=\"" . $this->getNameForInputField() . "\"]').length + 1) +'\" type=\"text\" value=\"' +
                         $('#" . $this->attribute . "_AddInput').val()
-                         + '\" size=\"50\"/>" . static::renderLanguageLabelHtmlContent($supportedLanguagesData[$baseLanguage]) . "' +
+                         + '\" size=\"50\"/>" . static::renderLanguageLabelHtmlContent($supportedLanguagesData[$baseLanguage]) . "</div>' +
                         '<input name=\"" . $this->getNameForExistingValueHiddenField() . "\" type=\"hidden\" value=\"' +
                         $('#" . $this->attribute . "_AddInput').val() + '\" />&#160;&#160;&#160;" . $this->renderRemoveLink() . "' +
                         '" . $this->renderSortableLanguageLabelInputsForAddingNewValuesJavaScriptContent(). "' +

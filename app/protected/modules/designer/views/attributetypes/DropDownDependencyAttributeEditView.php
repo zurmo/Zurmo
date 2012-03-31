@@ -76,6 +76,7 @@
 
         protected function renderAfterFormLayout($form)
         {
+            static::renderScripts();
             $content  = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
             //$content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= $form->error($this->model, 'mappingData');
@@ -89,6 +90,7 @@
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_bool($renderContainer)');
+            static::renderScripts();
             $mappingDataDivId                = 'DropDownDependencyMappingData';
             $ajaxActionId                    = 'changeDropDownDependencyAttribute';
             $content                         = null;
@@ -116,6 +118,16 @@
         protected function getAfterFormLayoutTranslatedTitleContent()
         {
             return Yii::t('Default', 'Dropdown Dependency Mapping');
+        }
+
+        protected static function renderScripts()
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
         }
     }
 ?>
