@@ -179,12 +179,12 @@
                 }
                 elseif ($elementInformation['type'] == 'TagCloud')
                 {
-                    $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
-                    $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $enableInputsScript  .= "$('#token-input-" . $id . "').removeAttr('disabled'); \n";
+                    $disableInputsScript .= "$('#token-input-" . $id . "').attr('disabled', 'disabled'); \n";
                     $id = $id.'_tag';
                     if (!$checked)
                     {
-                        $disableTagCloudInputsScript = "$('#" . $id . "').attr('disabled', 'disabled');";
+                        $disableTagCloudInputsScript = "$('#token-input-" . $id . "').attr('disabled', 'disabled');";
                     }
                 }
                 else

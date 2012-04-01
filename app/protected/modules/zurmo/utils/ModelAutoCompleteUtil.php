@@ -190,9 +190,8 @@
                 if (stripos($label, $partialName) === 0)
                 {
                     $autoCompleteResults[] = array(
-                        'id'    => $data,
-                        'value' => $data,
-                        'label' => $label,
+                        'id'   => $data,
+                        'name' => $label,
                     );
                 }
             }

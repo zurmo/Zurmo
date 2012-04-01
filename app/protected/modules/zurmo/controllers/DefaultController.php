@@ -167,8 +167,7 @@
             {
                 $data = 'No Results Found';
                 $autoCompleteResults[] = array('id'    => '',
-                                               'value' => '',
-                                               'label' => $data,
+                                               'name' => $data
                 );
             }
             echo CJSON::encode($autoCompleteResults);
