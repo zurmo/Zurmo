@@ -80,6 +80,9 @@
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
                     ),
+                    'derivedAttributeTypes' => array(
+                        'MeetingDaySummary',
+                    ),
                     'gridViewType' => RelatedListView::GRID_VIEW_TYPE_STACKED,
                     'panels' => array(
                         array(
@@ -88,7 +91,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
+                                                array('attributeName' => 'null', 'type' => 'MeetingDaySummary'),
                                             ),
                                         ),
                                     )

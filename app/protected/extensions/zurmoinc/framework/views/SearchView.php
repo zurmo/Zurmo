@@ -69,12 +69,24 @@
                                                             );
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderAfterFormLayout($form);
             $formEnd  = $clipWidget->renderEndWidget();
             $content .= $formEnd;
 
             $content .= '</div>';
             return $content;
         }
+
+        protected function renderAfterFormLayout($form)
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
+        }
+
 
         /**
          * Renders the bottom panel of the layout. Includes the search button

@@ -81,5 +81,19 @@
             }
             return $content;
         }
+
+        public static function getActivityItemsModelClassNamesDataExcludingContacts()
+        {
+            $metadata = Activity::getMetadata();
+            $activityItemsModelClassNamesData = $metadata['Activity']['activityItemsModelClassNames'];
+            foreach ($activityItemsModelClassNamesData as $index => $relationModelClassName)
+            {
+                if ($relationModelClassName == 'Contact')
+                {
+                    unset($activityItemsModelClassNamesData[$index]);
+                }
+            }
+            return $activityItemsModelClassNamesData;
+        }
     }
 ?>
