@@ -88,7 +88,7 @@
             return array(
                 'AddBlankForDropDown',
                 'BooleanAsDropDown',
-                'RadioAsDropDown',
+                'DropDownAsMultiSelect',
                 'TextAreaAsText'
             );
         }

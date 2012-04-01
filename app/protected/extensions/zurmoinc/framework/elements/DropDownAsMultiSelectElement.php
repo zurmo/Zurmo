@@ -25,48 +25,29 @@
      ********************************************************************************/
 
     /**
-     * Base class to test API functions.
+     * Display a drop down as multi-select.  This is used by search views.
      */
-    class ApiBaseTest extends BaseTest
+    class DropDownAsMultiSelectElement extends DropDownElement
     {
-        protected $serverUrl = '';
-        protected $freeze = false;
-
-        public static function setUpBeforeClass()
+        /**
+         * Renders the editable dropdown content.
+         * @return A string containing the element's content.
+         */
+        protected function renderControlEditable()
         {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
+            return $this->form->listBox(
+                $this->model->{$this->attribute},
+                'value',
+                $this->getDropDownArray(),
+                $this->getEditableHtmlOptions()
+            );
         }
 
-        public function setUp()
+        protected function getEditableHtmlOptions()
         {
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
-            {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
-            }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
-        }
-
-        public function teardown()
-        {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
-        }
-
-        public function testApiServerUrl()
-        {
-            $this->assertTrue(strlen($this->serverUrl) > 0);
+            $htmlOptions = parent::getEditableHtmlOptions();
+            $htmlOptions['multiple'] = true;
+            return $htmlOptions;
         }
     }
 ?>

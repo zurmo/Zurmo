@@ -25,48 +25,20 @@
      ********************************************************************************/
 
     /**
-     * Base class to test API functions.
+     * A  NotificationRules to manage when there is new zurmo stable release.
      */
-    class ApiBaseTest extends BaseTest
+    class NewZurmoVersionAvailableNotificationRules extends JobsManagerAccessNotificationRules
     {
-        protected $serverUrl = '';
-        protected $freeze = false;
+        protected $critical    = true;
 
-        public static function setUpBeforeClass()
+        public static function getDisplayName()
         {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
+            return Yii::t('Default', 'new stable Zurmo release available');
         }
 
-        public function setUp()
+        public static function getType()
         {
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
-            {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
-            }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
-        }
-
-        public function teardown()
-        {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
-        }
-
-        public function testApiServerUrl()
-        {
-            $this->assertTrue(strlen($this->serverUrl) > 0);
+            return 'NewZurmoVersionAvailable';
         }
     }
 ?>

@@ -25,48 +25,41 @@
      ********************************************************************************/
 
     /**
-     * Base class to test API functions.
+     * A job for checking if there is newer stable version of zurmo.
      */
-    class ApiBaseTest extends BaseTest
+    class CheckZurmoUpdatesJob extends BaseJob
     {
-        protected $serverUrl = '';
-        protected $freeze = false;
-
-        public static function setUpBeforeClass()
+        /**
+         * @returns Translated label that describes this job type.
+         */
+        public static function getDisplayName()
         {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
+           return Yii::t('Default', 'Check if there is newer Zurmo version available Job');
         }
 
-        public function setUp()
+        /**
+         * @return The type of the NotificationRules
+         */
+        public static function getType()
         {
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
-            {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
-            }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
+            return 'CheckZurmoUpdates';
         }
 
-        public function teardown()
+        public static function getRecommendedRunFrequencyContent()
         {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
+            return Yii::t('Default', 'Once a week, early in the morning.');
         }
 
-        public function testApiServerUrl()
+        /**
+         * Check if there are new zurmo updates.
+         * Then delete these logs.
+         *
+         * @see BaseJob::run()
+         */
+        public function run()
         {
-            $this->assertTrue(strlen($this->serverUrl) > 0);
+            ZurmoModule::checkAndUpdateZurmoInfo(true);
+            return true;
         }
     }
 ?>

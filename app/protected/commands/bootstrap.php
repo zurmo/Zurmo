@@ -35,6 +35,7 @@
     //Console configuration file
     $config = INSTANCE_ROOT . '/protected/config/console.php';
 
+    require_once(COMMON_ROOT   . "/version.php");
     require_once($debug);
     require_once($yii);
     require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');

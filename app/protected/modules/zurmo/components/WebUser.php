@@ -61,7 +61,7 @@
                 {
                     //Perhaps the username has changed, clear session and logout user.
                     Yii::app()->getSession()->destroy();
-                    $this->redirect(Yii::app()->homeUrl);
+                    Yii::app()->request->redirect(Yii::app()->homeUrl);
                 }
             }
             catch (CException $e)

@@ -24,49 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class to test API functions.
-     */
-    class ApiBaseTest extends BaseTest
+    class DropDownAsMultiSelectViewMetadataRules
     {
-        protected $serverUrl = '';
-        protected $freeze = false;
-
-        public static function setUpBeforeClass()
+        /**
+         * Renders dropdowns as multi-select except for contact/lead state.  Temporary until attributes that
+         * rely on 'states' such as LeadState or ContactState can allow for multi-select search.
+         */
+        public static function resolveElementMetadata($elementInformation, & $elementMetadata)
         {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
-        }
-
-        public function setUp()
-        {
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
+            $elementclassname = $elementInformation['type'] . 'Element';
+            if (($elementclassname == 'DropDownElement' ||
+                is_subclass_of($elementclassname, 'DropDownElement')) &&
+                $elementclassname != 'MultiSelectDropDownElement' &&
+                !is_subclass_of($elementclassname, 'MultiSelectDropDownElement')
+                )
             {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
+                if (!is_subclass_of($elementclassname, 'ContactStateDropDownElement') &&
+                    $elementclassname != 'ContactStateDropDownElement')
+                {
+                    $elementMetadata['type']     = 'DropDownAsMultiSelect';
+                    $elementMetadata['addBlank'] = true;
+                }
             }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
-        }
-
-        public function teardown()
-        {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
-        }
-
-        public function testApiServerUrl()
-        {
-            $this->assertTrue(strlen($this->serverUrl) > 0);
         }
     }
 ?>

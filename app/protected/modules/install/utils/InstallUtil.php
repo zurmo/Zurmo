@@ -841,6 +841,7 @@
             $rules                      = new RemoveApiTestEntryScriptFileNotificationRules();
             NotificationsUtil::submit($message, $rules);
 
+            ZurmoModule::setZurmoToken();
             $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
         }
 

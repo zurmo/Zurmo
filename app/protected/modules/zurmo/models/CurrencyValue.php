@@ -51,7 +51,7 @@
             {
                 return Yii::t('Default', '(None)');
             }
-            return $this->value;
+            return strval($this->value);
         }
 
         public static function getDefaultMetadata()

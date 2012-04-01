@@ -24,49 +24,28 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Base class to test API functions.
-     */
-    class ApiBaseTest extends BaseTest
+    class ZurmoUpdatesTest extends BaseTest
     {
-        protected $serverUrl = '';
-        protected $freeze = false;
-
-        public static function setUpBeforeClass()
+        public function testZurmoUpdatesApiCall()
         {
-            parent::setUpBeforeClass();
-            $super = SecurityTestHelper::createSuperAdmin();
-        }
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+            $data = array(
+                'zurmoToken' => '1111111111',
+                'serverIpAddress' => '127.0.0.1',
+                'serverName' => 'zurmo.com',
+                'serverSoftware' => 'Apache 2.2.16',
+                'zurmoVersion' => VERSION,
+                'serializedData' => ''
+            );
 
-        public function setUp()
-        {
-            parent::setUp();
-            if (strlen(Yii::app()->params['testApiUrl']) > 0)
-            {
-                $this->serverUrl = Yii::app()->params['testApiUrl'];
-            }
-            $freeze = false;
-            if (RedBeanDatabase::isFrozen())
-            {
-                RedBeanDatabase::unfreeze();
-                $freeze = true;
-            }
-            $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
-        }
-
-        public function teardown()
-        {
-            if ($this->freeze)
-            {
-                RedBeanDatabase::freeze();
-            }
-            parent::teardown();
-        }
-
-        public function testApiServerUrl()
-        {
-            $this->assertTrue(strlen($this->serverUrl) > 0);
+            $response = ApiRestHelper::createApiCall('http://updates.zurmo.com/app/index.php/updatesManager/api/create', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $version = $response['data']['latestStableZurmoVersion'];
+            $this->assertTrue(is_string($version));
         }
     }
 ?>

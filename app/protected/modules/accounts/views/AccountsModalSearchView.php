@@ -53,7 +53,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'industry', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                         array(

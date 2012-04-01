@@ -58,7 +58,7 @@
                                         ),
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'stage', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'stage', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                     )
@@ -67,7 +67,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'source', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'source', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                         array(
