@@ -1104,7 +1104,7 @@ table.items thead tr:hover{
             .b-shadow(0 0 1px 1px @themeColor);
         }
     }
-    textarea{
+    textarea, select.multiple {
     	height:auto;
     }
     input[type="text"][disabled],
@@ -1516,9 +1516,9 @@ label.hasCheckBox{
     padding:20px 20px 20px 20px;
     .flyout();
     label, select{
-        float:left;
-        margin:0 !important;
-        line-height: 100%;
+        //float:left;
+        //margin:0 !important;
+        //line-height: 100%;
     }
     label{
         padding-top:7px;
@@ -2480,7 +2480,7 @@ div.hasHalfs{
 }
 
 /*=Search User Modal*/
-#UsersModalSearchView{
+//#UsersModalSearchView{
     .search-view-0{
         .clearfix();
         width:230px !important;
@@ -2507,9 +2507,10 @@ div.hasHalfs{
             line-height: 25px;
         }
     }
-}
+//}
 
-#UsersModalListView{
+//#UsersModalListView{
+.ModalListView{
     .items{
         tbody td:first-child,
         thead th:first-child{
@@ -2645,6 +2646,7 @@ div.hasHalfs{
 		color: #fff !important;
 		text-decoration: none;
 	}
+	
 	/* Inner container for options, this is what makes the scrollbar possible. */
 	.dk_options_inner {
 		border: 1px solid #ccc;
