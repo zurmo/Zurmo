@@ -160,7 +160,7 @@
 
         public static function isValidDbFormattedDate($date) // Basic version, feel free to enhance.
         {
-            if($date == '0000-00-00')
+            if ($date == '0000-00-00')
             {
                 return true;
             }
@@ -170,7 +170,7 @@
 
         public static function isValidDbFormattedDateTime($datetime) // Basic version, feel free to enhance.
         {
-            if($datetime == '0000-00-00 00:00:00')
+            if ($datetime == '0000-00-00 00:00:00')
             {
                 return true;
             }

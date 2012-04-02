@@ -35,7 +35,6 @@
             AccountTestHelper::createAccountByNameForOwner('anAccount', $super);
         }
 
-
         public function testCreateTaskWithZerosStampAndEditAgain()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
