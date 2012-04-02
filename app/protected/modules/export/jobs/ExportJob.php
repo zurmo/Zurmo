@@ -110,7 +110,6 @@
                             );
                             $rules                      = new ExportProcessCompletedNotificationRules();
                             NotificationsUtil::submit($message, $rules);
-                            return true;
                         }
                     }
                 }
@@ -119,6 +118,7 @@
             {
                 return true;
             }
+            return true;
         }
     }
 ?>

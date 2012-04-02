@@ -31,6 +31,8 @@
     {
         protected $critical    = false;
 
+        protected $allowDuplicates = true;
+
         public static function getDisplayName()
         {
             return Yii::t('Default', 'Export process is completed.');
