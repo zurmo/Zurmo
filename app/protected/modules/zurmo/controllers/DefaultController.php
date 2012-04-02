@@ -135,11 +135,6 @@
             echo $view->render();
         }
 
-        public function actionRecentlyViewed()
-        {
-            echo AuditEventsRecentlyViewedUtil::getRecentlyViewedAjaxContentByUser(Yii::app()->user->userModel, 10);
-        }
-
         public function actionGlobalSearchAutoComplete($term)
         {
             $scopeData = GlobalSearchUtil::resolveGlobalSearchScopeFromGetData($_GET);

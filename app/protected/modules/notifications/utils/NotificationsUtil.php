@@ -121,5 +121,49 @@
                 Yii::app()->emailHelper->sendImmediately($emailMessage);
             }
         }
+
+        /**
+         * Get the content for displaying recent notifications information via an ajax call.
+         * @see HeaderLinksView->renderNotificationsLinkContent()
+         * @param User $user
+         */
+        public static function getRecentAjaxContentByUser(User $user, $count)
+        {
+            assert('is_int($count)');
+            $content     = null;
+            $notification = new Notification(false);
+            $searchAttributes = array(
+                'owner'    => array('id' => Yii::app()->user->userModel->id),
+                'isRead'   => '0',
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $notification,
+                Yii::app()->user->userModel->id,
+                $searchAttributes
+            );
+            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
+                $metadataAdapter,
+                'Notification',
+                'RedBeanModelDataProvider',
+                'createdDateTime',
+                true,
+                10
+            );
+            $notifications = $dataProvider->getData();
+            if (count($notifications) > 0)
+            {
+                foreach ($notifications as $notification)
+                {
+                        $content .= strval($notification);
+                        $content .= '&#160;-&#160;<span>';
+                        $content .= 'DELETE' . '</span><br/>';
+                }
+            }
+            else
+            {
+                $content .= Yii::t('Default', 'There are no recent notifications.');
+            }
+            return $content;
+        }
     }
 ?>

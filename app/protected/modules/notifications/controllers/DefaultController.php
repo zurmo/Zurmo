@@ -62,8 +62,7 @@
                                         'NotificationsForUserListView',
                                         NotificationsModule::getModuleLabelByTypeAndLanguage('Plural'),
                                         array(),
-                                        false,
-                                        Yii::t('Default', 'Unread'));
+                                        false);
             $view = new NotificationsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndListView));
             echo $view->render();
@@ -104,10 +103,17 @@
             $message                    = new NotificationMessage();
             $message->textContent       = 'text content';
             $message->htmlContent       = 'html content';
-            $rules                      = new SimpleNotificationRules();
+            $rules                      = new SimpleDuplicateNotificationRules();
             $rules->addUser(Yii::app()->user->userModel);
             NotificationsUtil::submit($message, $rules);
             echo 'Test notification created';
+        }
+
+        public function actionRecentNotifcations()
+        {
+            echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);
+            $linkHtmlOptions = array('style' => 'text-decoration:underline;');
+            echo CHtml::link(Yii::t('Default', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
         }
     }
 ?>

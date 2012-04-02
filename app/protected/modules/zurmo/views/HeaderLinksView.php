@@ -108,13 +108,29 @@
         protected function renderNotificationsLinkContent()
         {
             $label    = Yii::t('Default', 'Notifications');
-            $link     = $this->notificationsUrl;
             $content  = null;
             $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
 
             if ($count > 0)
             {
-                $content  .= "<a href=\"$link\" class=\"notifications-link unread\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+                $content  .= "<a href=\"#\" class=\"notifications-link unread\">";
+                $content  .= "<span id='notifications-link' class='tooltip'>" .
+                                Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+                Yii::import('application.extensions.qtip.QTip');
+                $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
+                $qtip   = new QTip();
+                $params = array(
+                    'content'  => array('text'    => CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')),
+                                        'url'     => $this->notificationsUrl,
+                                        'title'   => array('text'   => Yii::t('Default', 'Recently Viewed'),
+                                                           'button' => Yii::t('Default', 'Close'))),
+                    'show'     => array('when'    => 'click'),
+                    'hide'     => array('when'    => 'click'),
+                    'position' => array('corner'  => array(
+                                    'target'      => 'bottomRight',
+                                    'tooltip'     => 'topRight')),
+                    'style'    => array('width'   =>  300));
+                $qtip->addQTip("#notifications-link", $params);
             } else {
                 $content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
             }

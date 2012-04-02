@@ -24,36 +24,22 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class TitleBarAndListView extends GridView
+    /**
+     * A simple NotificationRules class for creating a basic notification.
+     */
+    class SimpleDuplicateNotificationRules extends SimpleNotificationRules
     {
-        public function __construct(
-            $controllerId,
-            $moduleId,
-            RedBeanModel $listModel,
-            $moduleName,
-            CDataProvider $dataProvider,
-            $listViewClassName,
-            $title,
-            $selectedIds = array(),
-            $selectAll = false,
-            $description = null
-            )
+        public static function getDisplayName()
         {
-            assert('is_string($controllerId)');
-            assert('is_string($moduleId)');
-            assert('is_string($moduleName)');
-            assert('is_string($listViewClassName)');
-            assert('is_string($title)');
-            assert('is_array($selectedIds)');
-            assert('is_bool($selectAll)');
-            assert('is_string($description) || $description == null');
-            parent::__construct(2, 1);
-            $moduleClassName = $moduleName . 'Module';
-            $this->setView(new TitleBarView($title, $description, 1), 0, 0);
-            $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds, $selectAll), 1, 0);
+            return Yii::t('Default', 'A simple notification');
         }
 
-        public function isUniqueToAPage()
+        public static function getType()
+        {
+            return 'SimpleDuplicate';
+        }
+
+        public function allowDuplicates()
         {
             return true;
         }
