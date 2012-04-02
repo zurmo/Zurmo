@@ -206,12 +206,22 @@
                     $exportItem->exportFileName = $this->getModule()->getName();
                     $exportItem->serializedData = serialize($dataProvider);
                     $exportItem->save();
+
+                    Yii::app()->user->setFlash('notification',
+                        Yii::t('Default', 'Export will be done in background, due to huge amount od data you requested ' .
+                        'to export. You will receive notification, after export process is completed, with download link.')
+                    );
+                    Yii::app()->clientScript->registerScript("redirectBack","javascript:history.back();return false;",CClientScript::POS_READY);
                 }
             }
             else
             {
-                // No data to export
+                Yii::app()->user->setFlash('notification',
+                    Yii::t('Default', 'There are no data to export.')
+                );
+                Yii::app()->clientScript->registerScript("redirectBack","javascript:history.back();return false;",CClientScript::POS_READY);
             }
+            return null;
         }
     }
 ?>

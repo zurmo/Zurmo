@@ -329,7 +329,6 @@
             $adapter     = new RedBeanModelToExportAdapter($testItem);
             $data        = $adapter->getData();
 
-            print_r($data);
             $compareData = array(
                 $testItem->getAttributeLabel('id')                => $id,
                 $testItem->getAttributeLabel('firstName')         => 'Bob3',
@@ -378,7 +377,6 @@
                 $testItem->getAttributeLabel('createdByUser')     => 'super',
                 $testItem->getAttributeLabel('modifiedByUser')    => 'super',
             );
-            print_r($compareData);
             $this->assertEquals($compareData, $data);
         }
     }

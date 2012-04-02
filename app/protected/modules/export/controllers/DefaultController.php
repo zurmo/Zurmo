@@ -39,9 +39,22 @@
 
         public function actionDownload($id)
         {
-            $exportItem = ExportItem::getById((int)$id);
-            $fileModel = $exportItem->exportFileModel;
-            Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type, false);
+            try
+            {
+                $exportItem = ExportItem::getById((int)$id);
+                if ($exportItem instanceOf ExportItem)
+                {
+                    $fileModel = $exportItem->exportFileModel;
+                    Yii::app()->request->sendFile($fileModel->name, $fileModel->fileContent->content, $fileModel->type, false);
+                }
+            }
+            catch (Exception $e)
+            {
+                Yii::app()->user->setFlash('notification',
+                    Yii::t('Default', 'Export file you requested is not available anymore.')
+                );
+                $this->redirect(Yii::app()->createUrl('home/default/index'));
+            }
         }
     }
 ?>
