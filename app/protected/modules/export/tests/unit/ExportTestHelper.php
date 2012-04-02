@@ -24,30 +24,36 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Module to manage exports
-     */
-    class ExportModule extends SecurableModule
+    class ExportTestHelper
     {
-        const RIGHT_ACCESS_EXPORT = 'Access Export Tool';
-
-        // Used to determine if data will be exported directly in browser
-        // or to be exported via asynchronous via background job.
-        const ASYNCHRONOUS_THRESHOLD = 1;
-
-        public function getDependencies()
+         /**
+         * Method to help us simulate Controller::makeRedBeanDataProviderFromGet method.
+         */
+        public static function makeRedBeanDataProvider(
+            $searchModel,
+            $listModelClassName,
+            $pageSize,
+            $userId,
+            $stateMetadataAdapterClassName = null)
         {
-           return array('zurmo');
-        }
+            assert('is_int($pageSize)');
+            assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
 
-        public function getRootModelNames()
-        {
-            return array('ExportItem', 'ExportFileModel');
-        }
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $searchModel,
+                $userId,
+                array()
+            );
 
-        public static function getAccessRight()
-        {
-            return self::RIGHT_ACCESS_EXPORT;
+            return RedBeanModelDataProviderUtil::makeDataProvider(
+                $metadataAdapter,
+                $listModelClassName,
+                'RedBeanModelDataProvider',
+                null,
+                false,
+                $pageSize,
+                $stateMetadataAdapterClassName
+            );
         }
     }
 ?>

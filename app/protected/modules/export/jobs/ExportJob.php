@@ -59,7 +59,7 @@
         */
         public static function getRunTimeThresholdInSeconds()
         {
-            return 600;
+            return 10;
         }
 
         public function run()
@@ -89,7 +89,6 @@
                         $fileContent->content = $output;
 
                         $exportFileModel = new ExportFileModel();
-                        $exportFileModel->exportItem = $exportItem;
                         $exportFileModel->fileContent = $fileContent;
                         $exportFileModel->name = $exportItem->exportFileName . ".csv";
                         $exportFileModel->type    = 'application/octet-stream';
