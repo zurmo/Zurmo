@@ -505,19 +505,22 @@ table.configuration-list{
 	}
 	input + span{
 		background:url(../images/lang-label.png) left top no-repeat;
+		/*
+		float:left;
+		*/
+		display:inline-block;
 		position: relative;
-		top:-25px;
 		left:1px;
 		line-height:24px;
-		float:left;
+		top:-25px;
 		width:80px;
 		text-align:center;
 		border-right:1px solid #cccccc;
 		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
 	}
 }
+
 .add-custom-field{
-	
 	> div{
 		padding:15px 15px 15px 15px;
 		position:relative;

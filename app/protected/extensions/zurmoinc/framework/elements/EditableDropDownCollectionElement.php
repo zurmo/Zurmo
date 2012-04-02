@@ -147,14 +147,14 @@
                         <input name = "' . $this->getNameForExistingValueHiddenField() . '" type = "hidden" value = "{content}"/>
 
                         ' . static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]) .
-                        '</div>&#160;{removalContent}' .
+                        '</div>{removalContent}' .
                         $this->renderSortableLanguageLabelInputsForAddingNewValuesJuiSortableContent() .
                         '</li>';
         }
 
         protected function renderRemoveLink()
         {
-            return CHtml::link('<span></span>' . Yii::t('Default', 'Remove'), '#', array('class' => 'remove-sortable-item-link'));
+            return CHtml::link( Yii::t('Default', '<span>Remove</span>'), '#', array('class' => 'remove-sortable-item-link'));
         }
 
         protected function renderAddInputAndAddButton()

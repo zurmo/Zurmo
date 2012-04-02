@@ -1041,7 +1041,7 @@ tr.odd{
     .animateAll(0.2s);
 }
 tr.even{
-    background:#fafafa;
+    //background:#fafafa;
     .animateAll(0.2s);
 }
 table.items tr:hover{
@@ -1169,7 +1169,7 @@ table.items thead tr:hover{
     padding-top:13px;
     text-align:center;
     border-top:1px solid #fff;
-    a, input[type="submit"]{
+    a, input[type="submit"], input[type="button"]{
         padding:0 30px;
         line-height:23px;
         margin:0 10px;
@@ -1487,9 +1487,10 @@ label.hasCheckBox{
 .search-form-tools{
     float:left;
     margin-left:20px;
+    line-height:25px;
     color:@themeColor;
     #more-search-link{
-        margin-left:10px;
+        margin-left:0;
         color:@themeColor;
         &:after{
             content: "▾";
@@ -1506,10 +1507,12 @@ label.hasCheckBox{
     }
 }
 .search-view-1{
+	//display:block !important;
     min-width:400px; //@TODO see later what will go inside here, we can't make it auto-grow.
+    height:auto;
     position:absolute;
-    left:312px;
-    top:30px;
+    left:250px;
+    top:35px;
     padding:20px 20px 20px 20px;
     .flyout();
     label, select{
@@ -1522,12 +1525,19 @@ label.hasCheckBox{
         padding-right:10px;
     }
     .dk_container{
-        float:left !important;
-        width: 30%;
-        display:block;
-        margin-right:20px;
+    }
+    #cancel-advanced-search{
+    	background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+    	color:#656565;
+    	.t-shadow(none);
+    }
+    .view-toolbar-container{
+    	margin-top:15px;
+        border-top:1px solid #CCCCCC;
     }
 }
+
+
 .ui-multiselect-menu{
     padding:10px;
     .flyout();
@@ -1555,6 +1565,7 @@ label.hasCheckBox{
 .buffer{
     padding-left:15px;
 }
+
 #edit-form{
     .clearfix;
     position: relative;
@@ -1723,15 +1734,20 @@ label.hasCheckBox{
     }
 }
 
-/*View Account View*/
+/*=View Account View*/
 .SecuredPortletFrameView{
     .juiportlet-widget-head h3{
         margin-left:15px;
         font-size:15px;
     }
 }
+.ConfigurableMetadataView{
+	.juiportlet-widget-head{
+		cursor:default;
+	}
+}
 
-/*For single meeting, contact etc..*/
+/*=For single meeting, contact etc..*/
 .AppContent.TableOfContentsView,
 .AppContent.SecuredEditAndDetailsView{
     padding-right:0;
@@ -2186,6 +2202,12 @@ div.hasHalfs{
             border-right:none;
             border-top:none;
         }
+        .hidden{
+        	
+        }
+        #list-view-endless-page{
+        	display:none;
+        }
     }
 
     li{
@@ -2247,7 +2269,41 @@ div.hasHalfs{
     }
 }
 
-/*Latest Activity*/
+/*=Meetings modal*/
+#days-meetings-list-view{
+	td{
+		padding:10px;
+		div{
+			line-height:125%;
+		}
+	}
+	tr{	
+		&:hover{
+			background:none;
+			color:#525252;
+		}
+	}
+	h3{
+		color:#525252;
+		font-size:11px;
+		margin-bottom:10px;
+		span{
+			font-weight:normal;
+			font-size:11px;
+			padding-left:10px;
+			a{
+				color:@themeColor !important;
+				outline: none;
+			}
+			
+			
+		}
+	}
+}
+
+
+
+/*=Latest Activity*/
 .latest-activity-icon{
     position:relative;
     top:-3px;

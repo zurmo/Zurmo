@@ -28,9 +28,9 @@
     {
         public static function renderDaySumaryContent(Meeting $meeting, $link)
         {
-            $content = '<div>';
-            $content .= '<h1>' . $meeting->name . '</h1>';
-            $content .= '<span>' . $link . '</span><br/>';
+            $content = null;
+            $content .= '<h3>' . $meeting->name . '<span>' . $link . '</span></h3>';
+            //$content .= '<span>' . $link . '</span><br/>';
             $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($meeting->startDateTime);
             if($meeting->endDateTime != null)
             {
@@ -58,7 +58,7 @@
                 $content .= Yii::t('Default', 'Description') . ':<br/>';
                 $content .= $meeting->description;
             }
-            return $content . '</div>';
+            return $content;
         }
 
         protected static function getExistingContactRelationsLabels($activityItems)

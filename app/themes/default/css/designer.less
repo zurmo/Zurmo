@@ -364,11 +364,32 @@
 		list-style: none;
 		li{
 			position: relative;
+			.has-lang-label > span{
+				cursor: move;
+			}
+		}
+		.ui-icon.ui-icon-arrowthick-2-n-s{
+			display:none;
 		}
 		.remove-sortable-item-link{
 			position: absolute;
-			left: -32px;
-			top: -20px;
+			left: 4px;
+			top: -7px;
+			
+			
+			span{
+				text-indent:-9999px;
+				display:block;
+				
+			}
+			
+			&:after{
+				content:"_";
+				.symbly(20px);
+				text-indent:0 !important;
+				color:#A7A7A7;
+				.t-shadow(0 1px 0 #fff);
+			}
 		}
 	}
 	
@@ -380,7 +401,7 @@
 		}
 		#customFieldDataData_AddInputButton{
 			.zButton();
-			margin:15px 0 0 -80px;
+			margin:15px 0 0 0;
 			
 		}
 	}
