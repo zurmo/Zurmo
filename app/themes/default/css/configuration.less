@@ -505,19 +505,22 @@ table.configuration-list{
 	}
 	input + span{
 		background:url(../images/lang-label.png) left top no-repeat;
+		/*
+		float:left;
+		*/
+		display:inline-block;
 		position: relative;
-		top:-25px;
 		left:1px;
 		line-height:24px;
-		float:left;
+		top:-25px;
 		width:80px;
 		text-align:center;
 		border-right:1px solid #cccccc;
 		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
 	}
 }
+
 .add-custom-field{
-	
 	> div{
 		padding:15px 15px 15px 15px;
 		position:relative;
@@ -760,7 +763,7 @@ table.configuration-list{
 }
 
 .process-container-view{
-	padding:15px;
+	padding:15px 15px 0 15px;
 }
 
 #ImportSequentialProcessContainerView{
@@ -791,7 +794,7 @@ table.configuration-list{
 		.b-shadow(none);
 	}
 	table{
-		margin-top:15px;
+		//margin-top:15px;
 		border-bottom:1px solid #DFDFDF !important;
 	}
 	table tr:first-child{
@@ -815,3 +818,17 @@ table.configuration-list{
 		font-weight: 400 !important;
 	}
 }
+.ui-progressbar{
+	 background: url(../images/ajax-loader.gif) left top no-repeat;
+}
+#SequentialProcessView{
+	.process-container-view{
+		//background:pink;
+		margin:0;
+		padding:0;
+	}
+}
+#ImportErrorsListView{
+	margin-bottom:15px;
+}
+
