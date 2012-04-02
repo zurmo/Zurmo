@@ -44,23 +44,12 @@
 
             $notifications = Notification::getAll();
             $this->assertEquals(1, count($notifications));
-            $this->assertEquals(0, $notifications[0]->isRead);
 
             //Test all default controller actions that do not require any POST/GET variables to be passed.
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent('notifications/default');
             $this->runControllerWithNoExceptionsAndGetContent('notifications/default/index');
             $this->runControllerWithNoExceptionsAndGetContent('notifications/default/userList');
-
-            //Test going to the detailview and the notification is now marked as read
-            $this->setGetArray(array('id' => $notifications[0]->id));
-            $this->resetPostArray();
-            $this->runControllerWithNoExceptionsAndGetContent('notifications/default/details');
-
-            //The notification should now show as read.
-            $notifications = Notification::getAll();
-            $this->assertEquals(1, count($notifications));
-            $this->assertEquals(1, $notifications[0]->isRead);
         }
     }
 ?>

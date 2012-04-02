@@ -65,12 +65,11 @@
             foreach ($users as $user)
             {
                 //todo: !!!process duplication check
-                if ($allowDuplicates || Notification::getUnreadCountByTypeAndUser($type, $user) == 0)
+                if ($allowDuplicates || Notification::getCountByTypeAndUser($type, $user) == 0)
                 {
                     $notification                      = new Notification();
                     $notification->owner               = $user;
                     $notification->type                = $type;
-                    $notification->isRead              = false;
                     $notification->notificationMessage = $message;
                     $saved                             = $notification->save();
                     if (!$saved)
@@ -133,8 +132,7 @@
             $content     = null;
             $notification = new Notification(false);
             $searchAttributes = array(
-                'owner'    => array('id' => Yii::app()->user->userModel->id),
-                'isRead'   => '0',
+                'owner'    => array('id' => Yii::app()->user->userModel->id)
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 $notification,
@@ -154,14 +152,38 @@
             {
                 foreach ($notifications as $notification)
                 {
-                        $content .= strval($notification);
-                        $content .= '&#160;-&#160;<span>';
-                        $content .= 'DELETE' . '</span><br/>';
+                        $content .= '<div>';
+                        $content .= self::renderListViewContent($notification);
+                        $content .= CHtml::link("Delete<span class='icon'></span>", "#",
+                                                array("class"   => "remove",
+                                                      "onClick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ")"));
+                        $content .= '</div>';
                 }
             }
             else
             {
                 $content .= Yii::t('Default', 'There are no recent notifications.');
+            }
+            return $content;
+        }
+
+        public static function renderListViewContent(Notification $notification)
+        {
+            $content = strval($notification);
+            if($content != null)
+            {
+                $content = '<div>' . $content . '</div>';
+            }
+            if ($notification->notificationMessage->id > 0)
+            {
+                if ($notification->notificationMessage->htmlContent != null)
+                {
+                    $content .= '<div>' . Yii::app()->format->raw($notification->notificationMessage->htmlContent). '</div>';
+                }
+                elseif ($notification->notificationMessage->textContent != null)
+                {
+                    $content .= '<div>' . Yii::app()->format->text($notification->notificationMessage->textContent) . '</div>';
+                }
             }
             return $content;
         }

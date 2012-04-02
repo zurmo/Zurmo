@@ -33,18 +33,15 @@
             UserTestHelper::createBasicUser('billy');
         }
 
-        public function testGetUnreadCountByUser()
+        public function testGetCountByUser()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+            $this->assertEquals(0, Notification::getCountByUser(Yii::app()->user->userModel));
             $notification         = new Notification();
             $notification->type   = 'Simple';
             $notification->owner  = Yii::app()->user->userModel;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
-            $this->assertEquals(1, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
-            $this->assertEquals(0, $notification->isRead);
-            $notification->isRead = true;
+            $this->assertEquals(1, Notification::getCountByUser(Yii::app()->user->userModel));
             $this->assertTrue($notification->save());
             $notificationId = $notification->id;
             $notification->forget();
@@ -52,15 +49,14 @@
             //Retrieve again.
             $notification = Notification::getById($notificationId);
             $this->assertEquals('Simple', $notification->type);
-            $this->assertEquals(1, $notification->isRead);
-            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByUser(Yii::app()->user->userModel));
 
             $notification->delete();
-            $this->assertEquals(0, Notification::getUnreadCountByUser(Yii::app()->user->userModel));
+            $this->assertEquals(0, Notification::getCountByUser(Yii::app()->user->userModel));
         }
 
         /**
-         * @depends testGetUnreadCountByUser
+         * @depends testGetCountByUser
          */
         public function testNotification()
         {
@@ -68,10 +64,7 @@
             $notification         = new Notification();
             $notification->type   = 'Simple';
             $notification->owner  = Yii::app()->user->userModel;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
-            $this->assertEquals(0, $notification->isRead);
-            $notification->isRead = true;
             $this->assertTrue($notification->save());
             $notificationId = $notification->id;
             $notification->forget();
@@ -79,8 +72,6 @@
             //Retrieve again.
             $notification = Notification::getById($notificationId);
             $this->assertEquals('Simple', $notification->type);
-            $this->assertEquals(1, $notification->isRead);
-
             $notification->delete();
         }
 
@@ -107,7 +98,7 @@
         /**
          * @depends testNotificationMessage
          */
-        public function testGetUnreadCountByTypeAndUser()
+        public function testGetCountByTypeAndUser()
         {
             $super = User::getByUsername('super');
             $billy = User::getByUsername('billy');
@@ -117,42 +108,36 @@
             $notification         = new Notification();
             $notification->type   = 'Simple';
             $notification->owner  = $super;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
             $notification         = new Notification();
             $notification->type   = 'Simple';
-            $notification->isRead = true;
             $notification->owner  = $super;
             $this->assertTrue($notification->save());
 
             //There are 2 notifications
             $this->assertEquals(2, count(Notification::getAll()));
-            //But only 1 notification that is unread for super
-            $this->assertEquals(1, Notification::getUnreadCountByTypeAndUser('Simple', $super));
             //And 0 notifications unread for billy
-            $this->assertEquals(0, Notification::getUnreadCountByTypeAndUser('Simple', $billy));
+            $this->assertEquals(0, Notification::getCountByTypeAndUser('Simple', $billy));
 
             //Now add another super notification, but not simple.
             $notification         = new Notification();
             $notification->type   = 'Simple2Test';
-            $notification->isRead = true;
             $notification->owner  = $super;
             $this->assertTrue($notification->save());
-            //And there is still 1 unread notification for super
-            $this->assertEquals(1, Notification::getUnreadCountByTypeAndUser('Simple', $super));
+            //And there are still 2 notifications for super
+            $this->assertEquals(2, Notification::getCountByTypeAndUser('Simple', $super));
 
             //Add a notification for billy.
             $notification = new Notification();
             $notification->type = 'Simple';
             $notification->owner = $billy;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
             //And there is still 1 unread notification for billy
-            $this->assertEquals(1, Notification::getUnreadCountByTypeAndUser('Simple', $billy));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('Simple', $billy));
         }
 
         /**
-         * @depends testGetUnreadCountByTypeAndUser
+         * @depends testGetCountByTypeAndUser
          */
         public function testNonAdminCanCreateNotificationsAndMessages()
         {
@@ -164,14 +149,12 @@
             $notification         = new Notification();
             $notification->type   = 'Simple';
             $notification->owner  = $billy;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
 
             //And Billy can create a notification for super
             $notification         = new Notification();
             $notification->type   = 'Simple';
             $notification->owner  = $super;
-            $notification->isRead = false;
             $this->assertTrue($notification->save());
 
             //Same with a message.
@@ -199,7 +182,6 @@
             $notification = new Notification();
             $notification->type                = 'SimpleYTest';
             $notification->owner               = $billy;
-            $notification->isRead              = false;
             $notification->notificationMessage = $message;
             $this->assertTrue($notification->save());
 
@@ -207,7 +189,6 @@
             $notification = new Notification();
             $notification->type                = 'SimpleZTest';
             $notification->owner               = $super;
-            $notification->isRead              = false;
             $notification->notificationMessage = $message;
             $this->assertTrue($notification->save());
 

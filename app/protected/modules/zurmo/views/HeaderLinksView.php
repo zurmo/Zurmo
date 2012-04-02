@@ -109,7 +109,7 @@
         {
             $label    = Yii::t('Default', 'Notifications');
             $content  = null;
-            $count    = Notification::getUnreadCountByUser(Yii::app()->user->userModel);
+            $count    = Notification::getCountByUser(Yii::app()->user->userModel);
 
             if ($count > 0)
             {
@@ -134,7 +134,25 @@
             } else {
                 $content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
             }
-
+            Yii::app()->clientScript->registerScript('deleteNotificationFromAjaxListViewScript', "
+                function deleteNotificationFromAjaxListView(element, modelId)
+                {
+                    $.ajax({
+                        url : '" . Yii::app()->createUrl('notifications/default/deleteFromAjax') . "?id=' + modelId,
+                        type : 'GET',
+                        dataType : 'json',
+                        success : function(data)
+                        {
+                            //remove row
+                            $(element).parent().remove();
+                        },
+                        error : function()
+                        {
+                            //todo: error call
+                        }
+                    });
+                }
+            ", CClientScript::POS_END);
             return $content;
         }
     }

@@ -60,6 +60,16 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DeleteNotification'),
+                                            ),
+                                        ),
+                                    )
+
+                                ),
                             ),
                         ),
                     ),

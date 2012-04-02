@@ -37,8 +37,7 @@
                             'listPageSize', get_class($this->getModule()));
             $notification = new Notification(false);
             $searchAttributes = array(
-                'owner'    => array('id' => Yii::app()->user->userModel->id),
-                'isRead'   => '0',
+                'owner'    => array('id' => Yii::app()->user->userModel->id)
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 $notification,
@@ -65,21 +64,6 @@
                                         false);
             $view = new NotificationsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $titleBarAndListView));
-            echo $view->render();
-        }
-
-        public function actionDetails($id)
-        {
-            $notification = Notification::getById(intval($id));
-            if (!$notification->isRead)
-            {
-                $notification->isRead = true;
-                $notification->save();
-            }
-            static::resolveCanCurrentUserAccessDetailsAction($notification->owner->id);
-            $view = new NotificationsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             $this->makeTitleBarAndDetailsView($notification)));
             echo $view->render();
         }
 
@@ -114,6 +98,13 @@
             echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);
             $linkHtmlOptions = array('style' => 'text-decoration:underline;');
             echo CHtml::link(Yii::t('Default', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
+        }
+
+        public function actionDeleteFromAjax($id)
+        {
+            $notification = Notification::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($notification);
+            $notification->delete();
         }
     }
 ?>

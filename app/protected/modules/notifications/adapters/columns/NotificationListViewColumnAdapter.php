@@ -31,7 +31,8 @@
             return array(
                 'name'   => 'type',
                 'header' => Yii::t('Default', 'Notification'),
-                'value'  => 'strval($data)'
+                'type'   => 'raw',
+                'value'  => 'NotificationsUtil::renderListViewContent($data)'
             );
         }
     }

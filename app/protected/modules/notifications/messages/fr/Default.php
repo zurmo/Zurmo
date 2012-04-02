@@ -33,10 +33,6 @@
             => 'Une simple notification',
         'Html Content'
             => 'Contenu HTML',
-        'Is Read'
-            => 'isRead',
-        'Is Read must be set as true or false, not null.'
-            => 'L\'attribut "isRead" ne peut être nul.',
         'Notification'
             => 'Notification',
         'Notification Message'
@@ -45,8 +41,6 @@
             => 'Liste de notifications',
         'Text Content'
             => 'Contenu du texte',
-        'Unread'
-            => 'Non lu',
         'You have a new notification'
             => 'Nouvelle notification',
     );
