@@ -2578,143 +2578,126 @@ div.hasHalfs{
 }
 
 /*DropKick Dropdowns*/
-.dk_container {
-    background:#fff;
-    border:1px solid #ccc;
-    .radius(3px);
-    font-size:12px;
-    color:#999;
-    text-indent:0;
-    line-height: 24px;
-    .b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
-    width:100%;
-    .box-sizing();
-    &:focus{
-        .b-shadow(0 0 1px 1px @themeColor);
-    }
-}
-  .dk_container:focus {
-    outline: 0;
-  }
-  .dk_container a {
-    cursor: pointer;
-    text-decoration: none;
-  }
 
-.dk_toggle {
-      background: url(../images/dropdown-arrow.png) right top no-repeat;
-      padding-left:6px;
-      display:block !important;
-      font-weight:normal !important;
-      color:#999 !important;
-}
-  .dk_toggle:hover {
-    background: url(../images/dropdown-arrow.png) right bottom no-repeat;
-  }
-  .dk_focus .dk_toggle {
-    border-color: #ccc;
-  }
-  .dk_focus .dk_toggle {
-  }
+	.dk_container {
+		background: #fff;
+		border: 1px solid #ccc;.radius(3px);
+		font-size: 12px;
+		color: #999;
+		text-indent: 0;
+		line-height: 24px;.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
+		width: 100%;
+		.box-sizing();
+		
+		display: none;
+		float: left;
+		position: relative;
+		
+		&:focus {
+			.b-shadow(0 0 1px 1px @themeColor);
+			outline: 0;
+		}
+		a {
+			cursor: pointer;
+			text-decoration: none;
+			outline: 0;
+		}
+	}
+	
+	.dk_toggle {
+		background: url(../images/dropdown-arrow.png) right top no-repeat;
+		padding-left: 6px;
+		display: block !important;
+		font-weight: normal !important;
+		color: #999 !important;
+		&:hover {
+			background: url(../images/dropdown-arrow.png) right bottom no-repeat;
+		}
+	}
+ 
+	.dk_focus .dk_toggle {
+		border-color: #ccc;
+	}
+	.dk_open {
+		.b-shadow(0 0 1px 1px @themeColor);
+		z-index: 1000;
+	}
 
-.dk_open {
- .b-shadow(0 0 1px 1px @themeColor);
-  z-index: 10;
-}
-  .dk_open .dk_toggle {
-  }
+	/* The outer container of the options */
+	.dk_options {
+		.b-shadow(rgba(0, 0, 0, .2) 0 2px 8px);
+		.radius(0 0 3px 3px);
+		a {
+			background-color: #fff;
+			border-bottom: 1px solid #ccc;
+			padding: 0 6px;
+			line-height: 24px;
+			font-weight: normal !important;
+			color: #999 !important;
+		}
+		li:last-child a {
+			border-bottom: none;
+		}
+	}
+	.dk_options a:hover, .dk_option_current a {
+		background-color: @themeColor;
+		border-bottom-color: #ccc;
+		color: #fff !important;
+		text-decoration: none;
+	}
+	/* Inner container for options, this is what makes the scrollbar possible. */
+	.dk_options_inner {
+		border: 1px solid #ccc;
+		border-bottom-width: 2px;
+		border-bottom-color: #ccc;
+		color: #999;
+		max-height: 250px;
+		.radius(0 0 3px 3px);
+	}
+	/* Set a max-height on the options inner */
+	.dk_options_inner, .dk_touch .dk_options {
+		max-height: 250px;
+	}
+	
+	.dk_toggle {
+		display: -moz-inline-stack;
+		display: inline-block;
+		*display: inline;
+		position: relative;
+		zoom: 1;
+	}
+	.dk_open {
+		position: relative;
+	}
+	.dk_open .dk_options {
+		display: block;
+	}
+	.dk_open .dk_label {
+		color: inherit;
+	}
+	.dk_options {
+		display: none;
+		margin-top: -1px;
+		position: absolute;
+		right: 0;
+		width: 100%;
+		a, a:link, a:visited{
+			display: block;
+		}
+	}
+	
+	.dk_options_inner {
+		overflow: auto;
+		position: relative;
+	}
+	.dk_touch .dk_options {
+		overflow: hidden;
+	}
+	.dk_touch .dk_options_inner {
+		max-height: none;
+		overflow: visible;
+	}
 
-/* The outer container of the options */
-.dk_options {
-  .b-shadow(rgba(0, 0, 0, .2) 0 2px 8px);
-  .radius(0 0 3px 3px);
-}
-  .dk_options a {
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-    padding: 0 6px;
-    line-height: 24px;
-    font-weight:normal !important;
-      color:#999 !important;
-  }
-  .dk_options li:last-child a {
-    border-bottom: none;
-  }
-  .dk_options a:hover,
-  .dk_option_current a {
-    background-color: @themeColor;
-    border-bottom-color: #ccc;
-    color: #fff !important;
-    text-decoration: none;
-  }
-
-/* Inner container for options, this is what makes the scrollbar possible. */
-.dk_options_inner {
-  border: 1px solid #ccc;
-  border-bottom-width: 2px;
-  border-bottom-color: #ccc;
-  color: #999;
-  max-height: 250px;
- .radius(0 0 3px 3px);
-}
-
-/* Set a max-height on the options inner */
-.dk_options_inner,
-.dk_touch .dk_options {
-  max-height: 250px;
-}
-
-.dk_container {
-  display: none;
-  float: left;
-  position: relative;
-}
-  .dk_container a {
-    outline: 0;
-  }
-
-.dk_toggle {
-  display: -moz-inline-stack;
-  display: inline-block;
-  *display: inline;
-  position: relative;
-  zoom: 1;
-}
-.dk_open {
-  position: relative;
-}
-  .dk_open .dk_options {
-    display: block;
-  }
-  .dk_open .dk_label {
-    color: inherit;
-  }
-
-.dk_options {
-  display: none;
-  margin-top: -1px;
-  position: absolute;
-  right: 0;
-  width: 100%;
-}
-  .dk_options a,
-  .dk_options a:link,
-  .dk_options a:visited {
-    display: block;
-  }
-  .dk_options_inner {
-    overflow: auto;
-    position: relative;
-  }
-
-.dk_touch .dk_options {
-  overflow: hidden;
-}
-
-.dk_touch .dk_options_inner {
-  max-height: none;
-  overflow: visible;
-}
 
 /*=Mass Edit view*/
 .AppContent.MassEditView{
