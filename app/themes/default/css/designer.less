@@ -51,6 +51,8 @@
 .layout-parts-container {
 	overflow:scroll;
 	width:100%;
+	overflow-x: scroll;
+	overflow-y: hidden;	
 }
 .layout-parts {
 	float: left;
@@ -256,12 +258,26 @@
 	
 }
 
+.sticky{
+	width:75%;
+	float:left;
+	z-index:15000;
+	#gradient > .vertical(#f6f6f6, #ededed);
+	&.stick {
+		position: fixed;
+		z-index: 1000;
+		margin-top:15px;
+		.b-shadow(0 0 15px 0 #000);
+	}
+}
+
 //#sortable-editable-dropdown-collection,
 #layout-container{
+	margin-top:30px;
 	
 	.ui-draggable-disabled.ui-state-disabled{
 		opacity:0.2 !important;
-		background:pink !important;
+		background: !important;
 	}
 	.ui-state-highlight,
 	.ui-widget-content .ui-state-highlight,
