@@ -383,8 +383,50 @@ footer, header, hgroup, menu, nav, section {
 #user-toolbar{
     float:right;
 }
+#notifications-flyout{
+	.flyout();
+	width:400px;
+	right:72px;
+	top:38px;
+	position:absolute;
+	z-index:99999;
+	padding:5px 10px;
+	.single-notification{
+		line-height:125%;
+		padding:9px 0;
+		border-top:1px solid #fff;
+		border-bottom:1px solid #ccc;
+		position:relative;
+		&:first-child{
+			border-top:none;	
+		}
+		&:last-child{
+			border-bottom:none;	
+		}
+		
+		div{
+			padding-right:40px;	
+		}
+		.remove{
+			position:absolute;
+			top:5px;
+			right:0;
+			float:right;
+		}
+	}
+	.view-all-notifications{
+		display:block;
+		border-top:1px solid #fff;
+		padding:9px 0;
+	}
+	img{
+		margin-left:182px;
+		padding:5px 0;
+	}
+}
 
-#user-header-menu, #settings-header-menu{
+#user-header-menu,
+#settings-header-menu{
     float:left;
     margin:0 10px;
     > li{

@@ -96,7 +96,7 @@
         public function actionRecentNotifcations()
         {
             echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);
-            $linkHtmlOptions = array('style' => 'text-decoration:underline;');
+            $linkHtmlOptions = array('class' => 'view-all-notifications');
             echo CHtml::link(Yii::t('Default', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
         }
 

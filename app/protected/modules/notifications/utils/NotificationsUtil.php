@@ -152,7 +152,7 @@
             {
                 foreach ($notifications as $notification)
                 {
-                        $content .= '<div>';
+                        $content .= '<div class="single-notification">';
                         $content .= self::renderListViewContent($notification);
                         $content .= CHtml::link("Delete<span class='icon'></span>", "#",
                                                 array("class"   => "remove",

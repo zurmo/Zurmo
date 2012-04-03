@@ -67,7 +67,8 @@
 	cursor: move;
 }
 
-.juiportlet-widget-head a.remove {
+/*.juiportlet-widget-head */
+a.remove {
 	float: right;
 	display: inline;
 	width: 13px;
@@ -76,6 +77,7 @@
 	text-indent: -9999em;
 	outline: none;
 	position:relative;
+	z-index:9999;
 	.icon:after{
 		content:"_";
 		.symbly(24px);
@@ -83,8 +85,14 @@
 		display:block;
 		float:right;
 		color:#A7A7A7;
+		.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0  );
 	}
-	z-index:9999;
+	
+	&:hover{
+		.icon:after{
+			color:@themeColor;
+		}
+	}
 }
 
 .juiportlet-widget-head a.edit {
@@ -103,6 +111,11 @@
 		display:block;
 		float:right;
 		color:#A7A7A7;
+	}
+	&:hover{
+		.icon:after{
+			color:@themeColor;
+		}
 	}
 }
 
