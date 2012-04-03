@@ -37,6 +37,8 @@
             => 'Accesso ai jobs',
         'Available Jobs'
             => 'Jobs disponibili',
+        'Check if there is newer Zurmo version available Job'
+            => 'Verifica di una nuova versione di Zurmo',
         'Cleanup old job logs Job'
             => 'Pulire i vecchi job logs.',
         'Clear the assets folder on server(optional).'

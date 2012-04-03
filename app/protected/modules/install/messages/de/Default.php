@@ -310,10 +310,14 @@
             => 'Sie haben ein bestehendes Benutzer angegeben.' .
             'Geben Sie nicht die Datenbank admin Benutzername und Passwort, wenn Sie möchten diese Benutzer zu verwenden.' .
             'Ansonsten wählen Sie einen Datenbank-Benutzernamen, der nicht existiert.',
+        'Your ZurmoCRM software is outdated, new stable release available:'
+            => 'Ihre Zumo Version ist veraltet, eine neue stabile Version ist Verfügbar:',
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Zurmo administrative Passwort. Der Benutzername ist `super`. Sie können dieses später ändern.',
         'Zurmo Installation'
             => 'Zurmo Installation',
+        'Zurmo Version'
+            => 'Zurmo Version',
         '{folderPath} is missing.'
             => '{folderPath} fehlt',
         '{folderPath} is not writable.'
