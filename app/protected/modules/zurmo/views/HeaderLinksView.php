@@ -113,24 +113,29 @@
 
             if ($count > 0)
             {
-                $content  .= "<a href=\"#\" class=\"notifications-link unread\">";
+                $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
+
+                $content  .= "<a id=\"notifications-flyout-link\" href=\"#\" class=\"notifications-link unread\">";
                 $content  .= "<span id='notifications-link' class='tooltip'>" .
                                 Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
-                Yii::import('application.extensions.qtip.QTip');
-                $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
-                $qtip   = new QTip();
-                $params = array(
-                    'content'  => array('text'    => CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')),
-                                        'url'     => $this->notificationsUrl,
-                                        'title'   => array('text'   => Yii::t('Default', 'Recently Viewed'),
-                                                           'button' => Yii::t('Default', 'Close'))),
-                    'show'     => array('when'    => 'click'),
-                    'hide'     => array('when'    => 'click'),
-                    'position' => array('corner'  => array(
-                                    'target'      => 'bottomRight',
-                                    'tooltip'     => 'topRight')),
-                    'style'    => array('width'   =>  300));
-                $qtip->addQTip("#notifications-link", $params);
+                $content  .= CHtml::tag('div',
+                                        array('id' => 'notifications-flyout'),
+                                        CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
+                Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
+                    $('#notifications-flyout-link').bind('click', function()
+                    {
+                        $.ajax({
+                            url 	 : '" . $this->notificationsUrl . "',
+                            type     : 'GET',
+                            dataType : 'html',
+                            success  : function(html)
+                            {
+                                jQuery('#notifications-flyout').html(html);
+                                alert(jQuery('#notifications-flyout').html());
+                            }
+                        });
+                    });
+                ", CClientScript::POS_END);
             } else {
                 $content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
             }
