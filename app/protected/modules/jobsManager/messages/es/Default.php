@@ -37,6 +37,8 @@
             => 'Acceso a las tareas del sistema',
         'Available Jobs'
             => 'Trabajos disponibles',
+        'Check if there is newer Zurmo version available Job'
+            => 'Verifique si hay una version nueva de Zurmo',
         'Cleanup old job logs Job'
             => 'Limpie los registros de trabajos antiguos.',
         'Clear the assets folder on server(optional).'
