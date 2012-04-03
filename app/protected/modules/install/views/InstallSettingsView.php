@@ -102,12 +102,13 @@
                     }
                     $content .= '</tr>';
                 }
-                $element  = new SaveButtonActionElement($this->controllerId, $this->moduleId,
-                                                        null, array('label' => Yii::t('Default', 'Install')));
-                $content .= '<tr><td colspan="3" style="text-align:right;">' . $element->render() . '</td></tr>';
                 $content .= '</tbody>';
             }
-            $content .= '</table>';
+			$content .= '</table>';
+			
+			$element  = new SaveButtonActionElement($this->controllerId, $this->moduleId,
+                                                        null, array('label' => Yii::t('Default', 'Install')));            
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">' . $element->render() . '</div></div>';
             return $content;
         }
 
