@@ -11,6 +11,7 @@
 @import 'notifications.less';
 @import 'designer.less';
 @import 'mozilla.less';
+@import 'qtip.less';
 *{
     margin:0;
     padding:0;
@@ -121,7 +122,9 @@
 	}
 }
 .disabled{
-	opacity:0.5;
+	//opacity:0.5;
+	pointer-events:none;
+	background:#EFEFEF;
 }
 
 
@@ -1106,6 +1109,8 @@ table.items thead tr:hover{
     textarea, select.multiple {
     	height:auto;
     }
+    
+    select[disabled="disabled"],
     input[type="text"][disabled],
     input[type="password"][disabled],
     textarea[disabled] {
@@ -2277,11 +2282,17 @@ div.hasHalfs{
         .clearfix();
     }
     .latest-activity-toolbar{
-        position: absolute;
-        top:-27px;
-        left:150px;
+        //position: absolute;
+        //top:-27px;
+        //left:150px;
+        
+        border-bottom:1px solid #DFDFDF;
+		padding:10px 15px;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		.b-shadow(inset 0 1px 0 0 #ffffff);
+        
         > div{
-            float:left;
+           // float:left;
         	&:first-child{
         		border-right:2px solid @themeColor;
         		padding-right:10px;
@@ -2357,22 +2368,16 @@ div.hasHalfs{
 	        }
    		}
     
-    
-    
-    
-    
     .filter-latest-activities-bar{
-    	
     	border-bottom:1px solid #DFDFDF;
-    	
     	overflow: hidden;
-		padding:0 15px;
+		//padding:0 15px;
 		height: 40px;
 		line-height: 40px;
 		#gradient > .vertical(#f6f6f6, #ededed);
 		.b-shadow(inset 0 1px 0 0 #ffffff);
+		
 		position:relative;
-    	
     }
     .items{
         border-top:none !important;
