@@ -53,6 +53,7 @@
         {
             $htmlOptions = parent::getEditableHtmlOptions();
             $htmlOptions['multiple'] = true;
+			$htmlOptions['class'] = 'multiple';
             return $htmlOptions;
         }
 

@@ -10,7 +10,8 @@
 @import 'token-input.less';
 @import 'notifications.less';
 @import 'designer.less';
-
+@import 'mozilla.less';
+@import 'qtip.less';
 *{
     margin:0;
     padding:0;
@@ -34,13 +35,13 @@
 }
 
 
-/*Variables*/
+/*=Variables*/
 //blue theme
 @themeColor : #262877;
 @themeColor2 : #7BB730;
 
 
-/*Functions*/
+/*=Functions*/
 
 .t-shadow(@style){
     /*color, x, y blur*/
@@ -93,7 +94,7 @@
             transition: all @time ease-out;
 }
 
-/* For modern browsers */
+/*=For modern browsers */
 
 .clearfix{
     &:before{
@@ -121,7 +122,9 @@
 	}
 }
 .disabled{
-	opacity:0.5;
+	//opacity:0.5;
+	pointer-events:none;
+	background:#EFEFEF;
 }
 
 
@@ -150,7 +153,7 @@ a:hover{
     color:#262877 !important;
 }
 
-/*HTML5*/
+/*=HTML5*/
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
@@ -169,7 +172,7 @@ footer, header, hgroup, menu, nav, section {
     width:85%;
     line-height: 150%;
 }
-/*Login*/
+/*=Login*/
 #LoginPageView > .GridView{
     background: url(../images/header-bar-1.png) left top repeat-x;
     padding-top:38px;
@@ -259,7 +262,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 
-/*MastHead*/
+/*=MastHead*/
 #HeaderLinksView{
     background: url(../images/header-bar-1.png) left top repeat-x;
     height:38px;
@@ -490,7 +493,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 
-/*Shortcuts nav*/
+/*=Shortcuts nav*/
 .GridView{
     position:relative;
 }
@@ -531,7 +534,7 @@ footer, header, hgroup, menu, nav, section {
 
 
 
-/*Left Sidebar*/
+/*=Left Sidebar*/
 .AppNavigation{
     width:170px;
     float:left;
@@ -584,8 +587,7 @@ footer, header, hgroup, menu, nav, section {
 /*#MenuView .parent > a*/
 #MenuView .nav{
 	li{
-		
-		 .clearfix();
+		.clearfix();
     }
 }
 #MenuView a{
@@ -638,7 +640,7 @@ footer, header, hgroup, menu, nav, section {
     color:#fff;
 }
 
-/*Recently Viewed*/
+/*=Recently Viewed*/
 #RecentlyViewedView{
     #gradient > .vertical(#dcdcdc, #e3e3e3);
     
@@ -762,7 +764,7 @@ footer, header, hgroup, menu, nav, section {
     }
 }
 
-/*Content*/
+/*=Content*/
 .AppContent{
     padding:20px 20px 20px 20px;
     margin-left:172px;
@@ -773,12 +775,12 @@ footer, header, hgroup, menu, nav, section {
 
 }
 
-/*dashboard*/
+/*=dashboard*/
 #HomePageView .AppContent{
     padding-right:0;
 }
 
-/*Inner toolbar*/
+/*=Inner toolbar*/
 .view-toolbar-container{
     width:100%;
     display:inline-block;
@@ -933,7 +935,7 @@ footer, header, hgroup, menu, nav, section {
     top:3px;
 }
 
-/*Footer*/
+/*=Footer*/
 #FooterView{
     margin:20px 40px;
 }
@@ -1095,8 +1097,8 @@ table.items thead tr:hover{
         font-size:12px;
         color:#999;
         text-indent:6px;
-        //line-height: 24px;
-        height:26px;
+        line-height: 24px;
+        //height:26px;
         .b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
         width:100%;
         .box-sizing();
@@ -1104,9 +1106,11 @@ table.items thead tr:hover{
             .b-shadow(0 0 1px 1px @themeColor);
         }
     }
-    textarea{
+    textarea, select.multiple {
     	height:auto;
     }
+    
+    select[disabled="disabled"],
     input[type="text"][disabled],
     input[type="password"][disabled],
     textarea[disabled] {
@@ -1135,24 +1139,12 @@ table.items thead tr:hover{
         border:1px solid #CCC;
         .b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
         background: #ffffff;
-        /*
-        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#F5F5F5));
-        background: -webkit-linear-gradient(#ffffff, #F5F5F5);
-        background: -moz-linear-gradient(#ffffff, #F5F5F5);
-        background: -ms-linear-gradient(#ffffff, #F5F5F5);
-        background: -o-linear-gradient(#ffffff, #F5F5F5);
-        background: linear-gradient(#ffffff, #F5F5F5);
-        //-pie-background: linear-gradient(#ffffff, #F5F5F5);
-        //behavior: url(/PIE.htc);
-        */
        #gradient > .vertical(#ffffff, #F5F5F5);
-
     }
     label{
         /*padding-top:8px;*/
     }
 }
-
 .AppContent label{
     font-size:12px !important;
     color:#666;
@@ -1160,7 +1152,7 @@ table.items thead tr:hover{
     margin-bottom:4px;
 }
 
-/*Form Edit Account*/
+/*=Form Edit Account*/
 .col-0{
     /*width:15% !important;*/
 }
@@ -1199,19 +1191,7 @@ table.items thead tr:hover{
         color:#FFF;
         .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
         .b-shadow(inset 0 1px 1px 1px rgba(255, 255, 255, 0.8));
-        /*
-        background: #97c43d;
-        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#97c43d), to(#6FA82D));
-        background: -webkit-linear-gradient(#97c43d, #6FA82D);
-        background: -moz-linear-gradient(#97c43d, #6FA82D);
-        background: -ms-linear-gradient(#97c43d, #6FA82D);
-        background: -o-linear-gradient(#97c43d, #6FA82D);
-        background: linear-gradient(#97c43d, #6FA82D);
-        -pie-background: linear-gradient(#97c43d, #6FA82D);
-        //behavior: url(/PIE.htc);
-        */
         #gradient > .vertical(#97c43d, #97c43d);
-
         cursor:pointer;
         &:hover{
             color:#656565 !important;
@@ -1274,7 +1254,7 @@ a.simple-select{
     }
 }
 
-/*Popup Modals*/
+/*=Popup Modals*/
 .ui-dialog-titlebar {
     padding:0;
     margin:0;
@@ -1303,8 +1283,6 @@ a.simple-select{
             margin-bottom: 4px;
         }
     }
-
-
     .ui-dialog-title{
         padding:0 !important;
         margin:0 !important;
@@ -1317,9 +1295,6 @@ a.simple-select{
         line-height: 40px;
         #gradient > .vertical(#f6f6f6, #ededed);
         .b-shadow(inset 0 1px 0 0 #ffffff);
-        
-        //background: url(../images/portlet-header-gradient.png) left top repeat-x;
-        
         border-bottom:1px solid #dfdfdf;
         text-indent:15px;
         width: 100%;
@@ -1372,9 +1347,8 @@ a.simple-select{
     background:none !important;
 }
 
-/*Search Scope box, and accoutn list*/
+/*=Search Scope box, and accoutn list*/
 /*Checkboxes*/
-
 label.hasCheckBox{
     display: block;
     background: url(../images/checkbox.png) left 4px no-repeat;
@@ -1396,8 +1370,6 @@ label.hasCheckBox{
 		opacity:0.5;
 	}
 }
-
-
 .ui-multiselect-checkboxes label {
     padding-left: 25px;
     background: url(../images/checkbox.png) left 4px no-repeat;
@@ -1410,11 +1382,6 @@ label.hasCheckBox{
     position: absolute;
     left: -9999px;
 }
-
-
-
-
-
 #FilteredListView, .select-all-options, .summary{
     /*@TODO check what this component do - for now its hidden cause its not in design*/
     display:none;
@@ -1499,15 +1466,9 @@ label.hasCheckBox{
     }
     input[type="submit"]{
     	.zButton();
-    	/*
-    	&:before{
-    		content:"k";
-    		.symbly(22px);
-    	}*/
     }
 }
 .search-view-1{
-	//display:block !important;
     min-width:400px; //@TODO see later what will go inside here, we can't make it auto-grow.
     height:auto;
     position:absolute;
@@ -1515,11 +1476,6 @@ label.hasCheckBox{
     top:35px;
     padding:20px 20px 20px 20px;
     .flyout();
-    label, select{
-        float:left;
-        margin:0 !important;
-        line-height: 100%;
-    }
     label{
         padding-top:7px;
         padding-right:10px;
@@ -1561,7 +1517,7 @@ label.hasCheckBox{
     .b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
 }
 
-/*Edit + Add Account View*/
+/*=Edit + Add Account View*/
 .buffer{
     padding-left:15px;
 }
@@ -1734,7 +1690,7 @@ label.hasCheckBox{
     }
 }
 
-/*=View Account View*/
+/*=View AccountView (before editing, portlets and such)*/
 .SecuredPortletFrameView{
     .juiportlet-widget-head h3{
         margin-left:15px;
@@ -1746,6 +1702,14 @@ label.hasCheckBox{
 		cursor:default;
 	}
 }
+.details-table{
+	table{
+		th{
+			vertical-align:top;
+		}
+	}
+}
+
 
 /*=For single meeting, contact etc..*/
 .AppContent.TableOfContentsView,
@@ -1801,7 +1765,7 @@ label.hasCheckBox{
             color:#525252;
         }
         th, td{
-            padding:7px;
+            padding:10px;
             font-weight:600;
         }
     }
@@ -2318,11 +2282,17 @@ div.hasHalfs{
         .clearfix();
     }
     .latest-activity-toolbar{
-        position: absolute;
-        top:-27px;
-        left:150px;
+        //position: absolute;
+        //top:-27px;
+        //left:150px;
+        
+        border-bottom:1px solid #DFDFDF;
+		padding:10px 15px;
+		#gradient > .vertical(#f6f6f6, #ededed);
+		.b-shadow(inset 0 1px 0 0 #ffffff);
+        
         > div{
-            float:left;
+           // float:left;
         	&:first-child{
         		border-right:2px solid @themeColor;
         		padding-right:10px;
@@ -2398,22 +2368,16 @@ div.hasHalfs{
 	        }
    		}
     
-    
-    
-    
-    
     .filter-latest-activities-bar{
-    	
     	border-bottom:1px solid #DFDFDF;
-    	
     	overflow: hidden;
-		padding:0 15px;
+		//padding:0 15px;
 		height: 40px;
 		line-height: 40px;
 		#gradient > .vertical(#f6f6f6, #ededed);
 		.b-shadow(inset 0 1px 0 0 #ffffff);
+		
 		position:relative;
-    	
     }
     .items{
         border-top:none !important;
@@ -2480,7 +2444,7 @@ div.hasHalfs{
 }
 
 /*=Search User Modal*/
-#UsersModalSearchView{
+//#UsersModalSearchView{
     .search-view-0{
         .clearfix();
         width:230px !important;
@@ -2507,9 +2471,10 @@ div.hasHalfs{
             line-height: 25px;
         }
     }
-}
+//}
 
-#UsersModalListView{
+//#UsersModalListView{
+.ModalListView{
     .items{
         tbody td:first-child,
         thead th:first-child{
@@ -2645,6 +2610,7 @@ div.hasHalfs{
 		color: #fff !important;
 		text-decoration: none;
 	}
+	
 	/* Inner container for options, this is what makes the scrollbar possible. */
 	.dk_options_inner {
 		border: 1px solid #ccc;
