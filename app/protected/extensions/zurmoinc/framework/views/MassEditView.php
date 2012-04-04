@@ -179,13 +179,8 @@
                 }
                 elseif ($elementInformation['type'] == 'TagCloud')
                 {
-                    $enableInputsScript  .= "$('#token-input-" . $id . "').removeAttr('disabled'); \n";
-                    $disableInputsScript .= "$('#token-input-" . $id . "').attr('disabled', 'disabled'); \n";
-                    $id = $id.'_tag';
-                    if (!$checked)
-                    {
-                        $disableTagCloudInputsScript = "$('#token-input-" . $id . "').attr('disabled', 'disabled');";
-                    }
+                    $enableInputsScript  .= "$('#token-input-" . $id . "').parent().parent().removeClass('disabled'); \n";
+                    $disableInputsScript .= "$('#token-input-" . $id . "').parent().parent().addClass('disabled'); \n";
                 }
                 else
                 {
@@ -221,7 +216,6 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
         }
     }
 );
-$disableTagCloudInputsScript
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
             return "<th><label class=\"hasCheckBox\">" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</label></th>  \n";

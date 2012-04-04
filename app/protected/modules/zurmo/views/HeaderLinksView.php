@@ -50,7 +50,9 @@
         {
 
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/';
-            $content   = '<div class="clearfix"><div id="corp-logo"><a href=""><img src="' . $imagePath. 'Zurmo_logo.png"></a>';
+            $homeUrl   = Yii::app()->createUrl('home/default');
+            $content   = '<div class="clearfix"><div id="corp-logo">';
+            $content  .= '<a href="' . $homeUrl . '"><img src="' . $imagePath. 'Zurmo_logo.png"></a>';
             if($this->applicationName != null)
             {
                 $content  .= CHtml::tag('span', array(), $this->applicationName);

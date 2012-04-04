@@ -64,6 +64,14 @@
         {
             $id = $this->getId();
             $this->htmlOptions['id'] = $id;
+            if(isset($this->htmlOptions['disabled']) && $this->htmlOptions['disabled'] == 'disabled')
+            {
+                $tokenListClassSuffix = ' disabled';
+            }
+            else
+            {
+                $tokenListClassSuffix = '';
+            }
             echo CHtml::textField($this->name, null, $this->htmlOptions);
             $javaScript  = "$(document).ready(function () { ";
             $javaScript .= "$('#$id').tokenInput('{$this->sourceUrl}', { ";
@@ -76,7 +84,7 @@
             {
                 $javaScript .= "prePopulate: " . $this->jsonEncodedIdsAndLabels . ","; // Not Coding Standard
             }
-            $javaScript .= "preventDuplicates: 'true'";
+            $javaScript .= "preventDuplicates: 'true', classes: {tokenList: 'token-input-list" . $tokenListClassSuffix . "'}";
             $javaScript .= "});";
             $javaScript .= "});";
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);
