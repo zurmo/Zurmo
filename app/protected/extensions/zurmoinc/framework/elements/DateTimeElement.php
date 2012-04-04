@@ -48,6 +48,7 @@
                 'htmlOptions' => array(
                     'id'              => $this->getEditableInputId(),
                     'name'            => $this->getEditableInputName(),
+                    'style'			  => 'position:relative;z-index:10000;'
                 ),
                 'options'    => array(
                     'stepMinute'      => 5,

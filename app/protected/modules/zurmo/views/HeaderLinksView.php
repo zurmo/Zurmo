@@ -133,7 +133,6 @@
                             success  : function(html)
                             {
                                 jQuery('#notifications-flyout').html(html);
-                                alert(jQuery('#notifications-flyout').html());
                             }
                         });
                     });
