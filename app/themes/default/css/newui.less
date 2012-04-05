@@ -1749,8 +1749,18 @@ label.hasCheckBox{
 }
 .details-table{
 	table{
+		margin-bottom:10px;
 		th{
 			vertical-align:top;
+		}
+		td, th{
+			padding:5px !important;
+		}
+	}
+	p{
+		color:#545454 !important;
+		a{
+			color:@themeColor !important;
 		}
 	}
 }
@@ -2123,20 +2133,44 @@ div.overlay-label-field{
 .overlay-label-field input{
     .box-sizing();
 }
-.half{
-   width:48%;
-   display:block;
-   float:left;
-   input{
-        width:100%;
-        .box-sizing();
-   }
-}
+
+div.hasParallelFields,
 div.hasHalfs{
     .clearfix();
     div:first-child{
         margin-right:4%;
     }
+    
+    > div{
+    	display:block;
+		float:left;
+		input{
+	    	width:100%;
+	        .box-sizing();
+		}
+    }
+    
+    .half{
+	   width:48%;
+	}
+	
+	.quarter{
+		width:23%;
+	}
+	.threeQuarters{
+		width:73%;
+	}
+	
+	.third{
+		width:32%;
+	}
+	.twoThirds{
+		width:64%;
+	}
+	
+    
+    
+    
 }
 
 
