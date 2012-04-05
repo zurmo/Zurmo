@@ -31,55 +31,44 @@
 		margin-top:15px;
 	}
 	td{
-		//padding-top:5px !important;
-		//padding-bottom:5px !important;
+		
 	}
 	.name{
 		color:@themeColor !important;
 		line-height: 120%;
 	}
 	.size{
-		//padding-top:0 !important;
+
 	}
 	.ui-button {
 		background:none;
 		border:none;
-		//margin-right:10px;
 		vertical-align:middle;
 	}
 	.ui-icon-trash:after{
 		content:"_";
 		.symbly(22px);
-		//color:#CC0000;
 		text-align:right;
 		float:right;
 	}
 	.ui-icon-cancel:after{
 		content:"_";
 		.symbly(22px);
-		//color:#CC0000;
 	}
 	.ui-button-text{
-		//margin-left:6px;
 		vertical-align:top;
 		position:relative;
 		top:2px;
 		color:#CC0000;
-		//display:none;
 	}
 	.template-download{
 		td{
-			/*padding-top:5px !important;
-			padding-bottom:5px !important;
-			font-size:11px;*/
 		}
 	}
 	td.delete{
 		button{
-			//margin-top:-3px;
 		}
 	}
-	
 	.template-download,
 	.template-upload {
 		td{
@@ -89,7 +78,6 @@
 			padding: 10px 0 !important;
 		}
 	}
-
 	.ui-progressbar {
 		background: url(../images/ajax-loader.gif) left top no-repeat;
 		width: 100%;
@@ -111,6 +99,18 @@
 	.cancel,
 	.delete {
 		text-align: right;
+		button{
+			&:hover{
+				span{
+					color:@themeColor !important;
+					cursor:pointer;
+					&:after{
+						color:@themeColor !important;
+						cursor:pointer;
+					}
+				}
+			}
+		}
 	}
 }
 
