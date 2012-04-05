@@ -172,7 +172,7 @@
             $content = strval($notification);
             if($content != null)
             {
-                $content = '<div>' . $content . '</div>';
+                $content = '<h4>' . $content . '</h4>';
             }
             if ($notification->notificationMessage->id > 0)
             {
