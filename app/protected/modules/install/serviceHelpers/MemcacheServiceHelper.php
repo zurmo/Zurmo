@@ -67,19 +67,19 @@
                     {
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .
-                        Yii::t('Default', 'is installed, but the version is unknown.');
+                        Yii::t('Default', 'extension is installed, but the version is unknown.');
                         return true;
                     }
                 }
                 else
                 {
-                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
+                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'extension is not installed.');
                 }
                 if ($this->message != null)
                 {
                     $this->message .= "\n";
                 }
-                $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel . '.';
                 return false;
             }
         }

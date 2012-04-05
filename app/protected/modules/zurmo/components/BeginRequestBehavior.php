@@ -28,6 +28,7 @@
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
             if (Yii::app()->apiRequest->isApiRequest())
             {
                 $owner->detachEventHandler('onBeginRequest', array(Yii::app()->request, 'validateCsrfToken'));
@@ -67,6 +68,22 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
+            }
+        }
+
+        /**
+        * Load memcache extension if memcache extension is
+        * loaded and if memcache server is avalable
+        * @param $event
+        */
+        public function handleApplicationCache($event)
+        {
+            $memcacheServiceHelper = new MemcacheServiceHelper();
+            if ($memcacheServiceHelper->runCheckAndGetIfSuccessful())
+            {
+                $cacheComponent = Yii::createComponent('CMemCache',
+                    array('servers' => Yii::app()->params['memcacheServers']));
+                Yii::app()->setComponent('cache',$cacheComponent);
             }
         }
 
