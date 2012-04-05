@@ -27,7 +27,7 @@
     /**
      * Helper class used to convert models into arrays
      */
-    class RedBeanModelToExportAdapter extends RedBeanModelToArrayAdapter
+    class ModelToExportAdapter extends ModelToArrayAdapter
     {
         /**
         * Use when multiple attribute names
@@ -65,7 +65,7 @@
                     // Owned relationship
                     if ($this->model->{$attributeName}->id > 0)
                     {
-                        $util = new RedBeanModelToExportAdapter($this->model->{$attributeName});
+                        $util = new ModelToExportAdapter($this->model->{$attributeName});
                         $relatedData          = $util->getData();
                         foreach ($relatedData as $relatedDataAttribute => $relatedDataValue)
                         {
@@ -137,7 +137,7 @@
 
         public static function getDerivedAttributeNameFromTwoStrings($string1, $string2)
         {
-            return $string1 . RedBeanModelToExportAdapter::DELIMITER . $string2;
+            return $string1 . ModelToExportAdapter::DELIMITER . $string2;
         }
 
         public function getAtttributesForEmptyRelationships($attributeName)

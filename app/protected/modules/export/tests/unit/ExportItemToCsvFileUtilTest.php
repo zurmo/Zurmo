@@ -150,17 +150,17 @@
 
             $data = array();
             $testItem    = ExportTestModelItem::getById($id);
-            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $adapter     = new ModelToExportAdapter($testItem);
             $data[]        = $adapter->getData();
 
             // Export data to csv, and then revert csv back to array, so we compare data
             $csvData = ExportItemToCsvFileUtil::export($data, '', false);
             $revertedData = ExportItemToCsvFileUtil::csvToArray($csvData);
 
-            // We are testing RedBeanModelToExportAdapter in details in another test
-            // so in this test we suppose that RedBeanModelToExportAdapter::getData
+            // We are testing ModelToExportAdapter in details in another test
+            // so in this test we suppose that ModelToExportAdapter::getData
             // return correct results
-            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $adapter     = new ModelToExportAdapter($testItem);
             $compareData        = $adapter->getData();
 
             $this->assertEquals($compareData, $revertedData[0]);

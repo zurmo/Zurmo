@@ -190,8 +190,8 @@
                     $formattedData = $dataProvider->getData();
                     foreach ($formattedData as $model)
                     {
-                        $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
-                        $data[] = $redBeanModelToExportAdapter->getData();
+                        $modelToExportAdapter  = new ModelToExportAdapter($model);
+                        $data[] = $modelToExportAdapter->getData();
                     }
                     // Output data
                     $fileName = $this->getModule()->getName() . ".csv";

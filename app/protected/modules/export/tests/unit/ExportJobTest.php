@@ -98,8 +98,8 @@
             $rows = $dataProvider->getData();
             foreach ($rows as $model)
             {
-                $redBeanModelToExportAdapter  = new RedBeanModelToExportAdapter($model);
-                $data[] = $redBeanModelToExportAdapter->getData();
+                $modelToExportAdapter  = new ModelToExportAdapter($model);
+                $data[] = $modelToExportAdapter->getData();
             }
             $output = ExportItemToCsvFileUtil::export($data, 'test.csv', false);
             $this->assertEquals($output, $fileModel->fileContent->content);

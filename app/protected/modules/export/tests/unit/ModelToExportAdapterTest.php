@@ -27,7 +27,7 @@
     /**
     * Test RedBeanModelAttributeValueToExportValueAdapter functions.
     */
-    class RedBeanModelToExportAdapterTest extends BaseTest
+    class ModelToExportAdapterTest extends BaseTest
     {
         public $freeze = false;
 
@@ -119,7 +119,7 @@
             unset($testItem);
 
             $testItem    = ExportTestModelItem::getById($id);
-            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $adapter     = new ModelToExportAdapter($testItem);
             $data        = $adapter->getData();
 
             $compareData = array(
@@ -219,7 +219,7 @@
             unset($testItem);
 
             $testItem    = ExportTestModelItem::getById($id);
-            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $adapter     = new ModelToExportAdapter($testItem);
             $data        = $adapter->getData();
             $compareData = array(
                 $testItem->getAttributeLabel('id')                => $id,
@@ -326,7 +326,7 @@
             unset($testItem);
 
             $testItem    = ExportTestModelItem::getById($id);
-            $adapter     = new RedBeanModelToExportAdapter($testItem);
+            $adapter     = new ModelToExportAdapter($testItem);
             $data        = $adapter->getData();
 
             $compareData = array(
