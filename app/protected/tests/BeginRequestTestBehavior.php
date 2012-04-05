@@ -28,6 +28,7 @@
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
         }
 
