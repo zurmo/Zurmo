@@ -45,8 +45,11 @@
             $activeCurrenciesElement   = new CurrencyIdForAModelsRelatedCurrencyValueDropDownElement(
                                                                 $this->model, $this->attribute, $this->form, $params);
             $activeCurrenciesElement->editableTemplate = '{content}{error}';
-            $content  = $activeCurrenciesElement->render() . '&#160;';
-            $content .= $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value');
+            $content  = '<div class="hasHalfs">';
+            $content .= CHtml::tag('div', array('class' => 'half'), $activeCurrenciesElement->render());
+            $content .= CHtml::tag('div', array('class' => 'half'),
+                            $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value'));
+            $content .= '</div>';
             return $content;
         }
 
