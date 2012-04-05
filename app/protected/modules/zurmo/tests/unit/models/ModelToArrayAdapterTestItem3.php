@@ -25,9 +25,28 @@
      ********************************************************************************/
 
     /**
-     * Helper class used to convert models into arrays
-     */
-    class RedBeanModelToApiDataUtil extends ModelToArrayAdapter
+    * Test model for ModelToArrayAdapter: ModelToArrayAdapterTestItem3
+    */
+    class ModelToArrayAdapterTestItem3 extends OwnedSecurableItem
     {
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata[__CLASS__] = array(
+                'members' => array(
+                    'name',
+                ),
+                'rules' => array(
+                    array('name',  'type',   'type' => 'string'),
+                    array('name',  'length', 'max' => 32),
+                ),
+            );
+            return $metadata;
+        }
+
+        public static function isTypeDeletable()
+        {
+            return true;
+        }
     }
 ?>
