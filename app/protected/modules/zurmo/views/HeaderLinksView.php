@@ -121,20 +121,28 @@
                 $content  .= "<span id='notifications-link' class='tooltip'>" .
                                 Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
                 $content  .= CHtml::tag('div',
-                                        array('id' => 'notifications-flyout'),
+                                        array('id' => 'notifications-flyout', 'style' => 'display:none;'),
                                         CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
                 Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
                     $('#notifications-flyout-link').bind('click', function()
                     {
-                        $.ajax({
-                            url 	 : '" . $this->notificationsUrl . "',
-                            type     : 'GET',
-                            dataType : 'html',
-                            success  : function(html)
-                            {
-                                jQuery('#notifications-flyout').html(html);
-                            }
-                        });
+                        if($('#notifications-flyout').css('display') == 'none')
+                        {
+                            $('#notifications-flyout').show();
+                            $.ajax({
+                                url 	 : '" . $this->notificationsUrl . "',
+                                type     : 'GET',
+                                dataType : 'html',
+                                success  : function(html)
+                                {
+                                    jQuery('#notifications-flyout').html(html);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('#notifications-flyout').hide();
+                        }
                     });
                 ", CClientScript::POS_END);
             } else {

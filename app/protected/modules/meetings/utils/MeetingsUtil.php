@@ -30,11 +30,11 @@
         {
             $content = null;
             $content .= '<h3>' . $meeting->name . '<span>' . $link . '</span></h3>';
-            //$content .= '<span>' . $link . '</span><br/>';
             $content .= DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($meeting->startDateTime);
-            if($meeting->endDateTime != null)
+            $localEndDateTime = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($meeting->endDateTime);
+            if($localEndDateTime != null)
             {
-                $content .= ' - ' . DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($meeting->endDateTime);
+                $content .= ' - ' . $localEndDateTime;
             }
             $content .= '<br/>';
             $content .= self::renderActivityItemsContentsExcludingContacts($meeting);
