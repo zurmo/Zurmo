@@ -90,8 +90,7 @@
             $title       = Yii::t('Default', 'Turn roll up on to see activities from related records.');
             $content     = '<span id="activities-rollup-tooltip" class="tooltip" title="' . $title . '">';
             $content    .= '?</span>';
-            Yii::import('application.extensions.qtip.QTip');
-            $qtip = new QTip();
+            $qtip = new ZurmoTip();
             $qtip->addQTip("#activities-rollup-tooltip");
             return $content;
         }

@@ -171,9 +171,7 @@
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is this?') . '</span>';
-
-            Yii::import('application.extensions.qtip.QTip');
-            $qtip = new QTip();
+            $qtip = new ZurmoTip();
             $qtip->addQTip("#active-currencies-tooltip");
             return $content;
         }
