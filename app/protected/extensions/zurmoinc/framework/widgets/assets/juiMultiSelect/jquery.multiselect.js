@@ -49,7 +49,7 @@ $.widget("ech.multiselect", {
         this._isOpen = false; // assume no
 
         var
-            button = (this.button = $('<button type="button" id="global-search-loopa"></button>'))
+            button = (this.button = $('<button type="button" class="global-search-loopa"></button>'))
                 //.addClass('ui-multiselect ui-widget ui-state-default ui-corner-all')
                 .addClass( o.classes )
                 .attr({ 'title':el.attr('title'), 'aria-haspopup':true, 'tabIndex':el.attr('tabIndex') })
@@ -528,7 +528,7 @@ $.widget("ech.multiselect", {
         var $container = menu.find('ul:last'),
             effect = o.show,
             pos = button.position();
-		
+
         // figure out opening effects/speeds
         if( $.isArray(o.show) ){
             effect = o.show[0];

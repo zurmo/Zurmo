@@ -31,7 +31,7 @@
             return array(
                 FormLayout::PANELS_DISPLAY_TYPE_ALL    => Yii::t('Default', 'All panels visible'),
                 FormLayout::PANELS_DISPLAY_TYPE_FIRST  => Yii::t('Default', 'First panel visible, then `show more` link'),
-                FormLayout::PANELS_DISPLAY_TYPE_TABBED => Yii::t('Default', 'Panels are tabbed'),
+                //FormLayout::PANELS_DISPLAY_TYPE_TABBED => Yii::t('Default', 'Panels are tabbed'), Enable when supported in UI
             );
         }
     }
