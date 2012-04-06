@@ -63,6 +63,10 @@
                                                 array('attributeName' => 'fullName', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'officePhone', 'type' => 'Phone'),
@@ -77,6 +81,10 @@
                                                 array('attributeName' => 'department', 'type' => 'Text'), // Not Coding Standard
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'mobilePhone', 'type' => 'Phone'),

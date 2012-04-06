@@ -56,6 +56,10 @@
                                                 array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'stage', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
@@ -70,6 +74,10 @@
                                                 array('attributeName' => 'source', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard

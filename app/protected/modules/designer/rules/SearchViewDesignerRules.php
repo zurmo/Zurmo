@@ -26,6 +26,11 @@
 
     class SearchViewDesignerRules extends DesignerRules
     {
+        public function canMergeAndSplitCells()
+        {
+            return false;
+        }
+
         public function canAddPanels()
         {
             return false;
@@ -95,7 +100,7 @@
 
         public function maxCellsPerRow()
         {
-            return 2;
+            return 1;
         }
 
         /**

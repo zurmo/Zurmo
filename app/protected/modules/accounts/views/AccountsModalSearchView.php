@@ -56,6 +56,10 @@
                                                 array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'type', 'type' => 'DropDown', 'addBlank' => true),
