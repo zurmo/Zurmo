@@ -67,7 +67,7 @@
                     }
                     $menuItems[] = array(
                         'label' => $dashboard['name'],
-                        'url'   => array('/home/default/dashboardDetails&id=' . $dashboard['id']),
+                        'url'   => array('/home/default/dashboardDetails?id=' . $dashboard['id']),
                         'right' => self::RIGHT_ACCESS_DASHBOARDS
                     );
                 }
