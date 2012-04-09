@@ -83,7 +83,7 @@
             {
                 $cacheComponent = Yii::createComponent('CMemCache',
                     array('servers' => Yii::app()->params['memcacheServers']));
-                Yii::app()->setComponent('cache',$cacheComponent);
+                Yii::app()->setComponent('cache', $cacheComponent);
             }
         }
 
