@@ -47,11 +47,11 @@
             $superAccount = AccountTestHelper::createAccountByNameForOwner('accountOwnedBySuper', $super);
 
             //Create address array for the account owned by super user.
-            $address = array('street1'    => '36826 East Oak Road',
-                             'street2'    => '',
-                             'city'       => 'New York',
-                             'state'      => 'NY',
-                             'postalCode' => '10001',
+            $address = array('street1'    => '123 Knob Street',
+                             'street2'    => 'Apartment 4b',
+                             'city'       => 'Chicago',
+                             'state'      => 'Illinois',
+                             'postalCode' => '60606',
                              'country'    => 'USA'
                        );
 
@@ -64,9 +64,9 @@
             $accounts = Account::getByName('accountOwnedBySuper');
             $this->assertEquals(1, count($accounts));
 
-            $this->assertEquals('40.7274969',   $accounts[0]->billingAddress->latitude);
-            $this->assertEquals('-73.9601597', $accounts[0]->billingAddress->longitude);
-            $this->assertEquals(0,              $accounts[0]->billingAddress->invalid);
+            $this->assertEquals('42.1153153',  $accounts[0]->billingAddress->latitude);
+            $this->assertEquals('-87.9763703', $accounts[0]->billingAddress->longitude);
+            $this->assertEquals(0,             $accounts[0]->billingAddress->invalid);
 
             $addressString = $accounts[0]->billingAddress->makeAddress();
             $this->setGetArray(array('addressString' => $addressString,

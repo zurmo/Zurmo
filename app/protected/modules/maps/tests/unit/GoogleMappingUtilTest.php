@@ -68,11 +68,11 @@
             unset($account2);
 
             $address = array();
-            $address['street1']    = '36826 East Oak Road';
+            $address['street1']    = '9570 West Michigan Street';
             $address['street2']    = '';
             $address['city']       = 'New York';
             $address['state']      = 'NY';
-            $address['postalCode'] = '10001';
+            $address['postalCode'] = '10169';
             $address['country']    = 'USA';
             $account3              = AddressGeoCodeTestHelper::createTestAccountsWithBillingAddressAndGetAccount($address, $super);
             $accountId3            = $account3->id;
@@ -142,8 +142,8 @@
             $this->assertEquals('-87.9763703', $geoCodeResultObj1->longitude);
             $this->assertEquals('37.38926',    $geoCodeResultObj2->latitude);
             $this->assertEquals('-121.873247', $geoCodeResultObj2->longitude);
-            $this->assertEquals('40.7274969',  $geoCodeResultObj3->latitude);
-            $this->assertEquals('-73.9601597', $geoCodeResultObj3->longitude);
+            $this->assertEquals('40.722668',  $geoCodeResultObj3->latitude);
+            $this->assertEquals('-73.7196971', $geoCodeResultObj3->longitude);
             $this->assertEquals('43.06132',    $geoCodeResultObj4->latitude);
             $this->assertEquals('-87.8880352', $geoCodeResultObj4->longitude);
         }
