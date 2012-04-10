@@ -47,15 +47,11 @@
         {
             return array(
               //'width'      => '200',
-              'padding'    => 5,
-              'background' => '#A2D959',
-              'color'      => 'black',
-              'textAlign'  => 'center',
-              'border' => array(
-                 'width'  => 7,
-                 'radius' => 5,
-                 'color'  => '#A2D959'
-              ),
+              'padding'    => 8,
+              'background' => '',
+              'color'      => '',
+              'textAlign'  => '',
+              'border' => '',
               'tip'       => 'bottomLeft',
               'name'      =>  'dark',
             );

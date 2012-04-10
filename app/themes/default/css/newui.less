@@ -1426,7 +1426,17 @@ label.hasCheckBox{
     &.disabled{
         opacity:0.5;
     }
+     & + label{
+     	margin-left:8px;
+     	margin-top:6px;
+     }
 }
+div.wide.form{
+	label.hasCheckBox{
+		margin-top:0 !important;
+	}
+}
+
 .ui-multiselect-checkboxes label {
     padding-left: 25px;
     background: url(../images/checkbox.png) left 4px no-repeat;
@@ -1513,16 +1523,17 @@ label.hasCheckBox{
     margin-left:20px;
     line-height:25px;
     color:@themeColor;
-    #more-search-link{
-        margin-left:0;
-        color:@themeColor;
-        &:after{
-            content: "▾";
-            margin-left:5px;
-        }
-    }
     input[type="submit"]{
         .zButton();
+    }
+}
+#more-search-linkmodal,
+#more-search-link{
+    margin-left:0;
+    color:@themeColor;
+    &:after{
+        content: "▾";
+        margin-left:5px;
     }
 }
 .search-view-1{
@@ -1604,7 +1615,7 @@ label.hasCheckBox{
 
     .view-toolbar-container{
         border-top:1px solid #CCCCCC;
-        margin-bottom:15px;
+        //margin-bottom:15px;
     }
     #permissions-module{
         width:30%;
