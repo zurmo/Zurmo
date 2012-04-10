@@ -82,7 +82,7 @@
             }
             if (!$invalid && $addressModel->makeAddress() != '')
             {
-                $content .= '&#160;' . $this->renderMapLink($addressModel);
+                $content .= $this->renderMapLink($addressModel);
             }
             return $content;
         }
@@ -150,16 +150,14 @@
                                                                          'latitude'      => $addressModel->latitude,
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
-            $content      = '<span>';
-            $content     .= CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl, array(
+            $content      = CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl, array(
                                 'onclick'    => '$("#modalContainer").dialog("open"); return false;',
                                 'update'     => '#modalContainer',
                                 'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
                                 'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
                                 ),
-                                array('id' => $id)
+                                array('id' => $id, 'class' => 'map-link')
             );
-            $content     .= '</span>';
             return $content;
         }
 

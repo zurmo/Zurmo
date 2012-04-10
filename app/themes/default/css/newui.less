@@ -163,7 +163,8 @@ footer, header, hgroup, menu, nav, section {
 .ZurmoDefaultPageView,
 .ZurmoPageView,
 .PageView{
-
+	position: relative;
+	z-index:1;
 }
 
 /*=Error View*/
@@ -505,7 +506,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 
-.global-search-loopa{
+#global-search-loopa{
     padding:0;
     margin:7px 0 0 0;
     height:25px;
@@ -729,6 +730,7 @@ footer, header, hgroup, menu, nav, section {
                 height:33px;
                 z-index: 0;
                 text-indent:35px;
+                .text-overflow();
                 &:first-child{
                     position: absolute;
                     top:0;
@@ -1390,6 +1392,17 @@ a.simple-select{
     border:none !important;
     background:none !important;
 }
+.ui-widget-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background:#fff;
+	opacity: .5;
+	filter: Alpha(Opacity=50);
+}
+
 
 /*=Search Scope box, and accoutn list*/
 /*Checkboxes*/
@@ -1762,7 +1775,7 @@ label.hasCheckBox{
             vertical-align:top;
         }
         td, th{
-            padding:5px !important;
+            padding:5px 5px 5px 10px !important;
         }
     }
     p{
@@ -1771,6 +1784,30 @@ label.hasCheckBox{
             color:@themeColor !important;
         }
     }
+    .panelTitle{
+    	padding-top:0;
+    	padding-left:10px;
+    }
+    
+    a{
+    	//text-decoration:underline;
+    	color:@themeColor !important;
+    }
+    .map-link{
+    	display: block;
+    	margin-top:3px;
+    }
+    .map-link:before{
+    	content:"L";
+    	.symbly(20px);
+    	position: relative;
+    	top:2px;
+    	margin-right:3px;
+    }
+}
+.mapcanvas{
+	width:600px;
+	height:400px;
 }
 
 
