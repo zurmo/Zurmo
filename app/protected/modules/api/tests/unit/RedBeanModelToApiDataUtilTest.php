@@ -158,10 +158,7 @@
                     'username' => 'super'
                 ),
             );
-            
-            print_r($compareData);
-            echo "\n\n\n";
-            print_r($data);
+
             $this->assertEquals($compareData, $data);
         }
 
