@@ -17,7 +17,6 @@
     padding:0;
 }
 
-
 @font-face {
     font-family: 'ZurmoSymblyRegular';
     src: url('../fonts/zurmosymblyregular-regular-webfont.eot');
@@ -147,6 +146,9 @@ h1, h2, h3, h4, h5, h6{
 a:link, a:hover, a:active, a:visited{
     text-decoration:none;
     color:#545454;
+    img{
+    	border:none;
+    }
 }
 
 a:hover{
@@ -547,8 +549,10 @@ footer, header, hgroup, menu, nav, section {
     float:right;
     right:40px;
     top:8px;
+     .radius(4px);
     > li{
         list-style:none !important;
+        .radius(4px);
         > a{
             padding:0 10px;
             display:block;
@@ -1138,6 +1142,7 @@ table.items thead tr:hover{
     input[type="password"],
     select.multiple,
     textarea{
+    	display:inline-block;
         border:1px solid #ccc;
         .radius(3px);
         font-size:12px;
