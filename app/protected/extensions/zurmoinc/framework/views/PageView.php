@@ -245,7 +245,7 @@
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
 
-            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/newui.less"/>';
+            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/newui.less?date='.rand().'"/>';
 
             if (MINIFY_SCRIPTS)
             {
@@ -286,7 +286,9 @@
             {
                 $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
             }
-            return '<head>' . $specialCss   .
+            return '<head>' .
+            	   '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' .
+            	   $specialCss .
                    "<title>$title</title>"  .
                    '</head>';
         }
