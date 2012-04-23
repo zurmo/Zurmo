@@ -157,7 +157,7 @@
             $title       = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= Yii::t('Default', 'What is this?') . '</span>';
+            $content    .= Yii::t('Default', '?') . '</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-languages-tooltip");
             return $content;
