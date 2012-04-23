@@ -86,17 +86,20 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            
-			$content .= '<div class="designer-toolbar">';
+            $content .= '<div class="designer-toolbar">';
             $content .= $this->renderNotificationBar('NotificationBar');
-            $content .= $this->renderSaveLayoutButton('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
-			}
-           	$content .= '</div>';
+            }
+            $content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
-            $formEnd = $clipWidget->renderEndWidget();
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderCancelLink();
+            $content .= $this->renderSaveLayoutButton('NotificationBar');
+            $content .= '</div></div>';
+
+            $formEnd  = $clipWidget->renderEndWidget();
             $content .= $formEnd;
             $content .= '</div></div>';
             return $content;
@@ -124,6 +127,13 @@
                 ));
         }
 
+        protected function renderCancelLink()
+        {
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/moduleLayoutsList/',
+                                                 array('moduleClassName' => $this->moduleClassName));
+            return CHtml::link(Yii::t('Default', 'Cancel'), $route);
+        }
+
         /**
          * If the metadata's designer rules support a panel configuration type, display that dropdown.
          */
@@ -133,7 +143,7 @@
             //$this->editableMetadata populate if it exists.
             $content = null;
             $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = Yii::t('Default', '<h3>Panels Configuration</h3>') . ' {content}{error}';
+            $element->editableTemplate = '{content}';
             $content .= $element->render();
             return $content;
         }
