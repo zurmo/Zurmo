@@ -139,7 +139,7 @@
             $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
-            $content .= '<td>' . CHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
+            $content .= '<td>' . ZurmoHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
             array('class' => 'settings-form-field')
             ) . '</td>';
             $content .= '</tr>';
