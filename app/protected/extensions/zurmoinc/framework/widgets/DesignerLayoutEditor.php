@@ -132,9 +132,11 @@
 
         protected function getCellSettingsDisplay($detailViewOnly, $cellIdName)
         {
-            $content = '<div class="cell-settings modal-settings" title="'. Yii::t('Default', 'Cell Settings') .'">';
+            $content  = '<div class="cell-settings modal-settings" title="'. Yii::t('Default', 'Cell Settings') .'">';
+            $content .= '<div class= "ModalConfigEditView EditView DetailsView ModelView ConfigurableMetadataView MetadataView">';
+            $content .= '<div class="wide form">';
             $content .= '<table>';
-
+            $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
             $content .= '<td>' . CHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
@@ -143,30 +145,47 @@
             $content .= '</tr>';
 
             $content .= '</table>';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderSaveModalSettingsButton();
+            $content .= '</div></div>';
+            $content .= '</div>';
+            $content .= '</div>';
             $content .= '</div>';
             return $content;
         }
 
         protected function getPanelSettingsDisplay($title, $detailViewOnly, $panelIdName)
         {
-            $content = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
+            $content  = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
+            $content .= '<div class= "ModalConfigEditView EditView DetailsView ModelView ConfigurableMetadataView MetadataView">';
+            $content .= '<div class="wide form">';
             $content .= '<table>';
-
+            $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Panel Title') . '</td>';
             $content .= '<td>' . CHtml::textField( 'title_' . $panelIdName,
-                $title, array('class' => 'panel-title settings-form-field')) . '</td>';
+                                 $title, array('class' => 'panel-title settings-form-field')) . '</td>';
             $content .= '</tr>';
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
-            $content .= '<td>' . CHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
+            $content .= '<td>' . ZurmoHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
             array('class' => 'panel-title settings-form-field')
             ) . '</td>';
             $content .= '</tr>';
 
             $content .= '</table>';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderSaveModalSettingsButton();
+            $content .= '</div></div>';
+            $content .= '</div>';
+            $content .= '</div>';
             $content .= '</div>';
             return $content;
+        }
+
+        protected function renderSaveModalSettingsButton()
+        {
+            return CHtml::button(Yii::t('Default', 'Save'), array('onClick' => '$(this).closest(".modal-settings").dialog("close");'));
         }
 
         /**

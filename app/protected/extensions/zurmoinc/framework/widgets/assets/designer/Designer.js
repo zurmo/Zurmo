@@ -480,12 +480,6 @@ var designer = {
             var panelId = $(this).parent().attr('id');
             $(this).parent().children('.panel-settings').dialog(
             {
-                buttons: [
-                    {
-                        text: "OK",
-                        click: function() { $(this).dialog("close"); }
-                    }
-                ],
                 modal: true,
                 draggable: false,
                 resizable: false,
@@ -505,12 +499,6 @@ var designer = {
             var cellId = $(this).parent().attr('id');
             $(this).parent().children('.cell-settings').dialog(
             {
-                buttons: [
-                    {
-                        text: "OK",
-                        click: function() { $(this).dialog("close"); }
-                    }
-                ],
                 modal: true,
                 draggable: false,
                 resizable: false,
