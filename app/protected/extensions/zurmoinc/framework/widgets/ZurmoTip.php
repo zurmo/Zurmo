@@ -53,7 +53,7 @@
               'textAlign'  => '',
               'border' => '',
               'tip'       => 'bottomLeft',
-              'name'      =>  'dark',
+              'name'      =>  'zTip',
             );
         }
     }

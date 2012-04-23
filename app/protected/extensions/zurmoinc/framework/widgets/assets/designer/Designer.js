@@ -397,8 +397,8 @@ var designer = {
                 start: function(event,ui)
                 {
                     $(ui.helper).addClass('ui-state-default');
-                    $(ui.helper).css('height', '20px');
-                    $(ui.helper).css('width', '260px');
+                    //$(ui.helper).css('height', '20px');
+                    //$(ui.helper).css('width', '260px');
                 },
                 stop: function(event, ui){
                     document.body.style.cursor = 'auto';
@@ -416,8 +416,8 @@ var designer = {
             start: function(event,ui)
             {
                 $(ui.helper).attr('id', $(this).attr('id'));
-                $(ui.helper).css('height', '20px');
-                $(ui.helper).css('width', '260px');
+                //$(ui.helper).css('height', '20px');
+                //$(ui.helper).css('width', '260px');
             },
             stop: function(event, ui){
                 document.body.style.cursor = 'auto';

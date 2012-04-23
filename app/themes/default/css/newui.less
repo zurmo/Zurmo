@@ -509,7 +509,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 
-#global-search-loopa{
+.global-search-loopa{
     padding:0;
     margin:7px 0 0 0;
     height:25px;
@@ -1869,44 +1869,37 @@ div.wide.form{
         text-align:center;
         margin-bottom:10px;
     }
-    table{
-        tr{
+    tr{
 
-        }
-        th{
-            color:#999;
-            text-align:right;
-        }
-        td, td a{
-            color:#525252;
-        }
-        th, td{
-            padding:10px;
-            font-weight:600;
-        }
     }
-    form{
-        tr{
-
+    th{
+        color:#999;
+        text-align:right;
+        line-height: 24px;
+    }
+    td, td a{
+        color:#525252;
+    }
+    th, td{
+        //padding:10px;
+        font-weight:600;
+        padding:0 0 15px 0;
+    }
+     //for opt in email checkboxes
+    input[type="checkbox"] + label{
+        width:60px;
+        margin-top:0;
+    }
+    //for address fields
+    td > label{
+        &:first-child{
+            margin-top:5px;
         }
-        th{
-            line-height: 24px;
-        }
-        th, td{
-            padding:0 0 15px 0;
-        }
-        //for opt in email checkboxes
-        input[type="checkbox"] + label{
-            width:60px;
-            margin-top:0;
-        }
-        //for address fields
-        td > label{
-            &:first-child{
-                margin-top:5px;
-            }
-            margin-top:10px;
-        }
+        margin-top:10px;
+    }
+    //for 2 columns
+    td + th{
+    	padding-left:30px;
     }
 }
 
