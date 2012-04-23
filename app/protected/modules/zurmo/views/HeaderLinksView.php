@@ -145,8 +145,6 @@
                         }
                     });
                 ", CClientScript::POS_END);
-            } else {
-                $content  .= "<a href=\"$link\" class=\"notifications-link all-read\"><span>".Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
             }
             Yii::app()->clientScript->registerScript('deleteNotificationFromAjaxListViewScript', "
                 function deleteNotificationFromAjaxListView(element, modelId)

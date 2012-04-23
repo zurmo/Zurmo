@@ -172,17 +172,19 @@
             $content = strval($notification);
             if($content != null)
             {
-                $content = '<h4>' . $content . '</h4>';
+                $content = '<h4>' . StringUtil::getChoppedStringContent($content, 68) . '</h4>';
             }
             if ($notification->notificationMessage->id > 0)
             {
-                if ($notification->notificationMessage->htmlContent != null)
+                if ($notification->notificationMessage->htmlContent != null && strlen($notification->notificationMessage->htmlContent) < 136)
                 {
                     $content .= '<div>' . Yii::app()->format->raw($notification->notificationMessage->htmlContent). '</div>';
                 }
                 elseif ($notification->notificationMessage->textContent != null)
                 {
-                    $content .= '<div>' . Yii::app()->format->text($notification->notificationMessage->textContent) . '</div>';
+                    $content .= '<div>' . Yii::app()->format->text(StringUtil::
+                                            getChoppedStringContent($notification->notificationMessage->textContent, 136)) .
+                                '</div>';
                 }
             }
             return $content;
