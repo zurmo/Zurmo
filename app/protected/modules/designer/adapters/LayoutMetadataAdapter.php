@@ -140,7 +140,7 @@
 
         protected function makeMergedSaveableMetadata($viewClassName, $savableMetadata)
         {
-            $metadata = $this->getexistingMetadataToMerge($viewClassName);
+            $metadata = $this->getExistingMetadataToMerge($viewClassName);
             $metadata['global']['panels'] = $savableMetadata['panels'];
             if (count($savableMetadata) > 1)
             {
@@ -155,7 +155,7 @@
             return $this->designerRules->formatSavableMetadataFromLayout($metadata, $viewClassName);
         }
 
-        protected function getexistingMetadataToMerge($viewClassName)
+        protected function getExistingMetadataToMerge($viewClassName)
         {
             if ($viewClassName == $this->viewClassName)
             {

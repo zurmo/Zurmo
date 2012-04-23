@@ -32,8 +32,9 @@
                 'global' => array(
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
-                            'rows' => array(
+                            'locked' => true,
+                            'title'  => 'Basic Search',
+                            'rows'   => array(
                                 array('cells' =>
                                     array(
                                         array(

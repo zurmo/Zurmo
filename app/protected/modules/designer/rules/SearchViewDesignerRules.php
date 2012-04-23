@@ -72,6 +72,7 @@
         {
             return array(
                 array('attributeName' => 'title', 'type' => 'Text'),
+                array('attributeName' => 'locked', 'type' => 'CheckBox'),
             );
         }
 

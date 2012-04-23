@@ -154,8 +154,9 @@
             return $content;
         }
 
-        protected function getPanelSettingsDisplay($title, $detailViewOnly, $panelIdName)
+        protected function getPanelSettingsDisplay($title, $detailViewOnly, $locked, $panelIdName)
         {
+            assert('is_bool($locked)');
             $content  = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
             $content .= '<div class= "ModalConfigEditView EditView DetailsView ModelView ConfigurableMetadataView MetadataView">';
             $content .= '<div class="wide form">';
@@ -164,7 +165,9 @@
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Panel Title') . '</td>';
             $content .= '<td>' . CHtml::textField( 'title_' . $panelIdName,
-                                 $title, array('class' => 'panel-title settings-form-field')) . '</td>';
+                                 $title, array('class' => 'panel-title settings-form-field')) .
+                                 CHtml::hiddenField( 'locked_' . $panelIdName,
+                                 $locked, array('class' => 'panel-title settings-form-field')) . '</td>';
             $content .= '</tr>';
             $content .= '<tr>';
             $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
@@ -243,9 +246,12 @@
                 $content .= '<li id="panel_' . $panelNumber . '" class="ui-state-default sortable-panel">';
                 $content .= '<span class="panel-title-display">' .
                             Yii::t('Default', ArrayUtil::getArrayValue($panel, 'title')) . '&#160;</span>';
-                if ($this->canMoveRows)
+                if ($this->canMovePanels)
                 {
-                    $content .= '<span class="panel-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<span class="panel-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                    }
                 }
                 if ($this->canRemovePanels)
                 {
@@ -258,7 +264,14 @@
                 $content .= '<div class="sortable-row-list-container">';
                 if ($this->canMoveRows)
                 {
-                    $content .= '<ul class="sortable-row-list sortable-row-connector">';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<ul class="sortable-row-list sortable-row-list-helper sortable-row-connector">';
+                    }
+                    else
+                    {
+                        $content .= '<ul class="sortable-row-list-helper sortable-row-connector">';
+                    }
                 }
                 else
                 {
@@ -269,7 +282,10 @@
                     $content .= '<li class="ui-state-default">';
                     if ($this->canMoveRows)
                     {
-                        $content .= '<span class="row-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                        if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                        {
+                            $content .= '<span class="row-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                        }
                     }
                     foreach ($row['cells'] as $cell)
                     {
@@ -285,7 +301,15 @@
                             $cssClassName                = 'layout-double-column';
                             $cssCellMergeIconClassName   = 'ui-icon-circle-minus';
                         }
-                        $content .= '<div class="' . $cssClassName . ' droppable-cell-container ui-state-hover">';
+                        if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                        {
+                            $content .= '<div class="' . $cssClassName . ' droppable-cell-container droppable-cell-container-helper ui-state-hover">';
+                        }
+                        else
+                        {
+                            //droppable-cell-container must be present for save to work
+                            $content .= '<div class="' . $cssClassName . ' droppable-cell-container-helper ui-state-hover">';
+                        }
                         if (is_array($cell['elements']))
                         {
                             assert('count($cell["elements"]) == 1');
@@ -304,9 +328,19 @@
                                 }
                                 else
                                 {
-                                    $content .= 'class="movable-cell-element cell-element">';
+                                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                    {
+                                         $content .= 'class="movable-cell-element cell-element">';
+                                    }
+                                    else
+                                    {
+                                        $content .= 'class="cell-element">';
+                                    }
                                 }
-                                $content .= '<span class="cell-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                                if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                {
+                                     $content .= '<span class="cell-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                                }
                                 $content .= $attribute['attributeLabel'];
                                 if ($this->showRequiredAttributeSpan && $attribute['isRequired'])
                                 {
@@ -314,7 +348,10 @@
                                 }
                                 if ($this->canRemoveElement())
                                 {
-                                    $content .= '<span class="cell-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                    {
+                                        $content .= '<span class="cell-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                                    }
                                 }
                                 if ($this->canModifyCellSettings)
                                 {
@@ -331,7 +368,10 @@
                         }
                         $content .= '</div>';
                     }
-                    $content .= '<span class="row-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<span class="row-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                    }
                     if ($this->canMergeAndSplitCells)
                     {
                         $content .= '<span class="row-element-icon ui-icon ' . $cssCellMergeIconClassName .'">&#160;</span>';
@@ -344,6 +384,7 @@
                 $content .= $this->getPanelSettingsDisplay(
                     ArrayUtil::getArrayValue($panel, 'title'),
                     ArrayUtil::getArrayValue($panel, 'detailViewOnly'),
+                    ArrayUtil::getArrayValue($panel, 'locked'),
                     $panelNumber
                 );
                 $content .= '</li>';
@@ -442,7 +483,7 @@
                     " . BooleanUtil::boolToString($this->canMergeAndSplitCells) .",
                     " . BooleanUtil::boolToString($this->mergeRowAndAttributePlacement) .",
                     " . $this->maxCellsPerRow . ",
-                    '" . $this->getPanelSettingsDisplay(null, false, '{panelId}') . "',
+                    '" . $this->getPanelSettingsDisplay(null, false, false, '{panelId}') . "',
                     '" . $this->getCellSettingsDisplay(false, '{cellId}') . "'
                 );");
             echo $this->renderLayoutTools();

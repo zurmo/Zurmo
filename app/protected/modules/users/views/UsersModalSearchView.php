@@ -37,7 +37,8 @@
                     ),
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
+                            'locked' => true,
+                            'title'  => 'Basic Search',
                             'rows' => array(
                                 array('cells' =>
                                     array(
