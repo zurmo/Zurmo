@@ -347,9 +347,9 @@
 
         protected function getMaxCellsPerRow()
         {
-            $designerRulesType = self::getDesignerRulesType();
+            $designerRulesType      = static::getDesignerRulesType();
             $designerRulesClassName = $designerRulesType . 'DesignerRules';
-            $designerRules = new $designerRulesClassName();
+            $designerRules          = new $designerRulesClassName();
             return $designerRules->maxCellsPerRow();
         }
     }

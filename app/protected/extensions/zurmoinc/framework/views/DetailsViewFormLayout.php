@@ -64,11 +64,15 @@
             $tabsContent    = '';
             foreach ($this->metadata['global']['panels'] as $panelNumber => $panel)
             {
-                $content .= $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
+                $panelHeaderContent = $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
+                if($panelHeaderContent != null)
+                {
+                    $content .= '<div>' . $panelHeaderContent;
+                }
                 $content .= $this->renderTableTagByPanelNumber($panelNumber);
                 $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels());
-				$content .= '<tbody>';
-                
+                $content .= '<tbody>';
+
                 foreach ($panel['rows'] as $row)
                 {
                     $cellsContent = null;
@@ -93,6 +97,10 @@
                 $content .= '</tbody>';
                 $content .= '</table>';
                 if ($this->shouldRenderTabbedPanels())
+                {
+                    $content .= '</div>';
+                }
+                if($panelHeaderContent != null)
                 {
                     $content .= '</div>';
                 }
@@ -162,7 +170,7 @@
         {
             if ($this->shouldHidePanelsAfterFirstPanel())
             {
-                Yii::app()->clientScript->registerScript('showMorePanels', "
+                Yii::app()->clientScript->registerScript('showMorePanels' . $this->uniqueId, "
                     $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
                         {
                             $('.view-panel-' + $(this).attr('href')).show();

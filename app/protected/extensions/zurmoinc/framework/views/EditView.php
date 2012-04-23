@@ -45,7 +45,16 @@
         {
             $content  = '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<div class="wide form">';
+            $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
+            if($maxCellsPresentInAnyRow > 1)
+            {
+                $class = "wide double-column form";
+            }
+            else
+            {
+                $class = "wide form";
+            }
+            $content .= '<div class="' . $class. '">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',

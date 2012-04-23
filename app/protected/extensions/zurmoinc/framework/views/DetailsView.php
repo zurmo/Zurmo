@@ -207,6 +207,33 @@
         }
 
         /**
+         * Given an array of metadata, resolve what the maximum amount of cells present are in any given row.
+         * @param array $metadata
+         */
+        protected function resolveMaxCellsPresentInAnyRow($metadata)
+        {
+            assert('is_array($metadata)');
+            $maxCellsPresent = 1;
+            foreach ($metadata['global']['panels'] as $panelNumber => $panel)
+            {
+                foreach ($panel['rows'] as $rowIndex => $row)
+                {
+                    $maxCellsPresentInThisRow = 0;
+                    foreach ($row['cells'] as $cellIndex => $cell)
+                    {
+                        $maxCellsPresentInThisRow ++;
+                    }
+                    if($maxCellsPresentInThisRow > $maxCellsPresent)
+                    {
+                        $maxCellsPresent = $maxCellsPresentInThisRow;
+                    }
+                }
+
+            }
+            return $maxCellsPresent;
+        }
+
+        /**
          * Override if you need to do any special processing of the metadata array prior to it being rendered.
          * @param array $metadataWithRenderedElements
          */
@@ -216,7 +243,7 @@
 
         protected function getMaxCellsPerRow()
         {
-            $designerRulesType      = self::getDesignerRulesType();
+            $designerRulesType          = static::getDesignerRulesType();
             if($designerRulesType == null)
             {
                 $designerRulesType      = self::getDesignerRulesType();
