@@ -39,6 +39,7 @@
 
         public function handleEndRequest($event)
         {
+            Yii::app()->end(0, false);
             exit;
         }
     }
