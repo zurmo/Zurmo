@@ -88,7 +88,10 @@
 
         protected function afterLogin($fromCookie)
         {
-            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+            if (!$fromCookie)
+            {
+                AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+            }
         }
 
         protected function beforeLogout()
