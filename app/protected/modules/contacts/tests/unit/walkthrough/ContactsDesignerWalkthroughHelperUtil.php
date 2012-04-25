@@ -47,6 +47,10 @@
                                         array(
                                             'element' => 'TitleFullName',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'officePhone',
                                         ),
@@ -57,6 +61,10 @@
                                         array(
                                             'element' => 'owner',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'account',
                                         ),
@@ -67,6 +75,10 @@
                                         array(
                                             'element' => 'industry',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'officeFax',
                                         ),
@@ -77,6 +89,10 @@
                                         array(
                                             'element' => 'jobTitle',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'mobilePhone',
                                         ),
@@ -87,9 +103,6 @@
                                         array(
                                             'element' => 'department',
                                         ),
-                                        array(
-                                            'element' => 'Null', // Not Coding Standard
-                                        ),
                                     )
                                 ),
                                 array('cells' =>
@@ -97,6 +110,10 @@
                                         array(
                                             'element' => 'source',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'website',
                                         ),
@@ -107,6 +124,10 @@
                                         array(
                                             'element' => $stateElementName,
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'companyName',
                                         ),
@@ -117,6 +138,10 @@
                                         array(
                                             'element' => 'primaryEmail',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'secondaryEmail',
                                         ),
@@ -127,6 +152,10 @@
                                         array(
                                             'element' => 'primaryAddress',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'secondaryAddress',
                                         ),
@@ -138,6 +167,10 @@
                                             'detailViewOnly' => true,
                                             'element' => 'DateTimeCreatedUser',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'detailViewOnly' => true,
                                             'element' => 'DateTimeModifiedUser',
@@ -156,6 +189,10 @@
                                         array(
                                             'element' => 'checkbox',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'currency',
                                         ),
@@ -166,6 +203,10 @@
                                         array(
                                             'element' => 'date',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'datetime',
                                         ),
@@ -176,6 +217,10 @@
                                         array(
                                             'element' => 'decimal',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'picklist',
                                         ),
@@ -186,6 +231,10 @@
                                         array(
                                             'element' => 'integer',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'multiselect',
                                         ),
@@ -196,6 +245,10 @@
                                         array(
                                             'element' => 'tagcloud',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'calculatednumber',
                                         ),
@@ -213,6 +266,10 @@
                                         array(
                                             'element' => 'phone',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'radio',
                                         ),
@@ -223,6 +280,10 @@
                                         array(
                                             'element' => 'text',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'textarea',
                                         ),
@@ -232,9 +293,6 @@
                                     array(
                                         array(
                                             'element' => 'url',
-                                        ),
-                                        array(
-                                            'element' => 'Null', // Not Coding Standard
                                         ),
                                     )
                                 ),
@@ -262,6 +320,10 @@
                                         array(
                                             'element' => 'checkbox',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'currency',
                                         ),
@@ -272,6 +334,10 @@
                                         array(
                                             'element' => 'date__Date',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'datetime__DateTime',
                                         ),
@@ -282,6 +348,10 @@
                                         array(
                                             'element' => 'decimal',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'picklist',
                                         ),
@@ -292,6 +362,10 @@
                                         array(
                                             'element' => 'integer',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'multiselect',
                                         ),
@@ -302,6 +376,10 @@
                                         array(
                                             'element' => 'tagcloud',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'countrypicklist',
                                         ),
@@ -312,6 +390,10 @@
                                         array(
                                             'element' => 'statepicklist',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'citypicklist',
                                         ),
@@ -322,6 +404,10 @@
                                         array(
                                             'element' => 'phone',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'radio',
                                         ),
@@ -332,6 +418,10 @@
                                         array(
                                             'element' => 'text',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'textarea',
                                         ),
@@ -341,9 +431,6 @@
                                     array(
                                         array(
                                             'element' => 'url',
-                                        ),
-                                        array(
-                                            'element' => 'Null', // Not Coding Standard
                                         ),
                                     )
                                 ),
@@ -358,6 +445,10 @@
                                         array(
                                             'element' => 'fullName',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'officePhone',
                                         ),
@@ -368,6 +459,10 @@
                                         array(
                                             'element' => 'owner',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'account',
                                         ),
@@ -378,6 +473,10 @@
                                         array(
                                             'element' => 'industry',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'officeFax',
                                         ),
@@ -388,6 +487,10 @@
                                         array(
                                             'element' => 'jobTitle',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'department',
                                         ),
@@ -398,6 +501,10 @@
                                         array(
                                             'element' => 'source',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'website',
                                         ),
@@ -408,6 +515,10 @@
                                         array(
                                             'element' => $stateElementName,
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'mobilePhone',
                                         ),
@@ -418,9 +529,6 @@
                                         array(
                                             'element' => 'companyName',
                                         ),
-                                        array(
-                                            'element' => 'Null', // Not Coding Standard
-                                        ),
                                     )
                                 ),
                                 array('cells' =>
@@ -428,6 +536,10 @@
                                         array(
                                             'element' => 'createdDateTime__DateTime',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'modifiedDateTime__DateTime',
                                         ),
@@ -438,6 +550,10 @@
                                         array(
                                             'element' => 'createdByUser',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'modifiedByUser',
                                         ),
@@ -448,6 +564,10 @@
                                         array(
                                             'element' => 'anyCity',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'anyStreet',
                                         ),
@@ -458,6 +578,10 @@
                                         array(
                                             'element' => 'anyState',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'anyPostalCode',
                                         ),
@@ -468,6 +592,10 @@
                                         array(
                                             'element' => 'anyCountry',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'anyEmail',
                                         ),
@@ -478,6 +606,10 @@
                                         array(
                                             'element' => 'anyInvalidEmail',
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'element' => 'anyOptOutEmail',
                                         ),
