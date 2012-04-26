@@ -365,25 +365,54 @@ footer, header, hgroup, menu, nav, section {
     width:18px;
     height:16px;
     padding:0 10px 0 10px;
-    background:url(../images/notifications-bubble.png) center top no-repeat;
+    background: url(../images/notifications-bubble.png) center top no-repeat;
     border-left:1px solid #fff;
     border-right:1px solid #fff;
     float:left;
     display:inline-block;
+    background-color:none !important;
     &.unread{
-        color:#ff0000;
+    	#notifications-link.tooltip{
+        	color:#ff0000 !important;
+       }
     }
     &.all-read{
-        color:#7bb730;
+    	#notifications-link.tooltip{
+        	color:#7bb730 !important;
+       }
     }
+    /*
     span{
         font-size:10px;
         font-weight:bold;
         display: block;
         text-align:center;
         margin-top:0px;
+        .radius(0) !important;
+    	background-color:none !important;
+    	border:none !important;
     }
+    span#notifications-link.tooltip{
+    	background-color:none !important;
+    }
+    */
 }
+
+#notifications-link.tooltip{
+	font-size:10px;
+    font-weight:bold;
+    display: block;
+    text-align:center;
+    margin-top:0  !important;
+    display:inline-block;
+    background:transparent  !important;
+    .radius(0) !important;
+    border:none  !important;
+    color:auto  !important;
+    cursor:pointer;
+    vertical-align:middle;
+}
+
 #user-toolbar{
     float:right;
 }
