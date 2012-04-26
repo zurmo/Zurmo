@@ -162,7 +162,7 @@
             }
             else
             {
-                $content .= Yii::t('Default', 'There are no recent notifications.');
+                $content .= Yii::t('Default', '<div class="single-notification">There are no recent notifications.</div>');
             }
             return $content;
         }
