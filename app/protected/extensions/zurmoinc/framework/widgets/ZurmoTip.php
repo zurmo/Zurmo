@@ -46,14 +46,13 @@
         protected function getZurmoStyle()
         {
             return array(
-              //'width'      => '200',
               'padding'    => 8,
               'background' => '',
               'color'      => '',
               'textAlign'  => '',
               'border' => '',
               'tip'       => 'bottomLeft',
-              'name'      =>  'zTip',
+              //'name'      =>  'qtip',
             );
         }
     }
