@@ -112,40 +112,35 @@
             $label    = Yii::t('Default', 'Notifications');
             $content  = null;
             $count    = Notification::getCountByUser(Yii::app()->user->userModel);
-
-            if ($count > 0)
-            {
-                $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
-
-                $content  .= "<a id=\"notifications-flyout-link\" href=\"#\" class=\"notifications-link unread\">";
-                $content  .= "<span id='notifications-link' class='tooltip'>" .
-                                Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
-                $content  .= CHtml::tag('div',
-                                        array('id' => 'notifications-flyout', 'style' => 'display:none;'),
-                                        CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
-                Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
-                    $('#notifications-flyout-link').bind('click', function()
+            $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
+            $content  .= "<a id=\"notifications-flyout-link\" href=\"#\" class=\"notifications-link unread\">";
+            $content  .= "<span id='notifications-link' class='tooltip'>" .
+                            Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+            $content  .= CHtml::tag('div',
+                                    array('id' => 'notifications-flyout', 'style' => 'display:none;'),
+                                    CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
+            Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
+                $('#notifications-flyout-link').bind('click', function()
+                {
+                    if($('#notifications-flyout').css('display') == 'none')
                     {
-                        if($('#notifications-flyout').css('display') == 'none')
-                        {
-                            $('#notifications-flyout').show();
-                            $.ajax({
-                                url 	 : '" . $this->notificationsUrl . "',
-                                type     : 'GET',
-                                dataType : 'html',
-                                success  : function(html)
-                                {
-                                    jQuery('#notifications-flyout').html(html);
-                                }
-                            });
-                        }
-                        else
-                        {
-                            $('#notifications-flyout').hide();
-                        }
-                    });
-                ", CClientScript::POS_END);
-            }
+                        $('#notifications-flyout').show();
+                        $.ajax({
+                            url 	 : '" . $this->notificationsUrl . "',
+                            type     : 'GET',
+                            dataType : 'html',
+                            success  : function(html)
+                            {
+                                jQuery('#notifications-flyout').html(html);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        $('#notifications-flyout').hide();
+                    }
+                });
+            ", CClientScript::POS_END);
             Yii::app()->clientScript->registerScript('deleteNotificationFromAjaxListViewScript', "
                 function deleteNotificationFromAjaxListView(element, modelId)
                 {

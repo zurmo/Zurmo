@@ -64,12 +64,9 @@
             $tabsContent    = '';
             foreach ($this->metadata['global']['panels'] as $panelNumber => $panel)
             {
-                $panelHeaderContent = $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
-                if($panelHeaderContent != null)
-                {
-                    $content .= '<div>' . $panelHeaderContent;
-                }
-                $content .= $this->renderTableTagByPanelNumber($panelNumber);
+                $content .= $this->renderDivTagByPanelNumber($panelNumber);
+                $content .= $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
+                $content .= '<table>';
                 $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels());
                 $content .= '<tbody>';
 
@@ -100,10 +97,7 @@
                 {
                     $content .= '</div>';
                 }
-                if($panelHeaderContent != null)
-                {
-                    $content .= '</div>';
-                }
+                $content .= '</div>';
             }
             $this->renderScripts();
             return $this->resolveFormLayoutContent($content);
@@ -135,15 +129,15 @@
             }
         }
 
-        protected function renderTableTagByPanelNumber($panelNumber)
+        protected function renderDivTagByPanelNumber($panelNumber)
         {
             if ($panelNumber > 0 && $this->shouldHidePanelsAfterFirstPanel())
             {
-                return '<table class="view-panel-' . $this->uniqueId . '" style="display:none;">';
+                return '<div id="view-panel-' . $this->uniqueId . '" class="panel" style="display:none;">';
             }
             else
             {
-                return '<table>';
+                return '<div class="panel">';
             }
         }
 
@@ -173,7 +167,7 @@
                 Yii::app()->clientScript->registerScript('showMorePanels' . $this->uniqueId, "
                     $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
                         {
-                            $('.view-panel-' + $(this).attr('href')).show();
+                            $('#view-panel-' + $(this).attr('href')).show();
                             $('#show-more-panels-link-" . $this->uniqueId . "').hide();
                             $('#show-less-panels-link-" . $this->uniqueId . "').show();
                             return false;
@@ -181,7 +175,7 @@
                     );
                     $('#show-less-panels-link-" . $this->uniqueId . "').click( function()
                         {
-                            $('.view-panel-' + $(this).attr('href')).hide();
+                            $('#view-panel-' + $(this).attr('href')).hide();
                             $('#show-more-panels-link-" . $this->uniqueId . "').show();
                             $('#show-less-panels-link-" . $this->uniqueId . "').hide();
                             return false;
