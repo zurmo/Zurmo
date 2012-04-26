@@ -110,7 +110,7 @@
                 $content .= $node['userCount'];
                 $content .= '</td>';
                 $content .= '<td>';
-                if(isset($node['route']) && $node['route'] != null)
+                if(isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
                 {
                     $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
                                             $node['route']);
@@ -209,6 +209,11 @@
         protected function resolveUserCountForItem(Item $item)
         {
             return $item->{$this->getModelRelationNameForUserCount()}->count();
+        }
+
+        protected static function shouldRenderConfigureLink()
+        {
+            return true;
         }
     }
 ?>

@@ -55,7 +55,7 @@
             $treeView = new GroupsActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
-                Group::getAll('name')
+                static::getGroupsOrderedByNonDeletablesFirst()
             );
             $view             = new GroupsPageView(ZurmoDefaultAdminViewUtil::
                                          makeViewWithBreadcrumbsForCurrentUser($this, $treeView, $breadcrumbLinks, 'GroupBreadCrumbView'));
@@ -107,7 +107,7 @@
                 $this->getId(),
                 $this->getModule()->getId(),
                 $_GET['modalTransferInformation']['sourceModelId'],
-                Group::getAll('name'),
+                static::getGroupsOrderedByNonDeletablesFirst(false),
                 $_GET['modalTransferInformation']['sourceIdFieldId'],
                 $_GET['modalTransferInformation']['sourceNameFieldId']
             );
@@ -335,6 +335,22 @@
             $view = new AccessFailurePageView($messageView);
             echo $view->render();
             Yii::app()->end(0, false);
+        }
+
+        protected static function getGroupsOrderedByNonDeletablesFirst($includeEveryoneGroup = true)
+        {
+            if($includeEveryoneGroup)
+            {
+                $groups = array(Group::getByName(Group::EVERYONE_GROUP_NAME),
+                                Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME));
+            }
+            else
+            {
+                $groups = array(Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME));
+            }
+            $where    = Group::getTableName('Group') . ".name NOT IN( '" . Group::EVERYONE_GROUP_NAME . "', '" . Group::SUPER_ADMINISTRATORS_GROUP_NAME . "')";
+            $orderBy  = Group::getTableName('Group') . '.name asc';
+            return array_merge($groups, Group::getSubset(null, null, null, $where, $orderBy));
         }
     }
 ?>

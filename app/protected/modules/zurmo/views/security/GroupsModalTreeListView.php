@@ -82,5 +82,10 @@
                     );'
             );
         }
+
+        protected static function shouldRenderConfigureLink()
+        {
+            return false;
+        }
     }
 ?>
