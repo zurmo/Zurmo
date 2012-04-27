@@ -32,7 +32,7 @@
          */
         public function load()
         {
-            $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'zurmoDbStatePersister');
+            $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'globalState');
             $content = unserialize($content);
             if($content)
             {
@@ -50,7 +50,7 @@
          */
         public function save($state)
         {
-            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'zurmoDbStatePersister', serialize($state));
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'globalState', serialize($state));
         }
     }
 ?>
