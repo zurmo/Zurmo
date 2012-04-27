@@ -71,13 +71,13 @@
             $testModel->tagCloud->values->add($customFieldValue);
 
             //Should this be 2? https://www.pivotaltracker.com/story/show/25407631
-            $this->assertEquals(3, count($testModel->multipleSomethings->values));
-            //$this->assertEquals('Multi 1', $testModel->multipleSomethings->values[0]->value);
-            //$this->assertEquals('Multi 3', $testModel->multipleSomethings->values[1]->value);
+            $this->assertEquals(2, count($testModel->multipleSomethings->values));
+            $this->assertEquals('Multi 1', $testModel->multipleSomethings->values[0]->value);
+            $this->assertEquals('Multi 3', $testModel->multipleSomethings->values[1]->value);
 
             //Should this be 2? https://www.pivotaltracker.com/story/show/25407631
-            $this->assertEquals(3, count($testModel->tagCloud->values));
-            //$this->assertEquals('Cloud 2', $testModel->tagCloud->values[0]->value);
-            //$this->assertEquals('Cloud 2', $testModel->tagCloud->values[1]->value);
+            $this->assertEquals(2, count($testModel->tagCloud->values));
+            $this->assertEquals('Cloud 2', $testModel->tagCloud->values[0]->value);
+            $this->assertEquals('Cloud 3', $testModel->tagCloud->values[1]->value);
         }
     }
