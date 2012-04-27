@@ -32,16 +32,18 @@
          */
         public function load()
         {
-            $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'globalState');
-            $content = unserialize($content);
-            if($content)
+            if (RedBeanDatabase::isSetup())
             {
-                return $content;
+                $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'globalState');
+                $content = unserialize($content);
+                if($content)
+                {
+                    return $content;
+                }
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
+
         }
 
         /**
