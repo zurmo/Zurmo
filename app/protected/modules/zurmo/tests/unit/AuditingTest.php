@@ -85,7 +85,7 @@
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, '   .    // Not Coding Standard
                                 'James Boondog, Item Modified, '                      .
                                 'TestOwnedCustomFieldsModel\([0-9]+\), \(None\), '    .    // Not Coding Standard
-                                'Changed Multiple Industries Values from \(None\) to C/',  // Not Coding Standard
+                                'Changed Multiple Industries Values from  to C/',  // Not Coding Standard
                                 ZurmoModule::stringifyAuditEvent($AuditEventsList[1]));
                 $this->assertRegExp('/[0-9]+\/[0-9]+\/[0-9]+ [0-9]+:[0-9]+ [AP]M, '   .    // Not Coding Standard
                                 'James Boondog, Item Modified, '                      .
