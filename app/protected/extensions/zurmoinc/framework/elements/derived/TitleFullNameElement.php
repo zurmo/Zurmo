@@ -31,21 +31,38 @@
     {
         protected function renderControlEditable()
         {
-            $content = null;
-            $editableTemplate = '{label}<br/>{content}{error}<br/>';
-            foreach ($this->getElementViewMetadata() as $elementInformation)
-            {
-                $elementclassname      = $elementInformation['type'] . 'Element';
-                $params                = array_slice($elementInformation, 2);
-                $params['inputPrefix'] = $this->resolveInputPrefix();
-                $element               = new $elementclassname($this->model,
-                                                               $elementInformation['attributeName'],
-                                                               $this->form,
-                                                               $params);
-                $element->editableTemplate = $editableTemplate;
-                $content .= $element->render();
-            }
+            $content  = '<div class="hasParallelFields">';
+            $content .= $this->renderEditableSalutationContent();
+            $content .= $this->renderEditableNameTextField($this->model, $this->form, $this->attribute, 'firstName', true). "\n";
+            $content .= $this->renderEditableNameTextField($this->model, $this->form, $this->attribute, 'lastName', true) . "\n";
+            $content .= '</div>';
             return $content;
+        }
+
+        protected function renderEditableSalutationContent()
+        {
+                $params                    = array('addBlank' => true);
+                $params['inputPrefix']     = $this->resolveInputPrefix();
+                $element                   = new DropDownElement($this->model, 'title', $this->form, $params);
+                $element->editableTemplate = '{content}{error}';
+                return CHtml::tag('div', array('class' => 'overlay-label-field fifth'), $element->render());
+        }
+
+        protected function renderEditableNameTextField($model, $form, $inputNameIdPrefix, $attribute)
+        {
+            $id          = $this->getEditableInputId($inputNameIdPrefix, $attribute);
+            $htmlOptions = array(
+                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'id'   => $id,
+            );
+            $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
+            $textField   = $form->textField($model, $attribute, $htmlOptions);
+            $error       = $form->error    ($model, $attribute);
+            if($model->$attribute != null)
+            {
+                 $label = null;
+            }
+            return CHtml::tag('div', array('class' => 'overlay-label-field twoFifths'), $label . $textField . $error);
         }
 
         protected function renderError()
@@ -111,7 +128,6 @@
         protected function getElementViewMetadata()
         {
             return array(
-                array('attributeName' => 'title', 'type' => 'DropDown', 'addBlank' => true),
                 array('attributeName' => 'firstName', 'type' => 'Text'),
                 array('attributeName' => 'lastName', 'type' => 'Text'),
             );
