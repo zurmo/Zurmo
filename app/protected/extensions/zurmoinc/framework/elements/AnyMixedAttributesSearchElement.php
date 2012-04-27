@@ -118,9 +118,9 @@
                             $('#" . $inputId . "').bind('change keyup', function(event) {
                                 if($(this).val() != '')
                                 {
-                                    if(basicSearchOldValue != $(\"" . $inputId . "\").val())
+                                    if(basicSearchOldValue != $(this).val())
                                     {
-                                        basicSearchOldValue = $(\"" . $inputId . "\").val();
+                                        basicSearchOldValue = $(this).val();
                                         basicSearchQueued = basicSearchQueued  + 1;
                                         setTimeout('basicSearchQueued = basicSearchQueued - 1',900);
                                         setTimeout('searchByQueuedSearch(\"" . $inputId . "\")',1000);

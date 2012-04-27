@@ -77,15 +77,6 @@
                                         ),
                                     )
                                 ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
-                                            ),
-                                        ),
-                                    )
-                                ),
                             ),
                         ),
                     ),
