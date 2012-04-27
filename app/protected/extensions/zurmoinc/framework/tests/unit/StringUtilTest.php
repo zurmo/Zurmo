@@ -24,27 +24,24 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Helper functionality for working with Strings
-     */
-    class StringUtil
+    class StringUtilTest extends BaseTest
     {
-        /**
-         * Given a string and a length, return the chopped string if it is larger than the length.
-         * @param string $string
-         * @param integer $length
-         */
-        public static function getChoppedStringContent($string, $length)
+        public function testGetChoppedStringContentFromString()
         {
-            assert('is_string($string)');
-            assert('is_int($length)');
-            if(strlen($string) > $length)
-            {
-                return substr($string, 0, ($length - 3)) . '...';
-            }
-            else
-            {
-                return $string;
-            }
+			$testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
+            $compairSting = 'This is a test string to test the getchoppedstringcontent...';
+            $newSting     = StringUtil::getChoppedStringContent($testString, 60);
+            $this->assertEquals($compairSting, $newSting);
+
+			$testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
+            $compairSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
+            $newSting     = StringUtil::getChoppedStringContent($testString, 100);
+            $this->assertEquals($compairSting, $newSting);
+			
+			$testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class. This is a test string to test the getchoppedstringcontent method for stringutil class.';
+            $compairSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class. This is a test string to test...';
+            $newSting     = StringUtil::getChoppedStringContent($testString, 119);
+            $this->assertEquals($compairSting, $newSting);
         }
     }
+?>
