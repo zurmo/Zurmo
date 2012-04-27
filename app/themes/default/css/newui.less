@@ -1623,7 +1623,7 @@ div.wide.form{
 
 /*=Edit + Add Account View*/
 .buffer{
-    padding-left:15px;
+    padding-left:30px;
 }
 
 .double-column{
@@ -1638,9 +1638,12 @@ div.wide.form{
         }
     }
     #permissions-module{
-        width:100% !important;
+    	margin-bottom:15px;
+    	position:relative !important;
+        //width:100% !important;
+        float:left !important;
         .buffer{
-            padding-left:0;
+            padding-left:15px;
             > div{
                 width:100%;
                 .box-sizing();
@@ -1649,12 +1652,22 @@ div.wide.form{
     }
 }
 
+
+
+
+
 #edit-form{
-    .clearfix;
+    .clearfix();
     position: relative;
+   .panel{
+		float:left;
+		width:70%;
+		display:block;
+		table{
+			width:100% !important;
+		}
+	}
     table{
-        float:left;
-        width: 70%;
         border-bottom:none;
         margin-bottom:15px;
         br{
@@ -1677,6 +1690,9 @@ div.wide.form{
         //margin-bottom:15px;
     }
     #permissions-module{
+    	position:absolute;
+    	right:15px;
+    	top:15px;
         width:30%;
         float:right;
         h3{
