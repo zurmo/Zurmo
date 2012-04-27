@@ -24,30 +24,33 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Called when Yii::app->end(0, false) is called. You should always call end
-     * with the second parameter set to false. This behavior exists so that during
-     * unit tests this behavior can be switched for a behavior that raises an
-     * exception instead of exiting.
-     */
-    class EndRequestBehavior extends CBehavior
+    class ZurmoDbStatePersister extends CApplicationComponent implements IStatePersister
     {
-        public function attach($owner)
+        /**
+         * Loads state data from persistent storage(database).
+         * @return mixed state data. Null if no state data available.
+         */
+        public function load()
         {
-            $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
+            $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'zurmoDbStatePersister');
+            $content = unserialize($content);
+            if($content)
+            {
+                return $content;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public function handleEndRequest($event)
+        /**
+         * Saves application state in persistent storage(database).
+         * @param mixed $state state data (must be serializable).
+         */
+        public function save($state)
         {
-            $allEventHandlers = Yii::app()->getEventHandlers('onEndRequest');
-            foreach ($allEventHandlers as $eventHandler)
-            {
-                if ($eventHandler[0] instanceof CApplication && $eventHandler[1] == 'saveGlobalState')
-                {
-                    Yii::app()->saveGlobalState();
-                }
-            }
-            exit;
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'zurmoDbStatePersister', serialize($state));
         }
     }
 ?>

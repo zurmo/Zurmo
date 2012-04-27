@@ -162,6 +162,9 @@
                 'enableCsrfValidation' => true,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.
             ),
+            'statePersister' => array(
+                'class'     => 'application.modules.zurmo.components.ZurmoDbStatePersister',
+            ),
             'urlManager' => array (
                 'urlFormat' => 'path',
                 'caseSensitive' => true,
