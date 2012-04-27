@@ -40,6 +40,18 @@
             return array();
         }
 
+        protected function getCGridViewPagerParams()
+        {
+            return array(
+                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
+                    'prevPageLabel'    => '<span>previous</span>',
+                    'nextPageLabel'    => '<span>next</span>',
+                    'paginationParams' => GetUtil::getData(),
+                    'route'            => $this->getGridViewActionRoute('auditEventsModalList', $this->moduleId),
+                    'class'            => 'SimpleListLinkPager',
+                );
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(
