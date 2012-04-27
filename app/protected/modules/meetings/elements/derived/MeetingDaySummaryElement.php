@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Display the fullName of a person
+     * Display the meeting day summary of a meeting.
      */
     class MeetingDaySummaryElement extends Element implements DerivedElementInterface
     {
@@ -40,7 +40,7 @@
         }
 
         /**
-         * Render the full name as a non-editable display
+         * Render the meeting day summary as a non-editable display
          * @return The element's content.
          */
         protected function renderControlNonEditable()

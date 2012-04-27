@@ -365,25 +365,56 @@ footer, header, hgroup, menu, nav, section {
     width:18px;
     height:16px;
     padding:0 10px 0 10px;
-    background:url(../images/notifications-bubble.png) center top no-repeat;
+    background: url(../images/notifications-bubble.png) center top no-repeat;
     border-left:1px solid #fff;
     border-right:1px solid #fff;
     float:left;
     display:inline-block;
+    background-color:none !important;
     &.unread{
-        color:#ff0000;
+    	#notifications-link.tooltip{
+        	color:#ff0000 !important;
+       }
     }
     &.all-read{
-        color:#7bb730;
+    	#notifications-link.tooltip{
+        	color:#7bb730 !important;
+       }
     }
+    /*
     span{
         font-size:10px;
         font-weight:bold;
         display: block;
         text-align:center;
         margin-top:0px;
+        .radius(0) !important;
+    	background-color:none !important;
+    	border:none !important;
     }
+    span#notifications-link.tooltip{
+    	background-color:none !important;
+    }
+    */
 }
+
+#notifications-link.tooltip{
+	width:18px;
+	height:14px;
+	font-size:10px;
+    font-weight:bold;
+    display: block;
+    text-align:center;
+    margin-top:-1px  !important;
+    display:inline-block;
+    background:transparent  !important;
+    .radius(0) !important;
+    border:none  !important;
+    color:auto  !important;
+    cursor:pointer;
+    vertical-align:middle;
+}
+
 #user-toolbar{
     float:right;
 }
@@ -1595,6 +1626,29 @@ div.wide.form{
     padding-left:15px;
 }
 
+.double-column{
+	.panel{
+		float:left;
+		width:100% !important;
+		table{
+			width:100% !important;
+		}
+		a{
+			color:@themeColor;
+		}
+	}
+	#permissions-module{
+		width:100% !important;
+		.buffer{
+			padding-left:0;
+			> div{
+				width:100%;
+				.box-sizing();
+			}
+		}
+	}
+}
+
 #edit-form{
     .clearfix;
     position: relative;
@@ -1993,7 +2047,7 @@ div.wide.form{
     .has-model-select{
         position:relative;
         a{
-            top: 16px;
+            top: 11px;
             &:before{
                 top:4px;
             }
@@ -2002,11 +2056,14 @@ div.wide.form{
     .has-date-select{
         position:relative;
         button{
-            top: 16px;
+            top: 11px;
             &:before{
                 top:1px;
             }
         }
+    }
+    td {
+    	width:100%;
     }
     td div{
         margin-left:0;
