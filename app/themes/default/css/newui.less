@@ -1652,8 +1652,22 @@ div.wide.form{
             }
         }
     }
+    .col-0, .col-2{
+		width:15%;
+	}
+	.col-1, .col-3{
+		width:35%;
+	}
 }
 
+.wide.form{
+	.col-0{
+		width:30%;
+	}
+	.col-1{
+		width:70%;
+	}
+}
 
 
 
@@ -1953,8 +1967,7 @@ div.wide.form{
         color:#525252;
     }
     th, td{
-        //padding:10px;
-        font-weight:600;
+    	font-weight:600;
         padding:0 0 15px 0;
     }
      //for opt in email checkboxes
@@ -1987,9 +2000,9 @@ div.wide.form{
     float:right;
     width:auto;
     .view-toolbar{
-          position:absolute;
-          right:0;
-          top:0;
+    	position:absolute;
+        right:0;
+        top:0;
         border:none;
         .b-shadow(none);
     }
