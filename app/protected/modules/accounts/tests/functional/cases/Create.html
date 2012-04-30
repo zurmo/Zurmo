@@ -10,337 +10,324 @@
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Create Account</td></tr>
-</thead><tbody>
+</thead>
+<tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+    <td>setSpeed</td>
+    <td>1000</td>
+    <td></td>
 </tr>
 <tr>
-  <td>storeGlobal</td>
-  <td>javascript{Math.floor(Math.random()*11000)}</td>
-  <td>randomSuffix</td>
+    <td>storeGlobal</td>
+    <td>javascript{Math.floor(Math.random()*11000)}</td>
+    <td>randomSuffix</td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/accounts/default/create</td>
-  <td></td>
+    <td>open</td>
+    <td>index.php/accounts/default/create</td>
+    <td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Accounts: (Unnamed)</td>
-  <td></td>
+    <td>waitForTextPresent</td>
+    <td>Create a New Account</td>
+    <td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_name</td>
-  <td>my account ${randomSuffix}</td>
+    <td>type</td>
+    <td>Account_name</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>Account_owner_SelectLink</td>
-  <td></td>
+    <td>click</td>
+    <td>Account_owner_SelectLink</td>
+    <td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>User Search</td>
-  <td></td>
+    <td>waitForTextPresent</td>
+    <td>User Search</td>
+    <td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>User[firstName]</td>
-  <td>Sam</td>
+    <td>type</td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>User[lastName]</td>
-  <td>Smith</td>
+    <td>waitForTextPresent</td>
+    <td>Sam Smith</td>
+    <td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
+    <td>click</td>
+    <td>link=Sam Smith</td>
+    <td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result(s).</td>
-  <td></td>
+    <td>waitForValue</td>
+    <td>Account_owner_name</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Sam Smith</td>
-  <td></td>
+    <td>assertNotValue</td>
+    <td>Account_owner_id</td>
+    <td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>link=Sam Smith</td>
-  <td></td>
+    <td>type</td>
+    <td>Account_employees</td>
+    <td>5</td>
 </tr>
 <tr>
-  <td>waitForValue</td>
-  <td>Account_owner_name</td>
-  <td>Sam Smith</td>
+    <td>type</td>
+    <td>Account_officeFax</td>
+    <td>123555</td>
 </tr>
 <tr>
-  <td>assertNotValue</td>
-  <td>Account_owner_id</td>
-  <td></td>
+    <td>type</td>
+    <td>Account_officePhone</td>
+    <td>456777</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_employees</td>
-  <td>5</td>
+    <td>type</td>
+    <td>Account_annualRevenue</td>
+    <td>500</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_officeFax</td>
-  <td>123555</td>
+    <td>type</td>
+    <td>Account_primaryEmail_emailAddress</td>
+    <td>test@testcompany.com</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_officePhone</td>
-  <td>456777</td>
+    <td>type</td>
+    <td>Account_secondaryEmail_emailAddress</td>
+    <td>test2@testcompany.com</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_annualRevenue</td>
-  <td>500</td>
+    <td>select</td>
+    <td>Account_industry_value</td>
+    <td>label=Financial Services</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_primaryEmail_emailAddress</td>
-  <td>test@testcompany.com</td>
+    <td>select</td>
+    <td>Account_type_value</td>
+    <td>label=Customer</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_secondaryEmail_emailAddress</td>
-  <td>test2@testcompany.com</td>
+    <td>type</td>
+    <td>Account_billingAddress_street1</td>
+    <td>123 ABC Street</td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>Account_industry_value</td>
-  <td>label=Financial Services</td>
+    <td>type</td>
+    <td>Account_billingAddress_street2</td>
+    <td>suite 100</td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>Account_type_value</td>
-  <td>label=Customer</td>
+    <td>type</td>
+    <td>Account_billingAddress_city</td>
+    <td>Chicago</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_street1</td>
-  <td>123 ABC Street</td>
+    <td>type</td>
+    <td>Account_billingAddress_state</td>
+    <td>IL</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_street2</td>
-  <td>suite 100</td>
+    <td>type</td>
+    <td>Account_billingAddress_postalCode</td>
+    <td>60611</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_city</td>
-  <td>Chicago</td>
+    <td>type</td>
+    <td>Account_billingAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_state</td>
-  <td>IL</td>
+    <td>type</td>
+    <td>Account_shippingAddress_street1</td>
+    <td>456 Main Street</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_postalCode</td>
-  <td>60611</td>
+    <td>type</td>
+    <td>Account_shippingAddress_street2</td>
+    <td>Suite 200</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_billingAddress_country</td>
-  <td>USA</td>
+    <td>type</td>
+    <td>Account_shippingAddress_city</td>
+    <td>New York</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_street1</td>
-  <td>456 Main Street</td>
+    <td>type</td>
+    <td>Account_shippingAddress_state</td>
+    <td>NY</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_street2</td>
-  <td>Suite 200</td>
+    <td>type</td>
+    <td>Account_shippingAddress_postalCode</td>
+    <td>12133</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_city</td>
-  <td>New York</td>
+    <td>type</td>
+    <td>Account_shippingAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_state</td>
-  <td>NY</td>
+    <td>type</td>
+    <td>Account_description</td>
+    <td>This is a test account</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_postalCode</td>
-  <td>12133</td>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_shippingAddress_country</td>
-  <td>USA</td>
+    <td>waitForTextPresent</td>
+    <td>my account ${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Account_description</td>
-  <td>This is a test account</td>
+    <td>assertText</td>
+    <td>link=Edit</td>
+    <td>Edit</td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>save</td>
-  <td></td>
+    <td>clickAndWait</td>
+    <td>link=Edit</td>
+    <td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>my account ${randomSuffix}</td>
-  <td></td>
+    <td>assertText</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>link=Edit</td>
-  <td>Edit</td>
+    <td>verifyValue</td>
+    <td>Account_name</td>
+    <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Edit</td>
-  <td></td>
+    <td>verifyValue</td>
+    <td>Account_owner_name</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>save</td>
-  <td></td>
+    <td>verifySelectedLabel</td>
+    <td>Account_industry_value</td>
+    <td>Financial Services</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_name</td>
-  <td>my account ${randomSuffix}</td>
+    <td>verifySelectedLabel</td>
+    <td>Account_type_value</td>
+    <td>Customer</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_owner_name</td>
-  <td>Sam Smith</td>
+    <td>verifyValue</td>
+    <td>Account_primaryEmail_emailAddress</td>
+    <td>test@testcompany.com</td>
 </tr>
 <tr>
-  <td>verifySelectedLabel</td>
-  <td>Account_industry_value</td>
-  <td>Financial Services</td>
+    <td>verifyValue</td>
+    <td>Account_billingAddress_street1</td>
+    <td>123 ABC Street</td>
 </tr>
 <tr>
-  <td>verifySelectedLabel</td>
-  <td>Account_type_value</td>
-  <td>Customer</td>
+    <td>verifyValue</td>
+    <td>Account_billingAddress_street2</td>
+    <td>suite 100</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_primaryEmail_emailAddress</td>
-  <td>test@testcompany.com</td>
+    <td>verifyValue</td>
+    <td>Account_billingAddress_city</td>
+    <td>Chicago</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_billingAddress_street1</td>
-  <td>123 ABC Street</td>
+    <td>verifyValue</td>
+    <td>Account_billingAddress_state</td>
+    <td>IL</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_billingAddress_street2</td>
-  <td>suite 100</td>
+    <td>verifyValue</td>
+    <td>Account_billingAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_billingAddress_city</td>
-  <td>Chicago</td>
+    <td>verifyValue</td>
+    <td>Account_description</td>
+    <td>This is a test account</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_billingAddress_state</td>
-  <td>IL</td>
+    <td>verifyValue</td>
+    <td>Account_officePhone</td>
+    <td>456777</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_billingAddress_country</td>
-  <td>USA</td>
+    <td>verifyValue</td>
+    <td>Account_officeFax</td>
+    <td>123555</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_description</td>
-  <td>This is a test account</td>
+    <td>verifyValue</td>
+    <td>Account_annualRevenue</td>
+    <td>500</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_officePhone</td>
-  <td>456777</td>
+    <td>verifyValue</td>
+    <td>Account_secondaryEmail_emailAddress</td>
+    <td>test2@testcompany.com</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_officeFax</td>
-  <td>123555</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_street1</td>
+    <td>456 Main Street</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_annualRevenue</td>
-  <td>500</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_street2</td>
+    <td>Suite 200</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_secondaryEmail_emailAddress</td>
-  <td>test2@testcompany.com</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_city</td>
+    <td>New York</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_street1</td>
-  <td>456 Main Street</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_state</td>
+    <td>NY</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_street2</td>
-  <td>Suite 200</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_postalCode</td>
+    <td>12133</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_city</td>
-  <td>New York</td>
+    <td>verifyValue</td>
+    <td>Account_shippingAddress_country</td>
+    <td>USA</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_state</td>
-  <td>NY</td>
+    <td>type</td>
+    <td>Account_name</td>
+    <td>Changing The Account ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_postalCode</td>
-  <td>12133</td>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>Account_shippingAddress_country</td>
-  <td>USA</td>
+    <td>waitForTextPresent</td>
+    <td>Changing The Account ${randomSuffix}</td>
+    <td></td>
 </tr>
-<tr>
-  <td>type</td>
-  <td>Account_name</td>
-  <td>Changing The Account ${randomSuffix}</td>
-</tr>
-<tr>
-  <td>clickAndWait</td>
-  <td>save</td>
-  <td></td>
-</tr>
-<tr>
-  <td>waitForTextPresent</td>
-  <td>Return to List</td>
-  <td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
 </body>
 </html>
