@@ -484,7 +484,7 @@ var designer = {
                 draggable: false,
                 resizable: false,
                 width: 400,
-                height: 300,
+                height: 'auto',
                 close: function(event, ui) {
                     $('#' + panelId).children('.panel-title-display').html($(this).find('.panel-title').val());
                     $(this).dialog('destroy');
@@ -503,7 +503,7 @@ var designer = {
                 draggable: false,
                 resizable: false,
                 width: 400,
-                height: 300,
+                height: 'auto',
                 close: function(event, ui) {
                     $(this).dialog('destroy');
                     $(this).appendTo('#' + cellId);
