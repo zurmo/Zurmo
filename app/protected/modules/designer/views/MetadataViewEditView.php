@@ -87,13 +87,14 @@
                                                             );
             $content .= $formStart;
             $content .= '<div class="designer-toolbar">';
-            $content .= $this->renderNotificationBar('NotificationBar');
+            //$content .= $this->renderNotificationBar('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
             }
             $content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
+			 $content .= $this->renderNotificationBar('NotificationBar');
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
             $content .= $this->renderCancelLink();
             $content .= $this->renderSaveLayoutButton('NotificationBar');

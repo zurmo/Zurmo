@@ -1222,7 +1222,7 @@ table.items thead tr:hover{
         border:1px solid #CCC;
         .b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
         background: #ffffff;
-       #gradient > .vertical(#ffffff, #F5F5F5);
+        #gradient > .vertical(#ffffff, #F5F5F5);
     }
     label{
         /*padding-top:8px;*/
@@ -1338,10 +1338,12 @@ a.simple-select{
 }
 
 /*=Popup Modals*/
+/*
 .ui-dialog-titlebar {
     padding:0;
     margin:0;
 }
+*/
 .ui-dialog{
     overflow: visible;
     padding:0 !important;
@@ -1650,8 +1652,22 @@ div.wide.form{
             }
         }
     }
+    .col-0, .col-2{
+		width:15%;
+	}
+	.col-1, .col-3{
+		width:35%;
+	}
 }
 
+.wide.form{
+	.col-0{
+		width:30%;
+	}
+	.col-1{
+		width:70%;
+	}
+}
 
 
 
@@ -1951,8 +1967,7 @@ div.wide.form{
         color:#525252;
     }
     th, td{
-        //padding:10px;
-        font-weight:600;
+    	font-weight:600;
         padding:0 0 15px 0;
     }
      //for opt in email checkboxes
@@ -1985,9 +2000,9 @@ div.wide.form{
     float:right;
     width:auto;
     .view-toolbar{
-          position:absolute;
-          right:0;
-          top:0;
+    	position:absolute;
+        right:0;
+        top:0;
         border:none;
         .b-shadow(none);
     }
