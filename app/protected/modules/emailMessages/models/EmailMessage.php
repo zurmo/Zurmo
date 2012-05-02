@@ -66,6 +66,24 @@
             return 'EmailMessagesModule';
         }
 
+        /**
+         * Returns the display name for the model class.
+         * @return dynamic label name based on module.
+         */
+        protected static function getLabel()
+        {
+            return 'EmailMessagesModuleSingularLabel';
+        }
+
+        /**
+         * Returns the display name for plural of the model class.
+         * @return dynamic label name based on module.
+         */
+        protected static function getPluralLabel()
+        {
+            return 'EmailMessagesModulePluralLabel';
+        }
+
         public static function canSaveMetadata()
         {
             return false;
