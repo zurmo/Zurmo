@@ -117,7 +117,14 @@
                 $emailMessage->recipients->add($recipient);
                 $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
                 $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
-                Yii::app()->emailHelper->sendImmediately($emailMessage);
+                try
+                {
+                    Yii::app()->emailHelper->sendImmediately($emailMessage);
+                }
+                catch(CException $e)
+                {
+                    //Not sure what to do yet when catching an exception here. Currently ignoring gracefully.
+                }
             }
         }
 
