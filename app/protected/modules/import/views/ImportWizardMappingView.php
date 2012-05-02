@@ -50,7 +50,8 @@
                                     $mappingDataMetadata,
                                     $mappingDataMappingRuleFormsAndElementTypes,
                                     $mappableAttributeIndicesAndDerivedTypes,
-                                    $requiredAttributesLabelsData)
+                                    $requiredAttributesLabelsData,
+                                    $title)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -67,6 +68,7 @@
             $this->mappingDataMappingRuleFormsAndElementTypes = $mappingDataMappingRuleFormsAndElementTypes;
             $this->mappableAttributeIndicesAndDerivedTypes    = $mappableAttributeIndicesAndDerivedTypes;
             $this->requiredAttributesLabelsData               = $requiredAttributesLabelsData;
+            $this->title                                      = $title;
         }
 
         /**
@@ -124,22 +126,22 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= $this->renderActionLinksContent();
             return $content;
         }
 
         protected function renderRequiredAttributesLabelsDataContent()
         {
-            $content = null;
+            $content = '<div class="required-fields">';
             if (count($this->requiredAttributesLabelsData) > 0)
             {
-                $content .= '<b>' . Yii::t('Default', 'Required Fields') . '</b>' . '<br/>';
+                $content .= '<strong>' . Yii::t('Default', 'Required Fields') . ':</strong>' . '<br/>';
                 foreach ($this->requiredAttributesLabelsData as $label)
                 {
                     $content .= $label. '<br/>';
                 }
                 $content .= '<br/>';
             }
+            $content .= '</div>';
             return $content;
         }
 

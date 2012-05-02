@@ -47,6 +47,7 @@
         {
             $htmlOptions = parent::getEditableHtmlOptions();
             $htmlOptions['multiple'] = true;
+            $htmlOptions['class'] = 'multiple ignore-style';
             return $htmlOptions;
         }
     }

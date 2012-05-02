@@ -62,10 +62,11 @@
 
         protected function actionCreateByModel(Activity $activity, $redirectUrl)
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit');
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this, $titleBarAndEditView);
+            $view = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                             makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -74,10 +75,11 @@
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($activity);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($activity), $activity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($activity), get_class($this->getModule())), $activity);
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView($activity, 'Details'));
+            $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeEditAndDetailsView($activity, 'Details')));
             echo $view->render();
         }
 
@@ -87,9 +89,10 @@
             $activity          = $modelClassName::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($activity);
             $pageViewClassName = $this->getPageViewClassName();
-            $view = new $pageViewClassName($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit'));
+            $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeEditAndDetailsView(
+                                                $this->attemptToSaveModelFromPost($activity, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 

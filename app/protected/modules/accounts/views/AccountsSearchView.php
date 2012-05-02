@@ -32,18 +32,15 @@
                 'global' => array(
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
-                            'rows' => array(
+                            'locked' => true,
+                            'title'  => 'Basic Search',
+                            'rows'   => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
@@ -57,12 +54,25 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
+                                                array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'type', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
+                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'industry', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                     )

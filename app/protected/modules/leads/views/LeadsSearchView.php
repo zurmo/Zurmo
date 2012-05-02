@@ -39,18 +39,15 @@
                     ),
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
+                            'locked' => true,
+                            'title'  => 'Basic Search',
                             'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'fullName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
@@ -64,9 +61,31 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'fullName', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'department', 'type' => 'Text'), // Not Coding Standard
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'mobilePhone', 'type' => 'Phone'),

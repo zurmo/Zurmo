@@ -141,8 +141,6 @@
             => 'Nom Formule',
         'General'
             => 'Général',
-        'General Edit'
-            => 'Modification Général',
         'How does this work?'
             => 'Comment ça marche?',
         'Invalid panel configuration type'

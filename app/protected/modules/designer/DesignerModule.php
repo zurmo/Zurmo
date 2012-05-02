@@ -33,6 +33,31 @@
            return array('zurmo');
         }
 
+        public static function getAdminTabMenuItems($user = null)
+        {
+            $tabMenuItems = array(
+                array(
+                    'label' => 'Designer',
+                    'url'   => array('/designer/default'),
+                    'right'            => self::RIGHT_ACCESS_DESIGNER,
+                ),
+            );
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $moduleTreeMenuItems = $module->getDesignerMenuItems();
+                if ($module->isEnabled() &&
+                    !empty($moduleTreeMenuItems))
+                {
+                    $tabMenuItems[0]['items'][] = array(
+                        'label' => Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')),
+                        'url'   => array('/designer/default/modulesMenu', 'moduleClassName' => get_class($module)),
+                    );
+                }
+            }
+            return $tabMenuItems;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array();
@@ -44,6 +69,14 @@
                         'descriptionLabel' => 'Manage module fields, layouts, and labels.',
                         'route'            => '/designer/default',
                         'right'            => self::RIGHT_ACCESS_DESIGNER,
+                    ),
+                ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Designer',
+                        'url' => array('/designer/default'),
+                        'right' => self::RIGHT_ACCESS_DESIGNER,
+                        'order' => 1,
                     ),
                 ),
             );

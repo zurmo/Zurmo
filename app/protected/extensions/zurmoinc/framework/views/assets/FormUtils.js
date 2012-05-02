@@ -36,3 +36,11 @@ function afterValidateAjaxAction(form, data, hasError)
     }
     return false;
 }
+
+function searchByQueuedSearch(inputId)
+{
+    if(basicSearchQueued == 0)
+    {
+        $('#' + inputId).closest('form').submit();
+    }
+}

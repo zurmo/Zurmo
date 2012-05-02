@@ -37,18 +37,15 @@
                     ),
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
+                            'locked' => true,
+                            'title'  => 'Basic Search',
                             'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'firstName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'lastName', 'type' => 'Text'),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
@@ -62,12 +59,16 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'username', 'type' => 'Text'),
+                                                array('attributeName' => 'department', 'type' => 'Text'), // Not Coding Standard
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
+                                                array('attributeName' => 'mobilePhone', 'type' => 'Phone'),
                                             ),
                                         ),
                                     )
@@ -83,6 +84,11 @@
         public static function getDesignerRulesType()
         {
             return 'ModalSearchView';
+        }
+
+        public static function getModelForMetadataClassName()
+        {
+            return 'UsersSearchForm';
         }
     }
 ?>

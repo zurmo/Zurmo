@@ -41,7 +41,8 @@
 
         public function actionIndex()
         {
-            $view = new ConfigurationPageView($this, new ConfigureModulesView());
+            $view = new ConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                                  makeStandardViewForCurrentUser($this, new ConfigureModulesView()));
             echo $view->render();
         }
     }

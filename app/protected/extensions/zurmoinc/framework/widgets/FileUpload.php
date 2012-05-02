@@ -244,7 +244,7 @@ $scriptContent = <<<EOD
             <td class="name" colspan="4">\${name}</td>
             <td class="size">\${size}</td>
             <td class="delete">
-                <button data-url="{$this->deleteUrl}&id=\${id}">{$deleteLabel}</button>
+                <button data-url="{$this->deleteUrl}?id=\${id}">{$deleteLabel}</button>
             </td>
         {{/if}}
 

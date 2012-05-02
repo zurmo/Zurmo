@@ -36,16 +36,7 @@
 
         protected function renderContent()
         {
-            return <<<END
-    <br/>
-    <br/>
-    <br/>
-    <div align='center'>
-    <h2>
-    $this->failureMessageContent
-    </h2>
-    </div>
-END;
+            return '<h2>' . $this->failureMessageContent . '</h2>';
         }
     }
 ?>

@@ -45,15 +45,6 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'id', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
                                             ),
                                         ),

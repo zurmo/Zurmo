@@ -360,6 +360,20 @@
         /**
          * TODO
          */
+        public static function getAdminTabMenuItems($user = null)
+        {
+            assert('$user == null || $user instanceof User');
+            $metadata = self::getMetadata();
+            if (!empty($metadata['global']['adminTabMenuItems']))
+            {
+                return $metadata['global']['adminTabMenuItems'];
+            }
+            return array();
+        }
+
+        /**
+         * TODO
+         */
         public static function getConfigureMenuItems()
         {
             $metadata = self::getMetadata();
@@ -370,13 +384,13 @@
             return array();
         }
 
-        public static function getShortCutsMenuItems()
+        public static function getShortCutsCreateMenuItems()
         {
             $calledClass = get_called_class();
             $metadata = $calledClass::getMetadata();
-            if (!empty($metadata['global']['shortcutsMenuItems']))
+            if (!empty($metadata['global']['shortcutsCreateMenuItems']))
             {
-                return $metadata['global']['shortcutsMenuItems'];
+                return $metadata['global']['shortcutsCreateMenuItems'];
             }
             return array();
         }

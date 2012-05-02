@@ -576,9 +576,7 @@
         'Your Yii version is currentVersion and it should be acceptableVersion.'
             => 'Suo versione di Yii � currentVersion e dovrebbe essere acceptableVersion.',
         'ZurmoCRM'
-            => 'ZurmoCR',
-        '{count} unread'
-            => '{count} non letti',
+            => 'ZurmoCRM',
         '{url} (installed with Yii)'
             => '{url} (installato con Yii)',
         '{url} (version {version} is installed)'

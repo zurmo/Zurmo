@@ -65,6 +65,14 @@
             parent::__construct($id, $module);
         }
 
+        /**
+         * Override if the module is a nested module such as groups or roles.
+         */
+        public function resolveAndGetModuleId()
+        {
+            return $this->getModule()->getId();
+        }
+
         public static function getRightsFilterPath()
         {
             return static::RIGHTS_FILTER_PATH;
@@ -100,6 +108,30 @@
                 $filteredListData,
                 $filteredListId,
                 $title
+            );
+        }
+
+        protected function makeActionBarSearchAndListView(
+            $searchModel,
+            $pageSize,
+            $title,
+            $userId,
+            $dataProvider,
+            $actionBarViewClassName = 'SecuredActionBarForSearchAndListView'
+            )
+        {
+            assert('is_string($actionBarViewClassName)');
+            $listModel = $searchModel->getModel();
+            return new ActionBarSearchAndListView(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $searchModel,
+                $listModel,
+                $this->getModule()->getPluralCamelCasedName(),
+                $dataProvider,
+                GetUtil::resolveSelectedIdsFromGet(),
+                GetUtil::resolveSelectAllFromGet(),
+                $actionBarViewClassName
             );
         }
 
@@ -265,7 +297,8 @@
                         );
                         if ($selectedRecordCount > $pageSize)
                         {
-                            $view = new $pageViewClassName($this,
+                            $view = new $pageViewClassName(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
                                 $this->makeMassEditProgressView(
                                     $listModel,
                                     1,
@@ -274,7 +307,7 @@
                                     $pageSize,
                                     $title,
                                     null)
-                            );
+                            ));
                             echo $view->render();
                             Yii::app()->end(0, false);
                         }

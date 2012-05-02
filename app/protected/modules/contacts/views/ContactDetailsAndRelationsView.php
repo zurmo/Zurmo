@@ -39,16 +39,16 @@
                         'viewClassName' => 'ContactEditAndDetailsView',
                     ),
                     'leftBottomView' => array(
-                        'showAsTabbed' => true,
+                        'showAsTabbed' => false,
                         'columns' => array(
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'ContactNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
                                     ),
                                     array(
-                                        'type' => 'OpportunitiesForContactRelatedList'
-                                    )
+                                        'type' => 'ContactLatestActivtiesForPortlet'
+                                    ),
                                 )
                             )
                         )
@@ -58,11 +58,14 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'UpcomingMeetingsForContactRelatedList',
+                                        'type' => 'UpcomingMeetingsForContactCalendar',
                                     ),
                                     array(
                                         'type' => 'OpenTasksForContactRelatedList',
                                     ),
+                                    array(
+                                        'type' => 'OpportunitiesForContactRelatedList',
+                                    )
                                 )
                             )
                         )

@@ -63,7 +63,18 @@
             {
                 return parent::renderContent();
             }
-            $content = '<div class="wide form">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
+            if($maxCellsPresentInAnyRow > 1)
+            {
+                $class = "wide double-column form";
+            }
+            else
+            {
+                $class = "wide form";
+            }
+            $content .= '<div class="' . $class. '">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -74,20 +85,60 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            $content .= '<div class="view-toolbar">';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderRightSideContent($form);
             $content .= $this->renderAfterFormLayout($form);
+            $actionElementContent = $this->renderActionElementBar(true);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
 
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            if($this->model->id > 0)
+            {
+                return '<h1>' . strval($this->model) . '</h1>';
+            }
+            return '<h1>' . $this->getNewModelTitleLabel() . '</h1>';
+        }
+
+        protected function renderRightSideContent($form)
+        {
+            assert('$form == null || $form instanceof ZurmoActiveForm');
+            if($form != null)
+            {
+                $rightSideContent = $this->renderRightSideFormLayoutForEdit($form);
+                if($rightSideContent != null)
+                {
+                    $content  = '<div id="permissions-module"><div class="buffer"><div>';
+                    $content .= $rightSideContent;
+                    $content .= '</div></div></div>';
+                    return $content;
+                }
+            }
+        }
+
+        protected function renderRightSideFormLayoutForEdit($form)
+        {
         }
 
         protected function renderAfterFormLayout($form)
         {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
         }
 
         protected function resolveActiveFormAjaxValidationOptions()
@@ -136,6 +187,11 @@
                 $data['enctype'] = 'multipart/form-data';
             }
             return $data;
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            throw new NotImplementedException();
         }
     }
 ?>

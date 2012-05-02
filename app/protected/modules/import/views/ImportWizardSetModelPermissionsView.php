@@ -41,21 +41,20 @@
 
             $importModelClassName      = ImportRulesUtil::getImportRulesClassNameByType($this->model->importRulesType);
             $importRulesLabel          = $importModelClassName::getDisplayLabel();
-            $label                     = Yii::t('Default', 'Who can read and write the new {importRulesLabel}',
+            $label                     = Yii::t('Default', '<h3>Who can read and write the new {importRulesLabel}</h3>',
                                                 array('{importRulesLabel}' => $importRulesLabel));
             $element                   = new ExplicitReadWriteModelPermissionsElement($this->model,
                                              'explicitReadWriteModelPermissions', $form);
-            $element->editableTemplate = $label . '<br/>{content}';
+            $element->editableTemplate = $label . '{content}';
 
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td>'    . "\n";
+            $content .= '<tr><td><div id="permissions-module">' . "\n";
             $content .= $element->render();
-            $content .= '</td></tr>'  . "\n";
+            $content .= '</div></td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";
             $content .= '</table>'    . "\n";
-            $content .= $this->renderActionLinksContent();
             return $content;
         }
 

@@ -195,7 +195,7 @@
         /**
          * This test shows that accents are maybe not in the right encoding in the message file. This is just an example
          * of something that was not working in windows correctly. The result was the label would not display in the
-         * input box in the browser in the module general edit in designer.
+         * input box in the browser in the module general in designer.
          */
         public function testAccentsAreEncodingProperly()
         {

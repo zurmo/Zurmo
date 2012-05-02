@@ -35,5 +35,20 @@
         {
             return 'Configuration';
         }
+
+        public static function getDefaultMetadata()
+        {
+            $metadata = array();
+            $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Settings',
+                        'url'   => array('/configuration/default'),
+                        'right' => ZurmoModule::RIGHT_ACCESS_ADMINISTRATION
+                    ),
+                ),
+            );
+            return $metadata;
+        }
     }
 ?>

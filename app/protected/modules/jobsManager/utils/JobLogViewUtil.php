@@ -36,7 +36,6 @@
                 $content     = '<span id="active-nonmonitor-job-tooltip-' .
                                $jobLog->id . '" class="tooltip" title="' . CHtml::encode($jobLog->message) . '">';
                 $content    .= Yii::t('Default', 'Completed with Errors') . '</span>';
-                Yii::import('application.extensions.qtip.QTip');
                 $options     = array('content' =>
                                         array('title' =>
                                             array('text'   => Yii::t('Default', 'Error Log'),
@@ -53,7 +52,7 @@
                                                                      { if (event.originalEvent.type !== "click")
                                                                      { return false;}}')
                                ); // Not Coding Standard
-                $qtip        = new QTip();
+                $qtip        = new ZurmoTip();
                 $qtip->addQTip("#active-nonmonitor-job-tooltip-" . $jobLog->id, $options);
                 return $content;
             }

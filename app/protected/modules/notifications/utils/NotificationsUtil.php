@@ -65,12 +65,11 @@
             foreach ($users as $user)
             {
                 //todo: !!!process duplication check
-                if ($allowDuplicates || Notification::getUnreadCountByTypeAndUser($type, $user) == 0)
+                if ($allowDuplicates || Notification::getCountByTypeAndUser($type, $user) == 0)
                 {
                     $notification                      = new Notification();
                     $notification->owner               = $user;
                     $notification->type                = $type;
-                    $notification->isRead              = false;
                     $notification->notificationMessage = $message;
                     $saved                             = $notification->save();
                     if (!$saved)
@@ -120,6 +119,75 @@
                 $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
                 Yii::app()->emailHelper->sendImmediately($emailMessage);
             }
+        }
+
+        /**
+         * Get the content for displaying recent notifications information via an ajax call.
+         * @see HeaderLinksView->renderNotificationsLinkContent()
+         * @param User $user
+         */
+        public static function getRecentAjaxContentByUser(User $user, $count)
+        {
+            assert('is_int($count)');
+            $content     = null;
+            $notification = new Notification(false);
+            $searchAttributes = array(
+                'owner'    => array('id' => Yii::app()->user->userModel->id)
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                $notification,
+                Yii::app()->user->userModel->id,
+                $searchAttributes
+            );
+            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
+                $metadataAdapter,
+                'Notification',
+                'RedBeanModelDataProvider',
+                'createdDateTime',
+                true,
+                10
+            );
+            $notifications = $dataProvider->getData();
+            if (count($notifications) > 0)
+            {
+                foreach ($notifications as $notification)
+                {
+                        $content .= '<div class="single-notification">';
+                        $content .= self::renderListViewContent($notification);
+                        $content .= CHtml::link("Delete<span class='icon'></span>", "#",
+                                                array("class"   => "remove",
+                                                      "onClick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ")"));
+                        $content .= '</div>';
+                }
+            }
+            else
+            {
+                $content .= Yii::t('Default', '<div class="single-notification">There are no recent notifications.</div>');
+            }
+            return $content;
+        }
+
+        public static function renderListViewContent(Notification $notification)
+        {
+            $content = strval($notification);
+            if($content != null)
+            {
+                $content = '<h4>' . StringUtil::getChoppedStringContent($content, 68) . '</h4>';
+            }
+            if ($notification->notificationMessage->id > 0)
+            {
+                if ($notification->notificationMessage->htmlContent != null && strlen($notification->notificationMessage->htmlContent) < 136)
+                {
+                    $content .= '<div>' . Yii::app()->format->raw($notification->notificationMessage->htmlContent). '</div>';
+                }
+                elseif ($notification->notificationMessage->textContent != null)
+                {
+                    $content .= '<div>' . Yii::app()->format->text(StringUtil::
+                                            getChoppedStringContent($notification->notificationMessage->textContent, 136)) .
+                                '</div>';
+                }
+            }
+            return $content;
         }
     }
 ?>

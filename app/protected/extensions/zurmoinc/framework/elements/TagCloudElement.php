@@ -30,43 +30,29 @@
         {
             $multipleValuesCustomField = $this->model->{$this->attribute};
             assert('$multipleValuesCustomField instanceof MultipleValuesCustomField');
-            $dataAndLabels = CustomFieldDataUtil::
-                             getDataIndexedByDataAndTranslatedLabelsByLanguage(
-                             $multipleValuesCustomField->data, Yii::app()->language);
-
+            $dataAndLabels      = CustomFieldDataUtil::
+                                  getDataIndexedByDataAndTranslatedLabelsByLanguage(
+                                  $multipleValuesCustomField->data, Yii::app()->language);
             $dataToValuesString = static::getDataToValuesString($multipleValuesCustomField->values);
             $dataLabels         = static::getJsonEncodedLabelsByDataAndLabels($multipleValuesCustomField->values,
                                     $dataAndLabels);
             $idForInput         = $this->getIdForSelectInput();
-            $themeUrl           = Yii::app()->baseUrl . '/themes';
-            $theme               = Yii::app()->theme->name;
-            Yii::app()->clientScript->registerCssFile($themeUrl . '/' . $theme . '/css/jquery-tagsinput.css');
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/TagsInput.js'
-                    ),
-                CClientScript::POS_END
-            );
-            $autoCompleteUrl = Yii::app()->createUrl('zurmo/default/autoCompleteCustomFieldData/',
+            $autoCompleteUrl    = Yii::app()->createUrl('zurmo/default/autoCompleteCustomFieldData/',
                                                      array('name' => $this->model->{$this->attribute}->data->name));
-            $script = "$('#" . $idForInput . "').tagsInput(
-                { autocomplete_url:'" . $autoCompleteUrl . "',
-                  jsonLabels: '" . $dataLabels . "',
-                  defaultText: '" . Yii::t('Default', 'Type to find a tag') . "'
-            });"; // Not Coding Standard
-            Yii::app()->clientScript->registerScript(
-                'tagCloud' . $idForInput,
-                $script,
-                CClientScript::POS_END
-            );
-
-            $htmlOptions  = array(
-                'id'       => $idForInput,
-                'disabled' => $this->getDisabledValue(),
-            );
-            $content      = CHtml::textField($this->getNameForSelectInput(),
-                                             $dataToValuesString,
-                                             $htmlOptions);
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("ModelElement");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MultiSelectAutoComplete', array(
+                'name'        => $this->getNameForSelectInput(),
+                'id'          => $this->getIdForSelectInput(),
+                'jsonEncodedIdsAndLabels'   => $dataLabels,
+                'sourceUrl'   => $autoCompleteUrl,
+                'htmlOptions' => array(
+                    'disabled' => $this->getDisabledValue(),
+                    ),
+                'hintText' => Yii::t('Default', 'Type to find a tag')
+            ));
+            $cClipWidget->endClip();
+            $content = $cClipWidget->getController()->clips['ModelElement'];
             return $content;
         }
 
@@ -96,7 +82,8 @@
             {
                 if ($customFieldValue->value != null)
                 {
-                    $labels[] = $dataAndLabels[$customFieldValue->value];
+                    $labels[] = array('id' => $customFieldValue->value,
+                                      'name' => $dataAndLabels[$customFieldValue->value]);
                 }
             }
             return CJSON::encode($labels);

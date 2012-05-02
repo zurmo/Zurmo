@@ -37,13 +37,16 @@
         protected function getCGridViewLastColumn()
         {
             return array(
-                'class'           => 'CButtonColumn',
+                'class'           => 'ButtonColumn',
                 'template'        => '{update}',
                 'buttons'         => array(
                     'update'      => array(
-                    'url'         => 'Yii::app()->createUrl("' .
-                                        $this->getGridViewActionRoute('edit') . '", array("id" => $data->id))',
-                    'visible'     => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                    'url'             => 'Yii::app()->createUrl("' .
+                                         $this->getGridViewActionRoute('edit') . '", array("id" => $data->id))',
+                    'imageUrl'	      => false,
+                    'visible'         => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                    'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                    'label'           => '!'
                     ),
                 ),
             );

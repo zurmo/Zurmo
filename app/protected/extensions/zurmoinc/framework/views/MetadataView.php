@@ -58,10 +58,17 @@
          */
         protected function renderViewToolBar($renderInForm = true)
         {
-            $content = '<div class="view-toolbar">';
-            $content .= $this->renderActionElementBar($renderInForm);
-            $content .= '</div>';
-            return $content;
+            if ( $renderInForm == true ){
+                $actionContent = $this->renderActionElementBar($renderInForm);
+                if($actionContent != null)
+                {
+                    $content  = '<div class="view-toolbar-container clearfix"><div class="portlet-toolbar">';
+                    $content .= $actionContent;
+                    $content .= '</div></div>';
+                    return $content;
+                }
+            }
+            return null;
         }
 
         /**
@@ -78,6 +85,7 @@
             {
                 foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
                 {
+                    $this->resolveActionElementInformationDuringRender($elementInformation);
                     $elementclassname = $elementInformation['type'] . 'ActionElement';
                     $params = array_slice($elementInformation, 1);
                     array_walk($params, array($this, 'resolveEvaluateSubString'));
@@ -93,13 +101,21 @@
                     $renderedContent = $element->render();
                     if (!$first && !empty($renderedContent))
                     {
-                        $content .= '&#160;|&#160;';
+                       // $content .= '&#160;|&#160;';
                     }
                     $first = false;
                     $content .= $renderedContent;
                 }
             }
             return $content;
+        }
+
+        /**
+         * Override if any manipulation is needed on the $elementInformaiton prior to rendering
+         * @param array $elementInformation
+         */
+        protected function resolveActionElementInformationDuringRender(& $elementInformation)
+        {
         }
 
         /**

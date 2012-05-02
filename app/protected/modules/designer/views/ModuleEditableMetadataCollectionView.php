@@ -26,6 +26,8 @@
 
     class ModuleEditableMetadataCollectionView extends MetadataView
     {
+        protected $cssClasses =  array( 'TableOfContentsView');
+
         protected $controllerId;
 
         protected $moduleId;
@@ -36,40 +38,52 @@
 
         protected $modelClassName;
 
-        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName)
+        protected $title;
+
+        public function __construct($controllerId, $moduleId, $editableMetadataCollection, $moduleClassName , $title)
         {
             $this->controllerId                 = $controllerId;
             $this->moduleId                     = $moduleId;
             $this->editableMetadataCollection   = $editableMetadataCollection;
             $this->moduleClassName              = $moduleClassName;
             $this->modelId                      = null;
+            $this->title                        = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>' . "\n";
-            $content .= '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:100%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<ul class="configuration-list">';
             foreach ($this->editableMetadataCollection as $item)
             {
                 //todo: make sure the route has attributeTypeName as well as attributeName
-                $content .= '<tr>';
-                $content .= '<td>' . CHtml::link($item['titleLabel'], Yii::app()->createUrl('/' . $this->moduleId . '/' . $this->controllerId . '/layoutEdit',
-                array(
-                    'viewClassName'   => $item['viewClassName'],
-                    'moduleClassName' => $this->moduleClassName,
-                )
-                )) . '</td>';
-                $content .= '</tr>';
+                $link    = CHtml::link(Yii::t('Default', 'Configure'),
+                                       Yii::app()->createUrl('/' . $this->moduleId . '/' . $this->controllerId . '/layoutEdit',
+                                       array('viewClassName'   => $item['viewClassName'],
+                                             'moduleClassName' => $this->moduleClassName,
+                                       )
+                                       ));
+                $content .= '<li>';
+                $content .= '<h4>'. $item['titleLabel'] . '</h4>';
+                $content .= $link;
+                $content .= '</li>';
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
+            $actionElementContent = $this->renderActionElementBar(false);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
+            $content .= '</div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

@@ -74,10 +74,10 @@ var designer = {
             data['layout[panels][' + panelCount + ']'] = '';
             //alert('aa' + $(this).children('.panel-settings').find('.settings-form-field'));
             var rowCount = 0;
-            $(this).find('.sortable-row-list').children('li').each(function(){
+            $(this).find('.sortable-row-list-helper').children('li').each(function(){
                 data['layout[panels][' + panelCount + '][rows][' + rowCount + ']'] = '';
                 var cellCount = 0;
-                $(this).children('.droppable-cell-container').each(function(){
+                $(this).children('.droppable-cell-container-helper').each(function(){
                     if($(this).children('.cell-element').length == 0)
                     {
                         var elementId = 'Null';
@@ -158,12 +158,12 @@ var designer = {
     {
         if(this.settings.maxCellsPerRow == 1)
         {
-            return '<div class="layout-single-column droppable-cell-container ui-state-hover"></div>';
+            return '<div class="layout-single-column droppable-cell-container droppable-cell-container-helper ui-state-hover"></div>';
         }
         else
         {
-            return '<div class="layout-double-column droppable-cell-container ui-state-hover"></div>\
-            <div class="layout-double-column droppable-cell-container ui-state-hover"></div>';
+            return '<div class="layout-double-column droppable-cell-container droppable-cell-container-helper ui-state-hover"></div>\
+            <div class="layout-double-column droppable-cell-container droppable-cell-container-helper ui-state-hover"></div>';
         }
     },
     getRowModifyCellSpan : function()
@@ -340,7 +340,7 @@ var designer = {
                         <span class="panel-title-display">&#160;</span>\
                         ' + designer.getPanelHandleSpan()+ designer.getPanelRemoveSpan() + designer.getPanelModifySpan() +
                         '<div class="sortable-row-list-container">\
-                            <ul class="' + designer.getRowUlSortableClass() + ' sortable-row-connector">\
+                            <ul class="' + designer.getRowUlSortableClass() + ' sortable-row-list-helper sortable-row-connector">\
                                 <li class="ui-state-default">' +
                                     designer.getRowHandleSpan() +
                                     designer.getRowCells() +
@@ -397,8 +397,8 @@ var designer = {
                 start: function(event,ui)
                 {
                     $(ui.helper).addClass('ui-state-default');
-                    $(ui.helper).css('height', '20px');
-                    $(ui.helper).css('width', '260px');
+                    //$(ui.helper).css('height', '20px');
+                    //$(ui.helper).css('width', '260px');
                 },
                 stop: function(event, ui){
                     document.body.style.cursor = 'auto';
@@ -416,8 +416,8 @@ var designer = {
             start: function(event,ui)
             {
                 $(ui.helper).attr('id', $(this).attr('id'));
-                $(ui.helper).css('height', '20px');
-                $(ui.helper).css('width', '260px');
+                //$(ui.helper).css('height', '20px');
+                //$(ui.helper).css('width', '260px');
             },
             stop: function(event, ui){
                 document.body.style.cursor = 'auto';
@@ -441,7 +441,7 @@ var designer = {
             $(this).addClass('ui-icon-circle-plus');
         });
         $('.ui-icon-circle-plus').live('click',function(){
-            $(this).parent().children("div:eq(0)").after('<div class="layout-double-column droppable-cell-container ui-state-hover"></div>');
+            $(this).parent().children("div:eq(0)").after('<div class="layout-double-column droppable-cell-container droppable-cell-container-helper ui-state-hover"></div>');
             $(this).parent().children("div:eq(0)").removeClass('layout-single-column');
             $(this).parent().children("div:eq(0)").addClass('layout-double-column');
             $(this).removeClass('ui-icon-circle-plus');
@@ -480,17 +480,11 @@ var designer = {
             var panelId = $(this).parent().attr('id');
             $(this).parent().children('.panel-settings').dialog(
             {
-                buttons: [
-                    {
-                        text: "OK",
-                        click: function() { $(this).dialog("close"); }
-                    }
-                ],
                 modal: true,
                 draggable: false,
                 resizable: false,
                 width: 400,
-                height: 300,
+                height: 'auto',
                 close: function(event, ui) {
                     $('#' + panelId).children('.panel-title-display').html($(this).find('.panel-title').val());
                     $(this).dialog('destroy');
@@ -505,17 +499,11 @@ var designer = {
             var cellId = $(this).parent().attr('id');
             $(this).parent().children('.cell-settings').dialog(
             {
-                buttons: [
-                    {
-                        text: "OK",
-                        click: function() { $(this).dialog("close"); }
-                    }
-                ],
                 modal: true,
                 draggable: false,
                 resizable: false,
                 width: 400,
-                height: 300,
+                height: 'auto',
                 close: function(event, ui) {
                     $(this).dialog('destroy');
                     $(this).appendTo('#' + cellId);

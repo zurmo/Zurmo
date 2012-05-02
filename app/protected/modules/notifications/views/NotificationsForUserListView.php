@@ -55,7 +55,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'type', 'type' => 'Notification', 'isLink' => true),
+                                                array('attributeName' => 'type', 'type' => 'Notification'),
                                             ),
                                         ),
                                     )
@@ -64,10 +64,11 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'createdDateTime', 'type' => 'DateTime'),
+                                                array('attributeName' => 'null', 'type' => 'DeleteNotification'),
                                             ),
                                         ),
                                     )
+
                                 ),
                             ),
                         ),
@@ -86,6 +87,18 @@
         protected function getCGridViewLastColumn()
         {
             return array();
+        }
+
+        /**
+         * Override to provide the correct pager URL
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewPagerParams()
+         */
+        protected function getCGridViewPagerParams()
+        {
+            $params             = parent::getCGridViewPagerParams();
+            $params['route']    = $this->getGridViewActionRoute('userList', $this->moduleId);
+            return $params;
         }
     }
 ?>

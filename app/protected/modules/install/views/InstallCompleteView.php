@@ -43,7 +43,7 @@
 
         protected function renderContent()
         {
-            $imagePath = Yii::app()->baseUrl . '/themes/default/images/pbar-ani.gif';
+            $imagePath = Yii::app()->baseUrl . '/themes/default/images/ajax-loader.gif';
             $progressBarImageContent = CHtml::image($imagePath, 'Progress Bar');
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);
@@ -70,7 +70,7 @@
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '<div id="progress-table">';
-            $content .= '<table><tr><td>';
+            $content .= '<table><tr><td class="progress-bar">';
             $content .= Yii::t('Default', 'Installation in progress. Please wait.');
             $content .= '<br/>';
             $content .= $progressBarImageContent;
@@ -78,7 +78,7 @@
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= Yii::t('Default', 'Installation Output:');
-            $content .= '<div id="logging-table" style="height: 300px; overflow: auto;">';
+            $content .= '<div id="logging-table">';
             $content .= '</div>';
             $content .= '</td></tr></table>';
             $content .= '</div>';

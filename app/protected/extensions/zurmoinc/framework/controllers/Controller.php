@@ -72,6 +72,7 @@
             assert('is_int($pageSize)');
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
             $searchAttributes          = SearchUtil::resolveSearchAttributesFromGetArray(get_class($searchModel));
+            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, get_class($searchModel));
             $sanitizedSearchAttributes = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel,
                                                                                            $searchAttributes);
             $sortAttribute             = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
@@ -130,12 +131,10 @@
                 'relationModel'    => $model,
                 'redirectUrl'      => $redirectUrl,
             );
-            $gridView = new GridView(2, 1);
-            $gridView->setView(new TitleBarView (
-                                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'), strval($model)), 0, 0);
+            $gridView = new GridView(1, 1);
             $gridView->setView(new $viewClassName(  $this->getId(),
                                                     $this->getModule()->getId(),
-                                                    $params), 1, 0);
+                                                    $params), 0, 0);
             return $gridView;
         }
 
@@ -152,6 +151,14 @@
                 $this->getModule()->getPluralCamelCasedName(),
                 $renderType
             );
+        }
+
+        protected function makeEditAndDetailsView($model, $renderType)
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit" || $renderType == "Details"');
+            $editViewClassName = get_class($model) . 'EditAndDetailsView';
+            return new $editViewClassName($renderType, $this->getId(), $this->getModule()->getId(), $model);
         }
 
         protected function makeTitleBarAndEditView($model, $titleBarAndEditViewClassName)
@@ -190,22 +197,20 @@
             }
         }
 
-        protected function makeTitleBarAndMassEditView(
+        protected function makeMassEditView(
             $model,
             $activeAttributes,
             $selectedRecordCount,
             $title)
         {
-            return new TitleBarAndMassEditView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $model,
-                $activeAttributes,
-                $selectedRecordCount,
-                $this->getModule()->getPluralCamelCasedName(),
-                $title,
-                $this->getMassEditAlertMessage(get_class($model))
-                );
+            $alertMessage          = $this->getMassEditAlertMessage(get_class($model));
+            $moduleName            = $this->getModule()->getPluralCamelCasedName();
+            $moduleClassName       = $moduleName . 'Module';
+            $title                 = Yii::t('Default', 'Mass Update') . ': ' . $title;
+            $massEditViewClassName = $moduleName . 'MassEditView';
+            $view  = new $massEditViewClassName($this->getId(), $this->getModule()->getId(), $model, $activeAttributes,
+                                                      $selectedRecordCount, $title, $alertMessage);
+            return $view;
         }
 
         protected function getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider)

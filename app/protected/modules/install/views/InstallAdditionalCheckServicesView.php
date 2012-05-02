@@ -72,7 +72,7 @@
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                             Yii::t('Default', 'Failed Required Services'),
                                             $this->checkResultsDisplayData[$failedIndexId][$requiredIndexId],
-                                            Yii::t('Default', 'FAIL'));
+                                            '<span class="fail">' . Yii::t('Default', 'FAIL') . '</span>');
                     $content .= '<br/><br/>';
                 }
                 if (count($this->checkResultsDisplayData[$failedIndexId][$optionalIndexId]) > 0)
@@ -80,7 +80,7 @@
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                             Yii::t('Default', 'Failed Optional Services'),
                                             $this->checkResultsDisplayData[$failedIndexId][$optionalIndexId],
-                                            Yii::t('Default', 'FAIL'));
+                                            '<span class="fail">' . Yii::t('Default', 'FAIL') . '</span>');
                     $content .= '<br/>';
                 }
             }
@@ -89,7 +89,7 @@
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                         Yii::t('Default', 'Service Status Partially Known'),
                                         $this->checkResultsDisplayData[$warningIndexId],
-                                        Yii::t('Default', 'WARNING'));
+                                        '<span class="warning">' . Yii::t('Default', 'WARNING') . '</span>');
                 $content .= '<br/>';
             }
 
@@ -98,7 +98,7 @@
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
                                         Yii::t('Default', 'Correctly Installed Services'),
                                         $this->checkResultsDisplayData[$passedIndexId],
-                                        Yii::t('Default', 'PASS'));
+                                        '<span class="pass">' . Yii::t('Default', 'PASS') . '</span>');
             }
             $content .= '<br/><br/>';
             $content .= CHtml::link(Yii::t('Default', 'Recheck System'), '#', array('onclick' => 'window.location.reload()'));

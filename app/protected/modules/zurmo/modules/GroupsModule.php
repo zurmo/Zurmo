@@ -49,6 +49,25 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Groups',
+                        'url'   => array('/zurmo/group'),
+                        'right' => self::RIGHT_ACCESS_GROUPS,
+                        'items' => array(
+                            array(
+                                'label' => 'Create Group',
+                                'url'   => array('/zurmo/group/create'),
+                                'right' => self::RIGHT_CREATE_GROUPS
+                            ),
+                            array(
+                                'label' => 'Groups',
+                                'url'   => array('/zurmo/group'),
+                                'right' => self::RIGHT_ACCESS_GROUPS
+                            ),
+                        ),
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
@@ -58,23 +77,12 @@
                         'right'            => self::RIGHT_ACCESS_GROUPS,
                     ),
                 ),
-                'shortcutsMenuItems' => array(
+                'headerMenuItems' => array(
                     array(
                         'label' => 'Groups',
-                        'url'   => array('/zurmo/group'),
+                        'url' => array('/zurmo/group'),
                         'right' => self::RIGHT_ACCESS_GROUPS,
-                        'items' => array(
-                            array(
-                                'label' => 'Create Group',
-                                'url'   => array('/zurmo/group/create'),
-                                'right' => self::RIGHT_ACCESS_GROUPS,
-                            ),
-                            array(
-                                'label' => 'Groups',
-                                'url'   => array('/zurmo/group'),
-                                'right' => self::RIGHT_ACCESS_GROUPS,
-                            ),
-                        ),
+                        'order' => 3,
                     ),
                 ),
             );

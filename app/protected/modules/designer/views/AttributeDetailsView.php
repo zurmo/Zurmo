@@ -31,8 +31,9 @@
         public function __construct(
             $controllerId,
             $moduleId,
-            ConfigurableMetadataModel $model,
-            $moduleClassName
+            AttributeForm $model,
+            $moduleClassName,
+            $title
         )
         {
             $this->controllerId    = $controllerId;
@@ -40,6 +41,7 @@
             $this->model           = $model;
             $this->moduleClassName = $moduleClassName;
             $this->modelId         = null;
+            $this->title           = $title;
         }
 
         public function isUniqueToAPage()
@@ -54,6 +56,11 @@
                 'attributeName'       => $this->model->attributeName,
                 'attributeTypeName'   => $this->model->getAttributeTypeName(),
             );
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
     }
 ?>

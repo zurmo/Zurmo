@@ -36,6 +36,11 @@
             );
         }
 
+        public function resolveAndGetModuleId()
+        {
+            return 'roles';
+        }
+
         public function actionIndex()
         {
             $this->actionList();
@@ -43,12 +48,17 @@
 
         public function actionList()
         {
-            $titleAndTreeView = new RolesTitleBarAndTreeView(
+            $title           = Yii::t('Default', 'Roles');
+            $breadcrumbLinks = array(
+                 $title,
+            );
+            $actionBarAndTreeView = new RolesActionBarAndTreeListView(
                 $this->getId(),
                 $this->getModule()->getId(),
                 Role::getAll('name')
             );
-            $view = new RolesPageView($this, $titleAndTreeView);
+            $view = new RolesPageView(ZurmoDefaultAdminViewUtil::
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $actionBarAndTreeView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
@@ -59,27 +69,30 @@
 
         public function actionCreate()
         {
-            $titleBarAndEditView = new TitleBarAndEditAndDetailsView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $this->attemptToSaveModelFromPost(new Role()),
-                RolesModule::getPluralCamelCasedName(),
-                'Edit'
-            );
-            $view = new RolesPageView($this, $titleBarAndEditView);
+            $title           = Yii::t('Default', 'Create Role');
+            $breadcrumbLinks = array($title);
+            $editView = new RoleEditAndDetailsView('Edit',
+                                                   $this->getId(),
+                                                   $this->getModule()->getId(),
+                                                   $this->attemptToSaveModelFromPost(new Role()));
+            $editView->setCssClasses(array('AdministrativeArea'));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEdit($id)
         {
-            $titleBarAndEditView = new TitleBarAndEditAndDetailsView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $this->attemptToSaveModelFromPost(Role::getById(intval($id))),
-                RolesModule::getPluralCamelCasedName(),
-                'Edit'
-            );
-            $view = new RolesPageView($this, $titleBarAndEditView);
+            $role            = Role::getById(intval($id));
+            $title           = Yii::t('Default', 'Edit');
+            $breadcrumbLinks = array(strval($role) => array('role/edit',  'id' => $id), $title);
+            $editView = new RoleEditAndDetailsView('Edit',
+                                                   $this->getId(),
+                                                   $this->getModule()->getId(),
+                                                   $this->attemptToSaveModelFromPost($role));
+            $editView->setCssClasses(array('AdministrativeArea'));
+            $view     = new RolesPageView(ZurmoDefaultAdminViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks, 'RoleBreadCrumbView'));
             echo $view->render();
         }
 
@@ -101,13 +114,13 @@
         public function actionModalParentList()
         {
             echo $this->renderModalList(
-                'SelectParentRoleModalTreeView', Yii::t('Default', 'Select a Parent Role'));
+                'SelectParentRoleModalTreeListView', Yii::t('Default', 'Select a Parent Role'));
         }
 
         public function actionModalList()
         {
             echo $this->renderModalList(
-                'RolesModalTreeView', Yii::t('Default', 'Select a Role'));
+                'RolesModalTreeListView', Yii::t('Default', 'Select a Role'));
         }
 
         protected function renderModalList($modalViewName, $pageTitle)

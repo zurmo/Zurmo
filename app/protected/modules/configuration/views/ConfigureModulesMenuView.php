@@ -28,15 +28,19 @@
     {
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line"></div>' . "\n";
+            $content  = $this->renderTitleContent();
             $categoryData = $this->getCategoryData();
             $categoryLabels = $this->getCategoriesArray();
             foreach ($categoryData as $category => $categoryItems)
             {
-                $content .= $this->renderCategoryTitle($categoryLabels[$category]);
                 $content .= $this->renderMenu($categoryItems);
             }
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Administration') . '</h1>';
         }
 
         protected function getCategoryData()
@@ -67,27 +71,19 @@
             return $categories;
         }
 
-        protected function renderCategoryTitle($category)
-        {
-            return '<h2>' . $category . '</h2>';
-        }
-
         protected function renderMenu($items)
         {
-            $content = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:80%"/>';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
+            $content = '<ul class="configuration-list">';
             foreach ($items as $item)
             {
-                $content .= '<tr>';
-                $content .= '<th>' . CHtml::link($item['titleLabel'], Yii::app()->createUrl($item['route'])) . '</th>';
-                $content .= '<td>' . $item['descriptionLabel'] . '</td>';
-                $content .= '</tr>';
+                $content .= '<li>';
+                $content .= '<h4>'.$item['titleLabel'].'</h4>';
+                $content .= ' - ' . $item['descriptionLabel'];
+                $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                                        Yii::app()->createUrl($item['route']));
+                $content .= '</li>';
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
             return $content;
         }
 

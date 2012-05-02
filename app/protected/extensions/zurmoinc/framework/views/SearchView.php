@@ -69,12 +69,24 @@
                                                             );
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderAfterFormLayout($form);
             $formEnd  = $clipWidget->renderEndWidget();
             $content .= $formEnd;
 
             $content .= '</div>';
             return $content;
         }
+
+        protected function renderAfterFormLayout($form)
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
+        }
+
 
         /**
          * Renders the bottom panel of the layout. Includes the search button
@@ -83,9 +95,8 @@
          */
         protected function renderFormBottomPanel()
         {
-            $searchButton = CHtml::submitButton(Yii::t('Default', 'Search'), array('name' => 'search'));
-            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced Search'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
-            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear Search'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
+            $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
+            $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
@@ -94,11 +105,6 @@
                 CClientScript::POS_END
             );
             Yii::app()->clientScript->registerScript('search', "
-                $('#more-search-link" . $this->gridIdSuffix . "').clearform(
-                    {
-                        form: '#" . $this->getSearchFormId() . "'
-                    }
-                );
                 $('#clear-search-link" . $this->gridIdSuffix . "').clearform(
                     {
                         form: '#" . $this->getSearchFormId() . "'
@@ -110,8 +116,19 @@
                         return false;
                     }
                 );
+                $('#cancel-advanced-search').click(function(){
+                    $('.search-view-1').hide();
+                });
                 $('#clear-search-link" . $this->gridIdSuffix . "').click( function()
                     {
+                        $(this).closest('form').submit();
+                        return false;
+                    }
+                );
+                $('#search-advanced-search').click( function()
+                    {
+                        $('.search-view-0').children(\"input[type='text']\").val('');
+                        $('.search-view-1').hide();
                         $(this).closest('form').submit();
                         return false;
                     }
@@ -136,14 +153,11 @@
             {
                 $startingDivStyle = "style='display:none;'";
             }
-            $content  = '<tbody class="search-view-bottom-panel" ' . $startingDivStyle . '>';
-            $content .= '<tr><td colspan="4">';
-            $content .= $searchButton . '&#160;';
+            $content  = '<div class="search-form-tools">';
             $content .= $moreSearchOptionsLink . '&#160;|&#160;';
             $content .= $clearSearchLink;
             $content .= $this->renderFormBottomPanelExtraLinks();
-            $content .= '</td></tr>';
-            $content .= '</tbody>';
+            $content .= '</div>';
             return $content;
         }
 
@@ -178,9 +192,10 @@
          */
         protected function renderFormLayout($form = null)
         {
-            $metadata = self::getMetadata();
-            $content  = '<table>';
-            $content .= TableUtil::getColGroupContent($this->getColumnCount($metadata['global']));
+            $metadata       = self::getMetadata();
+            $maxCellsPerRow = $this->getMaxCellsPerRow();
+            $content        = '';//'<table>';
+            $content       .= TableUtil::getColGroupContent($this->getColumnCount($metadata['global']));
             assert('count($metadata["global"]["panels"]) == 2');
             foreach ($metadata['global']['panels'] as $key => $panel)
             {
@@ -189,28 +204,40 @@
                 {
                     $startingDivStyle = "style='display:none;'";
                 }
-                $content .= '<tbody class="search-view-' . $key . '" ' . $startingDivStyle . '>';
+                $content .= '<div class="search-view-' . $key . '" ' . $startingDivStyle . '>';
                 foreach ($panel['rows'] as $row)
                 {
-                    $content .= '<tr>';
+                    //$content .= '<tr>';
                     foreach ($row['cells'] as $cell)
                     {
                         if (!empty($cell['elements']))
                         {
                             foreach ($cell['elements'] as $elementInformation)
                             {
+                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow)
+                                {
+                                    $elementInformation['wide'] = true;
+                                }
                                 $elementclassname = $elementInformation['type'] . 'Element';
                                 $element = new $elementclassname($this->model, $elementInformation['attributeName'], $form, array_slice($elementInformation, 2));
                                 $content .= $element->render();
                             }
                         }
                     }
-                    $content .= '</tr>';
+                    //$content .= '</tr>';
                 }
-                $content .= '</tbody>';
+                if($key == 1)
+                {
+                    $content .= '<div class="view-toolbar-container clearfix">';
+                    $content .= '<div class="form-toolbar">';
+                    $content .= CHtml::button(Yii::t('Default', 'Cancel'), array('id' => 'cancel-advanced-search'));
+                    $content .= CHtml::button(Yii::t('Default', 'Search'), array('id' => 'search-advanced-search'));
+                    $content .= '</div></div>';
+                }
+                $content .= '</div>';
             }
             $content .= $this->renderFormBottomPanel();
-            $content .= '</table>';
+            //$content .= '</table>';
             return $content;
         }
 
@@ -316,6 +343,14 @@
         protected function getSearchFormId()
         {
             return 'search-form' . $this->gridIdSuffix;
+        }
+
+        protected function getMaxCellsPerRow()
+        {
+            $designerRulesType      = static::getDesignerRulesType();
+            $designerRulesClassName = $designerRulesType . 'DesignerRules';
+            $designerRules          = new $designerRulesClassName();
+            return $designerRules->maxCellsPerRow();
         }
     }
 ?>

@@ -28,7 +28,7 @@
     {
         public function __construct(View $view)
         {
-            parent::__construct(new ZurmoErrorView($view));
+            parent::__construct(ZurmoDefaultViewUtil::makeErrorViewForCurrentUser(Yii::app()->controller, $view));
         }
 
         protected function getSubtitle()

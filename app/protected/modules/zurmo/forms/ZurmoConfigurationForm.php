@@ -29,6 +29,7 @@
      */
     class ZurmoConfigurationForm extends ConfigurationForm
     {
+        public $applicationName;
         public $timeZone;
         public $listPageSize;
         public $subListPageSize;
@@ -38,6 +39,8 @@
         public function rules()
         {
             return array(
+                array('applicationName',          'type',    'type' => 'string'),
+                array('applicationName',          'length',  'max' => 64),
                 array('timeZone',                 'required'),
                 array('listPageSize',             'required'),
                 array('listPageSize',             'type',      'type' => 'integer'),
@@ -57,6 +60,7 @@
         public function attributeLabels()
         {
             return array(
+                'applicationName'			=> Yii::t('Default', 'Application Name'),
                 'timeZone'                  => Yii::t('Default', 'Time zone'),
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),

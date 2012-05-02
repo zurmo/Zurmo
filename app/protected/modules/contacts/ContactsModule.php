@@ -87,6 +87,13 @@
                             ),
                         ),
                     ),
+                ),
+                'shortcutsCreateMenuItems' => array(
+                    array(
+                        'label' => 'ContactsModuleSingularLabel',
+                        'url'   => array('/contacts/default/create'),
+                        'right' => self::RIGHT_CREATE_CONTACTS,
+                    ),
                 )
             );
             return $metadata;

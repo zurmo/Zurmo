@@ -50,5 +50,50 @@
             }
             return array_reverse($modelDerivationPathToItem);
         }
+
+        public static function renderSummaryContent(RedBeanModel $model, $redirectUrl)
+        {
+            $mashableActivityRules = MashableActivityRulesFactory::createMashableActivityRulesByModel(
+                                         get_class($model));
+            $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
+            $content  = '<span class="'.get_class($model).'"></span>';
+            $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                            $model->{$orderByAttributeName}, 'long', null) . '</strong><br/>';
+            $modelDisplayString = strval($model);
+            if (strlen($modelDisplayString) > 200)
+            {
+                $modelDisplayString = substr($modelDisplayString, 0, 200) . '...';
+            }
+            if(get_class($model) == 'Task')
+            {
+                $modelDisplayString = '<span style="text-decoration:line-through;">' . $modelDisplayString . '<span>';
+            }
+            $params = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl);
+            $moduleClassName = $model->getModuleClassName();
+            $moduleId        = $moduleClassName::getDirectoryName();
+            $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);
+            $content .= $element->render() . '<br/>';
+            //$content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
+            $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
+            if ($extraContent)
+            {
+                $content .= '<br/>' . $extraContent;
+            }
+            return $content;
+        }
+
+        public static function getActivityItemsModelClassNamesDataExcludingContacts()
+        {
+            $metadata = Activity::getMetadata();
+            $activityItemsModelClassNamesData = $metadata['Activity']['activityItemsModelClassNames'];
+            foreach ($activityItemsModelClassNamesData as $index => $relationModelClassName)
+            {
+                if ($relationModelClassName == 'Contact')
+                {
+                    unset($activityItemsModelClassNamesData[$index]);
+                }
+            }
+            return $activityItemsModelClassNamesData;
+        }
     }
 ?>

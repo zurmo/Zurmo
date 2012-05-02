@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -60,7 +60,7 @@
                        $this->renderXHtmlEnd();
             Yii::app()->getClientScript()->render($content);
             $performanceMessage = null;
-            if (YII_DEBUG && SHOW_PERFORMANCE)
+            if (YII_DEBUG && SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
             {
                 $endTime = microtime(true);
                 $performanceMessage .= 'Page render time: ' . number_format(($endTime - $startTime), 3) . ' seconds.<br />';
@@ -75,24 +75,24 @@
                 {
                     echo '<span style="background-color: yellow; color: #c00000">Skipping tidy so that the line numbers in the error messages match the source, (if there are any).</span><br />';
                 }
-                if (SHOW_PERFORMANCE)
+                if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= 'Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
-                    $performanceMessage .= 'Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= '<span>Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= '<span>Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
                 }
             }
             else
             {
-                if (SHOW_PERFORMANCE)
+                if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
                     $performanceMessage .= 'Load time: ' . number_format(($endTotalTime), 3) . ' seconds.<br />';
                 }
             }
-            if (SHOW_PERFORMANCE)
+            if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
             {
                 if (SHOW_QUERY_DATA)
                 {
@@ -213,6 +213,14 @@
          */
         protected function renderXHtmlStart()
         {
+            $themeUrl = Yii::app()->baseUrl . '/themes';
+            $theme    = Yii::app()->theme->name;
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/less-1.2.0.min.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/interactions.js'));
             return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
                    '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';
@@ -232,11 +240,14 @@
             {
                 $title = "$title - $subtitle";
             }
-            $defaultTheme = '/themes/default';
-            $theme        = '/themes/' . Yii::app()->theme->name;
+            $defaultTheme = 'themes/default';
+            $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
 
+            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/newui.less"/>';
+			$ieCss = '<!--[if lt IE 10]><link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/ie.less"/><![endif]-->';
+			
             if (MINIFY_SCRIPTS)
             {
                 Yii::app()->minScript->generateScriptMap('css');
@@ -246,13 +257,15 @@
                 }
             }
 
-            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/screen.css', 'screen, projection');
-            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/print.css', 'print');
-            $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/theme.css');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.less');
 
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css' . '/ie.css', 'screen, projection');
+                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
             }
 
             foreach ($this->getStyles() as $style)
@@ -261,21 +274,24 @@
                 {
                     if (file_exists("$theme/css/$style.css"))
                     {
-                        $cs->registerCssFile(Yii::app()->baseUrl . $theme . '/css/' . $style. '.css'); // Not Coding Standard
+                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
                     }
                 }
             }
 
             if (file_exists("$theme/ico/favicon.ico"))
             {
-                $cs->registerLinkTag('shortcut icon', null, $theme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $theme . '/ico/favicon.ico');
             }
             else
             {
-                $cs->registerLinkTag('shortcut icon', null, $defaultTheme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
             }
-            return '<head>'                                                                 .
-                   "<title>$title</title>"                                                  .
+            return '<head>' .
+            	   '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' .
+            	   $specialCss .
+            	   $ieCss .
+                   "<title>$title</title>"  .
                    '</head>';
         }
 

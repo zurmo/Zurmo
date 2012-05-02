@@ -28,23 +28,12 @@
     {
         public function renderGridViewData()
         {
-            if ($this->getIsLink())
-            {
-                return array(
-                    'name'   => 'type',
-                    'header' => Yii::t('Default', 'Notification'),
-                    'value'  => $this->view->getLinkString('$data'),
-                    'type'   => 'raw',
-                );
-            }
-            else
-            {
-                return array(
-                    'name'   => 'type',
-                    'header' => Yii::t('Default', 'Notification'),
-                    'value'  => 'strval($data)'
-                );
-            }
+            return array(
+                'name'   => 'type',
+                'header' => Yii::t('Default', 'Notification'),
+                'type'   => 'raw',
+                'value'  => 'NotificationsUtil::renderListViewContent($data)'
+            );
         }
     }
 ?>

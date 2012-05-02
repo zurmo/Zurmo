@@ -60,7 +60,8 @@
             }
             else
             {
-                $view = new HomePageView($this, new WelcomeView());
+                $view = new HomePageView(ZurmoDefaultViewUtil::
+                                             makeStandardViewForCurrentUser($this, new WelcomeView()));
                 echo $view->render();
             }
         }
@@ -82,13 +83,14 @@
                 'moduleId'     => $this->getModule()->getId(),
             );
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($dashboard);
-            $view = new HomePageView($this, new HomeTitleBarAndDashboardView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                'HomeDashboard' . $layoutId,
-                $dashboard,
-                $params)
-            );
+            $homeTitleBarAndDashboardView = new HomeTitleBarAndDashboardView(
+                                                    $this->getId(),
+                                                    $this->getModule()->getId(),
+                                                    'HomeDashboard' . $layoutId,
+                                                    $dashboard,
+                                                    $params);
+            $view = new HomePageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $homeTitleBarAndDashboardView));
             echo $view->render();
         }
 
@@ -103,10 +105,14 @@
                 assert('in_array($dashboard->layoutType, array_keys(Dashboard::getLayoutTypesData()))');
                 if ($dashboard->save())
                 {
+                    GeneralCache::forgetAll(); //Ensure menu refreshes
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
-            $view = new HomePageView($this, new DashboardTitleBarAndEditView($this->getId(), $this->getModule()->getId(), $dashboard));
+            $view = new HomePageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             new DashboardTitleBarAndEditView($this->getId(),
+                                                     $this->getModule()->getId(), $dashboard)));
             echo $view->render();
         }
 
@@ -132,10 +138,14 @@
                         $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($uniqueLayoutId, Yii::app()->user->userModel->id, array());
                         Portlet::shiftPositionsBasedOnColumnReduction($portletCollection, 1);
                     }
+                    GeneralCache::forgetAll(); //Ensure menu refreshes
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
-            $view = new HomePageView($this, new DashboardTitleBarAndEditView($this->getId(), $this->getModule()->getId(), $dashboard));
+            $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             new DashboardTitleBarAndEditView($this->getId(),
+                                                     $this->getModule()->getId(), $dashboard)));
             echo $view->render();
         }
 

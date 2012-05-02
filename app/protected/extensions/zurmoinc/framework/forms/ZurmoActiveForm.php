@@ -134,5 +134,15 @@
                 $cs->registerScript(__CLASS__. '#' . $id, "\$('#$id').yiiactiveform($options);");
             }
         }
+
+        /**
+         * Override to support adding label class = 'hasCheckBox'
+         * (non-PHPdoc)
+         * @see CActiveForm::checkBox()
+         */
+        public function checkBox($model, $attribute, $htmlOptions = array())
+        {
+            return ZurmoHtml::activeCheckBox($model, $attribute, $htmlOptions);
+        }
     }
 ?>

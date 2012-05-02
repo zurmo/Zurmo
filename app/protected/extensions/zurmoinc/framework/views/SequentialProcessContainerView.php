@@ -44,26 +44,38 @@
          */
         protected $allStepsMessage;
 
-        public function __construct($containedView, $allStepsMessage)
+        protected $title;
+
+        public function __construct($containedView, $allStepsMessage, $title = null)
         {
             assert('$containedView instanceof SequentialProcessView');
             assert('is_string($allStepsMessage)');
+            assert('is_string($title) || $title == null');
             $this->containedView   = $containedView;
             $this->allStepsMessage = $allStepsMessage;
+            $this->title           = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= '</div>';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
             $content .= '<div class="process-container-view">';
-            $content .= "<h1>" . $this->allStepsMessage . '</h1>';
+            $content .= "<h3>" . $this->allStepsMessage . '</h3>';
             $content .= $this->renderProgressBarContent();
             $content .= '</div>';
             $content .= '<div id="' . $this->containerViewId . '" class="process-container-view">';
             $content .= $this->containedView->render();
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            if($this->title != null)
+            {
+                return '<h1>' . $this->title . "</h1>";
+            }
         }
 
         protected function renderProgressBarContent()

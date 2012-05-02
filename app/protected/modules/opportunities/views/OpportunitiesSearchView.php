@@ -32,18 +32,15 @@
                 'global' => array(
                     'panels' => array(
                         array(
-                            'title' => 'Basic Search',
+                            'locked' => true,
+                            'title'  => 'Basic Search',
                             'rows' => array(
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'stage', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
+                                                array('attributeName' => 'anyMixedAttributes',
+                                                      'type' => 'AnyMixedAttributesSearch', 'wide' => true),
                                             ),
                                         ),
                                     )
@@ -57,12 +54,25 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'source', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
+                                                array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
+                                                array('attributeName' => 'stage', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'source', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
                                             ),
                                         ),
                                     )

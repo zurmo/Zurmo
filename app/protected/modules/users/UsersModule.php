@@ -108,6 +108,30 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Users',
+                        'url'   => array('/users/default'),
+                        'right' => self::RIGHT_ACCESS_USERS,
+                        'items' => array(
+                            array(
+                                'label' => 'Create User',
+                                'url'   => array('/users/default/create'),
+                                'right' => self::RIGHT_CREATE_USERS
+                            ),
+                            array(
+                                'label' => 'Users',
+                                'url'   => array('/users/default'),
+                                'right' => self::RIGHT_ACCESS_USERS
+                            ),
+                        ),
+                    ),
+                ),
+                'globalSearchAttributeNames' => array(
+                    'fullName',
+                    'anyEmail',
+                    'username',
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
@@ -117,30 +141,29 @@
                         'right'            => self::RIGHT_ACCESS_USERS,
                     ),
                 ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Users',
+                        'url' => array('/users/default'),
+                        'right' => self::RIGHT_ACCESS_USERS,
+                        'order' => 4,
+                    ),
+                ),
+                'userHeaderMenuItems' => array(
+                        array(
+                            'label' => 'My Profile',
+                            'url' => array('/users/default/profile'),
+                        ),
+                        array(
+                            'label' => 'Sign Out',
+                            'url' => array('/zurmo/default/logout'),
+                        ),
+                ),
                 'designerMenuItems' => array(
                     'showFieldsLink' => false,
                     'showGeneralLink' => false,
                     'showLayoutsLink' => true,
                     'showMenusLink' => false,
-                ),
-                'shortcutsMenuItems' => array(
-                    array(
-                        'label' => 'Users',
-                        'url'   => array('/users/default'),
-                        'right' => self::RIGHT_ACCESS_USERS,
-                        'items' => array(
-                            array(
-                                'label' => 'Create User',
-                                'url'   => array('/users/default/create'),
-                                'right' => self::RIGHT_CREATE_USERS,
-                            ),
-                            array(
-                                'label' => 'Users',
-                                'url'   => array('/users/default'),
-                                'right' => self::RIGHT_ACCESS_USERS,
-                            ),
-                        ),
-                    ),
                 ),
             );
             return $metadata;
@@ -209,6 +232,11 @@
         public static function getDemoDataMakerClassName()
         {
             return 'UsersDemoDataMaker';
+        }
+
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'UsersSearchForm';
         }
     }
 ?>

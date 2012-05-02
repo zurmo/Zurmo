@@ -47,12 +47,12 @@
         }
 
         /**
-         * Given a type and a user, find out how many existing unread notifications exist for that user
+         * Given a type and a user, find out how many existing notifications exist for that user
          * and that type.
          * @param string $type
          * @param User $user
          */
-        public static function getUnreadCountByTypeAndUser($type, User $user)
+        public static function getCountByTypeAndUser($type, User $user)
         {
             assert('is_string($type) && $type != ""');
             assert('$user->id > 0');
@@ -69,20 +69,15 @@
                     'operatorType'         => 'equals',
                     'value'                => $user->id,
                 ),
-                3 => array(
-                    'attributeName'        => 'isRead',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1,
-                ),
             );
-            $searchAttributeData['structure'] = '1 and 2 and 3';
+            $searchAttributeData['structure'] = '1 and 2';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
             $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
             return count($models);
         }
 
-        public static function getUnreadCountByUser(User $user)
+        public static function getCountByUser(User $user)
         {
             assert('$user->id > 0');
             $searchAttributeData = array();
@@ -93,13 +88,8 @@
                     'operatorType'         => 'equals',
                     'value'                => $user->id,
                 ),
-                2 => array(
-                    'attributeName'        => 'isRead',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1,
-                ),
             );
-            $searchAttributeData['structure'] = '1 and 2';
+            $searchAttributeData['structure'] = '1';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
             $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
@@ -111,7 +101,6 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'isRead',
                     'type',
                 ),
                 'relations' => array(
@@ -119,8 +108,6 @@
                     'owner' => array(RedBeanModel::HAS_ONE, 'User'),
                 ),
                 'rules' => array(
-                    array('isRead', 'boolean'),
-                    array('isRead',   'validateIsReadIsSet'),
                     array('owner',  'required'),
                     array('type',   'required'),
                     array('type',   'type',    'type' => 'string'),
@@ -131,20 +118,11 @@
                 ),
                 'defaultSortAttribute' => null,
                 'noAudit' => array(
-                    'isRead',
                     'owner',
                     'type'
                 )
             );
             return $metadata;
-        }
-
-        public function validateIsReadIsSet()
-        {
-            if ($this->isRead == null)
-            {
-                $this->addError('isRead', Yii::t('Default', 'Is Read must be set as true or false, not null.'));
-            }
         }
 
         public static function isTypeDeletable()

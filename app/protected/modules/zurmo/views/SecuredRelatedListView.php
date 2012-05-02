@@ -39,16 +39,20 @@
             $url  = 'Yii::app()->createUrl("' . $this->getGridViewActionRoute('edit');
             $url .= '", array("id" => $data->id, "redirectUrl" => "' . Yii::app()->request->getRequestUri() . '"))';
             return array(
-                'class'           => 'CButtonColumn',
+                'class'           => 'ButtonColumn',
                 'template'        => '{update}',
                 'buttons' => array(
                     'update' => array(
                     'url' => $url,
-                    'visible' => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                    'imageUrl'	      => false,
+                    'visible'         => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
+                    'options'         => array('class' => 'pencil', 'title' => 'Update'),
+                    'label'           => '!'
                     ),
                 ),
             );
         }
+
 
         /**
          * Override to handle security/access resolution on links.

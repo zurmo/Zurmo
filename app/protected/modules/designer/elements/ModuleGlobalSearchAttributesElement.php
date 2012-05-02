@@ -46,7 +46,10 @@
 
         protected function getEditableHtmlOptions()
         {
-            return array('template' => '<div class="multi-select-checkbox-input">{input}{label}</div>');
+            return array(
+            	'template' => '<div class="multi-select-checkbox-input"><label class="hasCheckBox">{input}</label>{label}</div>',
+				'separator' => ''
+			);
         }
 
         protected function renderLabel()

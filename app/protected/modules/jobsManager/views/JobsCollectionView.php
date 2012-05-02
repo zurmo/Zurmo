@@ -55,7 +55,9 @@
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -66,16 +68,21 @@
             if ($this->messageBoxContent != null)
             {
                 $content .= $this->messageBoxContent;
-                $content .= '<br/>';
+                //$content .= '<br/>';
             }
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
             $content .= $clipWidget->renderEndWidget();
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
-            /**
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Job Manager: Home') . '</h1>';
+        }
+
+        /**
          * Render a form layout.
          * @param $form If the layout is editable, then pass a $form otherwise it can
          * be null.
@@ -83,14 +90,14 @@
           */
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
-            $content  = '<div class="horizontal-line"></div>' . "\n";
-            $content .= $this->renderMonitorJobLayout();
-            $content .= '<br/>';
+            //$content  = '<div class="horizontal-line"></div>' . "\n";
+            $content = $this->renderMonitorJobLayout();
+            //$content .= '<br/>';
             $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
             $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
-            $content .= '<br/>';
+            //$content .= '<br/>';
             $content .= $this->renderSuggestedFrequencyContent();
-            $content .= '<br/>';
+            //$content .= '<br/>';
             $content .= $this->renderHelpContent();
             return $content;
         }
@@ -150,8 +157,7 @@
             $title       = Yii::t('Default', 'The Monitor Job runs constantly making sure all jobs are running properly.');
             $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">';
             $content    .= Yii::t('Default', 'What is the Monitor Job?') . '</span>';
-            Yii::import('application.extensions.qtip.QTip');
-            $qtip = new QTip();
+            $qtip = new ZurmoTip();
             $qtip->addQTip("#active-monitor-job-tooltip");
             return $content;
         }
@@ -217,9 +223,10 @@
         {
             $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://www.zurmo.org/links/jobsManagerHelp.php');
             $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
+            $content .= '<span class="jobs-help">';
             $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',
                                array('{ClickHereLink}' => $clickHereLink));
-            $content .= '<br/><br/>';
+            $content .= '</span>';
             return $content;
         }
     }

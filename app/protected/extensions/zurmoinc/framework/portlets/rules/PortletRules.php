@@ -55,6 +55,17 @@
 
         /**
          * Views following this rule, are they
+         * able to be shown more than once on a dashboard
+         * @return boolean true/false
+         */
+        public function allowMultiplePlacementOnDashboard()
+        {
+            return true;
+        }
+
+
+        /**
+         * Views following this rule, are they
          * able to be shown on a relation view
          * @return boolean true/false
          */

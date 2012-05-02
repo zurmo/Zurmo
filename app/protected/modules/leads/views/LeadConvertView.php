@@ -26,6 +26,18 @@
 
     class LeadConvertView extends GridView
     {
+        protected $cssClasses =  array('DetailsView');
+
+        protected $controllerId;
+
+        protected $moduleId;
+
+        protected $convertToAccountSetting;
+
+        protected $title;
+
+        protected $modelId;
+
         public function __construct(
                 $controllerId,
                 $moduleId,
@@ -85,24 +97,127 @@
             }
             if ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $gridSize = 5;
+                $gridSize = 3;
             }
             else
             {
-                $gridSize = 4;
+                $gridSize = 2;
             }
+            $title = Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
+                                                LabelUtil::getTranslationParamsForAllModules()) . ': ' . $title;
             parent::__construct($gridSize, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
-                                                LabelUtil::getTranslationParamsForAllModules()), $title), 0, 0);
+            /**
+            $x = new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
+                                                      $userCanCreateAccount, $title);
             $this->setView(new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
-                                                      $userCanCreateAccount), 1, 0);
-            $this->setView(new AccountSelectView($selectAccountform), 2, 0);
-            $this->setView(new AccountConvertToView($controllerId, $moduleId, $account), 3, 0);
+                                                      $userCanCreateAccount, $title), 0, 0);
+                                                      **/
+            $this->setView(new AccountSelectView($controllerId, $moduleId, $modelId, $selectAccountform), 0, 0);
+            $this->setView(new AccountConvertToView($controllerId, $moduleId, $account, $modelId), 1, 0);
 
             if ($convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $this->setView(new LeadConvertAccountSkipView(), 4, 0);
+                $this->setView(new LeadConvertAccountSkipView($controllerId, $moduleId, $modelId), 2, 0);
             }
+
+            $this->controllerId            = $controllerId;
+            $this->moduleId                = $moduleId;
+            $this->modelId                 = $modelId;
+            $this->convertToAccountSetting = $convertToAccountSetting;
+            $this->userCanCreateAccount    = $userCanCreateAccount;
+            $this->title                   = $title;
+        }
+
+        /**
+         * Renders content for the view.
+         * @return A string containing the element's content.
+         */
+        protected function renderContent()
+        {
+            Yii::app()->clientScript->registerScript('leadConvertActions', "
+                $('.account-select-link').click( function()
+                    {
+                        $('#AccountConvertToView').hide();
+                        $('#LeadConvertAccountSkipView').hide();
+                        $('#AccountSelectView').show();
+                        $('#account-create-title').hide();
+                        $('#account-skip-title').hide();
+                        $('#account-select-title').show();
+                        return false;
+                    }
+                );
+                $('.account-create-link').click( function()
+                    {
+                        $('#AccountConvertToView').show();
+                        $('#LeadConvertAccountSkipView').hide();
+                        $('#AccountSelectView').hide();
+                        $('#account-create-title').show();
+                        $('#account-skip-title').hide();
+                        $('#account-select-title').hide();
+                        return false;
+                    }
+                );
+                $('.account-skip-link').click( function()
+                    {
+                        $('#AccountConvertToView').hide();
+                        $('#LeadConvertAccountSkipView').show();
+                        $('#AccountSelectView').hide();
+                        $('#account-create-title').hide();
+                        $('#account-skip-title').show();
+                        $('#account-select-title').hide();
+                        return false;
+                    }
+                );
+            ");
+            $createLink = CHtml::link(Yii::t('Default', 'Create AccountsModuleSingularLabel',
+                            LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-create-link'));
+            $selectLink = CHtml::link(Yii::t('Default', 'Select AccountsModuleSingularLabel',
+                            LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-select-link'));
+            $skipLink   = CHtml::link(Yii::t('Default', 'Skip AccountsModuleSingularLabel',
+                            LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-skip-link'));
+            $content = $this->renderTitleContent();
+            $content .= '<div class="lead-conversion-actions">';
+            $content .= '<div id="account-select-title">';
+            if ($this->userCanCreateAccount)
+            {
+                $content .= $createLink .  '&#160;' . Yii::t('Default', 'or') . '&#160;';
+            }
+            $content .= Yii::t('Default', 'Select AccountsModuleSingularLabel',
+                                    LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
+
+            if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
+            {
+                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
+            }
+            $content .= '</div>';
+            $content .= '<div id="account-create-title">';
+            $content .= Yii::t('Default', 'Create AccountsModuleSingularLabel',
+                                    LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
+            $content .= Yii::t('Default', 'or') . '&#160;' . $selectLink . '&#160;';
+            if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
+            {
+                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
+            }
+            $content .= '</div>';
+            if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
+            {
+                $content .= '<div id="account-skip-title">';
+                if ($this->userCanCreateAccount)
+                {
+                    $content .= $createLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
+                }
+                $content .= $selectLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
+                $content .= Yii::t('Default', 'Skip AccountsModuleSingularLabel',
+                                        LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
+                $content .= '</div>';
+            }
+            $content .= '</div>'; //this was missing..
+            return '<div>' . $content . parent::renderContent() . '</div>';
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title. '</h1>';
         }
 
         public function isUniqueToAPage()

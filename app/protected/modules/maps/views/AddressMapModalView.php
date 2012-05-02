@@ -46,7 +46,7 @@
             $mapCanvasContainerId = $this->getMapCanvasContainerId();
             $cClipWidget          = new CClipWidget();
             $cClipWidget->beginClip("Map");
-            echo "<div id='" . $mapCanvasContainerId . "' style='height:420px;width:670px;'></div>";
+            echo "<div id='" . $mapCanvasContainerId . "' class=\"mapcanvas\"></div>";
             Yii::app()->mappingHelper->renderMapContentForView($this->geoCodeQueryData, $mapCanvasContainerId);
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['Map'];

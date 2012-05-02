@@ -66,15 +66,14 @@
                     $this->redirect(Yii::app()->createUrl('maps/default/configurationView'));
                 }
             }
-            $titleBarAndEditView = new TitleBarAndConfigurationEditAndDetailsView(
+            $editView = new MapConfigurationView(
+                                    'Edit',
                                     $this->getId(),
                                     $this->getModule()->getId(),
-                                    $configurationForm,
-                                    'AdminConfigurationView',
-                                    'Edit',
-                                    Yii::t('Default', 'Maps Configuration')
-            );
-            $view = new ZurmoConfigurationPageView($this, $titleBarAndEditView);
+                                    $configurationForm);
+			$editView->setCssClasses( array('AdministrativeArea') );
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                         makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 

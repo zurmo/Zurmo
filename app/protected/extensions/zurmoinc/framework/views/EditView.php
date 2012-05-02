@@ -43,7 +43,18 @@
          */
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
+            if($maxCellsPresentInAnyRow > 1)
+            {
+                $class = "wide double-column form";
+            }
+            else
+            {
+                $class = "wide form";
+            }
+            $content .= '<div class="' . $class. '">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -54,18 +65,30 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            $content .= $this->renderViewToolBar();
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderAfterFormLayout($form);
-            $formEnd = $clipWidget->renderEndWidget();
+            $actionToolBarContent = $this->renderActionElementBar(true);
+            if($actionToolBarContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= $actionToolBarContent;
+                $content .= '</div></div>';
+            }
+            $formEnd  = $clipWidget->renderEndWidget();
             $content .= $formEnd;
 
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
         }
 
         protected function renderAfterFormLayout($form)
         {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
         }
 
         protected function resolveActiveFormAjaxValidationOptions()

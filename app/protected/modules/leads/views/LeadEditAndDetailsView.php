@@ -45,11 +45,8 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
-                        'DateTimeCreatedUser',
-                        'DateTimeModifiedUser',
                         'TitleFullName',
                         'LeadStateDropDown',
-                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'title',
@@ -57,6 +54,7 @@
                         'lastName',
                         'state',
                         'account',
+                        'owner',
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
@@ -69,6 +67,10 @@
                                                 array('attributeName' => 'null', 'type' => 'TitleFullName'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'LeadStateDropDown'),
@@ -83,6 +85,10 @@
                                                 array('attributeName' => 'jobTitle', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'companyName', 'type' => 'Text'),
@@ -97,6 +103,10 @@
                                                 array('attributeName' => 'department', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'officePhone', 'type' => 'Phone'),
@@ -111,6 +121,10 @@
                                                 array('attributeName' => 'source', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'mobilePhone', 'type' => 'Phone'),
@@ -120,11 +134,6 @@
                                 ),
                                 array('cells' =>
                                     array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => null, 'type' => 'Null'), // Not Coding Standard
-                                            ),
-                                        ),
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'officeFax', 'type' => 'Phone'),
@@ -139,6 +148,10 @@
                                                 array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'secondaryEmail', 'type' => 'EmailAddressInformation'),
@@ -153,6 +166,10 @@
                                                 array('attributeName' => 'primaryAddress', 'type' => 'Address'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'secondaryAddress', 'type' => 'Address'),
@@ -167,6 +184,10 @@
                                                 array('attributeName' => 'industry', 'type' => 'DropDown', 'addBlank' => true),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'website', 'type' => 'Url'),
@@ -183,43 +204,18 @@
                                         ),
                                     )
                                 ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null',
-                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
-                                            ),
-                                        ),
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
-                                            ),
-                                        ),
-                                    )
-                                ),
                             ),
                         ),
                     ),
                 ),
             );
             return $metadata;
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New LeadsModuleSingularLabel',
+                                     LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

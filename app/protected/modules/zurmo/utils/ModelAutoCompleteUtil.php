@@ -97,12 +97,13 @@
          * @param integer $pageSize
          * @param User    $user
          */
-        public static function getGlobalSearchResultsByPartialTerm($partialTerm, $pageSize, User $user)
+        public static function getGlobalSearchResultsByPartialTerm($partialTerm, $pageSize, User $user, $scopeData = null)
         {
             assert('is_string($partialTerm)');
             assert('is_int($pageSize)');
             assert('$user->id > 0');
-            $modelClassNamesAndSearchAttributeData = self::makeModelClassNamesAndSearchAttributeData($partialTerm, $user);
+            assert('$scopeData == null || is_array($scopeData)');
+            $modelClassNamesAndSearchAttributeData = self::makeModelClassNamesAndSearchAttributeData($partialTerm, $user, $scopeData);
             if (empty($modelClassNamesAndSearchAttributeData))
             {
                 return array(array('href' => '', 'label' => Yii::t('Default', 'No Results Found')));
@@ -128,16 +129,20 @@
             return $autoCompleteResults;
         }
 
-        protected static function makeModelClassNamesAndSearchAttributeData($partialTerm, User $user)
+        protected static function makeModelClassNamesAndSearchAttributeData($partialTerm, User $user, $scopeData)
         {
             assert('is_string($partialTerm)');
             assert('$user->id > 0');
+            assert('$scopeData == null || is_array($scopeData)');
             $modelClassNamesAndSearchAttributeData = array();
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
                 $globalSearchFormClassName = $module::getGlobalSearchFormClassName();
-                if ($globalSearchFormClassName != null && RightsUtil::canUserAccessModule(get_class($module), $user))
+                if (GlobalSearchUtil::resolveIfModuleShouldBeGloballySearched($module) &&
+                    $globalSearchFormClassName != null &&
+                    RightsUtil::canUserAccessModule(get_class($module), $user) &&
+                    ($scopeData == null || in_array($module->getName(), $scopeData)))
                 {
                     $modelClassName                = $module::getPrimaryModelName();
                     $searchAttributes              = MixedTermSearchUtil::
@@ -185,9 +190,8 @@
                 if (stripos($label, $partialName) === 0)
                 {
                     $autoCompleteResults[] = array(
-                        'id'    => $data,
-                        'value' => $data,
-                        'label' => $label,
+                        'id'   => $data,
+                        'name' => $label,
                     );
                 }
             }

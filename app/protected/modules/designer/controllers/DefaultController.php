@@ -26,78 +26,54 @@
 
     class DesignerDefaultController extends ZurmoBaseController
     {
-        public function filters()
-        {
-            $filters = array(
-                'moduleClassName - index'
-            );
-            return array_merge($filters, parent::filters());
-        }
-
-        /**
-         * Check if moduleClassName exist or not. If doesn't exist, throw exception.
-         * @throws DesignerModuleClassNameNotFoundException
-         */
-        public function filterModuleClassName($filterChain)
-        {
-            if (isset($_GET['moduleClassName']))
-            {
-                $moduleClassNames = array();
-                $modules = Module::getModuleObjects();
-                foreach ($modules as $module)
-                {
-                    $moduleTreeMenuItems = $module->getDesignerMenuItems();
-                    if ($module->isEnabled() && !empty($moduleTreeMenuItems))
-                    {
-                        $moduleClassNames[] = get_class($module);
-                    }
-                }
-                if (!in_array($_GET['moduleClassName'], $moduleClassNames))
-                {
-                    $message = Yii::t('Default', 'The requested {moduleClassName} module does not exist',
-                                                 array('moduleClassName' => $_GET['moduleClassName']));
-                    throw new DesignerModuleClassNameNotFoundException($message);
-                }
-            }
-            $filterChain->run();
-        }
-
         public function actionIndex()
         {
+            $title           = Yii::t('Default', 'Available Modules');
+            $breadcrumbLinks = array(
+                 $title,
+            );
             $canvasView = new TitleBarAndDesignerPageMenuView(
                         $this->getId(),
-                        $this->getModule()->getId()
+                        $this->getModule()->getId(),
+                        $title
             );
-            $view = new DesignerPageView($this, $canvasView, null);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionModulesMenu()
         {
             assert('!empty($_GET["moduleClassName"])');
-            $module = new $_GET['moduleClassName'](null, null);
-            $breadcrumbLinks = array(
-                $module::getModuleLabelByTypeAndLanguage('Plural')
-            );
-            $canvasView = new TitleBarAndModulesMenuView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $module,
-                        $breadcrumbLinks
-            );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
-            echo $view->render();
+            $moduleClassName = $_GET['moduleClassName'];
+            $module          = new $moduleClassName(null, null);
+            $moduleMenuItems = $module->getDesignerMenuItems();
+            if(ArrayUtil::getArrayValue($moduleMenuItems, 'showGeneralLink'))
+            {
+                $this->actionModuleEdit();
+            }
+            elseif(ArrayUtil::getArrayValue($moduleMenuItems, 'showFieldsLink'))
+            {
+                $this->actionAttributesList();
+            }
+            elseif(ArrayUtil::getArrayValue($moduleMenuItems, 'showLayoutsLink'))
+            {
+                $this->actionModuleLayoutsList();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public function actionAttributesList()
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Fields'),
-            );
+            $module          = new $_GET['moduleClassName'](null, null);
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'Fields');
+            $breadcrumbLinks = array($title);
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
                                  $moduleClassName::getDirectoryName() .
@@ -105,53 +81,25 @@
             if (is_file($overrideClassFile) && class_exists($overrideClassName))
             {
                 $viewClassName = $moduleClassName . 'AttributesListView';
-                $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId(), $breadcrumbLinks);
+                $canvasView    = new $viewClassName($this->getId(), $this->getModule()->getId());
             }
             else
             {
-                $modelClassName           = $moduleClassName::getPrimaryModelName();
-                $model                    = new $modelClassName();
-                $adapter                  = new ModelAttributesAdapter($model);
-                $derivedAttributesAdapter = new DerivedAttributesAdapter(get_class($model));
-                $customAttributes         = array_merge($adapter->getCustomAttributes(),
-                                                        $derivedAttributesAdapter->getAttributes());
+                $modelClassName  = $moduleClassName::getPrimaryModelName();
+                $model           = new $modelClassName();
+                $adapter         = new ModelAttributesAdapter($model);
                 $canvasView = new StandardAndCustomAttributesListView(
                             $this->getId(),
                             $this->getModule()->getId(),
-                            $_GET['moduleClassName'],
+                            $module,
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                             $adapter->getStandardAttributes(),
-                            $customAttributes,
-                            $modelClassName,
-                            $breadcrumbLinks
+                            $adapter->getCustomAttributes(),
+                            $modelClassName
                 );
             }
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
-            echo $view->render();
-        }
-
-        public function actionAttributeCreate()
-        {
-            assert('!empty($_GET["moduleClassName"])');
-            $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',    'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
-                    array('default/attributesList', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Create Field'),
-            );
-            $canvasView = new TitleBarAndAttributeCreateView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
-                        $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                        $modelClassName,
-                        $breadcrumbLinks
-            );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -160,13 +108,13 @@
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["attributeTypeName"])');
             $attributeFormClassName = $_GET['attributeTypeName'] . 'AttributeForm';
+            $module          = new $_GET['moduleClassName'](null, null);
             $moduleClassName = $_GET['moduleClassName'];
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             $model = new $modelClassName();
             if (!empty($_GET['attributeName']))
             {
                 $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
-                $attributeForm->setModelClassName($modelClassName);
             }
             else
             {
@@ -182,30 +130,46 @@
             {
                 $this->actionAttributeSave($attributeForm, $model);
             }
+            $title           = static::resolveAttributeEditTitle($attributeForm);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
-                strval($attributeForm),
+                $title,
             );
-            $canvasView = new TitleBarAndAttributeEditView(
+            $canvasView = new ActionBarAndAttributeEditView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
-                        $breadcrumbLinks
+                        $title
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
+        }
+
+        protected static function resolveAttributeEditTitle(AttributeForm $model)
+        {
+            if (empty($model->attributeName))
+            {
+                return Yii::t('Default', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
+            }
+            else
+            {
+                return Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
+            }
+        }
+
+        protected static function resolveAttributeDetailsTitle(AttributeForm $model)
+        {
+            return Yii::t('Default', 'Field')   . ': ' .strval($model);
         }
 
         protected function actionAttributeValidate($attributeForm)
         {
-            $attributeForm->sanitizeFromPostAndSetAttributes($_POST[get_class($attributeForm)]);
-            echo ZurmoActiveForm::validate($attributeForm, null, false);
+            echo ZurmoActiveForm::validate($attributeForm);
             Yii::app()->end(0, false);
         }
 
@@ -215,26 +179,27 @@
             assert('!empty($_GET["attributeTypeName"])');
             assert('!empty($_GET["attributeName"])');
             $moduleClassName = $_GET['moduleClassName'];
+            $module          = new $_GET['moduleClassName'](null, null);
             $modelClassName  = $moduleClassName::getPrimaryModelName();
             $model           = new $modelClassName();
             $attributeForm   = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
+            $title           = static::resolveAttributeDetailsTitle($attributeForm);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Fields') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
-                $attributeForm,
+                $title,
             );
-            $canvasView = new TitleBarAndAttributeDetailsView(
+            $canvasView = new ActionBarAndAttributeDetailsView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $_GET['attributeTypeName'],
                         $modelClassName,
                         $attributeForm,
-                        $breadcrumbLinks
+                        $title
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -242,39 +207,19 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $wasRequired = $attributeForm->isRequired;
-            $attributeForm->sanitizeFromPostAndSetAttributes($_POST[get_class($attributeForm)]);
+            $attributeForm->setAttributes($_POST[get_class($attributeForm)]);
             $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
             $adapter = new $modelAttributesAdapterClassName($model);
             $adapter->setAttributeMetadataFromForm($attributeForm);
             if ($attributeForm->isRequired && !$wasRequired)
             {
-                $modelClassName = get_class($model);
-                $model          = new $modelClassName(); //Forces metadata to reload
-                if ($model->isAttribute($attributeForm->attributeName))
-                {
-                    RequiredAttributesValidViewUtil::
-                    resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
-                }
-                else
-                {
-                    //A derived attribute that can be made required/unrequired is not supported.
-                    throw new NotSupportedException();
-                }
+                RequiredAttributesValidViewUtil::
+                resolveToSetAsMissingRequiredAttributesByModelClassName(get_class($model), $attributeForm->attributeName);
             }
             elseif (!$attributeForm->isRequired && $wasRequired)
             {
-                $modelClassName = get_class($model);
-                $model          = new $modelClassName(); //Forces metadata to reload
-                if ($model->isAttribute($attributeForm->attributeName))
-                {
-                    RequiredAttributesValidViewUtil::
-                    resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
-                }
-                else
-                {
-                    //A derived attribute that can be made required/unrequired is not supported.
-                    throw new NotSupportedException();
-                }
+                RequiredAttributesValidViewUtil::
+                resolveToRemoveAttributeAsMissingRequiredAttribute(get_class($model), $attributeForm->attributeName);
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
             $routeParams = array_merge(
@@ -289,9 +234,10 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             $moduleClassName = $_GET['moduleClassName'];
-            $modelClassName = $moduleClassName::getPrimaryModelName();
-            $model = new $modelClassName();
-            $viewClassNames = $moduleClassName::getViewClassNames();
+            $module          = new $_GET['moduleClassName'](null, null);
+            $modelClassName  = $moduleClassName::getPrimaryModelName();
+            $model           = new $modelClassName();
+            $viewClassNames  = $moduleClassName::getViewClassNames();
             $editableViewsCollection = array();
             foreach ($viewClassNames as $className)
             {
@@ -312,20 +258,19 @@
                     }
                 }
             }
-            $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu', 'moduleClassName' => $_GET['moduleClassName']),
-                 Yii::t('Default', 'Layouts'),
-            );
-            $canvasView = new TitleBarAndModuleEditableMetadataCollectionView(
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'Layouts');
+            $breadcrumbLinks = array($title);
+            $canvasView = new ActionBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
                         $this->getModule()->getId(),
-                        $_GET['moduleClassName'],
+                        $module,
                         $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                         $editableViewsCollection,
-                        $breadcrumbLinks
+                        $title
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -333,17 +278,15 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["viewClassName"])');
-            $viewClassName            = $_GET['viewClassName'];
-            $moduleClassName          = $_GET['moduleClassName'];
-            $modelClassName           = $moduleClassName::getPrimaryModelName();
-            $editableMetadata         = $viewClassName::getMetadata();
-            $designerRulesType        = $viewClassName::getDesignerRulesType();
-            $designerRulesClassName   = $designerRulesType . 'DesignerRules';
-            $designerRules            = new $designerRulesClassName();
-            $modelAttributesAdapter   = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
-            $derivedAttributesAdapter = new DerivedAttributesAdapter($modelClassName);
-            $attributeCollection      = array_merge($modelAttributesAdapter->getAttributes(),
-                                                        $derivedAttributesAdapter->getAttributes());
+            $viewClassName           = $_GET['viewClassName'];
+            $moduleClassName         = $_GET['moduleClassName'];
+            $modelClassName          = $moduleClassName::getPrimaryModelName();
+            $editableMetadata        = $viewClassName::getMetadata();
+            $designerRulesType       = $viewClassName::getDesignerRulesType();
+            $designerRulesClassName  = $designerRulesType . 'DesignerRules';
+            $designerRules           = new $designerRulesClassName();
+            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
+            $attributeCollection     = $modelAttributesAdapter->getAttributes();
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
                 $designerRules,
@@ -381,12 +324,11 @@
                 }
                 Yii::app()->end(0, false);
             }
+            $title           = Yii::t('Default', 'Edit Layout') . ': ' . $designerRules->resolveDisplayNameByView($_GET['viewClassName']);
             $breadcrumbLinks = array(
-                $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                Yii::t('Default', 'Layouts') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Layouts') =>
                     array('default/moduleLayoutsList',  'moduleClassName' => $_GET['moduleClassName']),
-                 $designerRules->resolveDisplayNameByView($_GET['viewClassName']),
+                $title,
             );
             $canvasView = new MetadataViewEditView(
                         $this->getId(),
@@ -397,19 +339,22 @@
                         $designerRules,
                         $attributeCollection,
                         $attributesLayoutAdapter->makeDesignerLayoutAttributes(),
-                        $breadcrumbLinks
+                        $title
+
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionModuleEdit()
         {
             assert('!empty($_GET["moduleClassName"])');
-            $module = new $_GET['moduleClassName'](null, null);
-            $metadata = $module::getMetadata();
-            $adapter = new ModuleMetadataToFormAdapter($metadata['global'], get_class($module));
-            $moduleForm = $adapter->getModuleForm();
+            $module          = new $_GET['moduleClassName'](null, null);
+            $moduleClassName = get_class($module);
+            $metadata        = $module::getMetadata();
+            $adapter         = new ModuleMetadataToFormAdapter($metadata['global'], get_class($module));
+            $moduleForm      = $adapter->getModuleForm();
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'edit-form')
             {
                 $this->actionModuleValidate($moduleForm);
@@ -418,19 +363,18 @@
             {
                 $this->actionModuleSave($moduleForm, $module);
             }
-            $breadcrumbLinks = array(
-                $module::getModuleLabelByTypeAndLanguage('Plural') =>
-                    array('default/modulesMenu',     'moduleClassName' => $_GET['moduleClassName']),
-                    Yii::t('Default', 'General Edit'),
-            );
-            $canvasView = new TitleBarAndModuleEditView(
+            $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
+                               ': ' . Yii::t('Default', 'General');
+            $breadcrumbLinks = array($title);
+            $canvasView = new ActionBarAndModuleEditView(
                         $this->getId(),
                         $this->getModule()->getId(),
                         $module,
                         $moduleForm,
-                        $breadcrumbLinks
+                        $title
             );
-            $view = new DesignerPageView($this, $canvasView, $_GET['moduleClassName']);
+            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
+                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
             echo $view->render();
         }
 
@@ -486,8 +430,10 @@
             {
                 throw new NotSupportedException();
             }
-            echo DropDownDependencyAttributeEditView::
-                 renderContainerAndMappingLayoutContent($attributeForm, $this->getId(), $this->getModule()->getId(), false);
+            $content = DropDownDependencyAttributeEditView::
+                       renderContainerAndMappingLayoutContent($attributeForm, $this->getId(), $this->getModule()->getId(), false);
+            Yii::app()->getClientScript()->render($content);
+            echo $content;
         }
     }
 ?>

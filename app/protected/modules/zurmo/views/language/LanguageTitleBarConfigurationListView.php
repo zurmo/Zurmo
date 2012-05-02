@@ -26,15 +26,16 @@
 
     class LanguageTitleBarConfigurationListView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea' , 'TableOfContentsView' );
+
         public function __construct(
             $controllerId,
             $moduleId,
             $languagesData,
             $messageBoxContent = null)
         {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Languages: List')), 0, 0);
-            $this->setView(new LanguagesCollectionView($controllerId, $moduleId, $languagesData, $messageBoxContent), 1, 0);
+            parent::__construct(1, 1);
+            $this->setView(new LanguagesCollectionView($controllerId, $moduleId, $languagesData, $messageBoxContent), 0, 0);
         }
     }
 ?>

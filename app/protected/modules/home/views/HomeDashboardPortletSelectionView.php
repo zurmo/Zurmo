@@ -41,7 +41,8 @@
 
         protected function renderContent()
         {
-            $content = null;
+            $placedViewTypes = $this->getPlacedViewTypes();
+            $content = '<ul>';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -57,25 +58,43 @@
                             $portletRules = PortletRulesFactory::createPortletRulesByView($className);
                             if ($portletRules != null && $portletRules->allowOnDashboard())
                             {
-                                $metadata = $className::getMetadata();
-                                $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(
-                                    'uniqueLayoutId' => $this->uniqueLayoutId,
-                                    'dashboardId'    => $this->dashboardId,
-                                    'portletType'    => $portletRules->getType(),
-                                    )
-                                );
-                                $onClick = 'window.location.href = "' . $url . '"';
-                                $content .= CHtml::button(Yii::t('Default', 'Select'), array('onClick' => $onClick));
-                                $title    = $metadata['perUser']['title'];
-                                MetadataUtil::resolveEvaluateSubString($title);
-                                $content .= '&#160;' . $title;
-                                $content .= '<br/>';
+                                if($portletRules->allowMultiplePlacementOnDashboard() ||
+                                   (!$portletRules->allowMultiplePlacementOnDashboard() &&
+                                    !in_array($portletRules->getType(), $placedViewTypes)))
+                                {
+                                    $metadata = $className::getMetadata();
+                                    $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(
+                                        'uniqueLayoutId' => $this->uniqueLayoutId,
+                                        'dashboardId'    => $this->dashboardId,
+                                        'portletType'    => $portletRules->getType(),
+                                        )
+                                    );
+                                    $onClick = 'window.location.href = "' . $url . '"';
+                                    $content .= '<li>';
+                                    $title    = $metadata['perUser']['title'];
+                                    MetadataUtil::resolveEvaluateSubString($title);
+                                    $label    = '<span>Y</span>' . $title;
+                                    $content .= CHtml::link(Yii::t('Default', $label ), null, array('onClick' => $onClick));
+                                    $content .= '</li>';
+                                }
                             }
                         }
                     }
                 }
             }
+            $content .= '</ul>';
             return $content;
+        }
+
+        protected function getPlacedViewTypes()
+        {
+            $portlets        = Portlet::getByLayoutId($this->uniqueLayoutId);
+            $placedViewTypes = array();
+            foreach($portlets as $portlet)
+            {
+                $placedViewTypes[] = $portlet->viewType;
+            }
+            return $placedViewTypes;
         }
     }
 ?>

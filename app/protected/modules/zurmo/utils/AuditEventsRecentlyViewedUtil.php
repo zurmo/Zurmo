@@ -31,7 +31,7 @@
     {
         /**
          * Get the content for displaying recently viewed information via an ajax call.
-         * @see GlobalSearchAndRecentlyViewedView
+         * @see RecentlyViewedView
          * @param User $user
          */
         public static function getRecentlyViewedAjaxContentByUser(User $user, $count)
@@ -49,10 +49,9 @@
                     $unserializedData = unserialize($auditEvent->serializedData);
                     if ($unserializedData)
                     {
-                        $model           = $modelClassName::getById((int)$auditEvent->modelId);
-                        $moduleClassName = ModelStateUtil::resolveModuleClassNameByStateOfModel($model);
+                        $moduleClassName = $unserializedData[1];
                         $linkHtmlOptions = array('style' => 'text-decoration:underline;');
-                        $content .= CHtml::link($unserializedData,
+                        $content .= CHtml::link($unserializedData[0],
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
                         $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span><br/>';
@@ -64,6 +63,38 @@
                 $content .= Yii::t('Default', 'There are no recently viewed items.');
             }
             return $content;
+        }
+
+        /**
+         * Get the recently viewed models as items which include a link and a moduleClassName.
+         * @see RecentlyViewedView
+         * @param User $user
+         */
+        public static function getRecentlyViewedItemsByUser(User $user, $count)
+        {
+            assert('is_int($count)');
+            $recentlyViewedItems = array();
+            $auditEvents = self::getRecentlyViewedAuditEventsByUser($user, $count);
+            if (count($auditEvents) > 0)
+            {
+                foreach ($auditEvents as $auditEvent)
+                {
+                    assert('is_string($auditEvent->modelClassName)');
+                    assert('$auditEvent->serializedData != null');
+                    $modelClassName   = $auditEvent->modelClassName;
+                    $unserializedData = unserialize($auditEvent->serializedData);
+                    if ($unserializedData)
+                    {
+                        $recentlyViewedItem                    = array();
+                        $moduleClassName                       = $unserializedData[1];
+                        $recentlyViewedItem['link']            = CHtml::link('<span></span><em></em><span>' . $unserializedData[0] . '</span>',
+                                    self::getRouteByAuditEvent($auditEvent, $moduleClassName));
+                        $recentlyViewedItem['moduleClassName'] = $moduleClassName;
+                        $recentlyViewedItems[]                 = $recentlyViewedItem;
+                    }
+                }
+            }
+            return $recentlyViewedItems;
         }
 
         /**

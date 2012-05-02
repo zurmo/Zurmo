@@ -76,6 +76,7 @@
                                  'ABName',
                                  'differentOperatorA',
                                  'differentOperatorB',
+                                 'anyMixedAttributes',
                                  'dateDateTimeADate__Date',
                                  'dateDateTimeADateTime__DateTime',
                                  'date__Date',
@@ -147,6 +148,32 @@
             //Test that the correct elements are used for the dynamic date attribute.
             $elementType = ModelAttributeToMixedTypeUtil::getType($searchForm, 'dateTime__DateTime');
             $this->assertEquals('MixedDateTypesForSearch', $elementType);
+        }
+
+        public function testGetGlobalSearchAttributeNamesAndLabelsAndAll()
+        {
+            $searchModel = new ASearchFormTestModel(new A());
+            $data        = $searchModel->getGlobalSearchAttributeNamesAndLabelsAndAll();
+            $compareData = array('All' => 'All', 'a' => 'A', 'name' => 'Name');
+            $this->assertEquals($compareData, $data);
+        }
+
+        public function testResolveMixedSearchAttributeMappedToRealAttributesMetadata()
+        {
+            $realAttributesMetadata = array('something' => 'somethingElse');
+            $searchModel = new ASearchFormTestModel(new A());
+            $searchModel->resolveMixedSearchAttributeMappedToRealAttributesMetadata($realAttributesMetadata);
+            $compareData = array('anyMixedAttributes' => array(array('a'), array('name')),
+                                 'something' => 'somethingElse');
+            $this->assertEquals($compareData, $realAttributesMetadata);
+
+            //Add scoping.
+            $searchModel = new ASearchFormTestModel(new A());
+            $searchModel->setAnyMixedAttributesScope(array('name'));
+            $searchModel->resolveMixedSearchAttributeMappedToRealAttributesMetadata($realAttributesMetadata);
+            $compareData = array('anyMixedAttributes' => array(array('name')),
+                                 'something' => 'somethingElse');
+            $this->assertEquals($compareData, $realAttributesMetadata);
         }
     }
 ?>

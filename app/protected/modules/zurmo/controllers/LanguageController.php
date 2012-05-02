@@ -55,7 +55,8 @@
                             $this->getModule()->getId(),
                             LanguagesToLanguageCollectionViewUtil::getLanguagesData(),
                             $messageBoxContent);
-            $view = new ZurmoConfigurationPageView($this, $view);
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                         makeStandardViewForCurrentUser($this, $view));
             echo $view->render();
         }
 
@@ -73,8 +74,7 @@
                     }
                 }
                 Yii::app()->languageHelper->setActiveLanguages($activeLanguages);
-                return HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                       Yii::t('Default', 'Changes to active languages saved successfully.'));
+                Yii::app()->user->setFlash('notification', Yii::t('Default', 'Changes to active languages saved successfully.'));
             }
         }
     }

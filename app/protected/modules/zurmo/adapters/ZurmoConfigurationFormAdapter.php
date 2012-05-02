@@ -36,6 +36,7 @@
         public static function makeFormFromGlobalConfiguration()
         {
             $form                           = new ZurmoConfigurationForm();
+            $form->applicationName          = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
             $form->timeZone                 = Yii::app()->timeZoneHelper->getGlobalValue();
             $form->listPageSize             = Yii::app()->pagination->getGlobalValueByType('listPageSize');
             $form->subListPageSize          = Yii::app()->pagination->getGlobalValueByType('subListPageSize');
@@ -49,6 +50,7 @@
          */
         public static function setConfigurationFromForm(ZurmoConfigurationForm $form)
         {
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'applicationName', $form->applicationName);
             Yii::app()->timeZoneHelper  ->setGlobalValue(                         (string)$form->timeZone);
             Yii::app()->pagination->setGlobalValueByType('listPageSize',          (int)   $form->listPageSize);
             Yii::app()->pagination->setGlobalValueByType('subListPageSize',       (int)   $form->subListPageSize);

@@ -49,7 +49,10 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'ContactNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
+                                    ),
+                                    array(
+                                        'type' => 'ContactLatestActivtiesForPortlet'
                                     ),
                                 )
                             )
@@ -60,7 +63,7 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'UpcomingMeetingsForContactRelatedList',
+                                        'type' => 'UpcomingMeetingsForContactCalendar',
                                     ),
                                     array(
                                         'type' => 'OpenTasksForContactRelatedList',

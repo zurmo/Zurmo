@@ -60,47 +60,116 @@
 jQuery('#{$this->id}_all').live('click', function()
 {
     var checked = this.checked;
+	
+	//custom checkbox style    
+    if(this.checked){
+    	jQuery(this).parent().addClass('c_on');
+    } else {
+    	jQuery(this).parent().removeClass('c_on');
+    }
+    
     jQuery("input[name='$name']").each(function()
     {
         this.checked = checked;
         updateListViewSelectedIds('{$this->grid->id}', $(this).val(), checked);
+        
+        //custom checkbox style
+        if(this.checked){
+        	jQuery(this).parent().addClass('c_on');
+        } else {
+        	jQuery(this).parent().removeClass('c_on');
+        }
     });
 });
 jQuery("input[name='$name']").live('click', function()
 {
-    jQuery('#{$this->id}_all').attr('checked', jQuery("input[name='$name']").length == jQuery("input[name='$name']:checked").length);{$one}
+    jQuery('#{$this->id}_all').attr( 'checked', jQuery("input[name='$name']").length == jQuery("input[name='$name']:checked").length);{$one}
     updateListViewSelectedIds('{$this->grid->id}', $(this).val(), $(this).attr('checked'));
+    
+    //custom checkbox style
+    if( jQuery('#{$this->id}_all').attr( 'checked') === 'checked' ){
+    	jQuery('#{$this->id}_all').parent().addClass('c_on');
+	} else {
+    	jQuery('#{$this->id}_all').parent().removeClass('c_on');
+    }
+    if( this.checked ){
+    	jQuery(this).parent().addClass('c_on');
+    } else {
+    	jQuery(this).parent().removeClass('c_on');
+    }
 });
 END;
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $js);
         }
 
-    /**
-     * Renders the header cell content.
-     * Override in order to allow for disabled and checked by default
-     * in the scenario where selectAll is selected.
-     */
-    protected function renderHeaderCellContent()
-    {
-        if ($this->grid->selectableRows>1)
+        /**
+         * Renders the header cell content.
+         * Override in order to allow for disabled and checked by default
+         * in the scenario where selectAll is selected.
+         */
+        protected function renderHeaderCellContent()
         {
-            if ($this->grid->selectAll)
+            if ($this->grid->selectableRows>1)
             {
-                $checked = true;
-                $disabled = 'disabled';
+                if ($this->grid->selectAll)
+                {
+                    $checked = true;
+                    $disabled = 'disabled';
+                }
+                else
+                {
+                    $checked = false;
+                    $disabled = '';
+                }
+                $htmlOptions = array('disabled' => $disabled);
+                echo CHtml::tag("label",
+                                array("class" => "hasCheckBox"),
+                                CHtml::checkBox($this->id . '_all', $checked, $htmlOptions));
             }
             else
             {
-                $checked = false;
-                $disabled = '';
+                parent::renderHeaderCellContent();
             }
-            $htmlOptions = array('disabled' => $disabled);
-            echo CHtml::checkBox($this->id . '_all', $checked, $htmlOptions);
         }
-        else
+
+        public function renderDataCellContentFromOutsideClass($row, $data)
         {
-            parent::renderHeaderCellContent();
+            $this->renderDataCellContent($row, $data);
         }
-    }
+
+        /**
+         * Override to support adding the label wrapper on the checkbox
+         * (non-PHPdoc)
+         * @see CCheckBoxColumn::renderDataCellContent()
+         */
+        protected function renderDataCellContent($row,$data)
+        {
+            if($this->value !== null)
+            {
+                $value = $this->evaluateExpression($this->value,array('data' => $data, 'row' => $row));
+            }
+            else if($this->name !== null)
+            {
+                $value = CHtml::value($data,$this->name);
+            }
+            else
+            {
+                $value = $this->grid->dataProvider->keys[$row];
+            }
+
+            $checked = false;
+            if($this->checked !== null)
+            {
+                $checked = $this->evaluateExpression($this->checked,array('data' => $data, 'row' => $row));
+            }
+            $options                  = $this->checkBoxHtmlOptions;
+            $name                     = $options['name'];
+            unset($options['name']);
+            $options['value']         = $value;
+            $options['id']            = $this->id.'_'.$row;
+            echo CHtml::tag("label",
+                            array("class" => "hasCheckBox"),
+                            CHtml::checkBox($name,$checked,$options));
+        }
     }
 ?>

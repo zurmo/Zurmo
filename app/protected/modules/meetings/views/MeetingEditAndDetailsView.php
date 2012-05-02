@@ -42,12 +42,10 @@
                     'derivedAttributeTypes' => array(
                         'ActivityItemsExcludingContacts',
                         'MultipleContactsForMeeting',
-                        'DateTimeCreatedUser',
-                        'DateTimeModifiedUser',
-                        'DerivedExplicitReadWriteModelPermissions',
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'latestDateTime',
+                        'owner'
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
@@ -125,51 +123,18 @@
                                         ),
                                     )
                                 ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'owner', 'type' => 'User'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'null',
-                                                      'type' => 'DerivedExplicitReadWriteModelPermissions'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeCreatedUser'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'detailViewOnly' => true,
-                                            'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'DateTimeModifiedUser'),
-                                            ),
-                                        ),
-                                    )
-                                ),
                             ),
                          ),
                     ),
                 ),
             );
             return $metadata;
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New MeetingsModuleSingularLabel',
+                                     LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

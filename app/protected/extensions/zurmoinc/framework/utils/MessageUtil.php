@@ -512,9 +512,9 @@
                 }
             }
         }
-        if (isset($metadata['global']['shortcutsMenuItems']))
+        if (isset($metadata['global']['shortcutsCreateMenuItems']))
         {
-            foreach ($metadata['global']['shortcutsMenuItems'] as $menuItem)
+            foreach ($metadata['global']['shortcutsCreateMenuItems'] as $menuItem)
             {
                 if (isset($menuItem['items']))
                 {
@@ -535,6 +535,16 @@
         if (isset($metadata['global']['headerMenuItems']))
         {
             foreach ($metadata['global']['headerMenuItems'] as $menuItem)
+            {
+                if (!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
+        if (isset($metadata['global']['userHeaderMenuItems']))
+        {
+            foreach ($metadata['global']['userHeaderMenuItems'] as $menuItem)
             {
                 if (!in_array($menuItem['label'], $labels))
                 {

@@ -42,17 +42,20 @@
             Yii::app()->pagination->setGlobalValueByType('subListPageSize',       51);
             Yii::app()->pagination->setGlobalValueByType('modalListPageSize',     52);
             Yii::app()->pagination->setGlobalValueByType('dashboardListPageSize', 53);
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'applicationName', 'demoCompany');
             $form = ZurmoConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $this->assertEquals('America/New_York', $form->timeZone);
             $this->assertEquals(50,                 $form->listPageSize);
             $this->assertEquals(51,                 $form->subListPageSize);
             $this->assertEquals(52,                 $form->modalListPageSize);
             $this->assertEquals(53,                 $form->dashboardListPageSize);
+            $this->assertEquals('demoCompany',      $form->applicationName);
             $form->timeZone              = 'America/Chicago';
             $form->listPageSize          = 60;
             $form->subListPageSize       = 61;
             $form->modalListPageSize     = 62;
             $form->dashboardListPageSize = 63;
+            $form->applicationName       = 'demoCompany2';
             ZurmoConfigurationFormAdapter::setConfigurationFromForm($form);
 
             $form = ZurmoConfigurationFormAdapter::makeFormFromGlobalConfiguration();
@@ -61,6 +64,7 @@
             $this->assertEquals(61,                 $form->subListPageSize);
             $this->assertEquals(62,                 $form->modalListPageSize);
             $this->assertEquals(63,                 $form->dashboardListPageSize);
+            $this->assertEquals('demoCompany2',     $form->applicationName);
         }
     }
 ?>

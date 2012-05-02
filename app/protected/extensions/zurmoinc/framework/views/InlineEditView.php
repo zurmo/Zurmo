@@ -100,9 +100,14 @@
 
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
-            $content .= '<div class="modal-view-toolbar">';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
+            $content .= $this->renderAfterFormLayout($form);
+            $actionElementContent = $this->renderActionElementBar(true);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix">';
+                $content .= $actionElementContent;
+                $content .= '</div>';
+            }
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
             $content .= '</div>';
@@ -162,6 +167,11 @@
         protected function getMorePanelsLinkLabel()
         {
             return Yii::t('Default', 'More Options');
+        }
+
+        protected function getLessPanelsLinkLabel()
+        {
+            return Yii::t('Default', 'Less Options');
         }
     }
 ?>

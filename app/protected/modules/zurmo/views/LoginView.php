@@ -74,9 +74,9 @@
             $content .= "<div class=\"form\">$formStart"                                            .
                        "<div>$usernameLabel$usernameTextField$usernameError</div>"                 .
                        "<div>$passwordLabel$passwordField$passwordError</div>"                     .
-                       "<div style = 'float:left; padding-right:3px;'>$rememberMeCheckBox</div>"   .
-                       "<div>$rememberMeLabel$rememberMeError</div>"                               .
-                       "<div style = 'clear:both;'>$submitButton</div>"                            .
+                       "<div class=\"remember-me\">$rememberMeCheckBox$rememberMeLabel$rememberMeError</div>"   .
+                       //"<div class=\"clearfix\">$rememberMeLabel$rememberMeError</div>"                               .
+                       "<div>$submitButton</div>"                            .
                        "$formEnd</div>";
 
             return $content;

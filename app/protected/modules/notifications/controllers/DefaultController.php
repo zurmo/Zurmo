@@ -37,8 +37,7 @@
                             'listPageSize', get_class($this->getModule()));
             $notification = new Notification(false);
             $searchAttributes = array(
-                'owner'    => array('id' => Yii::app()->user->userModel->id),
-                'isRead'   => '0',
+                'owner'    => array('id' => Yii::app()->user->userModel->id)
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(
                 $notification,
@@ -62,23 +61,9 @@
                                         'NotificationsForUserListView',
                                         NotificationsModule::getModuleLabelByTypeAndLanguage('Plural'),
                                         array(),
-                                        false,
-                                        Yii::t('Default', 'Unread'));
-            $view = new NotificationsPageView($this, $titleBarAndListView);
-            echo $view->render();
-        }
-
-        public function actionDetails($id)
-        {
-            $notification = Notification::getById(intval($id));
-            if (!$notification->isRead)
-            {
-                $notification->isRead = true;
-                $notification->save();
-            }
-            static::resolveCanCurrentUserAccessDetailsAction($notification->owner->id);
-            $view = new NotificationsPageView($this,
-                $this->makeTitleBarAndDetailsView($notification));
+                                        false);
+            $view = new NotificationsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndListView));
             echo $view->render();
         }
 
@@ -92,6 +77,34 @@
             $view = new AccessFailurePageView($messageView);
             echo $view->render();
             Yii::app()->end(0, false);
+        }
+
+        /**
+         * Method for testing creating a simple notification for the current user.
+         */
+        public function actionCreateTest()
+        {
+            $message                    = new NotificationMessage();
+            $message->textContent       = 'text content';
+            $message->htmlContent       = 'html content';
+            $rules                      = new SimpleDuplicateNotificationRules();
+            $rules->addUser(Yii::app()->user->userModel);
+            NotificationsUtil::submit($message, $rules);
+            echo 'Test notification created';
+        }
+
+        public function actionRecentNotifcations()
+        {
+            echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);
+            $linkHtmlOptions = array('class' => 'view-all-notifications');
+            echo CHtml::link(Yii::t('Default', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
+        }
+
+        public function actionDeleteFromAjax($id)
+        {
+            $notification = Notification::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($notification);
+            $notification->delete();
         }
     }
 ?>

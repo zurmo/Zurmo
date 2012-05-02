@@ -35,7 +35,7 @@ function updateListViewSelectedIds(gridViewId, selectedId, selectedValue)
         array.push(selectedId);
     }
     $('#' + gridViewId + "-selectedIds").val(array.toString());
-    //alert($('#' + gridViewId + "-selectedIds").val());
+    //alert( $('#' + gridViewId + "-selectedIds").val() );
 }
 
 function addListViewSelectedIdsAndSelectAllToUrl(id, options)

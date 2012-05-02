@@ -32,7 +32,6 @@
             $notification         = new Notification();
             $notification->type   = $type;
             $notification->owner  = $owner;
-            $notification->isRead = false;
             $saved = $notification->save();
             assert('$saved');
 

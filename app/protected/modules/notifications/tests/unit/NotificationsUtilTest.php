@@ -84,7 +84,6 @@
         public function testSubmittingDuplicateNotifications()
         {
             //todo:
-            //dont forget to deal with unread vs. read count issues.
         }
     }
 ?>

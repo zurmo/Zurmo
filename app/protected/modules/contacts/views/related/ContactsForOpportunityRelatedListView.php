@@ -46,6 +46,7 @@
                                         'update'  => '#modalContainer',
                                     ),
                                     'htmlOptions' => array( 'id' => 'SelectContactsForOpportunityFromRelatedListLink',
+                                    						'class' => 'simple-select',
                                                             'live' => false) //This is there are no double bindings
             );
             $metadata['global']['panels'] = array(
@@ -65,6 +66,24 @@
                                 array(
                                     'elements' => array(
                                         array('attributeName' => 'account', 'type' => 'Account', 'isLink' => true),
+                                    ),
+                                ),
+                            )
+                        ),
+                        array('cells' =>
+                            array(
+                                array(
+                                    'elements' => array(
+                                        array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                    ),
+                                ),
+                            )
+                        ),
+                        array('cells' =>
+                            array(
+                                array(
+                                    'elements' => array(
+                                        array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
                                     ),
                                 ),
                             )

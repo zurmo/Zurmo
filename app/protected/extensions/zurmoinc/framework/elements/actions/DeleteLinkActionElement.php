@@ -50,6 +50,16 @@
             }
         }
 
+        public function renderMenuItem()
+        {
+            if (!empty($this->modelId) && $this->modelId > 0)
+            {
+                $htmlOptions = $this->getHtmlOptions();
+                $htmlOptions = $this->resolveConfirmAlertInHtmlOptions($htmlOptions);
+                return array('label' => $this->getLabel(), 'url' => $this->route, 'linkOptions' => $htmlOptions);
+            }
+        }
+
         protected function getDefaultRoute()
         {
             $params = array('id' => $this->modelId);

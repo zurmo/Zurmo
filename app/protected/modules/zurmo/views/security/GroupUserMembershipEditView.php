@@ -79,6 +79,11 @@
             return $content;
         }
 
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'User Membership') . '</h1>';
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

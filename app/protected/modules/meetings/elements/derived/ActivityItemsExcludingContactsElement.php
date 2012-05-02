@@ -33,15 +33,7 @@
         protected function renderControlEditable()
         {
             assert('$this->model instanceof Activity');
-            $metadata = Activity::getMetadata();
-            $activityItemsModelClassNamesData = $metadata['Activity']['activityItemsModelClassNames'];
-            foreach ($activityItemsModelClassNamesData as $index => $relationModelClassName)
-            {
-                if ($relationModelClassName == 'Contact')
-                {
-                    unset($activityItemsModelClassNamesData[$index]);
-                }
-            }
+            $activityItemsModelClassNamesData = ActivitiesUtil::getActivityItemsModelClassNamesDataExcludingContacts();
             return $this->renderElementsForRelationsByRelationsData($activityItemsModelClassNamesData);
         }
     }

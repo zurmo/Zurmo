@@ -9,7 +9,7 @@
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
-
+/*
 .fileupload-buttonbar .ui-button input {
   position: absolute;
   top: 0;
@@ -32,13 +32,13 @@
 .fileinput-button {
   overflow: hidden;
 }
-
+*/
 /* Fix for IE 6: */
 *html .fileinput-button {
   padding: 2px 0;
 }
 
-/* Fix for IE 7: */
+/* Fix for IE 7: 
 *+html .fileinput-button {
   padding: 2px 0;
 }
@@ -97,4 +97,4 @@ table.files th, table.files td
 
 .readonly-field {
   background-color: #E3E3E3;
-}
+}*/

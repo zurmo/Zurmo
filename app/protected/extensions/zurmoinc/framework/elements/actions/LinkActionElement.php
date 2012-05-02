@@ -30,5 +30,10 @@
         {
             return CHtml::link($this->getLabel(), $this->route, $this->getHtmlOptions());
         }
+
+        public function renderMenuItem()
+        {
+            return array('label' => $this->getLabel(), 'url' => $this->route, 'linkOptions' => $this->getHtmlOptions());
+        }
     }
 ?>

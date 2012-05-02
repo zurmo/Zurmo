@@ -26,11 +26,13 @@
 
     class TitleBarAndDesignerPageMenuView extends GridView
     {
-        public function __construct($controllerId, $moduleId)
+        protected $cssClasses =  array( 'AdministrativeArea', 'DetailsView');
+
+        public function __construct($controllerId, $moduleId, $title)
         {
-            parent::__construct(2, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Designer Tool'), Yii::t('Default', 'Modules')), 0, 0);
-            $this->setView(new DesignerPageMenuView($controllerId, $moduleId), 1, 0);
+            assert('is_string($title)');
+            parent::__construct(1, 1);
+            $this->setView(new DesignerPageMenuView($controllerId, $moduleId, $title), 0, 0);
         }
 
         public function isUniqueToAPage()

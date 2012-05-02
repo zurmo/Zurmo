@@ -37,35 +37,6 @@
                         'elements' => array(
                             array('type'           => 'CancelLink', 'renderType' => 'Edit'),
                             array('type'           => 'SaveButton', 'renderType' => 'Edit'),
-                            array('type'           => 'EditLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'canModifyName'
-                            ),
-                            array(
-                                'type'             => 'GroupUserMembershipEditLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'canModifyMemberships'
-                                ),
-                            array(
-                                'type'             => 'GroupModulePermissionsEditLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'canGivePermissions'
-                                ),
-                            array(
-                                'type'             => 'GroupRightsEditLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'canModifyRights'
-                                ),
-                            array(
-                                'type'             => 'GroupPoliciesEditLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'canModifyPolicies'
-                                ),
-                            array(
-                                'type'             => 'GroupDeleteLink',
-                                'renderType'       => 'Details',
-                                'resolveToDisplay' => 'isDeletable'
-                            ),
                         ),
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
@@ -142,6 +113,11 @@
                     $elementInformation['attributeName'] = null;
                     $elementInformation['type']          = 'Null'; // Not Coding Standard
             }
+        }
+
+        protected function getNewModelTitleLabel()
+        {
+            return Yii::t('Default', 'Create a New Group');
         }
     }
 ?>

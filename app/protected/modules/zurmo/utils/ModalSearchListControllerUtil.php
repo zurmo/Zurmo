@@ -46,34 +46,34 @@
                                                         $stateMetadataAdapterClassName = null)
         {
             assert('$modalListLinkProvider instanceof ModalListLinkProvider');
-            $userId = Yii::app()->user->userModel->id;
-            $modelClassName = $controller->getModule()->getPrimaryModelName();
-            $searchAttributes = SearchUtil::resolveSearchAttributesFromGetArray($modelClassName);
-            $sortAttribute    = SearchUtil::resolveSortAttributeFromGetArray($modelClassName);
-            $sortDescending   = SearchUtil::resolveSortDescendingFromGetArray($modelClassName);
-            $metadataAdapter = new SearchDataProviderMetadataAdapter(
-                new $modelClassName(false),
-                $userId,
-                $searchAttributes
-            );
-            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                            'modalListPageSize', get_class($controller->getModule()));
-            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
-                $modelClassName,
-                'RedBeanModelDataProvider',
-                $sortAttribute,
-                $sortDescending,
-                $pageSize,
-                $stateMetadataAdapterClassName
-            );
-            $model = new $modelClassName(false);
-            $className = $controller->getModule()->getPluralCamelCasedName() . 'ModalSearchAndListView';
+            $userId              = Yii::app()->user->userModel->id;
+            $className           = $controller->getModule()->getPluralCamelCasedName() . 'ModalSearchAndListView';
+            $modelClassName      = $controller->getModule()->getPrimaryModelName();
+            $searchViewClassName = $className::getSearchViewClassName();
+            if($searchViewClassName::getModelForMetadataClassName() != null)
+            {
+                 $formModelClassName   = $searchViewClassName::getModelForMetadataClassName();
+                 $model                = new $modelClassName(false);
+                 $searchModel          = new $formModelClassName($model);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            $pageSize          = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                                'modalListPageSize', get_class($controller->getModule()));
+
+            $dataProvider      = $controller->makeRedBeanDataProviderFromGet(
+                                                $searchModel,
+                                                $modelClassName,
+                                                $pageSize,
+                                                $userId,
+                                                $stateMetadataAdapterClassName);
             $searchAndListView = new $className(
                 $controller->getId(),
                 $controller->getModule()->getId(),
                 $modalListLinkProvider,
+                $searchModel,
                 $model,
                 $dataProvider,
                 'modal'

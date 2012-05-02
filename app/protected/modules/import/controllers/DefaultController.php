@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportDefaultController extends Controller
+    class ImportDefaultController extends ZurmoBaseController
     {
         public function filters()
         {
@@ -62,12 +62,12 @@
                 ImportWizardUtil::setFormByPostForStep1($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step2');
             }
-            $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 1 of 6')), 0, 0);
-            $importView->setView(new ImportWizardImportRulesView($this->getId(),
-                                                                       $this->getModule()->getId(),
-                                                                       $importWizardForm), 1, 0);
-            $view       = new ImportPageView($this, $importView);
+            $title = Yii::t('Default', 'Import Wizard: Step 1 of 6');
+            $importView = new ImportWizardImportRulesView($this->getId(),
+                                                          $this->getModule()->getId(),
+                                                          $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -114,12 +114,11 @@
                     $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, $nextStep);
                 }
             }
-            $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 2 of 6')), 0, 0);
-            $importView->setView(new ImportWizardUploadFileView($this->getId(),
-                                                                $this->getModule()->getId(),
-                                                                $importWizardForm), 1, 0);
-            $view       = new ImportPageView($this, $importView);
+            $title = Yii::t('Default', 'Import Wizard: Step 2 of 6');
+            $importView = new ImportWizardUploadFileView($this->getId(), $this->getModule()->getId(),
+                                                         $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -135,12 +134,12 @@
                 ImportWizardUtil::setFormByPostForStep3($importWizardForm, $_POST[get_class($importWizardForm)]);
                 $this->attemptToValidateImportWizardFormAndSave($importWizardForm, $import, 'step4');
             }
-            $importView = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 3 of 6')), 0, 0);
-            $importView->setView(new ImportWizardSetModelPermissionsView($this->getId(),
-                                                                         $this->getModule()->getId(),
-                                                                         $importWizardForm), 1, 0);
-            $view       = new ImportPageView($this, $importView);
+            $title      = Yii::t('Default', 'Import Wizard: Step 3 of 6');
+            $importView = new ImportWizardSetModelPermissionsView($this->getId(),
+                                                                  $this->getModule()->getId(),
+                                                                  $importWizardForm, $title);
+            $view       = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                             makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -213,18 +212,18 @@
                                                               $sample, $headerRow);
             $mappableAttributeIndicesAndDerivedTypes        = $importRulesClassName::
                                                               getMappableAttributeIndicesAndDerivedTypes();
-            $importView                                     = new GridView(2, 1);
-            $importView->setView(new TitleBarView(Yii::t('Default', 'Import Wizard: Step 4 of 6')), 0, 0);
-            $importView->setView(new ImportWizardMappingView($this->getId(),
-                                                             $this->getModule()->getId(),
-                                                             $importWizardForm,
-                                                             $pagerContent,
-                                                             $mappingDataMetadata,
-                                                             $mappingDataMappingRuleFormsAndElementTypes,
-                                                             $mappableAttributeIndicesAndDerivedTypes,
-                                                             $importRulesClassName::getRequiredAttributesLabelsData()),
-                                                             1, 0);
-            $view                                           = new ImportPageView($this, $importView);
+            $title                                          = Yii::t('Default', 'Import Wizard: Step 4 of 6');
+            $importView                                     = new ImportWizardMappingView($this->getId(),
+                                                              $this->getModule()->getId(),
+                                                              $importWizardForm,
+                                                              $pagerContent,
+                                                              $mappingDataMetadata,
+                                                              $mappingDataMappingRuleFormsAndElementTypes,
+                                                              $mappableAttributeIndicesAndDerivedTypes,
+                                                              $importRulesClassName::getRequiredAttributesLabelsData(),
+                                                              $title);
+            $view                                           = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                                              makeStandardViewForCurrentUser($this, $importView));
             echo $view->render();
         }
 
@@ -277,12 +276,13 @@
             }
             if ($step == null)
             {
-                $gridView     = new GridView(2, 1);
-                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 5 of 6'));
-                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
-                $gridView->setView($titleBarView, 0, 0);
-                $gridView->setView($wrapperView, 1, 0);
-                $view        = new ImportPageView($this, $gridView);
+                $title = Yii::t('Default', 'Import Wizard: Step 5 of 6');
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView,
+                                                                         $sequentialProcess->getAllStepsMessage(),
+                                                                         $title);
+                $wrapperView->setCssClasses(array('DetailsView'));
+                $view         = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                       makeStandardViewForCurrentUser($this, $wrapperView));
             }
             else
             {
@@ -340,12 +340,11 @@
             }
             if ($step == null)
             {
-                $gridView     = new GridView(2, 1);
-                $titleBarView = new TitleBarView (Yii::t('Default', 'Import Wizard: Step 6 of 6'));
-                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage());
-                $gridView->setView($titleBarView, 0, 0);
-                $gridView->setView($wrapperView, 1, 0);
-                $view        = new ImportPageView($this, $gridView);
+                $title = Yii::t('Default', 'Import Wizard: Step 6 of 6');
+                $wrapperView  = new ImportSequentialProcessContainerView($sequenceView, $sequentialProcess->getAllStepsMessage(), $title);
+                $wrapperView->setCssClasses(array('DetailsView'));
+                $view = new ImportPageView(ZurmoDefaultAdminViewUtil::
+                                       makeStandardViewForCurrentUser($this, $wrapperView));
             }
             else
             {
@@ -407,6 +406,12 @@
                                                        $importWizardForm->importRulesType,
                                                        $columnType,
                                                        array());
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'), CClientScript::POS_END);
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'), CClientScript::POS_END);
             Yii::app()->getClientScript()->setToAjaxMode();
             Yii::app()->getClientScript()->render($content);
             echo $content;

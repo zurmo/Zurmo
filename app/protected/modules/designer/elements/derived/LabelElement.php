@@ -38,7 +38,7 @@
             $content = null;
             foreach ($this->getElementViewMetadata() as $elementInformation)
             {
-                $editableTemplate      = '{content}&#160;' . $elementInformation['label']. '{error}<br/>';
+                $editableTemplate      = '{content}<span>' . $elementInformation['label']. '</span>{error}';
                 $elementclassname      = $elementInformation['type'] . 'Element';
                 $params                = array_slice($elementInformation, 2);
                 $params['inputPrefix'] = $this->resolveInputPrefix();
@@ -49,7 +49,7 @@
                 $element->editableTemplate = $editableTemplate;
                 $content .= $element->render();
             }
-            return $content;
+             return CHtml::tag('div', array('class' => 'has-lang-label'), $content);
         }
 
         /**

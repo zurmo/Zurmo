@@ -26,12 +26,19 @@
 
     abstract class ModuleEditView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
+        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, $title)
         {
+            assert('is_string($title)');
             $this->controllerId          = $controllerId;
             $this->moduleId              = $moduleId;
             $this->model                 = $model;
             $this->modelId               = null;
+            $this->title                 = $title;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()
@@ -60,6 +67,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
+                            array('type' => 'CancelLink'),
                             array('type' => 'SaveButton'),
                         ),
                     ),

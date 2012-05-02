@@ -193,8 +193,6 @@
             => 'Panel Einstellungen',
         'Panel Title'
             => 'Panel-Titel',
-        'Perform Action'
-            => 'Aktion ausführen',
         'Radio Drop Down'
             => 'Radio Drop Down',
         'record'

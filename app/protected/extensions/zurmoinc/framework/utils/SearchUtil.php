@@ -31,9 +31,12 @@
      */
     class SearchUtil
     {
+        const ANY_MIXED_ATTRIBUTES_SCOPE_NAME = 'anyMixedAttributesScope';
+
         /**
          * Get the search attributes array by resolving the GET array
-         * for the information.
+         * for the information. If the self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME is set, remove that
+         * from the array since this is utilized only directly from the $_GET string.
          */
         public static function resolveSearchAttributesFromGetArray($getArrayName)
         {
@@ -42,8 +45,45 @@
             if (!empty($_GET[$getArrayName]))
             {
                 $searchAttributes = SearchUtil::getSearchAttributesFromSearchArray($_GET[$getArrayName]);
+                if(isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) ||
+                    key_exists(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME, $searchAttributes))
+                {
+                    unset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]);
+                }
             }
             return $searchAttributes;
+        }
+
+        /**
+         * From the get array, if the anyMixedAttributeScope variable is present, retrieve and set into the
+         * $searchModel.  If the value is 'All', then set into the SearchModel a value of null since this
+         * means there is no scoping.
+         * @param object $searchModel
+         * @param string $getArrayName
+         */
+        public static function resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName)
+        {
+            assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
+            assert('is_string($getArrayName)');
+            $searchAttributes  = array();
+            if (!empty($_GET[$getArrayName]) && isset($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+            {
+                assert('$searchModel instanceof SearchForm');
+                if(!is_array($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+                {
+                    $sanitizedAnyMixedAttributesScope = null;
+                }
+                elseif(count($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) == 1 &&
+                       $_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME][0] == 'All')
+                {
+                    $sanitizedAnyMixedAttributesScope = null;
+                }
+                else
+                {
+                    $sanitizedAnyMixedAttributesScope = $_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME];
+                }
+                $searchModel->setAnyMixedAttributesScope($sanitizedAnyMixedAttributesScope);
+            }
         }
 
         /**

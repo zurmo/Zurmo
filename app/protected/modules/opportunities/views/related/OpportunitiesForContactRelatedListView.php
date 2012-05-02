@@ -46,6 +46,7 @@
                                         'update'  => '#modalContainer',
                                     ),
                                     'htmlOptions' => array( 'id' => 'SelectOpportunitiesForContactFromRelatedListLink',
+                                                            'class' => 'simple-select',
                                                             'live' => false) //This is there are no double bindings
             );
             return $metadata;

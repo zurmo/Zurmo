@@ -39,16 +39,16 @@
                         'viewClassName' => 'OpportunityEditAndDetailsView',
                     ),
                     'leftBottomView' => array(
-                        'showAsTabbed' => true,
+                        'showAsTabbed' => false,
                         'columns' => array(
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'OpportunityNoteInlineEditAndLatestActivtiesForPortlet'
+                                        'type' => 'NoteInlineEditForPortlet'
                                     ),
                                     array(
-                                        'type' => 'ContactsForOpportunityRelatedList',
-                                    )
+                                        'type' => 'OpportunityLatestActivtiesForPortlet'
+                                    ),
                                 )
                             )
                         )
@@ -58,11 +58,14 @@
                             array(
                                 'rows' => array(
                                     array(
-                                        'type' => 'UpcomingMeetingsForOpportunityRelatedList',
+                                        'type' => 'UpcomingMeetingsForOpportunityCalendar',
                                     ),
                                     array(
                                         'type' => 'OpenTasksForOpportunityRelatedList',
                                     ),
+                                    array(
+                                        'type' => 'ContactsForOpportunityRelatedList',
+                                    )
                                 )
                             )
                         )

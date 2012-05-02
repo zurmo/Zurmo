@@ -52,6 +52,12 @@
             $this->metadata       = $metadata;
         }
 
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Group Policies') . '</h1>';
+        }
+
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

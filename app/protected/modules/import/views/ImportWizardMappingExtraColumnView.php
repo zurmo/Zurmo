@@ -51,6 +51,7 @@
 
         protected function renderContent()
         {
+            $this->renderScripts();
             $mappingFormLayoutUtil                   = ImportToMappingFormLayoutUtil::make(
                                                        get_class($this->model),
                                                        new ZurmoActiveForm(),
@@ -64,6 +65,19 @@
                                                        $this->model->id);
             return MappingFormLayoutUtil::renderMappingDataMetadataWithRenderedElements(
                    $mappingDataMetadataWithRenderedElements);
+        }
+
+        /**
+         * Renders special scripts required for displaying the view.  Renders scripts for dropdown styling and interaction.
+         */
+        protected function renderScripts()
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'), CClientScript::POS_END);
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'), CClientScript::POS_END);
         }
 
         protected function resolveMappingDataMetadataWithRenderedElements($mappingFormLayoutUtil, $mappingDataMetadata,

@@ -34,9 +34,7 @@
     {
         protected $selectAllOptionsCssClass = 'select-all-options';
 
-        protected $MassActionsCssClass = 'mass-action';
-
-        public $template = "{selectRowsSelectors}{summary}\n{items}\n{massActionSelector}{pager}";
+        public $template = "{selectRowsSelectors}{summary}\n{items}\n{pager}";
 
         public $selectAll;
 
@@ -49,8 +47,6 @@
          * Override to have proper XHTML compliant space value
          */
         public $blankDisplay = '&#160;';
-
-        public $massActionMenu = array();
 
         /**
          * Override to display select all/none optional
@@ -92,65 +88,99 @@
         }
 
         /**
-         * Render a mass action drop down for the list view.
+         * Renders the top pager content
          */
-        public function renderMassActionSelector()
+        public function renderTopPager()
         {
-            if (($count = $this->dataProvider->getItemCount()) <= 0)
+            if(!$this->enablePagination)
             {
                 return;
             }
-            if ($this->selectableRows > 0 && $this->massActionMenu > 0)
+            $pager = array();
+            $class = 'TopLinkPager';
+            if(is_array($this->pager))
             {
-                echo '&#160;<div class="' . $this->MassActionsCssClass . '">' . $this->renderMassActionDropDownElement() . '</div>' . "\n";
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            $pager['pages'] = $this->dataProvider->getPagination();
+            if($pager['pages']->getPageCount() > 1)
+            {
+                echo '<div class="'.$this->pagerCssClass.'">';
+                $this->widget($class,$pager);
+                echo '</div>';
             }
         }
 
-        protected function renderMassActionDropDownElement()
+        /**
+         * Renders the bottom pager content
+         */
+        public function renderBottomPager()
         {
-            $name = $this->id . '-massAction';
-            $htmlOptions = array(
-                'name' => $name,
-                'id'   => $name,
-            );
-            Yii::app()->clientScript->registerScript($this->id . '-listViewMassActionDropDown', "
-                $('#" . $this->id . "-massAction').live('change', function()
-                    {
-                        if ($(this).val() == '')
-                        {
-                            return false;
-                        }
-                        if ($('#" . $this->id . "-selectAll').val() == '')
-                        {
-                            if ($('#" . $this->id . "-selectedIds').val() == '')
-                            {
-                                alert('" . Yii::t('Default', 'You must select at least one record') . "');
-                                $(this).val('');
-                                return false;
-                            }
-                        }
-                        var options =
-                        {
-                            url : $.fn.yiiGridView.getUrl('" . $this->id . "')
-                        }
-                        if (options.url.split( '?' ).length == 2)
-                        {
-                            options.url.split( '?' )[0];
-                            options.url = options.url.split( '?' )[0] +'/'+ $(this).val() + '?' + options.url.split( '?' )[1];
-                        }
-                        else
-                        {
-                            options.url = options.url +'/'+ $(this).val();
-                        }
-                        addListViewSelectedIdsAndSelectAllToUrl('" . $this->id . "', options);
-                        var data = '' + $(this).val() + '&ajax=&" . $this->dataProvider->getPagination()->pageVar . "=1'; " . // Not Coding Standard
-                        "url = $.param.querystring(options.url, data);
-                        window.location.href = url;
-                        return false;
-                    }
-                );
-            ");
-            return CHtml::dropDownList($name, '', $this->massActionMenu, $htmlOptions);
+            if(!$this->enablePagination)
+            {
+                return;
+            }
+            $pager = array();
+            $class = 'BottomLinkPager';
+            if(is_array($this->pager))
+            {
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            $pager['pages'] = $this->dataProvider->getPagination();
+            if($pager['pages']->getPageCount() > 1)
+            {
+                echo '<div class="'.$this->pagerCssClass.'">';
+                $this->widget($class,$pager);
+                echo '</div>';
+            }
+        }
+
+        /**
+         * Override to always render pager div if paging is enabled.
+         * (non-PHPdoc)
+         * @see CBaseListView::renderPager()
+         */
+        public function renderPager()
+        {
+            if(!$this->enablePagination)
+            {
+                return;
+            }
+            $pager = array();
+            $class = 'CLinkPager';
+            if(is_string($this->pager))
+            {
+                $class=$this->pager;
+            }
+            elseif(is_array($this->pager))
+            {
+                $pager = $this->pager;
+                if(isset($pager['class']))
+                {
+                    $class=$pager['class'];
+                    unset($pager['class']);
+                }
+            }
+            $pager['pages']=$this->dataProvider->getPagination();
+            echo '<div class="'.$this->pagerCssClass.'">';
+            $this->widget($class,$pager);
+            echo '</div>';
         }
     }
 ?>

@@ -24,16 +24,11 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AboutPageView extends ZurmoPageView
+    class AboutPageView extends ZurmoDefaultPageView
     {
         protected function getSubtitle()
         {
             return 'About';
-        }
-
-        public function __construct(CController $controller)
-        {
-            parent::__construct(new ZurmoDefaultView($controller, new AboutView()));
         }
     }
 ?>

@@ -83,7 +83,14 @@
                             ),
                         ),
                     ),
-                )
+                ),
+                'shortcutsCreateMenuItems' => array(
+                    array(
+                        'label' => 'OpportunitiesModuleSingularLabel',
+                        'url'   => array('/opportunities/default/create'),
+                        'right' => self::RIGHT_CREATE_OPPORTUNITIES,
+                    ),
+                ),
             );
             return $metadata;
         }

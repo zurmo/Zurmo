@@ -34,7 +34,7 @@
         protected $designerRules;
         protected $attributeCollection;
         protected $designerLayoutAttributes;
-        protected $breadcrumbLinks;
+        protected $title;
 
         public function __construct($controllerId,
             $moduleId,
@@ -44,7 +44,7 @@
             DesignerRules $designerRules,
             $attributeCollection,
             DesignerLayoutAttributes $designerLayoutAttributes,
-            $breadcrumbLinks
+            $title
         )
         {
             assert('is_array($editableMetadata)');
@@ -57,7 +57,7 @@
             $this->designerRules            = $designerRules;
             $this->attributeCollection      = $attributeCollection;
             $this->designerLayoutAttributes = $designerLayoutAttributes;
-            $this->breadcrumbLinks          = $breadcrumbLinks;
+            $this->title                    = $title;
         }
 
         public function isUniqueToAPage()
@@ -67,22 +67,16 @@
 
         protected function renderContent()
         {
-            $titleDisplay    = $this->designerRules->resolveDisplayNameByView($this->metadataViewClassName);
-            $titleBarView    = new TitleBarView(
-                                        Yii::t('Default', 'Edit Layout'), $titleDisplay);
-            $content         = $titleBarView->render();
-            $breadcrumbView  = new DesignerBreadCrumbView(
-                                        $this->controllerId, $this->moduleId, $this->breadcrumbLinks);
-            $content        .= $breadcrumbView->render();
-            $content        .= '<div class="horizontal-line"></div>' . "\n";
-            $content        .= $this->renderForm();
+            $content = $this->renderForm();
             $this->renderStickyAnchorScript();
             return $content;
         }
 
         protected function renderForm()
         {
-            $content = '<div class="wide form">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -92,20 +86,29 @@
                                                                 )
                                                             );
             $content .= $formStart;
-            $content .= '<div class="view-toolbar">';
-            $content .= $this->renderNotificationBar('NotificationBar');
-            $content .= $this->renderSaveLayoutButton('NotificationBar');
+            $content .= '<div class="designer-toolbar">';
+            //$content .= $this->renderNotificationBar('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
             }
             $content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
-            $formEnd = $clipWidget->renderEndWidget();
-            $content .= $formEnd;
+			 $content .= $this->renderNotificationBar('NotificationBar');
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderCancelLink();
+            $content .= $this->renderSaveLayoutButton('NotificationBar');
+            $content .= '</div></div>';
 
-            $content .= '</div>';
+            $formEnd  = $clipWidget->renderEndWidget();
+            $content .= $formEnd;
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         protected function renderSaveLayoutButton($notificationBarId)
@@ -125,6 +128,13 @@
                 ));
         }
 
+        protected function renderCancelLink()
+        {
+            $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/moduleLayoutsList/',
+                                                 array('moduleClassName' => $this->moduleClassName));
+            return CHtml::link(Yii::t('Default', 'Cancel'), $route);
+        }
+
         /**
          * If the metadata's designer rules support a panel configuration type, display that dropdown.
          */
@@ -132,9 +142,9 @@
         {
             $formModel = PanelsDisplayTypeLayoutMetadataUtil::makeFormFromEditableMetadata($this->editableMetadata);
             //$this->editableMetadata populate if it exists.
-            $content = '&#160;&#160;&#160;';
+            $content = null;
             $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
-            $element->editableTemplate = Yii::t('Default', 'Panels Configuration') . ' {content}{error}';
+            $element->editableTemplate = '{content}';
             $content .= $element->render();
             return $content;
         }

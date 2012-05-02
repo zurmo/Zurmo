@@ -72,10 +72,10 @@
                 'existingFiles'        => $existingFilesInformation,
                 'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize(),
                 'beforeUploadAction'   => $beforeUploadAction,
-                'afterDeleteAction'    => $afterDeleteAction,
+                'afterDeleteAction'    => $afterDeleteAction
             ));
             $cClipWidget->endClip();
-            $content .= $cClipWidget->getController()->clips['filesElement'];
+            $content .= '<tr><td></td><td colspan="3"><div class="file-upload-box">' . $cClipWidget->getController()->clips['filesElement'] . '</div></td></tr>';
             return $content;
         }
 
@@ -91,13 +91,12 @@
 
             $delimiterElement                          = new TextElement($this->model, 'rowColumnDelimiter',
                                                          $this->form, $params);
-            $delimiterElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $delimiterElement->editableTemplate        = '<tr><td>{label}</td><td colspan="3">{content}</td></tr>';
             $enclosureElement                          = new TextElement($this->model, 'rowColumnEnclosure',
                                                          $this->form, $params);
-            $enclosureElement->editableTemplate        = '<div style="float:left; padding:2px;">{label} {content}</div>';
+            $enclosureElement->editableTemplate        = '<tr><td>{label}</td><td colspan="3">{content}</td></tr>';
             $content  = $delimiterElement->render();
             $content .= $enclosureElement->render();
-            $content .= '<div style="clear:both;"></div>' . "\n";
             return $content;
         }
 
@@ -107,7 +106,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Please select the CSV to upload');
+            return Yii::t('Default', '<h3>Please select the CSV to upload</h3>');
         }
     }
 ?>

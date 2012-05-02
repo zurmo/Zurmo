@@ -1,0 +1,250 @@
+/*Upload Files Box (in selected account, in Note)*/
+
+.file-upload-box{
+	.box-sizing();
+	padding-left:0;
+	margin:0 !important;
+	div{
+		margin-left:0 !important;	
+	}
+	
+	.fileinput-button{
+		width:100%;
+		.ui-button-text{}
+	}
+	
+	input[type="file"]{}
+	
+	.ui-icon-plusthick{	
+		.zButton();
+		padding:0 5px;
+		&:after{
+			content:"Y";
+			.symbly(20px);
+		}
+	}
+}
+
+
+.fileupload-content{
+	.files{
+		margin-top:15px;
+	}
+	td{
+		
+	}
+	.name{
+		color:@themeColor !important;
+		line-height: 120%;
+	}
+	.size{
+
+	}
+	.ui-button {
+		background:none;
+		border:none;
+		vertical-align:middle;
+	}
+	.ui-icon-trash:after{
+		content:"_";
+		.symbly(22px);
+		text-align:right;
+		float:right;
+	}
+	.ui-icon-cancel:after{
+		content:"_";
+		.symbly(22px);
+	}
+	.ui-button-text{
+		vertical-align:top;
+		position:relative;
+		top:2px;
+		color:#CC0000;
+	}
+	.template-download{
+		td{
+		}
+	}
+	td.delete{
+		button{
+		}
+	}
+	.template-download,
+	.template-upload {
+		td{
+			vertical-align: middle;
+			border-top: 1px solid #efefef;
+			border-bottom: 1px solid #efefef;
+			padding: 10px 0 !important;
+		}
+	}
+	.ui-progressbar {
+		background: url(../images/ajax-loader.gif) left top no-repeat;
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+	.preview {
+		display: none;
+	}
+	.start {
+		display: none;
+	}
+	.progress {
+		background: url(../images/ajax-loader.gif) 50% 50% no-repeat;
+	}
+	.size {
+		width: 80px;
+	}
+	.cancel,
+	.delete {
+		text-align: right;
+		button{
+			&:hover{
+				span{
+					color:@themeColor !important;
+					cursor:pointer;
+					&:after{
+						color:@themeColor !important;
+						cursor:pointer;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+	.fileinput-button {
+		position: relative;
+		overflow: hidden;
+		float: left;
+		margin-right: 4px;
+	}
+	.fileinput-button input {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0;
+		border: solid transparent;
+		border-width: 0 0 100px 200px;
+		opacity: 0;
+		filter: alpha(opacity=0);
+		-moz-transform: translate(-300px, 0) scale(4);
+		direction: ltr;
+		cursor: pointer;
+	}
+	.fileupload-buttonbar .btn, .fileupload-buttonbar .toggle {
+		margin-bottom: 5px;
+	}
+	.files .progress {
+		width: 200px;
+	}
+	.progress-animated .bar {
+		background: url(../images/ajax-loader.gif) !important;
+		filter: none;
+	}
+	.fileupload-loading {
+		position: absolute;
+		left: 50%;
+		width: 128px;
+		height: 128px;
+		background: url(../img/loading.gif) center no-repeat;
+		display: none;
+	}
+	.fileupload-processing .fileupload-loading {
+		display: block;
+	}
+
+/* Fix for IE 6: 
+*html .fileinput-button {
+  line-height: 22px;
+  margin: 1px -3px 0 0;
+}
+*/
+/* Fix for IE 7: 
+*+html .fileinput-button {
+  margin: 1px 0 0 0;
+}*/
+
+/*
+<td colspan="3">
+    <div class="file-upload-box">
+        <div id="fileUploadyw1" class="ui-widget">
+            <div class="fileupload-buttonbar">
+                <label class="fileinput-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary ui-state-hover" role="button">
+                    <span class="ui-button-icon-primary ui-icon ui-icon-plusthick"></span>
+                    <span class="ui-button-text">
+                        <span>Add File</span>
+                    </span>
+                    <input id="ImportWizardForm_file" type="file" name="ImportWizardForm_file">
+                </label>&nbsp;Max upload size: 32MB
+            </div>
+            
+            <div class="clear"></div>
+            
+            <div class="fileupload-content">
+            <table class="files">
+                <tbody>
+                    <tr class="template-upload" style="">
+                        <td class="preview"></td>
+                        <td class="name">zurmo-stable-0.6.2.8a690dd17d3a.csv</td>
+                        <td class="size">11.68 MB</td>
+                        
+                        <td class="progress">
+                            <div class="ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                                <div class="ui-progressbar-value ui-widget-header ui-corner-left ui-corner-right" style="width: 100%; "></div>
+                            </div>
+                        </td>
+                        <td class="start"></td>
+                        <td class="cancel">
+                            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="Cancel">
+                                <span class="ui-button-icon-primary ui-icon ui-icon-cancel"></span>
+                                <span class="ui-button-text">Cancel</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+</div>
+</div>
+<script id="template-upload" type="text/x-jquery-tmpl">
+    <tr class="template-upload{{if error}} ui-state-error{{/if}}">
+        <td class="preview"></td>
+        <td class="name">${name}</td>
+        <td class="size">${sizef}</td>
+        {{if error}}
+            <td class="error" colspan="2">${error}</td>
+        {{else}}
+            <td class="progress"><div></div></td>
+            <td class="start"><button>Start</button></td>
+        {{/if}}
+        <td class="cancel"><button>Cancel</button></td>
+    </tr>
+</script>
+<script id="template-download" type="text/x-jquery-tmpl">
+    <tr class="template-download{{if error}} ui-state-error{{/if}}">
+        {{if error}}
+            <td class="error" colspan="4">${error}</td>
+        {{else}}
+            <input name="fileId[]" type="hidden" value="${id}"/>
+            <td class="name" colspan="4">${name}</td>
+            <td class="size">${size}</td>
+            <td class="delete">
+                <button data-url="/index.php/import/default/deleteFile&id=${id}">Delete</button>
+            </td>
+        {{/if}}
+
+    </tr>
+</script>
+
+</div></td>
+*/

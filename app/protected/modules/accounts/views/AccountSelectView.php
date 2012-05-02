@@ -29,14 +29,23 @@
      */
     class AccountSelectView extends MetadataView
     {
+        protected $controllerId;
+
+        protected $moduleId;
+
+        protected $model;
         /**
          * Construct the view to display an input to select an account
          */
-        public function __construct($model)
+        public function __construct($controllerId, $moduleId, $modelId, $model)
         {
             assert('$model != null');
             assert('$model instanceof AccountSelectForm');
-            $this->model    = $model;
+
+            $this->controllerId   = $controllerId;
+            $this->moduleId       = $moduleId;
+            $this->modelId        = $modelId;
+            $this->model          = $model;
         }
 
         /**
@@ -70,7 +79,11 @@
             $content .= '</tr>';
             $content .= '</tbody>';
             $content .= '</table>';
-            $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'));
+            $cancelLink = new CancelConvertLinkActionElement($this->controllerId, $this->moduleId, $this->modelId);
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $cancelLink->render() . '&#160;';
+            $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'), array('name' => 'AccountSkip'));
+            $content .= '</div></div>';
             return $content;
         }
     }

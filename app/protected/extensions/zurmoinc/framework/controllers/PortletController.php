@@ -73,7 +73,6 @@
             {
                 $this->actionModalConfigValidate();
             }
-
             $portlet = Portlet::getById(intval($_GET['portletId']));
             $portlet->params = array(
                 'modalConfigSaveAction' => 'modalConfigSave',

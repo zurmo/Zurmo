@@ -24,21 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsModalSearchAndListView extends GridView
+    class ContactsModalSearchAndListView extends ModalSearchAndListView
     {
-        public function __construct($controllerId, $moduleId, $modalListLinkProvider,
-                                    RedBeanModel $contact, CDataProvider $dataProvider, $gridIdSuffix = null)
+        public static function getListViewClassName()
         {
-            assert('$modalListLinkProvider instanceof ModalListLinkProvider');
-            parent::__construct(2, 1);
-            $this->setView(new ContactsModalSearchView($contact, get_class($contact), $gridIdSuffix), 0, 0);
-            $this->setView(new ContactsModalListView($controllerId, $moduleId, get_class($contact),
-                                                     $modalListLinkProvider,  $dataProvider, $gridIdSuffix), 1, 0);
+            return 'ContactsModalListView';
         }
 
-        public function isUniqueToAPage()
+        public static function getSearchViewClassName()
         {
-            return true;
+            return 'ContactsModalSearchView';
         }
     }
 ?>

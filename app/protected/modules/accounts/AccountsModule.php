@@ -85,6 +85,13 @@
                             ),
                         ),
                     ),
+                ),
+                'shortcutsCreateMenuItems' => array(
+                    array(
+                        'label' => 'AccountsModuleSingularLabel',
+                        'url'   => array('/accounts/default/create'),
+                        'right' => self::RIGHT_CREATE_ACCOUNTS,
+                    ),
                 )
             );
             return $metadata;

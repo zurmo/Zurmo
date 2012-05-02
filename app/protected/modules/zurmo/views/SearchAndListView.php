@@ -30,13 +30,8 @@
         {
             parent::__construct(3, 1);
             $moduleClassName = $moduleName . 'Module';
-            $menuItems       = MenuUtil::getAccessibleShortcutsMenuByCurrentUser($moduleClassName);
-            $shortcutsMenu   = new DropDownShortcutsMenuView(
-                                    $controllerId,
-                                    $moduleId,
-                                    $menuItems);
             $titleBarView = new TitleBarView (  $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                                                Yii::t('Default', 'Home'), 1, $shortcutsMenu->render());
+                                                Yii::t('Default', 'Home'), 1);
             $this->setView($titleBarView, 0, 0);
             $searchViewClassName = $moduleName . 'SearchView';
             $this->setView(new $searchViewClassName($searchModel, get_class($listModel)), 1, 0);

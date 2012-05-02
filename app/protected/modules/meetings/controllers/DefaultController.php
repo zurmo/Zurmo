@@ -26,5 +26,42 @@
 
     class MeetingsDefaultController extends ActivityModelsDefaultController
     {
+        public function actionDaysMeetingsFromCalendarModalList($stringTime, $displayStringTime, $redirectUrl)
+        {
+            if(isset($_GET['ownerOnly']))
+            {
+                $ownerOnly = true;
+            }
+            else
+            {
+                $ownerOnly = false;
+            }
+            if(isset($_GET['relationModelId']))
+            {
+                $relationModelClassName = $_GET['relationModelClassName'];
+                $relationModel          = $relationModelClassName::getById((int)$_GET['relationModelId']);
+            }
+            else
+            {
+                $relationModel = null;
+            }
+            $pageTitle = Yii::t('Default', 'MeetingsModulePluralLabel On {displayStringTime}',
+                         array_merge(LabelUtil::getTranslationParamsForAllModules(),
+                             array('{displayStringTime}' => $displayStringTime)));
+            Yii::app()->getClientScript()->setToAjaxMode();
+            $meetingsView = new DaysMeetingsFromCalendarModalListView(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $stringTime,
+                $redirectUrl,
+                $ownerOnly,
+                $relationModel
+            );
+            $view = new ModalView($this,
+                $meetingsView,
+                'dayMeetingsModalContainer',
+                $pageTitle);
+            echo $view->render();
+        }
     }
 ?>

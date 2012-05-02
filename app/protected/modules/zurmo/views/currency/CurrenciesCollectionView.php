@@ -50,7 +50,9 @@
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -66,8 +68,13 @@
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
             $content .= $clipWidget->renderEndWidget();
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . Yii::t('Default', 'Currencies: List') . '</h1>';
         }
 
             /**
@@ -155,7 +162,7 @@
             {
                 $content .= $lastAttempedDateTime;
             }
-            return '<span style="font-size:75%;"><i>(' . $content . ')</i></span>';
+            return '<span><i>(' . $content . ')</i></span>';
         }
 
         protected static function renderActiveHeaderContent()
@@ -163,10 +170,8 @@
             $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">';
-            $content    .= Yii::t('Default', 'What is this?') . '</span>';
-
-            Yii::import('application.extensions.qtip.QTip');
-            $qtip = new QTip();
+            $content    .= Yii::t('Default', '?') . '</span>';
+            $qtip = new ZurmoTip();
             $qtip->addQTip("#active-currencies-tooltip");
             return $content;
         }

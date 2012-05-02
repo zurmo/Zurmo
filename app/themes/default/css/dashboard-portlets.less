@@ -1,0 +1,66 @@
+/*Add Portlet*/
+#HomeDashboardPortletSelectionView{
+	ul{
+		padding: 20px;
+		list-style: none;
+		.clearfix();
+		li{
+			width: 50%;
+			float:left;
+			margin-bottom:15px;
+			color:#666;
+			vertical-align:middle;
+		}
+		span{
+			.symbly(16px);
+			color:#fff;
+			width:14px;
+			height:14px;
+			.radius(10px);
+			background:@themeColor2;
+			border:none;
+			margin-right:6px;
+			outline: none !important;
+			display:inline-block;
+			text-align:center;
+		}
+		a{
+			outline: none !important;
+			cursor:pointer;
+			&:foucs{
+				outline: none;
+			}
+		}
+	}
+}
+
+/*Edit Portlet*/
+#modal-edit-form{
+	tr{
+	
+	}
+	th{
+		line-height: 24px;
+	}
+	th, td{
+		padding:0 0 15px 0;
+	}
+	//for opt in email checkboxes
+	input[type="checkbox"] + label{
+		width:60px;
+		margin-top:0;
+	}
+	//for address fields
+	td > label{
+		&:first-child{
+			margin-top:5px;
+		}
+		margin-top:10px;
+	}
+}
+.panelTitle{
+	font-size:13px;
+	font-weight:bold;
+	color:@themeColor;
+	margin:10px 0;
+}

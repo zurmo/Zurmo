@@ -117,6 +117,37 @@
             $this->assertEquals(array('a' => '0'), $newArray);
         }
 
+        public function testResolveSearchAttributesFromGetArrayForAnyMixedAttributeScopeName()
+        {
+            $_GET['testing'] = array(
+                'a' => '0',
+                SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => 'something',
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => '0'), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '0',
+                SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => null,
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => '0'), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '0',
+                SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => array(),
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => '0'), $newArray);
+
+            $_GET['testing'] = array(
+                'a' => '0',
+                SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => array('a' => 'b'),
+            );
+            $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing');
+            $this->assertEquals(array('a' => '0'), $newArray);
+        }
+
         /**
          * This test is for testing the method SearchUtil::changeEmptyArrayValuesToNull.
          * if a value in the search array for multiselect attribute has an empty element it is removed(eliminated).
@@ -132,7 +163,6 @@
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
             $this->assertEquals($resultArray, $newArray);
         }
-
         public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
         {
             $searchArray = array(
@@ -196,6 +226,27 @@
                 'name'               => array('value' => 'thiswillstay'),
             );
             $this->assertEquals($compareData, $adaptedSearchAttributes);
+        }
+
+        public function testResolveAnyMixedAttributesScopeForSearchModelFromGetArray()
+        {
+            $searchModel  = new ASearchFormTestModel(new A());
+            $getArrayName = 'someArray';
+            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertNull($searchModel->getAnyMixedAttributesScope());
+
+            //Test passing a value in the GET
+            $_GET['someArray'][SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME] = 'notAnArray';
+            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertNull($searchModel->getAnyMixedAttributesScope());
+
+            $_GET['someArray'][SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME] = array('All');
+            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertNull($searchModel->getAnyMixedAttributesScope());
+
+            $_GET['someArray'][SearchUtil::ANY_MIXED_ATTRIBUTES_SCOPE_NAME] = array('A', 'B', 'C');
+            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertEquals(array('A', 'B', 'C'), $searchModel->getAnyMixedAttributesScope());
         }
     }
 ?>

@@ -37,34 +37,35 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'EditDashboardLink'),
+                            array('type' => 'CreateDashboardLink',
+                                'htmlOptions' => array('class' => 'icon-create')
+                                ),
+                            array('type' => 'EditDashboardLink',
+                                'htmlOptions' => array('class' => 'icon-edit')
+                                ),
                             array('type' => 'AddPortletAjaxLink',
                                 'uniqueLayoutId' => 'eval:$this->uniqueLayoutId',
                                 'ajaxOptions' => array(
                                     'onclick' => '$("#modalContainer").dialog("open"); return false;',
                                     'update' => '#modalContainer',
                                 ),
-                                'htmlOptions' => array('id' => 'AddPortletLink')
+                                'htmlOptions' => array('id' => 'AddPortletLink',
+                                    'class' => 'icon-add'
+                                )
                             ),
                         ),
                     ),
                     'columns' => array(
                         array(
                             'rows' => array(
+                               array(
+                                    'type' => 'MyUpcomingMeetingsCalendar',
+                                ),
                                 array(
-                                    'type' => 'MeetingsMyList',
+                                    'type' => 'AllLatestActivtiesForPortlet',
                                 ),
                                 array(
                                     'type' => 'TasksMyList',
-                                ),
-                                array(
-                                    'type' => 'OpportunitiesMyList',
-                                ),
-                                array(
-                                    'type' => 'LeadsMyList',
-                                ),
-                                array(
-                                    'type' => 'AccountsMyList',
                                 ),
                             )
                         ),

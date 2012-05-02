@@ -26,12 +26,13 @@
 
     abstract class AttributeEditView extends EditView
     {
-        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model)
+        public function __construct($controllerId, $moduleId, ConfigurableMetadataModel $model, $title)
         {
             $this->controllerId = $controllerId;
             $this->moduleId     = $moduleId;
             $this->model        = $model;
             $this->modelId      = null;
+            $this->title        = $title;
         }
 
         public function isUniqueToAPage()
@@ -63,6 +64,11 @@
             {
                 $elementInformation['disabled'] = true;
             }
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
     }
 ?>

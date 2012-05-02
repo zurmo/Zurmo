@@ -87,9 +87,14 @@
 
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
-            $content .= '<div class="modal-view-toolbar">';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
+            $content .= $this->renderAfterFormLayout($form);
+            $actionElementContent = $this->renderActionElementBar(true);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="modal-view-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
             $content .= '</div>';

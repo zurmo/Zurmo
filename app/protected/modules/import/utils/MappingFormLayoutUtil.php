@@ -258,7 +258,7 @@
                     'url'     =>  $ajaxOnChangeUrl,
                     'replace' => '#' . $mappingRulesDivId,
             ));
-            return "$('#" . $id . "').change(function()
+            return "$('#" . $id . "').unbind('change'); $('#" . $id . "').bind('change', function()
             {
                 $ajaxSubmitScript
             }

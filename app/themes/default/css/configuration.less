@@ -1,0 +1,846 @@
+.tableTreeView(){
+	table{
+		width: 100%;
+		border-bottom:none;
+		br{
+			display:none;
+		}
+		tr:last-child{
+			td{
+				border-bottom:none;
+			}	
+		}
+		td, th{
+			border-bottom:1px solid #DFDFDF;
+			padding:10px !important;
+			text-align:left;
+		}
+		tr td{
+			font-weight:normal !important;
+			padding-top:10px !important;
+			padding-bottom:10px !important;
+		}
+	}
+}
+
+
+.back-to-app-menu-item span{
+	vertical-align:middle;
+	color:@themeColor !important;
+	&:before{
+		content:"z";
+		.symbly(21px);
+		margin-right:6px;
+	}
+}
+
+#ConfigurationPageView{
+		table{
+			border: 1px solid #DFDFDF;
+			border-collapse: collapse;
+			border-spacing: 1px;
+			width:100%;
+		}
+		
+		table th,
+		table td{
+			border: 1px solid #DFDFDF;
+			vertical-align:middle;
+			padding:10px;
+		}
+		
+		
+		table tbody,
+		table tbody tr:last-child,
+		table tbody tr:last-child td{
+			border-bottom: none;
+		}
+		
+		table thead tr th:last-child,
+		table tbody tr td:last-child{
+			//padding-right:15px;
+		}
+		
+		table th{
+			font-weight:bold !important;
+			height:35px;
+			line-height: 35px;
+			background: url(../images/table-items-header.png) left top repeat-x;
+			padding:0 0 0 10px !important;
+		}
+		.checkbox-column{
+			width:35px;
+			text-align:center;
+		}
+		.button-column{
+			width:25px;
+			text-align:center;
+			vertical-align:top !important;
+		}
+		tr.odd{
+			
+		}
+		tr.even{
+			background:#fafafa;	
+		}
+		table tr:hover{
+			background-color:#D4E7BC;
+			color:@themeColor;
+			.pencil{
+				visibility:visible;
+				color:@themeColor;
+			}
+		}
+		table thead{
+			#gradient > .vertical(#f9f9f9, #f4f4f4);
+		}
+		table thead tr:hover{
+			#gradient > .vertical(#f9f9f9, #f4f4f4);
+		}
+}
+
+.configuration-list{
+	list-style:none;
+	.clearfix;
+	li{
+		.clearfix;
+		.box-sizing();
+		width:100%;
+		float:left;
+		position: relative;
+		margin:0;
+		padding:20px 15px;
+		border-top:1px solid #ccc;
+		border-bottom:1px solid #fff;
+		font-size:11px;
+		&:last-child{
+			border-bottom:none;
+			margin-bottom:none;
+		}
+		&:first-child{
+			border-top:none;
+			margin-top:none;
+		}
+		
+		h4{
+			margin:0 0 0 0;
+			display:inline-block;
+		}
+		a{
+			.zButton();
+			float:right;
+			position: absolute;
+			right:15px;
+			top:14px;
+			&:before{
+				content: "n";
+				.symbly(16px);
+				margin-right:5px;
+				position:relative;
+				top:0px;
+			}
+		}
+	}
+}
+table.configuration-list{
+	.clearfix;
+	h4{
+		margin:0 0 0 0;
+		display:inline-block;
+	}
+	tbody > tr > td{
+		padding:20px 15px !important;
+		position:relative;
+	}
+	tr td:last-child a{
+		.zButton();
+		float:right;
+		position: absolute;
+		right:15px;
+		top:14px;
+		&:before{
+			content: "n";
+			.symbly(16px);
+			margin-right:5px;
+			position:relative;
+			top:0px;
+		}
+	}
+}
+
+/*Groups*/
+
+.ActionBarForSecurityTreeListView,
+#ActionBarForGroupsEditAndDetailsView{
+	.view-toolbar{
+		margin-top:0;
+	}
+}
+.AdministrativeArea{
+	#edit-form{
+		table{
+			width:100%;
+			float:none;
+		}
+	}
+	.view-toolbar{
+		margin-top:0;
+	}
+}
+
+#ModulePermissionsEditAndDetailsView{
+	table tr:first-child{
+		th{
+			padding-left:15px;
+			font-weight:bold !important;
+			color:@themeColor;
+		}
+	}
+	td{
+		text-align:left;
+		padding-left:15px;
+	}
+	th{
+		text-align:left;
+		font-size: 12px !important;
+		color: #666;
+		font-weight: 400 !important;
+	}
+}
+
+.AdministrativeArea.AppContent{
+	padding-right:0;
+}
+.AdministrativeArea.AppContent .DetailsView > div{
+	
+}
+.multiselect-holder{
+	width:675px;
+	margin:0 auto;
+	.clearfix();
+	label{
+		display:block !important;
+		float:none !important;
+	}
+	select{
+		display:block;
+		width:100%;
+		.box-sizing();
+		line-height: 150%;
+	}
+	input[type="button"]{
+		display:block !important;
+		margin-bottom:15px !important;
+		.zButton();
+		.symbly(22px);
+	}
+}
+.multiselect-left, .multiselect-right{
+	float:left;
+	width: 300px;
+}
+.multiselect-nav{
+	float:left;
+	padding:0 15px;
+	.box-sizing();
+	width:75px;
+	text-align:center;
+	height:75px;
+	margin-top:60px;
+}
+
+/*TreeListView - usualy first page in each in admin*/
+#LanguagesCollectionView,
+#CurrenciesCollectionView,
+#JobsCollectionView,
+.SecurityTreeListView{
+	.tableTreeView();
+	padding-bottom:10px !important;
+	
+	> div{
+		padding-bottom:0 !important;
+	}
+	
+	table{
+		tr:first-child{
+			th{
+				color:#545454;
+				text-align:left;
+				font-weight: bold !important;
+				height: 35px  !important;
+				line-height: 35px  !important;
+				background: url(../images/table-items-header.png) left top repeat-x;
+				padding: 0 0 0 10px !important;
+			}
+		}
+	}
+	
+	td.level-0{ padding-left:10px !important;}
+	
+	td.level-1{
+		padding-left:45px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 15px;
+			top:-1px;
+			font-weight:100 !important;
+		}
+	}
+	td.level-2{ 
+		padding-left:75px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 45px;
+			top:-1px;
+		}	
+	}
+	td.level-3{ 
+		padding-left:105px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 75px;
+			top:-1px;
+		}	
+	}
+	td.level-4{ 
+		padding-left:135px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 105px;
+			top:-1px;
+		}	
+	}
+	td.level-5{ 
+		padding-left:165px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 135px;
+			top:-1px;
+		}	
+	}
+	td.level-6{ 
+		padding-left:195px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 165px;
+			top:-1px;
+		}	
+	}
+	td.level-7{ 
+		padding-left:225px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 195px;
+			top:-1px;
+		}	
+	}
+	td.level-8{ 
+		padding-left:255px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 225px;
+			top:-1px;
+		}	
+	}
+	td.level-9{ 
+		padding-left:285px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 255px;
+			top:-1px;
+		}	
+	}
+	td.level-10{ 
+		padding-left:315px !important;
+		&:before{
+			content: "∟";
+			font-size: 30px;
+			position: absolute;
+			left: 285px;
+			top:-1px;
+		}	
+	}
+}
+
+/*Jobs*/
+#JobsCollectionView{
+	.form form{
+		padding: 0;
+	}
+	h3{
+		padding-left: 10px;
+		margin-top: 30px;
+		margin-bottom:10px;
+	}
+	.jobs-help{
+		margin:10px 0 10px 10px;
+		display: block;
+	}
+	tr:last-child{
+		td{
+			border-bottom:1px solid #DFDFDF !important;
+		}	
+	}
+	a{
+		background:@themeColor;
+		padding:1px 4px;
+		.radius(2px);
+		color:#fff;
+		&:hover{
+			color:#fff !important;
+			text-decoration:underline;
+		}
+	}
+	table{
+		border-top:1px solid #DFDFDF;
+		&:first-child{
+			border-top:none;
+		}
+	}
+	#jobs-collection-form > div + table{
+		border-top:none;
+	}
+}
+
+/*Languages*/
+#LanguagesCollectionView{
+	form{
+		padding:0;
+	}
+	.view-toolbar-container{
+		border-top:1px solid #CCCCCC;
+		margin-bottom:5px;
+	}
+	.hasChecBox{
+		margin-top:0 !important;
+	}
+	form td > label:first-child{
+		margin-top:0 !important;
+	}
+}
+
+/*Currency*/
+#currency-collection-form{
+	padding-bottom: 10px;
+	.portlet-toolbar{
+		position: relative;
+		top:auto;
+		left:auto;
+		right:auto;
+		.form-toolbar();
+	}
+	.view-toolbar-container{
+		border-top:1px solid #CCCCCC;
+		margin-bottom:5px;
+	}
+}
+#CurrenciesCollectionView{
+	.form form{
+		padding: 0;
+	}
+}
+#CurrencyCreateView{
+	margin:0;
+	padding:0;
+	border:none;
+	.b-shadow(none);
+	background:none;
+	#edit-form:after{
+		display:none !important;
+	}
+}
+
+
+/*Breadcrumbs*/
+.breadcrumbs{
+	padding:0 0 15px 0;
+	font-size:11px;
+	a{
+		color: @themeColor !important;
+	}
+}
+
+/*designer*/
+.ModuleEditView{
+	#edit-form{
+		label{
+			text-align: left;
+		}
+	}
+}
+.multi-select-checkbox-input{
+	.clearfix;
+	width:100%;
+	display:block;
+	margin-top:4px;
+	.hasCheckBox{
+		margin:0 10px 0 0 !important;
+	}
+	
+	label{
+		//margin:0 !important;
+	}
+}
+.has-lang-label{
+	input{
+		position: relative;
+		padding-left:80px;
+	}
+	input + span{
+		background:url(../images/lang-label.png) left top no-repeat;
+		/*
+		float:left;
+		*/
+		display:inline-block;
+		position: relative;
+		left:1px;
+		line-height:24px;
+		top:-25px;
+		width:80px;
+		text-align:center;
+		border-right:1px solid #cccccc;
+		.t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+	}
+}
+
+.add-custom-field{
+	> div{
+		padding:15px 15px 15px 15px;
+		position:relative;
+		&:after{
+			//display:none;
+		}
+	}
+	.dk_container{
+		width:75%;
+		margin-right:10px;
+	}
+	.configure-custom-field-button{
+		.zButton();
+		&:before{
+			content: "n";
+			.symbly(16px);
+			margin-right:5px;
+			position:relative;
+			top:0px;
+		}
+	}
+}
+
+/*Users*/
+
+#UsersPageView{
+	.AdministrativeArea.AppContent {
+		#ActionBarSearchAndListView{
+			padding-right:20px;
+		}
+	}
+	.DetailsView{
+		table{
+			margin-left:8px;
+		}
+		table tr:first-child{
+			th{
+				//font-weight:bold !important;
+				//color:@themeColor;
+			}
+		}
+		td{
+			text-align:left;
+			padding-left:15px;
+		}
+		th{
+			text-align:left;
+			font-size: 12px !important;
+			color: #666;
+			font-weight: 400 !important;
+		}
+	}
+	table.items{
+		float:left;
+	}
+	.panel{
+		width:100% !important;
+		table{
+			margin-right:15px;
+		}
+		
+	}
+}
+.panelTitle{
+	padding-left:15px;
+	padding-top:30px;
+}
+
+#UserConfigurationEditView{
+	#edit-form{
+		table{
+			width:100%;
+		}
+	}
+}
+/*Audit Modal*/
+#AuditEventsModalListView{
+	tr{
+		td:first-child, th:first-child{
+			padding-left:15px;
+			&:focus{
+				outline:none;
+			}
+		}
+	}
+}
+	
+/*Email Config*/
+#SendATestEmailToButton{
+	.zButton;
+}
+#TestEmailMessageView{
+	padding:15px;
+}
+#send-test-email-field{
+	width:100%;
+	float:left;
+	> div{
+		margin-right:130px;
+		> input{
+			
+		}
+	}
+	
+	& + span{
+		float:left;
+		width:130px;
+		margin-left: -130px;
+		input{
+			float:right;
+		}
+	}
+}
+
+/*Import window*/
+.AppContent.ImportWizardView{
+	padding-right:0;
+	#edit-form{
+		table{
+			width:100%;
+			td{
+				padding-left:0;
+			}
+		}
+	} 
+	h3{
+		margin-bottom:15px;
+	}
+	#permissions-module {
+		width: 60% !important;
+		float: none !important;
+	}
+	#addExtraColumnButton{
+		.zButton;
+	}
+	.required-fields{
+		font-size:12px;
+		line-height: 18px;
+		padding-left:10px;
+		strong{
+			margin-bottom:4px;
+			margin-left:-10px;
+		}
+	}
+}
+/*step 2*/
+#ImportWizardUploadFileView{
+	.hasCheckBox{
+		margin: 0 !important;
+		& + label{
+			margin:5px 0 0 10px !important;
+		}
+	}
+	
+}
+/*=Step 4,Mapping view*/
+#ImportWizardMappingView{
+	#edit-form{
+		padding:0;
+	}
+	h3{
+		margin:15px 0 0 15px;
+	}
+	.required-fields{
+		margin:5px 0 0 15px;
+	}
+	table tr:first-child{
+		th{
+			color:#545454;
+			text-align:left;
+			font-weight: bold !important;
+			height: 35px;
+			line-height: 35px;
+			background: url(../images/table-items-header.png) left top repeat-x;
+			padding: 0 0 0 15px !important;
+			border-top:1px solid #DFDFDF;
+			border-bottom:1px solid #DFDFDF;
+		}
+	}
+	td{
+		text-align:left;
+		padding-top:15px;
+		padding-left:15px !important;
+		border-bottom:1px solid #DFDFDF;
+	}
+	tr td:last-child{
+		padding-right:15px;
+	}
+	
+	table tr:last-child{
+		td{
+			border-bottom: none;
+			padding-bottom:0;
+		}
+	}
+	.view-toolbar-container{
+		padding-bottom:15px;
+	}
+	
+	.mapping-rules{
+		table, td, th, input, label{
+			margin:0 !important;
+		}
+		td, th{
+			padding:0 !important;
+			background:none !important;
+			border:none !important;
+		}
+		th{
+			height:auto !important;
+			line-height: 100% !important;
+		}
+		label{
+			line-height: 26px;
+		}
+	}
+	#sample-column-header{
+		a{
+			.zLink();
+		}
+	}
+}
+/*=Step 5, process details*/
+
+#ImportWizardDataAnalysisCompleteView{
+	> div{
+		margin:0;
+		border:none;
+		background:none;
+		.b-shadow(none);
+		#edit-form{
+			&:after{
+				display:none;
+			}
+		}
+	}
+}
+
+
+
+#ImportWizardImportRulesView{
+	.radio-input{
+		margin-top:20px;
+		.clearfix;
+		input{
+			float:left;
+			margin-right:10px;
+			margin-top:1px;
+		}
+	}	
+}
+
+.process-container-view{
+	padding:15px 15px 0 15px;
+}
+
+#ImportSequentialProcessContainerView{
+	padding-right:0;
+	#edit-form{
+		padding:0 0 15px 0 !important;
+		border:0 !important;
+		background:none !important;
+		.b-shadow(none);
+		table{
+			width:100%;
+			td{
+				padding-left:0;
+			}
+		}
+	} 
+	h3, h3 + span{
+		margin-bottom:15px;
+		display:block;
+	}
+}
+#ImportWizardCreateUpdateModelsCompleteView{
+	> div{
+		padding:0 !important;
+		margin:0;
+		border:0 !important;
+		background:none !important;
+		.b-shadow(none);
+	}
+	table{
+		//margin-top:15px;
+		border-bottom:1px solid #DFDFDF !important;
+	}
+	table tr:first-child{
+		th{
+			padding:0 0 0 15px !important;
+			font-weight:bold !important;
+		}
+	}
+	td{
+		text-align:left;
+		padding:10px 15px !important;
+		font-weight:normal !important;
+	}
+	tr td:first-child{
+		
+	}
+	th{
+		text-align:left;
+		font-size: 12px !important;
+		color: #666;
+		font-weight: 400 !important;
+	}
+}
+.ui-progressbar{
+	 background: url(../images/ajax-loader.gif) left top no-repeat;
+}
+#SequentialProcessView{
+	.process-container-view{
+		//background:pink;
+		margin:0;
+		padding:0;
+	}
+}
+#ImportErrorsListView{
+	margin-bottom:15px;
+}
+

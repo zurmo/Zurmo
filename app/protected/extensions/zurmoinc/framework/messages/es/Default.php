@@ -193,8 +193,6 @@
             => 'Configuración de panel',
         'Panel Title'
             => 'Título de panel',
-        'Perform Action'
-            => 'Realizar accíon',
         'Radio Drop Down'
             => 'Elementos del botón radio',
         'record'

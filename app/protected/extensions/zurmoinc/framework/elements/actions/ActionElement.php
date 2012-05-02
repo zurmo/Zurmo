@@ -54,6 +54,14 @@
             $this->route        = $this->getRoute();
         }
 
+        /**
+         * Override in child class to add support for rendering the element as a menu item.
+         */
+        public function renderMenuItem()
+        {
+            throw new NotSupportedException();
+        }
+
         protected function getLabel()
         {
             if (!isset($this->params['label']))

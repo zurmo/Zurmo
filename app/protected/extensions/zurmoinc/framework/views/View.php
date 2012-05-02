@@ -38,7 +38,13 @@
          * @see MenuView, TitleBarView for examples of views that set this
          * value to false.
          */
-        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = true;
+        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false; //true
+
+        /**
+         * Extra classes defined to add to the div style for the view.
+         * @var array
+         */
+        protected $cssClasses = array();
 
         /**
          * Tells View that it can render the extending class' divs with
@@ -95,7 +101,7 @@
             {
                 $id = '';
             }
-            $classes = join(' ', $classes);
+            $classes = join(' ', array_merge($this->getCssClasses(), $classes));
             if ($classes != '')
             {
                 $classes = " class=\"$classes\"";
@@ -107,7 +113,10 @@
             }
             else
             {
-                return "<div $id$classes style=\"\">$content</div>";
+				$reflection = new ReflectionClass( $calledClass );
+				$classFile = $reflection->getFileName();
+                return "<!--Called in: $classFile--><div $id $classes>$content</div>";
+				
             }
         }
 
@@ -115,5 +124,15 @@
          * Renders the view content.
          */
         protected abstract function renderContent();
+
+        public function setCssClasses(array $classes)
+        {
+            $this->cssClasses = $classes;
+        }
+
+        public function getCssClasses()
+        {
+            return $this->cssClasses;
+        }
     }
 ?>

@@ -45,7 +45,6 @@
             $content = null;
             $content .= $this->renderEditableEmailAddressTextField    ($addressModel, $this->form, $this->attribute, 'emailAddress') . "<br/>\n";
             $content .= $this->renderEditableEmailAddressCheckBoxField($addressModel, $this->form, $this->attribute, 'optOut') . "<br/>\n";
-            $content .= $this->renderEditableEmailAddressCheckBoxField($addressModel, $this->form, $this->attribute, 'isInvalid') . "<br/>\n";
             return $content;
         }
 
@@ -70,7 +69,7 @@
             $label         = $form->labelEx ($model, $attribute, array('for'   => $id));
             $checkBoxField = $form->checkBox($model, $attribute, $htmlOptions);
             $error         = $form->error   ($model, $attribute);
-            return $checkBoxField . $label . $error;
+            return '<div class="hasCheckBox">' . $checkBoxField . $label . $error . '</div>';
         }
 
         /**

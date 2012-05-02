@@ -54,15 +54,15 @@
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'OpportunitiesFilteredList',
                 $pageSize,
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new OpportunitiesPageView($this, $searchFilterListView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 
@@ -70,11 +70,12 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($opportunity), $opportunity);
+            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($opportunity), 'OpportunitiesModule'), $opportunity);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',
                                                                           'OpportunityDetailsAndRelationsView',
                                                                           Yii::app()->request->getRequestUri());
-            $view = new OpportunitiesPageView($this, $detailsAndRelationsView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
             echo $view->render();
         }
 
@@ -102,9 +103,10 @@
 
         protected function actionCreateByModel(Opportunity $opportunity, $redirectUrl = null)
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                                             $this->attemptToSaveModelFromPost($opportunity, $redirectUrl), 'Edit');
-            $view = new OpportunitiesPageView($this, $titleBarAndEditView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -112,9 +114,11 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($opportunity);
-            $view = new OpportunitiesPageView($this,
-                $this->makeTitleBarAndEditAndDetailsView(
-                    $this->attemptToSaveModelFromPost($opportunity, $redirectUrl), 'Edit'));
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeEditAndDetailsView(
+                                                        $this->attemptToSaveModelFromPost($opportunity, $redirectUrl),
+                                                        'Edit')));
             echo $view->render();
         }
 
@@ -154,13 +158,14 @@
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $opportunity,
                 $activeAttributes,
                 $selectedRecordCount,
                 OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural')
             );
-            $view = new OpportunitiesPageView($this, $titleBarAndMassEditView);
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 

@@ -119,7 +119,8 @@
             $htmlOptions = array(
                 'id'   => $this->getEditableInputId($this->getAttributeName(), 'type'),
             );
-            $htmlOptions['template'] =  '<div class="radio-input">{input}{label}</div>';
+            $htmlOptions['template']  = '<div class="radio-input">{input}{label}</div>';
+            $htmlOptions['separator'] = '';
             return $htmlOptions;
         }
 

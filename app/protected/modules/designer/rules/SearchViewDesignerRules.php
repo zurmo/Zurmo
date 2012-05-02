@@ -26,6 +26,11 @@
 
     class SearchViewDesignerRules extends DesignerRules
     {
+        public function canMergeAndSplitCells()
+        {
+            return false;
+        }
+
         public function canAddPanels()
         {
             return false;
@@ -67,6 +72,7 @@
         {
             return array(
                 array('attributeName' => 'title', 'type' => 'Text'),
+                array('attributeName' => 'locked', 'type' => 'CheckBox'),
             );
         }
 
@@ -95,7 +101,7 @@
 
         public function maxCellsPerRow()
         {
-            return 2;
+            return 1;
         }
 
         /**

@@ -64,7 +64,7 @@
             $htmlOptions['id']       = $this->getEditableInputId();
             $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = 'disabled';
-            return CHtml::activeCheckBox($this->model, $this->attribute, $htmlOptions);
+            return ZurmoHtml::activeCheckBox($this->model, $this->attribute, $htmlOptions);
         }
     }
 ?>

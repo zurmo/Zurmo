@@ -30,20 +30,20 @@
 
         protected $moduleId;
 
-        public function __construct($controllerId, $moduleId)
+        protected $title;
+
+        public function __construct($controllerId, $moduleId, $title)
         {
+            assert('is_string($title)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
+            $this->title                  = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:100%"/>';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Module') . '</th></tr>';
+            $content  = $this->renderTitleContent();
+            $content .= '<ul class="configuration-list">';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -52,22 +52,24 @@
                     !empty($moduleTreeMenuItems))
                 {
                     $route = $this->moduleId . '/' . $this->controllerId . '/modulesMenu/';
-                    $content .= '<tr>';
-                    $content .= '<td>';
-                    $content .= CHtml::link(
-                        Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')),
-                        Yii::app()->createUrl($route,
+                    $content .= '<li>';
+                    $content .= '<h4>'. Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')) . '</h4>';
+                    $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                                        Yii::app()->createUrl($route,
                             array(
                                 'moduleClassName' => get_class($module),
                             )
                         ));
-                    $content .= '</td>';
-                    $content .= '</tr>';
+                    $content .= '</li>';
                 }
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
+            $content .= '</ul>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

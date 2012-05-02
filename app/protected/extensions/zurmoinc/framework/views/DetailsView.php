@@ -35,18 +35,22 @@
 
         protected $model;
 
+        protected $title;
+
         /**
          * Constructs a detail view specifying the controller as
          * well as the model that will have its details displayed.
          */
-        public function __construct($controllerId, $moduleId, $model)
+        public function __construct($controllerId, $moduleId, $model, $title = null)
         {
             assert('$model instanceof RedBeanModel || $model instanceof CFormModel || $model instanceof ModelForm');
+            assert('$title == null || is_string($title)');
             $this->controllerId   = $controllerId;
             $this->moduleId       = $moduleId;
             $this->model          = $model;
             $this->modelClassName = get_class($model);
             $this->modelId        = $model->id;
+            $this->title          = $title;
         }
 
         /**
@@ -56,11 +60,74 @@
          */
         protected function renderContent()
         {
-            $content = '<div class="view-toolbar">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>';
+            $content  = '<div class="details-table">';
+            $content .= $this->renderTitleContent();
+            $actionElementContent = $this->renderActionElementMenu();
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $content .= $this->renderFormLayout();
+            $content .= '<p>'.$this->renderAfterFormLayoutForDetailsContent().'</p>';
+            $content .= '</div>';
             return $content;
+        }
+
+        /**
+         * Render a menu above the form layout. This includes buttons and/or
+         * links to go to different views or process actions such as save or delete
+         * @return A string containing the element's content.
+          */
+        protected function renderActionElementMenu()
+        {
+            $metadata  = $this::getMetadata();
+            $menuItems = array('label' => Yii::t('Default', 'Options'), 'items' => array());
+            if (isset($metadata['global']['toolbar']) && is_array($metadata['global']['toolbar']['elements']))
+            {
+                foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
+                {
+                    $elementclassname = $elementInformation['type'] . 'ActionElement';
+                    $params = array_slice($elementInformation, 1);
+                    array_walk($params, array($this, 'resolveEvaluateSubString'));
+                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+                    if (!$this->shouldRenderToolBarElement($element, $elementInformation))
+                    {
+                        continue;
+                    }
+                    if ($element->isFormRequiredToUse())
+                    {
+                        throw new NotSupportedException();
+                    }
+                    $menuItems['items'][] = $element->renderMenuItem();
+                }
+            }
+            if(count($menuItems['items']) > 0)
+            {
+                $cClipWidget = new CClipWidget();
+                $cClipWidget->beginClip("DetailsOptionMenu");
+                $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                    'htmlOptions' => array('id' => 'OptionsMenu'),
+                    'items'                   => array($menuItems),
+                    'navContainerClass'       => 'nav-single-container',
+                    'navBarClass'             => 'nav-single-bar',
+                ));
+                $cClipWidget->endClip();
+                return $cClipWidget->getController()->clips['DetailsOptionMenu'];
+            }
+        }
+
+        protected function renderTitleContent()
+        {
+            if($this->title != null)
+            {
+                return '<h1>' . $this->title . "</h1>";
+            }
+        }
+
+        protected function renderAfterFormLayoutForDetailsContent()
+        {
         }
 
         /**
@@ -86,6 +153,7 @@
             }
             $formLayout = new DetailsViewFormLayout($metadataWithRenderedElements, $maxCellsPerRow, $errorSummaryContent);
             $formLayout->setMorePanelsLinkLabel($this->getMorePanelsLinkLabel());
+            $formLayout->setLessPanelsLinkLabel($this->getLessPanelsLinkLabel());
             return $formLayout->render();
         }
 
@@ -139,6 +207,33 @@
         }
 
         /**
+         * Given an array of metadata, resolve what the maximum amount of cells present are in any given row.
+         * @param array $metadata
+         */
+        protected function resolveMaxCellsPresentInAnyRow($metadata)
+        {
+            assert('is_array($metadata)');
+            $maxCellsPresent = 1;
+            foreach ($metadata['global']['panels'] as $panelNumber => $panel)
+            {
+                foreach ($panel['rows'] as $rowIndex => $row)
+                {
+                    $maxCellsPresentInThisRow = 0;
+                    foreach ($row['cells'] as $cellIndex => $cell)
+                    {
+                        $maxCellsPresentInThisRow ++;
+                    }
+                    if($maxCellsPresentInThisRow > $maxCellsPresent)
+                    {
+                        $maxCellsPresent = $maxCellsPresentInThisRow;
+                    }
+                }
+
+            }
+            return $maxCellsPresent;
+        }
+
+        /**
          * Override if you need to do any special processing of the metadata array prior to it being rendered.
          * @param array $metadataWithRenderedElements
          */
@@ -148,9 +243,13 @@
 
         protected function getMaxCellsPerRow()
         {
-            $designerRulesType = self::getDesignerRulesType();
+            $designerRulesType          = static::getDesignerRulesType();
+            if($designerRulesType == null)
+            {
+                $designerRulesType      = self::getDesignerRulesType();
+            }
             $designerRulesClassName = $designerRulesType . 'DesignerRules';
-            $designerRules = new $designerRulesClassName();
+            $designerRules          = new $designerRulesClassName();
             return $designerRules->maxCellsPerRow();
         }
 
@@ -275,6 +374,15 @@
         protected function getMorePanelsLinkLabel()
         {
             return Yii::t('Default', 'More Details');
+        }
+
+        /**
+         * For the given view, return the label used when a link is displayed to show less panels in the view.
+         * @return string label.
+         */
+        protected function getLessPanelsLinkLabel()
+        {
+            return Yii::t('Default', 'Less Details');
         }
     }
 ?>

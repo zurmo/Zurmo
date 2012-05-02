@@ -1,0 +1,171 @@
+.element-to-place
+{
+    text-align: center;
+    white-space:nowrap;
+    margin: 1px;
+    padding: 1px 3px 1px 3px;
+    min-width: 120px;
+    height: 20px;
+}
+
+.layout-parts-container
+{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-y: hidden;
+    height:80px;
+}
+
+.layout-parts
+{
+    float:left;
+}
+.layout-parts ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    clear:both;
+}
+.layout-parts li
+{
+    margin: 1px;
+    padding: 1px;
+    width: 120px;
+    height: 20px;
+}
+
+.layout-elements
+{
+    width: 10000px;
+}
+
+.layout-elements-column-container
+{
+    float:left;
+}
+
+.sortable-panel
+{
+    margin: 1px;
+    padding: 1px;
+    width: 640px;
+    min-height: 60px;
+}
+
+.modal-settings
+{
+    margin: 1px;
+    padding: 1px;
+    width: 600px;
+    min-height: 60px;
+    display: none;
+    z-index: 2000;
+}
+
+.cell-element {
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.cell-element {
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.cell-element-icon {
+    float: right;
+}
+
+.cell-handle-icon {
+    cursor: hand;
+    cursor: pointer;
+    float: left;
+    clear: right;
+}
+
+.row-element-icon {
+    float: right;
+    clear: right;
+}
+
+.row-handle-icon {
+    cursor: hand;
+    cursor: pointer;
+    float: left;
+    clear: right;
+}
+
+.panel-element-icon {
+clear:none;
+    float: right;
+}
+
+.panel-handle-icon {
+    cursor: hand;
+    cursor: pointer;
+    float: left;
+}
+
+.sortable-row-list-container ul
+{
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 1px;
+    margin-bottom: 5px;
+    clear:both;
+}
+.sortable-row-list-container li
+{
+    margin: 5px;
+    padding: 1px;
+    width: 585px;
+    height: 40px;
+}
+
+.layout-single-column
+{
+    margin: 5px;
+    padding: 1px;
+    width: 535px;
+    height: 20px;
+    float: left;
+}
+
+.layout-double-column
+{
+    margin: 5px;
+    padding: 1px;
+    width: 260px;
+    height: 20px;
+    float: left;
+}
+
+.panel-list > li
+{
+    width: 640px;
+    min-height: 60px;
+    margin-bottom: 5px;
+}
+
+.panel-list
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    clear:both;
+    width: 640px;
+    min-height: 60px;
+}
+
+#sortable-editable-dropdown-collection li
+{
+   height: auto;
+   font-size: 1em;
+}

@@ -40,13 +40,16 @@
 
         protected $selectedRecordCount;
 
+        protected $title;
+
         /**
          * Constructs a detail view specifying the controller as
          * well as the model that will have its mass edit displayed.
          */
-        public function __construct($controllerId, $moduleId, RedBeanModel $model, $activeAttributes, $selectedRecordCount, $alertMessage = null)
+        public function __construct($controllerId, $moduleId, RedBeanModel $model, $activeAttributes, $selectedRecordCount, $title, $alertMessage = null)
         {
             assert('is_array($activeAttributes)');
+            assert('is_string($title)');
             $this->controllerId        = $controllerId;
             $this->moduleId            = $moduleId;
             $this->model               = $model;
@@ -54,12 +57,15 @@
             $this->modelId             = $model->id;
             $this->activeAttributes    = $activeAttributes;
             $this->selectedRecordCount = $selectedRecordCount;
+            $this->title               = $title;
             $this->alertMessage        = $alertMessage;
         }
 
         protected function renderContent()
         {
-            $content = '<div class="wide form">';
+            $content  = '<div>';
+            $content .= $this->renderTitleContent();
+            $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -71,14 +77,24 @@
                 $content .= HtmlNotifyUtil::renderAlertBoxByMessage($this->alertMessage);
             }
             $content .= $this->renderHighlightBox();
-            $content .= '<div>';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div>';
             $content .= $this->renderFormLayout($form);
+            $content .= $this->renderAfterFormLayout($form);
+            $actionElementContent = $this->renderActionElementBar(true);
+            if($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
             $formEnd = $clipWidget->renderEndWidget();
             $content .= $formEnd;
-            $content .= '</div>';
+            $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         protected function renderHighlightBox()
@@ -104,7 +120,7 @@
             $massEditScript = '';
             $content = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col class="col-checkbox"/><col style="width:20%" /><col style="width:80%" />';
+            $content .= '<col class="col-checkbox" style="width:36px"/><col style="width:20%" /><col/>';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             //loop through each panel
@@ -153,34 +169,39 @@
             $disableTagCloudInputsScript = "";
             foreach ($elementIds as $id)
             {
-                if ($elementInformation['type'] == 'TagCloud')
+                if ($elementInformation['type'] == 'DropDown' || $elementInformation['type'] == 'RadioDropDown')
                 {
-                    $enableInputsScript  .= "$('#" . $id . "').removeAttr('disabled'); \n";
-                    $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
-                    $id = $id.'_tag';
-                    if (!$checked)
-                    {
-                        $disableTagCloudInputsScript = "$('#" . $id . "').attr('disabled', 'disabled');";
-                    }
-                }
+                    $enableInputsScript   .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                    $enableInputsScript   .= "$('#" . $id . "').prev().removeClass('disabled-select-element'); \n";
+                    $disableInputsScript  .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $disableInputsScript  .= "$('#" . $id . "').prev().addClass('disabled-select-element'); \n";
 
-                $enableInputsScript .= "$('#" . $id . "').removeAttr('disabled'); \n";
-                $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
+                }
+                elseif ($elementInformation['type'] == 'TagCloud')
                 {
-                    if ($('#" . $id . "').attr('href') != undefined)
-                    {
-                        $('#" . $id . "').css('display', '');
-                    }
-                }; \n";
-                $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
-                $disableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
+                    $enableInputsScript  .= "$('#token-input-" . $id . "').parent().parent().removeClass('disabled'); \n";
+                    $disableInputsScript .= "$('#token-input-" . $id . "').parent().parent().addClass('disabled'); \n";
+                }
+                else
                 {
-                    if ($('#" . $id . "').attr('href') != undefined)
+                    $enableInputsScript .= "$('#" . $id . "').removeAttr('disabled'); \n";
+                    $enableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
                     {
-                        $('#" . $id . "').css('display', 'none');
-                    }
-                    $('#" . $id . "').val('');
-                }; \n";
+                        if ($('#" . $id . "').attr('href') != undefined)
+                        {
+                            $('#" . $id . "').css('display', '');
+                        }
+                    }; \n";
+                    $disableInputsScript .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
+                    $disableInputsScript .= "if ($('#" . $id . "').attr('type') != 'button')
+                    {
+                        if ($('#" . $id . "').attr('href') != undefined)
+                        {
+                            $('#" . $id . "').css('display', 'none');
+                        }
+                        $('#" . $id . "').val('');
+                    }; \n";
+                }
             }
             $massEditScript = <<<END
 $('#{$checkBoxHtmlOptions['id']}').click(function()
@@ -195,10 +216,9 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
         }
     }
 );
-$disableTagCloudInputsScript
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
-            return "<th>" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
+            return "<th><label class=\"hasCheckBox\">" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</label></th>  \n";
         }
 
         public static function getDesignerRulesType()

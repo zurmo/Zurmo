@@ -48,6 +48,8 @@
             $currency->rateToBase = .75;
             $saved = $currency->save();
             assert('$saved');
+
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'applicationName', 'Demo Company Inc.');
         }
 
         public function populateModel(& $model)

@@ -73,13 +73,14 @@
                 foreach ($columnPortlets as $position => $portlet)
                 {
                     $juiPortletsWidgetItems[$column][$position] = array(
-                        'id'        => $portlet->id,
-                        'uniqueId'  => $portlet->getUniquePortletPageId(),
-                        'title'     => $portlet->getTitle(),
-                        'content'   => $portlet->renderContent(),
-                        'editable'  => $portlet->isEditable(),
-                        'collapsed' => $portlet->collapsed,
-                        'removable' => $this->arePortletsRemovable(),
+                        'id'          => $portlet->id,
+                        'uniqueId'    => $portlet->getUniquePortletPageId(),
+                        'title'       => $portlet->getTitle(),
+                        'content'     => $portlet->renderContent(),
+                        'editable'    => $portlet->isEditable(),
+                        'collapsed'   => $portlet->collapsed,
+                        'removable'   => $this->arePortletsRemovable(),
+                        'uniqueClass' => get_class($portlet->getView())
                     );
                 }
             }

@@ -43,6 +43,7 @@
                     'derivedAttributeTypes' => array(
                         'FullName',
                     ),
+                    'gridViewType' => RelatedListView::GRID_VIEW_TYPE_STACKED,
                     'panels' => array(
                         array(
                             'rows' => array(
@@ -51,6 +52,24 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'null', 'type' => 'FullName', 'isLink' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
                                             ),
                                         ),
                                     )

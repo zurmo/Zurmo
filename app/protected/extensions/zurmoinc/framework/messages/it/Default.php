@@ -193,8 +193,6 @@
             => 'Impostazioni del pannello',
         'Panel Title'
             => 'Titolo del pannello',
-        'Perform Action'
-            => 'Selezion',
         'Radio Drop Down'
             => 'Eelementi del bottone radio',
         'record'

@@ -40,9 +40,9 @@
          */
         protected $pageTitle;
 
-        public $height = 480;
+        public $height = 'auto';
 
-        public $width  = 700;
+        public $width  = 600;
 
         /**
          * TODO

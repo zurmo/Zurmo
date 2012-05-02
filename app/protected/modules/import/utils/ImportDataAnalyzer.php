@@ -181,9 +181,16 @@
                 $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
                 assert('$mappingRuleType != null');
                 $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
-                $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
-                assert('$mappingRuleData != null');
-                $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName, $mappingRuleType, $mappingRuleData);
+                if(!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
+                {
+                    $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName);
+                }
+                else
+                {
+                    $mappingRuleData = $columnMappingData['mappingRulesData'][$mappingRuleFormClassName];
+                    assert('$mappingRuleData != null');
+                    $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName, $mappingRuleType, $mappingRuleData);
+                }
             }
             else
             {

@@ -132,41 +132,59 @@
 
         protected function getCellSettingsDisplay($detailViewOnly, $cellIdName)
         {
-            $content = '<div class="cell-settings modal-settings" title="'. Yii::t('Default', 'Cell Settings') .'">';
+            $content  = '<div class="cell-settings modal-settings" title="'. Yii::t('Default', 'Cell Settings') .'">';
+            $content .= '<div class="wide form">';
             $content .= '<table>';
-
+            $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
-            $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
-            $content .= '<td>' . CHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
+            $content .= '<th><label>' . Yii::t('Default', 'Detail View Only') . '</label></th>';
+            $content .= '<td>' . ZurmoHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
             array('class' => 'settings-form-field')
             ) . '</td>';
             $content .= '</tr>';
 
             $content .= '</table>';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderSaveModalSettingsButton();
+            $content .= '</div></div>';
+            $content .= '</div>';
             $content .= '</div>';
             return $content;
         }
 
-        protected function getPanelSettingsDisplay($title, $detailViewOnly, $panelIdName)
+        protected function getPanelSettingsDisplay($title, $detailViewOnly, $locked, $panelIdName)
         {
-            $content = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
+            assert('is_bool($locked)');
+            $content  = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
+            $content .= '<div class="wide form">';
             $content .= '<table>';
-
+            $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
-            $content .= '<td>' . Yii::t('Default', 'Panel Title') . '</td>';
+            $content .= '<th><label>' . Yii::t('Default', 'Panel Title') . '</label></th>';
             $content .= '<td>' . CHtml::textField( 'title_' . $panelIdName,
-                $title, array('class' => 'panel-title settings-form-field')) . '</td>';
+                                 $title, array('class' => 'panel-title settings-form-field')) .
+                                 CHtml::hiddenField( 'locked_' . $panelIdName,
+                                 $locked, array('class' => 'panel-title settings-form-field')) . '</td>';
             $content .= '</tr>';
             $content .= '<tr>';
-            $content .= '<td>' . Yii::t('Default', 'Detail View Only') . '</td>';
-            $content .= '<td>' . CHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
+            $content .= '<th><label>' . Yii::t('Default', 'Detail View Only') . '</label></th>';
+            $content .= '<td>' . ZurmoHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
             array('class' => 'panel-title settings-form-field')
             ) . '</td>';
             $content .= '</tr>';
 
             $content .= '</table>';
+            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $content .= $this->renderSaveModalSettingsButton();
+            $content .= '</div></div>';
+            $content .= '</div>';
             $content .= '</div>';
             return $content;
+        }
+
+        protected function renderSaveModalSettingsButton()
+        {
+            return CHtml::button(Yii::t('Default', 'Save'), array('onClick' => '$(this).closest(".modal-settings").dialog("close");'));
         }
 
         /**
@@ -202,9 +220,9 @@
 
         protected function registerScripts()
         {
-            $baseJuiPortletsScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
+            $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
             $cs = Yii::app()->getClientScript();
-            $cs->registerScriptFile($baseJuiPortletsScriptUrl . '/designer/Designer.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseScriptUrl . '/designer/Designer.js', CClientScript::POS_END);
         }
 
         protected function renderLayout()
@@ -224,9 +242,12 @@
                 $content .= '<li id="panel_' . $panelNumber . '" class="ui-state-default sortable-panel">';
                 $content .= '<span class="panel-title-display">' .
                             Yii::t('Default', ArrayUtil::getArrayValue($panel, 'title')) . '&#160;</span>';
-                if ($this->canMoveRows)
+                if ($this->canMovePanels)
                 {
-                    $content .= '<span class="panel-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<span class="panel-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                    }
                 }
                 if ($this->canRemovePanels)
                 {
@@ -239,7 +260,14 @@
                 $content .= '<div class="sortable-row-list-container">';
                 if ($this->canMoveRows)
                 {
-                    $content .= '<ul class="sortable-row-list sortable-row-connector">';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<ul class="sortable-row-list sortable-row-list-helper sortable-row-connector">';
+                    }
+                    else
+                    {
+                        $content .= '<ul class="sortable-row-list-helper sortable-row-connector">';
+                    }
                 }
                 else
                 {
@@ -250,7 +278,10 @@
                     $content .= '<li class="ui-state-default">';
                     if ($this->canMoveRows)
                     {
-                        $content .= '<span class="row-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                        if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                        {
+                            $content .= '<span class="row-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                        }
                     }
                     foreach ($row['cells'] as $cell)
                     {
@@ -266,7 +297,15 @@
                             $cssClassName                = 'layout-double-column';
                             $cssCellMergeIconClassName   = 'ui-icon-circle-minus';
                         }
-                        $content .= '<div class="' . $cssClassName . ' droppable-cell-container ui-state-hover">';
+                        if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                        {
+                            $content .= '<div class="' . $cssClassName . ' droppable-cell-container droppable-cell-container-helper ui-state-hover">';
+                        }
+                        else
+                        {
+                            //droppable-cell-container must be present for save to work
+                            $content .= '<div class="' . $cssClassName . ' droppable-cell-container-helper ui-state-hover">';
+                        }
                         if (is_array($cell['elements']))
                         {
                             assert('count($cell["elements"]) == 1');
@@ -285,9 +324,19 @@
                                 }
                                 else
                                 {
-                                    $content .= 'class="movable-cell-element cell-element">';
+                                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                    {
+                                         $content .= 'class="movable-cell-element cell-element">';
+                                    }
+                                    else
+                                    {
+                                        $content .= 'class="cell-element">';
+                                    }
                                 }
-                                $content .= '<span class="cell-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                                if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                {
+                                     $content .= '<span class="cell-handle-icon ui-icon ui-icon-arrow-4">&#160;</span>';
+                                }
                                 $content .= $attribute['attributeLabel'];
                                 if ($this->showRequiredAttributeSpan && $attribute['isRequired'])
                                 {
@@ -295,7 +344,10 @@
                                 }
                                 if ($this->canRemoveElement())
                                 {
-                                    $content .= '<span class="cell-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                                    {
+                                        $content .= '<span class="cell-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                                    }
                                 }
                                 if ($this->canModifyCellSettings)
                                 {
@@ -312,7 +364,10 @@
                         }
                         $content .= '</div>';
                     }
-                    $content .= '<span class="row-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                    if(!ArrayUtil::getArrayValue($panel, 'locked'))
+                    {
+                        $content .= '<span class="row-element-icon ui-icon ui-icon-trash">&#160;</span>';
+                    }
                     if ($this->canMergeAndSplitCells)
                     {
                         $content .= '<span class="row-element-icon ui-icon ' . $cssCellMergeIconClassName .'">&#160;</span>';
@@ -325,6 +380,7 @@
                 $content .= $this->getPanelSettingsDisplay(
                     ArrayUtil::getArrayValue($panel, 'title'),
                     ArrayUtil::getArrayValue($panel, 'detailViewOnly'),
+                    ArrayUtil::getArrayValue($panel, 'locked'),
                     $panelNumber
                 );
                 $content .= '</li>';
@@ -423,7 +479,7 @@
                     " . BooleanUtil::boolToString($this->canMergeAndSplitCells) .",
                     " . BooleanUtil::boolToString($this->mergeRowAndAttributePlacement) .",
                     " . $this->maxCellsPerRow . ",
-                    '" . $this->getPanelSettingsDisplay(null, false, '{panelId}') . "',
+                    '" . $this->getPanelSettingsDisplay(null, false, false, '{panelId}') . "',
                     '" . $this->getCellSettingsDisplay(false, '{cellId}') . "'
                 );");
             echo $this->renderLayoutTools();

@@ -26,6 +26,8 @@
 
     class AttributesCollectionView extends MetadataView
     {
+        protected $cssClasses =  array( 'TableOfContentsView');
+
         protected $controllerId;
 
         protected $moduleId;
@@ -36,7 +38,7 @@
 
         protected $modelClassName;
 
-        public function __construct($controllerId, $moduleId, $attributesCollection, $moduleClassName, $modelClassName)
+        public function __construct($controllerId, $moduleId, $attributesCollection, $moduleClassName, $modelClassName, $title)
         {
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
@@ -44,55 +46,66 @@
             $this->moduleClassName        = $moduleClassName;
             $this->modelClassName         = $modelClassName;
             $this->modelId                = null;
+            $this->title                  = $title;
         }
 
         protected function renderContent()
         {
-            $content  = '<div class="horizontal-line">';
-            $content .= $this->renderActionElementBar(false);
-            $content .= '</div>' . "\n";
-            $content .= '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:80%" />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Field Name') . '</th><th>' . Yii::t('Default', 'Field Type') . '</th></tr>';
-            foreach ($this->attributesCollection as $attributeName => $information)
+            $content  = null;
+            $content .= $this->renderBeforeTableContent();
+            if(count($this->attributesCollection) > 0)
             {
-                $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
-                $content .= '<tr>';
-                $content .= '<td>';
-                if ($information['elementType'] == 'EmailAddressInformation' ||
-                    $information['elementType'] == 'Address' ||
-                    $information['elementType'] == 'User' ||
-                    $information['isReadOnly'])
+                $content .= '<div>';
+                $content .= $this->renderTitleContent();
+                $content .= '<ul class="configuration-list">';
+                foreach ($this->attributesCollection as $attributeName => $information)
                 {
-                    //temporary until we figure out how to handle these types.
-                    $content .= $information['attributeLabel'];
+                    $route = $this->moduleId . '/' . $this->controllerId . '/AttributeEdit/';
+                    $content .= '<tr>';
+                    $content .= '<td>';
+                    $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
+                    if ($information['elementType'] == 'EmailAddressInformation' ||
+                        $information['elementType'] == 'Address' ||
+                        $information['elementType'] == 'User' ||
+                        $information['isReadOnly'])
+                    {
+                        //temporary until we figure out how to handle these types.
+                        $linkContent = null;
+                    }
+                    else
+                    {
+                        $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
+                            array(
+                                'moduleClassName' => $this->moduleClassName,
+                                'attributeTypeName' => $information['elementType'],
+                                'attributeName' => $attributeName,
+                            )
+                        ));
+                    }
+                    $content .= '<li>';
+                    $content .= '<h4>' . $information['attributeLabel'] . '</h4>';
+                    $content .= ' - ' . $attributeFormClassName::getAttributeTypeDisplayName();
+                    $content .= $linkContent;
+                    $content .= '</li>';
                 }
-                else
-                {
-                    $content .= CHtml::link($information['attributeLabel'], Yii::app()->createUrl($route,
-                        array(
-                            'moduleClassName' => $this->moduleClassName,
-                            'attributeTypeName' => $information['elementType'],
-                            'attributeName' => $attributeName,
-                        )
-                    ));
-                }
-                $content .= '</td>';
-                $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
-                $content .= '<td>' . $attributeFormClassName::getAttributeTypeDisplayName() . '</td>';
-                $content .= '</tr>';
+                $content .= '</ul>';
+                $content .= '</div>';
             }
-            $content .= '</tbody>';
-            $content .= '</table>';
             return $content;
+        }
+
+        protected function renderTitleContent()
+        {
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()
         {
             return false;
+        }
+
+        protected function renderBeforeTableContent()
+        {
         }
     }
 ?>

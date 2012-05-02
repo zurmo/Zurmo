@@ -33,7 +33,7 @@
          * Only show tasks that are completed. Adds filter to remove any non-completed tasks from the query.
          * @see ActivityMashableActivityRules::resolveSearchAttributeDataForLatestActivities()
          */
-        protected function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
+        public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
             $clausesCount = count($searchAttributeData['clauses']);
@@ -42,7 +42,11 @@
                     'operatorType'         => 'equals',
                     'value'                => (bool)1
             );
-            $searchAttributeData['structure'] .= ' and ' . ($clausesCount + 1);
+            if($searchAttributeData['structure'] != null)
+            {
+                $searchAttributeData['structure'] .= ' and ';
+            }
+            $searchAttributeData['structure'] .=  ($clausesCount + 1);
             return $searchAttributeData;
         }
     }

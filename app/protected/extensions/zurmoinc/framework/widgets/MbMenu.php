@@ -179,9 +179,13 @@
                 {
                     $htmlOptions = array();
                 }
-                if (isset($item['url']))
+                if((isset($item['ajaxLinkOptions'])))
                 {
-                    echo CHtml::link('<span>' . $item['label'] . '</span>', $item['url'], $htmlOptions);
+                    echo CHtml::ajaxLink('<span>' . $item['label'] . '</span>', $item['url'], $item['ajaxLinkOptions'], $htmlOptions);
+                }
+                elseif (isset($item['url']))
+                {
+                    echo CHtml::link('<span></span><span>' . $item['label'] . '</span>', $item['url'], $htmlOptions);
                 }
                 else
                 {
@@ -257,12 +261,12 @@
             $this->registerClientScripts();
             $this->registerCssFile();
             $htmlOptions['class'] = $this->navContainerClass;
-            echo CHtml::openTag('div', $htmlOptions) . "\n";
+            //echo CHtml::openTag('div', $htmlOptions) . "\n";
             $htmlOptions['class'] = $this->navBarClass;
-            echo CHtml::openTag('div', $htmlOptions) . "\n";
+            //echo CHtml::openTag('div', $htmlOptions) . "\n";
             parent::run();
-            echo CHtml::closeTag('div');
-            echo CHtml::closeTag('div');
+            //echo CHtml::closeTag('div');
+            //echo CHtml::closeTag('div');
         }
     }
 ?>

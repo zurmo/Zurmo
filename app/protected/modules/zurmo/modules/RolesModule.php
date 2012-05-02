@@ -49,6 +49,25 @@
         {
             $metadata = array();
             $metadata['global'] = array(
+                'adminTabMenuItems' => array(
+                    array(
+                        'label' => 'Roles',
+                        'url'   => array('/zurmo/role'),
+                        'right' => self::RIGHT_ACCESS_ROLES,
+                        'items' => array(
+                            array(
+                                'label' => 'Create Role',
+                                'url'   => array('/zurmo/role/create'),
+                                'right' => self::RIGHT_CREATE_ROLES
+                            ),
+                            array(
+                                'label' => 'Roles',
+                                'url'   => array('/zurmo/role'),
+                                'right' => self::RIGHT_ACCESS_ROLES
+                            ),
+                        ),
+                    ),
+                ),
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
@@ -58,23 +77,12 @@
                         'right'            => self::RIGHT_ACCESS_ROLES,
                     ),
                 ),
-                'shortcutsMenuItems' => array(
+                'headerMenuItems' => array(
                     array(
                         'label' => 'Roles',
-                        'url'   => array('/zurmo/role'),
+                        'url' => array('/zurmo/role'),
                         'right' => self::RIGHT_ACCESS_ROLES,
-                        'items' => array(
-                            array(
-                                'label' => 'Create Role',
-                                'url'   => array('/zurmo/role/create'),
-                                'right' => self::RIGHT_ACCESS_ROLES,
-                            ),
-                            array(
-                                'label' => 'Roles',
-                                'url'   => array('/zurmo/role'),
-                                'right' => self::RIGHT_ACCESS_ROLES,
-                            ),
-                        ),
+                        'order' => 5,
                     ),
                 ),
             );

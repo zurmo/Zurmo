@@ -57,9 +57,8 @@
             $title       = Yii::t('Default', 'Zurmo sends out system notifications.  The notifications must appear ' .
                                              'as coming from a super administrative user.');
             $content     = '&#160;<span id="send-notifications-from-user-tooltip" class="tooltip"  title="' . $title . '">';
-            $content    .= Yii::t('Default', 'What is this?') . '</span>';
-            Yii::import('application.extensions.qtip.QTip');
-            $qtip = new QTip();
+            $content    .= Yii::t('Default', '?') . '</span>';
+            $qtip = new ZurmoTip();
             $qtip->addQTip("#send-notifications-from-user-tooltip");
             return $content;
         }

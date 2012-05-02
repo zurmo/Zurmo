@@ -58,15 +58,15 @@
                 Yii::app()->user->userModel->id,
                 'LeadsStateMetadataAdapter'
             );
-            $searchFilterListView = $this->makeSearchFilterListView(
+            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
-                'LeadsFilteredList',
                 $pageSize,
-                Yii::t('Default', 'Leads'),
+                LeadsModule::getModuleLabelByTypeAndLanguage('Plural'),
                 Yii::app()->user->userModel->id,
                 $dataProvider
             );
-            $view = new LeadsPageView($this, $searchFilterListView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $actionBarSearchAndListView));
             echo $view->render();
         }
 
@@ -81,22 +81,24 @@
             }
             else
             {
-                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, strval($contact), $contact);
+                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($contact), 'LeadsModule'), $contact);
                 $detailsAndRelationsView = $this->makeDetailsAndRelationsView($contact, 'LeadsModule',
                                                                               'LeadDetailsAndRelationsView',
                                                                               Yii::app()->request->getRequestUri());
-                $view = new LeadsPageView($this, $detailsAndRelationsView);
+                $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsAndRelationsView));
                 echo $view->render();
             }
         }
 
         public function actionCreate()
         {
-            $titleBarAndEditView = $this->makeTitleBarAndEditAndDetailsView(
+            $titleBarAndEditView = $this->makeEditAndDetailsView(
                     $this->attemptToSaveModelFromPost(new Contact()), 'Edit',
                     'LeadTitleBarAndEditAndDetailsView'
             );
-            $view = new LeadsPageView($this, $titleBarAndEditView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $titleBarAndEditView));
             echo $view->render();
         }
 
@@ -111,12 +113,11 @@
             }
             else
             {
-                $view = new LeadsPageView($this,
-                    $this->makeTitleBarAndEditAndDetailsView(
-                        $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
-                        'LeadTitleBarAndEditAndDetailsView'
-                    )
-                );
+                $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this,
+                                             $this->makeEditAndDetailsView(
+                                                $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
+                                                            'LeadTitleBarAndEditAndDetailsView')));
                 echo $view->render();
             }
         }
@@ -158,13 +159,14 @@
                 Yii::t('Default', 'Leads'),
                 $dataProvider
             );
-            $titleBarAndMassEditView = $this->makeTitleBarAndMassEditView(
+            $massEditView = $this->makeMassEditView(
                 $contact,
                 $activeAttributes,
                 $selectedRecordCount,
                 Yii::t('Default', 'Leads')
             );
-            $view = new LeadsPageView($this, $titleBarAndMassEditView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $massEditView));
             echo $view->render();
         }
 
@@ -255,7 +257,8 @@
                 $convertToAccountSetting,
                 $userCanCreateAccount
             );
-            $view = new LeadsPageView($this, $convertView);
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this, $convertView));
             echo $view->render();
         }
 
@@ -315,6 +318,13 @@
                             'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'LeadsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
+        }
+        protected function makeEditAndDetailsView($model, $renderType)
+        {
+            assert('$model != null');
+            assert('$renderType == "Edit" || $renderType == "Details"');
+            $editViewClassName = 'LeadEditAndDetailsView';
+            return new $editViewClassName($renderType, $this->getId(), $this->getModule()->getId(), $model);
         }
 
         protected function getSearchFormClassName()

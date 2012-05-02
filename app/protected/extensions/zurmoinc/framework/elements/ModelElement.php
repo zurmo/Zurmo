@@ -99,10 +99,10 @@
                 'disabled' => $this->getDisabledValue(),
                 'value'    => $this->getId(),
             );
-            $content  = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
-            $content .= $this->renderTextField($this->getIdForHiddenField());
-            $content .= '&#160;' . $this->renderSelectLink();
-            return $content;
+            $content       = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
+            $inputContent  = $this->renderTextField($this->getIdForHiddenField());
+            $inputContent .= '&#160;' . $this->renderSelectLink();
+            return $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
         }
 
         /**
@@ -136,7 +136,8 @@
                 'source'  => Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getAutoCompleteControllerId()
                                                         . '/' . static::$autoCompleteActionId),
                 'options' => array(
-                    'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}' // Not Coding Standard
+                    'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}', // Not Coding Standard
+                    'appendTo'       => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()'
                 ),
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
@@ -160,8 +161,7 @@
         protected function renderSelectLink()
         {
             $id = $this->getIdForSelectLink();
-            $content  = '<span>';
-            $content .= CHtml::ajaxLink(Yii::t('Default', 'Select'),
+            $content = CHtml::ajaxLink(Yii::t('Default', '<span>Select</span>'),
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation()
                 )), array(
@@ -175,7 +175,6 @@
                     'style' => $this->getSelectLinkStartingStyle(),
                     )
             );
-            $content .= '</span>';
             return $content;
         }
 

@@ -258,6 +258,34 @@
         /**
          * @depends testGetGlobalSearchResultsByPartialTerm
          */
+        public function testGetGlobalSearchResultsByPartialTermUsingScope()
+        {
+            //Unfrozen, there are too many attributes that have to be columns in the database at this point, so
+            //now this is just a frozen test.
+            if (RedBeanDatabase::isFrozen())
+            {
+                $super = User::getByUsername('super');
+                Yii::app()->user->userModel = $super;
+
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super, array('accounts'));
+                $this->assertEquals(1, count($data));
+                $this->assertEquals('The Zoo - Account', $data[0]['label']);
+
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super, array('contacts'));
+                $this->assertEquals(1, count($data));
+                $this->assertEquals('Big Elephant - Contact', $data[0]['label']);
+
+                $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super,
+                                                                                   array('contacts', 'opportunities'));
+                $this->assertEquals(2, count($data));
+                $this->assertEquals('Big Elephant - Contact', $data[0]['label']);
+                $this->assertEquals('Animal Crackers - Opportunity', $data[1]['label']);
+            }
+        }
+
+        /**
+         * @depends testGetGlobalSearchResultsByPartialTermUsingScope
+         */
         public function testGetGlobalSearchResultsByPartialTermWithRegularUserAndElevationStepsForRegularUser()
         {
             //Unfrozen, there are too many attributes that have to be columns in the database at this point, so
