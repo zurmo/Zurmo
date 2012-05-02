@@ -231,5 +231,20 @@
                                                     $relationModuleId,
                                                     $pageTitle);
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'OpportunitiesSearchForm';
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return 'OpportunitiesFilteredList';
+        }
+
+        public function actionExport()
+        {
+            $this->export();
+        }
     }
 ?>

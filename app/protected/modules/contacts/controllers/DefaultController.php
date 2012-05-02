@@ -242,5 +242,20 @@
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'ContactsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'ContactsSearchForm';
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return 'ContactsFilteredList';
+        }
+
+        public function actionExport()
+        {
+            $this->export();
+        }
     }
 ?>

@@ -236,6 +236,7 @@
             'contacts',
             'designer',
             'emailMessages',
+            'export',
             'home',
             'import',
             'install',

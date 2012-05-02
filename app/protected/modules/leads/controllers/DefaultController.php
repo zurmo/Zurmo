@@ -316,5 +316,20 @@
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'LeadsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'LeadsSearchForm';
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return 'LeadsFilteredList';
+        }
+
+        public function actionExport()
+        {
+            $this->export();
+        }
     }
 ?>
