@@ -30,18 +30,27 @@
         {
             if (Yii::app()->apiRequest->isApiRequest())
             {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
                 $owner->detachEventHandler('onBeginRequest', array(Yii::app()->request, 'validateCsrfToken'));
-            }
-
-            $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
-            if (Yii::app()->apiRequest->isApiRequest())
-            {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
+
+                if (Yii::app()->isApplicationInstalled())
+                {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
+                }
             }
             else
             {
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBrowserCheck'));
@@ -55,18 +64,30 @@
                 }
                 else
                 {
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
                 }
             }
+        }
 
-            if (Yii::app()->isApplicationInstalled())
+        /**
+        * Load memcache extension if memcache extension is
+        * loaded and if memcache server is avalable
+        * @param $event
+        */
+        public function handleApplicationCache($event)
+        {
+            $memcacheServiceHelper = new MemcacheServiceHelper();
+            if ($memcacheServiceHelper->runCheckAndGetIfSuccessful())
             {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
+                $cacheComponent = Yii::createComponent('CMemCache',
+                    array('servers' => Yii::app()->params['memcacheServers']));
+                Yii::app()->setComponent('cache', $cacheComponent);
             }
         }
 

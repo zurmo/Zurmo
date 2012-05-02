@@ -56,10 +56,6 @@
             'clientScript' => array(
                 'class' => 'ClientScript',
             ),
-            'cache' => array(
-                'class' => 'CMemCache',
-                'servers' => $memcacheServers,
-            ),
             'currencyHelper' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoCurrencyHelper',
                 'baseCode' => 'USD',
@@ -166,6 +162,9 @@
                 'enableCsrfValidation' => true,
                 'enableCookieValidation' => false, //keep off until we can fix it on linux/windows servers.
             ),
+            'statePersister' => array(
+                'class'     => 'application.modules.zurmo.components.ZurmoDbStatePersister',
+            ),
             'urlManager' => array (
                 'urlFormat' => 'path',
                 'caseSensitive' => true,
@@ -224,6 +223,9 @@
             'application.extensions.zurmoinc.framework.exceptions.NotFoundException',
             'application.modules.api.tests.unit.models.*',
             'application.modules.api.tests.unit.forms.*',
+            'application.modules.install.serviceHelpers.MemcacheServiceHelper',
+            'application.modules.install.serviceHelpers.ServiceHelper',
+            'application.modules.install.utils.InstallUtil',
         ),
 
         'modules' => array(
@@ -259,6 +261,7 @@
         'params' => array(
             'redBeanVersion'    => '1.3',
             'yiiVersion'        => '1.1.10',
+            'memcacheServers'   => $memcacheServers,
             'supportedLanguages' => array(
                 'en' => 'English',
                 'es' => 'Spanish',

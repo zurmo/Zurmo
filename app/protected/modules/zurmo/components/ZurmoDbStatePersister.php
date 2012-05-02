@@ -24,41 +24,35 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /**
-     * Called when Yii::app->end(0, false) is called. You should always call end
-     * with the second parameter set to false. This behavior exists so that during
-     * unit tests this behavior can be switched for a behavior that raises an
-     * exception instead of exiting.
-     */
-    class EndRequestBehavior extends CBehavior
+    class ZurmoDbStatePersister extends CApplicationComponent implements IStatePersister
     {
-        public function attach($owner)
+        /**
+         * Loads state data from persistent storage(database).
+         * @return mixed state data. Null if no state data available.
+         */
+        public function load()
         {
-            $owner->attachEventHandler('onEndRequest', array($this, 'handleSaveGlobalStateCheck'));
-            $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
-        }
-
-        // Save global state into ZurmoConfig, before handleEndRequest event handler is called.
-        // This is needed because handleEndRequest is attached to component before saveGlobalState handler
-        // and therefore will be execute before, so we need to change order.
-        public function handleSaveGlobalStateCheck($event)
-        {
-            $allEventHandlers = Yii::app()->getEventHandlers('onEndRequest');
-            if (count($allEventHandlers))
+            if (RedBeanDatabase::isSetup())
             {
-                foreach ($allEventHandlers as $eventHandler)
+                $content = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'globalState');
+                $content = unserialize($content);
+                if($content)
                 {
-                    if ($eventHandler[0] instanceof CApplication && $eventHandler[1] == 'saveGlobalState')
-                    {
-                        Yii::app()->saveGlobalState();
-                    }
+                    return $content;
                 }
             }
+
+            return null;
+
         }
 
-        public function handleEndRequest($event)
+        /**
+         * Saves application state in persistent storage(database).
+         * @param mixed $state state data (must be serializable).
+         */
+        public function save($state)
         {
-            exit;
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'globalState', serialize($state));
         }
     }
 ?>

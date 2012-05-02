@@ -34,10 +34,7 @@
             assert('$attributeName != ""');
             try
             {
-                // This will defer to the parent until the Database
-                // has been set up (so that it can still be used normally
-                // before a controller first talks to the datbase.
-                if (RedBeanDatabase::isSetup() && $this->userModel === null)
+                if ($attributeName != 'isGuest' && $this->userModel === null)
                 {
                     $username = parent::__get('username');
                     $this->userModel = User::getByUsername($username);
@@ -88,7 +85,10 @@
 
         protected function afterLogin($fromCookie)
         {
-            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+            if (!$fromCookie)
+            {
+                AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+            }
         }
 
         protected function beforeLogout()

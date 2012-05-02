@@ -750,7 +750,10 @@
         protected static function checkVersion($minimumRequiredVersion, $actualVersion)
         {
             assert('self::isVersion($minimumRequiredVersion)');
-            assert('self::isVersion($actualVersion)');
+            if (!self::isVersion($actualVersion))
+            {
+                return false;
+            }
             if (preg_match('/^\d+\.\d+$/', $actualVersion) == 1) // Not Coding Standard
             {
                 $actualVersion .= '.0';
