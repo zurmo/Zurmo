@@ -214,6 +214,10 @@
         {
             assert('is_array($metadata)');
             $maxCellsPresent = 1;
+            if(!isset($metadata['global']['panels']))
+            {
+                return $maxCellsPresent;
+            }
             foreach ($metadata['global']['panels'] as $panelNumber => $panel)
             {
                 foreach ($panel['rows'] as $rowIndex => $row)

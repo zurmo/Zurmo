@@ -41,7 +41,6 @@
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
-            assert('is_int($modelId)');
             assert('is_string($activeActionElementType)');
             $this->controllerId              = $controllerId;
             $this->moduleId                  = $moduleId;
