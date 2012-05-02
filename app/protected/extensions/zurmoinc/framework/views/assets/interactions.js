@@ -87,7 +87,10 @@ $(window).ready(function(){
     /*Dropdowns - Dropkick - also see dropDownInteractions.js */
     $('html').click(function(e) {
         $.each($('select:not(.ignore-style)'), function(index, value) {
-            $(value).dropkick('close');
+            if( $(value).dropkick )
+            {
+                $(value).dropkick('close');
+            }
         });
     });
 

@@ -3,7 +3,7 @@ $(window).ready(function(){
     $('select:not(.ignore-style)').each(function(){
         if($(this).attr('multiple') != 'multiple')
         {
-        $(this).dropkick();
+            $(this).dropkick();
         }
     });
 });
