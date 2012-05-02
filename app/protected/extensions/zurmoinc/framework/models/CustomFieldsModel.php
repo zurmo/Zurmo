@@ -48,7 +48,7 @@
                                 $customField->value = $customFieldData->defaultValue;
                             }
                             elseif ($customField instanceof MultipleValuesCustomField &&
-                                 $customField->values->count() == 0 && $setDefaults)
+                                 $customField->values->count() == 0 && $setDefaults && isset($customFieldData->defaultValue))
                             {
                                 $customFieldValue = new CustomFieldValue();
                                 $customFieldValue->value = $customFieldData->defaultValue;

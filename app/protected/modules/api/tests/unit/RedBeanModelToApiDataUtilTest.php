@@ -136,6 +136,8 @@
                 'currencyValue'     => null,
                 'dropDown'          => null,
                 'radioDropDown'     => null,
+                'multiDropDown'     => array('values' => array('Multi 1', 'Multi 3')),
+                'tagCloud'          => array('values' => array('Cloud 2', 'Cloud 3')),
                 'hasOne'            => null,
                 'hasOneAlso'        => null,
                 'primaryEmail'      => null,
@@ -155,9 +157,8 @@
                     'id'       => $super->id,
                     'username' => 'super'
                 ),
-                'multiDropDown'    => array('values' => array('Multi 1', 'Multi 3')),
-                'tagCloud'         => array('values' => array('Cloud 2', 'Cloud 3')),
             );
+
             $this->assertEquals($compareData, $data);
         }
 

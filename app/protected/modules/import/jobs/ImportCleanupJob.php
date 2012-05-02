@@ -51,7 +51,7 @@
         }
 
         /**
-         * Return all imports where the modifiedDateTime was more than 1 week ago.  Then
+         * Get all imports where the modifiedDateTime was more than 1 week ago.  Then
          * delete the imports.
          * (non-PHPdoc)
          * @see BaseJob::run()

@@ -192,5 +192,20 @@
             $account->delete();
             $this->redirect(array($this->getId() . '/index'));
         }
+
+        protected function getSearchFormClassName()
+        {
+            return 'AccountsSearchForm';
+        }
+
+        protected function getModelFilteredListClassName()
+        {
+            return 'AccountsFilteredList';
+        }
+
+        public function actionExport()
+        {
+            $this->export();
+        }
     }
 ?>

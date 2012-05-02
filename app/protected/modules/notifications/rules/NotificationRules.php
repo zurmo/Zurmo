@@ -50,6 +50,12 @@
         protected $critical    = false;
 
         /**
+        * Defines whether multiple notifications by type for a single owner can be created.
+        * @var boolean
+        */
+        protected $allowDuplicates    = false;
+
+        /**
          * @returns Translated label that describes this rule type.
          */
         public static function getDisplayName()
@@ -63,7 +69,18 @@
          */
         public function allowDuplicates()
         {
-            return false;
+            return $this->allowDuplicates;
+        }
+
+        /**
+        * Set the notification as being critical or not. This will override the default
+        * setting for this particular NotificationRules
+        * @param boolean $critical
+        */
+        public function setAllowDuplicates($allowDuplicates)
+        {
+            assert('is_bool($$allowDuplicates)');
+            $this->allowDuplicates = $allowDuplicates;
         }
 
         /**
