@@ -39,7 +39,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td>//div[@id='ActionBarForGroupsTreeListView']/div/div/a</td>
   <td></td>
 </tr>
 <tr>
@@ -64,7 +64,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='GroupEditAndDetailsView']/table/tbody/tr[1]/td</td>
+  <td>//div[@id='GroupBreadCrumbView']/div/a[2]</td>
   <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <!-- create a parent group ends here -->
@@ -80,7 +80,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='GroupsTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td>//div[@id='ActionBarForGroupsTreeListView']/div/div/a</td>
   <td></td>
 </tr>
 <tr>
@@ -125,17 +125,17 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Groups: TestGroup${childrandomSuffix}</td>
+  <td>TestGroup${childrandomSuffix}</td>
   <td></td>
 </tr>
 <tr>
-  <td>assertTable</td>
-  <td>//div[@id='GroupEditAndDetailsView']/table.1.1</td>
+  <td>assertTextPresent</td>
+  <td>Group_group_name</td>
   <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/div/div/ul/li/ul/li[2]/a/span</td>
+  <td>//div[@id='MenuView']/ul/li[4]/ul/li[2]/a/span[2]</td>
   <td></td>
 </tr>
 <tr>
@@ -155,12 +155,12 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Groups: TestGroup${childrandomSuffix}</td>
+  <td>TestGroup${childrandomSuffix}</td>
   <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>link=TestGroup${parentrandomSuffix}</td>
+  <td>assertTextPresent</td>
+  <td>Group_group_name</td>
   <td>TestGroup${parentrandomSuffix}</td>
 </tr>
 </tbody></table>

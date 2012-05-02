@@ -38,12 +38,17 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
+  <td>Roles</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertTextPresent</td>
   <td>Manage Roles</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Roles</td>
+  <td>//div[@id='ConfigureModulesMenuView']/ul/li[6]/a/span</td>
   <td></td>
 </tr>
 <tr>
@@ -53,7 +58,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td>//div[@id='ActionBarForRolesTreeListView']/div/div/a</td>
   <td></td>
 </tr>
 <tr>
@@ -103,12 +108,12 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Roles: Home</td>
+  <td>Roles Home</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='RolesTitleBarAndTreeView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td>//div[@id='ActionBarForRolesTreeListView']/div/div/a</td>
   <td></td>
 </tr>
 <tr>
@@ -153,7 +158,7 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Roles: Home </td>
+  <td>Roles Home</td>
   <td></td>
 </tr>
 <tr>
@@ -203,18 +208,18 @@
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Admin</td>
+  <td>assertTextPresent</td>
+  <td>Users - Manage Users</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Users</td>
+  <td>//div[@id='ConfigureModulesMenuView']/ul/li[10]/a/span</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+  <td>//div[@id='SecuredActionBarForSearchAndListView']/div/div/a[1]</td>
   <td></td>
 </tr>
 <tr>
@@ -259,7 +264,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[1]/td[1]</td>
   <td>Mr. Jhon Smith${randomSuffix}</td>
 </tr>
 <!-- Create of a User completes here-->
@@ -276,22 +281,17 @@
 <!-- Search for a user -->
 <tr>
   <td>verifyTextPresent</td>
-  <td>Advanced Search</td>
+  <td>Advanced</td>
   <td></td>
 </tr>
 <tr>
   <td>type</td>
-  <td>UsersSearchForm_username</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
   <td>jhon smith${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
-</tr>
-<tr>
   <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result</td>
+  <td>Jhon Smith${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
@@ -312,12 +312,12 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/th</td>
   <td>Role</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/td</td>
   <td></td>
 </tr>
 <tr>
@@ -361,8 +361,8 @@
   <td></td>
 </tr>
 <tr>
-  <td>assertTable</td>
-  <td>//div[@id='UserDetailsView']/table.0.3</td>
+  <td>assertText</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/td/a</td>
   <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
@@ -373,11 +373,6 @@
 <tr>
   <td>waitForPageToLoad</td>
   <td></td>
-  <td></td>
-</tr>
-<tr>
-  <td>assertTextPresent</td>
-  <td>Jhon Smith${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
@@ -412,12 +407,7 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Roles: Home </td>
-  <td></td>
-</tr>
-<tr>
-  <td>assertTextPresent</td>
-  <td>Jhon Smith${randomSuffix}</td>
+  <td>Roles Home </td>
   <td></td>
 </tr>
 <tr>
@@ -462,12 +452,7 @@
 </tr>
 <tr>
   <td>assertTextPresent</td>
-  <td>Roles: Home </td>
-  <td></td>
-</tr>
-<tr>
-  <td>assertTextNotPresent</td>
-  <td>Jhon Smith${randomSuffix}</td>
+  <td>Roles Home </td>
   <td></td>
 </tr>
 <tr>
@@ -486,6 +471,21 @@
   <td></td>
 </tr>
 <tr>
+  <td>type</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>Jhon Smith${randomSuffix}</td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>Jhon Smith${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>assertText</td>
+  <td>link=Jhon Smith${randomSuffix}</td>
+  <td>Jhon Smith${randomSuffix}</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>link=Jhon Smith${randomSuffix}</td>
   <td></td>
@@ -497,12 +497,12 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/th[2]</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/th</td>
   <td>Role</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[2]</td>
+  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/td</td>
   <td></td>
 </tr>
 </tbody></table>
