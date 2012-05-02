@@ -17,9 +17,9 @@
     <td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/configuration</td>
-  <td></td>
+    <td>clickAndWait</td>
+    <td>link=My Profile</td>
+    <td></td>
 </tr>
 <tr>
     <td>waitForPageToLoad</td>
@@ -27,26 +27,35 @@
     <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Admin</td>
-  <td></td>
+    <td>verifyTextPresent</td>
+    <td>Super User</td>
+    <td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Administration: Menu</td>
-  <td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/ul/li[7]/a/span[2]</td>
+    <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>link=Designer</td>
-  <td>Designer</td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>link=Users</td>
-  <td>Users</td>
+    <td>verifyTextPresent</td>
+    <td>Administration</td>
+    <td></td>
 </tr>
-
+<tr>
+    <td>assertText</td>
+    <td>link=Designer</td>
+    <td>Designer</td>
+</tr>
+<tr>
+    <td>assertText</td>
+    <td>link=Users</td>
+    <td>Users</td>
+</tr>
 </tbody></table>
 </body>
 </html>
