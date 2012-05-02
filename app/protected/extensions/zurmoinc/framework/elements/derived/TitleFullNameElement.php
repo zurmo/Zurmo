@@ -33,8 +33,8 @@
         {
             $content  = '<div class="hasParallelFields">';
             $content .= $this->renderEditableSalutationContent();
-            $content .= $this->renderEditableNameTextField($this->model, $this->form, $this->attribute, 'firstName', true). "\n";
-            $content .= $this->renderEditableNameTextField($this->model, $this->form, $this->attribute, 'lastName', true) . "\n";
+            $content .= $this->renderEditableNameTextField($this->model, $this->form, 'firstName', true). "\n";
+            $content .= $this->renderEditableNameTextField($this->model, $this->form, 'lastName', true) . "\n";
             $content .= '</div>';
             return $content;
         }
@@ -48,11 +48,11 @@
                 return CHtml::tag('div', array('class' => 'overlay-label-field fifth'), $element->render());
         }
 
-        protected function renderEditableNameTextField($model, $form, $inputNameIdPrefix, $attribute)
+        protected function renderEditableNameTextField($model, $form, $attribute)
         {
-            $id          = $this->getEditableInputId($inputNameIdPrefix, $attribute);
+            $id          = $this->getEditableInputId($attribute);
             $htmlOptions = array(
-                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'name' => $this->getEditableInputName($attribute),
                 'id'   => $id,
             );
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
