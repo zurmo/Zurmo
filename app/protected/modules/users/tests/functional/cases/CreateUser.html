@@ -22,18 +22,13 @@
     <td>randomSuffix</td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/configuration</td>
-    <td></td>
+  <td>clickAndWait</td>
+  <td>link=My Profile</td>
+  <td></td>
 </tr>
 <tr>
     <td>waitForPageToLoad</td>
     <td></td>
-    <td></td>
-</tr>
-<tr>
-    <td>clickAndWait</td>
-    <td>link=Admin</td>
     <td></td>
 </tr>
 <tr>
@@ -43,7 +38,7 @@
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>//div[@id='SearchAndListView']/div[1]/div/div/div/ul/li/ul/li[1]/a/span</td>
+    <td>//div[@id='MenuView']/ul/li[5]/ul/li[1]/a/span[2]</td>
     <td></td>
 </tr>
 <tr>
@@ -138,17 +133,17 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[1]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[1]/td[1]</td>
     <td>Mr. Janny${randomSuffix} Jingo${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[2]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[3]/td[1]</td>
     <td>janny${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[4]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[7]/td[1]</td>
     <td>Mail</td>
 </tr>
 <tr>
@@ -158,27 +153,27 @@
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[6]/td[1]</td>
-    <td>123 Jingo Street<br /> Chicago IL, 60614<br /> USA map</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[10]/td[1]</td>
+    <td>123 Jingo Street<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[2]/td[2]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[4]/td[1]</td>
     <td>123456789</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[3]/td[2]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[6]/td[1]</td>
     <td>123455555</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/table/tbody/tr[4]/td[2]</td>
+    <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[8]/td[1]</td>
     <td>Jingo Factory</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>link=Logout</td>
+    <td>link=Sign Out</td>
     <td></td>
 </tr>
 <tr>
@@ -208,7 +203,7 @@
 </tr>
 <tr>
     <td>waitForTextPresent</td>
-    <td>Welcome, Janny${randomSuffix}</td>
+    <td>janny${randomSuffix}</td>
     <td></td>
 </tr>
 </tbody></table>

@@ -33,7 +33,7 @@
 </tr>
 <tr>
     <td>waitForTextPresent</td>
-    <td>Accounts: (Unnamed)</td>
+    <td>Create a New Account</td>
     <td></td>
 </tr>
 <tr>
@@ -63,12 +63,12 @@
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>//div[@id='MenuView']/div/div/ul/li[4]/ul/li[1]/a/span</td>
+    <td>//div[@id='MenuView']/ul/li[4]/ul/li[1]/a/span[2]</td>
     <td></td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>
-    <td>Contacts: (Unnamed)</td>
+    <td>Create a New Contact</td>
     <td></td>
 </tr>
 <tr>
@@ -143,23 +143,8 @@
 </tr>
 <tr>
     <td>type</td>
-    <td>User[firstName]</td>
-    <td>Sam</td>
-</tr>
-<tr>
-    <td>type</td>
-    <td>User[lastName]</td>
-    <td>Smith</td>
-</tr>
-<tr>
-    <td>click</td>
-    <td>search</td>
-    <td></td>
-</tr>
-<tr>
-    <td>waitForTextPresent</td>
-    <td>Displaying 1-1 of 1 result(s).</td>
-    <td></td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>
@@ -253,22 +238,17 @@
 </tr>
 <tr>
     <td>type</td>
-    <td>Account[name]</td>
+    <td>AccountsSearchForm_anyMixedAttributes</td>
     <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>search</td>
-    <td></td>
-</tr>
-<tr>
     <td>waitForTextPresent</td>
-    <td>Displaying 1-1 of 1 result(s).</td>
+    <td>my account ${randomSuffix}</td>
     <td></td>
 </tr>
 <tr>
     <td>click</td>
-    <td>link=my account ${randomSuffix}</td>
+    <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
     <td></td>
 </tr>
 <tr>
@@ -288,27 +268,27 @@
 </tr>
 <tr>
     <td>waitForTextPresent</td>
-    <td>Contacts: Jinny Jane ${randomSuffix}</td>
+    <td>Jinny Jane ${randomSuffix}</td>
     <td></td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
     <td>Mrs. Jinny Jane ${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[2]/td[1]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[3]/td[1]</td>
     <td>Sales Manager</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[3]/td[1]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[5]/td[1]</td>
     <td>Sales</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[7]/td[1]</td>
     <td>Tradeshow</td>
 </tr>
 <tr>
@@ -318,7 +298,7 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td[1]</td>
     <td>Customer</td>
 </tr>
 <tr>
@@ -328,28 +308,28 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[6]/td[1]</td>
     <td>456</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[8]/td[1]</td>
     <td>789</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[5]/td[2]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[9]/td[1]</td>
     <td>123</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[7]/td[1]</td>
-    <td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA map</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[12]/td[1]</td>
+    <td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[7]/td[2]</td>
-    <td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA map</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[13]/td[1]</td>
+    <td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
 </tr>
 </tbody></table>
 </body>
