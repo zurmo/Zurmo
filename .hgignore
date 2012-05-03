@@ -27,6 +27,6 @@ app/protected/config/debug.php
 app/protected/config/perInstanceTest.php
 app/protected/config/debugTest.php
 app/report
-git
+.git
 .DS_Store
 .settings
