@@ -52,7 +52,10 @@
          */
         public function save($state)
         {
-            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'globalState', serialize($state));
+            if (RedBeanDatabase::isSetup())
+            {
+                ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'globalState', serialize($state));
+            }
         }
     }
 ?>
