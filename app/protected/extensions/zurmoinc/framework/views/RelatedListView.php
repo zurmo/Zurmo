@@ -73,20 +73,19 @@
         {
             $moduleClassName = static::getModuleClassName();
             $moduleLabel     = $moduleClassName::getModuleLabelByTypeAndLanguage('PluralLowerCase');
-            return Yii::t('Default', 'No {moduleLabel} found', array('{moduleLabel}' => $moduleLabel));
+            return Yii::t('Default', 'No {moduleLabelPluralLowerCase} found', array('{moduleLabelPluralLowerCase}' => $moduleLabel));
         }
 
         protected function getGridViewWidgetPath()
         {
             $resolvedMetadata = $this->getResolvedMetadata();
-            if(isset($resolvedMetadata['global']['gridViewType']) &&
+            if (isset($resolvedMetadata['global']['gridViewType']) &&
                      $resolvedMetadata['global']['gridViewType'] == RelatedListView::GRID_VIEW_TYPE_STACKED)
              {
                  return 'ext.zurmoinc.framework.widgets.StackedExtendedGridView';
              }
 
             return parent::getGridViewWidgetPath();
-
         }
 
         protected function makeSearchAttributeData()
@@ -141,6 +140,20 @@
                     'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',
                 );
+        }
+
+        /**
+         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewAfterAjaxUpdate()
+         */
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            // Begin Not Coding Standard
+            return 'js:function(id, data) {
+                        processAjaxSuccessError(id, data);
+                    }';
+            // End Not Coding Standard
         }
 
         public function getTitle()

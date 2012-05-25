@@ -44,7 +44,7 @@
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Jobs Manager',
+                        'titleLabel'       => 'Job Manager',
                         'descriptionLabel' => 'Manage Scheduled Jobs',
                         'route'            => '/jobsManager/default/list',
                         'right'            => self::RIGHT_ACCESS_JOBSMANAGER,

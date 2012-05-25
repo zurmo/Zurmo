@@ -48,5 +48,16 @@
             $modelClassNames3 = ReadPermissionsOptimizationUtil::getMungableModelClassNames();
             $this->assertEquals($modelClassNames2, $modelClassNames3);
         }
+
+        public function testGetMungeIdsByUserIncludesEveryoneGroup()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $mungeIds = ReadPermissionsOptimizationUtil::getMungeIdsByUser(Yii::app()->user->userModel);
+            $this->assertEquals(2, count($mungeIds));
+            $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $group->save();
+            $mungeIds = ReadPermissionsOptimizationUtil::getMungeIdsByUser(Yii::app()->user->userModel);
+            $this->assertEquals(3, count($mungeIds));
+        }
     }
 ?>

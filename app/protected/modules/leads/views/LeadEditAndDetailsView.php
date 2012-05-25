@@ -214,7 +214,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New LeadsModuleSingularLabel',
+            return Yii::t('Default', 'Create LeadsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

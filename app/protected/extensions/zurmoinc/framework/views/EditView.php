@@ -46,7 +46,7 @@
             $content  = '<div>';
             $content .= $this->renderTitleContent();
             $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
-            if($maxCellsPresentInAnyRow > 1)
+            if ($maxCellsPresentInAnyRow > 1)
             {
                 $class = "wide double-column form";
             }
@@ -54,7 +54,7 @@
             {
                 $class = "wide form";
             }
-            $content .= '<div class="' . $class. '">';
+            $content .= '<div class="' . $class . '">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -68,7 +68,7 @@
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderAfterFormLayout($form);
             $actionToolBarContent = $this->renderActionElementBar(true);
-            if($actionToolBarContent != null)
+            if ($actionToolBarContent != null)
             {
                 $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
                 $content .= $actionToolBarContent;
@@ -85,10 +85,10 @@
         {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
         }
 
         protected function resolveActiveFormAjaxValidationOptions()

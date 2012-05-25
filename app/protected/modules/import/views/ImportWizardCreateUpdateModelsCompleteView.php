@@ -63,7 +63,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $content  = null;
-            $content .= Yii::t('Default', '<h3>Congratulations! Your import is complete.  Below is a summary of the results.</h3>');
+            $content .= '<h3>' . Yii::t('Default', 'Congratulations! Your import is complete.  Below is a summary of the results.') . '</h3>';
             $content .= '<span>'   . "\n";
             $content .= Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . "\n";
             $content .= Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . "\n";

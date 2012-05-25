@@ -31,6 +31,8 @@
     return array(
         'A simple notification'
             => 'Eine einfache Benachrichtigung',
+        'Delete Notification'
+            => 'Benachrichtigung Löschen',
         'Html Content'
             => 'HTML Code',
         'Notification'
@@ -41,6 +43,10 @@
             => 'Liste der Benachrichtigungen',
         'Text Content'
             => 'Textinhalt',
+        'There are no recent notifications.'
+            => 'Keine aktuellen Meldungen.',
+        'View All Notifications'
+            => 'Alle Benachrichtigungen anzeigen',
         'You have a new notification'
             => 'Neue Benachrichtigung',
     );

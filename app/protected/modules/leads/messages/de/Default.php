@@ -32,7 +32,7 @@
         'Access LeadsModulePluralLabel Tab'
             => 'Zugang LeadsModulePluralLabel Tab',
         'AccountsModuleSingularLabel Optional'
-            => 'AccountsModuleSingularLabel Optional',
+            => 'AccountsModuleSingularLabel Optional', // Same Word Translated
         'AccountsModuleSingularLabel Required'
             => 'AccountsModuleSingularLabel Erforderlich',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
@@ -56,7 +56,7 @@
         'Leads'
             => 'Interessenten',
         'LeadsModulePluralLabel'
-            => 'LeadsModulePluralLabel',
+            => 'LeadsModulePluralLabel', // Same Word Translated
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
         'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
         'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
@@ -65,11 +65,11 @@
             'aber in einen anderen Status. Zum Erstellen einer LeadsModuleSingularLowerCaseLabel Feld, erstellen Sie eine ContactsModuleSingularLowerCaseLabel Feld, ' .
             'und dann wird es in der LeadsModulePluralLowerCaseLabel Layouts platziert werden.',
         'LeadsModuleSingularLabel'
-            => 'LeadsModuleSingularLabel',
+            => 'LeadsModuleSingularLabel', // Same Word Translated
         'LeadsModuleSingularLabel Conversion'
-            => 'LeadsModuleSingularLabel ??',
+            => 'LeadsModuleSingularLabel Konversion',
         'LeadsModuleSingularLabel Search'
-            => 'LeadsModuleSingularLabel ??',
+            => 'LeadsModuleSingularLabel Suche',
         'LeadsModuleSingularLabel successfully converted.'
             => 'LeadsModuleSingularLabel erfolgreich konvertiert',
         'LeadsModuleSingularLabel was not converted. An error occurred.'

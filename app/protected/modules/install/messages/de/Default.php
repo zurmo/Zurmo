@@ -64,7 +64,7 @@
         'Ctype extension is not loaded.'
             => 'Die Erweiterung ctype ist nicht geladen',
         'Curl'
-            => 'Curl',
+            => 'Curl', // Same Word Translated
         'Database admin password'
             => 'Datenbank Administrator-Passwort',
         'Database admin username'
@@ -144,11 +144,11 @@
         'Installation in progress. Please wait.'
             => 'Die Installation ist im Gange. Bitte warten.',
         'Installation Output:'
-            => 'Installation Output:',
+            => 'Installation Output:', // Same Word Translated
         'is installed, but the version is unknown.'
             => 'ist installiert, aber die Version ist unbekannt.',
-        'is not installed'
-            => 'ist nicht installiert',
+        'is not installed.'
+            => 'ist nicht installiert.',
         'It is highly recommended that all optional services are installed and ' .
         'working before continuing.'
             => 'Es wird dringend empfohlen, dass alle optionalen Dienste installiert sind und funktionieren, bevor Sie fortfahren.',
@@ -160,16 +160,14 @@
             => 'Demodaten wird geladen. Bitte warten.',
         'Locking Installation.'
             => 'Sperren der Installations-Seite',
-        'Login'
-            => 'Anmeldung',
         'Mbstring is installed.'
             => 'Mbstring ist installiert.',
         'Mbstring is not installed.'
             => 'Mbstring ist nicht installiert.',
-        'Memcache'
-            => 'Memcache',
+        'Memcache extension'
+            => 'Memcache Extension',
         'Memcache host'
-            => 'Memcache host',
+            => 'Memcache host', // Same Word Translated
         'Memcache host name. Default is 127.0.0.1'
             => 'Memcache Hostname. Standard ist 127.0.0.1',
         'Memcache port number'
@@ -177,23 +175,23 @@
         'Memcache port number. Default is 11211'
             => 'Memcache Port-Nummer. Standard ist 11211',
         'Microsoft-IIS'
-            => 'Microsoft-IIS',
+            => 'Microsoft-IIS', // Same Word Translated
         'minimum requirement is:'
             => 'Mindestanforderung ist:',
         'Minimum version required:'
             => 'Minimum Version erforderlich:',
         'Mysql'
-            => 'Mysql',
+            => 'Mysql', // Same Word Translated
         'Oh no!'
             => 'Ach nein!',
         'PASS'
-            => 'PASS',
+            => 'PASS', // Same Word Translated
         'PCRE extension is loaded.'
             => 'Die PCRE-Erweiterung ist geladen.',
         'PCRE extension is not loaded.'
             => 'Die PCRE ist nicht geladen.',
         'PHP'
-            => 'PHP',
+            => 'PHP', // Same Word Translated
         'PHP date.timezone is not set.'
             => 'PHP date.timezone ist nicht gesetzt.',
         'PHP date.timezone is set.'
@@ -221,7 +219,7 @@
         'Recheck System'
             => 'System überprüfen',
         'RedBean'
-            => 'RedBean',
+            => 'RedBean', // Same Word Translated
         'RedBean file is missing patch.'
             => 'RedBean Datei fehlt Patch',
         'RedBean file is patched correctly'
@@ -275,7 +273,7 @@
         'There was a problem creating the user Error code:'
             => 'Es gab ein Problem beim Erstellen des Benutzers Fehlercode:',
         'Tidy'
-            => 'Tidy',
+            => 'Tidy', // Same Word Translated
         'User who can connect to the database.'
             => 'Benutzer, die mit der Datenbank verbinden kann.',
         'User`s password.'
@@ -295,7 +293,7 @@
         'Writing Configuration File.'
             => 'Erstellen der Konfigurationsdatei',
         'Yii'
-            => 'Yii',
+            => 'Yii', // Same Word Translated
         'You cannot access the installation area because the application is already installed.'
             => 'Sie haben keinen Zugriff auf die Installations-Bereich, weil die Anwendung schon installiert ist.',
         'You have specified an existing database. If you would like to use this database, ' .
@@ -315,9 +313,9 @@
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Zurmo administrative Passwort. Der Benutzername ist `super`. Sie können dieses später ändern.',
         'Zurmo Installation'
-            => 'Zurmo Installation',
+            => 'Zurmo Installation', // Same Word Translated
         'Zurmo Version'
-            => 'Zurmo Version',
+            => 'Zurmo Version', // Same Word Translated
         '{folderPath} is missing.'
             => '{folderPath} fehlt',
         '{folderPath} is not writable.'

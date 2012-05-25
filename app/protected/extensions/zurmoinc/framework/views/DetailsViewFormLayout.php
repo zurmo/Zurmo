@@ -46,6 +46,17 @@
          */
         protected $lessPanelsLinkLabel;
 
+        protected $labelsHaveOwnCells = true;
+
+        /**
+         * Set the labels to have their own cells or not.
+         * @param boolean $hasOwnCells
+         */
+        public function labelsHaveOwnCells($hasOwnCells)
+        {
+            assert('is_bool($hasOwnCells)');
+            $this->labelsHaveOwnCells = $hasOwnCells;
+        }
 
         /**
          * Render a form layout.
@@ -67,7 +78,7 @@
                 $content .= $this->renderDivTagByPanelNumber($panelNumber);
                 $content .= $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
                 $content .= '<table>';
-                $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels());
+                $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels(), $this->labelsHaveOwnCells);
                 $content .= '<tbody>';
 
                 foreach ($panel['rows'] as $row)
@@ -133,7 +144,7 @@
         {
             if ($panelNumber > 0 && $this->shouldHidePanelsAfterFirstPanel())
             {
-                return '<div id="view-panel-' . $this->uniqueId . '" class="panel" style="display:none;">';
+                return '<div class="panel more-view-panel-' . $this->uniqueId . '" style="display:none;">';
             }
             else
             {
@@ -167,7 +178,7 @@
                 Yii::app()->clientScript->registerScript('showMorePanels' . $this->uniqueId, "
                     $('#show-more-panels-link-" . $this->uniqueId . "').click( function()
                         {
-                            $('#view-panel-' + $(this).attr('href')).show();
+                            $('.more-view-panel-' + $(this).attr('href')).show();
                             $('#show-more-panels-link-" . $this->uniqueId . "').hide();
                             $('#show-less-panels-link-" . $this->uniqueId . "').show();
                             return false;
@@ -175,7 +186,7 @@
                     );
                     $('#show-less-panels-link-" . $this->uniqueId . "').click( function()
                         {
-                            $('#view-panel-' + $(this).attr('href')).hide();
+                            $('.more-view-panel-' + $(this).attr('href')).hide();
                             $('#show-more-panels-link-" . $this->uniqueId . "').show();
                             $('#show-less-panels-link-" . $this->uniqueId . "').hide();
                             return false;
@@ -256,7 +267,7 @@
         {
             if ($this->lessPanelsLinkLabel == null)
             {
-                Yii::t('Default', 'Less Options');
+                Yii::t('Default', 'Fewer Options');
             }
             else
             {

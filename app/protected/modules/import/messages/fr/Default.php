@@ -72,11 +72,11 @@
         'First Row is Header Row'
             => 'La première ligne du fichier contient les en-têtes de colonne',
         'Format'
-            => 'Format',
+            => 'Format', // Same Word Translated
         'Header'
             => 'L\'en-tête de colonne',
         'Id'
-            => 'Id',
+            => 'Id', // Same Word Translated
         'Import'
             => 'Importer',
         'Import Cleanup Job'
@@ -126,7 +126,7 @@
         'Mapping Data'
             => 'Mappage des données',
         'Messages'
-            => 'Messages',
+            => 'Messages', // Same Word Translated
         'Model Permissions'
             => 'Modèle d\'autorisations',
         'Module To Import To'

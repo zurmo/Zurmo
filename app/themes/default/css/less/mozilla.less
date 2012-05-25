@@ -1,0 +1,44 @@
+/*Target only Mozilla/Gecko Browsers*/
+@-moz-document url-prefix() {
+	.form{
+	    input[type="text"],
+	    input[type="password"],
+	    select.multiple,
+	    textarea{
+	        height:26px;
+	    }
+	}
+	input[type="submit"],
+	input[type="button"]{
+		height:26px;
+	}
+	/*
+	.panel, #permissions-module{
+		.has-date-select, .has-model-select{
+			a, button{
+            	&:before{
+                	top:-3px;
+            	}
+           }
+		}
+	}*/
+	.has-model-select a{
+		top:25px !important;
+	}
+    #owner-box{
+    	.has-model-select a{
+			top:23px !important;
+		}
+    }
+    .has-date-select button{
+		top:1px !important;
+	}
+	#NoteInlineEditView{
+		.has-model-select a{
+			top:11px !important;
+		}
+		.has-date-select button{
+			top:11px !important;
+		}
+	}
+}

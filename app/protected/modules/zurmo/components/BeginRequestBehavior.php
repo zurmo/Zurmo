@@ -33,7 +33,9 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
                 $owner->detachEventHandler('onBeginRequest', array(Yii::app()->request, 'validateCsrfToken'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
+
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleDisableGamification'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
@@ -59,8 +61,8 @@
                 {
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstanceFolderCheck'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
-                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    //$owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
+                    //$owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                 }
                 else
                 {
@@ -69,6 +71,7 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadGamification'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
                 }
@@ -235,7 +238,7 @@
 
                 if (!$isUrlAllowedToGuests)
                 {
-                    $message = Yii::t('Default', 'Login required.');
+                    $message = Yii::t('Default', 'Sign in required.');
                     $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, null);
                     Yii::app()->apiHelper->sendResponse($result);
                     exit;
@@ -335,6 +338,17 @@
             {
                 Yii::app()->custom->resolveIsCustomDataLoaded();
             }
+        }
+
+        public function handleLoadGamification($event)
+        {
+            Yii::app()->gameHelper;
+            Yii::app()->gamificationObserver; //runs init();
+        }
+
+        public function handleDisableGamification($event)
+        {
+            Yii::app()->gamificationObserver->enabled = false;
         }
      }
 ?>

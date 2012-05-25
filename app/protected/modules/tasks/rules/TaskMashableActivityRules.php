@@ -42,7 +42,7 @@
                     'operatorType'         => 'equals',
                     'value'                => (bool)1
             );
-            if($searchAttributeData['structure'] != null)
+            if ($searchAttributeData['structure'] != null)
             {
                 $searchAttributeData['structure'] .= ' and ';
             }

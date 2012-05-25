@@ -28,7 +28,7 @@
      * Series of tests to test attachments and file upload.
      *
      */
-    class ModelWithAttachmentTest extends BaseTest
+    class ModelWithAttachmentTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

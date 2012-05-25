@@ -160,7 +160,7 @@
             $user            = Yii::app()->user->userModel;
             $modules         = Module::getModuleObjects();
             $createMenuItems = array(
-                        'label' => Yii::t('Default', 'Create New'),
+                        'label' => Yii::t('Default', 'Create'),
                         'url'   => null,
                         'items' => array());
             foreach ($modules as $module)
@@ -168,14 +168,14 @@
                 $metadata  = $module::getShortCutsCreateMenuItems();
                 $menuItems = MenuUtil::resolveModuleMenuForAccess(get_class($module), $metadata, $user);
                 $menuItems = self::resolveMenuItemsForLanguageLocalization($menuItems, get_class($module));
-                if(!empty($menuItems))
+                if (!empty($menuItems))
                 {
                     $createMenuItems['items'] = array_merge($createMenuItems['items'],
                                                    self::resolveMenuItemsForLanguageLocalization
                                                        ($menuItems, get_class($module)));
                 }
             }
-            if(empty($createMenuItems['items']))
+            if (empty($createMenuItems['items']))
             {
                 return array();
             }
@@ -216,7 +216,7 @@
             foreach ($modules as $module)
             {
                 $metadata = $module::getMetadata();
-                if(!empty($metadata['global']['headerMenuItems']))
+                if (!empty($metadata['global']['headerMenuItems']))
                 {
                     $menuItems = MenuUtil::resolveModuleMenuForAccess(  get_class($module),
                                                                         $metadata['global']['headerMenuItems'],
@@ -230,8 +230,9 @@
             return $headerMenuItems;
         }
 
-        protected static function orderHeaderMenuItems($a, $b) {
-            if(!isset($a['order']))
+        protected static function orderHeaderMenuItems($a, $b)
+        {
+            if (!isset($a['order']))
             {
                 $aOrder = 1;
             }
@@ -239,7 +240,7 @@
             {
                 $aOrder = $a['order'];
             }
-            if(!isset($b['order']))
+            if (!isset($b['order']))
             {
                 $bOrder = 1;
             }
@@ -254,15 +255,39 @@
          * Get accessible user header menu item based for the current user.
          * @return array of menu items.
          */
-        public static function getAccessibleUserHeaderMenuForCurrentUser()
+        public static function getAccessibleOrderedUserHeaderMenuForCurrentUser()
         {
             $user      = Yii::app()->user->userModel;
-            $metadata  = UsersModule::getMetadata();
-            assert('!empty($metadata["global"]["userHeaderMenuItems"])');
-            $menuItems = MenuUtil::resolveModuleMenuForAccess('UsersModule',
-                                                                $metadata['global']['userHeaderMenuItems'],
-                                                                $user);
-            return self::resolveMenuItemsForLanguageLocalization            ($menuItems, 'UsersModule');
+            $modules         = Module::getModuleObjects();
+            $headerMenuItems = array();
+            foreach ($modules as $module)
+            {
+                $metadata = $module::getMetadata();
+                if (!empty($metadata['global']['userHeaderMenuItems']))
+                {
+                    $menuItems = MenuUtil::resolveModuleMenuForAccess(  get_class($module),
+                                                                        $metadata['global']['userHeaderMenuItems'],
+                                                                        $user);
+
+                    $headerMenuItems = array_merge($headerMenuItems,
+                                                   self::resolveMenuItemsForLanguageLocalization
+                                                       ($menuItems, get_class($module)));
+                }
+            }
+            $orderedHeaderMenuItems = array();
+            foreach ($headerMenuItems as $item)
+            {
+                if (isset($item['order']))
+                {
+                    $orderedHeaderMenuItems[$item['order']] = $item;
+                }
+                else
+                {
+                    $orderedHeaderMenuItems[] = $item;
+                }
+            }
+            ksort($orderedHeaderMenuItems);
+            return $orderedHeaderMenuItems;
         }
 
         /**

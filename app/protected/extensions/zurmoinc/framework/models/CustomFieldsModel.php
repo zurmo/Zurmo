@@ -70,6 +70,7 @@
         protected function constructIncomplete($bean)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');
+            parent::constructIncomplete($bean);
             $metadata = $this->getMetadata();
             foreach ($metadata as $unused => $classMetadata)
             {

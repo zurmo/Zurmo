@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -75,11 +75,6 @@
         {
             $this->themeUrl = Yii::app()->baseUrl . '/themes';
             $this->theme    = Yii::app()->theme->name;
-            if ($this->baseUrl === null)
-            {
-                $this->baseUrl = Yii::app()->getAssetManager()->publish(
-                                 Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
-            }
             if ($this->inputId == null)
             {
                 $this->inputId = $this->getId() . 'inputId';
@@ -88,7 +83,7 @@
             {
                 $this->inputId = $this->getId() . 'inputName';
             }
-            if(count($this->dataAndLabels) == 0)
+            if (count($this->dataAndLabels) == 0)
             {
                 throw new NotSupportedException();
             }
@@ -101,8 +96,11 @@
         {
             $this->registerClientScripts();
             $this->registerCssFile();
-            $htmlOptions = array_merge($this->htmlOptions, array('id' => $this->inputId, 'multiple' => true));
-            echo CHtml::listBox($this->inputName, $this->selectedValue,$this->dataAndLabels, $htmlOptions);
+            $htmlOptions = array_merge($this->htmlOptions,
+                array('id'       => $this->inputId,
+                      'multiple' => true,
+                      'style'    => 'display:none;'));
+            echo CHtml::listBox($this->inputName, $this->selectedValue, $this->dataAndLabels, $htmlOptions);
             if (empty($this->options))
             {
                 $options = null;
@@ -118,7 +116,9 @@
 
         protected function registerClientScripts()
         {
-            Yii::app()->getClientScript()->registerScriptFile($this->baseUrl . '/juiMultiSelect/jquery.multiselect.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets')) . '/juiMultiSelect/jquery.multiselect.js');
         }
 
         protected function registerCssFile()
@@ -129,7 +129,8 @@
         protected function renderJavaScript($options)
         {
             assert('$options == null || is_string($options)');
-            $content = " $('#{$this->inputId}').multiselect({$options});";
+            $content = "$('#{$this->inputId}').multiselect({$options}); " .
+                       "setupCheckboxStyling($('#{$this->inputId}').parent())";
             return $content;
         }
     }

@@ -71,11 +71,11 @@
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                     'onChangeMonthYear'   => $this->getOnChangeMonthScript(),
-                    'onSelect'		      => $this->getOnSelectScript(),
+                    'onSelect'            => $this->getOnSelectScript(),
                     'altFormat'           => 'yy-mm-dd',
                     'altField'            => '#calendarSelectedDate' . $this->uniqueLayoutId
                 ),
-                'dayEvents'			  => $this->makeDayEvents(),
+                'dayEvents'           => $this->makeDayEvents(),
 
             ));
             $cClipWidget->endClip();

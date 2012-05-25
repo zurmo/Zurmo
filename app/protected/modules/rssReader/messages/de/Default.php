@@ -32,13 +32,13 @@
         'Create RssReaderModuleSingularLabel'
             => 'RssReaderModuleSingularLabel erstellen',
         'RSS Reader'
-            => 'RSS Reader',
+            => 'RSS Reader', // Same Word Translated
         'RSS URL'
-            => 'RSS URL',
+            => 'RSS URL', // Same Word Translated
         'RssReaderModulePluralLabel'
-            => 'RssReaderModulePluralLabel',
+            => 'RssReaderModulePluralLabel', // Same Word Translated
         'RssReaderModuleSingularLabel'
-            => 'RssReaderModuleSingularLabel',
+            => 'RssReaderModuleSingularLabel', // Same Word Translated
         'Zurmo News'
             => 'Nachrichten über Zurmo',
     );

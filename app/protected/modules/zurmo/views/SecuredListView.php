@@ -43,7 +43,7 @@
                     'update'      => array(
                     'url'             => 'Yii::app()->createUrl("' .
                                          $this->getGridViewActionRoute('edit') . '", array("id" => $data->id))',
-                    'imageUrl'	      => false,
+                    'imageUrl'        => false,
                     'visible'         => 'ActionSecurityUtil::canCurrentUserPerformAction("Edit", $data)',
                     'options'         => array('class' => 'pencil', 'title' => 'Update'),
                     'label'           => '!'

@@ -121,8 +121,21 @@
                 {
                     if (!$model->isDeleted())
                     {
-                        $messageLogger->addInfoMessage(get_class($model) . " Deleted (Not Owned).");
-                        $model->delete();
+                        if (!$model->delete())
+                        {
+                            if ($model->id < 0)
+                            {
+                                $messageLogger->addInfoMessage(get_class($model) . " Not Deleted but never saved so this is ok. (Most likely it is a - Has Many Owned)");
+                            }
+                            else
+                            {
+                                $messageLogger->addErrorMessage("*** Deleting the sample " .  get_class($model) . " failed. It would not delete.");
+                            }
+                        }
+                        else
+                        {
+                            $messageLogger->addInfoMessage(get_class($model) . " Deleted (Not Owned).");
+                        }
                     }
                     else
                     {

@@ -87,17 +87,20 @@
         {
             $this->resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            $title           = Yii::t('Default', 'Details');
+            $title           = Yii::t('Default', 'Profile');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($user), 'UsersModule'), $user);
             $params = array(
                 'controllerId'     => $this->getId(),
                 'relationModuleId' => $this->getModule()->getId(),
                 'relationModel'    => $user,
+                'rankingData'      => GamePointUtil::getUserRankingData($user),
+                'statisticsData'   => GameLevelUtil::getUserStatisticsData($user),
+                'badgeData'        => GameBadge::getAllByPersonIndexedByType($user)
             );
             $detailsAndRelationsView = new UserDetailsAndRelationsView($this->getId(),
                                                                        $this->getModule()->getId(),
-                                                                       $user, $params);
+                                                                       $params);
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeViewWithBreadcrumbsForCurrentUser($this, $detailsAndRelationsView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
@@ -307,7 +310,7 @@
 
         public function actionProfile()
         {
-            $this->actionEdit(Yii::app()->user->userModel->id);
+            $this->actionDetails(Yii::app()->user->userModel->id);
         }
 
         public function actionModalList()

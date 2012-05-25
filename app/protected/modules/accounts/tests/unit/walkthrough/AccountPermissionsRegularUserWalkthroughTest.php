@@ -77,7 +77,8 @@
             $this->assertFalse(strpos($content, 'Who can read and write') === false);
 
             //Now go to an account details with nobody where nobody can read, but not write.
-            //In this scenario the DerivedExplicitReadWriteModelPermissions element should not show.
+            //In this scenario the DerivedExplicitReadWriteModelPermissions element is still shown
+            //at the bottom of the details area.
             $accounts = Account::getByName('superAccountReadableByNobody');
             $this->assertEquals(1, count($accounts));
             $accountId = $accounts[0]->id;
@@ -85,7 +86,7 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/details');
             //Confirm content does not have security element
-            $this->assertTrue(strpos($content, 'Who can read and write') === false);
+            $this->assertFalse(strpos($content, 'Who can read and write') === false);
         }
 
         /**

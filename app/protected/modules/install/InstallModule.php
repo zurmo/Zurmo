@@ -38,7 +38,9 @@
 
         public function getDependencies()
         {
-            return array();
+            return array(
+                'zurmo',
+            );
         }
 
         public static function getDefaultMetadata()

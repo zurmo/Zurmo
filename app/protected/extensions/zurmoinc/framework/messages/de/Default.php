@@ -37,16 +37,22 @@
             => 'Dateien hinzufügen',
         'Add Item'
             => 'Element hinzufügen',
+        'Advanced'
+            => 'Erweiterte Suche',
         'Advanced Search'
             => 'Erweiterte Suche',
         'After'
             => 'Nach',
         'All'
             => 'Alle',
+        'All Results'
+            => 'Alle Exporte',
         'and'
             => 'und',
         'Basic Search'
             => 'Einfache Suche',
+        'Basic Search Fields'
+            => 'Grund Suche Felder',
         'Before'
             => 'Vor',
         'Between'
@@ -60,13 +66,13 @@
         'Cell Settings'
             => 'Zelle Einstellungen',
         'Celsius'
-            => 'Celsius',
+            => 'Celsius', // Same Word Translated
         'Change Log'
             => 'Änderungsprotokoll',
         'Changed'
             => 'Geändert',
-        'Clear Search'
-            => 'Suche löschen',
+        'Clear'
+            => 'Löschen',
         'Create'
             => 'Erstellen',
         'Created By User'
@@ -90,7 +96,7 @@
         'Detail View Only'
             => 'Nur Detailansicht',
         'Details'
-            => 'Details',
+            => 'Details', // Same Word Translated
         'Done'
             => 'Fertig',
         'Edit'
@@ -99,8 +105,14 @@
             => 'Portlet bearbeiten',
         'Error'
             => 'Fehler',
+        'Export'
+            => 'Exportieren',
         'Fahrenheit'
-            => 'Fahrenheit',
+            => 'Fahrenheit', // Same Word Translated
+        'Fewer Details'
+            => 'Weniger Details',
+        'Fewer Options'
+            => 'Weniger Optionen',
         'Filtered Lists'
             => 'Gefilterte Listen',
         'First character must be a lower case letter'
@@ -112,7 +124,7 @@
         'firstDateTime must occur before secondDateTime'
             => 'firstDateTime muss vor secondDateTime kommen',
         'Float'
-            => 'Float',
+            => 'Float', // Same Word Translated
         'from'
             => 'von',
         'Full Name'
@@ -122,7 +134,7 @@
         'Hour'
             => 'Stunde',
         'Info'
-            => 'Info',
+            => 'Info', // Same Word Translated
         'Inline Edit View'
             => 'Inline Edit Ansicht',
         'Integer'
@@ -140,13 +152,13 @@
         'List'
             => 'Liste',
         'Loading'
-            => 'Loading',
+            => 'Loading', // Same Word Translated
         'Mass Update'
             => 'Massenaktualisierung',
         'Max upload size: {maxSize}'
             => 'Max Upload-Größe: {maxSize}',
         'Minute'
-            => 'Minute',
+            => 'Minute', // Same Word Translated
         'Missing the attribute labels.'
             => 'Attribut-Tags fehlt',
         'Model Class Name'
@@ -166,7 +178,7 @@
         'My List View'
             => 'Meine Liste Ansicht',
         'Name'
-            => 'Name',
+            => 'Name', // Same Word Translated
         'Name must not contain spaces or special characters'
             => 'Der Name darf keine Sonderzeichen oder Leerzeichen haben',
         'Next 7 Days'
@@ -175,26 +187,34 @@
             => 'Nein',
         'No import processes found.'
             => 'Kein Import-Prozesse gefunden',
+        'No {moduleLabelPluralLowerCase} found'
+            => 'Keine Ergebnisse gefunden',
         'None'
             => 'Keiner',
         'Now'
             => 'Jetzt',
         'of'
             => 'von',
-        'On'
+        'Off{visibility}'
+            => 'Deaktiviert',
+        'On{date}'
             => 'Am',
+        'On{visibility}'
+            => 'Eingeschaltet',
         'Opted Out'
-            => 'Opted Out',
+            => 'Opted Out', // Same Word Translated
+        'Options'
+            => 'Optionen',
         'or'
             => 'oder',
         'Panel'
-            => 'Panel',
+            => 'Panel', // Same Word Translated
         'Panel Settings'
             => 'Panel Einstellungen',
         'Panel Title'
             => 'Panel-Titel',
         'Radio Drop Down'
-            => 'Radio Drop Down',
+            => 'Radio Drop Down', // Same Word Translated
         'record'
             => 'Datensatz',
         'records'
@@ -213,6 +233,8 @@
             => 'Zweite',
         'Select'
             => 'Wählen',
+        'Selected'
+            => 'Ausgewählt',
         'selected for updating.'
             => 'Ausgewählt zur Aktualisierung',
         'Serialized Data'
@@ -223,8 +245,10 @@
                'Ändern Sie die Datensätze, die sie zum ersten Mal verwenden',
         'Start'
             => 'Anfang',
+        'Start typing to search'
+            => 'Geben Sie hier Ihren Suchbegriff ein',
         'Tab'
-            => 'Tab',
+            => 'Tab', // Same Word Translated
         'The file did not exist'
             => 'Diese Datei existierte nicht',
         'There was an error uploading the file.'
@@ -255,8 +279,8 @@
             => 'Schreiben, um ein tab zu finden',
         'Unknown'
             => 'unbekannt',
-        'Update Selected'
-            => 'Aktualisierung ausgewählt',
+        'Update'
+            => 'Aktualisieren',
         'updated successfully.'
             => 'erfolgreich aktualisiert.',
         'Updating'

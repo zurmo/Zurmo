@@ -28,7 +28,7 @@
      * This test is in the application instead of the framework so it can be tested when the database is frozen or
      * unfrozen.
      */
-    class DefaultDataUtilTest extends BaseTest
+    class DefaultDataUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

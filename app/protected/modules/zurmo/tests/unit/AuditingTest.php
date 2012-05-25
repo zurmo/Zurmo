@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AuditingTest extends BaseTest
+    class AuditingTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -37,6 +37,14 @@
             $user->lastName  = 'Boondog';
             assert($user->save()); // Not Coding Standard
             assert(AuditEvent::getCount() == 4); // Not Coding Standard
+            ContactsModule::loadStartingData();
+            Yii::app()->gameHelper->muteScoringModelsOnSave();
+        }
+
+        public static function tearDownAfterClass()
+        {
+            Yii::app()->gameHelper->unmuteScoringModelsOnSave();
+            parent::tearDownAfterClass();
         }
 
         public function testLogAuditForOwnedMultipleValuesCustomField()

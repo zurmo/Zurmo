@@ -49,6 +49,7 @@
                                                           $this->form->databaseName,
                                                           $this->form->databaseUsername,
                                                           $this->form->databasePassword,
+                                                          $this->form->databasePort,
                                                           $this->notAllowedDatabaseCollations,
                                                           $databaseDefaultCollation))
             {

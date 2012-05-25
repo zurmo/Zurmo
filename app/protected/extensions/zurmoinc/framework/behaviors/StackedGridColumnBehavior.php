@@ -34,11 +34,11 @@
         {
             $data    = $this->owner->grid->dataProvider->data[$row];
             $options = $this->owner->htmlOptions;
-            if($this->owner->cssClassExpression !== null)
+            if ($this->owner->cssClassExpression !== null)
             {
                 $class = $this->owner->evaluateExpression($this->owner->cssClassExpression,
                          array('row' => $row, 'data' => $data));
-                if(isset($options['class']))
+                if (isset($options['class']))
                 {
                     $options['class'] .= ' ' . $class;
                 }

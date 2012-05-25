@@ -27,7 +27,7 @@
     /**
      * Base class to test API functions.
      */
-    class ApiBaseTest extends BaseTest
+    class ApiBaseTest extends ZurmoBaseTest
     {
         protected $serverUrl = '';
         protected $freeze = false;

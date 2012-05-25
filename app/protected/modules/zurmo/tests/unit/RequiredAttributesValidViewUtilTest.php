@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class RequiredAttributesValidViewUtilTest extends BaseTest
+    class RequiredAttributesValidViewUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -114,7 +114,7 @@
 
         public function testResolveToSetAsMissingRequiredAttributesByModelClassName()
         {
-            RequiredAttributesValidViewUtil::resolveToSetAsMissingRequiredAttributesByModelClassName('Contact', 'owner');
+            RequiredAttributesValidViewUtil::resolveToSetAsMissingRequiredAttributesByModelClassName('Contact', 'lastName');
             $booleanTest = RequiredAttributesValidViewUtil::isViewMissingRequiredAttributes('ContactsModule', 'ContactEditAndDetailsView');
             $this->assertFalse($booleanTest);
 

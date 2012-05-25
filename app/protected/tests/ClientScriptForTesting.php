@@ -33,5 +33,40 @@
         {
             return $this->scriptFiles;
         }
+
+        /**
+         * Override since there will not be a baseUrl available from the request object. Need to alter what is returned
+         * in that scenario.
+         * (non-PHPdoc)
+         * @see CClientScript::getPackageBaseUrl()
+         */
+        public function getPackageBaseUrl($name)
+        {
+            if (!isset($this->coreScripts[$name]))
+            {
+                return false;
+            }
+            $package = $this->coreScripts[$name];
+            if (isset($package['baseUrl']))
+            {
+                $baseUrl = $package['baseUrl'];
+                echo 'grapes:' . $baseUrl . "\n";
+                if ($baseUrl === '' || $baseUrl[0] !== '/' && strpos($baseUrl, '://') === false)
+                {
+                    //do not return because it will render a slash in front of the actual url
+                    //$baseUrl = Yii::app()->getRequest()->getBaseUrl() . '/' . $baseUrl;
+                }
+                $baseUrl = rtrim($baseUrl, '/');
+            }
+            elseif (isset($package['basePath']))
+            {
+                $baseUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias($package['basePath']));
+            }
+            else
+            {
+                $baseUrl = $this->getCoreScriptUrl();
+            }
+            return $this->coreScripts[$name]['baseUrl'] = $baseUrl;
+        }
     }
 ?>

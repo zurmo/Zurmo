@@ -56,7 +56,7 @@
         'Leads'
             => 'Pistes',
         'LeadsModulePluralLabel'
-            => 'LeadsModulePluralLabel',
+            => 'LeadsModulePluralLabel', // Same Word Translated
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
         'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
         'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
@@ -66,7 +66,7 @@
                'veuillez créer le champ dans le module ContactsModuleSingularLowerCaseLabel, le champ ' .
                'apparaîtra alors dans les présentations de pages des LeadsModulePluralLowerCaseLabel.',
         'LeadsModuleSingularLabel'
-            => 'LeadsModuleSingularLabel',
+            => 'LeadsModuleSingularLabel', // Same Word Translated
         'LeadsModuleSingularLabel Conversion'
             => 'Conversion de la LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'

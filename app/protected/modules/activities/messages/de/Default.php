@@ -31,25 +31,35 @@
     return array(
         'Activities'
             => 'Aktivitäten',
+        'Activity'
+            => 'Aktivität',
         'Activity Items'
             => 'Aktivität Elemente',
+        'Activity Summary'
+            => 'Zusammenfassung der Aktivitäten',
         'All Activities'
             => 'Alle Aktivitäten',
+        'Latest Activities'
+            => 'Aktuelle Aktivitäten',
         'Latest Date Time'
             => 'Neueste Datum Uhrzeit',
+        'Mine'
+            => 'Meine',
         'No Activities found.'
             => 'Keine Aktivitäten gefunden.',
         'Related'
             => 'Bezug',
         'Related to'
             => 'In Bezug auf',
-        'Roll Up Off'
-            => 'Roll Up Off',
-        'Roll Up On'
-            => 'Roll Up aktivieren',
+        'Roll Up'
+            => 'Roll Up', // Same Word Translated
         'Show more'
             => 'Mehr schauen',
         'Summary'
             => 'Zusammenfassung',
+        'Turn roll up on to see activities from related records.'
+            => 'Aufrollen aktivieren, um Aktivitäten zu sehen.',
+        'View'
+            => 'Sicht',
     );
 ?>

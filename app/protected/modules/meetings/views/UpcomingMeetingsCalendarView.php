@@ -71,6 +71,7 @@
 
         protected function getOnChangeMonthScript()
         {
+            // Begin Not Coding Standard
             return "js:function(year, month, inst) {
                 //Call to render new events
                 $.ajax({
@@ -90,10 +91,12 @@
                     }
                 });
             }";
+            // End Not Coding Standard
         }
 
         protected function getOnSelectScript()
         {
+            // Begin Not Coding Standard
             return "js:function(dateText, inst) {
                 $.ajax({
                     url      : $.param.querystring('" . $this->getPortletSelectDayUrl() . "', '&displayStringTime=' + dateText + '&stringTime=' + $('#calendarSelectedDate" . $this->uniqueLayoutId . "').val()),
@@ -111,6 +114,7 @@
                     }
                 });
             }";
+            // End Not Coding Standard
         }
 
         protected function getPortletChangeMonthUrl()
@@ -135,7 +139,7 @@
             $month     = str_pad($_GET['month'], 2, '0', STR_PAD_LEFT);
             $year      = $_GET['year'];
             $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();
-            foreach($dayEvents as $event)
+            foreach ($dayEvents as $event)
             {
                 echo "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
             }

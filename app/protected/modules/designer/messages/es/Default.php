@@ -77,6 +77,8 @@
             => 'Por lo menos un valor se debe asignar para cada nivel',
         'Available Fields:'
             => 'Campos disponibles:',
+        'Available Modules'
+            => 'Resumen de las actividades',
         'Calculated Number'
             => 'Campo calculado',
         'Check Box'
@@ -86,9 +88,9 @@
         'Create Field'
             => 'Crear campo',
         'Custom Fields'
-            => 'campos personalizados',
+            => 'Campos personalizados',
         'Decimal'
-            => 'Decimal',
+            => 'Decimal', // Same Word Translated
         'Dependency Mapping'
             => 'Mapping dependiente',
         'Dependent Pick Lists'
@@ -140,9 +142,7 @@
         'Formula Name'
             => 'Nombre de fórmula',
         'General'
-            => 'General',
-        'General Edit'
-            => 'Modificación general',
+            => 'General', // Same Word Translated
         'How does this work?'
             => '¿Cómo funciona?',
         'Invalid panel configuration type'
@@ -194,7 +194,7 @@
         'Precision'
             => 'precisión',
         'Radio Pick List'
-            => 'Radio Pick List',
+            => 'Radio Pick List', // Same Word Translated
         'Related List View'
             => 'Vista de lista relacionada',
         'Required Field'
@@ -203,6 +203,8 @@
             => 'Publicar',
         'Search View'
             => 'Vista de búsqueda',
+        'Select a field type'
+            => 'Seleccionar el tipo de campo',
         'Show If'
             => 'Valor depende',
         'Tag Cloud'
@@ -224,9 +226,11 @@
         'Track Audit Log'
             => 'Auditar este campo',
         'URL'
-            => 'URL',
+            => 'URL', // Same Word Translated
         'You can only have at most 4 pick-lists selected.'
             => 'Puede tener hasta 4 listas desplegables.',
+        'You must first select a field type'
+            => 'Por favor, elija primero el tipo del campo.',
         'You must have at least one field placed in order to save a layout.'
             => 'El diseño debe contener al menos un campo.',
         'You must have at least one panel in order to save a layout.'

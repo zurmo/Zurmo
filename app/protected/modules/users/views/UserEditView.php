@@ -228,7 +228,7 @@
 
         protected function renderTitleContent()
         {
-            if($this->model->id > 0)
+            if ($this->model->id > 0)
             {
                 return '<h1>' . strval($this->model) . '</h1>';
             }

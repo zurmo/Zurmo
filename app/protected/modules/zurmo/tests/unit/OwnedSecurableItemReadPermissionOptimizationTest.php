@@ -31,7 +31,7 @@
         // These tests rely on the model ids being certain values, which relies
         // on it running on new tables, which is not the case when freezing.
 
-        class OwnedSecurableItemReadPermissionOptimizationTest extends BaseTest
+        class OwnedSecurableItemReadPermissionOptimizationTest extends ZurmoBaseTest
         {
             public static function setUpBeforeClass()
             {

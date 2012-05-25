@@ -121,7 +121,7 @@
                 {
                     Yii::app()->emailHelper->sendImmediately($emailMessage);
                 }
-                catch(CException $e)
+                catch (CException $e)
                 {
                     //Not sure what to do yet when catching an exception here. Currently ignoring gracefully.
                 }
@@ -160,24 +160,24 @@
                 foreach ($notifications as $notification)
                 {
                         $content .= '<div class="single-notification">';
-                        $content .= self::renderListViewContent($notification);
+                        $content .= self::renderShortenedListViewContent($notification);
                         $content .= CHtml::link("Delete<span class='icon'></span>", "#",
                                                 array("class"   => "remove",
-                                                      "onClick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ")"));
+                                                      "onclick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ")"));
                         $content .= '</div>';
                 }
             }
             else
             {
-                $content .= Yii::t('Default', '<div class="single-notification">There are no recent notifications.</div>');
+                $content .= '<div class="single-notification">' . Yii::t('Default', 'There are no recent notifications.') . '</div>';
             }
             return $content;
         }
 
-        public static function renderListViewContent(Notification $notification)
+        public static function renderShortenedListViewContent(Notification $notification)
         {
             $content = strval($notification);
-            if($content != null)
+            if ($content != null)
             {
                 $content = '<h4>' . StringUtil::getChoppedStringContent($content, 68) . '</h4>';
             }
@@ -191,6 +191,28 @@
                 {
                     $content .= '<div>' . Yii::app()->format->text(StringUtil::
                                             getChoppedStringContent($notification->notificationMessage->textContent, 136)) .
+                                '</div>';
+                }
+            }
+            return $content;
+        }
+
+        public static function renderListViewContent(Notification $notification)
+        {
+            $content = strval($notification);
+            if ($content != null)
+            {
+                $content = '<h4>' . $content . '</h4>';
+            }
+            if ($notification->notificationMessage->id > 0)
+            {
+                if ($notification->notificationMessage->htmlContent != null)
+                {
+                    $content .= '<div>' . Yii::app()->format->raw($notification->notificationMessage->htmlContent). '</div>';
+                }
+                elseif ($notification->notificationMessage->textContent != null)
+                {
+                    $content .= '<div>' . Yii::app()->format->text($notification->notificationMessage->textContent) .
                                 '</div>';
                 }
             }

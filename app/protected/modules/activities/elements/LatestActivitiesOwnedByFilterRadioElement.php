@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -80,7 +80,7 @@
         {
             $data = array(
                         LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER => Yii::t('Default', 'Mine'),
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'Everyones')
+                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'Everyone')
                     );
 
             return $data;

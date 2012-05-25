@@ -48,7 +48,7 @@
         'Create Dashboards'
             => 'Dashboards erstellen',
         'Dashboard'
-            => 'Dashboard',
+            => 'Dashboard', // Same Word Translated
         'Delete Dashboard'
             => 'Dashboard löschen',
         'Delete Dashboards'
@@ -60,7 +60,7 @@
         'Is Default'
             => 'Ist Standard',
         'Layout Id'
-            => 'Layout Id',
+            => 'Layout Id', // Same Word Translated
         'Layout Type'
             => 'Layout-Typ',
         'Return to Home'

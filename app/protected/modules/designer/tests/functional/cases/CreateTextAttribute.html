@@ -33,7 +33,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
   <td></td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Accounts: Custom Fields</td>
+  <td>Create Field</td>
   <td></td>
 </tr>
 <tr>
@@ -57,13 +57,13 @@
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Create Field</td>
-  <td></td>
+  <td>select</td>
+  <td>attributeTypeName</td>
+  <td>label=Text</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Text</td>
+  <td>attributeTypeNameButton</td>
   <td></td>
 </tr>
 <tr>
@@ -123,52 +123,52 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[1]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
   <td>Text</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[2]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
   <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[3]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
   <td>functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>AText</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[5]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td</td>
   <td>88</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeEditView']/div[1]/div/h1</td>
+  <td>//div[@id='TextAttributeEditView']/div/h1</td>
   <td>exact:Edit Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
@@ -208,22 +208,22 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functesttextfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>AText_New</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='TextAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='TextAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td>off</td>
 </tr>
 </tbody></table>

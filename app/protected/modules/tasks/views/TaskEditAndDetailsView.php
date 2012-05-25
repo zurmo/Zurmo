@@ -114,7 +114,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New TasksModuleSingularLabel',
+            return Yii::t('Default', 'Create TasksModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

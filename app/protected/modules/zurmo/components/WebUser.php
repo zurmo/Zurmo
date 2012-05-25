@@ -85,10 +85,20 @@
 
         protected function afterLogin($fromCookie)
         {
-            if (!$fromCookie)
+            AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+            if ($this->hasEventHandler('onAfterLogin'))
             {
-                AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
+                $this->onAfterLogin(new CEvent($this));
             }
+        }
+
+        /**
+         * Raised right AFTER the login is completed for a WebUser
+         * @param CEvent $event the event parameter
+         */
+        public function onAfterLogin($event)
+        {
+            $this->raiseEvent('onAfterLogin', $event);
         }
 
         protected function beforeLogout()

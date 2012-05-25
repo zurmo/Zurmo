@@ -41,18 +41,18 @@
          */
         protected function createPageButtons()
         {
-            if(($pageCount = $this->getPageCount()) <= 1)
+            if (($pageCount = $this->getPageCount()) <= 1)
             {
                 return array();
             }
-            list($beginPage,$endPage)  = $this->getPageRange();
+            list($beginPage, $endPage)  = $this->getPageRange();
             $currentPage               = $this->getCurrentPage(false);
             $buttons                   = array();
-            if(($currentPage +1) == $pageCount)
+            if (($currentPage +1) == $pageCount)
             {
                 return array();
             }
-            if(($page = $currentPage +1 ) >= $pageCount - 1)
+            if (($page = $currentPage +1 ) >= $pageCount - 1)
             {
                 $page = $pageCount - 1;
             }

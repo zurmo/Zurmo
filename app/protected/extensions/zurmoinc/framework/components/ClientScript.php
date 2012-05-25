@@ -87,23 +87,13 @@
         protected function removeAllPageLoadedScriptFilesWhenRenderingInAjaxMode()
         {
             $filesToRemove = PageView::getScriptFilesThatLoadOnAllPages();
-            if (isset($this->scriptFiles[self::POS_BEGIN]))
+            foreach ($this->scriptFiles as $position => $data)
             {
-                foreach ($this->scriptFiles[self::POS_BEGIN] as $key => $scriptFile)
+                foreach ($data as $key => $scriptFile)
                 {
                     if (in_array($scriptFile, $filesToRemove))
                     {
-                        unset($this->scriptFiles[self::POS_BEGIN][$key]);
-                    }
-                }
-            }
-            if (isset($this->scriptFiles[self::POS_END]))
-            {
-                foreach ($this->scriptFiles[self::POS_END] as $key => $scriptFile)
-                {
-                    if (in_array($scriptFile, $filesToRemove))
-                    {
-                        unset($this->scriptFiles[self::POS_END][$key]);
+                        unset($this->scriptFiles[$position][$key]);
                     }
                 }
             }

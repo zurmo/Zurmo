@@ -45,14 +45,16 @@
             => 'Grafico a torta 3D',
         '3D Vertical Bar Graph'
             => 'Grafico a barre verticale 3D',
-        '<b>Zurmo</b> is a <b>Customer Relationship Management</b> system by <b>Zurmo Inc.</b>'
-            => '<b>Zurmo</b> � un sistema di <b>Customer Relationship Management</b> creato da <b>Zurmo Inc.</b>',
-        '<b>Zurmo</b> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
-            => '<b>Zurmo</b> � � rilasciato sotto la licenza GPL3.  Potete leggere la licenza <a href="http://www.zurmo.org/license">qui</a>.',
-        '<b>Zurmo</b> uses the following great Open Source tools and frameworks:'
-            => '<b>Zurmo</b> utilizza i seguenti strumenti e framework di Open Source:',
-        'About'
-            => 'Chi siamo',
+        '<strong>Zurmo</strong> is a <strong>Customer Relationship Management</strong> system by <strong>Zurmo Inc.</strong>'
+            => '<strong>Zurmo</strong> è un sistema di <strong>Customer Relationship Management</strong> creato da <strong>Zurmo Inc.</strong>',
+        '<strong>Zurmo</strong> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.'
+            => '<strong>Zurmo</strong> è rilasciato sotto la licenza GPL3.  Potete leggere la licenza <a href="http://www.zurmo.org/license">qui</a>.',
+        '<strong>Zurmo</strong> uses the following great Open Source tools and frameworks:'
+            => '<strong>Zurmo</strong> utilizza i seguenti strumenti e framework di Open Source:',
+        'A large amount of data has been requested for export.  You will receive a notification with the download link when the export is complete.'
+            => 'C\'è una grande quantità di dati ad esportare',
+        'About Zurmo'
+            => 'Tutto su Zurmo',
         'Access Administration Tab'
             => 'Accesso Amministrazione',
         'Access Currency Configuration'
@@ -70,7 +72,7 @@
         'Active currencies can be used when creating new records and as a default currency for a user.'
             => 'Le valute attive sono usando quando create nuovi records e come una valute di default per un utente.',
         'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated'
-            => 'Le lingue attive sono disponibile ai utenti.  La lingua del sistema e qualunque lingua usata per un utente non si pu� essere inattiva.',
+            => 'Le lingue attive sono disponibile ai utenti.  La lingua del sistema e qualunque lingua usata per un utente non si può essere inattiva.',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Proprietario',
         'Add Currency'
@@ -78,7 +80,7 @@
         'Address'
             => 'Indirizzo',
         'Admin'
-            => 'Admin',
+            => 'Admin', // Same Word Translated
         'Alert'
             => 'Allarme',
         'Allow'
@@ -90,7 +92,7 @@
         'An error occured during login. Please try again.'
             => 'Errore login. Prego di provare di nuovo.',
         'Any City'
-            => 'Citt�',
+            => 'Città',
         'Any Country'
             => 'Paese',
         'Any Email Address'
@@ -105,6 +107,8 @@
             => 'Provincia',
         'Any Street'
             => 'Via',
+        'Application Name'
+            => 'Nome dell\'applicazione',
         'are required.'
             => 'sono richiesti.',
         'Are you sure you want to remove this group?'
@@ -134,13 +138,15 @@
         'Chart Type'
             => 'Tipo di grafico',
         'City'
-            => 'Citt�',
+            => 'Città',
         'Close'
             => 'Chiudi',
         'Code'
             => 'Codice',
         'Configuration'
             => 'Configurazine',
+        'Configure'
+            => 'Configura',
         'Convert'
             => 'Converti',
         'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
@@ -151,8 +157,6 @@
             => 'Nuovo Gruppo',
         'Create Groups'
             => 'Crea Gruppi',
-        'Create New'
-            => 'Crea',
         'Create Role'
             => 'Nuovo Ruolo',
         'Create Roles'
@@ -196,7 +200,7 @@
         'Description'
             => 'Descrizione',
         'Dr.'
-            => 'Dr.',
+            => 'Dr.', // Same Word Translated
         'Email Address'
             => 'Indirizzo Email',
         'Energy'
@@ -212,7 +216,7 @@
         'File Content'
             => 'Contenuto di file',
         'File failed to upload. The file is empty.'
-            => 'errore durante il caricamento di file.  Il file � vuoto.',
+            => 'errore durante il caricamento di file.  Il file è vuoto.',
         'Files'
             => 'File',
         'Filter By Created User'
@@ -223,12 +227,14 @@
             => 'Servizi finanziari',
         'First Name'
             => 'Nome',
+        'Forums'
+            => 'Forum',
+        'Global and Basic Search Fields'
+            => 'Campi di ricerca globale e semplice',
         'Global Configuration'
             => 'Configurazione globale',
         'Global configuration saved successfully.'
             => 'Configurazione globale modificata con successo.',
-        'Global Search Fields'
-            => 'Campi ricerca globale',
         'Go to Search'
             => 'alla Ricerca',
         'Group'
@@ -241,10 +247,12 @@
             => 'Diritti dei Gruppi',
         'Groups'
             => 'Gruppi',
+        'Groups Home'
+            => 'Gruppi Home',
         'here'
             => 'qui',
         'Home'
-            => 'Home',
+            => 'Home', // Same Word Translated
         'In Progress'
             => 'In corso',
         'Inbound Call'
@@ -274,15 +282,15 @@
         'Invalid username or password.'
             => 'Nome utente sconosciuto o password non valida.',
         'Is Invalid'
-            => '� invalido',
+            => 'È invalido',
         'Job Title'
             => 'Titolo',
         'Label must be all lowercase.'
             => 'Tutte le lettere della etichetta devono essere minuscole.',
         'Label must not be empty.'
-            => 'Etichetta non pu� essere vuota.',
+            => 'Etichetta non può essere vuota.',
         'Label must not contain any special characters.'
-            => 'Etichetta non pu� avere caratteri speciali.',
+            => 'Etichetta non può avere caratteri speciali.',
         'Language'
             => 'Lingua',
         'Languages'
@@ -303,14 +311,6 @@
             => 'Vista Elenco',
         'Load'
             => 'Carica',
-        'Login'
-            => 'Accedi',
-        'Login required.'
-            => 'Login obbligatorio.',
-        'Logout'
-            => 'Eschi',
-        'Logout failed.'
-            => 'Logout fallito.',
         'Longitude'
             => 'Longitudine',
         'Manage Active Languages'
@@ -334,7 +334,9 @@
         'Members'
             => 'Membri',
         'Menu'
-            => 'Men�',
+            => 'Menù',
+        'Missing Record'
+            => 'Record mancante',
         'Missing Required Fields'
             => 'Campi obbligatori mancanti',
         'Mobile Phone'
@@ -402,7 +404,7 @@
         'Parent Role'
             => 'Ruolo Padre',
         'Password'
-            => 'Password',
+            => 'Password', // Same Word Translated
         'Permissions'
             => 'Privilegi',
         'Permitable'
@@ -432,7 +434,7 @@
         'Read'
             => 'Leggere',
         'Read permissions rebuild complete.'
-            => 'Ricostruzione dei privilegi di leggere � completa.',
+            => 'Ricostruzione dei privilegi di leggere è completa.',
         'Recently Viewed'
             => 'Ultime visite',
         'Recycled'
@@ -442,15 +444,19 @@
         'Retail'
             => 'Commercio Retail',
         'Return to Admin Menu'
-            => 'Ritorno al Men� Admin',
+            => 'Ritorno al Menù Admin',
         'Rights'
             => 'Diritti',
+        'Rights and Permissions'
+            => 'Diritti e Privilegi',
         'Rights Saved Successfully.'
             => 'Diritti modificati con successo.',
         'Role'
             => 'Ruolo',
         'Roles'
             => 'Ruoli',
+        'Roles Home'
+            => 'Ruoli Home',
         'Salutation'
             => 'Saluto',
         'Save Changes'
@@ -475,18 +481,28 @@
             => 'Selezionate un ruolo',
         'Self-Generated'
             => 'Autogenerato',
+        'Settings'
+            => 'Parametri',
         'Shipping Address'
             => 'Indirizzo di consegna',
+        'Sign in'
+            => 'Accedi',
+        'Sign in required.'
+            => 'Login obbligatorio.',
+        'Sign out'
+            => 'Esci',
+        'Sign out failed.'
+            => 'Logout fallito.',
         'Size'
             => 'Dimensione',
         'skipped because you do not have sufficient permissions.'
-            => 'saltato perch� non avete privilegi sufficienti.',
+            => 'saltato perché non avete privilegi sufficienti.',
         'Sorry! Your browser is not supported.'
             => 'Spiacente! Il tuo browser non supporta.',
         'Source'
             => 'Fonte',
         'Specified custom field name was invalid.'
-            => 'Nome del campo personalizzato non � valido.',
+            => 'Nome del campo personalizzato non è valido.',
         'Stage'
             => 'Fase di Vendita',
         'Standard Fields'
@@ -508,23 +524,27 @@
         'Technology'
             => 'Tecnologia',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
-            => 'Il servizio di corsi delle valute indica che questo codice non � valido, anche se zurmo indica che � valido. Il tasso non fu aggiornato.',
+            => 'Il servizio di corsi delle valute indica che questo codice non è valido, anche se zurmo indica che è valido. Il tasso non fu aggiornato.',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'
-            => 'Il servizio di corsi delle valute non � disponibile. Il tasso non fu aggiornato.',
+            => 'Il servizio di corsi delle valute non è disponibile. Il tasso non fu aggiornato.',
         'The currency was not removed because it is in use.'
-            => 'La valuta non fu eliminata perch� � in uso.',
+            => 'La valuta non fu eliminata perché é in uso.',
         'The ID specified was invalid.'
-            => 'ID non � valido.',
+            => 'ID non è valido.',
+        'The record you are trying to access does not exist.'
+            => 'Questo record è stato cancellato.',
         'The status specified is invalid.'
-            => 'Il stato specificate non � valido.',
+            => 'Il stato specificate non é valido.',
         'There are no recently viewed items.'
             => 'Non ci sono elementi di ultime visite.',
         'There are required fields missing from the following layout: {view}.  Please contact your administrator.'
             => 'Ci sono campi obbligatori mancante del layout: {view}.  Prego di contattare il amministratore.',
+        'There is no data to export.'
+            => 'Non ci sono dati da esportare.',
         'This action is only available in debug mode.'
-            => 'Questa azione � solamente disponibile nel modo di debug.',
-        'This is <b>version {zurmoVersion}</b> of <b>Zurmo</b>.'
-            => 'Voi utilizzate la <b>versione {zurmoVersion}</b> di <b>Zurmo</b>.',
+            => 'Questa azione é solamente disponibile nel modo di debug.',
+        'This is <strong>version {zurmoVersion}</strong> of <strong>Zurmo</strong>.'
+            => 'Voi utilizzate la <strong>versione {zurmoVersion}</strong> di <strong>Zurmo</strong>.',
         'This name is reserved. Please pick a different name.'
             => 'Questo nome e riservato.  Prego di scegliere un altro nome.',
         'Time zone'
@@ -549,16 +569,16 @@
             => 'Valore',
         'Values'
             => 'Valori',
-        'Visit <b>Zurmo Inc.</b> at {url}.'
-            => 'Visita <b>Zurmo Inc.</b> a {url}.',
-        'Visit the <b>Zurmo Open Source Project</b> at {url}.'
-            => 'Visita il <b>Zurmo Open Source Project</b> a {url}.',
+        'Visit <strong>Zurmo Inc.</strong> at {url}.'
+            => 'Visita <strong>Zurmo Inc.</strong> a {url}.',
+        'Visit the <strong>Zurmo Open Source Project</strong> at {url}.'
+            => 'Visita il <strong>Zurmo Open Source Project</strong> a {url}.',
         'Website'
             => 'Sito web',
         'Welcome'
             => 'Benvenuto',
         'What is this?'
-            => 'Che cos\'�?',
+            => 'Che cos\'è?',
         'Who can read and write'
             => 'Autorizzazione di leggere/scrivere',
         'Word of Mouth'
@@ -566,20 +586,18 @@
         'Write'
             => 'Scrivere',
         'You have tried to access a page you do not have access to.'
-            => 'Non si � autorizzati a visualizzare questa pagina.',
+            => 'Non si è autorizzati a visualizzare questa pagina.',
         'You must have at least one active currency.'
             => 'Ha bisogno di almeno una valuta attiva.',
-        'Your Profile'
-            => 'Suo Profile',
         'Your RedBean version is currentVersion and it should be acceptableVersion.'
-            => 'Suo versione di RedBean � currentVersion e dovrebbe essere acceptableVersion.',
+            => 'Suo versione di RedBean è currentVersion e dovrebbe essere acceptableVersion.',
         'Your Yii version is currentVersion and it should be acceptableVersion.'
-            => 'Suo versione di Yii � currentVersion e dovrebbe essere acceptableVersion.',
+            => 'Suo versione di Yii è currentVersion e dovrebbe essere acceptableVersion.',
         'ZurmoCRM'
-            => 'ZurmoCRM',
+            => 'ZurmoCRM', // Same Word Translated
         '{url} (installed with Yii)'
             => '{url} (installato con Yii)',
         '{url} (version {version} is installed)'
-            => '{url} (la versione {version} � installato)',
+            => '{url} (la versione {version} è installato)',
     );
 ?>

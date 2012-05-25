@@ -33,16 +33,17 @@
                 'header'      => '',
                 'value'       => $this->resolveToRenderDeleteLink('$data->' . 'id'),
                 'type'        => 'raw',
-                'htmlOptions' => array('class'=>'delete-notification-column')
+                'htmlOptions' => array('class' => 'delete-notification-column')
             );
         }
 
         protected function resolveToRenderDeleteLink($modelId)
         {
             $checkboxId = 'closeTask' . $modelId;
+            // Begin Not Coding Standard
             $content    = 'CHtml::link("Delete<span class=\'icon\'></span>", "#",
                                        array("class" => "remove",
-                                             "onClick" => "deleteNotificationFromListView(this, \'' . $modelId . '\')"))';
+                                             "onclick" => "deleteNotificationFromListView(this, \'' . $modelId . '\')"))';
             Yii::app()->clientScript->registerScript('deleteNotificationFromListViewScript', "
                 function deleteNotificationFromListView(element, modelId)
                 {
@@ -62,6 +63,7 @@
                         });
                 }
             ", CClientScript::POS_END);
+            // End Not Coding Standard
             return $content;
         }
     }

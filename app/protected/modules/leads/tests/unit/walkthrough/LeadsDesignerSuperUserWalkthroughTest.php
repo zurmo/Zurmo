@@ -145,7 +145,6 @@
 
             //Test create field list.
             $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //View creation screen, then create custom field for each custom field type.
             $this->createCheckBoxCustomFieldByModule            ('ContactsModule', 'checkbox');
@@ -457,7 +456,7 @@
 
             //Check if the lead name exits after the search is performed on the basis of the
             //custom fields added to the leads module.
-            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            //$this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0); //removed until we show the count again in the listview.
             $this->assertTrue(strpos($content, "Sarah Williams") > 0);
         }
 
@@ -791,7 +790,7 @@
 
             //Check if the lead name exits after the search is performed on the basis of the
             //custom fields added to the leads module.
-            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            //$this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0); //removed until we show the count again in the listview.
             $this->assertTrue(strpos($content, "Sarah Williams Edit") > 0);
         }
 

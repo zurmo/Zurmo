@@ -173,7 +173,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New AccountsModuleSingularLabel',
+            return Yii::t('Default', 'Create AccountsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

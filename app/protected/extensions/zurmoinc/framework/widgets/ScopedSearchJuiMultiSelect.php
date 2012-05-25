@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -43,28 +43,28 @@
             $id     = $this->inputId;
             // Begin Not Coding Standard
             $script = '$("#' . $id . '").bind("multiselectclick", function(event, ui){
-                            if($("#' . $id . '").multiselect("widget").find(":checkbox:checked").length == 0)
+                            if ($("#' . $id . '").multiselect("widget").find(":checkbox:checked").length == 0)
                             {
                                 $("#' . $id . '").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value == "All" && !this.checked)
+                                    if (this.value == "All" && !this.checked)
                                     {
                                         this.click();
                                     }
                                 });
                             }
-                            if(ui.value == "All" && ui.checked)
+                            if (ui.value == "All" && ui.checked)
                             {
                                 $("#' . $id . '").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value != "All" && this.checked)
+                                    if (this.value != "All" && this.checked)
                                     {
                                         this.click();
                                     }
                                 });
                             }
-                            else if(ui.value != "All" && ui.checked)
+                            else if (ui.value != "All" && ui.checked)
                             {
                                 $("#' . $id . '").multiselect("widget").find(":checkbox").each(function(){
-                                    if(this.value == "All" && this.checked)
+                                    if (this.value == "All" && this.checked)
                                     {
                                         this.click();
                                     }

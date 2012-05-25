@@ -27,7 +27,7 @@
     /**
      * Broad data provider tests that touch across different modules in the zurmo application.
      */
-    class ModulesSearchFormTest extends BaseTest
+    class ModulesSearchFormTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

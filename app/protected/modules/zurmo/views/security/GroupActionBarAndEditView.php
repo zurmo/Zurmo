@@ -32,7 +32,7 @@
         {
             assert('$controllerId != null');
             assert('$moduleId != null');
-            if($group->id > 0)
+            if ($group->id > 0)
             {
                 $rows = 2;
             }
@@ -41,7 +41,7 @@
                 $rows = 1;
             }
             parent::__construct($rows, 1);
-            if($group->id > 0)
+            if ($group->id > 0)
             {
                 $this->setView(new ActionBarForGroupEditAndDetailsView ($controllerId, $moduleId, $group, 'EditLink'), 0, 0);
                 $this->setView(new GroupEditAndDetailsView ('Edit', $controllerId, $moduleId, $group), 1, 0);
@@ -50,7 +50,6 @@
             {
                 $this->setView(new GroupEditAndDetailsView ('Edit', $controllerId, $moduleId, $group), 0, 0);
             }
-
         }
     }
 ?>

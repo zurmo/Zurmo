@@ -194,7 +194,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New ContactsModuleSingularLabel',
+            return Yii::t('Default', 'Create ContactsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class GlobalSearchUtilTest extends BaseTest
+    class GlobalSearchUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -70,7 +70,7 @@
                                           getGlobalSearchScopingModuleNamesAndLabelsDataByUser(
                                           Yii::app()->user->userModel);
             $compareData                = array(
-                                            'accounts'	    => 'Accounts',
+                                            'accounts'      => 'Accounts',
                                             'contacts'      => 'Contacts',
                                             'leads'         => 'Leads',
                                             'opportunities' => 'Opportunities',
@@ -99,7 +99,7 @@
             //At this point because the data is was cleared after billy saved, it should show Accounts.
             $scopeModulesAndLabels      = GlobalSearchUtil::
                                           getGlobalSearchScopingModuleNamesAndLabelsDataByUser($billy);
-            $compareData                = array('accounts'	    => 'Accounts');
+            $compareData                = array('accounts'      => 'Accounts');
             $this->assertEquals($compareData, $scopeModulesAndLabels);
         }
     }

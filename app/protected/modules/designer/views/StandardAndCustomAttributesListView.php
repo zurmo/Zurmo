@@ -58,7 +58,6 @@
                 $modelClassName,
                 $title
             ), 2, 0);
-
         }
 
         public function isUniqueToAPage()

@@ -137,7 +137,7 @@
             {
                 if ($actualVersion == null)
                 {
-                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed');
+                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed.');
                 }
                 else
                 {

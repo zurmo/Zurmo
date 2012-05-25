@@ -34,6 +34,7 @@
             parent::init();
             $this->htmlOptions['class'] = 'endless-list-pager';
         }
+
         /**
          * Set the header to empty
          * @var string
@@ -46,15 +47,17 @@
          */
         protected function createPageButtons()
         {
-            if(($pageCount=$this->getPageCount())<=1)
+            if (($pageCount = $this->getPageCount()) <= 1)
+            {
                 return array();
+            }
 
-            list($beginPage,$endPage)=$this->getPageRange();
-            $currentPage=$this->getCurrentPage(false); // currentPage is calculated in getPageRange()
+            list($beginPage, $endPage) = $this->getPageRange();
+            $currentPage = $this->getCurrentPage(false); // currentPage is calculated in getPageRange()
             $buttons = array();
 
             // next page
-            if(($page = $currentPage+1)>=$pageCount-1)
+            if (($page = $currentPage + 1) >= $pageCount - 1)
             {
                 $page = $pageCount-1;
             }
@@ -70,15 +73,17 @@
          */
         protected function createPageButton($label, $page, $class, $hidden, $selected)
         {
-            if($hidden || $selected)
+            if ($hidden || $selected)
             {
                 $class.=' '.($hidden ? self::CSS_HIDDEN_PAGE : self::CSS_SELECTED_PAGE);
             }
             $gridId =  $this->getOwner()->getId();
             $pagerId = $gridId . "-endless-page";
+            // Begin Not Coding Standard
             Yii::app()->clientScript->registerScript('pagerEndlessLink', "
-                $('body').undelegate('click', '#" . $pagerId . "');
-                $('#" . $pagerId . "').click(function()
+                //$('body').undelegate('click', '#" . $pagerId . "');
+                $('#" . $pagerId . "').unbind('click');
+                $('#" . $pagerId . "').bind('click', function(event)
                     {
                         $.fn.yiiGridView.update('" . $gridId . "',
                         {
@@ -94,15 +99,16 @@
                                 });
                                 var \$data = $(data);
                                 jQuery.globalEval(\$data.filter('script').last().text());
-                                if(settings.afterAjaxUpdate !== undefined)
+                                if (settings.afterAjaxUpdate !== undefined)
                                     settings.afterAjaxUpdate(id, data);
                                 $('#'+id).removeClass(settings.loadingClass);
-                                $.fn.yiiGridView.selectCheckedRows(id);
+                                //$.fn.yiiGridView.selectCheckedRows(id);
                             },
                         });
                         return false;
                     }
                 );");
+            // End Not Coding Standard
             $nextPage = $page + 1;
             $htmlOptions = array('id' => $pagerId, 'class' => 'vertical-forward-pager');
             return '<li class="' . $class . '">' . CHtml::link($label, '#', $htmlOptions) . '</li>';

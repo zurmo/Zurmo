@@ -31,25 +31,35 @@
     return array(
         'Activities'
             => 'Attività',
+        'Activity'
+            => 'Attività',
         'Activity Items'
             => 'Elementi di attività',
+        'Activity Summary'
+            => 'Sommario della attività',
         'All Activities'
             => 'Tutte le attività',
+        'Latest Activities'
+            => 'Attività recenti',
         'Latest Date Time'
             => 'Ultima dato/hora',
+        'Mine'
+            => 'Le miei',
         'No Activities found.'
             => 'Nessuna attività trovato.',
         'Related'
             => 'Collegato',
         'Related to'
             => 'Collegato a',
-        'Roll Up Off'
-            => 'Roll Up spento',
-        'Roll Up On'
-            => 'Roll Up acceso',
+        'Roll Up'
+            => 'Roll Up', // Same Word Translated
         'Show more'
             => 'Ulteriori informazioni',
         'Summary'
             => 'Sommario',
+        'Turn roll up on to see activities from related records.'
+            => 'Attivare la funzione roll up per vedere attività collegate.',
+        'View'
+            => 'Vista',
     );
 ?>

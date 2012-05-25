@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -39,13 +39,13 @@
 
         protected function renderContent()
         {
-            $content = Yii::t('Default', '<h3>Recently Viewed</h3>');
+            $content = '<h3>' . Yii::t('Default', 'Recently Viewed') . '</h3>';
 
             $content .= '<ul>';
 
-            foreach($this->recentlyViewedItems as $recentlyViewedItem)
+            foreach ($this->recentlyViewedItems as $recentlyViewedItem)
             {
-                $content .= '<li class="type-'.$recentlyViewedItem['moduleClassName'].'">'.$recentlyViewedItem['link'].'</li>';
+                $content .= '<li class="type-' . $recentlyViewedItem['moduleClassName'] . '">' . $recentlyViewedItem['link'] . '</li>';
             }
 
             $content .= '</ul>';

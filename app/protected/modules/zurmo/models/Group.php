@@ -425,8 +425,12 @@
 
         protected function beforeDelete()
         {
-            parent::beforeDelete();
+            if (!parent::beforeDelete())
+            {
+                return false;
+            }
             ReadPermissionsOptimizationUtil::groupBeingDeleted($this);
+            return true;
         }
 
         protected function afterDelete()

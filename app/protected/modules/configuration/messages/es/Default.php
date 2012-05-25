@@ -34,6 +34,6 @@
         'Configuration'
             => 'Configuración',
         'General'
-            => 'General',
+            => 'General', // Same Word Translated
     );
 ?>

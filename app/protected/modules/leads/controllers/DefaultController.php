@@ -72,7 +72,7 @@
 
         public function actionDetails($id)
         {
-            $contact = Contact::getById(intval($id));
+            $contact = static::getModelAndCatchNotFoundAndDisplayError('Contact', intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
             if (!LeadsUtil::isStateALead($contact->state))
             {
@@ -319,6 +319,7 @@
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'LeadsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
         }
+
         protected function makeEditAndDetailsView($model, $renderType)
         {
             assert('$model != null');

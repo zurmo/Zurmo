@@ -78,7 +78,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New Role');
+            return Yii::t('Default', 'Create Role');
         }
     }
 ?>

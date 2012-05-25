@@ -34,7 +34,7 @@
         'Company Name'
             => 'Nom du compte',
         'Contact'
-            => 'Contact',
+            => 'Contact', // Same Word Translated
         'Contact Stage'
             => 'Statut du Contact',
         'Contact Status Translated Labels'
@@ -42,19 +42,19 @@
         'Contact Statuses'
             => 'Statut des Contacts',
         'Contacts'
-            => 'Contacts',
+            => 'Contacts', // Same Word Translated
         'ContactsModulePluralLabel'
-            => 'ContactsModulePluralLabel',
+            => 'ContactsModulePluralLabel', // Same Word Translated
         'ContactsModulePluralLabel For AccountsModuleSingularLabel'
             => 'ContactsModulePluralLabel pour AccountsModuleSingularLabel',
         'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'ContactsModulePluralLabel pour OpportunitiesModuleSingularLabel',
         'ContactsModuleSingularLabel'
-            => 'ContactsModuleSingularLabel',
+            => 'ContactsModuleSingularLabel', // Same Word Translated
         'ContactsModuleSingularLabel or LeadsModuleSingularLabel'
             => 'ContactsModuleSingularLabel ou LeadsModuleSingularLabel',
         'ContactsModuleSingularLabel Search'
-            => 'ContactsModuleSingularLabel Search',
+            => 'Recherche ContactsModuleSingularLabel',
         'Create ContactsModulePluralLabel'
             => 'Créer ContactsModulePluralLabel',
         'Create ContactsModuleSingularLabel'

@@ -108,9 +108,13 @@
 
         protected function beforeDelete()
         {
-            parent::beforeDelete();
+            if (!parent::beforeDelete())
+            {
+                return false;
+            }
             $sql = 'Drop table if exists ' . $this->getTempTableName();
             R::exec($sql);
+            return true;
         }
     }
 ?>

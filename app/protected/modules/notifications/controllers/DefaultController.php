@@ -79,20 +79,6 @@
             Yii::app()->end(0, false);
         }
 
-        /**
-         * Method for testing creating a simple notification for the current user.
-         */
-        public function actionCreateTest()
-        {
-            $message                    = new NotificationMessage();
-            $message->textContent       = 'text content';
-            $message->htmlContent       = 'html content';
-            $rules                      = new SimpleDuplicateNotificationRules();
-            $rules->addUser(Yii::app()->user->userModel);
-            NotificationsUtil::submit($message, $rules);
-            echo 'Test notification created';
-        }
-
         public function actionRecentNotifcations()
         {
             echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);

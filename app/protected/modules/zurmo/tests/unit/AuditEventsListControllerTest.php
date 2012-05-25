@@ -28,7 +28,7 @@
      * Unit test for AuditEventsListControllerUtil
      * To-Do: walkthrough test for AuditEventsListControllerUtil::renderList() action
      */
-    class AuditEventsListControllerTest extends BaseTest
+    class AuditEventsListControllerTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

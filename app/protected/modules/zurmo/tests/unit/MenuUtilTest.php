@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class MenuUtilTest extends BaseTest
+    class MenuUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -40,18 +40,20 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
-            $this->assertEquals(1, count($menu));
-            $this->assertEquals(2, count($menu[0]['items']));
+
+            $this->assertEquals(3, count($menu));
+            $this->assertEquals(4, count($menu['items']));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(0, count($menu));
             $bill = User::getByUsername('billy');
-            $bill->setRight('UsersModule', UsersModule::RIGHT_ACCESS_USERS);
+            $bill->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES);
+            $bill->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES);
             $saved = $bill->save();
             $this->assertTrue($saved);
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
-            $this->assertEquals(1, count($menu));
-            $this->assertEquals(1, count($menu[0]['items']));
+            $this->assertEquals(3, count($menu));
+            $this->assertEquals(1, count($menu['items']));
         }
 
         public function testGetAccessibleConfigureMenuByCurrentUser()
@@ -80,7 +82,7 @@
             Yii::app()->user->userModel = User::getByUsername('billy');
             $this->assertEquals(Right::NONE,  Yii::app()->user->userModel->getExplicitActualRight ('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS));
             $menu = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-            $this->assertEquals(1, count($menu));
+            $this->assertEquals(2, count($menu));
             $menu = MenuUtil::getAccessibleModuleTabMenuByUser('AccountsModule', Yii::app()->user->userModel);
             $this->assertEquals(0, count($menu));
             $bill = User::getByUsername('billy');
@@ -93,7 +95,7 @@
             $menu = MenuUtil::getAccessibleModuleTabMenuByUser('AccountsModule', $bill);
             $this->assertEquals(1, count($menu));
             $menu = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-            $this->assertEquals(3, count($menu));
+            $this->assertEquals(4, count($menu));
         }
 
         public function testGetAccessibleHeaderMenuByModuleClassNameForCurrentUser()
@@ -103,23 +105,23 @@
             $this->assertEquals(8, count($menu));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
-            $this->assertEquals(4, count($menu));
+            $this->assertEquals(3, count($menu));
             $bill = User::getByUsername('billy');
             $bill->setRight('ZurmoModule', ZurmoModule::RIGHT_ACCESS_ADMINISTRATION);
             $saved = $bill->save();
             $this->assertTrue($saved);
             $menu = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
-            $this->assertEquals(5, count($menu));
+            $this->assertEquals(4, count($menu));
         }
 
-        public function testGetAccessibleUserHeaderMenuForCurrentUser()
+        public function testGetAccessibleOrderedUserHeaderMenuForCurrentUser()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
-            $menu = MenuUtil::getAccessibleUserHeaderMenuForCurrentUser();
-            $this->assertEquals(2, count($menu));
+            $menu = MenuUtil::getAccessibleOrderedUserHeaderMenuForCurrentUser();
+            $this->assertEquals(3, count($menu));
             Yii::app()->user->userModel = User::getByUsername('billy');
-            $menu = MenuUtil::getAccessibleUserHeaderMenuForCurrentUser();
-            $this->assertEquals(2, count($menu));
+            $menu = MenuUtil::getAccessibleOrderedUserHeaderMenuForCurrentUser();
+            $this->assertEquals(3, count($menu));
         }
 
         public function testResolveMenuItemsForLanguageLocalizationIsRecursive()
@@ -129,56 +131,37 @@
             $backupMetadata                           = $metadata;
             $metadata['global']['shortcutsCreateMenuItems'] = array(
                 array(
-                    'label' => 'AccountsModulePluralLabel',
-                    'url'   => array('/accounts/default'),
-                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                    'items' => array(
-                        array(
-                            'label' => 'AccountsModulePluralLabel',
-                            'url'   => array('/accounts/default'),
-                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                            'items' => array(
-                                array(
-                                    'label' => 'AccountsModulePluralLabel',
-                                    'url'   => array('/accounts/default'),
-                                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                                ),
-                            ),
-                        ),
-                        array(
-                            'label' => 'AccountsModulePluralLabel',
-                            'url'   => array('/accounts/default'),
-                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                        ),
-                    ),
+                    'label' => 'AccountsModuleSingularLabel',
+                    'url'   => array('/accounts/default/create'),
+                    'right' => AccountsModule::RIGHT_CREATE_ACCOUNTS,
                 ),
             );
             AccountsModule::setMetadata($metadata);
             $menuItems = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $compareData = array(
-                array(
-                    'label' => 'Accounts',
-                    'url'   => array('/accounts/default'),
-                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                    'items' => array(
+                'label' => 'Create',
+                'url'   => null,
+                'items' => array(
                         array(
-                            'label' => 'Accounts',
-                            'url'   => array('/accounts/default'),
-                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                            'items' => array(
-                                array(
-                                    'label' => 'Accounts',
-                                    'url'   => array('/accounts/default'),
-                                    'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
-                                ),
-                            ),
+                            'label' => 'Account',
+                            'url'   => array('/accounts/default/create'),
+                            'right' => AccountsModule::RIGHT_CREATE_ACCOUNTS,
                         ),
                         array(
-                            'label' => 'Accounts',
-                            'url'   => array('/accounts/default'),
-                            'right' => AccountsModule::RIGHT_ACCESS_ACCOUNTS,
+                            'label' => 'Contact',
+                            'url'   => array('/contacts/default/create'),
+                            'right' => ContactsModule::RIGHT_CREATE_CONTACTS,
                         ),
-                    ),
+                        array(
+                            'label' => 'Lead',
+                            'url'   => array('/leads/default/create'),
+                            'right' => LeadsModule::RIGHT_CREATE_LEADS,
+                        ),
+                        array(
+                            'label' => 'Opportunity',
+                            'url'   => array('/opportunities/default/create'),
+                            'right' => OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES,
+                        ),
                 ),
             );
             $this->assertEquals($compareData, $menuItems);

@@ -28,27 +28,27 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Opportunities: Home</td>
+  <td>Create</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Advanced Search</td>
+  <td>Advanced</td>
   <td></td>
 </tr>
 <tr>
   <td>type</td>
-  <td>OpportunitiesSearchForm_name</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
+  <td>keyUp</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result</td>
+  <td>Test Opportunity ${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
@@ -68,17 +68,17 @@
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Opportunities: Test Opportunity ${randomSuffix}</td>
+  <td>Test Opportunity ${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[contains(@class, 'UpcomingMeetingsForOpportunityRelatedListView')]/div[1]/a</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[1]/div/a</td>
   <td></td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Meetings: (Unnamed)</td>
+  <td>Create Meeting</td>
   <td></td>
 </tr>
 <tr>
@@ -200,18 +200,13 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>type</td>
-  <td>Account_name</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
   <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
-</tr>
-<tr>
-  <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result(s).</td>
-  <td></td>
+  <td>keyUp</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -220,7 +215,7 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>click</td>
-  <td>link=my account ${randomSuffix}</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr/td[1]/a</td>
   <td></td>
 </tr>
 <tr>
@@ -250,23 +245,13 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>type</td>
-  <td>User_firstName</td>
-  <td>Sam</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>Sam Smith</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>User_lastName</td>
-  <td>Smith</td>
-</tr>
-<tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
-</tr>
-<tr>
-  <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result(s).</td>
-  <td></td>
+  <td>keyUp</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -294,19 +279,39 @@ This is kept pending for now as there is a need to figure out as to how to captu
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Project kick-off opportunity ${randomSuffix}</td>
+  <td>waitForTextPresent</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/div/a[2]/span</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/table/tbody/tr[2]/td[3]/a</td>
   <td></td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Meetings: Project kick-off opportunity ${randomSuffix}</td>
+  <td>Project kick-off opportunity ${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Telephone</td>
+  <td>clickAndWait</td>
+  <td>//div[@id='days-meetings-list-view']/table/tbody/tr[1]/td/div/h3/span/a</td>
   <td></td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>Project kick-off opportunity ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>verifyValue</td>
+  <td>Meeting_location</td>
+  <td>Telephone</td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
@@ -334,11 +339,6 @@ This is kept pending for now as there is a need to figure out as to how to captu
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Edit</td>
-  <td></td>
-</tr>
-<tr>
   <td>type</td>
   <td>Meeting_name</td>
   <td>Project kick-off new opportunity ${randomSuffix}</td>
@@ -355,7 +355,32 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Meetings: Project kick-off new opportunity ${randomSuffix}</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/div/a[2]/span</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/table/tbody/tr[2]/td[3]/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>Project kick-off new opportunity ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>clickAndWait</td>
+  <td>//div[@id='days-meetings-list-view']/table/tbody/tr[1]/td/div/h3/span/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>Project kick-off new opportunity ${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
@@ -390,27 +415,27 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Opportunities: Home</td>
+  <td>Create</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Advanced Search</td>
+  <td>Advanced</td>
   <td></td>
 </tr>
 <tr>
   <td>type</td>
-  <td>OpportunitiesSearchForm_name</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
+  <td>keyUp</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Displaying 1-1 of 1 result</td>
+  <td>Test Opportunity ${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
@@ -430,7 +455,17 @@ This is kept pending for now as there is a need to figure out as to how to captu
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Opportunities: Test Opportunity ${randomSuffix}</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/div/a[2]/span</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='UpcomingMeetingsForOpportunityCalendarView']/div[2]/div/table/tbody/tr[2]/td[3]/a</td>
   <td></td>
 </tr>
 <tr>

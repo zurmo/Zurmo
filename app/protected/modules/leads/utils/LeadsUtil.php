@@ -153,5 +153,19 @@
                 return false;
             }
         }
+
+        public static function isStateALeadByStateName($stateName)
+        {
+            assert('is_string($stateName)');
+            $leadStatesData = self::getLeadStateDataFromStartingStateOnAndKeyedById();
+            foreach ($leadStatesData as $leadStateName)
+            {
+                if ($stateName == $leadStateName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 ?>

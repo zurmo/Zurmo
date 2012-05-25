@@ -133,7 +133,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New MeetingsModuleSingularLabel',
+            return Yii::t('Default', 'Create MeetingsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

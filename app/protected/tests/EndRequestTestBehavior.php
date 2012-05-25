@@ -24,10 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class EndRequestTestBehavior extends CBehavior
+    Yii::import('application.modules.zurmo.components.EndRequestBehavior');
+    class EndRequestTestBehavior extends EndRequestBehavior
     {
         public function attach($owner)
         {
+            $owner->attachEventHandler('onEndRequest', array($this, 'handleGamification'));
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
         }
 

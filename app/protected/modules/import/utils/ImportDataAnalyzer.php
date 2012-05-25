@@ -181,7 +181,7 @@
                 $mappingRuleType = $attributeValueSanitizerUtilClassName::getLinkedMappingRuleType();
                 assert('$mappingRuleType != null');
                 $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
-                if(!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
+                if (!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
                 {
                     $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName);
                 }

@@ -77,6 +77,8 @@
             => 'Au moins une valeur de la liste déroulante doit être mappée pour chaque niveau.',
         'Available Fields:'
             => 'Champs disponibles:',
+        'Available Modules'
+            => 'Modules disponibles',
         'Calculated Number'
             => 'Champs disponibles:',
         'Check Box'
@@ -94,7 +96,7 @@
         'Dependent Pick Lists'
             => 'Listes déroulantes dépendantes',
         'Designer'
-            => 'Designer',
+            => 'Designer', // Same Word Translated
         'Designer Home'
             => 'Designer',
         'Designer Tool'
@@ -162,13 +164,13 @@
         'Maximum Value must be larger than the minimum value'
             => 'La valeur maximale doit être plus grande que la valeur minimale',
         'Menus'
-            => 'Menus',
+            => 'Menus', // Same Word Translated
         'Minimum Value'
             => 'Valeur minimale',
         'Module'
-            => 'Module',
+            => 'Module', // Same Word Translated
         'Modules'
-            => 'Modules',
+            => 'Modules', // Same Word Translated
         'Multi-Select Pick List'
             => 'Liste déroulante à choix multiple',
         'Name must not contain spaces or special characters'
@@ -201,6 +203,8 @@
             => 'Publier',
         'Search View'
             => 'Vue recherche',
+        'Select a field type'
+            => 'Sélectionnez le type de champ',
         'Show If'
             => 'Valeur dépendante',
         'Tag Cloud'
@@ -222,9 +226,11 @@
         'Track Audit Log'
             => 'Auditer ce champ',
         'URL'
-            => 'URL',
+            => 'URL', // Same Word Translated
         'You can only have at most 4 pick-lists selected.'
             => 'Vous pouvez avoir au maximum 4 listes déroulantes.',
+        'You must first select a field type'
+            => 'Veuillez d\'abord choisir le type du champ.',
         'You must have at least one field placed in order to save a layout.'
             => 'Le layout doit contenir au moins 1 champ.',
         'You must have at least one panel in order to save a layout.'

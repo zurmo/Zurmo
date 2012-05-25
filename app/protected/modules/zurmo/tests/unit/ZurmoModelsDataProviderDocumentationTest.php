@@ -27,7 +27,7 @@
     /**
      * Zurmo models RedBeanModelDataProvider Documentation test.  Demonstrates the different scenarios of search.
      */
-    class ZurmoModelsDataProviderDocumentationTest extends BaseTest
+    class ZurmoModelsDataProviderDocumentationTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

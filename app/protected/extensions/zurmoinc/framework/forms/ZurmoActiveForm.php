@@ -144,5 +144,14 @@
         {
             return ZurmoHtml::activeCheckBox($model, $attribute, $htmlOptions);
         }
+
+        /**
+         * (non-PHPdoc)
+         * @see CActiveForm::checkBoxList()
+         */
+        public function checkBoxList($model, $attribute, $data, $htmlOptions = array())
+        {
+            return ZurmoHtml::activeCheckBoxList($model, $attribute, $data, $htmlOptions);
+        }
     }
 ?>

@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AccountEditAndDetailsViewTest extends BaseTest
+    class AccountEditAndDetailsViewTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

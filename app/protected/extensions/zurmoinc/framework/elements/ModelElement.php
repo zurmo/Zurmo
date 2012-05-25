@@ -89,8 +89,8 @@
             $cs->registerCoreScript('bbq');
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets')
+                    ) . '/Modal.js',
                 CClientScript::POS_END
             );
             $idInputHtmlOptions = array(
@@ -161,9 +161,9 @@
         protected function renderSelectLink()
         {
             $id = $this->getIdForSelectLink();
-            $content = CHtml::ajaxLink(Yii::t('Default', '<span>Select</span>'),
+            $content = ZurmoHtml::ajaxLink('<span>' . Yii::t('Default', 'Select') . '</span>',
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
-                'modalTransferInformation' => $this->getModalTransferInformation()
+                'modalTransferInformation' => $this->getModalTransferInformation(),
                 )), array(
                     'onclick' => '$("#modalContainer").dialog("open"); return false;',
                     'update' => '#modalContainer',
@@ -171,8 +171,9 @@
                     'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
                     ),
                     array(
-                    'id' => $id,
-                    'style' => $this->getSelectLinkStartingStyle(),
+                    'id'        => $id,
+                    'style'     => $this->getSelectLinkStartingStyle(),
+                    'namespace' => 'selectLink',
                     )
             );
             return $content;

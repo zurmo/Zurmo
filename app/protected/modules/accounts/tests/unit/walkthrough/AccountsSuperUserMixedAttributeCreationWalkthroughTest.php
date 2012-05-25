@@ -54,7 +54,6 @@
             //Test create field list.
             $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'AccountsModule'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //Create 2 custom attributes that are required.
             $this->createDropDownCustomFieldByModule            ('AccountsModule', 'dropdown');

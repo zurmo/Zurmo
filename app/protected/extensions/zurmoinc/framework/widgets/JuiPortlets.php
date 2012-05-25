@@ -167,7 +167,7 @@
             );
             if (!$renderOnClickEvent)
             {
-                return CHtml::link(Yii::t('Default', 'Edit<span class="icon"></span>'), '#', $htmlOptions);
+                return CHtml::link(Yii::t('Default', 'Edit') . '<span class="icon"></span>', '#', $htmlOptions);
             }
             else
             {
@@ -178,7 +178,7 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
                 'portletId'      => $portletId,
             ));
-            return CHtml::ajaxLink(Yii::t('Default', 'Edit<span class="icon"></span>'), $url,
+            return CHtml::ajaxLink(Yii::t('Default', 'Edit') . '<span class="icon"></span>', $url,
                 array(
                     'onclick'  => '$("#modalContainer").dialog("open"); return false;',
                     'update'   => '#modalContainer',

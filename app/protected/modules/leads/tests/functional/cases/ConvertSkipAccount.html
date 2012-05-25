@@ -28,7 +28,7 @@
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[1]/a/span</td>
+    <td>//div[@id='MenuView']/ul/li[3]/ul/li[1]/a/span[2]</td>
     <td></td>
 </tr>
 <tr>
@@ -38,7 +38,7 @@
 </tr>
 <tr>
     <td>waitForTextPresent</td>
-    <td>Leads: (Unnamed)</td>
+    <td>Create Lead</td>
     <td></td>
 </tr>
 <tr>
@@ -93,23 +93,13 @@
 </tr>
 <tr>
     <td>type</td>
-    <td>User[firstName]</td>
-    <td>Sam</td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
+    <td>Sam Smith</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>User[lastName]</td>
-    <td>Smith</td>
-</tr>
-<tr>
-    <td>click</td>
-    <td>search</td>
-    <td></td>
-</tr>
-<tr>
-    <td>waitForTextPresent</td>
-    <td>Displaying 1-1 of 1 result(s).</td>
-    <td></td>
+    <td>keyUp</td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>
@@ -228,38 +218,38 @@
 </tr>
 <tr>
     <td>waitForText</td>
-    <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-    <td>exact:Leads: Sunny Dunes ${randomSuffix}</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
+    <td>exact:Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
     <td>Mrs. Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td[1]</td>
     <td>In Progress</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[2]/td[2]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[4]/td[1]</td>
     <td>Sand Technology</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[3]/td[2]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[6]/td[1]</td>
     <td>456-777-6655</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[2]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[8]/td[1]</td>
     <td>888999888</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[2]</td>
-    <td>458 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA map</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[13]/td[1]</td>
+    <td>458 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -268,13 +258,13 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[8]/td[1]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[14]/td[1]</td>
     <td>Financial Services</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[7]/td[1]</td>
-    <td>125 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA map</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[12]/td[1]</td>
+    <td>125 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -288,17 +278,17 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[4]/td[1]</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[7]/td[1]</td>
     <td>Inbound Call</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[9]/td</td>
+    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[16]/td[1]</td>
     <td>test</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[2]/a/span</td>
+    <td>//div[@id='MenuView']/ul/li[3]/ul/li[2]/a/span[2]</td>
     <td></td>
 </tr>
 <tr>
@@ -308,18 +298,13 @@
 </tr>
 <tr>
     <td>type</td>
-    <td>LeadsSearchForm_fullName</td>
+    <td>LeadsSearchForm_anyMixedAttributes</td>
     <td>Dunes ${randomSuffix}</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>search</td>
-    <td></td>
-</tr>
-<tr>
-    <td>waitForTextPresent</td>
-    <td>Displaying 1-1 of 1 result</td>
-    <td></td>
+    <td>keyUp</td>
+    <td>LeadsSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
 </tr>
 <tr>
     <td>waitForText</td>
@@ -358,12 +343,12 @@
 </tr>
 <tr>
     <td>click</td>
-    <td>//div[@id='account-create-title']/a[2]</td>
+    <td>link=Skip Account</td>
     <td></td>
 </tr>
 <tr>
     <td>clickAndWait</td>
-    <td>AccountSkip</td>
+    <td>//div[@id='LeadConvertAccountSkipView']/div/form/div[2]/div/input</td>
     <td></td>
 </tr>
 <tr>
@@ -373,12 +358,12 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-    <td>exact:Contacts: Sunny Dunes ${randomSuffix}</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/h1</td>
+    <td>exact:Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactEditAndDetailsView']/table/tbody/tr[1]/td[2]</td>
+    <td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td[1]</td>
     <td>Qualified</td>
 </tr>
 </tbody></table>

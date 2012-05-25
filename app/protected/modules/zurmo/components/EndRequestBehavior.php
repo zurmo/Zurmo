@@ -34,6 +34,10 @@
     {
         public function attach($owner)
         {
+            if (Yii::app()->isApplicationInstalled())
+            {
+                $owner->attachEventHandler('onEndRequest', array($this, 'handleGamification'));
+            }
             $owner->attachEventHandler('onEndRequest', array($this, 'handleSaveGlobalStateCheck'));
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
         }
@@ -59,6 +63,20 @@
         public function handleEndRequest($event)
         {
             exit;
+        }
+
+        /**
+         * Process any points that need to be tabulated based on scoring that occurred during the request.
+         * @param CEvent $event
+         */
+        public function handleGamification($event)
+        {
+            if (Yii::app()->user->userModel != null)
+            {
+                Yii::app()->gameHelper->processDeferredPoints();
+                Yii::app()->gameHelper->resolveNewBadges();
+                Yii::app()->gameHelper->resolveLevelChange();
+            }
         }
     }
 ?>

@@ -63,7 +63,6 @@
             return true;
         }
 
-
         /**
          * Views following this rule, are they
          * able to be shown on a relation view

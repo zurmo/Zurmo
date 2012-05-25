@@ -33,6 +33,12 @@
         protected $themePath;
 
         /**
+         * Add scripts here that do not need to load when using an ajax request such as a modal search box.  The scripts
+         * are already loaded in the minified script that loads on every page.
+         */
+        public $usingAjaxShouldNotIncludeJsPathAliasesAndFileNames = array();
+
+        /**
          * Used to avoid call to ExtMinScript::init() function
          * @see ExtMinScript::init()
          */

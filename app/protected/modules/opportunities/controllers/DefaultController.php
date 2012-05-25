@@ -68,7 +68,7 @@
 
         public function actionDetails($id)
         {
-            $opportunity = Opportunity::getById(intval($id));
+            $opportunity = static::getModelAndCatchNotFoundAndDisplayError('Opportunity', intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($opportunity), 'OpportunitiesModule'), $opportunity);
             $detailsAndRelationsView = $this->makeDetailsAndRelationsView($opportunity, 'OpportunitiesModule',

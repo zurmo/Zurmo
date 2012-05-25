@@ -138,6 +138,7 @@
             $this->runControllerWithRedirectExceptionAndGetContent('users/default/edit');
 
             $zUser = $this->logoutCurrentUserLoginNewUserAndGetByUsername('zUser');
+            $this->resetPostArray();
             $this->setGetArray(array('id' => $zUser->id));
             $this->runControllerWithNoExceptionsAndGetContent('users/default/details');
             $this->runControllerWithNoExceptionsAndGetContent('users/default/profile');

@@ -36,7 +36,7 @@
             $account->owner = Yii::app()->user->userModel;
             $account->name  = 'Full Load Account';
             $saved          = $account->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -50,7 +50,7 @@
                 $meeting->startDateTime    = $startStamp;
                 $meeting->activityItems->add($account);
                 $saved = $meeting->save();
-                if(!$saved)
+                if (!$saved)
                 {
                     throw new NotSupportedException();
                 }
@@ -66,7 +66,7 @@
                 $task->dueDateTime    = $dueDateStamp;
                 $task->activityItems->add($account);
                 $saved = $task->save();
-                if(!$saved)
+                if (!$saved)
                 {
                     throw new NotSupportedException();
                 }
@@ -78,7 +78,7 @@
                 $account->owner = Yii::app()->user->userModel;
                 $account->name  = 'List View Pagination Test Account ' . $i;
                 $saved          = $account->save();
-                if(!$saved)
+                if (!$saved)
                 {
                     throw new NotSupportedException();
                 }

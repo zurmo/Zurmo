@@ -29,5 +29,19 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access Export Tool'
+            => 'Zugang zur Import-Tool',
+        'Every 2 minutes.'
+            => 'Alle 2 Minuten.',
+        'Export Cleanup Job'
+            => 'Löschen von Tabellen-Export',
+        'Export file you requested is not available anymore.'
+            => 'Die Export-Datei ist nicht mehr verfügbar.',
+        'Export Job'
+            => 'Export-Job',
+        'Export of {fileName} requested on {dateTime} is completed. <a href="{url}">Click here</a> to download file!'
+            => 'Export von {filename} am {dateTime} ist abgeschlossen. <a href="{url}">Klicken Sie hier</a> um die Datei herunterzuladen!',
+        'Export process is completed.'
+            => 'Export abgeschlossen mit Erfolg.',
     );
 ?>

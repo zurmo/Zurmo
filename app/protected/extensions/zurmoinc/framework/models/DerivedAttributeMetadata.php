@@ -89,7 +89,7 @@
                     array('name',   'validateUniqueNameByModelClassName'),
                     array('name',   'type', 'type' => 'string'),
                     array('name',   'length', 'max'   => 64),
-                    array('name', 	'match', 'pattern' => '/^[A-Za-z0-9_]+$/', // Not Coding Standard
+                    array('name',   'match', 'pattern' => '/^[A-Za-z0-9_]+$/', // Not Coding Standard
                                     'message' =>  Yii::t('Default', 'Name must not contain spaces or special characters'),
                     ),
                     array('name',   'match', 'pattern' => '/^[a-z]/', // Not Coding Standard

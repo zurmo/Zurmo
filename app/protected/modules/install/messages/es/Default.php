@@ -63,7 +63,7 @@
         'Ctype extension is not loaded.'
             => 'El ctype extensión no está cargada.',
         'Curl'
-            => 'Curl',
+            => 'Curl', // Same Word Translated
         'Database admin password'
             => 'Contraseña de administrador',
         'Database admin username'
@@ -146,8 +146,8 @@
             => 'Log de la instalación:',
         'is installed, but the version is unknown.'
             => 'está instalado, pero la versión es desconocido.',
-        'is not installed'
-            => 'no está instalado',
+        'is not installed.'
+            => 'no está instalado.',
         'It is highly recommended that all optional services are installed and ' .
         'working before continuing.'
             => 'Se recomienda instalar todos los servicios opcionales' .
@@ -160,14 +160,12 @@
             => 'Cargando datos de demostración. Por favor espere.',
         'Locking Installation.'
             => 'Bloqueo de la página de instalación',
-        'Login'
-            => 'Inicio de sesión',
         'Mbstring is installed.'
             => 'Mbstring está instalado',
         'Mbstring is not installed.'
             => 'Mbstring no está instalado',
-        'Memcache'
-            => 'Memcache',
+        'Memcache extension'
+            => 'Extensión Memcache',
         'Memcache host'
             => 'host de Memcache',
         'Memcache host name. Default is 127.0.0.1'
@@ -177,13 +175,13 @@
         'Memcache port number. Default is 11211'
             => 'Memcache número de port. Predeterminado es 11211',
         'Microsoft-IIS'
-            => 'Microsoft-IIS',
+            => 'Microsoft-IIS', // Same Word Translated
         'minimum requirement is:'
             => 'requisito mínimo es:',
         'Minimum version required:'
             => 'Versión mínima requerida:',
         'Mysql'
-            => 'Mysql',
+            => 'Mysql', // Same Word Translated
         'Oh no!'
             => '¡Oh no!',
         'PASS'
@@ -193,7 +191,7 @@
         'PCRE extension is not loaded.'
             => 'La extensión PCRE no está cargada.',
         'PHP'
-            => 'PHP',
+            => 'PHP', // Same Word Translated
         'PHP date.timezone is not set.'
             => 'Configuración de date.timezone PHP no está configurado.',
         'PHP date.timezone is set.'
@@ -221,7 +219,7 @@
         'Recheck System'
             => 'Revisar el sistema',
         'RedBean'
-            => 'RedBean',
+            => 'RedBean', // Same Word Translated
         'RedBean file is missing patch.'
             => 'Archivo de RedBean falta el parche.',
         'RedBean file is patched correctly'
@@ -295,7 +293,7 @@
         'Writing Configuration File.'
             => 'Crear el archivo de configuración.',
         'Yii'
-            => 'Yii',
+            => 'Yii', // Same Word Translated
         'You cannot access the installation area because the application is already installed.'
             => 'No se puede acceder a la zona de instalación porque la aplicación ya está instalada.',
         'You have specified an existing database. If you would like to use this database, ' .

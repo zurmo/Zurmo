@@ -103,7 +103,7 @@
                 $this->controllerId,
                 $this->moduleId,
                 null,
-                array('label' => Yii::t('Default', 'Create New'))
+                array('label' => Yii::t('Default', 'Create'))
             );
 
             $editLink = CHtml::link(Yii::t('Default', 'Edit'), '#',
@@ -112,8 +112,8 @@
             $editLinkUrl = Yii::app()->createUrl($this->moduleId . '/filteredList/editFilteredList/');
             Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/FormUtils.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    ) . '/FormUtils.js',
                 CClientScript::POS_END
             );
             Yii::app()->clientScript->registerScript('filteredList', "
@@ -146,7 +146,6 @@
                 $('#filtered-list-form').submit(function()
                     {
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
-                        $('#" . $this->gridId . $this->gridIdSuffix . "-selectAll').val(null);
                         $.fn.yiiGridView.update('" . $this->gridId . $this->gridIdSuffix . "',
                         {
                             data: $(this).serialize() + '&" . $this->listModelClassName . "_page=&" . $this->listModelClassName . "_sort=' " . // Not Coding Standard

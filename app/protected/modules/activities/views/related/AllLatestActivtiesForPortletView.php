@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -63,7 +63,7 @@
         protected function getPortletDetailsUrl()
         {
             return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/myListDetails',
-                                                        array_merge($_GET, array( 'portletId' =>
+                                                        array_merge(GetUtil::getData(), array( 'portletId' =>
                                                                                     $this->params['portletId'],
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
         }
@@ -77,7 +77,7 @@
             return Yii::app()->createUrl('/' . $this->moduleId . '/default/index');
         }
 
-            protected function getDataProvider($uniquePageId, $form)
+        protected function getDataProvider($uniquePageId, $form)
         {
             assert('is_string($uniquePageId)');
             assert('$form instanceOf LatestActivitiesConfigurationForm');

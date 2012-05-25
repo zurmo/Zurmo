@@ -32,6 +32,7 @@
         {
             $this->items = $items;
         }
+
         /**
          * Rendering the MenuView with overflow would cause
          * some portions of the MenuView to be cut off in the

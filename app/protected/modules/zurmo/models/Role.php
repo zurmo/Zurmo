@@ -123,8 +123,12 @@
 
         protected function beforeDelete()
         {
-            parent::beforeDelete();
+            if (!parent::beforeDelete())
+            {
+                return false;
+            }
             ReadPermissionsOptimizationUtil::roleBeingDeleted($this);
+            return true;
         }
 
         protected function afterDelete()

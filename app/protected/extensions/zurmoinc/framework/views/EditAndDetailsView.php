@@ -66,7 +66,7 @@
             $content  = '<div>';
             $content .= $this->renderTitleContent();
             $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
-            if($maxCellsPresentInAnyRow > 1)
+            if ($maxCellsPresentInAnyRow > 1)
             {
                 $class = "wide double-column form";
             }
@@ -74,7 +74,7 @@
             {
                 $class = "wide form";
             }
-            $content .= '<div class="' . $class. '">';
+            $content .= '<div class="' . $class . '">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
@@ -85,11 +85,13 @@
                                                                 )
                                                             );
             $content .= $formStart;
+            $content .= '<div class="attributesContainer">';
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderRightSideContent($form);
+            $content .= '</div>';
             $content .= $this->renderAfterFormLayout($form);
             $actionElementContent = $this->renderActionElementBar(true);
-            if($actionElementContent != null)
+            if ($actionElementContent != null)
             {
                 $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
                 $content .= $actionElementContent;
@@ -104,7 +106,7 @@
 
         protected function renderTitleContent()
         {
-            if($this->model->id > 0)
+            if ($this->model->id > 0)
             {
                 return '<h1>' . strval($this->model) . '</h1>';
             }
@@ -114,10 +116,10 @@
         protected function renderRightSideContent($form)
         {
             assert('$form == null || $form instanceof ZurmoActiveForm');
-            if($form != null)
+            if ($form != null)
             {
                 $rightSideContent = $this->renderRightSideFormLayoutForEdit($form);
-                if($rightSideContent != null)
+                if ($rightSideContent != null)
                 {
                     $content  = '<div id="permissions-module"><div class="buffer"><div>';
                     $content .= $rightSideContent;
@@ -135,10 +137,10 @@
         {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
         }
 
         protected function resolveActiveFormAjaxValidationOptions()

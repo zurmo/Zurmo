@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -52,7 +52,7 @@
         {
             $htmlOptions             = array('class'   => 'input-hint',
                                              'onfocus' => '$(this).removeClass("input-hint"); $(this).val("");',
-                                             'size'	   => 80,
+                                             'size'    => 80,
                                              'value'   => Yii::t('Default', 'Start typing to search'));
             return array_merge(parent::getHtmlOptions(), $htmlOptions);
         }
@@ -102,31 +102,34 @@
         {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/FormUtils.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    ) . '/FormUtils.js',
                 CClientScript::POS_END
             );
             $inputId = $this->getEditableInputId();
             $script   = " basicSearchQueued = 0;";
             $script  .= " basicSearchOldValue = '';";
+            $script  .= "   $('#" . $inputId . "').removeAttr('clearForm'); ";
             $script  .= "   $('#" . $inputId . "').clearform(
                                 {
                                     form: '#" . $this->form->getId() . "',
-
                                 }
                             );
-                            $('#" . $inputId . "').bind('change keyup', function(event) {
-                                if($(this).val() != '')
+                            var basicSearchHandler = function(event)
+                            {
+                                if ($(this).val() != '')
                                 {
-                                    if(basicSearchOldValue != $(this).val())
+                                    if (basicSearchOldValue != $(this).val())
                                     {
                                         basicSearchOldValue = $(this).val();
                                         basicSearchQueued = basicSearchQueued  + 1;
-                                        setTimeout('basicSearchQueued = basicSearchQueued - 1',900);
-                                        setTimeout('searchByQueuedSearch(\"" . $inputId . "\")',1000);
+                                        setTimeout('basicSearchQueued = basicSearchQueued - 1', 900);
+                                        setTimeout('searchByQueuedSearch(\"" . $inputId . "\")', 1000);
                                     }
                                 }
-                            });
+                            }
+                            $('#" . $inputId . "').unbind('input propertychange keyup');
+                            $('#" . $inputId . "').bind('input propertychange keyup', basicSearchHandler);
                             ";
             Yii::app()->clientScript->registerScript('basicSearchAjaxSubmit', $script);
         }

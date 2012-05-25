@@ -36,9 +36,9 @@
         'RSS URL'
             => 'URL de flux RSS',
         'RssReaderModulePluralLabel'
-            => 'RssReaderModulePluralLabel',
+            => 'RssReaderModulePluralLabel', // Same Word Translated
         'RssReaderModuleSingularLabel'
-            => 'RssReaderModuleSingularLabel',
+            => 'RssReaderModuleSingularLabel', // Same Word Translated
         'Zurmo News'
             => 'Actualités Zurmo',
     );

@@ -28,7 +28,7 @@
     {
         public function actionDaysMeetingsFromCalendarModalList($stringTime, $displayStringTime, $redirectUrl)
         {
-            if(isset($_GET['ownerOnly']))
+            if (isset($_GET['ownerOnly']))
             {
                 $ownerOnly = true;
             }
@@ -36,7 +36,7 @@
             {
                 $ownerOnly = false;
             }
-            if(isset($_GET['relationModelId']))
+            if (isset($_GET['relationModelId']))
             {
                 $relationModelClassName = $_GET['relationModelClassName'];
                 $relationModel          = $relationModelClassName::getById((int)$_GET['relationModelId']);

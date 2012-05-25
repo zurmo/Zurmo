@@ -67,7 +67,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Logout failed.');
+                $message = Yii::t('Default', 'Sign out failed.');
                 throw new ApiException($message);
             }
         }

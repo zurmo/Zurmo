@@ -169,57 +169,116 @@
             {
                 $searchForm = null;
             }
-
             $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
-            $dataProvider = $this->makeSearchFilterListDataProvider(
+
+            $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 $searchForm,
                 $modelClassName,
-                $filteredListClassName,
                 $pageSize,
                 Yii::app()->user->userModel->id,
-                $stateMetadataAdapterClassName
+                $filteredListClassName
             );
-            $totalItems = $dataProvider->getTotalItemCount();
+
+            if (!$dataProvider)
+            {
+                $idsToExport = array_filter(explode(",", trim($_GET['selectedIds'], " ,"))); // Not Coding Standard
+            }
+            $totalItems = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider, false);
 
             $data = array();
             if ($totalItems > 0)
             {
-                if ($totalItems <= ExportModule::ASYNCHRONOUS_THRESHOLD)
+                if ($totalItems <= ExportModule::$asynchronusTreshold)
                 {
                     // Output csv file directly to user browser
-                    $formattedData = $dataProvider->getData();
-                    foreach ($formattedData as $model)
+                    if ($dataProvider)
                     {
-                        $modelToExportAdapter  = new ModelToExportAdapter($model);
-                        $data[] = $modelToExportAdapter->getData();
+                        $modelsToExport = $dataProvider->getData();
+                        foreach ($modelsToExport as $model)
+                        {
+                            if (ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($model, Permission::READ))
+                            {
+                                $modelToExportAdapter  = new ModelToExportAdapter($model);
+                                $data[] = $modelToExportAdapter->getData();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach ($idsToExport as $idToExport)
+                        {
+                            $model = $modelClassName::getById(intval($idToExport));
+                            if (ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($model, Permission::READ))
+                            {
+                                $modelToExportAdapter  = new ModelToExportAdapter($model);
+                                $data[] = $modelToExportAdapter->getData();
+                            }
+                        }
                     }
                     // Output data
-                    $fileName = $this->getModule()->getName() . ".csv";
-                    $output = ExportItemToCsvFileUtil::export($data, $fileName, true);
+                    if (count($data))
+                    {
+                        $fileName = $this->getModule()->getName() . ".csv";
+                        $output = ExportItemToCsvFileUtil::export($data, $fileName, true);
+                    }
+                    else
+                    {
+                        Yii::app()->user->setFlash('notification',
+                            Yii::t('Default', 'There is no data to export.')
+                        );
+                    }
                 }
                 else
                 {
+                    if ($dataProvider)
+                    {
+                        $serializedData = serialize($dataProvider);
+                    }
+                    else
+                    {
+                        $serializedData = serialize($idsToExport);
+                    }
+
                     // Create background job
                     $exportItem = new ExportItem();
-                    $exportItem->isCompleted = 0;
-                    $exportItem->exportFileType = 'csv';
-                    $exportItem->exportFileName = $this->getModule()->getName();
-                    $exportItem->serializedData = serialize($dataProvider);
+                    $exportItem->isCompleted     = 0;
+                    $exportItem->exportFileType  = 'csv';
+                    $exportItem->exportFileName  = $this->getModule()->getName();
+                    $exportItem->modelClassName = $modelClassName;
+                    $exportItem->serializedData  = $serializedData;
                     $exportItem->save();
-
+                    $exportItem->forget();
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'Export will be done in background, due to huge amount od data you requested ' .
-                        'to export. You will receive notification, after export process is completed, with download link.')
+                        Yii::t('Default', 'A large amount of data has been requested for export.  You will receive ' .
+                        'a notification with the download link when the export is complete.')
                     );
                 }
             }
             else
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'There are no data to export.')
+                    Yii::t('Default', 'There is no data to export.')
                 );
             }
             $this->redirect(array($this->getId() . '/index'));
+        }
+
+        protected static function getModelAndCatchNotFoundAndDisplayError($modelClassName, $id)
+        {
+            assert('is_string($modelClassName)');
+            assert('is_int($id)');
+            try
+            {
+                return $modelClassName::getById($id);
+            }
+            catch (NotFoundException $e)
+            {
+                $messageContent  = Yii::t('Default', 'The record you are trying to access does not exist.');
+                $messageView     = new ModelNotFoundView($messageContent);
+                $view            = new ModelNotFoundPageView($messageView);
+                echo $view->render();
+                Yii::app()->end(0, false);
+            }
         }
     }
 ?>

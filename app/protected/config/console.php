@@ -37,6 +37,8 @@
     $common_config['behaviors']['onBeginRequest'] = array(
         'class' => 'application.modules.zurmo.components.CommandBeginRequestBehavior'
     );
+    //Turn off gamification
+    $common_config['components']['gamificationObserver']['enabled'] = false;
     //Not applicable for console applications.
     unset($common_config['defaultController']);
     //Not applicable for console applications.

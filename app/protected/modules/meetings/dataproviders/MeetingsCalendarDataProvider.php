@@ -46,7 +46,7 @@
                                              convertDbFormattedDateTimeToLocaleFormattedDisplay($row['startdatetime'],
                                              'medium',
                                              null);
-                if(isset($data[$localTimeZoneAdjustedDate]))
+                if (isset($data[$localTimeZoneAdjustedDate]))
                 {
                     $data[$localTimeZoneAdjustedDate]['quantity'] = $data[$localTimeZoneAdjustedDate]['quantity'] + 1;
                 }
@@ -57,16 +57,20 @@
             }
             foreach ($data as $key => $item)
             {
-                if($item['quantity'] == 1)
+                if ($item['quantity'] == 1)
                 {
-                    $label = Yii::t('Default', '{quantity} Meeting', array('{quantity}' => $item['quantity']));
+                    $label = Yii::t('Default', '{quantity} MeetingsModuleSingularLabel',
+                                    array_merge(LabelUtil::getTranslationParamsForAllModules(),
+                                    array('{quantity}' => $item['quantity'])));
                 }
                 else
                 {
-                    $label = Yii::t('Default', '{quantity} Meetings', array('{quantity}' => $item['quantity']));
+                    $label = Yii::t('Default', '{quantity} MeetingsModulePluralLabel',
+                                    array_merge(LabelUtil::getTranslationParamsForAllModules(),
+                                    array('{quantity}' => $item['quantity'])));
                 }
                 $data[$key]['label']     = $label;
-                if($item['quantity'] > 5)
+                if ($item['quantity'] > 5)
                 {
                     $quantityClassSuffix = 6;
                 }

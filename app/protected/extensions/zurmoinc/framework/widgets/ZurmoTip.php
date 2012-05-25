@@ -25,6 +25,7 @@
      ********************************************************************************/
 
     Yii::import('application.extensions.qtip.QTip');
+
     /**
      * Override to suppport the Zurmo styling for the QTip.
      */
@@ -33,13 +34,13 @@
         public function __construct($params = array())
         {
             parent::__construct($params);
-            if(!isset($this->options['style']))
+            if (!isset($this->options['style']))
             {
                 $this->options['style'] = $this->getZurmoStyle();
             }
             else
             {
-                $this->options['style'] = array_merge($this->options['style'], $this->getZurmoStyle());
+                $this->options['style'] = array_merge($this->getZurmoStyle(), $this->options['style']);
             }
         }
 
@@ -51,7 +52,7 @@
               'color'      => '',
               'textAlign'  => '',
               'border' => '',
-              'tip'       => 'bottomLeft',
+              //'tip'       => 'bottomLeft',
               //'name'      =>  'qtip',
             );
         }

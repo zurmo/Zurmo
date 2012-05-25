@@ -126,15 +126,6 @@
             //Load LayoutEdit for each applicable module and applicable layout.
             $this->resetPostArray();
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForContactRelatedListView'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForOpportunityRelatedListView'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
                                      'viewClassName'   => 'MeetingEditAndDetailsView'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
         }
@@ -148,7 +139,6 @@
 
             //Test create field list.
             $this->setGetArray(array('moduleClassName' => 'MeetingsModule'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //View creation screen, then create custom field for each custom field type.
             $this->createCheckBoxCustomFieldByModule            ('MeetingsModule', 'checkbox');
@@ -185,28 +175,6 @@
             $layout = MeetingsDesignerWalkthroughHelperUtil::getMeetingEditAndDetailsViewLayoutWithAllCustomFieldsPlaced();
             $this->setPostArray(array('save'  => 'Save', 'layout' => $layout,
                                       'LayoutPanelsTypeForm' => array('type' => FormLayout::PANELS_DISPLAY_TYPE_ALL)));
-            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
-            $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
-
-            //Add all fields to UpcomingMeetingsForAccountRelatedListView.
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForAccountRelatedListView'));
-            $layout = MeetingsDesignerWalkthroughHelperUtil::getMeetingsRelatedListViewLayoutWithAllStandardAndCustomFieldsPlaced();
-            $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
-            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
-            $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
-
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForContactRelatedListView'));
-            $layout = MeetingsDesignerWalkthroughHelperUtil::getMeetingsRelatedListViewLayoutWithAllStandardAndCustomFieldsPlaced();
-            $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
-            $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
-            $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
-
-            $this->setGetArray(array('moduleClassName' => 'MeetingsModule',
-                                     'viewClassName'   => 'UpcomingMeetingsForOpportunityRelatedListView'));
-            $layout = MeetingsDesignerWalkthroughHelperUtil::getMeetingsRelatedListViewLayoutWithAllStandardAndCustomFieldsPlaced();
-            $this->setPostArray(array('save'  => 'Save', 'layout' => $layout));
             $content = $this->runControllerWithExitExceptionAndGetContent('designer/default/LayoutEdit');
             $this->assertFalse(strpos($content, 'Layout saved successfully') === false);
         }

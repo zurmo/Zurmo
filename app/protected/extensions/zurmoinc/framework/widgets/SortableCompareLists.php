@@ -82,7 +82,7 @@
             $content .= '<label>' . $this->leftSideDisplayLabel . '</label>';
             $content .= $leftListContent;
             $content .= '</div><div class="multiselect-nav">';
-            $content .= CHtml::button( '7', array( 'id' => $id . 'moveRight', 'class' => 'icon-right-arrow' ) ); //used 7,8 becuase those are rendered as icons with symbly, other option is to make it an A with a SPAN inside it
+            $content .= CHtml::button( '7', array( 'id' => $id . 'moveRight', 'class' => 'icon-right-arrow' ) ); //used 7, 8 becuase those are rendered as icons with symbly, other option is to make it an A with a SPAN inside it
             $content .= CHtml::button( '8', array( 'id' => $id . 'moveLeft', 'class' => 'icon-left-arrow' ) );
             $content .= '</div><div class="multiselect-right">';
             $content .= '<label>' . $this->rightSideDisplayLabel . '</label>';

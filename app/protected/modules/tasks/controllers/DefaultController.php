@@ -26,7 +26,6 @@
 
     class TasksDefaultController extends ActivityModelsDefaultController
     {
-
         public function actionCloseTask($id)
         {
             $task                    = Task::getById(intval($id));
@@ -34,7 +33,7 @@
             $task->completedDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $task->completed         = true;
             $saved                   = $task->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }

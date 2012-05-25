@@ -30,23 +30,36 @@
      */
     class TableUtil
     {
-        public static function getColGroupContent($columnCount)
+        public static function getColGroupContent($columnCount, $labelsHaveOwnCells = true)
         {
             assert('$columnCount <= 2');
+            $content = '<colgroup>';
             if ($columnCount == 1)
             {
-                $width = 85;
+                if ($labelsHaveOwnCells)
+                {
+                    $content .= '<col class="col-0" /><col class="col-1" />';
+                }
+                else
+                {
+                    $content .= '<col class="col-0" />';
+                }
+            }
+            elseif ($columnCount == 2)
+            {
+                if ($labelsHaveOwnCells)
+                {
+                    $content .= '<col class="col-0" /><col class="col-1" />';
+                    $content .= '<col class="col-2" /><col class="col-3" />';
+                }
+                else
+                {
+                    $content .= '<col class="col-0" /><col class="col-1" />';
+                }
             }
             else
             {
-                $width = 35;
-            }
-            $content = '<colgroup>';
-            for ($i = 0; $i < $columnCount; $i++)
-            {
-                $col_class = $i;
-                //$content .= '<col style="width:15%" /><col style="width:' . $width . '%" />';
-                 $content .= '<col class="col-'.$col_class.'" /><col class="col-'.++$col_class.'" />';
+                throw new NotSupportedException();
             }
             $content .= '</colgroup>';
             return $content;

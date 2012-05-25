@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -42,7 +42,7 @@
                 $this->getArray(),
                 $this->getEditableHtmlOptions()
             );
-            return Yii::t('Default', 'Roll up') . ':' . $content . ' ' . self::renderHelpContent();
+            return Yii::t('Default', 'Roll Up') . ':' . $content . ' ' . self::renderHelpContent();
         }
 
         protected function renderControlNonEditable()
@@ -78,8 +78,8 @@
         protected function getArray()
         {
             $data = array(
-                        '' => Yii::t('Default', 'Off'),
-                        1  => Yii::t('Default', 'On')
+                        '' => Yii::t('Default', 'Off{visibility}', array('{visibility}' => null)),
+                        1  => Yii::t('Default', 'On{visibility}', array('{visibility}' => null))
                     );
 
             return $data;

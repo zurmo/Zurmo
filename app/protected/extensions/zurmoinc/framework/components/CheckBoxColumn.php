@@ -56,28 +56,33 @@
             {
                 $one = '';
             }
+            // Begin Not Coding Standard
             $js = <<<END
 jQuery('#{$this->id}_all').live('click', function()
 {
     var checked = this.checked;
-	
-	//custom checkbox style    
-    if(this.checked){
-    	jQuery(this).parent().addClass('c_on');
-    } else {
-    	jQuery(this).parent().removeClass('c_on');
+
+    //custom checkbox style
+    if (this.checked){
+        jQuery(this).parent().addClass('c_on');
     }
-    
+    else
+    {
+        jQuery(this).parent().removeClass('c_on');
+    }
+
     jQuery("input[name='$name']").each(function()
     {
         this.checked = checked;
         updateListViewSelectedIds('{$this->grid->id}', $(this).val(), checked);
-        
+
         //custom checkbox style
-        if(this.checked){
-        	jQuery(this).parent().addClass('c_on');
-        } else {
-        	jQuery(this).parent().removeClass('c_on');
+        if (this.checked){
+            jQuery(this).parent().addClass('c_on');
+        }
+        else
+        {
+            jQuery(this).parent().removeClass('c_on');
         }
     });
 });
@@ -85,20 +90,26 @@ jQuery("input[name='$name']").live('click', function()
 {
     jQuery('#{$this->id}_all').attr( 'checked', jQuery("input[name='$name']").length == jQuery("input[name='$name']:checked").length);{$one}
     updateListViewSelectedIds('{$this->grid->id}', $(this).val(), $(this).attr('checked'));
-    
+
     //custom checkbox style
-    if( jQuery('#{$this->id}_all').attr( 'checked') === 'checked' ){
-    	jQuery('#{$this->id}_all').parent().addClass('c_on');
-	} else {
-    	jQuery('#{$this->id}_all').parent().removeClass('c_on');
+    if ( jQuery('#{$this->id}_all').attr( 'checked') === 'checked' ){
+        jQuery('#{$this->id}_all').parent().addClass('c_on');
     }
-    if( this.checked ){
-    	jQuery(this).parent().addClass('c_on');
-    } else {
-    	jQuery(this).parent().removeClass('c_on');
+    else
+    {
+        jQuery('#{$this->id}_all').parent().removeClass('c_on');
+    }
+    if ( this.checked )
+    {
+        jQuery(this).parent().addClass('c_on');
+    }
+    else
+    {
+        jQuery(this).parent().removeClass('c_on');
     }
 });
 END;
+            // End Not Coding Standard
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, $js);
         }
 
@@ -111,16 +122,8 @@ END;
         {
             if ($this->grid->selectableRows>1)
             {
-                if ($this->grid->selectAll)
-                {
-                    $checked = true;
-                    $disabled = 'disabled';
-                }
-                else
-                {
-                    $checked = false;
-                    $disabled = '';
-                }
+                $checked = false;
+                $disabled = '';
                 $htmlOptions = array('disabled' => $disabled);
                 echo CHtml::tag("label",
                                 array("class" => "hasCheckBox"),
@@ -142,15 +145,15 @@ END;
          * (non-PHPdoc)
          * @see CCheckBoxColumn::renderDataCellContent()
          */
-        protected function renderDataCellContent($row,$data)
+        protected function renderDataCellContent($row, $data)
         {
-            if($this->value !== null)
+            if ($this->value !== null)
             {
-                $value = $this->evaluateExpression($this->value,array('data' => $data, 'row' => $row));
+                $value = $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
             }
-            else if($this->name !== null)
+            elseif ($this->name !== null)
             {
-                $value = CHtml::value($data,$this->name);
+                $value = CHtml::value($data, $this->name);
             }
             else
             {
@@ -158,18 +161,18 @@ END;
             }
 
             $checked = false;
-            if($this->checked !== null)
+            if ($this->checked !== null)
             {
-                $checked = $this->evaluateExpression($this->checked,array('data' => $data, 'row' => $row));
+                $checked = $this->evaluateExpression($this->checked, array('data' => $data, 'row' => $row));
             }
             $options                  = $this->checkBoxHtmlOptions;
             $name                     = $options['name'];
             unset($options['name']);
             $options['value']         = $value;
-            $options['id']            = $this->id.'_'.$row;
+            $options['id']            = $this->id . '_' . $row;
             echo CHtml::tag("label",
                             array("class" => "hasCheckBox"),
-                            CHtml::checkBox($name,$checked,$options));
+                            CHtml::checkBox($name, $checked, $options));
         }
     }
 ?>

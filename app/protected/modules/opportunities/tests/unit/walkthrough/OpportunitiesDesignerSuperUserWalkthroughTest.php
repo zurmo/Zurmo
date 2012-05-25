@@ -156,7 +156,6 @@
 
             //Test create field list.
             $this->setGetArray(array('moduleClassName' => 'OpportunitiesModule'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributeCreate');
 
             //View creation screen, then create custom field for each custom field type.
             $this->createCheckBoxCustomFieldByModule            ('OpportunitiesModule', 'checkbox');
@@ -403,7 +402,7 @@
 
             //Check if the opportunity name exits after the search is performed on the basis of the
             //custom fields added to the opportunities module.
-            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            //$this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0); //removed until we show the count again in the listview.
             $this->assertTrue(strpos($content, "myNewOpportunity") > 0);
         }
 
@@ -642,7 +641,7 @@
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
 
             //Assert that the edit Opportunity exits after the edit and is diaplayed on the search page.
-            $this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0);
+            //$this->assertTrue(strpos($content, "Displaying 1-1 of 1 result(s).") > 0); //removed until we show the count again in the listview.
             $this->assertTrue(strpos($content, "myEditOpportunity") > 0);
         }
 

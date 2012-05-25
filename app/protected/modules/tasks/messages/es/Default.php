@@ -31,12 +31,16 @@
     return array(
         'Access TasksModulePluralLabel'
             => 'Acceso a TasksModulePluralLabel',
+        'Close Task Check Box'
+            => 'Cerrar casilla de verificación de tareas',
         'Completed'
             => 'Terminado',
         'Completed On'
             => 'Completó el',
         'Create TasksModulePluralLabel'
             => 'Crear TasksModulePluralLabel',
+        'Create TasksModuleSingularLabel'
+            => 'Crear TasksModuleSingularLabel',
         'Delete TasksModulePluralLabel'
             => 'Eliminar TasksModulePluralLabel',
         'Due On'
@@ -50,7 +54,7 @@
         'Tasks'
             => 'Tareas',
         'TasksModulePluralLabel'
-            => 'TasksModulePluralLabel',
+            => 'TasksModulePluralLabel', // Same Word Translated
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
             => 'TasksModulePluralLabel para AccountsModuleSingularLabel',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
@@ -58,6 +62,6 @@
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'TasksModulePluralLabel para OpportunitiesModuleSingularLabel',
         'TasksModuleSingularLabel'
-            => 'TasksModuleSingularLabel',
+            => 'TasksModuleSingularLabel', // Same Word Translated
     );
 ?>

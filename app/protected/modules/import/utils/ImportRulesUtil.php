@@ -95,7 +95,7 @@
          * @param array $requiredAttributeCollection
          * @param array $mappedAttributeImportRulesCollection
          * @throws NotSupportedException - Throws an error if the $mappedAttributeImportRulesCollection contains
-         * 								   any attribute rules that are not AttributeImportRules.
+         *                                 any attribute rules that are not AttributeImportRules.
          * @return boolean true - all required are mapped, otherwise false.
          */
         public static function areAllRequiredAttributesMappedOrHaveRules(& $requiredAttributeCollection,

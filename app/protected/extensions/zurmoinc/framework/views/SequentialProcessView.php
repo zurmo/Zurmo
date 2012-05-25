@@ -79,7 +79,7 @@
         protected function renderContent()
         {
             $content  = '<div class="process-container-view">' . "\n";
-			$content .= "<h3>" . $this->message . '</h3>';
+            $content .= "<h3>" . $this->message . '</h3>';
             $content .= "<span id='" . $this->getProgressBarId() . "-msg'></span>";
             $content .= '</div>';
             $this->registerAjaxScript();
@@ -90,11 +90,11 @@
         {
             if ($this->nextParams != null)
             {
-                $urlParams = array_merge($_GET, array('nextParams' => $this->nextParams));
+                $urlParams = array_merge(GetUtil::getData(), array('nextParams' => $this->nextParams));
             }
             else
             {
-                $getString = $_GET;
+                $getString = GetUtil::getData();
                 unset($getString['nextParams']);
                 $urlParams = $getString;
             }

@@ -63,14 +63,14 @@
             $content  = '<div class="details-table">';
             $content .= $this->renderTitleContent();
             $actionElementContent = $this->renderActionElementMenu();
-            if($actionElementContent != null)
+            if ($actionElementContent != null)
             {
                 $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
                 $content .= $actionElementContent;
                 $content .= '</div></div>';
             }
             $content .= $this->renderFormLayout();
-            $content .= '<p>'.$this->renderAfterFormLayoutForDetailsContent().'</p>';
+            $content .= '<p>' . $this->renderAfterFormLayoutForDetailsContent() . '</p>';
             $content .= '</div>';
             return $content;
         }
@@ -103,7 +103,7 @@
                     $menuItems['items'][] = $element->renderMenuItem();
                 }
             }
-            if(count($menuItems['items']) > 0)
+            if (count($menuItems['items']) > 0)
             {
                 $cClipWidget = new CClipWidget();
                 $cClipWidget->beginClip("DetailsOptionMenu");
@@ -120,7 +120,7 @@
 
         protected function renderTitleContent()
         {
-            if($this->title != null)
+            if ($this->title != null)
             {
                 return '<h1>' . $this->title . "</h1>";
             }
@@ -152,6 +152,7 @@
                 $errorSummaryContent = null;
             }
             $formLayout = new DetailsViewFormLayout($metadataWithRenderedElements, $maxCellsPerRow, $errorSummaryContent);
+            $formLayout->labelsHaveOwnCells($this->doesLabelHaveOwnCell());
             $formLayout->setMorePanelsLinkLabel($this->getMorePanelsLinkLabel());
             $formLayout->setLessPanelsLinkLabel($this->getLessPanelsLinkLabel());
             return $formLayout->render();
@@ -214,7 +215,7 @@
         {
             assert('is_array($metadata)');
             $maxCellsPresent = 1;
-            if(!isset($metadata['global']['panels']))
+            if (!isset($metadata['global']['panels']))
             {
                 return $maxCellsPresent;
             }
@@ -225,16 +226,24 @@
                     $maxCellsPresentInThisRow = 0;
                     foreach ($row['cells'] as $cellIndex => $cell)
                     {
-                        $maxCellsPresentInThisRow ++;
+                        $maxCellsPresentInThisRow++;
                     }
-                    if($maxCellsPresentInThisRow > $maxCellsPresent)
+                    if ($maxCellsPresentInThisRow > $maxCellsPresent)
                     {
                         $maxCellsPresent = $maxCellsPresentInThisRow;
                     }
                 }
-
             }
             return $maxCellsPresent;
+        }
+
+        /**
+         * @return true if the label has its own TD next to the TD of the input. Override if the label is on
+         * top of the input, in which case it does not need its own cell.
+         */
+        protected function doesLabelHaveOwnCell()
+        {
+            return true;
         }
 
         /**
@@ -248,7 +257,7 @@
         protected function getMaxCellsPerRow()
         {
             $designerRulesType          = static::getDesignerRulesType();
-            if($designerRulesType == null)
+            if ($designerRulesType == null)
             {
                 $designerRulesType      = self::getDesignerRulesType();
             }
@@ -386,7 +395,7 @@
          */
         protected function getLessPanelsLinkLabel()
         {
-            return Yii::t('Default', 'Less Details');
+            return Yii::t('Default', 'Fewer Details');
         }
     }
 ?>

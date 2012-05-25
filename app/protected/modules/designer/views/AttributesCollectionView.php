@@ -53,7 +53,7 @@
         {
             $content  = null;
             $content .= $this->renderBeforeTableContent();
-            if(count($this->attributesCollection) > 0)
+            if (count($this->attributesCollection) > 0)
             {
                 $content .= '<div>';
                 $content .= $this->renderTitleContent();
@@ -61,8 +61,6 @@
                 foreach ($this->attributesCollection as $attributeName => $information)
                 {
                     $route = $this->moduleId . '/' . $this->controllerId . '/AttributeEdit/';
-                    $content .= '<tr>';
-                    $content .= '<td>';
                     $attributeFormClassName = AttributesFormFactory::getFormClassNameByAttributeType($information['elementType']);
                     if ($information['elementType'] == 'EmailAddressInformation' ||
                         $information['elementType'] == 'Address' ||

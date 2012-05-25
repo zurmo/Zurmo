@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -24,6 +24,9 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Class to render link to mass edit from a listview.
+     */
     class MassEditLinkActionElement extends LinkActionElement
     {
         public function getActionType()
@@ -33,29 +36,24 @@
 
         public function render()
         {
-            $gridId = $this->getListViewGridId();
-            $name   = $gridId . '-massAction';
-            $htmlOptions = array(
-                'name' => $name,
-                'id'   => $name,
-            );
-            Yii::app()->clientScript->registerScript($gridId . '-listViewMassActionDropDown', "
-                $('#" . $gridId . "-massAction').live('click', function()
+            $gridId         = $this->getListViewGridId();
+            $selectedName   = $gridId . '-massActionSelected';
+            $allName        = $gridId . '-massActionAll';
+            Yii::app()->clientScript->registerScript($gridId . '-listViewMassActionUpdateSelected', "
+                $('#" . $gridId . "-massActionSelected').unbind('click.action');
+                $('#" . $gridId . "-massActionSelected').bind('click.action', function()
                     {
-                        if ($('#" . $gridId . "-selectAll').val() == '')
+                        if ($('#" . $gridId . "-selectedIds').val() == '')
                         {
-                            if ($('#" . $gridId . "-selectedIds').val() == '')
-                            {
-                                alert('" . Yii::t('Default', 'You must select at least one record') . "');
-                                $(this).val('');
-                                return false;
-                            }
+                            alert('" . Yii::t('Default', 'You must select at least one record') . "');
+                            $(this).val('');
+                            return false;
                         }
                         var options =
                         {
                             url : $.fn.yiiGridView.getUrl('" . $gridId . "')
                         }
-                        if(options.url.split( '?' ).length == 2)
+                        if (options.url.split( '?' ).length == 2)
                         {
                             options.url.split( '?' )[0];
                             options.url = options.url.split( '?' )[0] +'/'+ 'massEdit' + '?' + options.url.split( '?' )[1];
@@ -64,15 +62,56 @@
                         {
                             options.url = options.url +'/'+ 'massEdit';
                         }
-                        addListViewSelectedIdsAndSelectAllToUrl('" . $gridId . "', options);
-                        var data = '' + 'massEdit=' + '&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
+                        addListViewSelectedIdsToUrl('" . $gridId . "', options);
+                        var data = '' + 'massEdit=' + '&selectAll=&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);
                         window.location.href = url;
                         return false;
                     }
                 );
             ");
-            return CHtml::Link($this->getLabel(), '#', $htmlOptions);
+            Yii::app()->clientScript->registerScript($gridId . '-listViewMassActionUpdateAll', "
+                $('#" . $gridId . "-massActionAll').unbind('click.action');
+                $('#" . $gridId . "-massActionAll').bind('click.action', function()
+                    {
+                        var options =
+                        {
+                            url : $.fn.yiiGridView.getUrl('" . $gridId . "')
+                        }
+                        if (options.url.split( '?' ).length == 2)
+                        {
+                            options.url.split( '?' )[0];
+                            options.url = options.url.split( '?' )[0] +'/'+ 'massEdit' + '?' + options.url.split( '?' )[1];
+                        }
+                        else
+                        {
+                            options.url = options.url +'/'+ 'massEdit';
+                        }
+                        var data = '' + 'massEdit=' + '&selectAll=1&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
+                        "url = $.param.querystring(options.url, data);
+                        window.location.href = url;
+                        return false;
+                    }
+                );
+            ");
+            $menuItems = array('label' => $this->getLabel(), 'url' => null,
+                                    'items' => array(
+                                        array(  'label'   => Yii::t('Default', 'Selected'),
+                                                'url'     => '#',
+                                                'itemOptions' => array( 'id'   => $selectedName)),
+                                        array(  'label'   => Yii::t('Default', 'All Results'),
+                                                'url'     => '#',
+                                                'itemOptions' => array( 'id'   => $allName))));
+            $cClipWidget = new CClipWidget();
+            $cClipWidget->beginClip("ActionMenu");
+            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                'htmlOptions' => array('id' => 'ListViewMassActionMenu'),
+                'items'                   => array($menuItems),
+                'navContainerClass'       => 'nav-single-container',
+                'navBarClass'             => 'nav-single-bar',
+            ));
+            $cClipWidget->endClip();
+            return $cClipWidget->getController()->clips['ActionMenu'];
         }
 
         protected function getDefaultLabel()

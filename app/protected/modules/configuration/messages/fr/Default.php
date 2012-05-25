@@ -30,9 +30,9 @@
     // DON'T MAKE A MESS!
     return array(
         'Administration'
-            => 'Administration',
+            => 'Administration', // Same Word Translated
         'Configuration'
-            => 'Configuration',
+            => 'Configuration', // Same Word Translated
         'General'
             => 'Général',
     );

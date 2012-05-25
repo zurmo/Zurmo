@@ -52,21 +52,21 @@ $.extend(DropDownDependencyManager.prototype, {
        $.each(this.dependencyData, function() {
            if(this.parentInputId != null)
            {
-               var inputId				= this.inputId;
+               var inputId              = this.inputId;
                var parentSelectedValue  = $('#' + this.parentInputId).val();
-               var selectedValue		= $('#' + this.inputId).val();
+               var selectedValue        = $('#' + this.inputId).val();
                var valueToAlwaysShow    = this.valueToAlwaysShow;
                var valuesToParentValues = this.valuesToParentValues;
                var notReadyToSelectText = this.notReadyToSelectText;
                $('#' + this.inputId + ' > option').each(function(){
-                   if(this.value != valueToAlwaysShow && this.value != '')
+                   if (this.value != valueToAlwaysShow && this.value != '')
                    {
-                       if(valuesToParentValues[this.value] != parentSelectedValue)
+                       if (valuesToParentValues[this.value] != parentSelectedValue)
                        {
                            $("#" + inputId + " option[value='" + this.value + "']").remove();
                        }
                    }
-                   else if(this.value == '' && parentSelectedValue == '' && valueToAlwaysShow == null)
+                   else if (this.value == '' && parentSelectedValue == '' && valueToAlwaysShow == null)
                    {
                        $("#" + inputId + " option[value='']").text(notReadyToSelectText);
                    }

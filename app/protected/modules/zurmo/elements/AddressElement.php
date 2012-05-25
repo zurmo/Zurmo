@@ -74,11 +74,11 @@
             }
             if (!empty($postalCode))
             {
-                $content .= Yii::app()->format->text($postalCode) . "<br/>\n";
+                $content .= Yii::app()->format->text($postalCode);
             }
             if (!empty($country))
             {
-                $content .= Yii::app()->format->text($country);
+                $content .= "<br/>\n" . Yii::app()->format->text($country);
             }
             if (!$invalid && $addressModel->makeAddress() != '')
             {
@@ -103,9 +103,9 @@
             $content .= '<div class="hasHalfs">';
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'state', true)      . "\n";
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'postalCode', true) . "\n";
-			$content .= '</div>';
+      $content .= '</div>';
             $content .= $this->renderEditableAddressTextField($addressModel, $this->form, $this->attribute, 'country')          . "\n";
-            return '<div class="address-fields">'.$content.'</div>';
+            return '<div class="address-fields">' . $content . '</div>';
         }
 
         protected function renderEditableAddressTextField($model, $form, $inputNameIdPrefix, $attribute,
@@ -119,12 +119,12 @@
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
             $textField   = $form->textField($model, $attribute, $htmlOptions);
             $error       = $form->error    ($model, $attribute);
-            if($model->$attribute != null)
+            if ($model->$attribute != null)
             {
                  $label = null;
             }
             $halfClassString = null;
-            if($renderAsHalfSize)
+            if ($renderAsHalfSize)
             {
                 $halfClassString = ' half';
             }
@@ -141,8 +141,8 @@
             assert('$addressModel instanceof Address');
             Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/Modal.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets')
+                    ) . '/Modal.js',
                 CClientScript::POS_END
             );
             $mapRenderUrl = Yii::app()->mappingHelper->resolveMappingLinkUrl(array(

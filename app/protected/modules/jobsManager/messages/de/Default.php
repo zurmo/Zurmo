@@ -72,15 +72,15 @@
         'Job completed with errors.'
             => 'Fehler bei der Ausführung der Arbeit.',
         'Job Log'
-            => 'Job Log',
+            => 'Job Log', // Same Word Translated
         'Job Log for {jobDisplayName}'
             => 'Registrierungsdatei für {jobDisplayName}',
+        'Job Manager'
+            => 'System-Tasks',
+        'Job Manager: Home'
+            => 'System-Tasks: Home',
         'Job Name'
             => 'Name der Arbeit',
-        'Jobs Manager'
-            => 'System-Tasks',
-        'Jobs Manager: Home'
-            => 'System-Tasks: Home',
         'Last Completed Run'
             => 'Letzten Lauf',
         'Manage Scheduled Jobs'
@@ -89,6 +89,8 @@
             => 'Nachricht',
         'Monitor Job'
             => 'Job überwachen',
+        'New stable Zurmo release available'
+            => 'Eine neue stabile Version von Zurmo ist verfügar.',
         'Not Running'
             => 'Inaktiv',
         'Recommended Frequency'
@@ -96,7 +98,7 @@
         'Remove the api test entry script for production use.'
             => 'Entfernen das script test API für Produktion.',
         'Reset'
-            => 'Reset',
+            => 'Reset', // Same Word Translated
         'Return to Job Manager'
             => 'Zurück zum Job Manager',
         'Scheduled jobs are stuck'

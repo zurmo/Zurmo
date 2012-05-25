@@ -29,9 +29,9 @@
         public function __construct(CController $controller, CFormModel $formModel, $extraHeaderContent = null)
         {
             assert('is_string($extraHeaderContent) || $extraHeaderContent == null');
-			
-			$loginview = new LoginView($controller, $formModel, $extraHeaderContent);
-			$loginview->setCssClasses(array('clearfix'));
+
+            $loginview = new LoginView($controller, $formModel, $extraHeaderContent);
+            $loginview->setCssClasses(array('clearfix'));
             $gridView = new GridView(2, 1);
             $gridView->setView($loginview, 0, 0);
             $gridView->setView(new FooterView(), 1, 0);
@@ -40,7 +40,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Login');
+            return Yii::t('Default', 'Sign in');
         }
     }
 ?>

@@ -57,7 +57,7 @@
         {
             $moduleClassName = static::getModuleClassName();
             $moduleLabel     = $moduleClassName::getModuleLabelByTypeAndLanguage('PluralLowerCase');
-            return Yii::t('Default', 'No {moduleLabel} found', array('{moduleLabel}' => $moduleLabel));
+            return Yii::t('Default', 'No {moduleLabelPluralLowerCase} found', array('{moduleLabelPluralLowerCase}' => $moduleLabel));
         }
 
         protected function makeSearchAttributeData()
@@ -148,6 +148,20 @@
                     'route'            => 'defaultPortlet/myListDetails',
                     'class'            => 'SimpleListLinkPager',
                 );
+        }
+
+        /**
+         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewAfterAjaxUpdate()
+         */
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            // Begin Not Coding Standard
+            return 'js:function(id, data) {
+                        processAjaxSuccessError(id, data);
+                    }';
+            // End Not Coding Standard
         }
 
         public function getTitle()

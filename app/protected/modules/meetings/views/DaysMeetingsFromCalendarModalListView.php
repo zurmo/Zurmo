@@ -66,6 +66,20 @@
         }
 
         /**
+         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewAfterAjaxUpdate()
+         */
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            // Begin Not Coding Standard
+            return 'js:function(id, data) {
+                        processAjaxSuccessError(id, data);
+                    }';
+            // End Not Coding Standard
+        }
+
+        /**
          * Override to remove action buttons.
          */
         protected function getCGridViewLastColumn()
@@ -107,7 +121,7 @@
         protected function getGridViewWidgetPath()
         {
             $resolvedMetadata = $this->getResolvedMetadata();
-            if(isset($resolvedMetadata['global']['gridViewType']) &&
+            if (isset($resolvedMetadata['global']['gridViewType']) &&
                      $resolvedMetadata['global']['gridViewType'] == RelatedListView::GRID_VIEW_TYPE_STACKED)
              {
                  return 'ext.zurmoinc.framework.widgets.StackedExtendedGridView';
@@ -146,7 +160,7 @@
                 )
                 );
             $searchAttributeData['structure'] = '(1 and 2)';
-            if($this->ownerOnly)
+            if ($this->ownerOnly)
             {
                 $searchAttributeData['clauses'][3] =
                 array(
@@ -157,7 +171,7 @@
                 $searchAttributeData['structure'] = '(1 and 2 and 3)';
             }
             //The assertion above ensures that either ownerOnly or relationModel is populated but not both.
-            if($this->relationModel != null)
+            if ($this->relationModel != null)
             {
                 $searchAttributeData['clauses'][3] =
                 array(

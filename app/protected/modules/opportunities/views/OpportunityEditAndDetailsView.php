@@ -134,7 +134,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New OpportunitiesModuleSingularLabel',
+            return Yii::t('Default', 'Create OpportunitiesModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

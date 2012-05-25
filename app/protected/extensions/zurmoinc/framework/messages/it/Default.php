@@ -37,16 +37,22 @@
             => 'Caricare file',
         'Add Item'
             => 'Aggiungere',
+        'Advanced'
+            => 'Avanzata',
         'Advanced Search'
             => 'Ricerca avanzata',
         'After'
             => 'Dopo',
         'All'
             => 'Tutti',
+        'All Results'
+            => 'Lista completa',
         'and'
             => 'e',
         'Basic Search'
             => 'Ricerca',
+        'Basic Search Fields'
+            => 'Campi di ricerca semplice',
         'Before'
             => 'Prima',
         'Between'
@@ -60,13 +66,13 @@
         'Cell Settings'
             => 'Configurazione delle celle',
         'Celsius'
-            => 'Celcius',
+            => 'Celcius', // Same Word Translated
         'Change Log'
             => 'Log cambiamenti',
         'Changed'
             => 'Cambiato',
-        'Clear Search'
-            => 'Azzera',
+        'Clear'
+            => 'Cancella',
         'Create'
             => 'Crea',
         'Created By User'
@@ -99,8 +105,14 @@
             => 'Modifica il portlet',
         'Error'
             => 'Errore',
+        'Export'
+            => 'Esporta',
         'Fahrenheit'
-            => 'Fahrenheit',
+            => 'Fahrenheit', // Same Word Translated
+        'Fewer Details'
+            => 'Meno dettagli',
+        'Fewer Options'
+            => 'Meno opzioni',
         'Filtered Lists'
             => 'Liste filtrate',
         'First character must be a lower case letter'
@@ -112,7 +124,7 @@
         'firstDateTime must occur before secondDateTime'
             => 'firstDateTime deve essere avanti de secondDateTime',
         'Float'
-            => 'Float',
+            => 'Float', // Same Word Translated
         'from'
             => 'de',
         'Full Name'
@@ -122,7 +134,7 @@
         'Hour'
             => 'Ora',
         'Info'
-            => 'Info',
+            => 'Info', // Same Word Translated
         'Inline Edit View'
             => 'Vista Modifica Inline',
         'Integer'
@@ -160,9 +172,9 @@
         'Module Name'
             => 'Nome del modulo',
         'More Details'
-            => 'Ulteriori Dettagli',
+            => 'Altre informazioni',
         'More Options'
-            => 'Ulteriori opzioni',
+            => 'Altre opzioni',
         'My List View'
             => 'La mia vista elenco',
         'Name'
@@ -172,19 +184,27 @@
         'Next 7 Days'
             => 'Prossimi 7 giorni',
         'No'
-            => 'No',
+            => 'No', // Same Word Translated
         'No import processes found.'
             => 'Nessuno processo di importazione trovato.',
+        'No {moduleLabelPluralLowerCase} found'
+            => 'Nessun risultato trovato',
         'None'
             => 'Ninguno',
         'Now'
             => 'Adesso',
         'of'
             => 'de',
-        'On'
+        'Off{visibility}'
+            => 'Disattivato',
+        'On{date}'
             => 'Il',
+        'On{visibility}'
+            => 'Attivato',
         'Opted Out'
             => 'Opt out',
+        'Options'
+            => 'Opzioni',
         'or'
             => 'o',
         'Panel'
@@ -196,7 +216,7 @@
         'Radio Drop Down'
             => 'Eelementi del bottone radio',
         'record'
-            => 'record',
+            => 'record', // Same Word Translated
         'records'
             => 'record',
         'Remove'
@@ -213,18 +233,22 @@
             => 'Secondo',
         'Select'
             => 'Seleziona',
+        'Selected'
+            => 'Dati selezionati',
         'selected for updating.'
             => 'selezionato',
         'Serialized Data'
-            => 'Serialized Data',
+            => 'Dati Serializati',
         'Some values cannot be removed because they are currently in use. ' .
         'Try changing the records that use them first.'
             => 'Ci sono valori che non possono essere rimuovi perchè sono attualmente uttilizzato. ' .
                 'Provare di cambiare i record con questi valori.' ,
         'Start'
             => 'Inizio',
+        'Start typing to search'
+            => 'Ricerca',
         'Tab'
-            => 'Tab',
+            => 'Tab', // Same Word Translated
         'The file did not exist'
             => 'il file non esiste.',
         'There was an error uploading the file.'
@@ -255,7 +279,7 @@
             => 'Digitare per trovare un tag.',
         'Unknown'
             => 'Ignoto ',
-        'Update Selected'
+        'Update'
             => 'Aggiorna',
         'updated successfully.'
             => 'aggiornato con successo.',

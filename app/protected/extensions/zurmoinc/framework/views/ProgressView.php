@@ -137,9 +137,9 @@
             $content .= '<div class="progress-counter">' . "\n";
             $content .= "<h2><span id='" . $this->progressBarId . "-msg'>" . $this->getMessage() . "</span></h2>";
             $content .= $progressBarContent;
-			$content .= $this->renderFormLinks();
+            $content .= $this->renderFormLinks();
             $content .= '</div>';
-			$content .= '</div>';
+            $content .= '</div>';
             return $content;
         }
 

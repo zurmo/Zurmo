@@ -1,0 +1,36 @@
+/*Target only Explorer*/
+/*ALl input fields*/
+.form{
+    input[type="text"],
+    input[type="password"],
+    select.multiple,
+    textarea{
+        height:26px;
+    }
+}
+
+input[type="submit"],
+input[type="button"]{
+	height:26px;
+}
+
+/*Top Right Create New Menu*/
+#ShortcutsMenu > li > a {
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
+}
+
+/*Calendar with dates*/
+.calendar-events-1,
+.calendar-events-2,
+.calendar-events-3,
+.calendar-events-4,
+.calendar-events-5,
+.calendar-events-6{
+	span{
+		font-size:38px !important;
+		letter-spacing: -25px !important;
+		:before{
+			top:10px !important;
+		}
+	}
+}

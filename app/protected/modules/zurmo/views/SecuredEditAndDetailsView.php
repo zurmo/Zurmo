@@ -67,7 +67,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $content = parent::renderRightSideFormLayoutForEdit($form);
-            if($this->getModel() instanceof OwnedSecurableItem)
+            if ($this->getModel() instanceof OwnedSecurableItem)
             {
                 $content .= "<h3>".Yii::t('Default', 'Rights and Permissions') . '</h3><div id="owner-box">';
                 $element  = new UserElement($this->getModel(), 'owner', $form);
@@ -83,9 +83,9 @@
         protected function renderAfterFormLayoutForDetailsContent()
         {
             $content = parent::renderAfterFormLayoutForDetailsContent();
-            if($this->getModel() instanceof OwnedSecurableItem)
+            if ($this->getModel() instanceof OwnedSecurableItem)
             {
-                if($content != null)
+                if ($content != null)
                 {
                     $content .= '<br/>';
                 }

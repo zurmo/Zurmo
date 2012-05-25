@@ -117,7 +117,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New Group');
+            return Yii::t('Default', 'Create Group');
         }
     }
 ?>

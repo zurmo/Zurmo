@@ -33,7 +33,6 @@
         {
             assert('isset($params["controllerId"])');
             assert('isset($params["portletId"])');
-            assert('$this->getRelationAttributeName() != null');
             parent::__construct($viewData, $params, $uniqueLayoutId);
         }
 
@@ -73,7 +72,7 @@
         protected function getPortletChangeMonthUrl()
         {
             return Yii::app()->createUrl('/' . $this->resolvePortletModuleId() . '/defaultPortlet/myListViewAction',
-                                                        array_merge($_GET, array(
+                                                        array_merge(GetUtil::getData(), array(
                                                             'action'         => 'renderMonthEvents',
                                                             'portletId'      => $this->params['portletId'],
                                                             'uniqueLayoutId' => $this->uniqueLayoutId)));
@@ -82,7 +81,7 @@
         protected function getPortletSelectDayUrl()
         {
             return Yii::app()->createUrl('/meetings/default/daysMeetingsFromCalendarModalList',
-                                                        array_merge($_GET, array(
+                                                        array_merge(GetUtil::getData(), array(
                                                             'redirectUrl' => Yii::app()->request->getRequestUri(),
                                                             'ownerOnly'   => true
                                                             )));

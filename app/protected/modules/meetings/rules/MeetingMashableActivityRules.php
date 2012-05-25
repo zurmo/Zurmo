@@ -42,7 +42,7 @@
                     'operatorType'         => 'lessThan',
                     'value'                => DateTimeUtil::convertTimestampToDbFormatDateTime(time())
             );
-            if($searchAttributeData['structure'] != null)
+            if ($searchAttributeData['structure'] != null)
             {
                 $searchAttributeData['structure'] .= ' and ';
             }

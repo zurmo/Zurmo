@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ExportJobTest extends BaseTest
+    class ExportJobTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -43,7 +43,7 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            $numberOfUserNotifications = Notification::getUnreadCountByTypeAndUser('ExportProcessCompleted', Yii::app()->user->userModel);
+            $numberOfUserNotifications = Notification::getCountByTypeAndUser('ExportProcessCompleted', Yii::app()->user->userModel);
 
             $account = new Account();
             $account->owner       = $super;
@@ -73,6 +73,7 @@
             $exportItem->isCompleted = 0;
             $exportItem->exportFileType = 'csv';
             $exportItem->exportFileName = 'test';
+            $exportItem->modelClassName = 'Account';
             $exportItem->serializedData = serialize($dataProvider);
             $this->assertTrue($exportItem->save());
 
@@ -105,7 +106,7 @@
             $this->assertEquals($output, $fileModel->fileContent->content);
 
             // Check if user got notification message, and if its type is ExportProcessCompleted
-            $this->assertEquals($numberOfUserNotifications + 1, Notification::getUnreadCountByTypeAndUser('ExportProcessCompleted', Yii::app()->user->userModel));
+            $this->assertEquals($numberOfUserNotifications + 1, Notification::getCountByTypeAndUser('ExportProcessCompleted', Yii::app()->user->userModel));
         }
     }
 ?>

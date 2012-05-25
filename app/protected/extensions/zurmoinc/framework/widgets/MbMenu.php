@@ -179,7 +179,7 @@
                 {
                     $htmlOptions = array();
                 }
-                if((isset($item['ajaxLinkOptions'])))
+                if ((isset($item['ajaxLinkOptions'])))
                 {
                     echo CHtml::ajaxLink('<span>' . $item['label'] . '</span>', $item['url'], $item['ajaxLinkOptions'], $htmlOptions);
                 }

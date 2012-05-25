@@ -58,7 +58,7 @@
             $content .= '<br/>';
             $content .= Yii::t('Default', 'Click below to go to the login page. The username is <b>super</b>');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Login'), $loginUrl);
+            $content .= CHtml::link(Yii::t('Default', 'Sign in'), $loginUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '<div id="progress-table">';

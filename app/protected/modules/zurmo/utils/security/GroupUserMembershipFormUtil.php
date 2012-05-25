@@ -145,7 +145,7 @@
         public static function typeCastPostData($postData)
         {
             assert('is_array($postData)');
-            if(isset($postData['userMembershipData']))
+            if (isset($postData['userMembershipData']))
             {
                 foreach ($postData['userMembershipData'] as $index => $userId)
                 {

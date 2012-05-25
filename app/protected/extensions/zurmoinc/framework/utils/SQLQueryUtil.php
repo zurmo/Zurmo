@@ -44,10 +44,6 @@
             assert('$where   === null || is_string ($where)   && $where   != ""');
             assert('$orderBy === null || is_string ($orderBy) && $orderBy != ""');
             assert('$groupBy === null || is_string ($groupBy) && $groupBy != ""');
-            if ($groupBy != null && $orderBy != null)
-            {
-                throw new NotSupportedException();
-            }
             $quote = DatabaseCompatibilityUtil::getQuote();
             $sql   = $selectQueryAdapter->getSelect();
             $sql  .= "from ";
@@ -78,13 +74,13 @@
             {
                 $sql .= " where $joinWherePart";
             }
-            if ($orderBy !== null)
-            {
-                $sql .= " order by $orderBy";
-            }
             if ($groupBy !== null)
             {
                 $sql .= " group by $groupBy";
+            }
+            if ($orderBy !== null)
+            {
+                $sql .= " order by $orderBy";
             }
             if ($count !== null)
             {

@@ -26,7 +26,7 @@
 
     class SearchAndListView extends GridView
     {
-        public function __construct($controllerId, $moduleId, ModelForm $searchModel, RedBeanModel $listModel, $moduleName, CDataProvider $dataProvider, $selectedIds, $selectAll)
+        public function __construct($controllerId, $moduleId, ModelForm $searchModel, RedBeanModel $listModel, $moduleName, CDataProvider $dataProvider, $selectedIds)
         {
             parent::__construct(3, 1);
             $moduleClassName = $moduleName . 'Module';
@@ -36,7 +36,7 @@
             $searchViewClassName = $moduleName . 'SearchView';
             $this->setView(new $searchViewClassName($searchModel, get_class($listModel)), 1, 0);
             $listViewClassName   = $moduleName . 'ListView';
-            $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds, $selectAll), 2, 0);
+            $this->setView(new $listViewClassName($controllerId, $moduleId, get_class($listModel), $dataProvider, $selectedIds), 2, 0);
         }
 
         public function isUniqueToAPage()

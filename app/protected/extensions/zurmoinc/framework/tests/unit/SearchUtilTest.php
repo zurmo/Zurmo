@@ -163,6 +163,7 @@
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
             $this->assertEquals($resultArray, $newArray);
         }
+
         public function testGetSearchAttributesFromSearchArrayForSavingExistingSearchCriteria()
         {
             $searchArray = array(

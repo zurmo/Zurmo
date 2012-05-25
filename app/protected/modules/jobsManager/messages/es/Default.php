@@ -75,12 +75,12 @@
             => 'Archivo de registro',
         'Job Log for {jobDisplayName}'
             => 'Archivo de registro para {jobDisplayName}',
+        'Job Manager'
+            => 'Tareas del sistema',
+        'Job Manager: Home'
+            => 'Tareas del sistema: Inicio',
         'Job Name'
             => 'Nombre del trabajo',
-        'Jobs Manager'
-            => 'Tareas del sistema',
-        'Jobs Manager: Home'
-            => 'Tareas del sistema: Inicio',
         'Last Completed Run'
             => 'Última ejecución',
         'Manage Scheduled Jobs'
@@ -89,6 +89,8 @@
             => 'Mensaje',
         'Monitor Job'
             => 'Sistema de Seguimiento de Tareas',
+        'New stable Zurmo release available'
+            => 'Una nueva versión estable de Zurmo está disponible.',
         'Not Running'
             => 'Inactivo',
         'Recommended Frequency'

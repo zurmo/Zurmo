@@ -31,12 +31,16 @@
     {
         protected $modalListLinkProvider;
 
-        public function __construct($controllerId, $moduleId, $modelClassName, $modalListLinkProvider, $dataProvider, $gridIdSuffix = null)
+        protected $actionId;
+
+        public function __construct($controllerId, $moduleId, $actionId, $modelClassName, $modalListLinkProvider, $dataProvider, $gridIdSuffix = null)
         {
             assert('$modalListLinkProvider instanceof ModalListLinkProvider');
-            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), false, $gridIdSuffix);
+            assert('is_string($actionId)');
+            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), $gridIdSuffix);
             $this->modalListLinkProvider = $modalListLinkProvider;
             $this->rowsAreSelectable     = false;
+            $this->actionId              = $actionId;
         }
 
         /**
@@ -54,9 +58,23 @@
                     'prevPageLabel'    => '<span>previous</span>',
                     'nextPageLabel'    => '<span>next</span>',
                     'paginationParams' => GetUtil::getData(),
-                    'route'            => $this->getGridViewActionRoute('modalList', $this->moduleId),
+                    'route'            => $this->getGridViewActionRoute($this->actionId, $this->moduleId),
                     'class'            => 'SimpleListLinkPager',
                 );
+        }
+
+        /**
+         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewAfterAjaxUpdate()
+         */
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            // Begin Not Coding Standard
+            return 'js:function(id, data) {
+                        processAjaxSuccessError(id, data);
+                    }';
+            // End Not Coding Standard
         }
 
         public function getLinkString($attributeString)

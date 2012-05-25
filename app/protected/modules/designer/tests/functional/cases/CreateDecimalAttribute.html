@@ -33,7 +33,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
   <td></td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Accounts: Custom Fields</td>
+  <td>Create Field</td>
   <td></td>
 </tr>
 <tr>
@@ -57,13 +57,13 @@
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Create Field</td>
-  <td></td>
+  <td>select</td>
+  <td>attributeTypeName</td>
+  <td>label=Decimal</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Decimal</td>
+  <td>attributeTypeNameButton</td>
   <td></td>
 </tr>
 <tr>
@@ -128,57 +128,57 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[1]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
   <td>Decimal</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[2]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
   <td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[3]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
   <td>functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>67.894</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[5]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td</td>
   <td>6</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[6]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td</td>
   <td>3</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[8]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[8]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[8]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeEditView']/div[1]/div/h1</td>
+  <td>//div[@id='DecimalAttributeEditView']/div/h1</td>
   <td>exact:Edit Field: functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
@@ -218,22 +218,22 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functestdecimalfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>62.894</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='DecimalAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='DecimalAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td>off</td>
 </tr>
 </tbody></table>

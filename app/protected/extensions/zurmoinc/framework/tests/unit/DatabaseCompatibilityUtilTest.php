@@ -29,6 +29,7 @@
         protected $hostname;
         protected $rootUsername;
         protected $rootPassword;
+        protected $databasePort = 3306;
         protected $existingDatabaseName;
         protected $temporaryDatabaseName;
         protected $superUserPassword;
@@ -37,11 +38,22 @@
         {
             parent::__construct();
             $matches = array();
-            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+
+            assert(preg_match("/host=([^;]+);(?:port=([^;]+);)?dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+            if ($matches[2] != '')
+            {
+                $this->databasePort      = intval($matches[2]);
+            }
+            else
+            {
+                $databaseType = RedBeanDatabase::getDatabaseTypeFromDsnString(Yii::app()->db->connectionString);
+                $this->databasePort = DatabaseCompatibilityUtil::getDatabaseDefaultPort($databaseType);
+            }
+
             $this->hostname              = $matches[1];
             $this->rootUsername          = Yii::app()->db->username;
             $this->rootPassword          = Yii::app()->db->password;
-            $this->existingDatabaseName  = $matches[2];
+            $this->existingDatabaseName  = $matches[3];
             $this->temporaryDatabaseName = "zurmo_wacky";
             if ($this->rootUsername == 'zurmo')
             {
@@ -173,7 +185,8 @@
             $maxAllowedPacketSize = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize('mysql',
                                                                                                 $this->hostname,
                                                                                                 $this->rootUsername,
-                                                                                                $this->rootPassword);
+                                                                                                $this->rootPassword,
+                                                                                                $this->databasePort);
             $this->assertGreaterThan(0, $maxAllowedPacketSize);
         }
 
@@ -182,7 +195,8 @@
             $maxSpRecursionDepth = DatabaseCompatibilityUtil::getDatabaseMaxSpRecursionDepth('mysql',
                                                                                              $this->hostname,
                                                                                              $this->rootUsername,
-                                                                                             $this->rootPassword);
+                                                                                             $this->rootPassword,
+                                                                                             $this->databasePort);
             $this->assertGreaterThan(0, $maxSpRecursionDepth);
         }
 
@@ -191,7 +205,8 @@
             $threadStackValue = DatabaseCompatibilityUtil::getDatabaseThreadStackValue('mysql',
                                                                                           $this->hostname,
                                                                                           $this->rootUsername,
-                                                                                          $this->rootPassword);
+                                                                                          $this->rootPassword,
+                                                                                          $this->databasePort);
             $this->assertGreaterThan(0, $threadStackValue);
         }
 
@@ -201,7 +216,8 @@
                                                                                           $this->hostname,
                                                                                           $this->existingDatabaseName,
                                                                                           $this->rootUsername,
-                                                                                          $this->rootPassword);
+                                                                                          $this->rootPassword,
+                                                                                          $this->databasePort);
             $this->assertTrue(is_string($dbDefaultCollation));
             $this->assertTrue(strlen($dbDefaultCollation) > 0);
         }
@@ -211,17 +227,18 @@
             $isDatabaseStrictMode = DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
                                                                                     $this->hostname,
                                                                                     $this->rootUsername,
-                                                                                    $this->rootPassword);
+                                                                                    $this->rootPassword,
+                                                                                    $this->databasePort);
             $this->assertTrue(is_bool($isDatabaseStrictMode));
         }
 
         public function testDatabaseConnection_mysql()
         {
-            $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername, $this->rootPassword));
+            $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort));
             $this->assertEquals(array(1045, "Access denied for user '{$this->rootUsername}'@'{$this->hostname}' (using password: YES)"),
-            DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong'));
+                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong', $this->databasePort));
             $this->assertEquals(array(1045, "Access denied for user 'nobody'@'{$this->hostname}' (using password: YES)"),
-            DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password'));
+                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password', $this->databasePort));
         }
 
         public function testCheckDatabaseExists()
@@ -229,9 +246,9 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->existingDatabaseName));
+                $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->existingDatabaseName));
                 $this->assertEquals(array(1049, "Unknown database 'junk'"),
-                DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'junk'));
+                DatabaseCompatibilityUtil::checkDatabaseExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, 'junk'));
             }
         }
 
@@ -240,14 +257,14 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue (DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->rootUsername));
-                $this->assertFalse(DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, 'dude'));
+                $this->assertTrue (DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->rootUsername));
+                $this->assertFalse(DatabaseCompatibilityUtil::checkDatabaseUserExists('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, 'dude'));
             }
         }
 
         public function testCreateDatabase()
         {
-            $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
+            $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName));
         }
 
         public function testCreateDatabaseUser()
@@ -255,9 +272,9 @@
             // This test cannot run as saltdev. It is therefore skipped on the server.
             if ($this->rootUsername == 'root')
             {
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName));
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', 'wacked'));
-                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, 'wacko', ''));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase    ('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName, 'wacko', 'wacked'));
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabaseUser('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName, 'wacko', ''));
             }
         }
 

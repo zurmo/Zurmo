@@ -31,16 +31,22 @@
     return array(
         'A simple notification'
             => 'Une simple notification',
+        'Delete Notification'
+            => 'Supprimer la notification',
         'Html Content'
             => 'Contenu HTML',
         'Notification'
-            => 'Notification',
+            => 'Notification', // Same Word Translated
         'Notification Message'
             => 'Message de notification',
         'Notifications List'
             => 'Liste de notifications',
         'Text Content'
             => 'Contenu du texte',
+        'There are no recent notifications.'
+            => 'Aucune nouvelle notification.',
+        'View All Notifications'
+            => 'Afficher toutes les notifications',
         'You have a new notification'
             => 'Nouvelle notification',
     );

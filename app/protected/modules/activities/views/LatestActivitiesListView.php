@@ -66,6 +66,12 @@
          */
         protected $showRollUpToggle = true;
 
+        /**
+         * True to show the owned by filter option.
+         * @var boolean
+         */
+        protected $showOwnedByFilter = true;
+
         protected $params;
 
         public function __construct(RedBeanModelsDataProvider $dataProvider,
@@ -153,6 +159,20 @@
                 );
         }
 
+        /**
+         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewAfterAjaxUpdate()
+         */
+        protected function getCGridViewAfterAjaxUpdate()
+        {
+            // Begin Not Coding Standard
+            return 'js:function(id, data) {
+                        processAjaxSuccessError(id, data);
+                    }';
+            // End Not Coding Standard
+        }
+
         protected function renderConfigurationForm()
         {
             $formName   = 'latest-activity-configuration-form';
@@ -174,26 +194,34 @@
         protected function renderConfigurationFormLayout($form)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $element                   = new LatestActivitiesOwnedByFilterRadioElement($this->configurationForm,
-                                                                                      'ownedByFilter',
-                                                                                      $form);
-            $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_ownedByFilter">{content}</div>';
-            $ownedByFilterContent      = $element->render();
-
-            $content  = '<div class="horizontal-line latest-activity-toolbar">';
-            $content .= $ownedByFilterContent;
-            if($this->showRollUpToggle)
+            $content      = null;
+            $innerContent = null;
+            if ($this->showOwnedByFilter)
+            {
+                $element                   = new LatestActivitiesOwnedByFilterRadioElement($this->configurationForm,
+                                                                                          'ownedByFilter',
+                                                                                          $form);
+                $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_ownedByFilter_area">{content}</div>';
+                $ownedByFilterContent      = $element->render();
+                $innerContent             .= $ownedByFilterContent;
+            }
+            if ($this->showRollUpToggle)
             {
                 $element                   = new LatestActivitiesRollUpFilterRadioElement($this->configurationForm,
                                                                                        'rollup', $form);
                 $element->editableTemplate = '{content}';
                 $rollupElementContent      = $element->render();
-                $content .= '<div id="LatestActivitiesConfigurationForm_rollup">' . $rollupElementContent . '</div>';
+                $innerContent .= '<div id="LatestActivitiesConfigurationForm_rollup_area">' . $rollupElementContent . '</div>';
             }
-            $content .= CHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
-            $content .= '</div>' . "\n";
-
-            if($this->configurationForm->filteredByModelName == LatestActivitiesConfigurationForm::FILTERED_BY_ALL)
+            if ($innerContent != null)
+            {
+                $content .= '<div class="horizontal-line latest-activity-toolbar">';
+                $content .= $innerContent;
+                $content .= CHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
+                $content .= '</div>' . "\n";
+            }
+            if ($innerContent != null &&
+               $this->configurationForm->filteredByModelName == LatestActivitiesConfigurationForm::FILTERED_BY_ALL)
             {
                 $startingStyle = "display:none";
             }
@@ -205,7 +233,7 @@
             $element                       = new LatestActivitiesMashableFilterRadioElement($this->configurationForm,
                                                                                       'filteredByModelName',
                                                                                       $form);
-            $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_filteredByModelName">{content}</div>';
+            $element->editableTemplate =  '<div id="LatestActivitiesConfigurationForm_filteredByModelName_area">{content}</div>';
             $content .= $element->render();
             $content .= '</div>' . "\n";
             return $content;
@@ -223,20 +251,20 @@
                     'update' => '#' . $this->uniquePageId,
             ));
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
-            $('#LatestActivitiesConfigurationForm_rollup').buttonset();
-            $('#LatestActivitiesConfigurationForm_ownedByFilter').buttonset();
-            $('#LatestActivitiesConfigurationForm_filteredByModelName').buttonset();
-            $('#LatestActivitiesConfigurationForm_rollup').change(function()
+            $('#LatestActivitiesConfigurationForm_rollup_area').buttonset();
+            $('#LatestActivitiesConfigurationForm_ownedByFilter_area').buttonset();
+            $('#LatestActivitiesConfigurationForm_filteredByModelName_area').buttonset();
+            $('#LatestActivitiesConfigurationForm_rollup_area').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }
             );
-            $('#LatestActivitiesConfigurationForm_ownedByFilter').change(function()
+            $('#LatestActivitiesConfigurationForm_ownedByFilter_area').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }
             );
-            $('#LatestActivitiesConfigurationForm_filteredByModelName').change(function()
+            $('#LatestActivitiesConfigurationForm_filteredByModelName_area').change(function()
                 {
                     " . $ajaxSubmitScript . "
                 }

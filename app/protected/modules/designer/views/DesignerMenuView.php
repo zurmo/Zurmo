@@ -28,32 +28,7 @@
     {
         public static function getMetadata()
         {
-            return array(
-                'moduleCategories' => array(
-                    array(
-                        'label'        => Yii::t('Default', 'Fields'),
-                        'action'       => 'AttributesList',
-                        'showFlagName' => 'showFieldsLink',
-                    ),
-                    array(
-                        'label'        => Yii::t('Default', 'General'),
-                        'action'       => 'ModuleEdit',
-                        'showFlagName' => 'showGeneralLink',
-                    ),
-                    array(
-                        'label'        => Yii::t('Default', 'Layouts'),
-                        'action'       => 'ModuleLayoutsList',
-                        'showFlagName' => 'showLayoutsLink',
-                    ),
-                    /* todo: implement
-                    array(
-                        'label'        => Yii::t('Default', 'Menus'),
-                        'action'       => 'ModuleMenus',
-                        'showFlagName' => 'showMenusLink',
-                    ),
-                    */
-                ),
-            );
+            return array();
         }
     }
 ?>

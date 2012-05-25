@@ -33,7 +33,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <superuser-password> [demodata] [load-magnitude]
+      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <database-port> <superuser-password> [demodata] [load-magnitude]
 
     DESCRIPTION
       This command runs a silent install on the application, optional loading demo data if specified. This version
@@ -45,6 +45,7 @@
      * database-name      : The database name to installation the application on.
      * database-username  : The database user
      * database-password  : The database user password.
+     * database-port      : The database port.
      * superuser-password : The password for the super administrator that is created.  The username will be 'super'
 
      Optional Parameters:
@@ -61,17 +62,17 @@ EOD;
     public function run($args)
     {
         set_time_limit('7200');
-        if (!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]))
+        if (!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]) || !isset($args[5]))
         {
-            $this->usageError('The database user, password, and host must be specified.');
+            $this->usageError('The database user, database name, password, host and port must be specified.');
         }
-        if (isset($args[5]) && $args[5] != 'demodata')
+        if (isset($args[6]) && $args[6] != 'demodata')
         {
-            $this->usageError('Invalid parameter specified.  If specified the 6th parameter should be \'demodata\'');
+            $this->usageError('Invalid parameter specified.  If specified the 7th parameter should be \'demodata\'');
         }
-        if (isset($args[6]) && (intval($args[6]) < 1))
+        if (isset($args[7]) && (intval($args[7]) < 1))
         {
-            $this->usageError('Invalid parameter specified.  If specified the 7th parameter should be integer and greater then 0');
+            $this->usageError('Invalid parameter specified.  If specified the 8th parameter should be integer and greater then 0');
         }
         if (Yii::app()->isApplicationInstalled())
         {

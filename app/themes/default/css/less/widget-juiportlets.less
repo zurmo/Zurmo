@@ -1,0 +1,198 @@
+.juiportlet-columns .juiportlet-column {
+	float: left;
+	min-height: 400px;
+	height: auto !important;
+	height: 400px;
+}
+
+.juiportlet-widget-column1 {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.juiportlet-widget-column2 {
+	padding: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.juiportlet-column-split-even-2 {
+	width: 50%;
+}
+
+.juiportlet-column-no-split {
+	width: 100%;
+}
+
+.juiportlet-column-split-left-75 {
+	width: 65%;
+}
+
+.juiportlet-column-split-right-25 {
+	width: 35%;
+}
+
+.juiportlet-columns .juiportlet-widget {
+	min-width:265px;
+	margin: 0px 20px 20px 0px;
+	padding: 0;
+	border:1px solid #CCC;
+	.portlet-gradient();
+	.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12)); /*999*/
+}
+
+.juiportlet-columns .juiportlet-widget .juiportlet-widget-head {
+	overflow: hidden;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	#gradient > .vertical(#f6f6f6, #ededed);
+	.b-shadow(inset 0 1px 0 0 #ffffff);
+	position:relative;
+}
+
+.juiportlet-columns .juiportlet-widget .juiportlet-widget-head h3 {
+	float: left;
+	position: relative;
+	margin-left:15px;
+}
+
+.juiportlet-widget-head{
+	border-bottom:1px solid #CCC;
+	background:#fff;
+	cursor: move;
+}
+
+/*.juiportlet-widget-head */
+a.remove {
+	float: right;
+	display: inline;
+	width: 13px;
+	height: 40px;
+	margin-right:8px;
+	text-indent: -9999em;
+	outline: none;
+	position:relative;
+	z-index:9999;
+	.icon:after{
+		content:"_";
+		.symbly(24px);
+		text-indent:0;
+		display:block;
+		float:right;
+		color:#A7A7A7;
+		.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0  );
+	}
+	&:hover{
+		.icon:after{
+			color:@themeColor;
+		}
+	}
+}
+
+.juiportlet-widget-head a.edit {
+	float: right;
+	display: inline;
+	width: 14px;
+	height: 40px;
+	text-indent: -9999em;
+	margin-right:8px;
+	outline: none;
+	position:relative;
+	.icon:after{
+		content:"n";
+		.symbly(24px);
+		text-indent:0;
+		display:block;
+		float:right;
+		color:#A7A7A7;
+	}
+	&:hover{
+		.icon:after{
+			color:@themeColor;
+		}
+	}
+}
+
+.juiportlet-widget-head a.collapse {
+	float: left;
+	display: inline;
+	background: url(../../images/portlet-minimize.png) 14px 50% no-repeat;
+	width: 14px;
+	height: 40px;
+	text-indent: -9999em;
+	margin:0 8px;
+	outline: none;
+}
+
+.juiportlet-widget-placeholder {
+	border: 2px dashed #262877;
+}
+
+.juiportlet-widget-placeholder {
+	margin: 20px 20px 20px 2px;
+}
+
+.juiportlet-widget-content{
+	padding:0 0 0 0;
+}
+
+.juiportlet-widget-content li{
+	padding:10px 15px;
+	border-bottom:1px solid #dfdfdf;
+	list-style: none;
+}
+
+.juiportlet-widget-content li:last-child{
+	border-bottom:none;
+}
+
+.juiportlet-widget-content .summary,
+.juiportlet-widget-content .rssHeader{
+	padding:10px 15px 0 15px;
+}
+
+.juiportlet-widget-content table.items{
+	width:100%;
+	border:none !important;
+	thead > tr{
+		th, td{
+			border-top:none !important;
+		}
+    }
+}
+
+.juiportlet-widget-content table.items tbody tr:last-child td{
+	border-bottom:none;
+}
+
+/*ICONS..*/
+.juiportlet-header-icon{
+	.symbly(32px);
+	color:#7A7A7A;
+	text-indent:-30px;
+	line-height: 100%;
+	position:absolute;
+	top:6px;
+}
+
+.juiportlet-widget.OpportunitiesForAccountRelatedListView{
+	h3{
+		text-indent:30px;
+		&:before{
+			.juiportlet-header-icon();
+			content: '9';
+		}
+	}
+}
+
+.juiportlet-widget.ContactsForAccountRelatedListView{
+	h3{
+		text-indent:30px;
+		&:before{
+			.juiportlet-header-icon();
+			content: 'e';
+		}
+	}
+}

@@ -49,7 +49,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 5 minutes.');
+            return Yii::t('Default', 'Every 2 minutes.');
         }
 
         /**
@@ -59,7 +59,7 @@
         */
         public static function getRunTimeThresholdInSeconds()
         {
-            return 10;
+            return 300;
         }
 
         public function run()
@@ -74,14 +74,30 @@
                         //continue;
                     }
 
-                    $dataProvider = unserialize($exportItem->serializedData);
-                    $formattedData = $dataProvider->getData();
+                    $unSerialzedData = unserialize($exportItem->serializedData);
+                    if ($unSerialzedData instanceOf RedBeanModelDataProvider)
+                    {
+                        $formattedData = $unSerialzedData->getData();
+                    }
+                    else
+                    {
+                        $formattedData = array();
+                        foreach ($unSerialzedData as $idToExport)
+                        {
+                            $model = call_user_func(array($exportItem->modelClassName, 'getById'), intval($idToExport));
+                            $formattedData[] = $model;
+                        }
+                    }
+
                     if ($exportItem->exportFileType == 'csv')
                     {
                         foreach ($formattedData as $model)
                         {
-                            $modelToExportAdapter  = new ModelToExportAdapter($model);
-                            $data[] = $modelToExportAdapter->getData();
+                            if (ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($model, Permission::READ))
+                            {
+                                $modelToExportAdapter  = new ModelToExportAdapter($model);
+                                $data[] = $modelToExportAdapter->getData();
+                            }
                         }
                         $output = ExportItemToCsvFileUtil::export($data);
 

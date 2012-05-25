@@ -139,7 +139,7 @@
                          self::TYPE_TOMORROW    => Yii::t('Default', 'Tomorrow'),
                          self::TYPE_BEFORE      => Yii::t('Default', 'Before'),
                          self::TYPE_AFTER       => Yii::t('Default', 'After'),
-                         self::TYPE_ON          => Yii::t('Default', 'On'),
+                         self::TYPE_ON          => Yii::t('Default', 'On{date}', array('{date}' => null)),
                          self::TYPE_BETWEEN     => Yii::t('Default', 'Between'),
                          self::TYPE_NEXT_7_DAYS => Yii::t('Default', 'Next 7 Days'),
                          self::TYPE_LAST_7_DAYS => Yii::t('Default', 'Last 7 Days'),

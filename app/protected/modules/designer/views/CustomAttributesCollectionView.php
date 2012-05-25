@@ -37,7 +37,7 @@
             Yii::app()->clientScript->registerScript('attributeTypeCreateLink', "
             $('#attributeTypeNameButton').click( function()
                 {
-                    if($('#attributeTypeName').val() == '')
+                    if ($('#attributeTypeName').val() == '')
                     {
                         alert('" . Yii::t('Default', 'You must first select a field type') . "');
                     }
@@ -47,13 +47,13 @@
                     }
                 }
             );");
-			$content = null;
-			$content .= '<div class="add-custom-field">';
-			$content .= '<h1>' . Yii::t('Default', 'Add a Custom Field') . '</h1>';
-			$content .= '<div>';
-			$content .= $dropDownContent . $linkContent;
-			$content .= '</div></div>';
-			return $content;
+            $content = null;
+            $content .= '<div class="add-custom-field">';
+            $content .= '<h1>' . Yii::t('Default', 'Create Field') . '</h1>';
+            $content .= '<div>';
+            $content .= $dropDownContent . $linkContent;
+            $content .= '</div></div>';
+            return $content;
         }
 
         protected static function getValueTypeDropDownArray()

@@ -50,7 +50,7 @@
         'Default Name'
             => 'Standardname',
         'Delimiter'
-            => 'Delimiter',
+            => 'Delimiter', // Same Word Translated
         'Do not map this field'
             => 'Diesem Bereich Nicht mappen',
         'Email was too long.'
@@ -72,13 +72,13 @@
         'First Row is Header Row'
             => 'Erste Reihe ist Kopfzeile',
         'Format'
-            => 'Format',
+            => 'Format', // Same Word Translated
         'Header'
             => 'Kopfzeile',
         'Id'
             => 'ID',
         'Import'
-            => 'Import',
+            => 'Import', // Same Word Translated
         'Import Cleanup Job'
             => 'Entfernen von Import-Tabellen',
         'Import complete.  Rows processed: {rowsProcessed}'
@@ -152,7 +152,7 @@
         'Processing'
             => 'Verarbeitung',
         'Qualifier'
-            => 'Qualifier',
+            => 'Qualifier', // Same Word Translated
         'Record saved correctly.'
             => 'Datensatz gespeichert mit Erfolg',
         'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}'

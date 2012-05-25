@@ -50,10 +50,10 @@
                     $output .= self::arraytoCsv($row);
                 }
             }
-
             if ($download)
             {
                 Yii::app()->request->sendFile($exportFilename, $output, self::$mimeType, false);
+                exit;
             }
             else
             {
@@ -69,9 +69,9 @@
          * @param string $enclosure
          * @param string $eol
          */
-        protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"', $eol = "\n")
+        protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"', $eol = "\n") // Not Coding Standard
         {
-            $fp = fopen('php://temp', 'r+');
+            $fp = fopen('php://temp', 'r+'); // Not Coding Standard
 
             if (fputcsv($fp, $row, $delimiter, $enclosure) === false)
             {
@@ -88,7 +88,7 @@
             return $csv;
         }
 
-        public static function csvToArray($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n")
+        public static function csvToArray($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") // Not Coding Standard
         {
             $result = array();
             $rows = explode($terminator, trim($csv));

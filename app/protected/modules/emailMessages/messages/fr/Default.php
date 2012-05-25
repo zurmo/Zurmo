@@ -82,7 +82,7 @@
         'Person'
             => 'Nom',
         'Port'
-            => 'Port',
+            => 'Port', // Same Word Translated
         'Process Outbound Email Job'
             => 'Démarrer le processus du courrier sortant',
         'Response from Server'

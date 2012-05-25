@@ -34,6 +34,7 @@
         protected $moduleId;
 
         protected $model;
+
         /**
          * Construct the view to display an input to select an account
          */

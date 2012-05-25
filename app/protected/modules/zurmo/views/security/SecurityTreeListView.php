@@ -110,14 +110,14 @@
                 $content .= $node['userCount'];
                 $content .= '</td>';
                 $content .= '<td>';
-                if(isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
+                if (isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
                 {
                     $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
                                             $node['route']);
                 }
                 $content .= '</td>';
                 $content .= '</tr>';
-                if(isset($node['children']))
+                if (isset($node['children']))
                 {
                     static::renderTreeListViewNode($content, $node['children'], $indent + 1);
                 }

@@ -99,7 +99,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create a New NotesModuleSingularLabel',
+            return Yii::t('Default', 'Create NotesModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

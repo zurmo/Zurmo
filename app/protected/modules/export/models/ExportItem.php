@@ -54,17 +54,20 @@
                     'isCompleted',
                     'exportFileType',
                     'exportFileName',
+                    'modelClassName',
                     'serializedData'
                 ),
                 'relations' => array(
                     'exportFileModel' => array(RedBeanModel::HAS_ONE,  'ExportFileModel', RedBeanModel::OWNED),
                 ),
                 'rules' => array(
-                    array('isCompleted',    'boolean'),
+                    array('isCompleted',      'boolean'),
                     array('exportFileType',   'required'),
                     array('exportFileType',   'type', 'type' => 'string'),
                     array('exportFileName',   'required'),
                     array('exportFileName',   'type', 'type' => 'string'),
+                    array('modelClassName',   'required'),
+                    array('modelClassName',   'type', 'type' => 'string'),
                     array('serializedData',   'required'),
                     array('serializedData',   'type', 'type' => 'string'),
                 ),

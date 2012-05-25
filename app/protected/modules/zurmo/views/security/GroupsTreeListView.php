@@ -53,7 +53,7 @@
             $content .= '<col style="width:25%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Group Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th><th></th></tr>';
+            $content .= '<tr><th>' . Yii::t('Default', 'Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th><th></th></tr>';
             static::renderTreeListViewNode($content, $data, 0);
             $content .= '</tbody>';
             $content .= '</table>';
@@ -62,7 +62,7 @@
 
         protected function resolveUserCountForItem(Item $item)
         {
-            if($item->name == Group::EVERYONE_GROUP_NAME)
+            if ($item->name == Group::EVERYONE_GROUP_NAME)
             {
                 return User::getCount();
             }

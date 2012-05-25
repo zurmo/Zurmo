@@ -36,13 +36,13 @@
         'Accounts'
             => 'Aziende',
         'AccountsModulePluralLabel'
-            => 'AccountsModulePluralLabel',
+            => 'AccountsModulePluralLabel', // Same Word Translated
         'AccountsModulePluralLabel For AccountsModuleSingularLabel'
             => 'AccountsModulePluralLabel per AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel'
-            => 'AccountsModuleSingularLabel',
+            => 'AccountsModuleSingularLabel', // Same Word Translated
         'AccountsModuleSingularLabel Id'
-            => 'AccountsModuleSingularLabel Id',
+            => 'AccountsModuleSingularLabel Id', // Same Word Translated
         'AccountsModuleSingularLabel Name'
             => 'Nome AccountsModuleSingularLabel',
         'AccountsModuleSingularLabel Search'
@@ -68,7 +68,7 @@
         'Parent AccountsModuleSingularLabel'
             => 'AccountsModuleSingularLabel Genetori',
         'Prospect'
-            => 'Prospect',
+            => 'Prospect', // Same Word Translated
         'Related AccountsModulePluralLabel'
             => 'AccountsModulePluralLabel principale',
         'Vendor'

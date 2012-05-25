@@ -182,13 +182,15 @@
                                             $databaseHostname,
                                             $databaseUsername,
                                             $databasePassword,
+                                            $databasePort,
                                             $minimumRequiredVersion,
                                             /* out */ &$actualVersion)
         {
             $actualVersion = DatabaseCompatibilityUtil::getDatabaseVersion($databaseType,
                                                                            $databaseHostname,
                                                                            $databaseUsername,
-                                                                           $databasePassword);
+                                                                           $databasePassword,
+                                                                           $databasePort);
             return self::checkVersion($minimumRequiredVersion, $actualVersion);
         }
 
@@ -371,6 +373,7 @@
                                                                 $databaseHostname,
                                                                 $databaseUsername,
                                                                 $databasePassword,
+                                                                $databasePort,
                                                                 $minimumRequireBytes,
                                                                 /* out */ & $actualBytes)
         {
@@ -378,7 +381,8 @@
             $actualBytes = DatabaseCompatibilityUtil::getDatabaseMaxAllowedPacketsSize($databaseType,
                                                                                        $databaseHostname,
                                                                                        $databaseUsername,
-                                                                                       $databasePassword);
+                                                                                       $databasePassword,
+                                                                                       $databasePort);
             return $minimumRequireBytes <= $actualBytes;
         }
 
@@ -389,6 +393,7 @@
                                                               $databaseHostname,
                                                               $databaseUsername,
                                                               $databasePassword,
+                                                              $databasePort,
                                                               $minimumRequiredMaxSpRecursionDepth,
                                                               /* out */ & $maxSpRecursionDepth)
         {
@@ -396,7 +401,8 @@
             $maxSpRecursionDepth = DatabaseCompatibilityUtil::getDatabaseMaxSpRecursionDepth($databaseType,
                                                                                              $databaseHostname,
                                                                                              $databaseUsername,
-                                                                                             $databasePassword);
+                                                                                             $databasePassword,
+                                                                                             $databasePort);
             return $minimumRequiredMaxSpRecursionDepth <= $maxSpRecursionDepth;
         }
 
@@ -407,6 +413,7 @@
                                                              $databaseHostname,
                                                              $databaseUsername,
                                                              $databasePassword,
+                                                             $databasePort,
                                                              $minimumRequiredThreadStackValue,
                                                              /* out */ & $threadStackValue)
         {
@@ -414,7 +421,8 @@
             $threadStackValue = DatabaseCompatibilityUtil::getDatabaseThreadStackValue($databaseType,
                                                                                        $databaseHostname,
                                                                                        $databaseUsername,
-                                                                                       $databasePassword);
+                                                                                       $databasePassword,
+                                                                                       $databasePort);
             return $minimumRequiredThreadStackValue <= $threadStackValue;
         }
 
@@ -425,13 +433,15 @@
                                                                       $databaseHostname,
                                                                       $databaseUsername,
                                                                       $databasePassword,
+                                                                      $databasePort,
                                                                       /* out */ & $optimizerSearchDepth)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             $optimizerSearchDepth = DatabaseCompatibilityUtil::getDatabaseOptimizerSearchDepthValue($databaseType,
                                                                                                     $databaseHostname,
                                                                                                     $databaseUsername,
-                                                                                                    $databasePassword);
+                                                                                                    $databasePassword,
+                                                                                                    $databasePort);
             return $optimizerSearchDepth == 0;
         }
 
@@ -443,6 +453,7 @@
                                                              $databaseName,
                                                              $databaseUsername,
                                                              $databasePassword,
+                                                             $databasePort,
                                                              $notAllowedDatabaseCollations,
                                                              /* out */ & $databaseDefaultCollation)
         {
@@ -452,7 +463,8 @@
                                                                                                $databaseHostname,
                                                                                                $databaseName,
                                                                                                $databaseUsername,
-                                                                                               $databasePassword);
+                                                                                               $databasePassword,
+                                                                                               $databasePort);
             return !in_array($databaseDefaultCollation, $notAllowedDatabaseCollations);
         }
 
@@ -463,13 +475,15 @@
                                                         $databaseHostname,
                                                         $databaseUsername,
                                                         $databasePassword,
+                                                        $databasePort,
                                                         /* out */ & $logBinValue)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             $logBinValue = DatabaseCompatibilityUtil::getDatabaseLogBinValue($databaseType,
                                                                              $databaseHostname,
                                                                              $databaseUsername,
-                                                                             $databasePassword);
+                                                                             $databasePassword,
+                                                                             $databasePort);
             if (strtolower($logBinValue) == 'on' || $logBinValue == '1')
             {
                 return false;
@@ -488,6 +502,7 @@
                                                                              $databaseHostname,
                                                                              $databaseUsername,
                                                                              $databasePassword,
+                                                                             $databasePort,
                                                                              /* out */ & $logBinTrustFunctionCreatorsValue)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
@@ -495,7 +510,8 @@
                                                                             $databaseType,
                                                                             $databaseHostname,
                                                                             $databaseUsername,
-                                                                            $databasePassword);
+                                                                            $databasePassword,
+                                                                            $databasePort);
             if (strtolower($logBinTrustFunctionCreatorsValue) == 'on' || $logBinTrustFunctionCreatorsValue == '1')
             {
                 return true;
@@ -509,14 +525,14 @@
         /**
          * Connects to the database.
          */
-        public static function connectToDatabase($databaseType, $host, $databaseName, $username, $password)
+        public static function connectToDatabase($databaseType, $host, $databaseName, $username, $password, $port)
         {
             assert('in_array($databaseType, self::getSupportedDatabaseTypes())');
             assert('is_string($host)         && $host         != ""');
             assert('is_string($databaseName) && $databaseName != ""');
             assert('is_string($username)     && $username     != ""');
             assert('is_string($password)');
-            $connectionString = "$databaseType:host=$host;dbname=$databaseName"; // Not Coding Standard
+            $connectionString = "$databaseType:host=$host;port=$port;dbname=$databaseName"; // Not Coding Standard
             self::connectToDatabaseWithConnectionString($connectionString, $username, $password);
         }
 
@@ -567,11 +583,14 @@
         }
 
         /**
-         * Auto builds the database.
+         * Auto builds the database.  Must manually set AuditEvent first to avoid issues building the AuditEvent
+         * table. This is because AuditEvent is specially optimized during this build process to reduce how
+         * long this takes to do.
          */
         public static function autoBuildDatabase(& $messageLogger)
         {
-            $rootModels = array();
+            $rootModels   = array();
+            $rootModels[] = 'AuditEvent';
             foreach (Module::getModuleObjects() as $module)
             {
                 $moduleAndDependenciesRootModelNames = $module->getRootModelNamesIncludingDependencies();
@@ -600,7 +619,7 @@
          * Writes configuration to debug.php and phpInstance.php.
          */
         public static function writeConfiguration($instanceRoot,
-                                                  $databaseType, $databaseHost, $databaseName, $username, $password,
+                                                  $databaseType, $databaseHost, $databaseName, $username, $password, $port,
                                                   $memcacheHost = null, $memcachePort = null, $minifyScripts = true,
                                                   $language,
                                                   $perInstanceFilename = 'perInstance.php', $debugFilename = 'debug.php',
@@ -612,6 +631,7 @@
             assert('is_string($databaseName) && $databaseName != ""');
             assert('is_string($username)     && $username     != ""');
             assert('is_string($password)');
+            assert('is_string($port) || is_int($port)');
             assert('is_string($memcacheHost) || $memcacheHost == null');
             assert('(is_int   ($memcachePort) && $memcachePort >= 1024) || $memcachePort == null');
             assert('is_string($language)     && $language     != ""');
@@ -655,8 +675,8 @@
             $contents = preg_replace('/\$language\s*=\s*\'[a-z]+\';/', // Not Coding Standard
                                      "\$language         = '$language';",
                                      $contents);
-            $contents = preg_replace('/\$connectionString\s*=\s*\'[a-z]+:host=[^;]+;dbname=[^;]+;/', // Not Coding Standard
-                                   "\$connectionString = '$databaseType:host=$databaseHost;dbname=$databaseName';", // Not Coding Standard
+            $contents = preg_replace('/\$connectionString\s*=\s*\'[a-z]+:host=[^;]+;port=[^;]+;dbname=[^;]+;/', // Not Coding Standard
+                                   "\$connectionString = '$databaseType:host=$databaseHost;port=$port;dbname=$databaseName';", // Not Coding Standard
                                      $contents);
             $contents = preg_replace('/\$username\s*=\s*\'[^\']+\';/', // Not Coding Standard
                                      "\$username         = '$username';",
@@ -801,7 +821,8 @@
                                             $form->databaseHostname,
                                             $form->databaseName,
                                             $form->databaseUsername,
-                                            $form->databasePassword);
+                                            $form->databasePassword,
+                                            $form->databasePort);
             ForgetAllCacheUtil::forgetAllCaches();
             $messageStreamer->add(Yii::t('Default', 'Dropping existing tables.'));
             InstallUtil::dropAllTables();
@@ -825,6 +846,7 @@
                                             $form->databaseName,
                                             $form->databaseUsername,
                                             $form->databasePassword,
+                                            $form->databasePort,
                                             $form->memcacheHostname,
                                             (int)$form->memcachePortNumber,
                                             true,
@@ -880,17 +902,18 @@
             $form->databaseName      = $args[1];
             $form->databaseUsername  = $args[2];
             $form->databasePassword  = $args[3];
-            $form->superUserPassword = $args[4];
+            $form->databasePort      = $args[4];
+            $form->superUserPassword = $args[5];
 
             InstallUtil::runInstallation($form, $messageStreamer);
-            if (isset($args[5]))
+            if (isset($args[6]))
             {
                 $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
                 $messageLogger = new MessageLogger($messageStreamer);
 
-                if (isset($args[6]))
+                if (isset($args[7]))
                 {
-                    DemoDataUtil::load($messageLogger, intval($args[6]));
+                    DemoDataUtil::load($messageLogger, intval($args[7]));
                 }
                 else
                 {

@@ -43,12 +43,12 @@
                 $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleFirstNames']);
                 $title = RandomDataUtil::getRandomValueFromArray($personRandomData['femaleTitles']);
             }
-            elseif($model->firstName == null)
+            elseif ($model->firstName == null)
             {
                 $model->firstName = RandomDataUtil::getRandomValueFromArray($personRandomData['maleFirstNames']);
                 $title = RandomDataUtil::getRandomValueFromArray($personRandomData['maleTitles']);
             }
-            if($model->lastName == null)
+            if ($model->lastName == null)
             {
                 $model->lastName   = $lastName;
             }

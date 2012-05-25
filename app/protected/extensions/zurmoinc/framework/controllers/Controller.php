@@ -117,8 +117,7 @@
                 $listModel,
                 $moduleClassName,
                 $dataProvider,
-                GetUtil::resolveSelectedIdsFromGet(),
-                GetUtil::resolveSelectAllFromGet()
+                GetUtil::resolveSelectedIdsFromGet()
             );
         }
 
@@ -213,7 +212,7 @@
             return $view;
         }
 
-        protected function getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider)
+        protected function getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider, $countEmptyStringAsElement = true)
         {
             if ($_GET['selectAll'])
             {
@@ -221,7 +220,14 @@
             }
             else
             {
-                return count(explode(",", $_GET['selectedIds'])); // Not Coding Standard
+                if ($countEmptyStringAsElement)
+                {
+                    return count(explode(",", trim($_GET['selectedIds'], ', '))); // Not Coding Standard
+                }
+                else
+                {
+                    return count(array_filter(explode(",", trim($_GET['selectedIds'], " ,")))); // Not Coding Standard
+                }
             }
         }
 

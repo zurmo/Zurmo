@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Jobs Manager', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'Job Manager', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

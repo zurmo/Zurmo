@@ -33,7 +33,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div[2]/div/table/tbody/tr[2]/td/a</td>
+  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
   <td></td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Accounts: Custom Fields</td>
+  <td>Create Field</td>
   <td></td>
 </tr>
 <tr>
@@ -57,13 +57,13 @@
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Create Field</td>
-  <td></td>
+  <td>select</td>
+  <td>attributeTypeName</td>
+  <td>label=URL</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=URL</td>
+  <td>attributeTypeNameButton</td>
   <td></td>
 </tr>
 <tr>
@@ -123,52 +123,52 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[1]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
   <td>URL</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[2]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
   <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[3]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
   <td>functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>http://functionaltestsrock.com</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[5]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td</td>
   <td>75</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[7]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td/label/input</td>
   <td>on</td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeEditView']/div[1]/div/h1</td>
+  <td>//div[@id='UrlAttributeEditView']/div/h1</td>
   <td>exact:Edit Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
@@ -213,22 +213,22 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='ActionBarAndAttributeDetailsView']/div[1]/div/h1</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/h1</td>
   <td>exact:Field: functesturlfield_${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[4]/td</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
   <td>http://functionalnewtestsrock.com</td>
 </tr>
 <tr>
   <td>assertNotEditable</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//div[@id='UrlAttributeDetailsView']/table/tbody/tr[6]/td/input[2]</td>
+  <td>//div[@id='UrlAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
   <td>off</td>
 </tr>
 </tbody></table>

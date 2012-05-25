@@ -41,8 +41,9 @@
             $errorExplanation2 = Yii::t('Default', 'here');
             $errorExplanation3 = Yii::t('Default', 'to continue to the home page. If the error persists please contact your administrator.');
             $error = Yii::app()->format->text($this->message);
+            $homeUrl = Yii::app()->request->hostInfo . "/" . ltrim(Yii::app()->request->scriptUrl, '/');
             $content = '<p>'                                                                         .
-                       "$errorExplanation1 <a href=\"/app\">$errorExplanation2</a> $errorExplanation3" .
+                       "$errorExplanation1 <a href=\"{$homeUrl}\">$errorExplanation2</a> $errorExplanation3" .
                        '</p>'                                                                        .
                        "<div>$error</div>";
             return $content;

@@ -81,16 +81,16 @@
         {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
         }
-
 
         /**
          * Renders the bottom panel of the layout. Includes the search button
-         * and the advanced search link that opens/closes the second panel
+         * and the advanced search link that opens/closes the second panel. Using click.clear namespace to
+         * avoid collision with the binding from clearform.
          * @return A string containing the element's content.
          */
         protected function renderFormBottomPanel()
@@ -98,34 +98,40 @@
             $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
             $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
             $cs = Yii::app()->getClientScript();
+            // Begin Not Coding Standard
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/FormUtils.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    ) . '/FormUtils.js',
                 CClientScript::POS_END
             );
             Yii::app()->clientScript->registerScript('search', "
+                $('#clear-search-link" . $this->gridIdSuffix . "').removeAttr('clearForm');
                 $('#clear-search-link" . $this->gridIdSuffix . "').clearform(
                     {
                         form: '#" . $this->getSearchFormId() . "'
                     }
                 );
-                $('#more-search-link" . $this->gridIdSuffix . "').click( function()
-                    {
-                        $('.search-view-1').toggle();
-                        return false;
-                    }
-                );
-                $('#cancel-advanced-search').click(function(){
-                    $('.search-view-1').hide();
-                });
-                $('#clear-search-link" . $this->gridIdSuffix . "').click( function()
+                $('#clear-search-link" . $this->gridIdSuffix . "').unbind('click.clear');
+                $('#clear-search-link" . $this->gridIdSuffix . "').bind('click.clear', function()
                     {
                         $(this).closest('form').submit();
                         return false;
                     }
                 );
-                $('#search-advanced-search').click( function()
+                $('#more-search-link" . $this->gridIdSuffix . "').unbind('click');
+                $('#more-search-link" . $this->gridIdSuffix . "').bind('click',  function(event)
+                    {
+                        $('.search-view-1').toggle();
+                        return false;
+                    }
+                );
+                $('#cancel-advanced-search').unbind('click');
+                $('#cancel-advanced-search').bind('click', function(event){
+                    $('.search-view-1').hide();
+                });
+                $('#search-advanced-search').unbind('click');
+                $('#search-advanced-search').bind('click', function(event)
                     {
                         $('.search-view-0').children(\"input[type='text']\").val('');
                         $('.search-view-1').hide();
@@ -133,21 +139,22 @@
                         return false;
                     }
                 );
-                $('#" . $this->getSearchFormId() . "').submit(function()
+                $('#" . $this->getSearchFormId() . "').unbind('submit');
+                $('#" . $this->getSearchFormId() . "').bind('submit', function(event)
                     {
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
-                        $('#" . $this->gridId . $this->gridIdSuffix . "-selectAll').val(null);
                         $.fn.yiiGridView.update('" . $this->gridId . $this->gridIdSuffix . "',
                         {
                             data: $(this).serialize() + '&" . $this->listModelClassName . "_page=&" . // Not Coding Standard
                             $this->listModelClassName . "_sort=" .
-                            $this->getExtraQueryPartForSearchFormScriptSubmitFunction() ."' " . // Not Coding Standard
-                        "}
+                            $this->getExtraQueryPartForSearchFormScriptSubmitFunction() ."' // Not Coding Standard
+                         }
                         );
                         return false;
                     }
                 );
             " . $this->getExtraRenderFormBottomPanelScriptPart());
+            // End Not Coding Standard
             $startingDivStyle = null;
             if ($this->hideAllSearchPanelsToStart)
             {
@@ -194,7 +201,7 @@
         {
             $metadata       = self::getMetadata();
             $maxCellsPerRow = $this->getMaxCellsPerRow();
-            $content        = '';//'<table>';
+            $content        = null;
             $content       .= TableUtil::getColGroupContent($this->getColumnCount($metadata['global']));
             assert('count($metadata["global"]["panels"]) == 2');
             foreach ($metadata['global']['panels'] as $key => $panel)
@@ -226,7 +233,7 @@
                     }
                     //$content .= '</tr>';
                 }
-                if($key == 1)
+                if ($key == 1)
                 {
                     $content .= '<div class="view-toolbar-container clearfix">';
                     $content .= '<div class="form-toolbar">';

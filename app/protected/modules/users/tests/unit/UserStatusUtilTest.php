@@ -27,7 +27,7 @@
     /**
      * Test class for testing UserStatus and UserStatusUtil classes
      */
-    class UserStatusUtilTest extends BaseTest
+    class UserStatusUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

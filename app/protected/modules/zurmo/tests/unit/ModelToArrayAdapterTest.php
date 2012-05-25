@@ -27,7 +27,7 @@
     /**
     * Test ModelToArrayAdapter functions.
     */
-    class ModelToArrayAdapterTest extends BaseTest
+    class ModelToArrayAdapterTest extends ZurmoBaseTest
     {
         public $freeze = false;
 

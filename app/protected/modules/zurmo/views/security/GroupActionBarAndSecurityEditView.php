@@ -44,7 +44,7 @@
             assert('is_string($activeActionElementType)');
             parent::__construct(2, 1);
             $this->setView(new ActionBarForGroupEditAndDetailsView ($controllerId, $moduleId, $model, $activeActionElementType), 0, 0);
-            $this->setView(new $editViewClassName('Edit', $controllerId, $moduleId, $form, $model->id, $metadata), 1, 0);
+            $this->setView(new $editViewClassName('Edit', $controllerId, $moduleId, $form, $model->id, $metadata, strval($model)), 1, 0);
         }
     }
 ?>

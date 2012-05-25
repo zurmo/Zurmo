@@ -72,7 +72,7 @@
         'First Row is Header Row'
             => 'La primera fila es la fila de cabecera',
         'Format'
-            => 'Format',
+            => 'Format', // Same Word Translated
         'Header'
             => 'Cabecera',
         'Id'

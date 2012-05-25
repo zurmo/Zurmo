@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class LeadTest extends BaseTest
+    class LeadTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -277,6 +277,25 @@
                 }
                 $isStateALead = LeadsUtil::isStateALead($contactState);
                 $this->assertEquals($isStateALead, $isStateALeadCorrect);
+            }
+        }
+
+        public function testIsStateALeadByStateName()
+        {
+            $allContactStates = ContactState::GetAll();
+            $this->assertGreaterThan(1, count($allContactStates));
+            foreach ($allContactStates as $contactState)
+            {
+                if ($contactState->id < ContactsUtil::getStartingStateId())
+                {
+                    $isStateALeadByStateNameCorrect = true;
+                }
+                else
+                {
+                    $isStateALeadByStateNameCorrect = false;
+                }
+                $isStateALead = LeadsUtil::isStateALeadByStateName($contactState->name);
+                $this->assertEquals($isStateALead, $isStateALeadByStateNameCorrect);
             }
         }
 

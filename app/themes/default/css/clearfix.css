@@ -1,7 +1,4 @@
 /*List of object we can't get to through php to add class="clearfix"*/
-
-
-
 #search-form:after{
 	content: " ";
 	display: block;
@@ -10,30 +7,11 @@
 	visibility: hidden;
 	line-height: 0;
 }
-
-
-
-
-
-
 #search-form{
 	height:1%;
 	zoom: 1;
 }
-
-
-
-
-
-
-
-
-
-
 *:first-child + html #search-form{
 	min-height: 1px;
 	zoom: 1;
 }
-
-
-

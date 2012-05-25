@@ -80,7 +80,7 @@
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderAfterFormLayout($form);
             $actionElementContent = $this->renderActionElementBar(true);
-            if($actionElementContent != null)
+            if ($actionElementContent != null)
             {
                 $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
                 $content .= $actionElementContent;
@@ -175,7 +175,6 @@
                     $enableInputsScript   .= "$('#" . $id . "').prev().removeClass('disabled-select-element'); \n";
                     $disableInputsScript  .= "$('#" . $id . "').attr('disabled', 'disabled'); \n";
                     $disableInputsScript  .= "$('#" . $id . "').prev().addClass('disabled-select-element'); \n";
-
                 }
                 elseif ($elementInformation['type'] == 'TagCloud')
                 {
@@ -218,7 +217,7 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
 );
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
-            return "<th><label class=\"hasCheckBox\">" . CHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</label></th>  \n";
+            return "<th>" . ZurmoHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
         }
 
         public static function getDesignerRulesType()

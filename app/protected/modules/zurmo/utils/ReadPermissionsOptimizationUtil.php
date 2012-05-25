@@ -26,98 +26,6 @@
 
     abstract class ReadPermissionsOptimizationUtil
     {
-        public static function getAll($modelClassName, $orderBy = null, $sortDescending = false, User $user = null)
-        {
-            assert('is_string($modelClassName) && $modelClassName != ""');
-            assert('$orderBy        === null || is_string ($orderBy) && $orderBy != ""');
-            assert('$sortDescending === null || is_bool   ($sortDescending)');
-            return self::getSubset($modelClassName, null, null, $orderBy, $sortDescending, $user);
-        }
-
-        public static function getSubset($modelClassName, $offset = null, $count = null, $orderBy = null, $sortDescending = null, User $user = null)
-        {
-            assert('is_string($modelClassName) && $modelClassName != ""');
-            assert('$offset         === null || is_integer($offset)  && $offset  >= 0');
-            assert('$count          === null || is_integer($count)   && $count   >= 1');
-            assert('$orderBy        === null || is_string ($orderBy) && $orderBy != ""');
-            assert('$sortDescending === null || is_bool   ($sortDescending)');
-            $sql = self::makeBasicSql($modelClassName, $user);
-            if ($orderBy !== null)
-            {
-                $sql .= " order by $quote$orderBy$quote";
-                if ($sortDescending)
-                {
-                    $sql .= ' desc';
-                }
-            }
-            if ($count !== null)
-            {
-                $sql .= " limit $count";
-            }
-            if ($offset !== null)
-            {
-                $sql .= " offset $offset";
-            }
-            $ids   = R::getCol($sql);
-            $beans = R::batch(self::getMainTableName($modelClassName), $ids);
-            return RedBeanModel::makeModels($beans, $modelClassName);
-        }
-
-        public static function getCount($modelClassName, User $user = null)
-        {
-            assert('is_string($modelClassName) && $modelClassName != ""');
-            $sql = self::makeBasicSql($modelClassName, $user, true);
-            return R::getCell($sql);
-        }
-
-        protected static function makeBasicSql($modelClassName, User $user = null, $selectCount = false)
-        {
-            assert('is_string($modelClassName) && $modelClassName != ""');
-            assert('is_bool($selectCount)');
-            if ($user === null)
-            {
-                $user = Yii::app()->user->userModel;
-                if (!$user instanceof User)
-                {
-                    throw new NoCurrentUserSecurityException();
-                }
-            }
-            $userId = $user->id;
-            list($roleId, $groupIds) = self::getUserRoleIdAndGroupIds($user);
-            $mungeIds = array("U$userId", "R$roleId");
-            foreach ($groupIds as $groupId)
-            {
-                $mungeIds[] = "G$groupId";
-            }
-            $mainTableName  = self::getMainTableName ($modelClassName);
-            $mungeTableName = self::getMungeTableName($modelClassName);
-            $sql =  'select ';
-            if (!$selectCount)
-            {
-                $sql .= "distinct $mainTableName.id ";
-            }
-            else
-            {
-                $sql .= "count(distinct $mainTableName.id) ";
-            }
-            $sql .= "from   $mainTableName, ownedsecurableitem ";
-            if (count($mungeIds) > 0)
-            {
-                $sql .= "left join {$mungeTableName} ON ownedsecurableitem.securableitem_id = {$mungeTableName}.securableitem_id ";
-                $sql .= "and munge_id in ('" . join("', '", $mungeIds) . "') ";
-            }
-            $sql .= "where $mainTableName.ownedsecurableitem_id = ownedsecurableitem.id and ";
-            if (count($mungeIds) > 0)
-            {
-                $sql .= "(ownedsecurableitem.owner__user_id   = $userId OR munge_id IS NOT NULL) ";  // Not Coding Standard
-            }
-            else
-            {
-                $sql .= "ownedsecurableitem.owner__user_id ";
-            }
-            return $sql;
-        }
-
         // $forcePhp is for use in tests only. So that the php version and
         // the optimized version can be run in succession to compare them.
         public static function rebuild($forcePhp = false)
@@ -851,6 +759,12 @@
             foreach ($groupIds as $groupId)
             {
                 $mungeIds[] = "G$groupId";
+            }
+            //Add everyone group
+            $everyoneGroupId = Group::getByName(Group::EVERYONE_GROUP_NAME)->id;
+            if (!in_array("G" . $everyoneGroupId, $mungeIds) && $everyoneGroupId > 0)
+            {
+                $mungeIds[] = "G" . $everyoneGroupId;
             }
             return $mungeIds;
         }

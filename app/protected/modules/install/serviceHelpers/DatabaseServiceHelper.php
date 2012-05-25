@@ -50,6 +50,7 @@
                                             $this->form->databaseHostname,
                                             $this->form->databaseUsername,
                                             $this->form->databasePassword,
+                                            $this->form->databasePort,
                                             $this->minimumVersion,
                                             $actualVersion);
         }

@@ -35,16 +35,18 @@
             => 'Ajouter une NotesModuleSingularLabel sur',
         'Create NotesModulePluralLabel'
             => 'Créer NotesModulePluralLabel',
+        'Create NotesModuleSingularLabel'
+            => 'Créer NotesModuleSingularLabel',
         'Delete NotesModulePluralLabel'
             => 'Supprimer NotesModulePluralLabel',
         'Note'
-            => 'Note',
+            => 'Note', // Same Word Translated
         'Notes'
-            => 'Notes',
+            => 'Notes', // Same Word Translated
         'NotesModulePluralLabel'
-            => 'NotesModulePluralLabel',
+            => 'NotesModulePluralLabel', // Same Word Translated
         'NotesModuleSingularLabel'
-            => 'NotesModuleSingularLabel',
+            => 'NotesModuleSingularLabel', // Same Word Translated
         'Occurred On'
             => 'Date',
         'The NotesModulePluralLabel form cannot be displayed.'

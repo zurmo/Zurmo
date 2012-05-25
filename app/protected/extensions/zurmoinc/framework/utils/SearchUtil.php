@@ -45,7 +45,7 @@
             if (!empty($_GET[$getArrayName]))
             {
                 $searchAttributes = SearchUtil::getSearchAttributesFromSearchArray($_GET[$getArrayName]);
-                if(isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) ||
+                if (isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) ||
                     key_exists(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME, $searchAttributes))
                 {
                     unset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]);
@@ -69,11 +69,11 @@
             if (!empty($_GET[$getArrayName]) && isset($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
             {
                 assert('$searchModel instanceof SearchForm');
-                if(!is_array($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+                if (!is_array($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
                 {
                     $sanitizedAnyMixedAttributesScope = null;
                 }
-                elseif(count($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) == 1 &&
+                elseif (count($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) == 1 &&
                        $_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME][0] == 'All')
                 {
                     $sanitizedAnyMixedAttributesScope = null;

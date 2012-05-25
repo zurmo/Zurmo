@@ -36,7 +36,7 @@
         protected function checkService()
         {
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkMemcache',
-                                                                                Yii::t('Default', 'Memcache'));
+                                                                                Yii::t('Default', 'Memcache extension'));
         }
 
         /**
@@ -67,13 +67,13 @@
                     {
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .
-                        Yii::t('Default', 'extension is installed, but the version is unknown.');
+                        Yii::t('Default', 'is installed, but the version is unknown.');
                         return true;
                     }
                 }
                 else
                 {
-                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'extension is not installed.');
+                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed.');
                 }
                 if ($this->message != null)
                 {

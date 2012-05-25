@@ -68,6 +68,15 @@
             return array('User');
         }
 
+        public static function getUntranslatedRightsLabels()
+        {
+            $labels                                = array();
+            $labels[self::RIGHT_LOGIN_VIA_WEB]     = 'Sign in Via Web';
+            $labels[self::RIGHT_LOGIN_VIA_MOBILE]  = 'Sign in Via Mobile';
+            $labels[self::RIGHT_LOGIN_VIA_WEB_API] = 'Sign in Via Web API';
+            return array_merge(parent::getUntranslatedRightsLabels(), $labels);
+        }
+
         public static function getStrongerPolicy($policyName, array $values)
         {
             assert('is_string($policyName) && $policyName != ""');
@@ -153,10 +162,12 @@
                         array(
                             'label' => 'My Profile',
                             'url' => array('/users/default/profile'),
+                            'order' => 1,
                         ),
                         array(
-                            'label' => 'Sign Out',
+                            'label' => 'Sign out',
                             'url' => array('/zurmo/default/logout'),
+                            'order' => 3,
                         ),
                 ),
                 'designerMenuItems' => array(

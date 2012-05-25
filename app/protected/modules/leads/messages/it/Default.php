@@ -52,11 +52,11 @@
         'Do not show AccountsModuleSingularLabel'
             => 'Non mostra AccountsModuleSingularLabel',
         'Lead'
-            => 'Lead',
+            => 'Lead', // Same Word Translated
         'Leads'
-            => 'Leads',
+            => 'Leads', // Same Word Translated
         'LeadsModulePluralLabel'
-            => 'LeadsModulePluralLabel',
+            => 'LeadsModulePluralLabel', // Same Word Translated
         'LeadsModulePluralLabel and ContactsModulePluralLabel are the same records, ' .
         'just in a different status. To create a LeadsModuleSingularLowerCaseLabel ' .
         'field, create a ContactsModuleSingularLowerCaseLabel field, and then it ' .
@@ -66,7 +66,7 @@
                'crea il campo nel module ContactsModuleSingularLowerCaseLabel, dopo il campo' .
                'apparirà nel layout LeadsModulePluralLowerCaseLabel.',
         'LeadsModuleSingularLabel'
-            => 'LeadsModuleSingularLabel',
+            => 'LeadsModuleSingularLabel', // Same Word Translated
         'LeadsModuleSingularLabel Conversion'
             => 'Conversione di LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel Search'

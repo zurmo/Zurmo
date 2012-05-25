@@ -60,7 +60,7 @@
         public function attributeLabels()
         {
             return array(
-                'applicationName'			=> Yii::t('Default', 'Application Name'),
+                'applicationName'           => Yii::t('Default', 'Application Name'),
                 'timeZone'                  => Yii::t('Default', 'Time zone'),
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),

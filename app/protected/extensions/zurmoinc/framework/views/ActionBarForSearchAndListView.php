@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -98,6 +98,10 @@
                                   'htmlOptions' => array('class' => 'icon-edit'),
                                   'listViewGridId' => 'eval:$this->listViewGridId',
                                   'pageVarName' => 'eval:$this->pageVarName'),
+                            array('type'  => 'ExportLink',
+                                  'htmlOptions' => array('class' => 'icon-export'),
+                                  'listViewGridId' => 'eval:$this->listViewGridId',
+                                  'pageVarName' => 'eval:$this->pageVarName'),
                         ),
                     ),
                 ),
@@ -117,7 +121,7 @@
             {
                 return false;
             }
-            if($elementInformation['type'] == 'MassEditLink' && !$this->listViewRowsAreSelectable)
+            if ($elementInformation['type'] == 'MassEditLink' && !$this->listViewRowsAreSelectable)
             {
                 return false;
             }

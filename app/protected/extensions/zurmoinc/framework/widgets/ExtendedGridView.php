@@ -32,11 +32,7 @@
      */
     class ExtendedGridView extends CGridView
     {
-        protected $selectAllOptionsCssClass = 'select-all-options';
-
         public $template = "{selectRowsSelectors}{summary}\n{items}\n{pager}";
-
-        public $selectAll;
 
         /**
          * Override to have proper XHTML compliant space value
@@ -48,43 +44,14 @@
          */
         public $blankDisplay = '&#160;';
 
-        /**
-         * Override to display select all/none optional
-         * dropdown.
-         */
-        public function renderSelectRowsSelectors()
+        //extendedGridView
+
+        public function init()
         {
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/ListViewUtils.js'
-                    ),
-                CClientScript::POS_END
-            );
-            if (($count = $this->dataProvider->getItemCount()) <= 0)
-            {
-                return;
-            }
-            if ($this->selectableRows > 1)
-            {
-                $allLink = CHtml::link(Yii::t('Default', 'All'), '#', array('id'   => $this->id . '-select-all-rows-link'));
-                $noneLink = CHtml::link(Yii::t('Default', 'None'), '#', array('id' => $this->id . '-select-none-rows-link'));
-                Yii::app()->clientScript->registerScript($this->id . '-listViewSelectAllOptions', "
-                    $('#" . $this->id . "-select-all-rows-link').live('click', function()
-                        {
-                            selectAllResults('" . $this->id . "', '" . $this->id . "-rowSelector');
-                            return false;
-                        }
-                    );
-                    $('#" . $this->id . "-select-none-rows-link').live('click', function()
-                        {
-                            selectNoneResults('" . $this->id . "', '" . $this->id . "-rowSelector');
-                            return false;
-                        }
-                    );
-                ");
-                echo '<div class="' . $this->selectAllOptionsCssClass . '">' . Yii::t('Default', 'Select') . ':&#160;' . $allLink
-                . '&#160;|&#160;' . $noneLink . '</div>' . "\n";
-            }
+            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(
+                                        Yii::getPathOfAlias('application.extensions.zurmoinc.framework.widgets.assets'))
+                                        . '/extendedGridView';
+            parent::init();
         }
 
         /**
@@ -92,16 +59,16 @@
          */
         public function renderTopPager()
         {
-            if(!$this->enablePagination)
+            if (!$this->enablePagination)
             {
                 return;
             }
             $pager = array();
             $class = 'TopLinkPager';
-            if(is_array($this->pager))
+            if (is_array($this->pager))
             {
                 $pager = $this->pager;
-                if(isset($pager['class']))
+                if (isset($pager['class']))
                 {
                     throw new NotSupportedException();
                 }
@@ -111,10 +78,10 @@
                 throw new NotSupportedException();
             }
             $pager['pages'] = $this->dataProvider->getPagination();
-            if($pager['pages']->getPageCount() > 1)
+            if ($pager['pages']->getPageCount() > 1)
             {
-                echo '<div class="'.$this->pagerCssClass.'">';
-                $this->widget($class,$pager);
+                echo '<div class="' . $this->pagerCssClass . '">';
+                $this->widget($class, $pager);
                 echo '</div>';
             }
         }
@@ -124,16 +91,16 @@
          */
         public function renderBottomPager()
         {
-            if(!$this->enablePagination)
+            if (!$this->enablePagination)
             {
                 return;
             }
             $pager = array();
             $class = 'BottomLinkPager';
-            if(is_array($this->pager))
+            if (is_array($this->pager))
             {
                 $pager = $this->pager;
-                if(isset($pager['class']))
+                if (isset($pager['class']))
                 {
                     throw new NotSupportedException();
                 }
@@ -143,10 +110,10 @@
                 throw new NotSupportedException();
             }
             $pager['pages'] = $this->dataProvider->getPagination();
-            if($pager['pages']->getPageCount() > 1)
+            if ($pager['pages']->getPageCount() > 1)
             {
-                echo '<div class="'.$this->pagerCssClass.'">';
-                $this->widget($class,$pager);
+                echo '<div class="' . $this->pagerCssClass . '">';
+                $this->widget($class, $pager);
                 echo '</div>';
             }
         }
@@ -158,28 +125,28 @@
          */
         public function renderPager()
         {
-            if(!$this->enablePagination)
+            if (!$this->enablePagination)
             {
                 return;
             }
             $pager = array();
             $class = 'CLinkPager';
-            if(is_string($this->pager))
+            if (is_string($this->pager))
             {
-                $class=$this->pager;
+                $class = $this->pager;
             }
-            elseif(is_array($this->pager))
+            elseif (is_array($this->pager))
             {
                 $pager = $this->pager;
-                if(isset($pager['class']))
+                if (isset($pager['class']))
                 {
-                    $class=$pager['class'];
+                    $class = $pager['class'];
                     unset($pager['class']);
                 }
             }
-            $pager['pages']=$this->dataProvider->getPagination();
-            echo '<div class="'.$this->pagerCssClass.'">';
-            $this->widget($class,$pager);
+            $pager['pages'] = $this->dataProvider->getPagination();
+            echo '<div class="' . $this->pagerCssClass . '">';
+            $this->widget($class, $pager);
             echo '</div>';
         }
     }

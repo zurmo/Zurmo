@@ -94,14 +94,14 @@
                     {
                         $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
                             $this->model->getAttributeLabel($attributeName),
-                            Yii::t('Default', 'name'));
+                            Yii::t('Default', 'Name'));
                         $data[$exportAttributeName] = strval($this->model->{$attributeName});
                     }
                     else
                     {
                         $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
                             $this->model->getAttributeLabel($attributeName),
-                            Yii::t('Default', 'name'));
+                            Yii::t('Default', 'Name'));
                         $data[$this->model->getAttributeLabel($attributeName)] = null;
                     }
                 }

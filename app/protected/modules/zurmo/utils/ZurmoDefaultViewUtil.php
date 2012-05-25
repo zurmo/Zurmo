@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -39,8 +39,7 @@
          */
         public static function makeStandardViewForCurrentUser(CController $controller, View $containedView)
         {
-
-            if(static::$showRecentlyViewed)
+            if (static::$showRecentlyViewed)
             {
                 $verticalColumns = 2;
             }
@@ -52,7 +51,7 @@
 
             $aVerticalGridView->setCssClasses( array('AppNavigation', 'clearfix')); //navigation left column
             $aVerticalGridView->setView(static::makeMenuView($controller), 0, 0);
-            if(static::$showRecentlyViewed)
+            if (static::$showRecentlyViewed)
             {
                 $aVerticalGridView->setView(static::makeRecentlyViewedView(), 1, 0);
             }
@@ -118,7 +117,7 @@
 
         protected static function getAndResolveUserMenuItemsForHeader()
         {
-            $userMenuItems             = MenuUtil::getAccessibleUserHeaderMenuForCurrentUser();
+            $userMenuItems             = MenuUtil::getAccessibleOrderedUserHeaderMenuForCurrentUser();
             return $userMenuItems;
         }
 
@@ -134,9 +133,9 @@
         {
             assert('$controller == null || $controller instanceof CController');
             assert('is_array($items)');
-            foreach($items as $key => $item)
+            foreach ($items as $key => $item)
             {
-                if($controller != null && isset($item['moduleId']) &&
+                if ($controller != null && isset($item['moduleId']) &&
                    $controller->resolveAndGetModuleId() == $item['moduleId'])
                 {
                     $items[$key]['active'] = true;

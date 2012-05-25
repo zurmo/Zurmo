@@ -151,7 +151,7 @@
             {
                 throw new NotSupportedException();
             }
-            parent::beforeDelete();
+            return parent::beforeDelete();
         }
     }
 ?>

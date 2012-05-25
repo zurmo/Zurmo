@@ -54,13 +54,13 @@
         'Opportunities By Sales Stage'
             => 'Opportunités par étape de vente',
         'OpportunitiesModulePluralLabel'
-            => 'OpportunitiesModulePluralLabel',
+            => 'OpportunitiesModulePluralLabel', // Same Word Translated
         'OpportunitiesModulePluralLabel For AccountsModuleSingularLabel'
             => 'OpportunitiesModulePluralLabel pour un AccountsModuleSingularLabel',
         'OpportunitiesModulePluralLabel For ContactsModuleSingularLabel'
             => 'OpportunitiesModulePluralLabel pour un ContactsModuleSingularLabel',
         'OpportunitiesModuleSingularLabel'
-            => 'OpportunitiesModuleSingularLabel',
+            => 'OpportunitiesModuleSingularLabel', // Same Word Translated
         'OpportunitiesModuleSingularLabel Search'
             => 'Recherche OpportunitiesModuleSingularLabel',
         'Opportunity'
@@ -70,8 +70,8 @@
         'Prospecting'
             => 'Prospection',
         'Qualification'
-            => 'Qualification',
+            => 'Qualification', // Same Word Translated
         'Verbal'
-            => 'Verbal',
+            => 'Verbal', // Same Word Translated
     );
 ?>

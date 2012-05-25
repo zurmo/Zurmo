@@ -39,6 +39,8 @@
             => 'Categoria',
         'Create MeetingsModulePluralLabel'
             => 'Crea MeetingsModulePluralLabel',
+        'Create MeetingsModuleSingularLabel'
+            => 'Crea MeetingsModuleSingularLabel',
         'Delete MeetingsModulePluralLabel'
             => 'Elimina MeetingsModulePluralLabel',
         'End Time'
@@ -50,15 +52,19 @@
         'Meetings'
             => 'Riunioni',
         'MeetingsModulePluralLabel'
-            => 'MeetingsModulePluralLabel',
+            => 'MeetingsModulePluralLabel', // Same Word Translated
         'MeetingsModulePluralLabel For AccountsModuleSingularLabel'
             => 'MeetingsModulePluralLabel per AccountsModuleSingularLabel',
         'MeetingsModulePluralLabel For ContactsModuleSingularLabel'
             => 'MeetingsModulePluralLabel per ContactsModuleSingularLabel',
         'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'MeetingsModulePluralLabel per OpportunitiesModuleSingularLabel',
+        'MeetingsModulePluralLabel On {displayStringTime}'
+            => 'MeetingsModulePluralLabel Il {displayStringTime}',
         'MeetingsModuleSingularLabel'
-            => 'MeetingsModuleSingularLabel',
+            => 'MeetingsModuleSingularLabel', // Same Word Translated
+        'MeetingsModuleSingularLabel Day Summary'
+            => 'Sommario delle MeetingsModulePluralLabel',
         'My Upcoming MeetingsModulePluralLabel'
             => 'Le miei MeetingsModulePluralLabel',
         'Related ContactsModulePluralLabel and LeadsModulePluralLabel'
@@ -68,6 +74,10 @@
         'Type a ContactsModuleSingularLowerCaseLabel or LeadsModuleSingularLowerCaseLabel: name or email address'
             => 'Digita un ContactsModuleSingularLowerCaseLabel o LeadsModuleSingularLowerCaseLabel: nome o indirizzo e-mail',
         'Upcoming MeetingsModulePluralLabel'
-            => 'MeetingsModulePluralLabel Prossimi',
+            => 'Prossimi MeetingsModulePluralLabel',
+        '{quantity} MeetingsModulePluralLabel'
+            => '{quantity} MeetingsModulePluralLabel', // Same Word Translated
+        '{quantity} MeetingsModuleSingularLabel'
+            => '{quantity} MeetingsModuleSingularLabel', // Same Word Translated
     );
 ?>

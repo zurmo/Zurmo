@@ -113,10 +113,16 @@
             }
             else
             {
-				$reflection = new ReflectionClass( $calledClass );
-				$classFile = $reflection->getFileName();
-                return "<!--Called in: $classFile--><div $id $classes>$content</div>";
-				
+                if (YII_DEBUG)
+                {
+                    $reflection = new ReflectionClass( $calledClass );
+                    $classFile = $reflection->getFileName();
+                    return "<!--Called in: $classFile--><div $id $classes>$content</div>";
+                }
+                else
+                {
+                    return "<div $id $classes>$content</div>";
+                }
             }
         }
 

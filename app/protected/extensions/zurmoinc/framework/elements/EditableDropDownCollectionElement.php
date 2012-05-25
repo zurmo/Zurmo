@@ -154,7 +154,7 @@
 
         protected function renderRemoveLink()
         {
-            return CHtml::link( Yii::t('Default', '<span>Remove</span>'), '#', array('class' => 'remove-sortable-item-link'));
+            return CHtml::link( '<span>' . Yii::t('Default', 'Remove') . '</span>', '#', array('class' => 'remove-sortable-item-link'));
         }
 
         protected function renderAddInputAndAddButton()

@@ -28,7 +28,7 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Create New</td>
+  <td>Create</td>
   <td></td>
 </tr>
 <tr>
@@ -40,6 +40,11 @@
   <td>type</td>
   <td>LeadsSearchForm_anyMixedAttributes</td>
   <td>Sally ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>keyUp</td>
+  <td>LeadsSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -73,7 +78,7 @@
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Create a New Task</td>
+  <td>Create Task</td>
   <td></td>
 </tr>
 <tr>
@@ -122,6 +127,11 @@
   <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
+    <td>keyUp</td>
+    <td>AccountsSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>my account ${randomSuffix}</td>
   <td></td>
@@ -154,6 +164,11 @@
   <td>type</td>
   <td>OpportunitiesSearchForm_anyMixedAttributes</td>
   <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -189,6 +204,11 @@
   <td>type</td>
   <td>UsersSearchForm_anyMixedAttributes</td>
   <td>Sam Smith</td>
+</tr>
+<tr>
+  <td>keyUp</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -347,7 +367,7 @@
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Create New</td>
+  <td>Create</td>
   <td></td>
 </tr>
 <tr>
@@ -359,6 +379,11 @@
   <td>type</td>
   <td>LeadsSearchForm_anyMixedAttributes</td>
   <td>Silly Sally ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>LeadsSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -385,9 +410,19 @@
   <td>Silly Sally ${randomSuffix}</td>
   <td></td>
 </tr>
-<tr>
+<!--tr>
   <td>verifyTextNotPresent</td>
   <td>Task kick-off new lead ${randomSuffix}</td>
+  <td></td>
+</tr-->
+<tr>
+  <td>clickAndWait</td>
+  <td>link=Task kick-off new lead ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>An error has occurred. Please click here to continue to the home page. If the error persists please contact your administrator.</td>
   <td></td>
 </tr>
 </tbody></table>

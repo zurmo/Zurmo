@@ -28,7 +28,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[@id='MenuView']/div/div/ul/li[3]/ul/li[1]/a/span</td>
+  <td>//div[@id='MenuView']/ul/li[3]/ul/li[1]/a/span[2]</td>
   <td></td>
 </tr>
 <tr>
@@ -58,12 +58,12 @@
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//div[@id='ZurmoDefaultView']/div/div[4]/div/div/div[1]/div/h1</td>
-  <td>exact:Leads: Jhon Connor ${randomSuffix}</td>
+  <td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
+  <td>exact:Jhon Connor ${randomSuffix}</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='LeadEditAndDetailsView']/table/tbody/tr[1]/td[1]</td>
+  <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
   <td>Mr. Jhon Connor ${randomSuffix}</td>
 </tr>
 <tr>
@@ -83,23 +83,23 @@
 </tr>
 <tr>
   <td>waitForTextPresent</td>
-  <td>Leads: Home</td>
+  <td>Create</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Advanced Search</td>
+  <td>Advanced</td>
   <td></td>
 </tr>
 <tr>
   <td>type</td>
-  <td>LeadsSearchForm_fullName</td>
+  <td>LeadsSearchForm_anyMixedAttributes</td>
   <td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>search</td>
-  <td></td>
+  <td>keyUp</td>
+  <td>LeadsSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>

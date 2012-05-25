@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class FormLayoutSecurityUtilTest extends BaseTest
+    class FormLayoutSecurityUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

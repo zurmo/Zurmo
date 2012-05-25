@@ -28,7 +28,7 @@
     $language         = 'en'; // As per language codes under the messages directory.
     $currencyBaseCode = 'USD';
     $theme            = 'default';
-    $connectionString = 'mysql:host=localhost;dbname=zurmo'; // Not Coding Standard
+    $connectionString = 'mysql:host=localhost;port=3306;dbname=zurmo'; // Not Coding Standard
     $username         = 'zurmo';
     $password         = 'zurmo';
     $memcacheServers  = array( // An empty array means memcache is not used.

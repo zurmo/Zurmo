@@ -48,12 +48,11 @@
 
         protected function renderContent()
         {
-
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/';
             $homeUrl   = Yii::app()->createUrl('home/default');
             $content   = '<div class="clearfix"><div id="corp-logo">';
-            $content  .= '<a href="' . $homeUrl . '"><img src="' . $imagePath. 'Zurmo_logo.png"></a>';
-            if($this->applicationName != null)
+            $content  .= '<a href="' . $homeUrl . '"><img src="' . $imagePath . 'Zurmo_logo.png" alt="Zurmo Logo"/></a>';
+            if ($this->applicationName != null)
             {
                 $content  .= CHtml::tag('span', array(), $this->applicationName);
             }
@@ -86,7 +85,6 @@
             return $finalMenuItems;
         }
 
-
         protected static function renderHeaderMenuContent($menuItems, $menuId)
         {
             assert('is_array($menuItems)');
@@ -113,16 +111,17 @@
             $content  = null;
             $count    = Notification::getCountByUser(Yii::app()->user->userModel);
             $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
+            // Begin Not Coding Standard
             $content  .= "<a id=\"notifications-flyout-link\" href=\"#\" class=\"notifications-link unread\">";
-            $content  .= "<span id='notifications-link' class='tooltip'>" .
-                            Yii::t('Default', '{count}', array('{count}' => $count))."</span></a>";
+            $content  .= "<span id='notifications-link' class='tooltip'>" . $count ."</span></a>";
             $content  .= CHtml::tag('div',
                                     array('id' => 'notifications-flyout', 'style' => 'display:none;'),
                                     CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
             Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
+                $('#notifications-flyout-link').unbind('click');
                 $('#notifications-flyout-link').bind('click', function()
                 {
-                    if($('#notifications-flyout').css('display') == 'none')
+                    if ($('#notifications-flyout').css('display') == 'none')
                     {
                         $('#notifications-flyout').show();
                         $.ajax({
@@ -160,6 +159,7 @@
                     });
                 }
             ", CClientScript::POS_END);
+            // End Not Coding Standard
             return $content;
         }
     }

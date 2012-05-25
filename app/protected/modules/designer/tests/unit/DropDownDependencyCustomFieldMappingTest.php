@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class DropDownDependencyCustomFieldMappingTest extends BaseTest
+    class DropDownDependencyCustomFieldMappingTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

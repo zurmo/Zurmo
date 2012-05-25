@@ -120,7 +120,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'  => 'ConfigurationLink',
-                                  'label' => "eval:Yii::t('Default', 'Cancel')",),
+                                  'label' => "eval:Yii::t('Default', 'Cancel')"),
                             array('type'  => 'SaveButton',
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),
@@ -157,7 +157,7 @@
             $title       = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
             $content     = Yii::t('Default', 'Active') . '&#160;';
             $content    .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= Yii::t('Default', '?') . '</span>';
+            $content    .= '?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-languages-tooltip");
             return $content;

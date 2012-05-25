@@ -77,6 +77,8 @@
             => 'Prego di mappare almeno una valuta del pick list per ogni livello.',
         'Available Fields:'
             => 'Campi disponibile:',
+        'Available Modules'
+            => 'Moduli disponibili',
         'Calculated Number'
             => 'Campo Calcolato',
         'Check Box'
@@ -94,7 +96,7 @@
         'Dependent Pick Lists'
             => 'Picklists dipendenti',
         'Designer'
-            => 'Designer',
+            => 'Designer', // Same Word Translated
         'Designer Home'
             => 'Designer',
         'Designer Tool'
@@ -136,7 +138,7 @@
         'First select level {number}'
             => 'Primo, scegliete livello {number}',
         'Formula'
-            => 'Formula',
+            => 'Formula', // Same Word Translated
         'Formula Name'
             => 'Nome Formula',
         'General'
@@ -148,7 +150,7 @@
         'Layout saved successfully.'
             => 'Layout salvato con successo',
         'Layouts'
-            => 'Layouts',
+            => 'Layouts', // Same Word Translated
         'Level: {number}'
             => 'Livello: {number}',
         'Manage module fields, layouts, and labels.'
@@ -180,7 +182,7 @@
         'Phone'
             => 'Telefono',
         'Pick List'
-            => 'Pick List',
+            => 'Pick List', // Same Word Translated
         'Pick List Value Translations'
             => 'Traduzioni dei valori del pick list',
         'Pick List Values'
@@ -201,6 +203,8 @@
             => 'Salva',
         'Search View'
             => 'Vista ricerca',
+        'Select a field type'
+            => 'Selezionare il tipo di campo',
         'Show If'
             => 'Valore dipendente',
         'Tag Cloud'
@@ -222,9 +226,11 @@
         'Track Audit Log'
             => 'Audit questo campo',
         'URL'
-            => 'URL',
+            => 'URL', // Same Word Translated
         'You can only have at most 4 pick-lists selected.'
             => 'Potete avere al massimo 4 picklists.',
+        'You must first select a field type'
+            => 'È necessario selezionare un tipo di campo',
         'You must have at least one field placed in order to save a layout.'
             => 'Il layout deve contenire al meno 1 campo.',
         'You must have at least one panel in order to save a layout.'

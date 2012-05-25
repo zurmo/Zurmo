@@ -65,7 +65,7 @@
         protected function renderContent()
         {
             $actionElementContent = $this->renderActionElementBar(false);
-            if($actionElementContent != null)
+            if ($actionElementContent != null)
             {
                 $content  = '<div class="view-toolbar-container clearfix"><div class="view-toolbar">';
                 $content .= $actionElementContent;

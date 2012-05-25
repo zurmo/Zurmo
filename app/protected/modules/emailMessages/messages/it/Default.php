@@ -60,7 +60,7 @@
         'From Name'
             => 'Nome mittente',
         'Host'
-            => 'Host',
+            => 'Host', // Same Word Translated
         'Html Content'
             => 'Contenuto HTML',
         'Inbox'

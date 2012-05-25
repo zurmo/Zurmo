@@ -247,10 +247,12 @@
             assert('is_string($modelClassName) && $modelClassName != ""');
             if (RedBeanDatabase::isFrozen())
             {
+                Yii::app()->gameHelper->muteScoringModelsOnSave();
                 RedBeanDatabase::unfreeze();
                 $messageLogger = new MessageLogger();
                 RedBeanDatabaseBuilderUtil::autoBuildModels(array('User', $modelClassName), $messageLogger);
                 RedBeanDatabase::freeze();
+                Yii::app()->gameHelper->unmuteScoringModelsOnSave();
                 if ($messageLogger->isErrorMessagePresent())
                 {
                     throw new FailedDatabaseSchemaChangeException($messageLogger->printMessages(true, true));

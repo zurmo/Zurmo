@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ModelAttributeCollectionToGlobalSearchAttributesAdapterTest extends BaseTest
+    class ModelAttributeCollectionToGlobalSearchAttributesAdapterTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -40,7 +40,7 @@
                                            $moduleClassName::getGlobalSearchFormClassName(),
                                            $moduleClassName::getPrimaryModelName());
             $attributeCollection     = $modelAttributesAdapter->getAttributes();
-            $this->assertEquals(30, count($attributeCollection));
+            $this->assertEquals(31, count($attributeCollection));
             $adapter                 = new ModelAttributeCollectionToGlobalSearchAttributesAdapter(
                                                 $attributeCollection);
             $this->assertEquals(12, count($adapter->getValuesAndLabelsData()));

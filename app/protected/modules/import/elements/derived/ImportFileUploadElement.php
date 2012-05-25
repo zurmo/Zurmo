@@ -106,7 +106,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', '<h3>Please select the CSV to upload</h3>');
+            return '<h3>' . Yii::t('Default', 'Please select the CSV to upload') . '</h3>';
         }
     }
 ?>

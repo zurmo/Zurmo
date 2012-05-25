@@ -49,6 +49,7 @@
                                                        $this->form->databaseHostname,
                                                        $this->form->databaseUsername,
                                                        $this->form->databasePassword,
+                                                       $this->form->databasePort,
                                                        $this->minimumUploadRequireBytes,
                                                        $logBinValue))
             {
@@ -59,6 +60,7 @@
                                                        $this->form->databaseHostname,
                                                        $this->form->databaseUsername,
                                                        $this->form->databasePassword,
+                                                       $this->form->databasePort,
                                                        $this->minimumUploadRequireBytes,
                                                        $logBinTrustFunctionCreatorsValue))
                 {

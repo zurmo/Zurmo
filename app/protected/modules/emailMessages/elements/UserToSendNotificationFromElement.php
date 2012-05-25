@@ -43,6 +43,7 @@
                                                  $value,
                                                  $dropDownArray,
                                                  $htmlOptions);
+            $content       = CHtml::tag('div', array('class' => 'beforeToolTip'), $content);
             $content      .= self::renderTooltipContent();
             return $content;
         }
@@ -57,8 +58,8 @@
             $title       = Yii::t('Default', 'Zurmo sends out system notifications.  The notifications must appear ' .
                                              'as coming from a super administrative user.');
             $content     = '&#160;<span id="send-notifications-from-user-tooltip" class="tooltip"  title="' . $title . '">';
-            $content    .= Yii::t('Default', '?') . '</span>';
-            $qtip = new ZurmoTip();
+            $content    .= '?</span>';
+            $qtip = new ZurmoTip(array('options' => array('position' => array('corner' => array('target' => 'bottomLeft', 'tooltip' => 'topRight')))));
             $qtip->addQTip("#send-notifications-from-user-tooltip");
             return $content;
         }

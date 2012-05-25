@@ -53,14 +53,26 @@
 
         protected $dataProvider;
 
+        public $cssFile = 'css/jquery-ui.css';
+
+        /**
+         * Initialize the Calendar Widget
+         */
+        public function init()
+        {
+            $this->themeUrl = Yii::app()->baseUrl . '/themes';
+            $this->theme    = Yii::app()->theme->name;
+            parent::init();
+        }
+
         /**
          * This function overrides the run method from CJuiDatePicker and fixes the jQuery issue for the Datepicker showing
          * wrong language in the portlet views popup.
          */
         public function run()
         {
-            list($name, $id) = $this->resolveNameID();
-
+            //Invalid HTML using a name on a div
+            //list($name, $id) = $this->resolveNameID();
             if (isset($this->htmlOptions['id']))
             {
                 $id = $this->htmlOptions['id'];
@@ -69,25 +81,19 @@
             {
                 $this->htmlOptions['id'] = $id;
             }
-
+            //Invalid HTML using a name on a div
             if (isset($this->htmlOptions['name']))
             {
-                $name = $this->htmlOptions['name'];
-            }
-            else
-            {
-                $this->htmlOptions['name'] = $name;
+                unset($this->htmlOptions['name']);
             }
             $id = $this->htmlOptions['id'] = $this->htmlOptions['id'].'_container';
-            $this->htmlOptions['name'] = $this->htmlOptions['name'].'_container';
-
 
             echo CHtml::tag('div', $this->htmlOptions, '');
-
             //renderEvents before the datePicker.
             $this->renderEvents($id);
 
             //Add beforeShowDate as options
+            // Begin Not Coding Standard
             $this->options['beforeShowDay'] = "js:function(date) {
                 var event = calendarEvents[date];
                 if (event) {
@@ -97,12 +103,13 @@
                     return [true, '', ''];
                 }
             }";
+            // End Not Coding Standard
             $options = CJavaScript::encode($this->options);
             $js = "jQuery('#{$id}').datepicker($options);";
             if ($this->language != '' && $this->language != 'en')
             {
                 $this->registerScriptFile($this->i18nScriptFile);
-                $js = "jQuery(function(){jQuery('#{$id}').datepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional['{$this->language}'], {$options}));})";
+                $js = "jQuery(function(){jQuery('#{$id}').datepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional['{$this->language}'], {$options}));});";
             }
             $js .= 'addSpansToDatesOnCalendar("' . $id . '");';
             $cs = Yii::app()->getClientScript();
@@ -114,15 +121,14 @@
             $cs->registerScript(__CLASS__. '#' . $id, $js);
             $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets'));
             $cs->registerScriptFile($baseScriptUrl . '/calendar/Calendar.js', CClientScript::POS_END);
-
         }
 
         protected function renderEvents($id)
         {
             $script = "var calendarEvents = {}; \n";
-            if(count($this->dayEvents) > 0)
+            if (count($this->dayEvents) > 0)
             {
-                foreach($this->dayEvents as $event)
+                foreach ($this->dayEvents as $event)
                 {
                     $script .= "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
                 }

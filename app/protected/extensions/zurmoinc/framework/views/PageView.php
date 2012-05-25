@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -215,12 +215,15 @@
         {
             $themeUrl = Yii::app()->baseUrl . '/themes';
             $theme    = Yii::app()->theme->name;
+            if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
+            {
+                Yii::app()->clientScript->registerScriptFile(
+                    Yii::app()->getAssetManager()->publish(
+                        Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/less-1.2.0.min.js');
+            }
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/less-1.2.0.min.js'));
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/interactions.js'));
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/interactions.js');
             return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
                    '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';
@@ -245,9 +248,18 @@
             $cs = Yii::app()->getClientScript();
             $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
 
-            $specialCss = '<link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/newui.less"/>';
-			$ieCss = '<!--[if lt IE 10]><link rel="stylesheet/less" type="text/css" href="' . Yii::app()->baseUrl . '/' . $theme . '/css/ie.less"/><![endif]-->';
-			
+            $specialCssContent = null;
+            if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
+            {
+                $specialCssContent .= '<link rel="stylesheet/less" type="text/css" href="' .
+                                      Yii::app()->baseUrl . '/' . $theme . '/css/less/newui.less"/>';
+                $specialCssContent .= '<!--[if lt IE 10]><link rel="stylesheet/less" type="text/css" href="' .
+                                      Yii::app()->baseUrl . '/' . $theme . '/css/less/ie.less"/><![endif]-->';
+            }
+            else
+            {
+                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
+            }
             if (MINIFY_SCRIPTS)
             {
                 Yii::app()->minScript->generateScriptMap('css');
@@ -256,13 +268,6 @@
                     Yii::app()->minScript->generateScriptMap('js');
                 }
             }
-
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/screen.css', 'screen, projection');
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/print.css', 'print');
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/theme.css');
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.less');
-
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 8)
             {
                 $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
@@ -288,11 +293,10 @@
                 $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
             }
             return '<head>' .
-            	   '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' .
-            	   $specialCss .
-            	   $ieCss .
-                   "<title>$title</title>"  .
-                   '</head>';
+                 '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
+                  $specialCssContent .
+                  "<title>$title</title>"  .
+                  '</head>';
         }
 
         /**
@@ -377,7 +381,15 @@
          */
         public static function getScriptFilesThatLoadOnAllPages()
         {
-            return array();
+            $scriptData = array();
+            if (MINIFY_SCRIPTS)
+            {
+                foreach (Yii::app()->minScript->usingAjaxShouldNotIncludeJsPathAliasesAndFileNames as $data)
+                {
+                   $scriptData[] = Yii::app()->getAssetManager()->getPublishedUrl(Yii::getPathOfAlias($data[0])) . $data[1];
+                }
+            }
+            return $scriptData;
         }
     }
 ?>

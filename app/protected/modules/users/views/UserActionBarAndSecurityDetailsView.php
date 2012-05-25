@@ -49,9 +49,15 @@
                                                                    Yii::t('Default', 'Groups'));
             $userGroupMembershipView->setCssClasses(array('DetailsView'));
             $this->setView($userGroupMembershipView, 1, 0);
-            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm, $user->id, $rightsViewMetadata), 2, 0);
-            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId, $policiesForm, $user->id, $policiesViewMetadata), 3, 0);
-            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm, $user->id, $modulePermissionsViewMetadata), 4, 0);
+            $this->setView(new RightsEditAndDetailsView('Details', $controllerId, $moduleId, $rightsForm,
+                                                        $user->id, $rightsViewMetadata,
+                                                        Yii::t('Default', 'Group Rights')), 2, 0);
+            $this->setView(new PoliciesEditAndDetailsView('Details', $controllerId, $moduleId,
+                                                          $policiesForm, $user->id, $policiesViewMetadata,
+                                                          Yii::t('Default', 'Group Policies')), 3, 0);
+            $this->setView(new ModulePermissionsEditAndDetailsView('Details', $controllerId, $moduleId, $modulePermissionsForm,
+                                                                   $user->id, $modulePermissionsViewMetadata,
+                                                                   Yii::t('Default', 'Group Module Permissions')), 4, 0);
         }
     }
 ?>

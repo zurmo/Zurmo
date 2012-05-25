@@ -33,27 +33,30 @@
                 'header'      => Yii::t('Default' , 'Close'),
                 'value'       => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
                 'type'        => 'raw',
-                'htmlOptions' => array('class'=>'checkbox-column')
+                'htmlOptions' => array('class' => 'checkbox-column')
             );
         }
 
         protected function resolveToRenderCheckBox($modelClassName, $modelId)
         {
-            if(!ActionSecurityUtil::canCurrentUserPerformAction( 'Edit', new $modelClassName(false)))
+            if (!ActionSecurityUtil::canCurrentUserPerformAction( 'Edit', new $modelClassName(false)))
             {
                 return '';
             }
             $checkboxId = 'closeTask' . $modelId;
+            // Begin Not Coding Standard
             $content    = '"<label class=\'hasCheckBox\'>" . CHtml::checkBox("' . $checkboxId . '", false,
                                        array("class" => "close-task-checkbox",
-                                             "onClick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')")) . "</label>"';
+                                             "onclick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')")) . "</label>"';
 
             Yii::app()->clientScript->registerScript('closeTaskCheckBoxScript', "
                 function closeOpenTaskByCheckBoxClick(checkboxId, modelId)
                 {
-                    if($('#' + checkboxId).attr('checked') == 'checked')
+                    if ($('#' + checkboxId).attr('checked') == 'checked')
                     {
                         $('#' + checkboxId).attr('disabled', true);
+                        $('#' + checkboxId).parent().addClass('c_on');
+                        $('#' + checkboxId).parent().addClass('disabled');
                         $('#' + checkboxId).parents('td').children().css('text-decoration', 'line-through');
                         $.ajax({
                             url : '" . Yii::app()->createUrl('tasks/default/closeTask') . "?id=' + modelId,
@@ -74,10 +77,9 @@
                     }
                 }
             ", CClientScript::POS_END);
+            // End Not Coding Standard
             return $content;
         }
-
-        //todo make sure live actually works on paged tassks
-
+        //todo make sure live actually works on paged tasks
     }
 ?>

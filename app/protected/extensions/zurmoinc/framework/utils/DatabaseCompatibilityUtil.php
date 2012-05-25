@@ -299,16 +299,18 @@
 
         /**
          * Get version number of database
-         * @param unknown_type $databaseType
-         * @param unknown_type $databaseHostname
-         * @param unknown_type $databaseUsername
-         * @param unknown_type $databasePassword
+         * @param string $databaseType
+         * @param string $databaseHostname
+         * @param string $databaseUsername
+         * @param string $databasePassword
+         * @param string $port
          * @throws NotSupportedException
          */
         public static function getDatabaseVersion($databaseType,
                                                   $databaseHostname,
                                                   $databaseUsername,
-                                                  $databasePassword)
+                                                  $databasePassword,
+                                                  $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -320,7 +322,7 @@
                     $PhpDriverVersion = phpversion('mysql');
                     if ($PhpDriverVersion !== null)
                     {
-                        $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                        $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                         $result = @mysql_query("SELECT VERSION()");
                         $row    = @mysql_fetch_row($result);
                         if (is_resource($connection))
@@ -365,13 +367,15 @@
          * @param string $databaseHostname
          * @param string $databaseUsername
          * @param string $databasePassword
+         * @param string $databasePort
          * @throws NotSupportedException
          * @return int|string error
          */
         public static function getDatabaseMaxAllowedPacketsSize($databaseType,
                                                                 $databaseHostname,
                                                                 $databaseUsername,
-                                                                $databasePassword)
+                                                                $databasePassword,
+                                                                $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -381,7 +385,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_allowed_packet'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -402,12 +406,14 @@
          * @param string $databaseHostname
          * @param string $databaseUsername
          * @param string $databasePassword
+         * @param string $databasePort
          * @throws NotSupportedException
          */
         public static function getDatabaseMaxSpRecursionDepth($databaseType,
                                                               $databaseHostname,
                                                               $databaseUsername,
-                                                              $databasePassword)
+                                                              $databasePassword,
+                                                              $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -416,7 +422,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'max_sp_recursion_depth'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -437,12 +443,14 @@
         * @param string $databaseHostname
         * @param string $databaseUsername
         * @param string $databasePassword
+        * @param string $databasePort
         * @throws NotSupportedException
         */
         public static function getDatabaseThreadStackValue($databaseType,
                                                            $databaseHostname,
                                                            $databaseUsername,
-                                                           $databasePassword)
+                                                           $databasePassword,
+                                                           $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -451,7 +459,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'thread_stack'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -472,12 +480,14 @@
         * @param string $databaseHostname
         * @param string $databaseUsername
         * @param string $databasePassword
+        * @param string $databasePort
         * @throws NotSupportedException
         */
         public static function getDatabaseOptimizerSearchDepthValue($databaseType,
                                                                     $databaseHostname,
                                                                     $databaseUsername,
-                                                                    $databasePassword)
+                                                                    $databasePassword,
+                                                                    $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -486,7 +496,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'optimizer_search_depth'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -507,12 +517,14 @@
         * @param string $databaseHostname
         * @param string $databaseUsername
         * @param string $databasePassword
+        * @param string $databasePort
         * @throws NotSupportedException
         */
         public static function getDatabaseLogBinValue($databaseType,
                                                       $databaseHostname,
                                                       $databaseUsername,
-                                                      $databasePassword)
+                                                      $databasePassword,
+                                                      $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -521,7 +533,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'log_bin'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -542,12 +554,14 @@
         * @param string $databaseHostname
         * @param string $databaseUsername
         * @param string $databasePassword
+        * @param string $databasePort
         * @throws NotSupportedException
         */
         public static function getDatabaseLogBinTrustFunctionCreatorsValue($databaseType,
                                                                            $databaseHostname,
                                                                            $databaseUsername,
-                                                                           $databasePassword)
+                                                                           $databasePassword,
+                                                                           $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -556,7 +570,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'log_bin_trust_function_creators'");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -578,6 +592,7 @@
          * @param string $databaseName
          * @param string $databaseUsername
          * @param string $databasePassword
+         * @param string $databasePort
          * @throws NotSupportedException
          * @return string|boolean
          */
@@ -585,7 +600,8 @@
                                                            $databaseHostname,
                                                            $databaseName,
                                                            $databaseUsername,
-                                                           $databasePassword)
+                                                           $databasePassword,
+                                                           $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -595,7 +611,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     @mysql_select_db($databaseName);
                     $result = @mysql_query("SHOW VARIABLES LIKE 'collation_database'");
                     $row    = @mysql_fetch_row($result);
@@ -617,13 +633,15 @@
          * @param string $databaseHostname
          * @param string $databaseUsername
          * @param string $databasePassword
+         * @param string $databasePort
          * @throws NotSupportedException
          * @return boolean
          */
         public static function isDatabaseStrictMode($databaseType,
                                                     $databaseHostname,
                                                     $databaseUsername,
-                                                    $databasePassword)
+                                                    $databasePassword,
+                                                    $databasePort)
         {
             if ($databaseType != 'mysql')
             {
@@ -632,7 +650,7 @@
             switch ($databaseType)
             {
                 case 'mysql':
-                    $connection = @mysql_connect($databaseHostname, $databaseUsername, $databasePassword);
+                    $connection = @mysql_connect($databaseHostname . ':' . $databasePort, $databaseUsername, $databasePassword);
                     $result = @mysql_query("SELECT @@sql_mode;");
                     $row    = @mysql_fetch_row($result);
                     if (is_resource($connection))
@@ -660,10 +678,11 @@
          * @param string $host
          * @param string $rootUsername
          * @param string $rootPassword
+         * @param string $port
          * @throws NotSupportedException
          * @return true|string $error
          */
-        public static function checkDatabaseConnection($databaseType, $host, $rootUsername, $rootPassword)
+        public static function checkDatabaseConnection($databaseType, $host, $rootUsername, $rootPassword, $port)
         {
             if ($databaseType != 'mysql')
             {
@@ -673,11 +692,12 @@
             assert('is_string($host)         && $host != ""');
             assert('is_string($rootUsername) && $rootUsername != ""');
             assert('is_string($rootPassword) && $rootPassword != ""');
+            assert('is_int($port)            && $port != ""');
             switch ($databaseType)
             {
                 case 'mysql':
                     $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword)) === false)
+                    if (($connection = @mysql_connect($host . ':' . $port, $rootUsername, $rootPassword)) === false)
                     {
                         $result = array(mysql_errno(), mysql_error());
                     }
@@ -695,11 +715,12 @@
          * @param string $host
          * @param string $rootUsername
          * @param string $rootPassword
+         * @param string $port
          * @param string $databaseName
          * @throws NotSupportedException
          * @returns true/false for if the named database exists.
          */
-        public static function checkDatabaseExists($databaseType, $host, $rootUsername, $rootPassword,
+        public static function checkDatabaseExists($databaseType, $host, $rootUsername, $rootPassword, $port,
                                                    $databaseName)
         {
             if ($databaseType != 'mysql')
@@ -709,12 +730,13 @@
             assert('is_string($host)         && $host         != ""');
             assert('is_string($rootUsername) && $rootUsername != ""');
             assert('is_string($rootPassword) && $rootPassword != ""');
+            assert('is_int($port)            && $port != ""');
             assert('is_string($databaseName) && $databaseName != ""');
             switch ($databaseType)
             {
                 case 'mysql':
                     $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword)) === false ||
+                    if (($connection = @mysql_connect($host . ':' . $port, $rootUsername, $rootPassword)) === false ||
                     @mysql_select_db($databaseName, $connection)         === false)
                     {
                         $result = array(mysql_errno(), mysql_error());
@@ -733,11 +755,12 @@
          * @param string $host
          * @param string $rootUsername
          * @param string $rootPassword
+         * @param string $port
          * @param string $username
          * @throws NotSupportedException
          * @returns true/false for if the named database user exists.
          */
-        public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $username)
+        public static function checkDatabaseUserExists($databaseType, $host, $rootUsername, $rootPassword, $port, $username)
         {
             if ($databaseType != 'mysql')
             {
@@ -746,13 +769,14 @@
             assert('is_string($host)         && $host         != ""');
             assert('is_string($rootUsername) && $rootUsername != ""');
             assert('is_string($rootPassword) && $rootPassword != ""');
+            assert('is_int($port)            && $port != ""');
             assert('is_string($username)     && $username     != ""');
             switch ($databaseType)
             {
                 case 'mysql':
                     $result             = true;
                     $query              = "select count(*) from user where Host in ('%', '$host') and User ='$username'";
-                    $connection         = @mysql_connect($host, $rootUsername, $rootPassword);
+                    $connection         = @mysql_connect($host . ':' . $port, $rootUsername, $rootPassword);
                     $databaseConnection = @mysql_select_db('mysql', $connection);
                     $queryResult        = @mysql_query($query, $connection);
                     $row                = @mysql_fetch_row($queryResult);
@@ -796,11 +820,12 @@
          * @param string $host
          * @param string $rootUsername
          * @param string $rootPassword
+         * @param string $port
          * @param string $databaseName
          * @throws NotSupportedException
          * @return boolean|string error
          */
-        public static function createDatabase($databaseType, $host, $rootUsername, $rootPassword, $databaseName)
+        public static function createDatabase($databaseType, $host, $rootUsername, $rootPassword, $port, $databaseName)
         {
             if ($databaseType != 'mysql')
             {
@@ -809,12 +834,13 @@
             assert('is_string($host)         && $host         != ""');
             assert('is_string($rootUsername) && $rootUsername != ""');
             assert('is_string($rootPassword) && $rootPassword != ""');
+            assert('is_int($port)            && $port != ""');
             assert('is_string($databaseName) && $databaseName != ""');
             switch ($databaseType)
             {
                 case 'mysql':
                     $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword))                   === false ||
+                    if (($connection = @mysql_connect($host . ':' . $port, $rootUsername, $rootPassword))                   === false ||
                     @mysql_query("drop   database if exists `$databaseName`", $connection) === false ||
                     @mysql_query("create database `$databaseName` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;", $connection) === false)
                     {
@@ -835,13 +861,14 @@
          * @param string $host
          * @param string $rootUsername
          * @param string $rootPassword
+         * @param string $port
          * @param string $databaseName
          * @param string $username
          * @param string $password
          * @throws NotSupportedException
          * @return boolean|string error
          */
-        public static function createDatabaseUser($databaseType, $host, $rootUsername, $rootPassword,
+        public static function createDatabaseUser($databaseType, $host, $rootUsername, $rootPassword, $port,
                                                   $databaseName, $username, $password)
         {
             if ($databaseType != 'mysql')
@@ -851,6 +878,7 @@
             assert('is_string($host)         && $host         != ""');
             assert('is_string($rootUsername) && $rootUsername != ""');
             assert('is_string($rootPassword) && $rootPassword != ""');
+            assert('is_int($port)            && $port != ""');
             assert('is_string($databaseName) && $databaseName != ""');
             assert('is_string($username)     && $username     != ""');
             assert('is_string($password)');
@@ -858,7 +886,7 @@
             {
                 case 'mysql':
                     $result = true;
-                    if (($connection = @mysql_connect($host, $rootUsername, $rootPassword))                               === false ||
+                    if (($connection = @mysql_connect($host . ':' . $port, $rootUsername, $rootPassword))                               === false ||
                     // The === 666 is to execute this command ignoring whether it fails.
                     @mysql_query("drop user `$username`", $connection) === 666                                  ||
                     @mysql_query("grant all on `$databaseName`.* to `$username`",        $connection) === false ||
@@ -874,10 +902,16 @@
             }
         }
 
+        /**
+         * Get database name from connection string
+         * Function allow two connection formats because backward compatibility
+         * 1. "host=localhost;port=3306;dbname=zurmo"
+         * 2. "host=localhost;dbname=zurmo"
+         */
         public static function getDatabaseNameFromConnectionString()
         {
-            assert(preg_match("/host=([^;]+);dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
-            return $matches[2];
+            assert(preg_match("/host=([^;]+);(?:port=([^;]+);)?dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
+            return $matches[3];
         }
 
         public static function getTableRowsCountTotal()
@@ -899,6 +933,22 @@
                 $totalCount = $totalCount + $row['count'];
             }
             return $totalCount;
+        }
+
+        /**
+         * Get port on which database is running by default, depending on database type
+         * @param string $databaseType
+         */
+        public static function getDatabaseDefaultPort($databaseType = 'mysql')
+        {
+            if ($databaseType == 'mysql')
+            {
+                return 3306;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 ?>

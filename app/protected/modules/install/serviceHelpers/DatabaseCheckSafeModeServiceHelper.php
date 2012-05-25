@@ -43,7 +43,8 @@
             if (!DatabaseCompatibilityUtil::isDatabaseStrictMode('mysql',
                                                                  $this->form->databaseHostname,
                                                                  $this->form->databaseUsername,
-                                                                 $this->form->databasePassword))
+                                                                 $this->form->databasePassword,
+                                                                 $this->form->databasePort))
             {
                 $this->message  = Yii::t('Default', 'Database is in strict mode.');
                 $passed = false;

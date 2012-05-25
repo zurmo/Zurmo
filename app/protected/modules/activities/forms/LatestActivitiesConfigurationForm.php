@@ -58,7 +58,7 @@
         public $rollup;
 
         /**
-         * Whether to filter latest activity feed by ownership for the current user.
+         * Whether to filter latest activity feed by ownership for the current user.  Can also be a user id that is an integer.
          * Defaults to not filtering on anything, thus showing all available models that implement the
          * MashableActivityInterface.
          * @var string
@@ -71,7 +71,6 @@
          * @var string
          */
         public $filteredByModelName = self::FILTERED_BY_ALL;
-
 
         /**
          * Filtered by models that implement the MashableActivityInterface and by what models the current user has
@@ -86,7 +85,7 @@
             return array(
                 array('filteredByModelName', 'type',    'type' => 'string'),
                 array('rollup',              'boolean'),
-                array('ownedByFilter', 		 'type',    'type' => 'string')
+                array('ownedByFilter',       'type',    'type' => 'string')
             );
         }
     }

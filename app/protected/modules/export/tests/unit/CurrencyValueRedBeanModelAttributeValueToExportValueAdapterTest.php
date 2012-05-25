@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CurrencyValueRedBeanModelAttributeValueToExportValueAdapterTest extends BaseTest
+    class CurrencyValueRedBeanModelAttributeValueToExportValueAdapterTest extends ZurmoBaseTest
     {
         public $freeze = false;
 

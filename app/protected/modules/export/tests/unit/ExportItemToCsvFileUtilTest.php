@@ -27,7 +27,7 @@
     /**
     * Test ExportItemToCsvFileUtil functions.
     */
-    class ExportItemToCsvFileUtilTest extends BaseTest
+    class ExportItemToCsvFileUtilTest extends ZurmoBaseTest
     {
         public $freeze = false;
 

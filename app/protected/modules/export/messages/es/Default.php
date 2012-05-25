@@ -29,5 +29,19 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access Export Tool'
+            => 'Acceso a la herramienta de importación',
+        'Every 2 minutes.'
+            => 'Cada 2 minutos.',
+        'Export Cleanup Job'
+            => 'Eliminar las tablas de exportación',
+        'Export file you requested is not available anymore.'
+            => 'El archivo de exportación ya no está disponible.',
+        'Export Job'
+            => 'Exportar Trabajo',
+        'Export of {fileName} requested on {dateTime} is completed. <a href="{url}">Click here</a> to download file!'
+            => 'La exportación de {fileName} solicitada en {dateTime} se ha completado. <a href="{url}">Haga clic aquí</a> para descargar el archivo!',
+        'Export process is completed.'
+            => 'Exportación completado con éxito.',
     );
 ?>

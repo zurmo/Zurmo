@@ -71,6 +71,7 @@
         {
             $this->attributeNamesThatCanBeSplitUsingDelimiter[] = $value;
         }
+
         public function setAnyMixedAttributesScope($anyMixedAttributesScope)
         {
             $this->anyMixedAttributesScope = $anyMixedAttributesScope;
@@ -398,11 +399,11 @@
 
         private function supportsMixedSearch()
         {
-            if($this->supportsMixedSearch === null)
+            if ($this->supportsMixedSearch === null)
             {
                 $this->supportsMixedSearch = false;
                 $moduleClassName = $this->model->getModuleClassName();
-                if($moduleClassName != null && $moduleClassName::getGlobalSearchFormClassName() != null)
+                if ($moduleClassName != null && $moduleClassName::getGlobalSearchFormClassName() != null)
                 {
                     $this->supportsMixedSearch  = true;
                 }
@@ -412,7 +413,7 @@
 
         private function getMixedSearchRules()
         {
-            if($this->supportsMixedSearch())
+            if ($this->supportsMixedSearch())
             {
                 return array(array('anyMixedAttributes', 'safe'));
             }
@@ -421,9 +422,9 @@
 
         private function getMixedSearchAttributeLabels()
         {
-            if($this->supportsMixedSearch())
+            if ($this->supportsMixedSearch())
             {
-                return array('anyMixedAttributes' => Yii::t('Default', 'Any Mixed Fields'));
+                return array('anyMixedAttributes' => Yii::t('Default', 'Basic Search Fields'));
             }
             return array();
         }
@@ -435,26 +436,26 @@
         public function resolveMixedSearchAttributeMappedToRealAttributesMetadata(& $realAttributesMetadata)
         {
             assert('is_array($realAttributesMetadata)');
-            if($this->supportsMixedSearch())
+            if ($this->supportsMixedSearch())
             {
                 $moduleClassName            = $this->model->getModuleClassName();
                 $metadata                   = $moduleClassName::getMetadata();
                 $data                       = array('anyMixedAttributes' => array());
-                if($metadata['global']['globalSearchAttributeNames'] != null)
+                if ($metadata['global']['globalSearchAttributeNames'] != null)
                 {
-                    foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
+                    foreach ($metadata['global']['globalSearchAttributeNames'] as $attributeName)
                     {
-                        if($this->anyMixedAttributesScope == null ||
+                        if ($this->anyMixedAttributesScope == null ||
                            in_array($attributeName, $this->anyMixedAttributesScope))
                         {
-                            if(!isset($realAttributesMetadata[$attributeName]))
+                            if (!isset($realAttributesMetadata[$attributeName]))
                             {
                                 $data['anyMixedAttributes'][] = array($attributeName);
                             }
-                            elseif(isset($realAttributesMetadata[$attributeName]) &&
+                            elseif (isset($realAttributesMetadata[$attributeName]) &&
                                    is_array($realAttributesMetadata[$attributeName]))
                             {
-                                foreach($realAttributesMetadata[$attributeName] as $mixedAttributeMetadata)
+                                foreach ($realAttributesMetadata[$attributeName] as $mixedAttributeMetadata)
                                 {
                                     $data['anyMixedAttributes'][] = $mixedAttributeMetadata;
                                 }
@@ -472,7 +473,7 @@
 
         protected function resolveMixedSearchAttributeElementForMetadata(& $metadata)
         {
-            if($this->supportsMixedSearch())
+            if ($this->supportsMixedSearch())
             {
                 $metadata['anyMixedAttributes'] = 'AnyMixedAttributesSearch';
             }
@@ -485,15 +486,15 @@
         public function getGlobalSearchAttributeNamesAndLabelsAndAll()
         {
             $namesAndLabels = array();
-            if($this->supportsMixedSearch())
+            if ($this->supportsMixedSearch())
             {
                 $moduleClassName            = $this->model->getModuleClassName();
                 $metadata                   = $moduleClassName::getMetadata();
-                if($metadata['global']['globalSearchAttributeNames'] != null)
+                if ($metadata['global']['globalSearchAttributeNames'] != null)
                 {
-                    foreach($metadata['global']['globalSearchAttributeNames'] as $attributeName)
+                    foreach ($metadata['global']['globalSearchAttributeNames'] as $attributeName)
                     {
-                        if($this->isAttribute($attributeName))
+                        if ($this->isAttribute($attributeName))
                         {
                             $namesAndLabels[$attributeName] = $this->getAttributeLabel($attributeName);
                         }

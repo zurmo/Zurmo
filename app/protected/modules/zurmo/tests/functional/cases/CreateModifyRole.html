@@ -264,8 +264,8 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[1]/td[1]</td>
-  <td>Mr. Jhon Smith${randomSuffix}</td>
+  <td>//div[@id='UserDetailsView']/div/h1</td>
+  <td>Jhon Smith${randomSuffix}</td>
 </tr>
 <!-- Create of a User completes here-->
 <tr>
@@ -288,6 +288,11 @@
   <td>type</td>
   <td>UsersSearchForm_anyMixedAttributes</td>
   <td>jhon smith${randomSuffix}</td>
+</tr>
+<tr>
+  <td>keyUp</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -313,7 +318,7 @@
 <tr>
   <td>assertText</td>
   <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/th</td>
-  <td>Role</td>
+  <td>Department</td>
 </tr>
 <tr>
   <td>assertText</td>
@@ -362,7 +367,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/td/a</td>
+  <td>//div[@id='UserDetailsView']/div/div[2]/table/tbody/tr[1]/td/a</td>
   <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
@@ -476,6 +481,11 @@
   <td>Jhon Smith${randomSuffix}</td>
 </tr>
 <tr>
+  <td>keyUp</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>\10</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>Jhon Smith${randomSuffix}</td>
   <td></td>
@@ -498,7 +508,7 @@
 <tr>
   <td>assertText</td>
   <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/th</td>
-  <td>Role</td>
+  <td>Department</td>
 </tr>
 <tr>
   <td>assertText</td>

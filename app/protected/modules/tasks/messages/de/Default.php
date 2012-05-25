@@ -31,12 +31,16 @@
     return array(
         'Access TasksModulePluralLabel'
             => 'Zugang TasksModulePluralLabel',
+        'Close Task Check Box'
+            => 'Schließen Kontrollkästchen Aufgabe',
         'Completed'
             => 'Abgeschlossen',
         'Completed On'
             => 'Abgeschlossen am',
         'Create TasksModulePluralLabel'
             => 'TasksModulePluralLabel erstellen',
+        'Create TasksModuleSingularLabel'
+            => 'TasksModuleSingularLabel erstellen',
         'Delete TasksModulePluralLabel'
             => 'TasksModulePluralLabel löschen',
         'Due On'
@@ -50,7 +54,7 @@
         'Tasks'
             => 'Aufgaben',
         'TasksModulePluralLabel'
-            => 'TasksModulePluralLabel',
+            => 'TasksModulePluralLabel', // Same Word Translated
         'TasksModulePluralLabel For AccountsModuleSingularLabel'
             => 'TasksModulePluralLabel für AccountsModuleSingularLabel',
         'TasksModulePluralLabel For ContactsModuleSingularLabel'
@@ -58,6 +62,6 @@
         'TasksModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'TasksModulePluralLabel für OpportunitiesModuleSingularLabel',
         'TasksModuleSingularLabel'
-            => 'TasksModuleSingularLabel',
+            => 'TasksModuleSingularLabel', // Same Word Translated
     );
 ?>

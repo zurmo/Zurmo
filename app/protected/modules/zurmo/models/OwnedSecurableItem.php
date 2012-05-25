@@ -149,11 +149,15 @@
 
         protected function beforeDelete()
         {
-            parent::beforeDelete();
+            if (!parent::beforeDelete())
+            {
+                return false;
+            }
             if ($this->hasReadPermissionsOptimization())
             {
                 ReadPermissionsOptimizationUtil::securableItemBeingDeleted($this);
             }
+            return true;
         }
 
         public static function getDefaultMetadata()

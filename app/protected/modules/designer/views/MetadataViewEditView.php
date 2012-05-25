@@ -94,7 +94,7 @@
             }
             $content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
-			 $content .= $this->renderNotificationBar('NotificationBar');
+            $content .= $this->renderNotificationBar('NotificationBar');
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
             $content .= $this->renderCancelLink();
             $content .= $this->renderSaveLayoutButton('NotificationBar');
@@ -146,6 +146,12 @@
             $element  = new LayoutPanelsTypeStaticDropDownElement($formModel, 'type', $form);
             $element->editableTemplate = '{content}';
             $content .= $element->render();
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
             return $content;
         }
 

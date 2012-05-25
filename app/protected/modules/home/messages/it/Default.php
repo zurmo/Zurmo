@@ -48,7 +48,7 @@
         'Create Dashboards'
             => 'Nuovi Dashboards',
         'Dashboard'
-            => 'Dashboard',
+            => 'Dashboard', // Same Word Translated
         'Delete Dashboard'
             => 'Elimina Dashboard',
         'Delete Dashboards'
@@ -56,7 +56,7 @@
         'Edit Dashboard'
             => 'Modifica Dashboard',
         'Home'
-            => 'Home',
+            => 'Home', // Same Word Translated
         'Is Default'
             => 'Default',
         'Layout Id'

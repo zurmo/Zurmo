@@ -35,12 +35,10 @@
             $modelClassName,
             $dataProvider,
             $selectedIds,
-            $selectAll,
             $gridIdSuffix = null
         )
         {
-            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, $selectedIds, $selectAll,
-                                $gridIdSuffix);
+            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, $selectedIds, $gridIdSuffix);
             $this->rowsAreSelectable = false;
         }
 

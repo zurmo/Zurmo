@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class EmailBoxTest extends BaseTest
+    class EmailBoxTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {
@@ -99,21 +99,7 @@
         }
 
         /**
-         * @expects NotSupportedException
          * @depends testNotificationsBoxResolvesCorrectly
-         */
-        public function testCannotCreateBoxWithNotificationName()
-        {
-            $super                      = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-
-            //Try to make a box with the reserved name EmailBox::NOTIFICATIONS_NAME
-            $box = new EmailBox();
-            $box->name = EmailBox::NOTIFICATIONS_NAME;
-        }
-
-        /**
-         * @depends testCannotCreateBoxWithNotificationName
          */
         public function testSetAndGetMailbox()
         {

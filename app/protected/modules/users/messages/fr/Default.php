@@ -48,17 +48,11 @@
         'Enforce Strong Passwords'
             => 'Exiger mot de passe fort',
         'Hash'
-            => 'Hash',
+            => 'Hash', // Same Word Translated
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
             => 'Les utilisateurs inactifs ne peuvent pas connecter par le web, mobile, ni API.  La connexion des utilisateurs est contrôlée par les droits de sécurité des groupes.',
         'Inherited Value:'
             => 'Valeur héritée',
-        'Login Via Mobile'
-            => 'Connexion mobile',
-        'Login Via Web'
-            => 'Connexion par le Web',
-        'Login Via Web API'
-            => 'Connexion API',
         'Manage Users'
             => 'Gestion des utilisateurs',
         'Manager'
@@ -67,12 +61,20 @@
             => 'Longueur minimale du mot de passe',
         'Minimum Username Length'
             => 'Longueur minimale du nom d\'utilisateur',
+        'My Profile'
+            => 'Mon Profil',
         'Password Expires'
             => 'Expiration du mot de passe',
         'Password Expiry Days'
             => 'Durée de vie minimale des mots de passe',
         'Profile'
             => 'Profil',
+        'Sign in Via Mobile'
+            => 'Connexion mobile',
+        'Sign in Via Web'
+            => 'Connexion par le Web',
+        'Sign in Via Web API'
+            => 'Connexion API',
         'The password is too short. Minimum length is {minimumLength}.'
             => 'Le mot de passe doit comprendre {minimumLength} charatères minimum.',
         'The password must have at least one lowercase letter'
@@ -95,5 +97,7 @@
             => 'Recherche d\'utilisateurs',
         'Users'
             => 'Utilisateurs',
+        'Users Home'
+            => 'Inicio de Usuarios',
     );
 ?>

@@ -29,7 +29,7 @@
      * tool.  Has tests to make sure users can properly rebuild the database for schema changes after creating or
      * editing a custom attribute.
      */
-    class DesignerRedBeanDatabaseBuilderUtilTest extends BaseTest
+    class DesignerRedBeanDatabaseBuilderUtilTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2011 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -92,7 +92,7 @@
         protected function resolveActionElementInformationDuringRender(& $elementInformation)
         {
             parent::resolveActionElementInformationDuringRender($elementInformation);
-            if($elementInformation['type'] == $this->activeActionElementType)
+            if ($elementInformation['type'] == $this->activeActionElementType)
             {
                 $elementInformation['htmlOptions']['class'] .= ' active';
             }
@@ -112,17 +112,17 @@
             {
                 return false;
             }
-            if($elementInformation['type'] == 'DesignerGeneralLink' &&
+            if ($elementInformation['type'] == 'DesignerGeneralLink' &&
                !ArrayUtil::getArrayValue($moduleMenuItems, 'showGeneralLink'))
             {
                 return false;
             }
-            if($elementInformation['type'] == 'DesignerFieldsLink' &&
+            if ($elementInformation['type'] == 'DesignerFieldsLink' &&
                !ArrayUtil::getArrayValue($moduleMenuItems, 'showFieldsLink'))
             {
                 return false;
             }
-            if($elementInformation['type'] == 'DesignerLayoutsLink' &&
+            if ($elementInformation['type'] == 'DesignerLayoutsLink' &&
                !ArrayUtil::getArrayValue($moduleMenuItems, 'showLayoutsLink'))
             {
                 return false;

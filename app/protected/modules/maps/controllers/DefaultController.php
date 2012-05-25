@@ -71,7 +71,7 @@
                                     $this->getId(),
                                     $this->getModule()->getId(),
                                     $configurationForm);
-			$editView->setCssClasses( array('AdministrativeArea') );
+            $editView->setCssClasses( array('AdministrativeArea') );
             $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
                                          makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();

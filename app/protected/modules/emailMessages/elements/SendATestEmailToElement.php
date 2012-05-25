@@ -44,10 +44,9 @@
             $htmlOptions             = array_merge($this->getHtmlOptions(), $htmlOptions);
             $content                 = '<div id="send-test-email-field"><div>';
             $content                .= $this->form->textField($this->model, $this->attribute, $htmlOptions);
-			$content                .= '</div>';
-			$content                .= '</div>';
+            $content                .= '</div>';
+            $content                .= '</div>';
             $content                .= $this->renderTestButton();
-			
             return $content;
         }
 

@@ -219,7 +219,7 @@
       options  = $dk.find('.dk_options'),
       letter   = String.fromCharCode(code),
       open     = $dk.hasClass('dk_open'),
-      lis	   = options.find('li'),
+      lis      = options.find('li'),
       current  = $dk.find('.dk_option_current'),
       first    = lis.first(),
       last     = lis.last(),

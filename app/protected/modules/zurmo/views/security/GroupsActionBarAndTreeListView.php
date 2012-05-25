@@ -35,8 +35,8 @@
             assert('is_array($groups)');
             parent::__construct(2, 1);
             $this->setView(new ActionBarForGroupsTreeListView ($controllerId, $moduleId), 0, 0);
-			$groupsTreeListView = new GroupsTreeListView($controllerId, $moduleId, $groups);
-			$groupsTreeListView->setCssClasses(array('DetailsView'));
+            $groupsTreeListView = new GroupsTreeListView($controllerId, $moduleId, $groups);
+            $groupsTreeListView->setCssClasses(array('DetailsView'));
             $this->setView($groupsTreeListView, 1, 0);
         }
 

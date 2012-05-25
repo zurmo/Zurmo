@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ActivitiesActionSecurityTest extends BaseTest
+    class ActivitiesActionSecurityTest extends ZurmoBaseTest
     {
         public static function setUpBeforeClass()
         {

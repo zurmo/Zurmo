@@ -609,7 +609,7 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/1', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals('Login required.', $response['message']);
+            $this->assertEquals('Sign in required.', $response['message']);
         }
     }
 ?>

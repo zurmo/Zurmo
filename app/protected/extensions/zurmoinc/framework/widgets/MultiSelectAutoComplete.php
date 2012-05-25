@@ -64,7 +64,7 @@
         {
             $id = $this->getId();
             $this->htmlOptions['id'] = $id;
-            if(isset($this->htmlOptions['disabled']) && $this->htmlOptions['disabled'] == 'disabled')
+            if (isset($this->htmlOptions['disabled']) && $this->htmlOptions['disabled'] == 'disabled')
             {
                 $tokenListClassSuffix = ' disabled';
             }

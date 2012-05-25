@@ -129,5 +129,23 @@
         {
             R::freeze(false);
         }
+
+        /**
+         * Get database type from connection string(dsn)
+         * @param string $dsn
+         * @throws NotSupportedException
+         */
+        public static function getDatabaseTypeFromDsnString($dsn)
+        {
+            $databaseType = substr($dsn, 0, strpos($dsn, ':'));
+            if ($databaseType)
+            {
+                return $databaseType;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
     }
 ?>

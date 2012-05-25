@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ImportWizardFormPostUtilTest extends BaseTest
+    class ImportWizardFormPostUtilTest extends ZurmoBaseTest
     {
         public function testSanitizePostByTypeForSavingMappingData()
         {

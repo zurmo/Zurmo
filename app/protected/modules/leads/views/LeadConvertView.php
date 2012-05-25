@@ -106,12 +106,13 @@
             $title = Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
                                                 LabelUtil::getTranslationParamsForAllModules()) . ': ' . $title;
             parent::__construct($gridSize, 1);
+
             /**
             $x = new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
                                                       $userCanCreateAccount, $title);
             $this->setView(new LeadConvertActionsView($controllerId, $moduleId, $modelId, $convertToAccountSetting,
                                                       $userCanCreateAccount, $title), 0, 0);
-                                                      **/
+            **/
             $this->setView(new AccountSelectView($controllerId, $moduleId, $modelId, $selectAccountform), 0, 0);
             $this->setView(new AccountConvertToView($controllerId, $moduleId, $account, $modelId), 1, 0);
 
@@ -217,7 +218,7 @@
 
         protected function renderTitleContent()
         {
-            return '<h1>' . $this->title. '</h1>';
+            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

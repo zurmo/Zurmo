@@ -116,7 +116,6 @@
             $portletView->$action();
         }
 
-
        /**
          * Used by my list portlets to process or render actions on the portlet's view. An example is changing the
          * month of the calendar, requires additional calendar events to be loaded.

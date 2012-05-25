@@ -73,12 +73,11 @@
             {
                 $this->redirect(array($this->getId() . '/editPolicies', 'id' => $id));
             }
-
         }
 
         public function actionCreate()
         {
-            $title           = Yii::t('Default', 'Create a New Group');
+            $title           = Yii::t('Default', 'Create Group');
             $breadcrumbLinks = array($title);
             $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(),
                                                                    $this->attemptToSaveModelFromPost(new Group()));
@@ -339,7 +338,7 @@
 
         protected static function getGroupsOrderedByNonDeletablesFirst($includeEveryoneGroup = true)
         {
-            if($includeEveryoneGroup)
+            if ($includeEveryoneGroup)
             {
                 $groups = array(Group::getByName(Group::EVERYONE_GROUP_NAME),
                                 Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME));

@@ -29,7 +29,6 @@
         private $insideOnModified;
 
         protected $isSetting = false;
-        protected $isNewModel = false;
 
         // On changing a member value the original value
         // is saved (ie: on change it again the original
@@ -89,7 +88,7 @@
         public function delete()
         {
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_DELETED, strval($this), $this);
-            parent::delete();
+            return parent::delete();
         }
 
         // Makes Item appear on the stack so that auditing can ensure
@@ -190,7 +189,6 @@
             return false;
         }
 
-
         /**
          * Used for testing only. In scenarios where you need to test beforeDelete but can't because beforeDelete is
          * protected
@@ -241,6 +239,14 @@
                 }
             }
             return false;
+        }
+
+        /**
+         * @return string of gamificationRulesType Override for a child class as needed.
+         */
+        public static function getGamificationRulesType()
+        {
+            return null;
         }
     }
 ?>

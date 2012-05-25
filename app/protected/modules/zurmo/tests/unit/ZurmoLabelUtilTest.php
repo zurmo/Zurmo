@@ -28,7 +28,7 @@
      * File exists to test LabelUtil::getTranslationParamsForAllModules which requires a specific module in Zurmo
      * to be used for the test.
      */
-    class ZurmoLabelUtilTest extends BaseTest
+    class ZurmoLabelUtilTest extends ZurmoBaseTest
     {
         public function testGetTranslationParamsForAllModules()
         {

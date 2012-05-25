@@ -29,5 +29,30 @@
      */
     class RedBeanModelToApiDataUtil extends ModelToArrayAdapter
     {
+        /**
+        * Return array of retrievable model attributes
+        * @return array
+        */
+        protected static function resolveRetrievableAttributesByModel($model)
+        {
+            $retrievableAttributeNames = array();
+            $metadata = $model->getMetadata();
+            foreach ($model->attributeNames() as $name)
+            {
+                if (isset($metadata[get_class($model)]['noApiExport']) && in_array($name, $metadata[get_class($model)]['noApiExport']))
+                {
+                    continue;
+                }
+                try
+                {
+                    $value = $model->{$name};
+                    $retrievableAttributeNames[] = $name;
+                }
+                catch (Exception $e)
+                {
+                }
+            }
+            return $retrievableAttributeNames;
+        }
     }
 ?>

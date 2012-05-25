@@ -121,12 +121,12 @@
             {
                 $element->editableTemplate = '<td colspan="{colspan}">{content}{error}</td>';
             }
-            elseif($element instanceOf DerivedExplicitReadWriteModelPermissionsElement)
+            elseif ($element instanceOf DerivedExplicitReadWriteModelPermissionsElement)
             {
                 $element->editableTemplate = '<td colspan="{colspan}">' .
                                              '<div class="permissions-box">{label}<br/>{content}{error}</div></td>';
             }
-            elseif($element instanceOf FilesElement)
+            elseif ($element instanceOf FilesElement)
             {
                 $element->editableTemplate = '<td colspan="{colspan}">' .
                                              '<div class="file-upload-box">{content}{error}</div></td>';
@@ -144,6 +144,7 @@
          */
         protected function renderConfigSaveAjax($formName)
         {
+            // Begin Not Coding Standard
             return CHtml::ajax(array(
                     'type' => 'POST',
                     'data' => 'js:$("#' . $formName . '").serialize()',
@@ -155,6 +156,12 @@
                             $(this).find('.pager').find('.first').find('a').click();
                         });}"
                 ));
+            // End Not Coding Standard
+        }
+
+        protected function doesLabelHaveOwnCell()
+        {
+            return false;
         }
     }
 ?>

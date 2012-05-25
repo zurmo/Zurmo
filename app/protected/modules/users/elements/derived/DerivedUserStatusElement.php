@@ -50,6 +50,7 @@
                                                  $value,
                                                  $dropDownArray,
                                                  $htmlOptions);
+            $content       = CHtml::tag('div', array('class' => 'beforeToolTip'), $content);
             $content      .= self::renderTooltipContent();
             return $content;
         }
@@ -64,9 +65,9 @@
         {
             $title       = Yii::t('Default', 'Inactive users cannot log in using the web, mobile or web API. Login for' .
                                              ' active users is controlled by group rights.');
-            $content     = '&#160;<span id="user-status-tooltip" class="tooltip"  title="' . $title . '">';
-            $content    .= Yii::t('Default', '?') . '</span>';
-            $qtip = new ZurmoTip();
+            $content     = '<span id="user-status-tooltip" class="tooltip"  title="' . $title . '">';
+            $content    .= '?</span>';
+            $qtip = new ZurmoTip(array('options' => array('position' => array('corner' => array('target' => 'bottomLeft', 'tooltip' => 'topRight')))));
             $qtip->addQTip("#user-status-tooltip");
             return $content;
         }

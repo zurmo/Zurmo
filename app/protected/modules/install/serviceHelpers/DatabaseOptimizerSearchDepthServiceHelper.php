@@ -47,6 +47,7 @@
                                                                $this->form->databaseHostname,
                                                                $this->form->databaseUsername,
                                                                $this->form->databasePassword,
+                                                               $this->form->databasePort,
                                                                $optimizerSearchDepth))
             {
                 if ($optimizerSearchDepth == 0)

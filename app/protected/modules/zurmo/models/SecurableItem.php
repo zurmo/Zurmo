@@ -364,7 +364,7 @@
         public function delete()
         {
             self::checkPermissionsHasAnyOf(Permission::DELETE);
-            parent::delete();
+            return parent::delete();
         }
 
         protected function checkPermissionsHasAnyOf($requiredPermissions)

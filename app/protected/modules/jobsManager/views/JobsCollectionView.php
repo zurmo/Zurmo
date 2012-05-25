@@ -156,7 +156,7 @@
         {
             $title       = Yii::t('Default', 'The Monitor Job runs constantly making sure all jobs are running properly.');
             $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= Yii::t('Default', 'What is the Monitor Job?') . '</span>';
+            $content    .= '?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-monitor-job-tooltip");
             return $content;
@@ -221,7 +221,7 @@
 
         protected static function renderHelpContent()
         {
-            $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://www.zurmo.org/links/jobsManagerHelp.php');
+            $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager');
             $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
             $content .= '<span class="jobs-help">';
             $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',

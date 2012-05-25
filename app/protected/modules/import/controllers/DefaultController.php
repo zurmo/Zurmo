@@ -326,13 +326,17 @@
                                                            (bool)$importWizardForm->firstRowIsHeaderRow,
                                                            $config);
             $sequentialProcess    = new ImportCreateUpdateModelsSequentialProcess($import, $dataProvider);
+            Yii::app()->gameHelper->muteScoringModelsOnSave();
             $sequentialProcess->run($step, $nextParams);
+            Yii::app()->gameHelper->unmuteScoringModelsOnSave();
             $nextStep             = $sequentialProcess->getNextStep();
             $route                = $this->getModule()->getId() . '/' . $this->getId() . '/step6';
             if ($sequentialProcess->isComplete())
             {
-                $importCompleteView = $this->makeImportCompleteView($import, $importWizardForm, true);
-                $sequenceView       = new ContainedViewCompleteSequentialProcessView($importCompleteView);
+                $importingIntoModelClassName = $unserializedData['importRulesType'] . 'ImportRules';
+                Yii::app()->gameHelper->triggerImportEvent($importingIntoModelClassName::getModelClassName());
+                $importCompleteView          = $this->makeImportCompleteView($import, $importWizardForm, true);
+                $sequenceView                = new ContainedViewCompleteSequentialProcessView($importCompleteView);
             }
             else
             {
@@ -408,10 +412,10 @@
                                                        array());
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/dropDownInteractions.js'), CClientScript::POS_END);
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js', CClientScript::POS_END);
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/jquery.dropkick-1.0.0.js'), CClientScript::POS_END);
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js', CClientScript::POS_END);
             Yii::app()->getClientScript()->setToAjaxMode();
             Yii::app()->getClientScript()->render($content);
             echo $content;
