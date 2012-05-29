@@ -35,3 +35,5 @@ We have installation walkthroughs based on different development  platforms.
 For support please visit and register for our [forum] [fp] pages.
 [fp]: http://zurmo.org/forums/
 
+IMPORTANT NOTE: This is mirror repository from our Mercurial repository, which is hosted on BitBucket: https://bitbucket.org/zurmo/zurmo. We update this repository only when we release new stable releases, so it is strongly recomanded to clone Zurmo CRM from our master Mercurial repository.
+
