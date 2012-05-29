@@ -917,7 +917,7 @@
                 }
                 else
                 {
-                    DemoDataUtil::load($messageLogger, 3);
+                    DemoDataUtil::load($messageLogger, 6);
                 }
                 $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
             }

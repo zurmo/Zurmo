@@ -3337,3 +3337,5 @@ data/app/themes/default/fonts/zurmosymblyregular-regular.svg.i
 data/app/themes/default/fonts/zurmosymblyregular-regular.ttf.i
 data/app/themes/default/fonts/zurmosymblyregular-regular.woff.i
 data/app/themes/default/images/sprite-socialicons.png.i
+data/app/protected/modules/gamification/data/GamificationDemoDataMaker.php.i
+data/app/themes/default/fonts/zurmogamificationsymblyregular-regular-webfont.svg.i

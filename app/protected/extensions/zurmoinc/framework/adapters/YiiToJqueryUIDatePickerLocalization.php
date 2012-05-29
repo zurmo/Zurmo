@@ -73,6 +73,8 @@
                     return 'y/mm/dd';
                 case 'dd-MM-yy':    //nl format
                         return 'dd-mm-y';
+                case 'd/MM/yy':     //en_au format
+                        return 'd/mm/y';
                 default :
                     throw new NotImplementedException();
             }
@@ -89,7 +91,7 @@
             {
                 case 'HH:mm':       //de, es, fr, it, pt, nl, sr_yu, vi format
                     return 'hh:mm';
-                case 'h:mm a':      //en, hi format
+                case 'h:mm a':      //en, hi, en_au format
                     return 'h:mm tt';
                 case 'H:mm':        //sk, fa_ir, ru, ja format
                     return 'h:mm';

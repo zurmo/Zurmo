@@ -43,6 +43,7 @@
             assert('$demoDataHelper->isSetRange("Opportunity")');
 
             $meetings = array();
+            //Future meetings
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
                 $meeting        = new Meeting();
@@ -56,10 +57,24 @@
                 assert('$saved');
                 $meetings[] = $meeting->id;
             }
+            //Past meetings
+            for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
+            {
+                $meeting        = new Meeting();
+                $opportunity    = $demoDataHelper->getRandomByModelName('Opportunity');
+                $meeting->owner = $opportunity->owner;
+                $meeting->activityItems->add($opportunity);
+                $meeting->activityItems->add($opportunity->contacts[0]);
+                $meeting->activityItems->add($opportunity->account);
+                $this->populateModel($meeting, false);
+                $saved = $meeting->save();
+                assert('$saved');
+                $meetings[] = $meeting->id;
+            }
             $demoDataHelper->setRangeByModelName('Meeting', $meetings[0], $meetings[count($meetings)-1]);
         }
 
-        public function populateModel(& $model)
+        public function populateModel(& $model, $setInFuture = true)
         {
             assert('$model instanceof Meeting');
             parent::populateModel($model);
@@ -70,9 +85,18 @@
             $category          = RandomDataUtil::getRandomValueFromArray(
                                  static::getCustomFieldDataByName('MeetingCategories'));
             $location          = RandomDataUtil::getRandomValueFromArray($meetingRandomData['locations']);
-            $startTimeStamp    = time() + (mt_rand(1, 200) * 60 * 60 * 24);
-            $startDateTime     = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp);
-            $endDateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp + (mt_rand(1, 24) * 15));
+            if($setInFuture)
+            {
+                $startTimeStamp    = time() + (mt_rand(1, 60) * 60 * 60 * 24);
+                $startDateTime     = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp);
+                $endDateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp + (mt_rand(1, 24) * 15));
+            }
+            else
+            {
+                $startTimeStamp    = time() - (mt_rand(1, 30) * 60 * 60 * 24);
+                $startDateTime     = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp);
+                $endDateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp + (mt_rand(1, 24) * 15));
+            }
 
             $model->name             =      $name;
             $model->category->value  =      $category;

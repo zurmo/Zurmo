@@ -44,7 +44,7 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                $serializedData = Yii::app()->cache->get('G:' . $identifier);
+                @$serializedData = Yii::app()->cache->get('G:' . $identifier);
                 if ($serializedData !== false)
                 {
                     $unserializedData = unserialize($serializedData);
@@ -68,7 +68,7 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                Yii::app()->cache->set('G:' . $identifier, serialize($entry));
+                @Yii::app()->cache->set('G:' . $identifier, serialize($entry));
             }
         }
 
@@ -83,7 +83,7 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                Yii::app()->cache->delete('G:' . $identifier);
+                @Yii::app()->cache->delete('G:' . $identifier);
             }
         }
 
@@ -95,7 +95,7 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                Yii::app()->cache->flush();
+                @Yii::app()->cache->flush();
             }
         }
     }

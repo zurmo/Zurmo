@@ -58,7 +58,7 @@
             $this->assertEquals(3, Account::getCount());
             $this->assertEquals(12, Contact::getCount());
             $this->assertEquals(6, Opportunity::getCount());
-            $this->assertEquals(9, Meeting::getCount());
+            $this->assertEquals(18, Meeting::getCount());
             $this->assertEquals(9, Note::getCount());
             $this->assertEquals(9, Task::getCount());
             $this->assertEquals(9, User::getCount());

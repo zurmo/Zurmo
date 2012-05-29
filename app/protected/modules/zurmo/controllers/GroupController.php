@@ -26,6 +26,18 @@
 
     class ZurmoGroupController extends ZurmoModuleController
     {
+        public static function resolveBreadCrumbActionByGroup(Group $group)
+        {
+            if (!$group->isEveryone && !$group->isSuperAdministrators)
+            {
+                return 'edit';
+            }
+            else
+            {
+                return 'editPolicies';
+            }
+        }
+
         public function filters()
         {
             return array(
@@ -90,7 +102,7 @@
         {
             $group               = Group::getById(intval($id));
             $title           = Yii::t('Default', 'Edit');
-            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
+            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $this->resolveCanGroupBeEdited($group);
             $titleBarAndEditView = new GroupActionBarAndEditView($this->getId(),
                                                                  $this->getModule()->getId(),
@@ -133,7 +145,7 @@
         {
             $group              = Group::getById(intval($id));
             $title           = Yii::t('Default', 'User Membership');
-            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
+            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $membershipForm     = GroupUserMembershipFormUtil::makeFormFromGroup($group);
             $postVariableName   = get_class($membershipForm);
             if (isset($_POST[$postVariableName]))
@@ -164,7 +176,7 @@
         {
             $group            = Group::getById(intval($id));
             $title           = Yii::t('Default', 'Module Permissions');
-            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
+            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $data             =  PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
             $permissionsForm  = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
             $postVariableName = get_class($permissionsForm);
@@ -205,7 +217,7 @@
         {
             $group              = Group::getById(intval($id));
             $title           = Yii::t('Default', 'Rights');
-            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
+            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $rightsData         = RightsUtil::getAllModuleRightsDataByPermitable($group);
             $rightsForm         = RightsFormUtil::makeFormFromRightsData($rightsData);
             $postVariableName   = get_class($rightsForm);
@@ -243,7 +255,7 @@
         {
             $group              = Group::getById(intval($id));
             $title           = Yii::t('Default', 'Policies');
-            $breadcrumbLinks = array(strval($group) => array('group/edit',  'id' => $id), $title);
+            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $data               = PoliciesUtil::getAllModulePoliciesDataByPermitable($group);
             $policiesForm       = PoliciesFormUtil::makeFormFromPoliciesData($data);
             $postVariableName   = get_class($policiesForm);
