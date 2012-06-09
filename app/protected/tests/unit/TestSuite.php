@@ -168,7 +168,7 @@
         public static function customOptionSet($customOption, &$argv)
         {
             $set = in_array($customOption, $argv);
-            $argv = array_diff($argv, array($customOption));
+            $argv = array_values(array_diff($argv, array($customOption)));
             return $set;
         }
 

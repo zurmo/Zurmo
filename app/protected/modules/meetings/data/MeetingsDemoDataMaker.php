@@ -85,7 +85,7 @@
             $category          = RandomDataUtil::getRandomValueFromArray(
                                  static::getCustomFieldDataByName('MeetingCategories'));
             $location          = RandomDataUtil::getRandomValueFromArray($meetingRandomData['locations']);
-            if($setInFuture)
+            if ($setInFuture)
             {
                 $startTimeStamp    = time() + (mt_rand(1, 60) * 60 * 60 * 24);
                 $startDateTime     = DateTimeUtil::convertTimestampToDbFormatDateTime($startTimeStamp);

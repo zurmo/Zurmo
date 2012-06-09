@@ -29,71 +29,32 @@
      */
     abstract class MassEditModelsGameBadgeRules extends GameBadgeRules
     {
+        public static $valuesIndexedByGrade = array(
+            1  => 1,
+            2  => 5,
+            3  => 10,
+            4  => 20,
+            5  => 30,
+            6  => 40,
+            7  => 50,
+            8  => 60,
+            9  => 70,
+            10 => 80,
+            11 => 90,
+            12 => 100,
+            13 => 125
+        );
+
         public static function badgeGradeUserShouldHaveByPointsAndScoresByModelClassName(
                                $userPointsByType, $userScoresByType, $modelClassName)
         {
             assert('is_array($userPointsByType)');
             assert('is_array($userScoresByType)');
             assert('is_string($modelClassName)');
-            $elementName = 'Search' . $modelClassName;
+            $elementName = 'MassEdit' . $modelClassName;
             if (isset($userScoresByType[$elementName]))
             {
-                if ($userScoresByType[$elementName]->value < 1)
-                {
-                    return 0;
-                }
-                if ($userScoresByType[$elementName]->value < 2)
-                {
-                    return 1;
-                }
-                elseif ($userScoresByType[$elementName]->value < 6)
-                {
-                    return 2;
-                }
-                elseif ($userScoresByType[$elementName]->value < 11)
-                {
-                    return 3;
-                }
-                elseif ($userScoresByType[$elementName]->value < 21)
-                {
-                    return 4;
-                }
-                elseif ($userScoresByType[$elementName]->value < 31)
-                {
-                    return 5;
-                }
-                elseif ($userScoresByType[$elementName]->value < 41)
-                {
-                    return 6;
-                }
-                elseif ($userScoresByType[$elementName]->value < 51)
-                {
-                    return 7;
-                }
-                elseif ($userScoresByType[$elementName]->value < 61)
-                {
-                    return 8;
-                }
-                elseif ($userScoresByType[$elementName]->value < 71)
-                {
-                    return 9;
-                }
-                elseif ($userScoresByType[$elementName]->value < 81)
-                {
-                    return 10;
-                }
-                elseif ($userScoresByType[$elementName]->value < 91)
-                {
-                    return 11;
-                }
-                elseif ($userScoresByType[$elementName]->value < 101)
-                {
-                    return 12;
-                }
-                elseif ($userScoresByType[$elementName]->value >= 125)
-                {
-                    return 13;
-                }
+                return static::getBadgeGradeByValue((int)$userScoresByType[$elementName]->value);
             }
             return 0;
         }

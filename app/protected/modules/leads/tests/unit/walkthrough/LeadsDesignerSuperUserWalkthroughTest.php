@@ -80,6 +80,10 @@
             $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/modulesMenu');
 
+            //Load AttributesList for Leads module.
+            $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
+            $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributesList');
+
             //Load ModuleLayoutsList for Lead module.
             $this->setGetArray(array('moduleClassName' => 'LeadsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/moduleLayoutsList');

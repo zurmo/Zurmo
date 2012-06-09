@@ -63,7 +63,7 @@
 
         protected function renderContent()
         {
-            $content  = '<div>';
+            $content  = '<div class="wrapper">';
             $content .= $this->renderTitleContent();
             $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();

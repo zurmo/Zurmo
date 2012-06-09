@@ -152,8 +152,7 @@
             $errors = CJSON::decode($content);
             $this->assertGreaterThanOrEqual(5, count($errors));
 
-            //This validation should pass.
-            $this->setPostArray(array(
+            $postData = array(
                 'ajax'                => 'install-form',
                 'InstallSettingsForm' => array(
                     'databaseHostname'      => $this->databaseHostname,
@@ -164,13 +163,33 @@
                     'databasePassword'      => $this->databasePassword,
                     'databasePort'          => $this->databasePort,
                     'superUserPassword'     => $this->superUserPassword,
-                    'memcacheHostname'      => 'localhost',
-                    'memcachePortNumber'    => '11211',
-                    'memcacheAvailable'     => '1',
                     'databaseType'          => 'mysql',
                     'removeExistingData'    => '1',
                     'installDemoData'       => '',
-                )));
+                )
+            );
+            if (MEMCACHE_ON)
+            {
+                $memcacheSettings = array(
+                    'memcacheHostname'      => 'localhost',
+                    'memcachePortNumber'    => '11211',
+                    'memcacheAvailable'     => '1',
+                );
+            }
+            else
+            {
+                $memcacheSettings = array(
+                    'memcacheHostname'      => '',
+                    'memcachePortNumber'    => '',
+                    'memcacheAvailable'     => '0',
+                );
+            }
+            $postData['InstallSettingsForm'] = array_merge(
+                $postData['InstallSettingsForm'], $memcacheSettings
+            );
+
+            $this->setPostArray($postData);
+
             $content = $this->runControllerWithExitExceptionAndGetContent('install/default/settings');
             $errors = CJSON::decode($content);
             $this->assertEquals(0, count($errors));

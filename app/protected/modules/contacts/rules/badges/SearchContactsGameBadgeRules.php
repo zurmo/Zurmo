@@ -29,9 +29,10 @@
      */
     class SearchContactsGameBadgeRules extends SearchModelsGameBadgeRules
     {
-        public static function getDisplayName()
+        public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', 'Searching ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', '{n} ContactsModuleSingularLabel search completed|{n} ContactsModuleSingularLabel searches completed',
+                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

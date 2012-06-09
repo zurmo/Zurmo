@@ -82,7 +82,7 @@
             $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/modulesMenu');
 
-            //Load AttributesList for Conatct module.
+            //Load AttributesList for Contacts module.
             $this->setGetArray(array('moduleClassName' => 'ContactsModule'));
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/attributesList');
 

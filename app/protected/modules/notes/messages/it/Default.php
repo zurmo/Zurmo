@@ -48,8 +48,10 @@
         'NotesModuleSingularLabel'
             => 'NotesModuleSingularLabel', // Same Word Translated
         'Occurred On'
-            => 'Avvenuto ',
+            => 'Avvenuto',
         'The NotesModulePluralLabel form cannot be displayed.'
             => 'Non si può visualizzare il formulario di NotesModulePluralLabel.',
+        '{n} NotesModuleSingularLabel created|{n} NotesModulePluralLabel created'
+            => '{n} NotesModuleSingularLabel create|{n} NotesModulePluralLabel creati',
     );
 ?>

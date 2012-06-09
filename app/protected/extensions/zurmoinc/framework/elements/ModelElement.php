@@ -101,7 +101,7 @@
             );
             $content       = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
             $inputContent  = $this->renderTextField($this->getIdForHiddenField());
-            $inputContent .= '&#160;' . $this->renderSelectLink();
+            $inputContent .= $this->renderSelectLink();
             return $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
         }
 

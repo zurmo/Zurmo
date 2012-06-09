@@ -104,6 +104,7 @@
             {
                 $content .= CHtml::hiddenField($this->gridId . $this->gridIdSuffix . '-selectedIds', implode(",", $this->selectedIds)) . "\n"; // Not Coding Standard
             }
+            $content .= $this->renderScripts();
             return $content;
         }
 
@@ -362,6 +363,13 @@
         protected function getDataProvider()
         {
             return $this->dataProvider;
+        }
+
+        protected function renderScripts()
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/ListViewUtils.js');
         }
     }
 ?>

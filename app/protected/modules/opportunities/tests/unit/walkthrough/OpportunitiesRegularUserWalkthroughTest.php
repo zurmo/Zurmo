@@ -127,11 +127,17 @@
 
             //Test nobody with elevated rights.
             Yii::app()->user->userModel = User::getByUsername('nobody');
-            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/list');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/list');
+            $this->assertFalse(strpos($content, 'Albert Einstein') === false);
             $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/create');
 
             //Test nobody can view an existing opportunity he owns.
             $opportunity = OpportunityTestHelper::createOpportunityByNameForOwner('opportunityOwnedByNobody', $nobody);
+
+            //At this point the listview for leads should show the search/list and not the helper screen.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/list');
+            $this->assertTrue(strpos($content, 'Albert Einstein') === false);
+
             $this->setGetArray(array('id' => $opportunity->id));
             $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
 

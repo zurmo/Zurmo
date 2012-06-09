@@ -73,5 +73,11 @@
             => 'AccountsModulePluralLabel principal',
         'Vendor'
             => 'Vendeur',
-    );
+        '{n} AccountsModuleSingularLabel created|{n} AccountsModulePluralLabel created'
+            => '{n} AccountsModuleSingularLabel crée|{n} AccountsModulePluralLabel creés',
+        '{n} AccountsModuleSingularLabel mass updated|{n} AccountsModulePluralLabel mass updated'
+            => '{n} AccountsModuleSingularLabel a été mis à jour|{n} AccountsModulePluralLabel ont été mis à jour',
+        '{n} AccountsModuleSingularLabel search completed|{n} AccountsModuleSingularLabel searches completed'
+            => '{n} recherche AccountsModuleSingularLabel complétée|{n} recherches AccountsModuleSingularLabel complétées',
+   );
 ?>

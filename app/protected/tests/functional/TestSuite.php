@@ -25,9 +25,10 @@
      ********************************************************************************/
 
     $basePath = realpath(dirname(__FILE__) . '/../../../');
-    require_once 'File/Iterator.php';
 
     require_once('../PhpUnitServiceUtil.php');
+    require_once 'File/Iterator.php';
+    require_once('File/Iterator/Factory.php');
 
     if (is_file($basePath . '/protected/config/debugTest.php'))
     {
@@ -47,9 +48,8 @@
     define('USER_EXTENSIONS_JS_PATH', './assets/extensions/user-extensions.js');
     define('SELENIUM_SERVER_PORT', $seleniumServerPort);
     define('BROWSERS_TO_RUN', $seleniumBrowsersToRun);
-    define('TEST_BASE_DB_CONTROL_URL', $seleniumDbControlUrl);
+    define('TEST_BASE_CONTROL_URL', $seleniumControlUrl);
 
-    require_once('File/Iterator/Factory.php');
     class TestSuite
     {
         public static function run()
@@ -169,12 +169,20 @@
                 self::clearPreviousTestResultsByBrowser($browserDisplayName);
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
-                    echo 'Restoring test db';
-                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
-                    echo "Restored test db";
-                    echo 'Clear cache on remote server';
-                    self::remoteAction(TEST_BASE_URL, array('clearCache'         => '1',
-                                                            'ignoreBrowserCheck' => '1'));
+                    if (!self::isInstallationTest($pathToSuite))
+                    {
+                        echo 'Restoring test db';
+                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restore'));
+                        echo "Restored test db";
+                        echo 'Clear cache on remote server';
+                        self::remoteAction(TEST_BASE_URL, array('clearCache'         => '1',
+                                                                'ignoreBrowserCheck' => '1'));
+                    }
+                    else
+                    {
+                        echo 'Uninstall zurmo';
+                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'backupRemovePerInstance'));
+                    }
                     echo "Cache cleared";
 
                     echo 'Running test suite: ';
@@ -201,7 +209,11 @@
                     echo $finalCommand . "\n";
                     exec($finalCommand);
                     echo 'Restoring test db';
-                    self::remoteAction(TEST_BASE_DB_CONTROL_URL, array('action' => 'restore'));
+                    self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restore'));
+                    if (self::isInstallationTest($pathToSuite))
+                    {
+                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restorePerInstance'));
+                    }
                 }
             }
             echo 'Functional Run Complete.' . "\n";
@@ -597,7 +609,7 @@
                 echo "Invalid db control url";
                 exit;
             }
-            if (isset($params['action']) && in_array($params['action'], array('restore')))
+            if (isset($params['action']) && in_array($params['action'], array('restore', 'backupRemovePerInstance', 'restorePerInstance')))
             {
                 $url = $url . "?action=" . urlencode($params['action']);
             }
@@ -633,6 +645,25 @@
             {
                 echo $error_info;
                 exit;
+            }
+        }
+
+        /**
+         * Determine is suite is installation test suite.
+         * @param string $path
+         * @return boolen
+         */
+        protected static function isInstallationTest($path)
+        {
+            $position = strpos($path, 'InstallationTestSuite.html');
+
+            if ($position !== false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

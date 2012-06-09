@@ -39,6 +39,8 @@
             => 'Actividades recientes',
         'All Activities'
             => 'Todas las actividades',
+        'for {relatedModelsStringContent}'
+            => 'para {relatedModelsStringContent}',
         'Latest Activities'
             => 'Resumen de las actividades',
         'Latest Date Time'
@@ -61,5 +63,7 @@
             => 'Activar enrollar para ver las actividades conectadas.',
         'View'
             => 'Vista',
+        'with {relatedContactsStringContent}'
+            => 'con {relatedContactsStringContent}',
     );
 ?>

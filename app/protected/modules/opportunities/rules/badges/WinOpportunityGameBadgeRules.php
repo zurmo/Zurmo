@@ -29,9 +29,26 @@
      */
     class WinOpportunityGameBadgeRules extends GameBadgeRules
     {
-        public static function getDisplayName()
+        public static $valuesIndexedByGrade = array(
+            1  => 1,
+            2  => 3,
+            3  => 5,
+            4  => 10,
+            5  => 20,
+            6  => 30,
+            7  => 40,
+            8  => 50,
+            9  => 60,
+            10 => 70,
+            11 => 80,
+            12 => 90,
+            13 => 100
+        );
+
+        public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', 'Winning OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', '{n} OpportunitiesModuleSingularLabel won|{n} OpportunitiesModulePluralLabel won',
+                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)
@@ -40,62 +57,7 @@
             assert('is_array($userScoresByType)');
             if (isset($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]))
             {
-                if ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 1)
-                {
-                    return 0;
-                }
-                if ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 2)
-                {
-                    return 1;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 4)
-                {
-                    return 2;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 6)
-                {
-                    return 3;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 11)
-                {
-                    return 4;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 21)
-                {
-                    return 5;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 31)
-                {
-                    return 6;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 41)
-                {
-                    return 7;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 51)
-                {
-                    return 8;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 61)
-                {
-                    return 9;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 71)
-                {
-                    return 10;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 81)
-                {
-                    return 11;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value < 91)
-                {
-                    return 12;
-                }
-                elseif ($userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value >= 100)
-                {
-                    return 13;
-                }
+                return static::getBadgeGradeByValue((int)$userScoresByType[OpportunityGamificationRules::SCORE_TYPE_WIN_OPPORTUNITY]->value);
             }
             return 0;
         }

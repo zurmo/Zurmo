@@ -40,6 +40,7 @@
         {
             if ($this->enabled)
             {
+                $observedModels = array();
                 $modules = Module::getModuleObjects();
                 foreach ($modules as $module)
                 {
@@ -47,8 +48,10 @@
                     {
                         $modelClassName = $module->getPrimaryModelName();
                         if ($modelClassName != null && is_subclass_of($modelClassName, 'Item') &&
-                            $modelClassName::getGamificationRulesType() != null)
+                            $modelClassName::getGamificationRulesType() != null &&
+                            !in_array($modelClassName, $observedModels))
                         {
+                            $observedModels[]           = $modelClassName;
                             $gamificationRulesType      = $modelClassName::getGamificationRulesType();
                             $gamificationRulesClassName = $gamificationRulesType . 'Rules';
                             $rules                      = new $gamificationRulesClassName();

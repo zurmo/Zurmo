@@ -26,5 +26,31 @@
 
     class UsersDefaultPortletController extends ZurmoPortletController
     {
+        /**
+         * Override to exclude details
+         * because this action are checked using the
+         * resolveCanCurrentUserAccessAction method.
+         */
+        public function filters()
+        {
+            $moduleClassName = get_class($this->getModule());
+            $filters = array();
+            if (is_subclass_of($moduleClassName, 'SecurableModule'))
+            {
+                $filters[] = array(
+                        ZurmoBaseController::RIGHTS_FILTER_PATH .
+                        ' - details',
+                        'moduleClassName' => $moduleClassName,
+                        'rightName' => $moduleClassName::getAccessRight(),
+                );
+            }
+            return $filters;
+        }
+
+        public function actionDetails($id)
+        {
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
+            parent::actionDetails($id);
+        }
     }
 ?>

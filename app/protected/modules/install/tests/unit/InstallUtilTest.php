@@ -451,6 +451,11 @@
 
         public function testCheckMemcacheConnection()
         {
+            if (!MEMCACHE_ON)
+            {
+                $this->markTestSkipped('Memcache level caching is turned off.');
+            }
+
             $this->assertTrue  (InstallUtil::checkMemcacheConnection('127.0.0.1', 11211));
             $this->assertTrue  (InstallUtil::checkMemcacheConnection('localhost', 11211));
             $results = InstallUtil::checkMemcacheConnection('10.3.3.3',  11211);

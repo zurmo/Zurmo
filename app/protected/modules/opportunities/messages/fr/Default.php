@@ -73,5 +73,13 @@
             => 'Qualification', // Same Word Translated
         'Verbal'
             => 'Verbal', // Same Word Translated
+        '{n} OpportunitiesModuleSingularLabel created|{n} OpportunitiesModulePluralLabel created'
+            => '{n} OpportunitiesModuleSingularLabel crée|{n} OpportunitiesModulePluralLabel crées',
+        '{n} OpportunitiesModuleSingularLabel mass updated|{n} OpportunitiesModulePluralLabel mass updated'
+            => '{n} OpportunitiesModuleSingularLabel a été mise à jour|{n} OpportunitiesModulePluralLabel ont été mises à jour',
+        '{n} OpportunitiesModuleSingularLabel search completed|{n} OpportunitiesModuleSingularLabel searches completed'
+            => '{n} recherche OpportunitiesModuleSingularLabel complétée|{n} recherches OpportunitiesModuleSingularLabel complétées',
+        '{n} OpportunitiesModuleSingularLabel won|{n} OpportunitiesModulePluralLabel won'
+            => '{n} OpportunitiesModuleSingularLabel gagnée|{n} OpportunitiesModulePluralLabel gagnées',
     );
 ?>

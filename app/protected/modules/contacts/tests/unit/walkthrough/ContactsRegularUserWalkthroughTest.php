@@ -54,6 +54,7 @@
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser                          (Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
             //Make contact DetailsAndRelations portlets
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function testRegularUserAllControllerActionsNoElevation()
@@ -114,11 +115,18 @@
 
             //Test nobody with elevated rights.
             Yii::app()->user->userModel = User::getByUsername('nobody');
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->assertFalse(strpos($content, 'Arthur Conan') === false);
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/create');
 
             //Test nobody can view an existing contact he owns.
             $contact = ContactTestHelper::createContactByNameForOwner('Switcheroo', $nobody);
+
+            //At this point the listview for leads should show the search/list and not the helper screen.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->assertTrue(strpos($content, 'Arthur Conan') === false);
+
+            //Go to the a ccount editview.
             $this->setGetArray(array('id' => $contact->id));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
 

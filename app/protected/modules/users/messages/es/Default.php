@@ -49,6 +49,8 @@
             => 'Forzar contraseñas robustas',
         'Hash'
             => 'Almohadilla',
+        'Hide welcome page'
+            => 'Ocultar la página de inicio',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
             => 'Los usuarios inactivos no pueden iniciar sesión en el uso de la web, móvil o web API. Inicio de sesión de usuarios activos es controlado por los derechos de grupo.',
         'Inherited Value:'

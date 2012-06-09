@@ -63,5 +63,7 @@
             => 'TasksModulePluralLabel para OpportunitiesModuleSingularLabel',
         'TasksModuleSingularLabel'
             => 'TasksModuleSingularLabel', // Same Word Translated
+        '{n} TasksModuleSingularLabel created|{n} TasksModulePluralLabel created'
+            => '{n} TasksModuleSingularLabel ha sido creado|{n} TasksModulePluralLabel han sido creados',
     );
 ?>

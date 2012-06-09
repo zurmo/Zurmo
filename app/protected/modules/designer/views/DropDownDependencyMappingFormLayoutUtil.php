@@ -198,6 +198,7 @@
             ));
             return "$('#" . $id . "').live('change', function()
             {
+                $('.AppContainer').removeAttr('style');
                 $ajaxSubmitScript
             }
             );";
@@ -211,21 +212,14 @@
                                 getDataIndexedByDataAndTranslatedLabelsByLanguage($mapping->getCustomFieldData(),
                                                                                   Yii::app()->language);
             $content  = '<table>';
-            $content .= '<tr>';
-            $content .= '<td>';
-            $content .= '<b>' . Yii::t('Default', 'Value') . '</b>';
-            $content .= '</td>';
-            $content .= '<td>';
-            $content .= '<b>' . Yii::t('Default', 'Show If') . '</b>';
-            $content .= '</td>';
-            $content .= '</tr>';
             $valuePosition = 0;
             foreach ($dataAndLabels as $value => $label)
             {
                 $content .= '<tr>';
                 $content .= '<td>';
-                $content .= $label;
+                $content .= Yii::t('Default', 'Display {label} when', array('{label}' =>$label));
                 $content .= '</td>';
+                $content .= '</tr><tr>';
                 $content .= '<td>';
                 $content .= $this->renderValuesToParentValuesMappingDropDownContent(
                                         $parentMapping,

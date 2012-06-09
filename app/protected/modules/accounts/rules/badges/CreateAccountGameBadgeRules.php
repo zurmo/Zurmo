@@ -29,9 +29,26 @@
      */
     class CreateAccountGameBadgeRules extends GameBadgeRules
     {
-        public static function getDisplayName()
+        public static $valuesIndexedByGrade = array(
+            1  => 1,
+            2  => 5,
+            3  => 10,
+            4  => 25,
+            5  => 50,
+            6  => 75,
+            7  => 100,
+            8  => 125,
+            9  => 150,
+            10 => 175,
+            11 => 200,
+            12 => 225,
+            13 => 250
+        );
+
+        public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', 'Creating AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', '{n} AccountsModuleSingularLabel created|{n} AccountsModulePluralLabel created',
+                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)
@@ -40,62 +57,7 @@
             assert('is_array($userScoresByType)');
             if (isset($userScoresByType['CreateAccount']))
             {
-                if ($userScoresByType['CreateAccount']->value < 1)
-                {
-                    return 0;
-                }
-                if ($userScoresByType['CreateAccount']->value < 2)
-                {
-                    return 1;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 6)
-                {
-                    return 2;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 11)
-                {
-                    return 3;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 26)
-                {
-                    return 4;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 51)
-                {
-                    return 5;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 76)
-                {
-                    return 6;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 101)
-                {
-                    return 7;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 126)
-                {
-                    return 8;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 151)
-                {
-                    return 9;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 176)
-                {
-                    return 10;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 201)
-                {
-                    return 11;
-                }
-                elseif ($userScoresByType['CreateAccount']->value < 226)
-                {
-                    return 12;
-                }
-                elseif ($userScoresByType['CreateAccount']->value >= 250)
-                {
-                    return 13;
-                }
+                return static::getBadgeGradeByValue((int)$userScoresByType['CreateAccount']->value);
             }
             return 0;
         }

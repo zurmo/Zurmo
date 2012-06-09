@@ -81,5 +81,11 @@
             => 'El estado especificado no existe.',
         'The status specified is not unique and is invalid.'
             => 'El estado especificado no es único y es invalido.',
+        '{n} ContactsModuleSingularLabel created|{n} ContactsModulePluralLabel created'
+            => '{n} ContactsModuleSingularLabel creado|{n} ContactsModulePluralLabel creados',
+        '{n} ContactsModuleSingularLabel mass updated|{n} ContactsModulePluralLabel mass updated'
+            => '{n} ContactsModuleSingularLabel Se ha actualizado|{n} ContactsModulePluralLabel se han actualizados',
+        '{n} ContactsModuleSingularLabel search completed|{n} ContactsModuleSingularLabel searches completed'
+            => '{n} ContactsModuleSingularLabel búsqueda se ha completado|{n} ContactsModuleSingularLabel búsquedas se han completadas',
     );
 ?>

@@ -112,10 +112,10 @@
                 $nextLevel                       = GameLevelUtil::
                                                    getNextLevelByTypeAndCurrentLevel($levelType, $currentGameLevel);
                 $currentLevelMinimumPointValue   = $rulesClassName::getMinimumPointsForLevel(intval($currentGameLevel->value));
+                $trueCurrentGameLevel            = $currentGameLevel->value;
             }
             if ($nextLevel !== false)
             {
-
                 $pointsCollectedTowardsNextLevel = ($currentPoints - $currentLevelMinimumPointValue);
                 if ($pointsCollectedTowardsNextLevel == 0)
                 {
@@ -125,12 +125,10 @@
                 {
                     $nextLevelPercentageComplete = ($pointsCollectedTowardsNextLevel / ($nextLevelPointValue - $currentLevelMinimumPointValue)) * 100;
                 }
-                $trueCurrentGameLevel        = $currentGameLevel->value;
             }
             else
             {
                 $nextLevelPercentageComplete = null;
-                $trueCurrentGameLevel        = $currentGameLevel->value;
             }
 
             $rankingData = array(

@@ -81,5 +81,11 @@
             => 'La valeur du statut spécifié n\'existe pas.',
         'The status specified is not unique and is invalid.'
             => 'La valeur du statut spécifié n\'est pas unique et n\'est pas valide.',
+        '{n} ContactsModuleSingularLabel created|{n} ContactsModulePluralLabel created'
+            => '{n} ContactsModuleSingularLabel crée|{n} ContactsModulePluralLabel crées',
+        '{n} ContactsModuleSingularLabel mass updated|{n} ContactsModulePluralLabel mass updated'
+            => '{n} ContactsModuleSingularLabel a été mis à jour|{n} ContactsModulePluralLabel ont été mis à jour',
+        '{n} ContactsModuleSingularLabel search completed|{n} ContactsModuleSingularLabel searches completed'
+            => '{n} recherche ContactsModuleSingularLabel complétée|{n} recherches ContactsModuleSingularLabel complétées',
     );
 ?>

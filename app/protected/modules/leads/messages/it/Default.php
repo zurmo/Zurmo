@@ -81,5 +81,7 @@
             => 'Seleziona AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'
             => 'Salta AccountsModuleSingularLabel',
+        '{n} LeadsModuleSingularLabel created|{n} LeadsModulePluralLabel created'
+            => '{n} LeadsModuleSingularLabel create|{n} LeadsModulePluralLabel creati',
     );
 ?>

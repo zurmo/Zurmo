@@ -70,7 +70,7 @@
     // memcache. A model's related models are not serialized
     // along with it.
     // Check it in as true!
-    $memcacheLevelCaching = true;
+    $memcacheLevelCaching = false;
 
     // Turn this off to test without db level caching of permissions.
     // Check it in as true!
@@ -97,7 +97,7 @@
     $seleniumTestResultsPath        = '';
     $seleniumServerPort             = '4048';
     $seleniumBrowsersToRun          = 'All';
-    $seleniumDbControlUrl           = '';
+    $seleniumControlUrl           = '';
 
     if ($debugOn)
     {

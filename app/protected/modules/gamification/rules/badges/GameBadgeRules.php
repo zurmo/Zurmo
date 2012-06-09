@@ -29,9 +29,15 @@
      */
     abstract class GameBadgeRules
     {
-        public static function getDisplayName()
+        public static function getPassiveDisplayLabel($value)
         {
             throw new NotImplementedException();
+        }
+
+        public static function getItemCountByGrade($grade)
+        {
+            assert('is_int($grade)');
+            return ArrayUtil::getArrayValue(static::$valuesIndexedByGrade, $grade);
         }
 
         /**
@@ -78,6 +84,20 @@
             assert('is_array($userPointsByType)');
             assert('is_array($userScoresByType)');
             throw new NotImplementedException();
+        }
+
+        protected static function getBadgeGradeByValue($value)
+        {
+            assert('is_int($value)');
+            $currentGrade   = 0;
+            foreach (static::$valuesIndexedByGrade as $grade => $minimumValue)
+            {
+                if ($value >= $minimumValue)
+                {
+                    $currentGrade = $grade;
+                }
+            }
+            return $currentGrade;
         }
 
         /**

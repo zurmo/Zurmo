@@ -81,5 +81,11 @@
             => 'Die angegebenen Status existiert nicht',
         'The status specified is not unique and is invalid.'
             => 'Die angegebenen Status ist nicht eindeutig und ist ungültig',
+        '{n} ContactsModuleSingularLabel created|{n} ContactsModulePluralLabel created'
+            => '??',
+        '{n} ContactsModuleSingularLabel mass updated|{n} ContactsModulePluralLabel mass updated'
+            => '??',
+        '{n} ContactsModuleSingularLabel search completed|{n} ContactsModuleSingularLabel searches completed'
+            => '??',
     );
 ?>

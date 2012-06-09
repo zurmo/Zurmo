@@ -104,7 +104,8 @@
                                                                  $this->getPortletDetailsUrl(),
                                                                  $this->getNonAjaxRedirectUrl(),
                                                                  $uniquePageId,
-                                                                 $this->params);
+                                                                 $this->params,
+                                                                 get_class(Yii::app()->findModule($this->moduleId)));
                 return $latestView->render();
             }
         }

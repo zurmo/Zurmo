@@ -77,6 +77,8 @@
             => 'Ad-hoc / Proprietario',
         'Add Currency'
             => 'Nuova Valuta',
+        'Add new fields, remove ones you don\'t need and change the layout using Designer.'
+            => 'Utilisate Desginer per creare un nuevo campo, rimuovere campi non utilizzati, e modificare il layout.',
         'Address'
             => 'Indirizzo',
         'Admin'
@@ -111,6 +113,8 @@
             => 'Nome dell\'applicazione',
         'are required.'
             => 'sono richiesti.',
+        'Are you number one{spaceAndFirstName}? Find out how you size up to your colleagues on the Leaderboard.'
+            => 'Pronti? Attenti! Via! Vedete il Leaderboard per vedere como paragonate con i vostri colleghi.',
         'Are you sure you want to remove this group?'
             => 'Siete sicuro di voler eliminare questo gruppo?',
         'Are you sure you want to remove this role?'
@@ -129,6 +133,8 @@
             => 'Bancaria',
         'Business Services'
             => 'Servizi di business',
+        'by {ownerStringContent}'
+            => 'di {ownerStringContent}',
         'Cancel'
             => 'Annulla',
         'Changes to active currencies saved successfully.'
@@ -139,6 +145,8 @@
             => 'Tipo di grafico',
         'City'
             => 'Città',
+        'Click on the Map link on records to see the customer location on Google Maps.'
+            => 'Clicca sul link mappa per visualizzare la posizione geograficha con Google Maps.',
         'Close'
             => 'Chiudi',
         'Code'
@@ -303,6 +311,8 @@
             => 'Ultima modifica',
         'Latitude'
             => 'Latitudine',
+        'Let Zurmo crunch the numbers, add calculated fields to your records in Designer.'
+            => 'Permetate a Zurmo di fare il lavoro più pesante, aggiungiate campi calcolati in Designer.',
         'List Filters'
             => 'Filtre de lista',
         'List page size'
@@ -365,6 +375,8 @@
             => 'Sig.na',
         'My List Configuration View'
             => 'Il mio elenco di configurazioni della vista',
+        'Need to update multiple records at once? Select them from the list and hit the Update button.'
+            => 'Per aggiornare molti dati in stesso tempo, spuntate i dati nella Vista Elenco e clicca il bottone "Aggiornamento globale".',
         'Never'
             => 'Mai',
         'New'
@@ -403,6 +415,8 @@
             => 'Gruppo Padre',
         'Parent Role'
             => 'Ruolo Padre',
+        'Parlez vous Français{spaceAndFirstName}?  Choose your preferred language in your My Profile area.'
+            => 'Selezionate vostra lingua preferita in Il mio profile.',
         'Password'
             => 'Password', // Same Word Translated
         'Permissions'

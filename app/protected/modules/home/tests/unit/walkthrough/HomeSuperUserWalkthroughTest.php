@@ -45,6 +45,23 @@
             ContactsModule::loadStartingData();
         }
 
+        public function testSuperUserWelcomeActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //test that the welcome screen appears
+            $content = $this->runControllerWithNoExceptionsAndGetContent('home/default/welcome');
+            $this->assertFalse(strpos($content, 'Go to the dashboard') === false);
+
+            //Change setting so user ignores welcome view.
+            $form                    = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($super);
+            $form->hideWelcomeView   = true;
+            UserConfigurationFormAdapter::setConfigurationFromFormForCurrentUser($form);
+
+            //Now the welcome screen should not appear
+            $this->runControllerWithRedirectExceptionAndGetContent('home/default/welcome');
+        }
+
         public function testSuperUserAllDefaultControllerActions()
         {
             //Set the current user as the super user.

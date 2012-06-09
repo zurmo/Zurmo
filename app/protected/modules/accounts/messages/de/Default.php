@@ -73,5 +73,11 @@
             => 'Verwandte AccountsModulePluralLabel',
         'Vendor'
             => 'Verkäufer',
+        '{n} AccountsModuleSingularLabel created|{n} AccountsModulePluralLabel created'
+            => '{n} AccountsModuleSingularLabel erstellt|{n} AccountsModulePluralLabel erstellt',
+        '{n} AccountsModuleSingularLabel mass updated|{n} AccountsModulePluralLabel mass updated'
+            => '{n} AccountsModuleSingularLabel wurde aktualisiert|{n} AccountsModulePluralLabel wurden aktualisiert',
+        '{n} AccountsModuleSingularLabel search completed|{n} AccountsModuleSingularLabel searches completed'
+            => '{n} AccountsModuleSingularLabel Suche wurde abgeschlossen|{n} AccountsModuleSingularLabel Suchen wurden abgeschlossen',
     );
 ?>

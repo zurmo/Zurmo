@@ -37,6 +37,7 @@
          */
         protected function renderControlEditable()
         {
+            $this->renderScripts();
             $dropDownArray            = $this->getDropDownArray();
             $htmlOptions              = array();
             $htmlOptions['id']        = $this->getEditableInputId();
@@ -84,6 +85,16 @@
                 return array();
             }
             return $dropDownArray;
+        }
+
+        protected static function renderScripts()
+        {
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
         }
     }
 ?>

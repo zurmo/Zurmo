@@ -59,5 +59,57 @@
             $this->setGetArray(array(
                 'type' => GamePointUtil::LEADERBOARD_TYPE_OVERALL));
         }
+
+        public function testGameNotificationsComingUpCorrectly()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $this->assertEquals(0, count(GameNotification::getAll()));
+            $this->assertEquals(0, count(GameNotification::getAllByUser($super)));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('gamification/default/leaderboard');
+            $this->assertTrue(strpos($content, 'ModalGameNotification0') === false);
+
+            //Level up notification
+            $gameNotification           = new GameNotification();
+            $gameNotification->user     = $super;
+            $gameNotification->setLevelChangeByNextLevelValue(2);
+            $saved                      = $gameNotification->save();
+            $this->assertTrue($saved);
+
+            $this->assertEquals(1, count(GameNotification::getAll()));
+            $this->assertEquals(1, count(GameNotification::getAllByUser($super)));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('gamification/default/leaderboard');
+            $this->assertFalse(strpos($content, 'ModalGameNotification0') === false);
+            $this->assertTrue(strpos($content, 'ModalGameNotification1') === false);
+
+            $this->assertEquals(0, count(GameNotification::getAll()));
+            $this->assertEquals(0, count(GameNotification::getAllByUser($super)));
+            Yii::app()->clientScript->reset();
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('gamification/default/leaderboard');
+            $this->assertTrue(strpos($content, 'ModalGameNotification0') === false);
+
+            //New badge notification
+            $gameNotification           = new GameNotification();
+            $gameNotification->user     = $super;
+            $gameNotification->setNewBadgeByType('LoginUser');
+            $saved                      = $gameNotification->save();
+            $this->assertTrue($saved);
+
+            //Badge grade up notification
+            $gameNotification           = new GameNotification();
+            $gameNotification->user     = $super;
+            $gameNotification->setBadgeGradeChangeByTypeAndNewGrade('LoginUser', 5);
+            $saved                      = $gameNotification->save();
+            $this->assertTrue($saved);
+
+            Yii::app()->clientScript->reset();
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('gamification/default/leaderboard');
+            $this->assertFalse(strpos($content, 'ModalGameNotification0') === false);
+            $this->assertFalse(strpos($content, 'ModalGameNotification1') === false);
+        }
     }
 ?>

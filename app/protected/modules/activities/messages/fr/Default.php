@@ -39,6 +39,8 @@
             => 'Sommaire des activités',
         'All Activities'
             => 'Toutes les Activités',
+        'for {relatedModelsStringContent}'
+            => 'pour {relatedModelsStringContent}',
         'Latest Activities'
             => 'Activités récentes',
         'Latest Date Time'
@@ -61,5 +63,7 @@
             => 'Activez la fonction de rollup pour voir les activités associées.',
         'View'
             => 'Vue',
+        'with {relatedContactsStringContent}'
+            => 'avec {relatedContactsStringContent}',
     );
 ?>

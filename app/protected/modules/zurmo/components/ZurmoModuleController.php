@@ -31,6 +31,8 @@
      */
     abstract class ZurmoModuleController extends ZurmoBaseController
     {
+        const ZERO_MODELS_CHECK_FILTER_PATH = 'application.modules.zurmo.controllers.filters.ZeroModelsCheckControllerFilter';
+
         public function actionIndex()
         {
             $this->actionList();
@@ -158,7 +160,7 @@
             $searchFormClassName   = $this->getSearchFormClassName();
             $filteredListClassName = $this->getModelFilteredListClassName();
             // Set $pageSize to unlimited, because we don't want pagination
-            $pageSize = 0;
+            $pageSize = Yii::app()->pagination->getGlobalValueByType('unlimitedPageSize');
             $model = new $modelClassName(false);
 
             if (isset($searchFormClassName))

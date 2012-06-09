@@ -49,6 +49,8 @@
             => 'Erzwingen sicherer Kennwörter',
         'Hash'
             => 'Hash', // Same Word Translated
+        'Hide welcome page'
+            => 'Startseite verstecken',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
             => 'Inaktive Benutzer können sich nicht anmelden über die Web-, Mobil-oder Web-API. Anmeldung für aktive Benutzer wird durch Gruppenrechte kontrolliert.',
         'Inherited Value:'

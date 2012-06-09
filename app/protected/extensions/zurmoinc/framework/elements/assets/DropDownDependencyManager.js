@@ -71,7 +71,10 @@ $.extend(DropDownDependencyManager.prototype, {
                        $("#" + inputId + " option[value='']").text(notReadyToSelectText);
                    }
                });
-
+               $('#' + inputId).removeData('dropkick');
+               $('#dk_container_' + inputId).remove();
+               $('#' + inputId).dropkick();
+               $('#' + inputId).dropkick('rebindToggle');
            }
        });
    },

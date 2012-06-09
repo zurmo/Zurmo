@@ -28,7 +28,7 @@
     {
         protected function getDropDownArray()
         {
-            return Yii::app()->languageHelper->getActiveLanguagesData();
+            return Yii::app()->languageHelper->getActiveLanguagesData(true);
         }
     }
 ?>

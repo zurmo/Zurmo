@@ -61,5 +61,35 @@
          * Override if you want to display anything extra in the view for a particular model.
          */
         abstract public function getLatestActivityExtraDisplayStringByModel($model);
+
+        /**
+         * Override to define how related models are displayed if at all.
+         * @param RedBeanModel $model
+         */
+        public function renderRelatedModelsByImportanceContent(RedBeanModel $model)
+        {
+        }
+
+        /**
+         * Override to customize summary content.
+         * @param string $ownedByFilter
+         * @param string $viewModuleClassName
+         */
+        public function getSummaryContentTemplate($ownedByFilter, $viewModuleClassName)
+        {
+            assert('is_string($ownedByFilter)');
+            assert('is_string($viewModuleClassName)');
+            if ($ownedByFilter != LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER)
+            {
+                return "<span>{modelStringContent}</span><span class='less-pronounced-text'>" .
+                       Yii::t('Default', 'by {ownerStringContent}') . "</span><span>{extraContent}</span>";
+            }
+            else
+            {
+                return "<span>{modelStringContent}</span><span>{extraContent}</span>";
+            }
+        }
+
+
     }
 ?>

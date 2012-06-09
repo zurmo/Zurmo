@@ -68,7 +68,10 @@
         {
             Yii::app()->user->userModel = User::getByUsername('steven');
             $gamePoint = new GamePoint();
-            $gamePoint->value = 5;
+            $gamePoint->value = 5; //Calls replaceValue
+            $this->assertEquals(5, $gamePoint->value);
+            $gamePoint->addValue(10);
+            $this->assertEquals(15, $gamePoint->value);
         }
 
         /**

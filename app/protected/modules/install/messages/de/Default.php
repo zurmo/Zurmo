@@ -103,6 +103,8 @@
             => 'Der einstellwert optimizer_search_depth ist {searchDepth}. Der Wert muss 0 sein.',
         'Database password'
             => 'Datenbankkennwort',
+        'Database port.'
+            => 'Datenbank-Port',
         'Database schema creation complete.'
             => 'Datenbankschema Erstellung abzuschließen',
         'Database thread_stack value is:'

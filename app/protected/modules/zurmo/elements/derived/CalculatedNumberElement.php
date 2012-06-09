@@ -76,7 +76,8 @@
          */
         protected function renderLabel()
         {
-            return $this->calculatedDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language);
+            return CHtml::tag('label', array(),
+                   $this->calculatedDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language));
         }
 
         /**

@@ -26,17 +26,17 @@
 
     class LeadsModuleAttributesListView extends GridView
     {
+        protected $cssClasses =  array( 'AdministrativeArea');
+
         public function __construct(
             $controllerId,
-            $moduleId,
-            $breadcrumbLinks
+            $moduleId
         )
         {
-            parent::__construct(3, 1);
+            parent::__construct(2, 1);
             $moduleDisplayName = LeadsModule::getModuleLabelByTypeAndLanguage('Plural');
-            $this->setView(new TitleBarView(Yii::t('Default', $moduleDisplayName), Yii::t('Default', 'Standard Fields')), 0, 0);
-            $this->setView(new BreadCrumbView($controllerId, $moduleId, $breadcrumbLinks), 1, 0);
-            $this->setView(new AttributesRedirectToContactsView($controllerId, $moduleId), 2, 0);
+            $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, Yii::app()->getModule('leads'), 'DesignerFieldsLink'), 0, 0);
+            $this->setView(new AttributesRedirectToContactsView($controllerId, $moduleId), 1, 0);
         }
 
         public function isUniqueToAPage()

@@ -75,6 +75,10 @@
             => 'Digita un ContactsModuleSingularLowerCaseLabel o LeadsModuleSingularLowerCaseLabel: nome o indirizzo e-mail',
         'Upcoming MeetingsModulePluralLabel'
             => 'Prossimi MeetingsModulePluralLabel',
+        '{n} Call created|{n} Calls created'
+            => '{n} Chiamata create|{n} Chiamati creati',
+        '{n} MeetingsModuleSingularLabel created|{n} MeetingsModulePluralLabel created'
+            => '{n} MeetingsModuleSingularLabel create|{n} MeetingsModulePluralLabel creati',
         '{quantity} MeetingsModulePluralLabel'
             => '{quantity} MeetingsModulePluralLabel', // Same Word Translated
         '{quantity} MeetingsModuleSingularLabel'

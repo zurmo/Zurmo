@@ -180,5 +180,10 @@
                                 $portlet->getView()->getChartParams());
             echo $fusionChart->getXML();
         }
+
+        public function resolveAndGetModuleId()
+        {
+            return $this->getModule()->getId();
+        }
     }
 ?>

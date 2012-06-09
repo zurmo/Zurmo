@@ -73,5 +73,13 @@
             => 'Qualificazione',
         'Verbal'
             => 'Verbale',
+        '{n} OpportunitiesModuleSingularLabel created|{n} OpportunitiesModulePluralLabel created'
+            => '{n} OpportunitiesModuleSingularLabel create|{n} OpportunitiesModulePluralLabel creati',
+        '{n} OpportunitiesModuleSingularLabel mass updated|{n} OpportunitiesModulePluralLabel mass updated'
+            => '{n} OpportunitiesModuleSingularLabel è stata aggiornata|{n} OpportunitiesModulePluralLabel sono state aggiornate',
+        '{n} OpportunitiesModuleSingularLabel search completed|{n} OpportunitiesModuleSingularLabel searches completed'
+            => '{n} recherche OpportunitiesModuleSingularLabel completata|{n} recherches OpportunitiesModuleSingularLabel completate',
+        '{n} OpportunitiesModuleSingularLabel won|{n} OpportunitiesModulePluralLabel won'
+            => '{n} OpportunitiesModuleSingularLabel vinta|{n} OpportunitiesModulePluralLabel vinte',
     );
 ?>

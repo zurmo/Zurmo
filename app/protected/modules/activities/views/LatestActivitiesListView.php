@@ -74,6 +74,12 @@
 
         protected $params;
 
+        /**
+         * Associated moduleClassName of the containing view.
+         * @var string
+         */
+        protected $containerModuleClassName;
+
         public function __construct(RedBeanModelsDataProvider $dataProvider,
                                     LatestActivitiesConfigurationForm $configurationForm,
                                     $controllerId,
@@ -81,7 +87,8 @@
                                     $portletDetailsUrl,
                                     $redirectUrl,
                                     $uniquePageId,
-                                    $params)
+                                    $params,
+                                    $containerModuleClassName)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -89,16 +96,18 @@
             assert('is_string($redirectUrl)');
             assert('is_string($uniquePageId)');
             assert('is_array($params)');
-            $this->dataProvider           = $dataProvider;
-            $this->configurationForm      = $configurationForm;
-            $this->controllerId           = $controllerId;
-            $this->moduleId               = $moduleId;
-            $this->portletDetailsUrl      = $portletDetailsUrl;
-            $this->redirectUrl            = $redirectUrl;
-            $this->uniquePageId           = $uniquePageId;
-            $this->gridIdSuffix           = $uniquePageId;
-            $this->gridId                 = 'list-view';
-            $this->params                 = $params;
+            assert('is_string($containerModuleClassName)');
+            $this->dataProvider             = $dataProvider;
+            $this->configurationForm        = $configurationForm;
+            $this->controllerId             = $controllerId;
+            $this->moduleId                 = $moduleId;
+            $this->portletDetailsUrl        = $portletDetailsUrl;
+            $this->redirectUrl              = $redirectUrl;
+            $this->uniquePageId             = $uniquePageId;
+            $this->gridIdSuffix             = $uniquePageId;
+            $this->gridId                   = 'list-view';
+            $this->params                   = $params;
+            $this->containerModuleClassName = $containerModuleClassName;
         }
 
         protected function renderContent()
@@ -281,6 +290,16 @@
         public function isUniqueToAPage()
         {
             return false;
+        }
+
+        public function getOwnedByFilter()
+        {
+            return $this->configurationForm->ownedByFilter;
+        }
+
+        public function getContainerModuleClassName()
+        {
+            return $this->containerModuleClassName;
         }
     }
 ?>

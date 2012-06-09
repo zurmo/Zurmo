@@ -115,16 +115,170 @@
             Yii::app()->gameHelper->processDeferredPoints();
         }
 
+        public function testArraySum()
+        {
+            $data = array('type1' => 50, 'type2' => 30);
+            $this->assertEquals(80, array_sum($data));
+        }
+
         /**
          * @depends testProcessDeferredPoints
          */
         public function testResolveLevelChange()
         {
-           Yii::app()->gameHelper->resolveLevelChange();
+            $super                       = User::getByUsername('super');
+            Yii::app()->user->userModel  = $super;
+            $billy                       = UserTestHelper::createBasicUser('Billy');
+            Yii::app()->user->userModel  = $billy;
+            $this->assertEquals(0, count(GameNotification::getAllByUser($billy)));
+
+            //test user at general level 0 where they dont have enough points to move up (No game notification created)
+            $gamePoint = new GamePoint();
+            $gamePoint->type = GamePoint::TYPE_USER_ADOPTION;
+            $gamePoint->value = 100;
+            $gamePoint->person = $billy;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(0, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $billy);
+            $this->assertTrue($gameLevel->id < 0);
+            $this->assertEquals(1, $gameLevel->value);
+
+            //test user at general level 0 where they do have enough points to move up   (Game notification created)
+            $gamePoint->value = 250;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(1, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(250, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(1, $gameLevel->value);
+
+            //test user at general level 1 where they dont have enough points to move up (No game notification created)
+            $gamePoint->value = 350;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(1, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(350, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(1, $gameLevel->value);
+
+            //test user at general level 1 where they do have enough points to move up   (Game notification created)
+            $gamePoint->value = 575;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(575, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(2, $gameLevel->value);
+
+            //test user at general level 15 with 100 000 points, so there is nowhere to move up to (No game notification created)
+            $gamePoint->value = 100000;
+            $this->assertTrue($gamePoint->save());
+            $gameLevel->value = 15;
+            $this->assertTrue($gameLevel->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100000, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(15, $gameLevel->value);
         }
 
         /**
          * @depends testResolveLevelChange
+         * This will also implicitly test sub-level level changes.
+         */
+        public function testResolveLevelChangeBonusPointsAndSubLevels()
+        {
+            $billy                       = User::getByUsername('billy');
+            Yii::app()->user->userModel  = $billy;
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100000, $gamePoint2->value);
+
+            //test user at general level 0 where they dont have enough points to move up (No game notification created)
+            $gamePoint = new GamePoint();
+            $gamePoint->type = GamePoint::TYPE_NEW_BUSINESS;
+            $gamePoint->value = 50;
+            $gamePoint->person = $billy;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_NEW_BUSINESS, $billy);
+            $this->assertEquals(50, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_NEW_BUSINESS, $billy);
+            $this->assertTrue($gameLevel->id < 0);
+            $this->assertEquals(1, $gameLevel->value);
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100000, $gamePoint2->value);
+
+            //test user at general level 0 where they do have enough points to move up (No game notification created)
+            $gamePoint->value = 105;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_NEW_BUSINESS, $billy);
+            $this->assertEquals(105, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_NEW_BUSINESS, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(1, $gameLevel->value);
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100100, $gamePoint2->value);
+
+            //test user at general level 1 where they dont have enough points to move up (No game notification created)
+            $gamePoint->value = 150;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_NEW_BUSINESS, $billy);
+            $this->assertEquals(150, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_NEW_BUSINESS, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(1, $gameLevel->value);
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100100, $gamePoint2->value);
+
+            //test user at general level 1 where they do have enough points to move up (No game notification created)
+            $gamePoint->value = 250;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_NEW_BUSINESS, $billy);
+            $this->assertEquals(250, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_NEW_BUSINESS, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(2, $gameLevel->value);
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100210, $gamePoint2->value);
+
+            //test user at general level 15 with 100 000 points, so there is nowhere to move up to (No game notification created)
+            $gamePoint->value = 100000;
+            $this->assertTrue($gamePoint->save());
+            $gameLevel->value = 7;
+            $this->assertTrue($gameLevel->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($billy)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_NEW_BUSINESS, $billy);
+            $this->assertEquals(100000, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_NEW_BUSINESS, $billy);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(7, $gameLevel->value);
+            $gamePoint2 = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $billy);
+            $this->assertEquals(100210, $gamePoint2->value);
+        }
+
+        /**
+         * @depends testResolveLevelChangeBonusPointsAndSubLevels
          */
         public function testResolveNewBadges()
         {

@@ -185,22 +185,5 @@
                 throw new NotSupportedException();
             }
         }
-
-        protected function renderAfterFormLayoutForDetailsContent()
-        {
-            $content = parent::renderAfterFormLayoutForDetailsContent();
-            if ($content != null)
-            {
-                $content .= '<br/>';
-            }
-            $element  = new DateTimeModifiedUserElement($this->getModel(), 'null');
-            $element->nonEditableTemplate = '{label} {content}';
-            $content .= $element->render();
-            $content .= '&#160;|&#160;';
-            $element  = new DateTimeCreatedUserElement($this->getModel(), 'null');
-            $element->nonEditableTemplate = '{label} {content}';
-            $content .= $element->render();
-            return $content;
-        }
     }
 ?>

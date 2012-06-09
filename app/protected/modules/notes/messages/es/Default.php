@@ -51,5 +51,7 @@
             => 'Ocurrió el',
         'The NotesModulePluralLabel form cannot be displayed.'
             => 'El formulario de NotesModulePluralLabel no se puede mostrar.',
+        '{n} NotesModuleSingularLabel created|{n} NotesModulePluralLabel created'
+            => '{n} NotesModuleSingularLabel ha sido creado|{n} NotesModulePluralLabel han sido creados',
     );
 ?>

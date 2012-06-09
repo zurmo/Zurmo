@@ -347,7 +347,7 @@
                 $confirm = 'confirm(\''.CJavaScript::quote($htmlOptions['confirm']).'\')';
                 if ($handler !== '')
                 {
-                    $handler = "if($confirm) {" . $handler . "} else return false;";
+                    $handler = "if ($confirm) {" . $handler . "} else return false;";
                 }
                 else
                 {

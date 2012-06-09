@@ -73,6 +73,11 @@
         protected $_apiListPageSize;
 
         /**
+        * Default list page size for api calls.
+        */
+        protected $_unlimitedPageSize;
+
+        /**
          * This is set from the value in the application common config file. It is used as the final fall back
          * if no other configuration settings are found.
          */
@@ -133,6 +138,15 @@
         public function setAutoCompleteListPageSize($value)
         {
             $this->_autoCompleteListPageSize = $value;
+        }
+
+        /**
+        * This is set from the value in the application common config file. It is used as the final fall back
+        * if no other configuration settings are found.
+        */
+        public function setUnlimitedPageSize($value)
+        {
+            $this->_unlimitedPageSize = $value;
         }
 
         /**
@@ -277,7 +291,8 @@
         protected static function getAvailablePageSizeNames()
         {
             return array('listPageSize', 'subListPageSize', 'modalListPageSize', 'massEditProgressPageSize',
-                         'autoCompleteListPageSize', 'importPageSize', 'dashboardListPageSize', 'apiListPageSize');
+                         'autoCompleteListPageSize', 'importPageSize', 'dashboardListPageSize', 'apiListPageSize',
+                         'unlimitedPageSize');
         }
     }
 ?>

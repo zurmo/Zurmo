@@ -65,7 +65,8 @@
                     if ($information['elementType'] == 'EmailAddressInformation' ||
                         $information['elementType'] == 'Address' ||
                         $information['elementType'] == 'User' ||
-                        $information['isReadOnly'])
+                        $information['isReadOnly'] ||
+                        $attributeName == 'id')
                     {
                         //temporary until we figure out how to handle these types.
                         $linkContent = null;

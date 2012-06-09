@@ -49,6 +49,8 @@
             => 'Attuare l\'uso di password forti',
         'Hash'
             => 'Hash', // Same Word Translated
+        'Hide welcome page'
+            => 'Nascondere la pagina di benvenuto',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
             => 'Gli utenti inatyivi no possono login nel web, mobile, o web API.  Il login per gli utente attivi è controllato per i diritti del grupo.',
         'Inherited Value:'

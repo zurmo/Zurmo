@@ -35,22 +35,83 @@
     {
         protected $relatedModelClassname;
         protected $owns;
+        protected $polyName;
 
         /**
          * Constructs a new RedBeanOneToManyRelatedModels. The models are retrieved lazily.
          * RedBeanOneToManyRelatedModels are only constructed with beans by the model.
          * Beans are never used by the application directly.
          */
-        public function __construct(RedBean_OODBBean $bean, $modelClassName, $relatedModelClassName, $owns)
+        public function __construct(RedBean_OODBBean $bean, $modelClassName, $relatedModelClassName, $owns, $polyName = null)
         {
             assert('is_string($modelClassName)');
             assert('is_string($relatedModelClassName)');
             assert('$modelClassName        != ""');
             assert('$relatedModelClassName != ""');
             assert('is_bool($owns)');
-            parent::__construct($modelClassName, $bean);
+            assert('is_string($polyName) || $polyName == null');
+            $this->rewind();
+            $this->modelClassName        = $modelClassName;
             $this->relatedModelClassName = $relatedModelClassName;
-            $this->owns = $owns;
+            $this->owns                  = $owns;
+            $this->polyName              = $polyName;
+            $this->constructRelatedBeansAndModels($modelClassName, $bean);
+        }
+
+        /**
+         * Handles constructing the relatedBeansAndModels with special attention to the case where it is PolyOneToMany
+         * @param string $modelClassName
+         * @param mixed $sqlOrBean
+         */
+        private function constructRelatedBeansAndModels($modelClassName, $sqlOrBean = '')
+        {
+            assert('is_string($sqlOrBean) || $sqlOrBean instanceof RedBean_OODBBean');
+            $tableName = RedBeanModel::getTableName($modelClassName);
+            if (is_string($sqlOrBean))
+            {
+                $this->relatedBeansAndModels = array_values(RedBean_Plugin_Finder::where($tableName, $sqlOrBean));
+            }
+            else
+            {
+                assert('$sqlOrBean instanceof RedBean_OODBBean');
+                $this->bean = $sqlOrBean;
+                try
+                {
+                    if ($this->bean->id > 0)
+                    {
+                        if ($this->polyName != null)
+                        {
+                            $value           = array();
+                            $values['id']    = $this->bean->id;
+                            $values['type']  = $this->bean->getMeta('type');
+
+                            $this->relatedBeansAndModels = array_values(R::find( $tableName,
+                                                                    strtolower($this->polyName) . '_id = :id AND ' .
+                                                                    strtolower($this->polyName) . '_type = :type',
+                                                                    $values));
+                        }
+                        else
+                        {
+                            $relatedIds                  = R::$linkManager->getKeys($this->bean, $tableName);
+                            $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
+                        }
+                    }
+                    else
+                    {
+                        $this->relatedBeansAndModels = array();
+                    }
+                }
+                catch (RedBean_Exception_SQL $e)
+                {
+                    // SQLSTATE[42S02]: Base table or view not found...
+                    // SQLSTATE[42S22]: Column not found...
+                    if (!in_array($e->getSQLState(), array('42S02', '42S22')))
+                    {
+                        throw $e;
+                    }
+                    $this->relatedBeansAndModels = array();
+                }
+            }
         }
 
         public function save($runValidation = true)
@@ -61,12 +122,31 @@
             }
             foreach ($this->deferredRelateBeans as $bean)
             {
-                R::$linkManager->link($bean, $this->bean);
-                if (!RedBeanDatabase::isFrozen())
+                if ($this->polyName != null)
                 {
-                    $tableName  = RedBeanModel::getTableName($this->modelClassName);
-                    $columnName = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';
-                    RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                    if ($this->bean->id == null)
+                    {
+                        R::store($this->bean);
+                    }
+                    $polyIdFieldName   = strtolower($this->polyName) . '_id';
+                    $polyTypeFieldName = strtolower($this->polyName) . '_type';
+                    $bean->$polyTypeFieldName = $this->bean->getMeta('type');
+                    $bean->$polyIdFieldName   = $this->bean->id;
+                    if (!RedBeanDatabase::isFrozen())
+                    {
+                        $tableName  = RedBeanModel::getTableName($this->modelClassName);
+                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $polyIdFieldName);
+                    }
+                }
+                else
+                {
+                    R::$linkManager->link($bean, $this->bean);
+                    if (!RedBeanDatabase::isFrozen())
+                    {
+                        $tableName  = RedBeanModel::getTableName($this->modelClassName);
+                        $columnName = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';
+                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                    }
                 }
                 R::store($bean);
             }

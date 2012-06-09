@@ -32,8 +32,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink',
-                                  'label' => "eval:Yii::t('Default', 'Return to Home')"),
+                            array('type' => 'ListLink', 'label' => "eval:Yii::t('Default', 'Cancel')"),
                             array('type' => 'SaveButton'),
                         ),
                     ),
@@ -48,6 +47,10 @@
                                                 array('attributeName' => 'name', 'type' => 'Text'),
                                             ),
                                         ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'layoutType', 'type' => 'DashboardLayoutTypeStaticDropDown'),

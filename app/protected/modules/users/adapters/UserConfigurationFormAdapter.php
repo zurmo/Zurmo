@@ -33,23 +33,25 @@
         /**
          * @return UserConfigurationForm
          */
-        public static function makeFormFromUserConfigurationByUser($user)
+        public static function makeFormFromUserConfigurationByUser(User $user)
         {
             assert('$user instanceOf User && $user->id > 0');
             $form                           = new UserConfigurationForm($user->id);
             $form->listPageSize             = Yii::app()->pagination->getByUserAndType($user, 'listPageSize');
             $form->subListPageSize          = Yii::app()->pagination->getByUserAndType($user, 'subListPageSize');
+            $form->hideWelcomeView          = static::resolveAndGetHideWelcomeViewValue($user);
             return $form;
         }
 
         /**
          * Given a UserConfigurationForm and user, save the configuration values for the specified user.
          */
-        public static function setConfigurationFromForm(UserConfigurationForm $form, $user)
+        public static function setConfigurationFromForm(UserConfigurationForm $form, User $user)
         {
             assert('$user instanceOf User && $user->id > 0');
             Yii::app()->pagination    ->setByUserAndType($user, 'listPageSize',    (int)$form->listPageSize);
             Yii::app()->pagination    ->setByUserAndType($user, 'subListPageSize', (int)$form->subListPageSize);
+            static::setHideWelcomeViewValue($user, (bool)$form->hideWelcomeView);
         }
 
         /**
@@ -60,6 +62,26 @@
         {
             Yii::app()->pagination    ->setForCurrentUserByType('listPageSize',    (int)$form->listPageSize);
             Yii::app()->pagination    ->setForCurrentUserByType('subListPageSize', (int)$form->subListPageSize);
+            static::setHideWelcomeViewValue(Yii::app()->user->userModel, (bool)$form->hideWelcomeView);
+        }
+
+        public static function resolveAndGetHideWelcomeViewValue(User $user)
+        {
+            assert('$user instanceOf User && $user->id > 0');
+            if ( null != $hide = ZurmoConfigurationUtil::getByUserAndModuleName($user, 'ZurmoModule', 'hideWelcomeView'))
+            {
+                return $hide;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static function setHideWelcomeViewValue(User $user, $value)
+        {
+            assert('is_bool($value)');
+            ZurmoConfigurationUtil::setByUserAndModuleName($user, 'ZurmoModule', 'hideWelcomeView', $value);
         }
     }
 ?>

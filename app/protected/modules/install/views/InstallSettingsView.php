@@ -154,7 +154,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'databaseAdminPassword', 'type' => 'Text',
+                                                array('attributeName' => 'databaseAdminPassword', 'type' => 'Password',
                                                       'description' => Yii::t('Default', 'Leave this blank unless you ' .
                                                       'would like to create the user and database for Zurmo to run in.'))
                                             ),
@@ -199,7 +199,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'databasePassword', 'type' => 'Text',
+                                                array('attributeName' => 'databasePassword', 'type' => 'Password',
                                                       'description' => Yii::t('Default', 'User`s password.')),
                                             ),
                                         ),

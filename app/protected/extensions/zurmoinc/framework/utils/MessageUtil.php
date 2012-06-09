@@ -656,7 +656,7 @@
             $messages = require($fullFileName);
             if (!is_array($messages))
             {
-                $problems = "$shortFileName is not a valid message file.\n";
+                $problems = $shortFileName . ' is not a valid message file.' . PHP_EOL;
                 continue;
             }
             $messages = array_keys($messages);
@@ -664,7 +664,7 @@
             usort($messagesSorted, 'lowercaseCompare');
             if ($messages !== $messagesSorted)
             {
-                $problems[] = "Messages not in alphabetical order in $shortFileName. " . compareArrays($messages, $messagesSorted);
+                $problems[] = 'Messages not in alphabetical order in ' . $shortFileName . ': ' . compareArrays($messages, $messagesSorted);
             }
         }
         return $problems;
@@ -684,6 +684,7 @@
         $commonFileNames = array_intersect($fileNames1, $fileNames2);
         $only1FileNames  = array_diff     ($fileNames1, $fileNames2);
         $only2FileNames  = array_diff     ($fileNames2, $fileNames1);
+
         foreach ($commonFileNames as $fileName)
         {
             $fullFileName1 = "$directoryName1/$fileName";
@@ -700,7 +701,7 @@
                     $messages2 = array_keys($messages2);
                     if ($messages1 != $messages2)
                     {
-                        $problems[] = "$shortFileName1 and $shortFileName2 do not contain the same messages in $moduleName. " . compareArrays($messages1, $messages2);
+                        $problems[] = "$shortFileName1 and $shortFileName2 do not contain the same messages in '$moduleName': " . compareArrays($messages1, $messages2);
                     }
                 }
             }
@@ -757,13 +758,18 @@
 
     function compareArrays(array $array1, array $array2)
     {
-        for ($i = 0; $i < count($array1) && count($array2); $i++)
+        assert('is_array($array1)');
+        assert('is_array($array2)');
+
+        $difference = array_diff($array1, $array2);
+
+        if (isset($difference) && sizeof($difference))
         {
-            if ($array1[$i] !== $array2[$i])
+            foreach ($difference as $i => $val)
             {
-                $entryIndex = $i + 1;
-                return "Near entries '{$array1[$i]}' & '{$array2[$i]}'.";
+                $msg[] = "'" . $array1[$i] . (isset($array2[$i]) ? "' & '" . $array2[$i] . "'" : '');
             }
+            return 'Near entries ' . implode(', ', $msg);
         }
         return 'OK';
     }

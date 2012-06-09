@@ -29,6 +29,8 @@
      */
     abstract class ImportWizardView extends EditView
     {
+		protected $cssClasses =  array( 'AdministrativeArea');
+		
         public function __construct($controllerId, $moduleId, ImportWizardForm $model, $title = null)
         {
             assert('is_string($controllerId)');

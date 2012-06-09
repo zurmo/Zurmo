@@ -45,63 +45,12 @@
     //$instanceConfig['components']['request']['hostInfo'] = '';
     //$instanceConfig['components']['request']['scriptUrl'] = '';
 
-    $urlManager = array (); //Set any parameters you want to customize url manager.
-    $testApiUrl = '';
+    $urlManager = array (); // Set any parameters you want to customize url manager.
+    $testApiUrl = ''; // Set this url only for in perInstanceTest.php file. It should point to app directory, and it is used just for API tests.
+                      // For example if zurmo index page is http://my-site.com/app/index.php, the value should be http://my-site.com/app
 
     if (is_file(INSTANCE_ROOT . '/protected/config/perInstanceConfig.php'))
     {
         require_once INSTANCE_ROOT . '/protected/config/perInstanceConfig.php';
     }
-    // REMOVE THE REMAINDER OF THIS FILE FOR PRODUCTION.
-    // This configuration is for development and testing.
-    // Do not remove it from source control!
-    // Check it in as mysql!
-    /*
-    $databaseType = 'mysql'; // mysql, sqlite, oracle, mysql, pgsql.
-
-    switch ($databaseType)
-    {
-        case 'mysql':
-            $connectionString = 'mysql:host=localhost;dbname=zurmo'; // Not Coding Standard
-            break;
-
-        case 'sqlite':
-            switch (PHP_OS)
-            {
-                case 'WINNT':
-                    $connectionString = 'sqlite:' . getenv('TEMP') . '\zurmo.sqlite';
-                    break;
-
-                case 'Linux':
-                    if (is_dir('/tmp/ram'))
-                    {
-                        $connectionString = 'sqlite:/tmp/ram/zurmo.sqlite';
-                    }
-                    else
-                    {
-                        $connectionString = 'sqlite:/tmp/zurmo.sqlite';
-                    }
-                    break;
-
-                default:
-                    die(PHP_OS . ' is untested as yet.');
-            }
-            $username = null;
-            $password = null;
-            break;
-
-        case 'pgsql':
-            $connectionString = 'pgsql:host=localhost;dbname=zurmo'; // Not Coding Standard
-            break;
-
-        case 'oracle':
-            die('Oracle is untested as yet.');
-
-        case 'mssql':
-            die('SQL Server is untested as yet.');
-
-        default:
-            die('Unknown database type.');
-    }
-    */
 ?>

@@ -120,15 +120,16 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
+                    'buttonText'      => '<span>Date</span>',
                     'showButtonPanel' => true,
-                    'buttonImage'     => $themePath . '/images/jqueryui/calendar.gif',
-                    'buttonImageOnly' => true,
+                    'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                 ),
             ));
             $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['EditableDateElement'];
+            $content = $cClipWidget->getController()->clips['EditableDateElement'];
+            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         protected function renderEditableSecondDateContent()
@@ -148,15 +149,16 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
+                    'buttonText'      => '<span>Date</span>',
                     'showButtonPanel' => true,
-                    'buttonImage'     => $themePath . '/images/jqueryui/calendar.gif',
-                    'buttonImageOnly' => true,
+                    'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                 ),
             ));
             $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['EditableDateElement'];
+            $content = $cClipWidget->getController()->clips['EditableDateElement'];
+            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         protected function getEditableValueTypeHtmlOptions()

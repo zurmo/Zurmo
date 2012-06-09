@@ -73,5 +73,13 @@
             => 'Qualifikation',
         'Verbal'
             => 'Mündlich',
+        '{n} OpportunitiesModuleSingularLabel created|{n} OpportunitiesModulePluralLabel created'
+            => '{n} OpportunitiesModuleSingularLabel erstellt|{n} OpportunitiesModulePluralLabel erstellt',
+        '{n} OpportunitiesModuleSingularLabel mass updated|{n} OpportunitiesModulePluralLabel mass updated'
+            => '{n} OpportunitiesModuleSingularLabel wurde aktualisiert|{n} OpportunitiesModulePluralLabel wurden aktualisiert',
+        '{n} OpportunitiesModuleSingularLabel search completed|{n} OpportunitiesModuleSingularLabel searches completed'
+            => '{n} OpportunitiesModuleSingularLabel Suche wurde abgeschlossen|{n} OpportunitiesModuleSingularLabel Suchen wurden abgeschlossen',
+        '{n} OpportunitiesModuleSingularLabel won|{n} OpportunitiesModulePluralLabel won'
+            => '{n} OpportunitiesModuleSingularLabel gewonnen|{n} OpportunitiesModulePluralLabel gewonnen',
     );
 ?>

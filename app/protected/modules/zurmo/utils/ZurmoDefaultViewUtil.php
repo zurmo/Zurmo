@@ -65,11 +65,12 @@
             $horizontalGridView->setView(static::makeFlashMessageView($controller),   0, 1); //TODO needs to move into $cotainedView
             $horizontalGridView->setView($containedView, 0, 2);
 
-            $verticalGridView   = new GridView(4, 1);
-            $verticalGridView->setView(static::makeHeaderView($controller),                    0, 0);
-            $verticalGridView->setView($horizontalGridView,                         1, 0);
-            $verticalGridView->setView(static::makeModalContainerView(),            2, 0);
-            $verticalGridView->setView(static::makeFooterView(),                    3, 0);
+            $verticalGridView   = new GridView(5, 1);
+            $verticalGridView->setView(static::makeHeaderView($controller),                 0, 0);
+            $verticalGridView->setView($horizontalGridView,                                 1, 0);
+            $verticalGridView->setView(static::makeModalContainerView(),                    2, 0);
+            $verticalGridView->setView(static::makeModalGameNotificationContainerView(),    3, 0);
+            $verticalGridView->setView(static::makeFooterView(),                            4, 0);
 
             return $verticalGridView;
         }
@@ -157,6 +158,11 @@
         protected static function makeModalContainerView()
         {
             return new ModalContainerView();
+        }
+
+        protected static function makeModalGameNotificationContainerView()
+        {
+            return new ModalGameNotificationContainerView(GameNotification::getAllByUser(Yii::app()->user->userModel));
         }
 
         protected static function makeFooterView()

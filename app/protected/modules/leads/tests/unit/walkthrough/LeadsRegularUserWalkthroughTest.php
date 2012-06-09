@@ -47,6 +47,7 @@
             LeadTestHelper::createLeadbyNameForOwner                 ('superLead4', $super);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser                          (Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function testRegularUserAllControllerActions()
@@ -118,11 +119,17 @@
 
             //Test nobody with elevated rights.
             Yii::app()->user->userModel = User::getByUsername('nobody');
-            $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
+            $this->assertFalse(strpos($content, 'Thomas Paine') === false);
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/create');
 
             //Test nobody can view an existing lead he owns.
             $lead = LeadTestHelper::createLeadByNameForOwner('leadOwnedByNobody', $nobody);
+
+            //At this point the listview for leads should show the search/list and not the helper screen.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
+            $this->assertTrue(strpos($content, 'Thomas Paine') === false);
+
             $this->setGetArray(array('id' => $lead->id));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/edit');
 

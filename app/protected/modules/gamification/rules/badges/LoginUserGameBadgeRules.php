@@ -29,9 +29,26 @@
      */
     class LoginUserGameBadgeRules extends GameBadgeRules
     {
-        public static function getDisplayName()
+       public static $valuesIndexedByGrade = array(
+            1  => 1,
+            2  => 10,
+            3  => 25,
+            4  => 50,
+            5  => 75,
+            6  => 100,
+            7  => 125,
+            8  => 150,
+            9  => 175,
+            10 => 200,
+            11 => 225,
+            12 => 250,
+            13 => 300
+        );
+
+        public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', 'Logging into the application');
+            return Yii::t('Default', '{n} Zurmo login|{n} Zurmo logins',
+                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

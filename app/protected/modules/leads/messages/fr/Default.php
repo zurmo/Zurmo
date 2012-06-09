@@ -81,5 +81,7 @@
             => 'Choisir un AccountsModuleSingularLabel',
         'Skip AccountsModuleSingularLabel'
             => 'Aucun AccountsModuleSingularLabel',
+        '{n} LeadsModuleSingularLabel created|{n} LeadsModulePluralLabel created'
+            => '{n} LeadsModuleSingularLabel crée|{n} LeadsModulePluralLabel crées',
     );
 ?>

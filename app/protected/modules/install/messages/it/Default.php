@@ -102,6 +102,8 @@
             => 'Il valore del parametro optimizer_search_depth è {searchDepth}. Il valore dovrebbe essere 0.?',
         'Database password'
             => 'Password del database',
+        'Database port.'
+            => 'Porta database',
         'Database schema creation complete.'
             => 'Creazione schema di database è completato.',
         'Database thread_stack value is:'

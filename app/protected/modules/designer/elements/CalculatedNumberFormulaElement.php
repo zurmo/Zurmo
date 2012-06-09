@@ -35,17 +35,9 @@
          */
         protected function renderControlEditable()
         {
-            $content  = parent::renderControlEditable();
-            $title        = Yii::t('Default', 'Create a math formula that is calculated from other fields.' .
-                                   ' Use the Formula Name from the Available Fields grid below to create your formula.' .
-                                   ' Example formula (field1 x field2) / field3');
-            $spanContent  = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">';
-            $spanContent .= Yii::t('Default', 'How does this work?') . '</span>';
-            $content      = $spanContent . '<br/>' . $content;
-            $content     .= '<br/>';
-            $content     .= $this->renderAvailableAttributesContent();
-            $qtip = new ZurmoTip();
-            $qtip->addQTip("#formula-tooltip");
+            $content      = parent::renderControlEditable();
+            $content     .= '<div class="field-instructions">' . $this->renderAvailableAttributesContent() . '</div>';
+
             return $content;
         }
 
@@ -55,9 +47,14 @@
             $model          = new $modelClassName(false);
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
             $attributeData  = $adapter->getAttributes();
+            $title          = Yii::t('Default', 'Create a math formula that is calculated from other fields.' .
+                                   ' Use the Formula Name from the Available Fields grid below to create your formula.' .
+                                   ' Example formula (field1 x field2) / field3');
+            $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">';
+            $spanContent   .= Yii::t('Default', '?') . '</span>';
             if (count($attributeData) > 0)
             {
-                $content  = '<b>' . Yii::t('Default', 'Available Fields:') . '</b>';
+                $content  = '<strong>' . Yii::t('Default', 'Available Fields:') . '</strong> ' . $spanContent;
                 $content .= '<table style="width:auto">';
                 $content .= '<tr><td><b>' . Yii::t('Default', 'Field Name') . '</b></td>';
                 $content .= '<td><b>' . Yii::t('Default', 'Formula Name') . '</b></td></tr>';
@@ -72,6 +69,8 @@
                 $content  = '<span class="error">' . Yii::t('Default', 'There are no fields in this module to be used in a formula.');
                 $content .= '</span>';
             }
+            $qtip = new ZurmoTip();
+            $qtip->addQTip("#formula-tooltip");
             return $content;
         }
     }

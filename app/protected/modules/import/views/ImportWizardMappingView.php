@@ -98,16 +98,18 @@
             $content .= $this->renderRequiredAttributesLabelsDataContent();
             $content .= '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:20%" />';
-            $content .= '<col style="width:20%" />';
             if (count($headerColumns) == 4)
             {
                 $content .= '<col style="width:20%" />';
-                $content .= '<col style="width:40%" />';
+                $content .= '<col style="width:20%" />';
+                $content .= '<col style="width:25%" />';
+                $content .= '<col style="width:35%" />';
             }
             else
             {
-                $content .= '<col style="width:60%" />';
+                $content .= '<col style="width:20%" />';
+                $content .= '<col style="width:25%" />';
+                $content .= '<col style="width:55%" />';
             }
             $content .= '</colgroup>';
             $content .= '<tbody>';

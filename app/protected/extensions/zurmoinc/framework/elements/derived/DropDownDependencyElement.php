@@ -78,7 +78,7 @@
                 $element->editableTemplate  = $this->getEditableTemplate();
                 $content                   .= $element->render();
                 $inputId                    = $element->getIdForSelectInput();
-                $onChangeScript .= "$('#" . $inputId . "').change(function()
+                $onChangeScript .= "$('#" . $inputId . "').bind('change', function()
                 {
                     " . $this->getDependencyManagerResolveScriptCall() . "
                 }
@@ -208,7 +208,8 @@
          */
         protected function renderLabel()
         {
-            return $this->dropDownDependencyDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language);
+            return Chtml::tag('label',
+                   array(), $this->dropDownDependencyDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language));
         }
 
         /**

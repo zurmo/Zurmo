@@ -77,6 +77,8 @@
             => 'Ad-hoc / Propietario',
         'Add Currency'
             => 'Añadir divisa',
+        'Add new fields, remove ones you don\'t need and change the layout using Designer.'
+            => 'Añadir nuevos campos, eliminar los no necesita y cambiar el diseño con el Diseñador.',
         'Address'
             => 'Dirección',
         'Admin'
@@ -111,6 +113,8 @@
             => 'Nombre de systema',
         'are required.'
             => 'son obligatorios.',
+        'Are you number one{spaceAndFirstName}? Find out how you size up to your colleagues on the Leaderboard.'
+            => '¿Es el número uno {spaceAndFirstName}? Compárese con sus colegas en la tabla clasificatoria.',
         'Are you sure you want to remove this group?'
             => '¿Está seguro que desea eliminar este grupo?',
         'Are you sure you want to remove this role?'
@@ -129,6 +133,8 @@
             => 'Bancario',
         'Business Services'
             => 'Servicios de negocios',
+        'by {ownerStringContent}'
+            => 'de {ownerStringContent}',
         'Cancel'
             => 'Cancelar',
         'Changes to active currencies saved successfully.'
@@ -139,6 +145,8 @@
             => 'Tipo de gráfico',
         'City'
             => 'Ciudad',
+        'Click on the Map link on records to see the customer location on Google Maps.'
+            => 'Haga clic en el enlace para ver el mapa de localización con Google Maps.',
         'Close'
             => 'Cerrar',
         'Code'
@@ -303,6 +311,8 @@
             => 'Última actualización',
         'Latitude'
             => 'Latitud',
+        'Let Zurmo crunch the numbers, add calculated fields to your records in Designer.'
+            => 'Permite Zurmo para hacer el trabajo duro, agregar campos calculados en el Diseñador.',
         'List Filters'
             => 'Filtros de lista',
         'List page size'
@@ -365,6 +375,8 @@
             => 'Srta.',
         'My List Configuration View'
             => 'Mi vista de lista configuración',
+        'Need to update multiple records at once? Select them from the list and hit the Update button.'
+            => '¿Se necesita actualizar registros múltiples? Seleccione de la lista y pulsa el botón Actualizar.',
         'Never'
             => 'Nunca',
         'New'
@@ -403,6 +415,8 @@
             => 'Parent group',
         'Parent Role'
             => 'Parent role',
+        'Parlez vous Français{spaceAndFirstName}?  Choose your preferred language in your My Profile area.'
+            => 'Seleccione su idioma preferido en mi perfil.',
         'Password'
             => 'Contraseña',
         'Permissions'

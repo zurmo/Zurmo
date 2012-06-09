@@ -113,6 +113,55 @@
             return $models[0];
         }
 
+        /**
+         * Given an  Item (Either User or Person),  try to find an existing model for each type. If the model does
+         * not exist, create it and populate the Item and type. @return models found or created indexed by type.
+         * @param Item $person
+         * @param array $levelTypes - Level types
+         */
+        public static function resolvePersonAndAvailableTypes(Item $person, $levelTypes)
+        {
+            assert('$person->id > 0');
+            assert('$person instanceof Contact || $person instanceof User');
+            assert('is_array($levelTypes)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'person',
+                    'relatedAttributeName' => 'id',
+                    'operatorType'         => 'equals',
+                    'value'                => $person->getClassId('Item'),
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('GameLevel');
+            $where  = RedBeanModelDataProvider::makeWhere('GameLevel', $searchAttributeData, $joinTablesAdapter);
+            $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
+            $modelsByType = array();
+            foreach ($levelTypes as $type)
+            {
+                $modelFound = false;
+                foreach ($models as $model)
+                {
+                    if ($model->type == $type)
+                    {
+                        $modelsByType[$type] = $model;
+                        $modelFound          = true;
+                        break;
+                    }
+                }
+                if (!$modelFound)
+                {
+                    $gameLevel           = new GameLevel();
+                    $gameLevel->type     = $type;
+                    $gameLevel->person   = $person;
+                    $gameLevel->value    = 1;
+                    $modelsByType[$type] = $gameLevel;
+                }
+            }
+            return $modelsByType;
+        }
+
         public static function getModuleClassName()
         {
             return 'GamificationModule';

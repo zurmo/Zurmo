@@ -45,6 +45,7 @@
             AccountTestHelper::createAccountByNameForOwner('superAccount4', Yii::app()->user->userModel);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser(Dashboard::DEFAULT_USER_LAYOUT_ID, Yii::app()->user->userModel);
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function testRegularUserAllControllerActionsNoElevation()
@@ -104,11 +105,18 @@
 
             //Test nobody with elevated rights.
             Yii::app()->user->userModel = User::getByUsername('nobody');
-            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $this->assertFalse(strpos($content, 'Benjamin Franklin') === false);
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
 
             //Test nobody can view an existing account he owns.
             $account = AccountTestHelper::createAccountByNameForOwner('accountOwnedByNobody', $nobody);
+
+            //At this point the listview for accounts should show the search/list and not the helper screen.
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $this->assertTrue(strpos($content, 'Benjamin Franklin') === false);
+
+            //Go to the a ccount editview.
             $this->setGetArray(array('id' => $account->id));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
 

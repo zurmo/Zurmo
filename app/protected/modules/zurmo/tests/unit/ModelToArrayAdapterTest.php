@@ -111,7 +111,7 @@
             $customFieldValue->value = 'Cloud 3';
             $testItem->tagCloud->values->add($customFieldValue);
 
-            $createStamp         = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $createStamp         = strtotime(DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
             $testItem->forget();
@@ -145,8 +145,6 @@
                     'id'       => $super->id,
                     'username' => 'super'
                 ),
-                'createdDateTime'  => $createStamp,
-                'modifiedDateTime' => $createStamp,
                 'createdByUser'    => array(
                     'id'       => $super->id,
                     'username' => 'super'
@@ -158,6 +156,13 @@
                 'multiDropDown'    => array('values' => array('Multi 1', 'Multi 3')),
                 'tagCloud'         => array('values' => array('Cloud 2', 'Cloud 3')),
             );
+
+            // Because small delay in IO operation, allow tresholds
+            $this->assertEquals($createStamp, strtotime($data['createdDateTime']), '', 2);
+            $this->assertEquals($createStamp, strtotime($data['modifiedDateTime']), '', 2);
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
+
             $this->assertEquals($compareData, $data);
         }
 
@@ -199,7 +204,7 @@
             $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
             $testItem->dropDown->value = $values[1];
-            $createStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $createStamp         = strtotime(DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
             $testItem->forget();
@@ -245,8 +250,6 @@
                     'id' => $super->id,
                     'username' => 'super'
                 ),
-                'createdDateTime'  => $createStamp,
-                'modifiedDateTime' => $createStamp,
                 'createdByUser'    => array(
                     'id' => $super->id,
                     'username' => 'super'
@@ -256,6 +259,13 @@
                     'username' => 'super'
                 ),
             );
+
+            // Because small delay in IO operation, allow tresholds
+            $this->assertEquals($createStamp, strtotime($data['createdDateTime']), '', 2);
+            $this->assertEquals($createStamp, strtotime($data['modifiedDateTime']), '', 2);
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
+
             $this->assertEquals($compareData, $data);
         }
 
@@ -305,7 +315,7 @@
             $testItem->hasMany->add($testItem3_1);
             $testItem->hasMany->add($testItem3_2);
             $testItem->hasOneAlso    = $testItem4;
-            $createStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $createStamp         = strtotime(DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
             $testItem->forget();
@@ -346,8 +356,6 @@
                             'id' => $super->id,
                             'username' => 'super'
                         ),
-                        'createdDateTime'  => $createStamp,
-                        'modifiedDateTime' => $createStamp,
                         'createdByUser'    => array(
                             'id' => $super->id,
                             'username' => 'super'
@@ -359,6 +367,13 @@
                         'multiDropDown'    => array('values' => null),
                         'tagCloud'         => array('values' => null),
             );
+
+            // Because small delay in IO operation, allow tresholds
+            $this->assertEquals($createStamp, strtotime($data['createdDateTime']), '', 2);
+            $this->assertEquals($createStamp, strtotime($data['modifiedDateTime']), '', 2);
+            unset($data['createdDateTime']);
+            unset($data['modifiedDateTime']);
+
             $this->assertEquals($compareData, $data);
         }
     }

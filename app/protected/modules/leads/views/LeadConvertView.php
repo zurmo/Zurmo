@@ -213,7 +213,7 @@
                 $content .= '</div>';
             }
             $content .= '</div>'; //this was missing..
-            return '<div>' . $content . parent::renderContent() . '</div>';
+            return '<div class="wrapper">' . $content . parent::renderContent() . '</div>';
         }
 
         protected function renderTitleContent()

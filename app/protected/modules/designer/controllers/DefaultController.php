@@ -85,16 +85,19 @@
             }
             else
             {
-                $modelClassName  = $moduleClassName::getPrimaryModelName();
-                $model           = new $modelClassName();
-                $adapter         = new ModelAttributesAdapter($model);
+                $modelClassName           = $moduleClassName::getPrimaryModelName();
+                $model                    = new $modelClassName();
+                $adapter                  = new ModelAttributesAdapter($model);
+                $derivedAttributesAdapter = new DerivedAttributesAdapter(get_class($model));
+                $customAttributes         = array_merge($adapter->getCustomAttributes(),
+                                                        $derivedAttributesAdapter->getAttributes());
                 $canvasView = new StandardAndCustomAttributesListView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             $module,
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
                             $adapter->getStandardAttributes(),
-                            $adapter->getCustomAttributes(),
+                            $customAttributes,
                             $modelClassName
                 );
             }
@@ -278,15 +281,17 @@
         {
             assert('!empty($_GET["moduleClassName"])');
             assert('!empty($_GET["viewClassName"])');
-            $viewClassName           = $_GET['viewClassName'];
-            $moduleClassName         = $_GET['moduleClassName'];
-            $modelClassName          = $moduleClassName::getPrimaryModelName();
-            $editableMetadata        = $viewClassName::getMetadata();
-            $designerRulesType       = $viewClassName::getDesignerRulesType();
-            $designerRulesClassName  = $designerRulesType . 'DesignerRules';
-            $designerRules           = new $designerRulesClassName();
-            $modelAttributesAdapter  = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
-            $attributeCollection     = $modelAttributesAdapter->getAttributes();
+            $viewClassName            = $_GET['viewClassName'];
+            $moduleClassName          = $_GET['moduleClassName'];
+            $modelClassName           = $moduleClassName::getPrimaryModelName();
+            $editableMetadata         = $viewClassName::getMetadata();
+            $designerRulesType        = $viewClassName::getDesignerRulesType();
+            $designerRulesClassName   = $designerRulesType . 'DesignerRules';
+            $designerRules            = new $designerRulesClassName();
+            $modelAttributesAdapter   = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
+            $derivedAttributesAdapter = new DerivedAttributesAdapter($modelClassName);
+            $attributeCollection      = array_merge($modelAttributesAdapter->getAttributes(),
+                                                        $derivedAttributesAdapter->getAttributes());
             $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
                 $attributeCollection,
                 $designerRules,

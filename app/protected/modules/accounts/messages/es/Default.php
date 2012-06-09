@@ -73,5 +73,11 @@
             => 'AccountsModulePluralLabel Relacionadas',
         'Vendor'
             => 'Vendedor',
+        '{n} AccountsModuleSingularLabel created|{n} AccountsModulePluralLabel created'
+            => '{n} AccountsModuleSingularLabel ha sido creado|{n} AccountsModulePluralLabel han sido creados',
+        '{n} AccountsModuleSingularLabel mass updated|{n} AccountsModulePluralLabel mass updated'
+            => '{n} AccountsModuleSingularLabel Se ha actualizado|{n} AccountsModulePluralLabel se han actualizados',
+        '{n} AccountsModuleSingularLabel search completed|{n} AccountsModuleSingularLabel searches completed'
+            => '{n} AccountsModuleSingularLabel búsqueda se ha completado|{n} AccountsModuleSingularLabel búsquedas se han completadas',
     );
 ?>

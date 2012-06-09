@@ -85,7 +85,7 @@
 
         public function actionDetails($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
             $title           = Yii::t('Default', 'Profile');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
@@ -108,7 +108,7 @@
 
         public function actionAuditEventsModalList($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             parent::actionAuditEventsModalList($id);
         }
 
@@ -133,7 +133,7 @@
 
         public function actionEdit($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user            = User::getById(intval($id));
             $title           = Yii::t('Default', 'Details');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
@@ -166,7 +166,7 @@
 
         public function actionChangePassword($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
             $title           = Yii::t('Default', 'Change Password');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
@@ -325,7 +325,7 @@
 
         public function actionSecurityDetails($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
             $title           = Yii::t('Default', 'Security');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
@@ -366,7 +366,7 @@
 
         public function actionConfigurationEdit($id)
         {
-            $this->resolveCanCurrentUserAccessAction(intval($id));
+            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
             $title           = Yii::t('Default', 'Configuration');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
@@ -388,7 +388,7 @@
                     Yii::app()->user->setFlash('notification',
                         Yii::t('Default', 'User configuration saved successfully.')
                     );
-                    $this->redirect(array($this->getId() . '/index'));
+                    $this->redirect(array($this->getId() . '/details', 'id' => $user->id));
                 }
             }
             $titleBarAndEditView = new UserActionBarAndConfigurationEditView(
@@ -401,19 +401,6 @@
             $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView, $breadcrumbLinks, 'UserBreadCrumbView'));
             echo $view->render();
-        }
-
-        protected function resolveCanCurrentUserAccessAction($userId)
-        {
-            if (Yii::app()->user->userModel->id == $userId ||
-                RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))
-            {
-                return;
-            }
-            $messageView = new AccessFailureView();
-            $view = new AccessFailurePageView($messageView);
-            echo $view->render();
-            Yii::app()->end(0, false);
         }
 
         protected function getSearchFormClassName()

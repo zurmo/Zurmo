@@ -71,6 +71,7 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadActivitiesObserver'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadGamification'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
@@ -85,12 +86,15 @@
         */
         public function handleApplicationCache($event)
         {
-            $memcacheServiceHelper = new MemcacheServiceHelper();
-            if ($memcacheServiceHelper->runCheckAndGetIfSuccessful())
+            if (MEMCACHE_ON)
             {
-                $cacheComponent = Yii::createComponent('CMemCache',
-                    array('servers' => Yii::app()->params['memcacheServers']));
-                Yii::app()->setComponent('cache', $cacheComponent);
+                $memcacheServiceHelper = new MemcacheServiceHelper();
+                if ($memcacheServiceHelper->runCheckAndGetIfSuccessful())
+                {
+                    $cacheComponent = Yii::createComponent('CMemCache',
+                        array('servers' => Yii::app()->params['memcacheServers']));
+                    Yii::app()->setComponent('cache', $cacheComponent);
+                }
             }
         }
 
@@ -339,6 +343,13 @@
                 Yii::app()->custom->resolveIsCustomDataLoaded();
             }
         }
+
+        public function handleLoadActivitiesObserver($event)
+        {
+            $activitiesObserver = new ActivitiesObserver();
+            $activitiesObserver->init(); //runs init();
+        }
+
 
         public function handleLoadGamification($event)
         {

@@ -51,14 +51,46 @@
             return array_reverse($modelDerivationPathToItem);
         }
 
-        public static function renderSummaryContent(RedBeanModel $model, $redirectUrl)
+        /**
+         * Renders and returns string content of summary content for the given model.
+         * @param RedBeanModel $model
+         * @param mixed $redirectUrl
+         * @param string $ownedByFilter
+         * @param string $viewModuleClassName
+         * @return string content
+         */
+        public static function renderSummaryContent(RedBeanModel $model, $redirectUrl, $ownedByFilter, $viewModuleClassName)
         {
-            $mashableActivityRules = MashableActivityRulesFactory::createMashableActivityRulesByModel(
-                                         get_class($model));
-            $orderByAttributeName = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
-            $content  = '<span class="'.get_class($model).'"></span>';
+            assert('is_string($redirectUrl) || $redirectUrl == null');
+            assert('is_string($ownedByFilter)');
+            assert('is_string($viewModuleClassName)');
+            $mashableActivityRules  = MashableActivityRulesFactory::createMashableActivityRulesByModel(get_class($model));
+            $orderByAttributeName   = $mashableActivityRules->getLatestActivitiesOrderByAttributeName();
+            $summaryContentTemplate = $mashableActivityRules->getSummaryContentTemplate($ownedByFilter, $viewModuleClassName);
+
+            $content  = '<div class="activity-item">';
+            //Render icon
+            $content  .= '<em class="'.get_class($model).'"></em>';
+            //Render date
             $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
                             $model->{$orderByAttributeName}, 'long', null) . '</strong><br/>';
+
+            $data                                            = array();
+            $data['modelStringContent']                      = self::renderModelStringContent($model, $redirectUrl);
+            $data['ownerStringContent']                      = self::renderOwnerStringContent($model);
+            $data['relatedModelsByImportanceContent']        = $mashableActivityRules->renderRelatedModelsByImportanceContent($model);
+            $data['extraContent']                            = self::resolveAndRenderExtraContent($model,
+                                                                     $mashableActivityRules);
+
+            //Render display content
+            $content .= self::resolveContentTemplate($summaryContentTemplate, $data);
+            $content .= '</div>';
+            return $content;
+        }
+
+        protected static function renderModelStringContent(RedBeanModel $model, $redirectUrl)
+        {
+            assert('is_string($redirectUrl) || $redirectUrl == null');
             $modelDisplayString = strval($model);
             if (strlen($modelDisplayString) > 200)
             {
@@ -68,18 +100,47 @@
             {
                 $modelDisplayString = '<span style="text-decoration:line-through;">' . $modelDisplayString . '</span>';
             }
-            $params = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl);
+            $params          = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl);
             $moduleClassName = $model->getModuleClassName();
             $moduleId        = $moduleClassName::getDirectoryName();
             $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);
-            $content .= $element->render() . '<br/>';
-            //$content .= Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($model->createdByUser);
+            return $element->render();
+        }
+
+        protected static function renderOwnerStringContent($model)
+        {
+            if ($model instanceof MashableActivity)
+            {
+                return strval($model->owner);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected static function resolveAndRenderExtraContent(RedBeanModel $model,
+                                                               MashableActivityRules $mashableActivityRules)
+        {
+            $content      = null;
             $extraContent = $mashableActivityRules->getLatestActivityExtraDisplayStringByModel($model);
             if ($extraContent)
             {
                 $content .= '<br/>' . $extraContent;
             }
             return $content;
+        }
+
+        protected static function resolveContentTemplate($template, $data)
+        {
+            assert('is_string($template)');
+            assert('is_array($data)');
+            $preparedContent = array();
+            foreach ($data as $templateVar => $content)
+            {
+                $preparedContent["{" . $templateVar . "}"] = $content;
+            }
+            return strtr($template, $preparedContent);
         }
 
         public static function getActivityItemsModelClassNamesDataExcludingContacts()

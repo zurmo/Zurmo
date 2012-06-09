@@ -39,6 +39,8 @@
             => 'Zusammenfassung der Aktivitäten',
         'All Activities'
             => 'Alle Aktivitäten',
+        'for {relatedModelsStringContent}'
+            => 'für {relatedModelsStringContent}',
         'Latest Activities'
             => 'Aktuelle Aktivitäten',
         'Latest Date Time'
@@ -61,5 +63,7 @@
             => 'Aufrollen aktivieren, um Aktivitäten zu sehen.',
         'View'
             => 'Sicht',
+        'with {relatedContactsStringContent}'
+            => 'mit {relatedContactsStringContent}',
     );
 ?>

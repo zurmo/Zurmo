@@ -77,6 +77,8 @@
             => 'De circonstance / Resp. du compte',
         'Add Currency'
             => 'Ajouter la Devise',
+        'Add new fields, remove ones you don\'t need and change the layout using Designer.'
+            => 'Utilisez Designer pour ajouter de nouveau champs, enlever les champs non utilisés, et modifer la présentation de page.',
         'Address'
             => 'Adresse',
         'Admin'
@@ -111,6 +113,8 @@
             => 'Nom du système',
         'are required.'
             => 'sont obligatoires.',
+        'Are you number one{spaceAndFirstName}? Find out how you size up to your colleagues on the Leaderboard.'
+            => 'À vos marques! Prêt? Feu, partez!  Voyez comment vous concurrencez par rapport à vos collègues su le Leaderboard.',
         'Are you sure you want to remove this group?'
             => 'Êtes-vous sûr(e) de vouloir supprimer ce groupe?',
         'Are you sure you want to remove this role?'
@@ -129,6 +133,8 @@
             => 'Bancaire',
         'Business Services'
             => 'Service de gestion',
+        'by {ownerStringContent}'
+            => 'par {ownerStringContent}',
         'Cancel'
             => 'Annuler',
         'Changes to active currencies saved successfully.'
@@ -139,6 +145,8 @@
             => 'Type de graphique',
         'City'
             => 'Ville',
+        'Click on the Map link on records to see the customer location on Google Maps.'
+            => 'Cliquez le lien plan pour visualiser une adresse sur Google Maps.',
         'Close'
             => 'Fermer',
         'Code'
@@ -303,6 +311,8 @@
             => 'Dernière Modification',
         'Latitude'
             => 'Latitude', // Same Word Translated
+        'Let Zurmo crunch the numbers, add calculated fields to your records in Designer.'
+            => 'Permettez à Zurmo de faire le gros du travail,  ajoutez des champs calculés dans Designer.',
         'List Filters'
             => 'Filtres',
         'List page size'
@@ -326,7 +336,7 @@
         'Manufacturing'
             => 'Industriel',
         'map'
-            => 'carte',
+            => 'plan',
         'Member'
             => 'Filiale',
         'Member Of'
@@ -365,6 +375,8 @@
             => 'Mlle.',
         'My List Configuration View'
             => 'Ma Vue Liste Configuration',
+        'Need to update multiple records at once? Select them from the list and hit the Update button.'
+            => 'Pour mettre à jour plusieurs données en même temps, cochez les données dans la Vue liste et cliquez le bouton "Mise à jour globale".',
         'Never'
             => 'Jamais',
         'New'
@@ -403,6 +415,8 @@
             => 'Groupe mère',
         'Parent Role'
             => 'Rôle parent',
+        'Parlez vous Français{spaceAndFirstName}?  Choose your preferred language in your My Profile area.'
+            => 'Sélectionnez votre langue préférée dans Mon Profil.',
         'Password'
             => 'Mot de passe',
         'Permissions'

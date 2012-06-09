@@ -28,11 +28,16 @@
     {
         public function renderGridViewData()
         {
+            //we can pass the name of the adapter but not the adpater it self..
+            //we could maybe just pass template in, but does task even know how to get its relatedaccountname?
             return array(
                     'name' => 'summary',
                     'header' => Yii::t('Default', 'Summary'),
                     'type'  => 'raw',
-                    'value'  => 'ActivitiesUtil::renderSummaryContent($data, "' . $this->view->redirectUrl . '")',
+                    'value'  => 'ActivitiesUtil::renderSummaryContent($data, "' .
+                                $this->view->redirectUrl . '", "' .
+                                $this->view->getOwnedByFilter() . '", "' .
+                                $this->view->getContainerModuleClassName() . '")',
             );
         }
     }

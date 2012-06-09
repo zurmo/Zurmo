@@ -199,6 +199,10 @@
         _closeDropdown($(this).data('dropkick').$dk);
     };
 
+    // Close the dropdown manually
+    methods.rebindToggle = function() {
+        _processBindings();
+    };
 
   // Expose the plugin
   $.fn.dropkick = function (method) {
@@ -397,8 +401,7 @@
     return ($.trim(text).length > 0) ? text : false;
   }
 
-  $(function () {
-
+  function _processBindings() {
     // Handle click events on the dropdown toggler
     //Zurmo needed to change this to 'bind' from live to ensure it would not add multiple events when using ajax
     $('.dk_toggle').unbind('click');
@@ -459,5 +462,6 @@
         _handleKeyBoardNav(e, $dk);
       }
     });
-  });
+  }
+  $(_processBindings);
 })(jQuery, window, document);

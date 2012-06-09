@@ -31,7 +31,7 @@
             return array_merge(parent::filters(),
                 array(
                     array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' - index',
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' - index, welcome, hideWelcome',
                         'moduleClassName' => 'HomeModule',
                         'rightName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                    ),
@@ -60,10 +60,42 @@
             }
             else
             {
-                $view = new HomePageView(ZurmoDefaultViewUtil::
-                                             makeStandardViewForCurrentUser($this, new WelcomeView()));
-                echo $view->render();
+                $this->actionWelcome();
             }
+        }
+
+        public function actionWelcome()
+        {
+            $hasDashboardAccess = true;
+            if (!RightsUtil::doesUserHaveAllowByRightName(
+            'HomeModule',
+            HomeModule::RIGHT_ACCESS_DASHBOARDS,
+            Yii::app()->user->userModel))
+            {
+                $hasDashboardAccess = false;
+            }
+            if (UserConfigurationFormAdapter::resolveAndGetHideWelcomeViewValue(Yii::app()->user->userModel))
+            {
+                //If you can see dashboards, then go there, otherwise stay here since the user has limited access.
+                if ($hasDashboardAccess)
+                {
+                    $this->redirect(array($this->getId() . '/index'));
+                }
+            }
+            $tipContent                = ZurmoTipsUtil::getRandomTipResolvedForCurrentUser();
+            $welcomeView               = new WelcomeView($tipContent, $hasDashboardAccess);
+            $view                      = new HomePageView(ZurmoDefaultViewUtil::
+                                             makeStandardViewForCurrentUser($this, $welcomeView));
+            echo $view->render();
+        }
+
+        public function actionHideWelcome()
+        {
+            $configurationForm = UserConfigurationFormAdapter::
+                                 makeFormFromUserConfigurationByUser(Yii::app()->user->userModel);
+            $configurationForm->hideWelcomeView = true;
+            UserConfigurationFormAdapter::setConfigurationFromForm($configurationForm, Yii::app()->user->userModel);
+            $this->redirect(array($this->getId() . '/index'));
         }
 
         public function actionDashboardDetails($id)
@@ -109,10 +141,9 @@
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
-            $view = new HomePageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             new DashboardTitleBarAndEditView($this->getId(),
-                                                     $this->getModule()->getId(), $dashboard)));
+            $editView = new DashboardEditView($this->getId(), $this->getModule()->getId(), $dashboard,
+                                              Yii::t('Default', 'Create Dashboard'));
+            $view     = new HomePageView(ZurmoDefaultViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 
@@ -142,10 +173,9 @@
                     $this->redirect(array('default/dashboardDetails', 'id' => $dashboard->id));
                 }
             }
-            $view = new AccountsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             new DashboardTitleBarAndEditView($this->getId(),
-                                                     $this->getModule()->getId(), $dashboard)));
+            $editView = new DashboardEditView($this->getId(), $this->getModule()->getId(), $dashboard, strval($dashboard));
+            $view     = new AccountsPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
 

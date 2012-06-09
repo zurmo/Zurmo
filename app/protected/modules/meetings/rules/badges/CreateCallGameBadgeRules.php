@@ -29,9 +29,26 @@
      */
     class CreateCallGameBadgeRules extends GameBadgeRules
     {
-        public static function getDisplayName()
+        public static $valuesIndexedByGrade = array(
+            1  => 1,
+            2  => 10,
+            3  => 25,
+            4  => 50,
+            5  => 75,
+            6  => 100,
+            7  => 125,
+            8  => 150,
+            9  => 175,
+            10 => 200,
+            11 => 225,
+            12 => 250,
+            13 => 300
+        );
+
+        public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', 'Creating Calls');
+            return Yii::t('Default', '{n} Call created|{n} Calls created',
+                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)
@@ -40,62 +57,7 @@
             assert('is_array($userScoresByType)');
             if (isset($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]))
             {
-                if ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 1)
-                {
-                    return 0;
-                }
-                if ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 2)
-                {
-                    return 1;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 11)
-                {
-                    return 2;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 26)
-                {
-                    return 3;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 51)
-                {
-                    return 4;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 76)
-                {
-                    return 5;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 101)
-                {
-                    return 6;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 126)
-                {
-                    return 7;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 151)
-                {
-                    return 8;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 176)
-                {
-                    return 9;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 201)
-                {
-                    return 10;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 226)
-                {
-                    return 11;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value < 251)
-                {
-                    return 12;
-                }
-                elseif ($userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value >= 300)
-                {
-                    return 13;
-                }
+                return static::getBadgeGradeByValue((int)$userScoresByType[MeetingGamificationRules::SCORE_TYPE_CREATE_CALL]->value);
             }
             return 0;
         }

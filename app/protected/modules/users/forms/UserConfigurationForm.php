@@ -33,8 +33,12 @@
          * Is set in order to properly route action elements in view.
          */
         public $userId;
+
         public $listPageSize;
+
         public $subListPageSize;
+
+        public $hideWelcomeView = false;
 
         public function __construct($userId)
         {
@@ -60,6 +64,7 @@
                 array('subListPageSize',          'required'),
                 array('subListPageSize',          'type',      'type' => 'integer'),
                 array('subListPageSize',          'numerical', 'min' => 1),
+                array('hideWelcomeView',          'boolean'),
             );
         }
 
@@ -68,6 +73,7 @@
             return array(
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
+                'hideWelcomeView'           => Yii::t('Default', 'Hide welcome page'),
             );
         }
     }

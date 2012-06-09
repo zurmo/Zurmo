@@ -77,6 +77,8 @@
             => 'Ad-hoc / Besitzer',
         'Add Currency'
             => 'Währung hinzufügen',
+        'Add new fields, remove ones you don\'t need and change the layout using Designer.'
+            => 'Neue Felder hinzufügen, entfernan was nicht benötigt ist, und ändern das Layout mit Designer.',
         'Address'
             => 'Adresse',
         'Admin'
@@ -111,6 +113,8 @@
             => 'Systemname',
         'are required.'
             => 'Sind Erforderlich.',
+        'Are you number one{spaceAndFirstName}? Find out how you size up to your colleagues on the Leaderboard.'
+            => 'Bist du Nummer eins{spaceAndFirstName}? Vergleiche dich mit deinen Kollegen auf dem Leaderboard.',
         'Are you sure you want to remove this group?'
             => 'Sind Sie sicher, dass Sie dieser Gruppe entfernen möchten?',
         'Are you sure you want to remove this role?'
@@ -129,6 +133,8 @@
             => 'Banking', // Same Word Translated
         'Business Services'
             => 'Handelsdienstleistungen',
+        'by {ownerStringContent}'
+            => 'von {ownerStringContent}',
         'Cancel'
             => 'Abbrechen',
         'Changes to active currencies saved successfully.'
@@ -139,6 +145,8 @@
             => 'Diagrammtyp',
         'City'
             => 'Stadt',
+        'Click on the Map link on records to see the customer location on Google Maps.'
+            => 'Klickst du auf den Link, um den Lageplan mit Google Maps zu sehen.',
         'Close'
             => 'schließen',
         'Code'
@@ -303,6 +311,8 @@
             => 'Aktualisiert',
         'Latitude'
             => 'Breite',
+        'Let Zurmo crunch the numbers, add calculated fields to your records in Designer.'
+            => 'Zurmo kann dein Zahlenfresser sein wenn du berechnete Felder in Designer hinzufügen.',
         'List Filters'
             => 'Liste Filtern',
         'List page size'
@@ -365,6 +375,8 @@
             => 'Frau',
         'My List Configuration View'
             => 'Meine Liste Konfigurationsansicht',
+        'Need to update multiple records at once? Select them from the list and hit the Update button.'
+            => 'Brauchst du mehrere Datensätze zu aktualisieren? Wähle aus der Liste und die Aktualisierung Taste drücken.',
         'Never'
             => 'Nie',
         'New'
@@ -403,6 +415,8 @@
             => 'Übergeordnete Gruppe',
         'Parent Role'
             => 'übergeordneten Rolle',
+        'Parlez vous Français{spaceAndFirstName}?  Choose your preferred language in your My Profile area.'
+            => 'Parlez vous français{spaceAndFirstName}? Die gewünschte Sprache kann man in meinem Profil ausgewählt.',
         'Password'
             => 'Kennwort',
         'Permissions'

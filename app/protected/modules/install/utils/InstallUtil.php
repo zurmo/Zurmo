@@ -657,17 +657,24 @@
             $contents = preg_replace('/\$forceNoFreeze\s*=\s*true;/',
                                      '$forceNoFreeze = false;',
                                      $contents);
+
             if ($minifyScripts)
             {
                 $contents = preg_replace('/\$minifyScripts\s*=\s*false;/',
                                          '$minifyScripts = true;',
                                          $contents);
             }
-            if ($memcacheHost == null && $memcachePort == null)
+            // Check if user setup memcache host and port
+            if ($memcacheHost && $memcachePort)
             {
-                $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*true;/',
-                                                     '$memcacheLevelCaching = false;',
-                                         $contents);
+                // Check if memcache extension is installed
+                $memcacheServiceHelper = new MemcacheServiceHelper();
+                if ($memcacheServiceHelper->runCheckAndGetIfSuccessful())
+                {
+                    $contents = preg_replace('/\$memcacheLevelCaching\s*=\s*false;/',
+                                             '$memcacheLevelCaching = true;',
+                                             $contents);
+                }
             }
             file_put_contents($debugConfigFile, $contents);
 
@@ -812,6 +819,7 @@
             }
             else
             {
+                @set_time_limit(1200);
                 $perInstanceFilename     = "perInstance.php";
                 $debugFilename     = "debug.php";
             }
