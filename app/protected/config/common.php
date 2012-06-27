@@ -100,7 +100,6 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/widget-juiportlets.css',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/newui.css',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/jquery-multiselect.css',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/fileUpload/css/jquery.fileupload-ui.css',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/timepicker/assets/jquery-ui-timepicker-addon.css'
                     ),
 
@@ -110,7 +109,7 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.ba-bbq.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jui/js/jquery-ui.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.yiiactiveform.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-1.0.0-rc3.min.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-2.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/extendedGridView/jquery.yiigridview.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/fusionChart/jquery.fusioncharts.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/elements/assets/Modal.js',
@@ -139,7 +138,7 @@
                     array('system.web.js.source',                                       '/jquery.ba-bbq.js'),
                     array('system.web.js.source',                                       '/jui/js/jquery-ui.min.js'),
                     array('system.web.js.source',                                       '/jquery.yiiactiveform.js'),
-                    array('application.extensions.qtip.assets',                         '/jquery.qtip-1.0.0-rc3.min.js'),
+                    array('application.extensions.qtip.assets',                         '/jquery.qtip-2.min.js'),
                     array('application.extensions.zurmoinc.framework.widgets.assets',   '/extendedGridView/jquery.yiigridview.js'),
                     array('application.extensions.zurmoinc.framework.widgets.assets',   '/fusionChart/jquery.fusioncharts.js'),
                     array('application.extensions.zurmoinc.framework.elements.assets',  '/Modal.js'),
@@ -278,6 +277,7 @@
             'application.modules.api.tests.unit.forms.*',
             'application.modules.install.serviceHelpers.MemcacheServiceHelper',
             'application.modules.install.serviceHelpers.ServiceHelper',
+            'application.modules.install.serviceHelpers.SetIncludePathServiceHelper',
             'application.modules.install.utils.InstallUtil',
         ),
 

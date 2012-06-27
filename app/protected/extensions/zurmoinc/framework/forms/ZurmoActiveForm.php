@@ -85,6 +85,12 @@
             }
             echo CHtml::endForm();
             $cs = Yii::app()->clientScript;
+            $cs->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    ) . '/FormUtils.js',
+                CClientScript::POS_END
+            );
             if (!$this->enableAjaxValidation && !$this->enableClientValidation || empty($this->attributes))
             {
                 if ($this->focus !== null)
@@ -97,7 +103,6 @@
                 }
                 return;
             }
-
             $options = $this->clientOptions;
             if (isset($this->clientOptions['validationUrl']) && is_array($this->clientOptions['validationUrl']))
             {
@@ -116,7 +121,20 @@
             }
 
             $options = CJavaScript::encode($options);
-            $cs->registerCoreScript('yiiactiveform');
+            //Not registering via coreScript because it does not properly register when using ajax non-minified
+            //on home page myList config view.  Needs a better solution
+            $cs->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('system.web.js.source')
+                    ) . '/jquery.yii.js',
+                CClientScript::POS_END
+            );
+            $cs->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('system.web.js.source')
+                    ) . '/jquery.yiiactiveform.js',
+                CClientScript::POS_END
+            );
             $id = $this->id;
             if ($this->bindAsLive)
             {

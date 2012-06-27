@@ -190,7 +190,7 @@
 
         protected function renderSaveModalSettingsButton()
         {
-            return CHtml::button(Yii::t('Default', 'Save'), array('onClick' => '$(this).closest(".modal-settings").dialog("close");'));
+            return CHtml::button(Yii::t('Default', 'Save'), array('onclick' => '$(this).closest(".modal-settings").dialog("close");'));
         }
 
         /**

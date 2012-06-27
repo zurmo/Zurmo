@@ -89,7 +89,5 @@
                 return "<span>{modelStringContent}</span><span>{extraContent}</span>";
             }
         }
-
-
     }
 ?>

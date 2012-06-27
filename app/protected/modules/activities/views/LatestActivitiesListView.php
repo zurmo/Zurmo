@@ -254,10 +254,12 @@
             $urlScript = 'js:$.param.querystring("' . $this->portletDetailsUrl . '", "' .
                          $this->dataProvider->getPagination()->pageVar . '=1")'; // Not Coding Standard
             $ajaxSubmitScript = CHtml::ajax(array(
-                    'type' => 'GET',
-                    'data' => 'js:$("#' . $form->getId() . '").serialize()',
-                    'url'  =>  $urlScript,
-                    'update' => '#' . $this->uniquePageId,
+                    'type'       => 'GET',
+                    'data'       => 'js:$("#' . $form->getId() . '").serialize()',
+                    'url'        =>  $urlScript,
+                    'update'     => '#' . $this->uniquePageId,
+                    'beforeSend' => 'js:function(){makeSmallLoadingSpinner("' . $this->getGridViewId() . '"); $("#' . $form->getId() . '").parent().children(".cgrid-view").addClass("loading");}',
+                    'complete'   => 'js:function(){$("#' . $form->getId() . '").parent().children(".cgrid-view").removeClass("loading");}'
             ));
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
             $('#LatestActivitiesConfigurationForm_rollup_area').buttonset();

@@ -136,8 +136,8 @@
             assert('is_array($dependencyData)');
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/DropDownDependencyManager.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets')
+                    ) . '/DropDownDependencyManager.js',
                 CClientScript::POS_END
             );
             $managerObjectName = $this->getDependencyManagerScriptObjectName();
@@ -189,16 +189,19 @@
         protected function renderControlNonEditable()
         {
             $attributes = $this->dropDownDependencyDerivedAttributeMetadata->getUsedAttributeNames();
-            $content    = "<table> \n";
+            $content    = null;
             foreach ($attributes as $attribute)
             {
                 $element                        = new DropDownElement($this->model,
                                                                   $attribute,
                                                                   $this->form);
                 $element->nonEditableTemplate   = $this->getNonEditableTemplate();
+                if ($content != null)
+                {
+                    $content .= ' &rarr; ';
+                }
                 $content                       .= $element->render();
             }
-            $content   .= "</table> \n";
             return $content;
         }
 
@@ -208,8 +211,12 @@
          */
         protected function renderLabel()
         {
-            return Chtml::tag('label',
-                   array(), $this->dropDownDependencyDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language));
+            $content = $this->dropDownDependencyDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language);
+            if ($this->form === null)
+            {
+                return Yii::app()->format->text($content);
+            }
+            return Chtml::tag('label', array(), $content);
         }
 
         /**
@@ -233,10 +240,7 @@
 
         protected function getNonEditableTemplate()
         {
-            $template  = "<tr><td width='100%' style='border:0px;'>\n";
-            $template .= '{label}&#160;{content}';
-            $template .= "</td></tr>\n";
-            return $template;
+            return "{content}";
         }
     }
 ?>

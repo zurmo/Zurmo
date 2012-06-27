@@ -56,7 +56,11 @@
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
-                                                                array('id' => 'language-collection-form')
+                                                                array('id' => 'language-collection-form',
+                                                                        'htmlOptions' =>
+                                                                            array('onSubmit' =>
+                                                                                        'js:return attachLoadingOnSubmit("language-collection-form")')
+                                                                )
                                                             );
             $content .= $formStart;
 

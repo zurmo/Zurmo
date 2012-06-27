@@ -122,12 +122,13 @@
         {
             $columns = $this->getCGridViewColumns();
             assert('is_array($columns)');
+            $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
             return array(
                 'id' => $this->getGridViewId(),
                 'htmlOptions' => array(
                     'class' => 'cgrid-view'
                 ),
-                'loadingCssClass'  => 'cgrid-view-loading',
+                'loadingCssClass'  => 'loading',
                 'dataProvider'     => $this->getDataProvider(),
                 'selectableRows'   => $this->getCGridViewSelectableRowsCount(),
                 'pager'            => $this->getCGridViewPagerParams(),
@@ -138,7 +139,7 @@
                 'nullDisplay'      => '&#160;',
                 'showTableOnEmpty' => $this->getShowTableOnEmpty(),
                 'emptyText'        => $this->getEmptyText(),
-                'template'         => "\n{items}\n{pager}",
+                'template'         => "\n{items}\n{pager}" . $preloader,
             );
         }
 
@@ -237,11 +238,11 @@
         {
             if ($this->rowsAreSelectable)
             {
-                return 'js:function(id, options) {addListViewSelectedIdsToUrl(id, options);}';
+                return 'js:function(id, options) { makeSmallLoadingSpinner(id, options); addListViewSelectedIdsToUrl(id, options); }';
             }
             else
             {
-                return null;
+                return 'js:function(id, options) { makeSmallLoadingSpinner(id, options); }';
             }
         }
 

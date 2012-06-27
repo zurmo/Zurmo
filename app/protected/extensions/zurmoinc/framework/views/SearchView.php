@@ -97,14 +97,7 @@
         {
             $moreSearchOptionsLink = CHtml::link(Yii::t('Default', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
             $clearSearchLink = CHtml::link(Yii::t('Default', 'Clear'), '#', array('id' => 'clear-search-link' . $this->gridIdSuffix));
-            $cs = Yii::app()->getClientScript();
             // Begin Not Coding Standard
-            $cs->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
-                    ) . '/FormUtils.js',
-                CClientScript::POS_END
-            );
             Yii::app()->clientScript->registerScript('search', "
                 $('#clear-search-link" . $this->gridIdSuffix . "').removeAttr('clearForm');
                 $('#clear-search-link" . $this->gridIdSuffix . "').clearform(
@@ -119,8 +112,8 @@
                         return false;
                     }
                 );
-                $('#more-search-link" . $this->gridIdSuffix . "').unbind('click');
-                $('#more-search-link" . $this->gridIdSuffix . "').bind('click',  function(event)
+                $('#more-search-link" . $this->gridIdSuffix . "').unbind('click.more');
+                $('#more-search-link" . $this->gridIdSuffix . "').bind('click.more',  function(event)
                     {
                         $('.search-view-1').toggle();
                         return false;

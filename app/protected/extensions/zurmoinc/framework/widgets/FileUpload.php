@@ -34,7 +34,7 @@
         public $scriptFile = array('jquery.fileupload.js',
                                    'jquery.fileupload-ui.js', 'jquery.tmpl.min.js', 'jquery.iframe-transport.js');
 
-        public $cssFile    = 'jquery.fileupload-ui.css';
+        public $cssFile    = null;
 
         public $assetFolderName = 'fileUpload';
 

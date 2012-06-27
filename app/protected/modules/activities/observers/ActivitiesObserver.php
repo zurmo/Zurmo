@@ -33,11 +33,11 @@
         {
             $metadata                = Activity::getMetadata();
             $observedModelClassNames = $metadata['Activity']['activityItemsModelClassNames'];
-            if($observedModelClassNames == null)
+            if ($observedModelClassNames == null)
             {
                 return;
             }
-            foreach($observedModelClassNames as $modelClassName)
+            foreach ($observedModelClassNames as $modelClassName)
             {
                 $modelClassName::model()->attachEventHandler('onAfterDelete', array($this, 'deleteActivityItems'));
             }

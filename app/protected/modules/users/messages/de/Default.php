@@ -39,6 +39,8 @@
             => 'Ändern Kennwörter von Benutzern',
         'Confirm Password'
             => 'Kennwort bestätigen',
+        'Confirm your time zone'
+            => 'Deine Zeitzone bestätigen',
         'Create User'
             => 'Benutzer erstellen',
         'Create Users'

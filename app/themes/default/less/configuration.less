@@ -182,10 +182,10 @@ table.configuration-list{
 		padding-left:15px;
 	}
 	th{
-		text-align:left;
+		/*text-align:left;
 		font-size: 12px !important;
 		color: #666;
-		font-weight: 400 !important;
+		font-weight: 400 !important;*/
 	}
 }
 
@@ -369,6 +369,20 @@ table.configuration-list{
 			border-bottom:1px solid #DFDFDF !important;
 		}	
 	}
+	table tr:first-child{
+		th{
+			color:#545454;
+			text-align:left;
+			font-weight: bold !important;
+			height: auto  !important;
+			//line-height: 100%  !important;
+			background: url(../images/table-items-header.png) left top repeat-x;
+			padding: 0 0 0 10px !important;
+		}
+	}
+	.tooltip{
+		margin-top:9px;
+	}
 	a{
 		background:@themeColor;
 		padding:1px 4px;
@@ -391,8 +405,16 @@ table.configuration-list{
 }
 
 #active-monitor-job-tooltip{
-	position: absolute;
-	margin-top:9px;
+	//position: absolute;
+	//margin-top:-9px;
+	//float:left;
+	
+}
+
+#JobLogsModalListView{
+	td:first-child, th:first-child{
+		padding-left:15px;
+	}
 }
 
 /*Languages*/
@@ -421,6 +443,9 @@ table.configuration-list{
 		left:auto;
 		right:auto;
 		.form-toolbar();
+		a:before{
+			content:"";
+		}
 	}
 	.view-toolbar-container{
 		margin-bottom:5px;
@@ -567,11 +592,22 @@ table.configuration-list{
 }
 
 /*=User Security*/
+.UserGroupMembershipView,
 #PoliciesEditAndDetailsView,
 #ModulePermissionsEditAndDetailsView,
 #RightsEditAndDetailsView{
 	.details-table{
 		margin-right:0;
+	}
+	th{
+		text-align:left;
+		min-width: 200px;
+	}
+}
+
+.UserGroupMembershipView{
+	th{
+		text-align:left !important;
 	}
 }
 

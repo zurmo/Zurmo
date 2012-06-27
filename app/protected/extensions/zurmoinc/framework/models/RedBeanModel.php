@@ -1813,9 +1813,14 @@
                                                                self::HAS_MANY_BELONGS_TO)))
                             {
                                 if ($relatedModel->isModified() ||
-                                    ($this->isAttributeRequired($relationName) ))
+                                    ($this->isAttributeRequired($relationName)))
                                 {
-                                    if ($this->isSavableFromRelation)
+                                    //If the attribute is required, but already exists and has not been modified we do
+                                    //not have to worry about saving it.
+                                    if ($this->isSavableFromRelation &&
+                                       !($this->isAttributeRequired($relationName) &&
+                                         !$relatedModel->isModified() &&
+                                         $relatedModel->id > 0))
                                     {
                                         if (!$relatedModel->save(false))
                                         {

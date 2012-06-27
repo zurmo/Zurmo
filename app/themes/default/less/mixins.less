@@ -1,4 +1,4 @@
-.zButton{
+.zButton, .z-button{
     cursor:pointer;
     padding:0 15px 0 15px;
     line-height:23px;
@@ -13,9 +13,11 @@
     border-bottom:1px solid #bababa;
     color:#656565;
     .radius( 4px );
-    .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
-    background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+    .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.15));
     .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+    &:not(.attachLoading){
+    	 background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+    }
     &:hover{
         color:@themeColor2 !important;
     }
@@ -23,6 +25,32 @@
         color:#656565;
         box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
     }
+    &.loading{
+    	.z-spinner{
+    		display:inline-block;
+    	}
+    	.z-label{
+    		//display:none;
+    	}
+    	.z-icon{
+    		display:none;
+    	}
+    }
+}
+
+.z-spinner{
+	 width:23px;
+	 height:23px;
+	 display:none;
+	 float:left;
+}
+
+.z-icon:before{
+	/*empty*/
+}
+
+.z-label{
+	/*empty*/
 }
 
 .zLink{

@@ -83,6 +83,7 @@
                 {
                     try
                     {
+                        $model->setScenario('autoBuildDatabase');
                         if (!$model->save())
                         {
                             $messageLogger->addErrorMessage("*** Saving the sample $modelClassName failed.");
@@ -165,6 +166,7 @@
             }
             $messageLogger->addInfoMessage("$modelClassName Being Created.");
             $model = new $modelClassName();
+            $model->setScenario('autoBuildDatabase');
             self::$modelClassNamesToSampleModels[$modelClassName] = $model;
             $metadata = $model->getMetadata();
             foreach ($metadata as $unused => $classMetadata)

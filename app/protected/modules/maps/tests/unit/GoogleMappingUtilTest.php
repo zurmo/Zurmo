@@ -142,8 +142,8 @@
             $this->assertEquals(round('-87.9763703', 4), round($geoCodeResultObj1->longitude, 4));
             $this->assertEquals('37.38926',    $geoCodeResultObj2->latitude);
             $this->assertEquals('-121.873247', $geoCodeResultObj2->longitude);
-            $this->assertEquals('40.722668',  $geoCodeResultObj3->latitude);
-            $this->assertEquals('-73.7196971', $geoCodeResultObj3->longitude);
+            $this->assertEquals('41',  round($geoCodeResultObj3->latitude, 0));
+            $this->assertEquals('-73', round($geoCodeResultObj3->longitude, 0));
             $this->assertEquals('43.06132',    $geoCodeResultObj4->latitude);
             $this->assertEquals('-87.8880352', $geoCodeResultObj4->longitude);
         }

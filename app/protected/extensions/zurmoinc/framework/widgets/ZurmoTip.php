@@ -34,6 +34,8 @@
         public function __construct($params = array())
         {
             parent::__construct($params);
+
+            /**
             if (!isset($this->options['style']))
             {
                 $this->options['style'] = $this->getZurmoStyle();
@@ -42,12 +44,13 @@
             {
                 $this->options['style'] = array_merge($this->getZurmoStyle(), $this->options['style']);
             }
+            **/
         }
 
         protected function getZurmoStyle()
         {
             return array(
-              'padding'    => 8,
+              'padding'    => 25,
               'background' => '',
               'color'      => '',
               'textAlign'  => '',

@@ -23,7 +23,7 @@ class QTip extends CComponent {
      */
     protected static function scriptName($minify) {
         $ext = $minify ? '.min.js' : '.js';
-        return 'jquery.qtip-1.0.0-rc3'.$ext;
+        return 'jquery.qtip-2'.$ext;
     }
 
     /**

@@ -85,5 +85,7 @@
             => 'Visualizzare un tutorial',
         'Watch a video'
             => 'Guardare un video',
+        'Welcome to Zurmo'
+            => 'Benvenuto a Zurmo',
     );
 ?>

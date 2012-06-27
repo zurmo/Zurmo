@@ -36,6 +36,7 @@
             {
                 throw new NotFoundException();
             }
+            RedBeansCache::cacheBean($bean, User::getTableName('User') . $bean->id);
             return self::makeModel($bean);
         }
 
@@ -345,6 +346,8 @@
                     'fullName' => 'Name',
                     'timeZone' => 'Time Zone',
                     'title'    => 'Salutation',
+                    'primaryEmail' => 'Email',
+                    'primaryAddress' => 'Address',
                 )
             );
         }

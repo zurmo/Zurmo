@@ -59,7 +59,9 @@
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
-                                                                array('id' => 'select-account-form', 'enableAjaxValidation' => false)
+                                                                array('id'                   => static::getFormId(),
+                                                                      'enableAjaxValidation' => false,
+                                                                      'htmlOptions'          => $this->resolveFormHtmlOptions())
                                                             );
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
@@ -83,9 +85,25 @@
             $cancelLink = new CancelConvertLinkActionElement($this->controllerId, $this->moduleId, $this->modelId);
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
             $content .= $cancelLink->render() . '&#160;';
-            $content .= CHtml::submitButton(Yii::t('Default', 'Complete Conversion'), array('name' => 'AccountSkip'));
+            $element  =   new SaveButtonActionElement($this->controllerId, $this->moduleId,
+                                                      null,
+                                                      array('htmlOptions' =>
+                                                          array('name'   => 'AccountSelect', 'id' => 'AccountSelect'),
+                                                                'label'  => Yii::t('Default', 'Complete Conversion')));
+            $content .= $element->render();
             $content .= '</div></div>';
             return $content;
+        }
+
+        protected static function getFormId()
+        {
+            return 'select-account-form';
+        }
+
+        protected function resolveFormHtmlOptions()
+        {
+            $data = array('onSubmit' => 'js:return attachLoadingOnSubmit("' . static::getFormId() . '")');
+            return $data;
         }
     }
 ?>

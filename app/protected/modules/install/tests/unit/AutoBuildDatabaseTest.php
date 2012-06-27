@@ -68,5 +68,85 @@
                 RedBeanDatabase::freeze();
             }
         }
+
+        public function testColumnType()
+        {
+            if (RedBeanDatabase::isFrozen())
+            {
+                $rootModels = array();
+                foreach (Module::getModuleObjects() as $module)
+                {
+                    $moduleAndDependenciesRootModelNames    = $module->getRootModelNamesIncludingDependencies();
+                    $rootModels                             = array_merge(  $rootModels,
+                                                                        array_diff($moduleAndDependenciesRootModelNames,
+                                                                        $rootModels));
+                }
+
+                foreach ($rootModels as $model)
+                {
+                    $meta = $model::getDefaultMetadata();
+                    if (isset($meta[$model]['rules']))
+                    {
+                        foreach ($meta[$model]['rules'] as $rule)
+                        {
+                            if (is_array($rule) && count($rule) >= 3)
+                            {
+                                $attributeName       = $rule[0];
+                                $validatorName       = $rule[1];
+                                $validatorParameters = array_slice($rule, 2);
+                                switch ($validatorName)
+                                {
+                                    case 'type':
+                                        if (isset($validatorParameters['type']))
+                                        {
+                                            $type           = $validatorParameters['type'];
+                                            $tableName      = RedBeanModel::getTableName($model);
+                                            $field          = strtolower($attributeName);
+                                            $row            = R::getRow("SHOW COLUMNS FROM $tableName where field='$field'");
+                                            $compareType    = null;
+                                            if ($row !== false)
+                                            {
+                                                $compareType = $this->getDbTypeValue($row['Type']);
+                                            }
+                                            $this->assertEquals($compareType, $type);
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected function getDbTypeValue($value)
+        {
+            $typeArray = array(
+                'string'    => array('CHAR', 'VARCHAR', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT', 'ENUM', 'SET'),
+                'integer'   => array('TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'INTEGER', 'BIGINT'),
+                'float'     => array('FLOAT', 'DOUBLE', 'DECIMAL', 'NUMERIC'),
+                'timestamp' => array('TIMESTAMP'),
+                'year'      => array('YEAR'),
+                'date'      => array('DATE'),
+                'time'      => array('TIME'),
+                'datetime'  => array('DATETIME'),
+                'blob'      => array('TINY_BLOB', 'MEDIUM_BLOB', 'LONG_BLOB', 'BLOB')
+            );
+            $value              = strtoupper($value);
+            $startCuttingPos    = stripos($value, '(');
+            $searchValue        = $value;
+            if ($startCuttingPos !== false)
+            {
+                $searchValue = substr($value, 0, $startCuttingPos);
+            }
+            foreach ($typeArray as $type => $array)
+            {
+                if (in_array($searchValue, $array))
+                {
+                    return $type;
+                }
+            }
+            return null;
+        }
     }
 ?>

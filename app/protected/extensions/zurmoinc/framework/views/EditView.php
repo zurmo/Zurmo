@@ -59,7 +59,7 @@
             list($form, $formStart) = $clipWidget->renderBeginWidget(
                                                                 'ZurmoActiveForm',
                                                                 array_merge(
-                                                                    array('id' => 'edit-form',
+                                                                    array('id' => static::getFormId(),
                                                                     'htmlOptions' => $this->resolveFormHtmlOptions()),
                                                                     $this->resolveActiveFormAjaxValidationOptions()
                                                                 )
@@ -106,9 +106,14 @@
             return !$detailViewOnly;
         }
 
+        protected static function getFormId()
+        {
+            return 'edit-form';
+        }
+
         protected function resolveFormHtmlOptions()
         {
-            $data = array();
+            $data = array('onSubmit' => 'js:return attachLoadingOnSubmit("' . static::getFormId() . '")');
             if ($this->viewContainsFileUploadElement)
             {
                 $data['enctype'] = 'multipart/form-data';

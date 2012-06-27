@@ -74,7 +74,7 @@
 
         protected function renderForm()
         {
-            $content  = '<div>';
+            $content  = '<div class="wrapper">';
             $content .= $this->renderTitleContent();
             $content .= '<div class="wide form">';
             $clipWidget = new ClipWidget();
@@ -113,10 +113,23 @@
 
         protected function renderSaveLayoutButton($notificationBarId)
         {
-            return CHtml::ajaxSubmitButton(Yii::t('Default', 'Save Layout'), null, array(
-                    //designer.AfterSaveLayoutUpdateFlashBar(data, flashBarId)
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    ) . '/FormUtils.js',
+                CClientScript::POS_END
+            );
+            $htmlOptions             = array();
+            $htmlOptions['class']    = 'attachLoading z-button';
+            $aContent                = CHtml::tag('span', array('class' => 'z-spinner'), null);
+            $aContent               .= CHtml::tag('span', array('class' => 'z-icon'), null);
+            $aContent               .= CHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Save Layout'));
+            return ZurmoHtml::ajaxLink($aContent, '#', array(
                     'data' => 'js:designer.prepareSaveLayout("edit-form")',
                     'dataType' => 'json',
+                    'type' => 'POST',
+                    'beforeSend' => 'js:function(){attachLoadingOnSubmit("edit-form");}',
+                    'complete'   => 'js:function(){detachLoadingOnSubmit("edit-form");}',
                     'success' => 'function(data){designer.updateFlashBarAfterSaveLayout(data, "' . $notificationBarId . '")}', // Not Coding Standard
                     'error' => 'function(data){ ' . // Not Coding Standard
                         'var data = {' . // Not Coding Standard
@@ -125,7 +138,7 @@
                         };
                         designer.updateFlashBarAfterSaveLayout(data, "' . $notificationBarId . '")
                     }',
-                ));
+                ), $htmlOptions);
         }
 
         protected function renderCancelLink()

@@ -58,7 +58,7 @@
         'Edit Dashboard'
             => 'Modifier le tableau de bord',
         'Go to the dashboard'
-            => 'Continuer aux Tableaux de bord',
+            => 'Continuer au Tableau de bord',
         'Helpful Links'
             => 'Liens Utiles',
         'Home'
@@ -85,5 +85,7 @@
             => 'Visualiser un tutoriel',
         'Watch a video'
             => 'Regarder une vidéo',
+        'Welcome to Zurmo'
+            => 'Bienvenue à Zurmo',
     );
 ?>

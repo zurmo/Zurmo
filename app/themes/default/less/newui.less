@@ -185,9 +185,6 @@ footer, header, hgroup, menu, nav, section {
     min-width:900px;
     height:100%;
     margin:0 3% 0 3%;
-    //margin:0 40px 0 40px;
-    //#gradient > .vertical-three-colors( #f6f6f6, #ffffff, 100px, #f6f6f6 );
-    //background: #fff url(../images/landscape-2.png) bottom left repeat-x;
     .b-shadow(  0 0 12px 5px rgba(153, 153, 153, 0.3) ); /*999*/
     .radius(0 0 5px 5px);
     padding:0;
@@ -207,7 +204,7 @@ footer, header, hgroup, menu, nav, section {
         margin:-100px auto 0 -250px;
         height:200px;
         position:relative;
-        top:45%;
+        top:40%;
         left:50%;
     }
     #LoginLogo{
@@ -250,16 +247,22 @@ footer, header, hgroup, menu, nav, section {
                 margin-top:1px !important;
                 clear:both;
             }
+            /*
             input[type="submit"]{
                 .zButton();
             }
+            */
             .errorMessage{
                 font-size:11px;
                 padding-top:4px
             }
         }
     }
+    .error{
+    	margin-bottom: 40px !important;
+    }
 }
+
 .background-1{
 	 background: #fff url(../images/landscape-1.png) left bottom repeat-x;
 }
@@ -877,8 +880,10 @@ footer, header, hgroup, menu, nav, section {
     .parent > a{
         .view-toolbar-link();
         position:relative;
-        text-indent:20px;
         border-left: 1px solid #bababa;
+        text-indent:0 !important;
+    	padding-left:40px;
+    	vertical-align:middle;
     }
     .parent > a:after{
         content: "▾";
@@ -903,128 +908,127 @@ footer, header, hgroup, menu, nav, section {
 .view-toolbar-icons(@size: @recentlyViewedIconSize){
     .symbly(@size);
     padding:0 0 0 0;
-    margin:0 10px 0 0;
-    line-height: 100%;
-    position:absolute;
-    text-indent:-20px;
-    top:2px;
+    margin:0 6px 0 -30px;
     .box-sizing();
+    vertical-align:middle;
+    position:relative;
 }
 
 .icon-general:before,
 .icon-edit:before{
     .view-toolbar-icons();
     content: "!";
+    top:-2px;
 }
 
 .icon-create:before{
     content: "Y"; //w
     .view-toolbar-icons();
-    padding-top: 1px;
+    top:-2px;
 }
 
 .icon-add:before{
     content: "Y";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 #ListViewExportActionMenu .parent > a:before,
 .icon-export:before{
     content: "(";
     .view-toolbar-icons();
-    top:4px;
+    top:-2px;
 }
 
 #ListViewMassActionMenu .parent > a:before,
 #list-view-massAction:before{
     content: "2";
     .view-toolbar-icons();
-    padding-top: 1px;
+    top:-2px;
 }
 
 .icon-memberships:before{
     content: "y";
     .view-toolbar-icons(24px);
-    top:3px;
+    top:-2px;
 }
 
 .icon-permissions:before{
     content: "E";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-rights:before{
     content: "u";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-policies:before{
     content: "x";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-delete:before{
     content: "_";
     .view-toolbar-icons();
-    top:2px;
+    top:-2px;
 }
 
 .icon-left-arrow:before{
     content: "8";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-right-arrow:before{
     content: "7";
     .view-toolbar-icons();
-    top:2px;
+    top:-2px;
 }
 
 .icon-fields:before{
     content: "0";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-layout:before{
     content: "C";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-user-details:before{
     content: "e";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-password:before{
     content: "J";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-audit:before{
     content: "I";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-user-config:before{
     content: "n";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 .icon-security:before{
     content: "F";
     .view-toolbar-icons();
-    top:3px;
+    top:-2px;
 }
 
 /*=Footer*/
@@ -1268,9 +1272,11 @@ table.items thead tr:hover{
     }
     a{
         color:#333333;
-        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
         display:inline-block;
         .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+	    &:not(.attachLoading){
+	    	background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+	    }
         &:hover{
             color:@themeColor2 !important;
         }
@@ -1279,19 +1285,21 @@ table.items thead tr:hover{
             .b-shadow(~"inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF");
         }
     }
-    input{
-        color:#FFF;
-        .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
-        .b-shadow(inset 0 1px 1px 1px rgba(255, 255, 255, 0.8));
-        #gradient > .vertical(#97c43d, #97c43d);
-        cursor:pointer;
-        &:hover{
-            color:#656565 !important;
-        }
-        &:active{
-            color:#FFF !important;
-            .b-shadow(~"inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
-        }
+}
+
+a.attachLoading{
+    color:#FFF;
+    .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
+    //.b-shadow(inset 0 1px 1px 0 rgba(255, 255, 255, 0.5));
+    .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.15));
+    #gradient > .vertical(#97c43d, #6fa82d );        
+    cursor:pointer;
+    &:hover{
+        color:#656565 !important;
+    }
+    &:active{
+        color:#FFF !important;
+        .b-shadow(~"inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
     }
 }
 
@@ -1300,7 +1308,7 @@ table.items thead tr:hover{
     top:-34px;
     right:8px;
     a {
-        padding:0 15px 0 25px;
+        padding:0 15px 0 15px;
         line-height:23px;
         margin:0;
         font-size:10px;
@@ -1312,15 +1320,19 @@ table.items thead tr:hover{
         border-right:1px solid #d7d7d7;
         border-bottom:1px solid #bababa;
         color:#656565;
-        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+        //background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
         display:inline-block;
         .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+        &:not(.attachLoading){
+	    	background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+	    }
         &:before{
             content: "Y";
             .view-toolbar-icons();
-            top:1px;
+            top:-1px;
+            color:#fff;
+            margin-left:0;
             color:@themeColor2;
-            margin-left:2px;
         }
         &:hover{
             color:@themeColor2 !important;
@@ -1440,8 +1452,8 @@ a.simple-select{
     left: 0;
     width: 100%;
     height: 100%;
-    background:#fff;
-    .opacity(50);
+    background:rgba(255, 255, 255, 0.5 );
+    //.opacity(50);
 }
 
 /*=Checkboxes*/
@@ -1492,7 +1504,53 @@ div.wide.form{
     left: -9999px;
 }
 
+/*=LIST VIEW*/
 /*=Search Scope box, and account list*/
+.list-preloader{
+	display:none;
+	background: rgba(0, 0, 0, 0.5);
+	.b-shadow(  0 0 30px 0 rgba(100, 100, 100, 0.7) );
+	position:absolute;
+	top:50%;
+	left:50%;
+	.radius(6px);
+	width:28px;
+	height:28px;
+	margin:-15px 0 0 -15px;
+	.z-spinner{
+		width:auto;
+		height:auto;
+    	display:block;
+    	margin:4px 0 0 4px;
+   }
+}
+
+.overlay-spinner{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:rgba( 255, 255, 255, 0.5 );
+	.big-spinner{
+		width:auto;
+		height:auto;
+    	display:block;
+    	//margin:4px 0 0 4px;
+   }
+}
+
+.loading .list-preloader{
+	display:block;
+}
+
+.cgrid-view.loading{
+	.list-preloader{
+		display:block;
+	}
+}
+
+
 .ZeroModelsYetView{
 	h2{
 		font-family:"Times New Roman", Times, serif;
@@ -1528,7 +1586,7 @@ div.wide.form{
 			content: "Y";
 			.symbly(24px);
 			position: relative;
-			top: 2px;
+			top: -1px;
 			left:-5px;
 			margin-right:3px;
 			color:@themeColor2;
@@ -1565,7 +1623,6 @@ div.wide.form{
 	
 }
 
-
 #FilteredListView, .summary{
     display:none;
 }
@@ -1594,10 +1651,12 @@ div.wide.form{
    float:left;
    width:100%;
    margin-bottom:20px;
+   position: relative;
 }
 
 .cgrid-view{
     .b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );
+    position:relative;
 }
 
 .juiportlet-widget-content .cgrid-view{
@@ -1661,6 +1720,7 @@ div.wide.form{
 }
 
 .search-view-1{
+    z-index:100;
     min-width:400px;
     height:auto;
     position:absolute;
@@ -1758,7 +1818,7 @@ div.wide.form{
 }
 
 .attributesContainer{
-    min-height: 260px;
+    /*min-height: 260px;*/
     padding-bottom:15px;
 }
 
@@ -2008,6 +2068,7 @@ div.wide.form{
 }
 
 .details-table{
+	position:relative;
 	margin-right:20px;
     table{
         margin-bottom:10px;
@@ -2154,7 +2215,7 @@ div.wide.form{
 .toolbar-mbmenu{
     position:absolute;
     top:-12px;
-    right:30px;
+    right:10px;
     margin:0;
     float:right;
     width:auto;
@@ -2333,7 +2394,7 @@ div.wide.form{
             &:before{
                 content: "Y";
                 .view-toolbar-icons();
-                top:1px;
+                top: -1px;
                 color:@themeColor2;
                 margin-left:2px;
             }
@@ -2369,6 +2430,11 @@ div.wide.form{
             text-align:right;
             margin-top:6px;
         }
+    }
+    .view-toolbar-container{
+    	a{
+    		float:right;
+    	}
     }
 }
 
@@ -2805,6 +2871,11 @@ div.hasHalfs{
         content: "U";
         .latest-activity-icon();
     }
+}
+#activities-rollup-tooltip{
+	position:relative;
+	margin-top:-9px;
+	top:2px;
 }
 
 .vertical-forward-pager{

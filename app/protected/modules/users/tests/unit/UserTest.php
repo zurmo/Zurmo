@@ -578,7 +578,7 @@
             try
             {
                 Address::getById($primaryAddressId);
-                $this->fail("Primary address should have been deleted.");
+                $this->fail("Address should have been deleted.");
             }
             catch (NotFoundException $e)
             {
@@ -587,7 +587,7 @@
             try
             {
                 Email::getById($primaryEmailId);
-                $this->fail("Primary email should have been deleted.");
+                $this->fail("Email should have been deleted.");
             }
             catch (NotFoundException $e)
             {

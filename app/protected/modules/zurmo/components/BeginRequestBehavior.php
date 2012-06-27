@@ -71,6 +71,7 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleUserTimeZoneConfirmed'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadActivitiesObserver'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadGamification'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
@@ -194,6 +195,35 @@
             {
                 $url = Yii::app()->createUrl('zurmo/default/unsupportedBrowser', array('name' => $browserName));
                 Yii::app()->request->redirect($url);
+            }
+        }
+
+        /**
+         * Called if installed, and logged in.
+         * @param CEvent $event
+         */
+        public function handleUserTimeZoneConfirmed($event)
+        {
+            if (!Yii::app()->user->isGuest && !Yii::app()->timeZoneHelper->isCurrentUsersTimeZoneConfirmed())
+            {
+                $allowedTimeZoneConfirmBypassUrls = array (
+                    Yii::app()->createUrl('users/default/confirmTimeZone'),
+                    Yii::app()->createUrl('min/serve'),
+                );
+                $reqestedUrl = Yii::app()->getRequest()->getUrl();
+                $isUrlAllowedToByPass = false;
+                foreach ($allowedTimeZoneConfirmBypassUrls as $url)
+                {
+                    if (strpos($reqestedUrl, $url) === 0)
+                    {
+                        $isUrlAllowedToByPass = true;
+                    }
+                }
+                if (!$isUrlAllowedToByPass)
+                {
+                    $url = Yii::app()->createUrl('users/default/confirmTimeZone');
+                    Yii::app()->request->redirect($url);
+                }
             }
         }
 
@@ -349,7 +379,6 @@
             $activitiesObserver = new ActivitiesObserver();
             $activitiesObserver->init(); //runs init();
         }
-
 
         public function handleLoadGamification($event)
         {

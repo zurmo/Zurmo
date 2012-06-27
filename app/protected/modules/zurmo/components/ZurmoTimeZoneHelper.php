@@ -119,5 +119,21 @@
             $timeZone = $this->getForCurrentUser();
             return DateTimeUtil::convertFromLocalUnixStampByTimeZoneToUtcUnixStamp($utcTimeStamp, $timeZone);
         }
+
+        public function isCurrentUsersTimeZoneConfirmed()
+        {
+            $keyName = 'timeZoneConfirmed';
+            if ( false != ZurmoConfigurationUtil::getForCurrentUserByModuleName('UsersModule', $keyName))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public function confirmCurrentUsersTimeZone()
+        {
+            $keyName = 'timeZoneConfirmed';
+            ZurmoConfigurationUtil::setForCurrentUserByModuleName('UsersModule', $keyName, true);
+        }
     }
 ?>

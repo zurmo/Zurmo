@@ -127,6 +127,20 @@
                     }
                 }
 
+                if (!$this->hostInfo)
+                {
+                    $this->addError('hostInfo', Yii::t( 'Default', 'Please enter server ip or url.'));
+                    return;
+                }
+                else
+                {
+                    if ((strpos($this->hostInfo, 'http://') === false) && (strpos($this->hostInfo, 'https://') === false))
+                    {
+                        $this->addError('hostInfo', Yii::t( 'Default', 'Host Info must start with "http://" or "https://".'));
+                        return;
+                    }
+                }
+
                 if ($this->databaseAdminUsername != null)
                 {
                     if ($this->databaseAdminPassword == null)

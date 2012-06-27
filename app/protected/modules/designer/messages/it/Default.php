@@ -58,7 +58,7 @@
         'A set of dependent pick lists'
             => 'Picklists dipendenti',
         'A tag cloud'
-            => 'Una nuvola di etichette',
+            => 'Una nuvola di tag',
         'A text field'
             => 'Un campo di testo',
         'Access Designer Tool'
@@ -105,6 +105,8 @@
             => 'Layouts de dettaglio e modifica',
         'Details View'
             => 'Layout dettaglio',
+        'Display {label} when'
+            => 'Esporre {label} quando',
         'Display Name'
             => 'Etichetta campo',
         'Dropdown Dependency Mapping'
@@ -208,9 +210,9 @@
         'Show If'
             => 'Valore dipendente',
         'Tag Cloud'
-            => 'Nuvola di etichette',
+            => 'Nuvola di tag',
         'Tag Cloud Values'
-            => 'Parole del nuvola di etichette',
+            => 'Parole del nuvola di tag',
         'Text'
             => 'Testo',
         'Text Area'

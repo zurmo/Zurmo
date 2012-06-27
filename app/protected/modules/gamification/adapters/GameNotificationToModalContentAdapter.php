@@ -46,13 +46,10 @@
             {
                 return 'game-level-change';
             }
-            elseif ($data['type'] == GameNotification::TYPE_NEW_BADGE)
+            elseif ($data['type'] == GameNotification::TYPE_NEW_BADGE ||
+                    $data['type'] == GameNotification::TYPE_BADGE_GRADE_CHANGE)
             {
-                return 'game-new-badge';
-            }
-            elseif ($data['type'] == GameNotification::TYPE_BADGE_GRADE_CHANGE)
-            {
-                return 'game-badge-grade-change';
+                return 'game-badge-' . $data['badgeType'];
             }
             else
             {

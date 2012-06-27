@@ -205,8 +205,7 @@ if($.fn.yiiGridView == undefined)
                     id = $grid.attr('id'),
                     settings = gridSettings[id];
                 $grid.addClass(settings.loadingClass);
-
-                options = $.extend({
+               	options = $.extend({
                     type: 'GET',
                     url: $grid.yiiGridView('getUrl'),
                     success: function (data) {

@@ -26,7 +26,7 @@
 
     /**
      * ActivityForm helps manage related models to an Activity. This form is used by ModelElements and its interface
-     * mimics if a CActiveForm was used.
+     * mimics if a ZurmoActiveForm was used.
      */
     class ActivityItemForm extends CFormModel
     {

@@ -217,7 +217,7 @@
             {
                 $content .= '<tr>';
                 $content .= '<td>';
-                $content .= Yii::t('Default', 'Display {label} when', array('{label}' =>$label));
+                $content .= Yii::t('Default', 'Display {label} when', array('{label}' => $label));
                 $content .= '</td>';
                 $content .= '</tr><tr>';
                 $content .= '<td>';

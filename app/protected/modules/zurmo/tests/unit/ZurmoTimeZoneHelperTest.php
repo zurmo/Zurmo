@@ -133,5 +133,19 @@
             $this->assertWithinTolerance($time, $modifiedTimeStamp, 2);
             date_default_timezone_set($tz);
         }
+
+        public function testIsCurrentUsersTimeZoneConfirmed()
+        {
+            Yii::app()->user->userModel =  User::getByUsername('super');
+            $timeZoneHelper = new ZurmoTimeZoneHelper();
+            $this->assertFalse($timeZoneHelper->isCurrentUsersTimeZoneConfirmed());
+            $timeZoneHelper->confirmCurrentUsersTimeZone();
+            $this->assertTrue($timeZoneHelper->isCurrentUsersTimeZoneConfirmed());
+            Yii::app()->user->userModel =  User::getByUsername('billy');
+            $timeZoneHelper = new ZurmoTimeZoneHelper();
+            $this->assertFalse($timeZoneHelper->isCurrentUsersTimeZoneConfirmed());
+            $timeZoneHelper->confirmCurrentUsersTimeZone();
+            $this->assertTrue($timeZoneHelper->isCurrentUsersTimeZoneConfirmed());
+        }
     }
 ?>

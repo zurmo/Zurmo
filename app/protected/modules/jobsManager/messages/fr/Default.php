@@ -49,6 +49,8 @@
             => 'Réalisé',
         'Completed with Errors'
             => 'Réalisé avec des erreurs',
+        'Enable Minify for CSS and JavaScript files.'
+            => 'Activer Minify pour les fichiers CSS et Javascript.',
         'End Date Time'
             => 'Date/heure réalisé?',
         'Error Log'

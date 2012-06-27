@@ -39,6 +39,8 @@
             => 'Changer le mot de passe des utilisateurs',
         'Confirm Password'
             => 'Confirmation du mot de passe',
+        'Confirm your time zone'
+            => 'Confirmez votre fuseau d\'horaire',
         'Create User'
             => 'Nouvel Utilisateur',
         'Create Users'

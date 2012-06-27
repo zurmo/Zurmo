@@ -178,6 +178,10 @@
             => 'Memcache número de port. Predeterminado es 11211',
         'Microsoft-IIS'
             => 'Microsoft-IIS', // Same Word Translated
+        'Minify has been disabled due to a system issue. Try to resolve the problem and re-enable Minify.'
+            => 'Minify ha sido deshabilitado por un problema del sistema. Tratar de resolver el problema y volver a habilitar Minify.',
+        'Minify library is included.'
+            => 'Biblioteca minify está incluido.',
         'minimum requirement is:'
             => 'requisito mínimo es:',
         'Minimum version required:'
@@ -270,6 +274,8 @@
             => 'La ruta relativa en Zurmo se instalará.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
             => 'El sistema ha detectado que hostinfo y/o ScirptUrl no se configuran. Por favor, abra el archivo de configuración perInstance.php y configurar estos parámetros.',
+        'There is problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
+            => 'Existe un problema con php set_include_path. El comando puede fallar si la directiva "php_admin_value include_path" está activado en la configuración de Apache. ',
         'There was a problem creating the database Error code:'
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'

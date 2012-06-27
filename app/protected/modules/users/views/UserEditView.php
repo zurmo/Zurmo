@@ -127,7 +127,9 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'primaryEmail', 'type' => 'EmailAddressInformation'),
+                                                array('attributeName' => 'primaryEmail',
+                                                      'type'          => 'EmailAddressInformation',
+                                                      'hideOptOut'    => true),
                                             ),
                                         ),
                                     )
@@ -196,9 +198,11 @@
         {
             return array('enableAjaxValidation' => true,
                 'clientOptions' => array(
-                    'validateOnSubmit' => true,
-                    'validateOnChange' => false,
-                    'inputContainer' => 'td',
+                    'beforeValidate'    => 'js:beforeValidateAction',
+                    'afterValidate'     => 'js:afterValidateAction',
+                    'validateOnSubmit'  => true,
+                    'validateOnChange'  => false,
+                    'inputContainer'    => 'td',
                 )
             );
         }

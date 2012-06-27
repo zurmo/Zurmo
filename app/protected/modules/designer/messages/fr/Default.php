@@ -58,7 +58,7 @@
         'A set of dependent pick lists'
             => 'Listes déroulantes dépendantes',
         'A tag cloud'
-            => 'Un nuage de mots-clefs',
+            => 'Un nuage de tags',
         'A text field'
             => 'Un champ texte',
         'Access Designer Tool'
@@ -105,6 +105,8 @@
             => 'Vue des formulaires',
         'Details View'
             => 'Vue détaillée',
+        'Display {label} when'
+            => 'Exposer {label} quand',
         'Display Name'
             => 'Étiquette du champ',
         'Dropdown Dependency Mapping'
@@ -208,9 +210,9 @@
         'Show If'
             => 'Valeur dépendante',
         'Tag Cloud'
-            => 'Nuage de mots-clés',
+            => 'Nuage de tags',
         'Tag Cloud Values'
-            => 'Valeurs du nuage de mots-clés',
+            => 'Valeurs du nuage de tags',
         'Text'
             => 'Texte',
         'Text Area'

@@ -26,5 +26,9 @@
 
     class LeadsSearchForm extends ContactsSearchForm
     {
+        protected function getModelModuleClassName()
+        {
+            return 'LeadsModule';
+        }
     }
 ?>

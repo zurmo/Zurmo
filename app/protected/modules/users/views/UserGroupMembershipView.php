@@ -53,7 +53,7 @@
 
         protected function renderContent()
         {
-            $content  = '<div>';
+            $content  = '<div class="details-table">';
             $content .= $this->renderTitleContent();
             $content .= '<table>';
             $content .= '<colgroup>';

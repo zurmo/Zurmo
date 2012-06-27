@@ -57,62 +57,7 @@
             assert('is_array($userScoresByType)');
             if (isset($userScoresByType['LoginUser']))
             {
-                if ($userScoresByType['LoginUser']->value < 1)
-                {
-                    return 0;
-                }
-                if ($userScoresByType['LoginUser']->value < 2)
-                {
-                    return 1;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 11)
-                {
-                    return 2;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 26)
-                {
-                    return 3;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 51)
-                {
-                    return 4;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 76)
-                {
-                    return 5;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 101)
-                {
-                    return 6;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 126)
-                {
-                    return 7;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 151)
-                {
-                    return 8;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 176)
-                {
-                    return 9;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 201)
-                {
-                    return 10;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 226)
-                {
-                    return 11;
-                }
-                elseif ($userScoresByType['LoginUser']->value < 251)
-                {
-                    return 12;
-                }
-                elseif ($userScoresByType['LoginUser']->value >= 300)
-                {
-                    return 13;
-                }
+                return static::getBadgeGradeByValue((int)$userScoresByType['LoginUser']->value);
             }
             return 0;
         }

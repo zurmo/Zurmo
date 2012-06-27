@@ -100,12 +100,6 @@
          */
         protected function renderEditableScripts()
         {
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
-                    ) . '/FormUtils.js',
-                CClientScript::POS_END
-            );
             $inputId = $this->getEditableInputId();
             $script   = " basicSearchQueued = 0;";
             $script  .= " basicSearchOldValue = '';";

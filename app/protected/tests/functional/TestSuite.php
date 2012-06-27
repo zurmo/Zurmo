@@ -92,6 +92,15 @@
             $whatToTestIsModuleDir = self::isWhatToTestAModule($whatToTest);
             $suiteNames          = array();
             $htmlTestSuiteFiles  = array();
+            if ($whatToTest == 'All' || $whatToTest == 'Misc' || !$whatToTestIsModuleDir)
+            {
+                $compareToTest = $whatToTest;
+                if ($whatToTest == 'Misc')
+                {
+                    $compareToTest = null;
+                }
+                $htmlTestSuiteFiles = self::buildSuiteFromSeleneseDirectory($htmlTestSuiteFiles, '.', $compareToTest);
+            }
             if ($whatToTest != 'Misc' && !$whatToTestIsModuleDir)
             {
                 $compareToTest = $whatToTest;
@@ -135,15 +144,6 @@
                     }
                 }
             }
-            if ($whatToTest == 'All' || $whatToTest == 'Misc' || !$whatToTestIsModuleDir)
-            {
-                $compareToTest = $whatToTest;
-                if ($whatToTest == 'Misc')
-                {
-                    $compareToTest = null;
-                }
-                $htmlTestSuiteFiles = self::buildSuiteFromSeleneseDirectory($htmlTestSuiteFiles, '.', $compareToTest);
-            }
             if (count($htmlTestSuiteFiles) == 0)
             {
                 echo $usage;
@@ -174,6 +174,12 @@
                         echo 'Restoring test db';
                         self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restore'));
                         echo "Restored test db";
+                        if (!self::isInstallationTest($pathToSuite))
+                        {
+                            echo 'Set user default time zone.';
+                            self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'setUserDefaultTimezone'));
+                            echo "User default time zone set.";
+                        }
                         echo 'Clear cache on remote server';
                         self::remoteAction(TEST_BASE_URL, array('clearCache'         => '1',
                                                                 'ignoreBrowserCheck' => '1'));
@@ -609,7 +615,7 @@
                 echo "Invalid db control url";
                 exit;
             }
-            if (isset($params['action']) && in_array($params['action'], array('restore', 'backupRemovePerInstance', 'restorePerInstance')))
+            if (isset($params['action']) && in_array($params['action'], array('restore', 'backupRemovePerInstance', 'restorePerInstance', 'setUserDefaultTimezone')))
             {
                 $url = $url . "?action=" . urlencode($params['action']);
             }
@@ -656,6 +662,25 @@
         protected static function isInstallationTest($path)
         {
             $position = strpos($path, 'InstallationTestSuite.html');
+
+            if ($position !== false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /**
+         * Determine is suite is actually default timezone test.
+         * @param string $path
+         * @return boolen
+         */
+        protected static function isDefaultTimeZoneTest($path)
+        {
+            $position = strpos($path, DIRECTORY_SEPARATOR . 'TestSuite.html');
 
             if ($position !== false)
             {

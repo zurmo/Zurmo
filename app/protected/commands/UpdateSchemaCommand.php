@@ -71,13 +71,17 @@ EOD;
             $this->usageError('The specified user is not a super administrator.');
         }
 
+        $startTime = microtime(true);
         $template        = "{message}\n";
         $messageStreamer = new MessageStreamer($template);
         $messageStreamer->setExtraRenderBytes(0);
         $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
         $messageLogger = new MessageLogger($messageStreamer);
         InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+        $endTime = microtime(true);
         $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
+        $messageStreamer->add(Yii::t('Default', 'Total run time: {formattedTime} seconds.',
+                                     array('{formattedTime}' => number_format(($endTime - $startTime), 3))));
     }
 }
 ?>

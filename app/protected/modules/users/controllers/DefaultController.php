@@ -39,7 +39,7 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails',
+                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails, confirmTimeZone',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -179,6 +179,34 @@
                                              $this->makeTitleBarAndEditView(
                                                 $this->attemptToSaveModelFromPost($userPasswordForm),
                                                 'UserActionBarAndChangePasswordView'), $breadcrumbLinks, 'UserBreadCrumbView'));
+            echo $view->render();
+        }
+
+        public function actionConfirmTimeZone()
+        {
+            $confirmTimeZoneForm           = new UserTimeZoneConfirmationForm();
+            $confirmTimeZoneForm->timeZone = Yii::app()->timeZoneHelper->getForCurrentUser();
+            if (isset($_POST['UserTimeZoneConfirmationForm']))
+            {
+                $confirmTimeZoneForm->attributes = $_POST['UserTimeZoneConfirmationForm'];
+                if ($confirmTimeZoneForm->validate())
+                {
+                    Yii::app()->user->userModel->timeZone = $confirmTimeZoneForm->timeZone;
+                    if (Yii::app()->user->userModel->save())
+                    {
+                        Yii::app()->timeZoneHelper->confirmCurrentUsersTimeZone();
+                        $this->redirect(Yii::app()->homeUrl);
+                    }
+                }
+            }
+            $title                         = Yii::t('Default', 'Confirm your time zone');
+            $timeZoneView                  = new UserTimeZoneConfirmationView($this->getId(),
+
+                                                                 $this->getModule()->getId(),
+                                                                 $confirmTimeZoneForm,
+                                                                 $title);
+            $view                          = new UsersPageView(ZurmoDefaultViewUtil::
+                                                 makeStandardViewForCurrentUser($this, $timeZoneView));
             echo $view->render();
         }
 

@@ -178,6 +178,10 @@
             => 'Numero di porta Memcache.  Il default è 11211',
         'Microsoft-IIS'
             => 'Microsoft-IIS', // Same Word Translated
+        'Minify has been disabled due to a system issue. Try to resolve the problem and re-enable Minify.'
+            => '??',
+        'Minify library is included.'
+            => 'La libreria minify esiste.',
         'minimum requirement is:'
             => 'requisito minimo è:',
         'Minimum version required:'
@@ -270,6 +274,8 @@
             => 'Il percorso relativo del file dove Zurmo va essere installato.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
             => 'Il sistema ha trovato che hostInfo e/o scriptUrl non sono configurati.  Prego di aprire il file config perInstance.php e configurare questi parametri.',
+        'There is problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
+            => 'C\'è un problema con la funzione php set_include_path.  La funzione può fallire se "php_admin_value include_path" è definito nella configurazione di Apache.',
         'There was a problem creating the database Error code:'
             => 'C\'era un errore durante la creazione del database dei codice Errore:',
         'There was a problem creating the user Error code:'
@@ -290,7 +296,7 @@
                'Contrassegna questo box si specificate un database esistente.',
         'Welcome to Zurmo. Before getting started, we need some information on the database. ' .
         'You will need to know the following items before proceeding:'
-            => 'Benvenuto a Zurmo.  Avanti di cominciare, è necessario ottenere informazione del vostro database.' .
+            => 'Benvenuto a Zurmo. Avanti di cominciare, è necessario ottenere informazione del vostro database.' .
                'È necessario avere LE informazioni seguenti:',
         'Writing Configuration File.'
             => 'Creazione del file di configurazione.',

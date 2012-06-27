@@ -193,6 +193,8 @@
             => 'jours',
         'Dead'
             => 'Mort',
+        'Decide who can view and edit a record, set Group rights and permissions.'
+            => 'Pour décider qui peut accéder et modifier des données, définissez les Droits de sécurité et Permissions.',
         'Delete Group'
             => 'Supprimer le Groupe',
         'Delete Groups'
@@ -209,6 +211,8 @@
             => 'Description', // Same Word Translated
         'Dr.'
             => 'Dr.', // Same Word Translated
+        'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
+            => '??',
         'Email Address'
             => 'Addresse e-mail',
         'Energy'
@@ -233,6 +237,8 @@
             => 'Listes Filtrées',
         'Financial Services'
             => 'Finance',
+        'Find what you need quickly using the global search at the top of the screen.'
+            => 'Cliquez sur l\'icône de configuration dans le coin supérieur droit du portlet pour modifier les graphiques dans le tableau de bord.',
         'First Name'
             => 'Prénom',
         'Forums'
@@ -245,6 +251,8 @@
             => 'Configuration globale sauvegardée.',
         'Go to Search'
             => 'à la Recherche',
+        'Got questions{spaceAndFirstName}? Find answers in the Zurmo Wiki.'
+            => 'Avez vous des questions{spaceAndFirstName}? Consultez le Wiki Zurmo.',
         'Group'
             => 'Groupe',
         'Group Module Permissions'
@@ -312,7 +320,7 @@
         'Latitude'
             => 'Latitude', // Same Word Translated
         'Let Zurmo crunch the numbers, add calculated fields to your records in Designer.'
-            => 'Permettez à Zurmo de faire le gros du travail,  ajoutez des champs calculés dans Designer.',
+            => 'Permettez à Zurmo de faire le gros du travail, ajoutez des champs calculés dans Designer.',
         'List Filters'
             => 'Filtres',
         'List page size'
@@ -375,6 +383,10 @@
             => 'Mlle.',
         'My List Configuration View'
             => 'Ma Vue Liste Configuration',
+        'Need help{spaceAndFirstName}, why not ask a question in the forum?'
+            => '{spaceAndFirstName}, avez-vous besoin de l\'aide? Posez votre question dans le forum.',
+        'Need to see the big picture? Click Roll-Up to see activities from related records.'
+            => 'Activer la fonction Rollup pour voir toutes les activités associées.',
         'Need to update multiple records at once? Select them from the list and hit the Update button.'
             => 'Pour mettre à jour plusieurs données en même temps, cochez les données dans la Vue liste et cliquez le bouton "Mise à jour globale".',
         'Never'
@@ -405,6 +417,8 @@
             => 'Seulement mes éléments',
         'Opt Out'
             => 'Opt-Out',
+        'owned by {ownerStringContent}'
+            => 'resp. {ownerStringContent}',
         'Owner'
             => 'Resp. du compte',
         'Owner and users in'
@@ -415,7 +429,7 @@
             => 'Groupe mère',
         'Parent Role'
             => 'Rôle parent',
-        'Parlez vous Français{spaceAndFirstName}?  Choose your preferred language in your My Profile area.'
+        'Parlez vous Français{spaceAndFirstName}? Choose your preferred language in your My Profile area.'
             => 'Sélectionnez votre langue préférée dans Mon Profil.',
         'Password'
             => 'Mot de passe',
@@ -451,10 +465,14 @@
             => 'Reconstruction des autorisations lecture effectuée.',
         'Recently Viewed'
             => 'Éléments récents',
+        'Recently Viewed lets you jump back to any records you have looked at lately.'
+            => 'Les éléments récents vous permet d\'accéder rapidement aux documents récents.',
         'Recycled'
             => 'Réactivé',
         'Remember me next time'
             => 'Retenir le nom d\'utilisateur',
+        'Remember{spaceAndFirstName}, the Audit Trail shows you what has changed on a record and who changed it.'
+            => 'Le log de modifications vous montre l\'historique des modifications y compris le nom d\'utilisateur qui l\'a changé.',
         'Retail'
             => 'Commerce de détail',
         'Return to Admin Menu'
@@ -475,6 +493,8 @@
             => 'Civilité',
         'Save Changes'
             => 'Sauver',
+        'Save yourself time and click the pencil icon to jump right in and edit your record.'
+            => 'Cliquez sur l\'icône crayon pour rapidement éditer une donnée.',
         'Search'
             => 'Rechercher',
         'Search by name, phone, or e-mail'
@@ -487,6 +507,8 @@
             => 'Élément sécurisable',
         'Security'
             => 'Sécurité',
+        'See more search results by clicking the down arrow at the bottom of the screen.'
+            => 'Cliquez sur la flèche vers le bas pour afficher plus de résultats de votre recherche.',
         'Select a Parent Group'
             => 'Sélectionner le groupe Parent',
         'Select a Parent Role'
@@ -495,6 +517,8 @@
             => 'Selectionner un rôle',
         'Self-Generated'
             => 'Auto-généré',
+        'Set your preferences, password, and contact details in your My Profile area.'
+            => 'Modifiez vos préférences, mot de passe, et coordonnées dans la section Mon Profil.',
         'Settings'
             => 'Paramètres',
         'Shipping Address'
@@ -535,6 +559,8 @@
             => 'Mise à jour réussie',
         'Super Administrators'
             => 'Super Administrateur',
+        'Tag Cloud fields allow you to tag records with values so that you can easily find them later.'
+            => 'Les champs nuage de tags vous permet d\'associer des mots-clefs avec vos données pour les pouvoir retrouver facilement.',
         'Technology'
             => 'Technologie',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
@@ -545,6 +571,10 @@
             => 'Impossible de supprimer la devise car elle est actuellement utilisée.',
         'The ID specified was invalid.'
             => 'ID invalide.',
+        'The Import Wizard helps get your data into the system easily, find it under the config icon (that\'s the cog in the top right).'
+            => 'L\'assistant d\'importation vous permet de facilement importer vos données dans le système. Retrouvez le sous l\'icône de configuration située au coin supérieur droit.',
+        'The Notifications speech bubble keeps you up to date on important events.'
+            => 'La bulle de notification vous tient au courant d\'événements importants.',
         'The record you are trying to access does not exist.'
             => 'Cette donnée n\'existe pas.',
         'The status specified is invalid.'
@@ -573,6 +603,8 @@
             => 'Entrez le code ou nom de devise.',
         'Update'
             => 'Actualiser',
+        'Upload attachments to a record by clicking "More Options" when adding a note.'
+            => 'Vous pouvez ajouter une pièce jointe a une Note en cliquant "Plus d\'options".',
         'User Membership'
             => 'Membres du groupe',
         'User Membership Saved Successfully.'
@@ -587,6 +619,8 @@
             => 'Visitez <strong>Zurmo Inc.</strong>: {url}.',
         'Visit the <strong>Zurmo Open Source Project</strong> at {url}.'
             => 'Visitez le <strong>Project Zurmo Open Source</strong>: {url}.',
+        'Want to export your data directly to Excel?  Search for the data you need and hit the Export button.'
+            => 'Pour exporter vos données vers excel, exécutez une recherche et cliquez "Exporter".',
         'Website'
             => 'Site web',
         'Welcome'

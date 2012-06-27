@@ -57,7 +57,6 @@
             $sanitizedDataWithoutOwner     = PostUtil::
                                                  removeElementFromPostDataForSavingModel($readyToUseData, 'owner');
             $model->setAttributes($sanitizedDataWithoutOwner);
-
             if ($model->validate())
             {
                 $modelToStringValue = strval($model);

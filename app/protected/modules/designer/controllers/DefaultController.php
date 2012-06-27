@@ -437,6 +437,7 @@
             }
             $content = DropDownDependencyAttributeEditView::
                        renderContainerAndMappingLayoutContent($attributeForm, $this->getId(), $this->getModule()->getId(), false);
+            Yii::app()->getClientScript()->setToAjaxMode();
             Yii::app()->getClientScript()->render($content);
             echo $content;
         }

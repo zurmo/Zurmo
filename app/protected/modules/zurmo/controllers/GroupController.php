@@ -122,6 +122,7 @@
                 $_GET['modalTransferInformation']['sourceIdFieldId'],
                 $_GET['modalTransferInformation']['sourceNameFieldId']
             );
+            Yii::app()->getClientScript()->setToAjaxMode();
             $pageTitle           = Yii::t('Default', 'Select a Parent Group');
             $view                = new ModalView($this,
                                         $groupsModalTreeView,

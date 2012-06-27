@@ -105,6 +105,8 @@
             => 'Detail und Bearbeiten Ansicht',
         'Details View'
             => 'Detailansicht',
+        'Display {label} when'
+            => '{label} anzeigen wenn',
         'Display Name'
             => 'Display Name', // Same Word Translated
         'Dropdown Dependency Mapping'

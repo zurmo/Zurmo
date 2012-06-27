@@ -44,7 +44,7 @@
         }
 
         /**
-         * Override of parent function. Makes use of the CActiveForm
+         * Override of parent function. Makes use of the ZurmoActiveForm
          * widget to provide an editable form.
          * @return A string containing the element's content.
          */
@@ -53,7 +53,7 @@
             $content = '<div class="wide form">';
             $clipWidget = new ClipWidget();
             list($form, $formStart) = $clipWidget->renderBeginWidget(
-                                                                'CActiveForm',
+                                                                'ZurmoActiveForm',
                                                                 array_merge(
                                                                     array('id' => 'install-form'),
                                                                     $this->resolveActiveFormAjaxValidationOptions()
@@ -281,9 +281,11 @@
         {
             return array('enableAjaxValidation' => true,
                 'clientOptions' => array(
-                    'validateOnSubmit' => true,
-                    'validateOnChange' => false,
-                    'inputContainer' => 'td',
+                    'beforeValidate'    => 'js:beforeValidateAction',
+                    'afterValidate'     => 'js:afterValidateAction',
+                    'validateOnSubmit'  => true,
+                    'validateOnChange'  => false,
+                    'inputContainer'    => 'td',
                 )
             );
         }

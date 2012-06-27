@@ -96,8 +96,8 @@
             $adapter3 = new GameNotificationToModalContentAdapter($notifications[2]);
 
             $this->assertEquals('game-level-change', $adapter1->getIconCssName());
-            $this->assertEquals('game-new-badge', $adapter2->getIconCssName());
-            $this->assertEquals('game-badge-grade-change', $adapter3->getIconCssName());
+            $this->assertEquals('game-badge-LoginUser', $adapter2->getIconCssName());
+            $this->assertEquals('game-badge-LoginUser', $adapter3->getIconCssName());
 
             $this->assertEquals('<h2>Congratulations!</h2><h3>You have reached level 2</h3>',
                                 $adapter1->getMessageContent());

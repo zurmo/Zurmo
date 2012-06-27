@@ -67,6 +67,11 @@
             }
         }
 
+        protected function getModelModuleClassName()
+        {
+            return $this->model->getModuleClassName();
+        }
+
         protected function addAttributeNamesThatCanBeSplitUsingDelimiter($value)
         {
             $this->attributeNamesThatCanBeSplitUsingDelimiter[] = $value;
@@ -488,7 +493,7 @@
             $namesAndLabels = array();
             if ($this->supportsMixedSearch())
             {
-                $moduleClassName            = $this->model->getModuleClassName();
+                $moduleClassName            = $this->getModelModuleClassName();
                 $metadata                   = $moduleClassName::getMetadata();
                 if ($metadata['global']['globalSearchAttributeNames'] != null)
                 {

@@ -180,14 +180,14 @@
                 ),
                 'rules' => array(
                     array('column',             'required'),
-                    array('column',             'type',   'type' => 'number'),
+                    array('column',             'type',   'type' => 'integer'),
                     array('position',           'required'),
-                    array('position',           'type',   'type' => 'number'),
+                    array('position',           'type',   'type' => 'integer'),
                     array('layoutId',           'required'),
                     array('layoutId',           'type',   'type' => 'string'),
                     array('layoutId',           'length', 'max'  => 100),
                     array('viewType',           'required'),
-                    array('viewType',           'type',   'type' => 'number'),
+                    array('viewType',           'type',   'type' => 'string'),
                     array('serializedViewData', 'type',   'type' => 'string'),
                     array('collapsed',          'boolean'),
                 )

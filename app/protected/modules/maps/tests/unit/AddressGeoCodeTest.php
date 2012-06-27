@@ -125,15 +125,17 @@
             AddressMappingUtil::updateChangedAddresses();
 
             $account3 = Account::getById($accountId3);
-            $this->assertEquals('40.722668',  $account3->billingAddress->latitude);
-            $this->assertEquals('-73.7196971', $account3->billingAddress->longitude);
-            $this->assertEquals(0,             $account3->billingAddress->invalid);
-            unset($account3);
+            $this->assertNotNull($account3->billingAddress->latitude);
+            $this->assertNotNull($account3->billingAddress->longitude);
+            $this->assertEquals(0,           $account3->billingAddress->invalid);
 
             $account4 = Account::getById($accountId4);
-            $this->assertEquals('43.06132',    $account4->billingAddress->latitude);
-            $this->assertEquals('-87.8880352', $account4->billingAddress->longitude);
+            $this->assertNotNull($account4->billingAddress->latitude);
+            $this->assertNotNull($account4->billingAddress->longitude);
+            $this->assertNotEquals($account3->billingAddress->latitude, $account4->billingAddress->latitude);
+            $this->assertNotEquals($account3->billingAddress->longitude, $account4->billingAddress->longitude);
             $this->assertEquals(0,             $account4->billingAddress->invalid);
+            unset($account3);
             unset($account4);
 
             //Check after Modifying address lat / long set to null and flag to flase.

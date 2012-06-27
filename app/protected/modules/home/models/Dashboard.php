@@ -114,7 +114,7 @@
                 'rules' => array(
                     array('isDefault',  'boolean'),
                     array('layoutId',   'required'),
-                    array('layoutId',   'type',   'type' => 'number'),
+                    array('layoutId',   'type',   'type' => 'integer'),
                     array('layoutType', 'required'),
                     array('layoutType', 'type',   'type' => 'string'),
                     array('layoutType', 'length', 'max' => 10),

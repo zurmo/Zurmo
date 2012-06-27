@@ -63,6 +63,7 @@
                          'RedBean',
                          'MbString',
                          'Memcache',
+                         'SetIncludePath'
             );
         }
 

@@ -185,8 +185,8 @@
             $baseLanguage           = $this->getBaseLanguage();
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets') . '/SelectInputUtils.js'
-                    ),
+                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets')
+                    ) . '/SelectInputUtils.js',
                 CClientScript::POS_END
             );
             $inputIdPrefix = $this->getInputIdPrefix();

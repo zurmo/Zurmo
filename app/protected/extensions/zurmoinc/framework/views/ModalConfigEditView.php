@@ -63,9 +63,10 @@
                     'id' => $formName,
                     'enableAjaxValidation' => true,
                     'clientOptions' => array(
-                        'validateOnSubmit' => true,
-                        'validateOnChange' => false,
-                        'afterValidate'    => 'js:afterValidateAjaxAction',
+                        'validateOnSubmit'  => true,
+                        'validateOnChange'  => false,
+                        'beforeValidate'    => 'js:beforeValidateAction',
+                        'afterValidate'     => 'js:afterValidateAjaxAction',
                         'afterValidateAjax' => $afterValidateAjax,
                     ),
                 )
@@ -78,13 +79,6 @@
                     ) . '/Modal.js',
                 CClientScript::POS_END
             );
-            $cs->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
-                    ) . '/FormUtils.js',
-                CClientScript::POS_END
-            );
-
             $content .= $formStart;
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderAfterFormLayout($form);

@@ -121,7 +121,7 @@
             $tidyServiceHelper = new TidyServiceHelper();
             if (!$tidyServiceHelper->runCheckAndGetIfSuccessful())
             {
-                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has not been tidied, because tidy extension is not loaded.</div>';
+                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has not been tidied, because tidy extension is not loaded.</div><br />';
                 return $content;
             }
             else
@@ -138,7 +138,7 @@
                 );
                 $tidy->parseString($content, $tidyConfig);
                 $content = $tidy->root()->value;
-                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div>';
+                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div><br />';
                 return $content;
             }
         }

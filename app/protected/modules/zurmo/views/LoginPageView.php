@@ -31,7 +31,7 @@
             assert('is_string($extraHeaderContent) || $extraHeaderContent == null');
 
             $loginview = new LoginView($controller, $formModel, $extraHeaderContent);
-            $loginview->setCssClasses(array('clearfix', 'background-' . mt_rand(1,3)));
+            $loginview->setCssClasses(array('clearfix', 'background-' . mt_rand(1, 3)));
             $gridView = new GridView(2, 1);
             $gridView->setView($loginview, 0, 0);
             $gridView->setView(new FooterView(), 1, 0);
