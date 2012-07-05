@@ -34,9 +34,7 @@
                     $this->getModule()->getId(),
                     $_GET['dashboardId'],
                     $_GET['uniqueLayoutId']
-                    ),
-                'modalContainer',
-                Yii::t('Default', 'Add Portlet'));
+                    ));
             echo $view->render();
         }
 

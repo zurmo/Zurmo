@@ -60,7 +60,6 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null,
                                                     $stateMetadataAdapterClassName = null)
         {
             $portlet = Portlet::getById((int)$portletId);
@@ -74,8 +73,7 @@
                                             $this->getModule()->getId()
             );
             echo ModalSearchListControllerUtil::
-                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $pageTitle,
-                                                     $stateMetadataAdapterClassName);
+                 setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $stateMetadataAdapterClassName);
         }
 
         public function actionAutoComplete($term)
@@ -135,8 +133,7 @@
             $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($model);
             $dataProvider = AuditEventsListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
             Yii::app()->getClientScript()->setToAjaxMode();
-            echo AuditEventsListControllerUtil::renderList($this, $dataProvider,
-                                                           strval($model) . ' ' . Yii::t('Default', 'Audit Trail'));
+            echo AuditEventsListControllerUtil::renderList($this, $dataProvider);
         }
 
         protected function getModelName()

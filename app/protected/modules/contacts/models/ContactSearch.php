@@ -107,5 +107,37 @@
                    "       person.lastname       like '$partialName%' or "    .
                    "       $fullNameSql like '$partialName%') ";
         }
+
+        /**
+         * For a given email address, run search by email address and retrieve contact models.
+         */
+        public static function getContactsByAnyEmailAddress($emailAddress, $pageSize = null, $stateMetadataAdapterClassName = null)
+        {
+            assert('is_string($emailAddress)');
+            $metadata = array();
+            $metadata['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'emailAddress',
+                    'operatorType'         => 'equals',
+                    'value'                => $emailAddress,
+                ),
+                2 => array(
+                    'attributeName'        => 'secondaryEmail',
+                    'relatedAttributeName' => 'emailAddress',
+                    'operatorType'         => 'equals',
+                    'value'                => $emailAddress,
+                ),
+            );
+            $metadata['structure'] = '(1 or 2)';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Contact');
+            if ($stateMetadataAdapterClassName != null)
+            {
+                $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
+                $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
+            }
+            $where  = RedBeanModelDataProvider::makeWhere('Contact', $metadata, $joinTablesAdapter);
+            return Contact::getSubset($joinTablesAdapter, null, $pageSize, $where);
+        }
     }
 ?>

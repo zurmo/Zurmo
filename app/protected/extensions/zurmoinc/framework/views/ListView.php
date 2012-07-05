@@ -134,7 +134,6 @@
                 'pager'            => $this->getCGridViewPagerParams(),
                 'beforeAjaxUpdate' => $this->getCGridViewBeforeAjaxUpdate(),
                 'afterAjaxUpdate'  => $this->getCGridViewAfterAjaxUpdate(),
-                'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
                 'columns'          => $columns,
                 'nullDisplay'      => '&#160;',
                 'showTableOnEmpty' => $this->getShowTableOnEmpty(),
@@ -146,7 +145,6 @@
         protected function getCGridViewPagerParams()
         {
             return array(
-                    'cssFile'          => Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name . '/css/cgrid-view.css',
                     'prevPageLabel'    => '<span>previous</span>',
                     'nextPageLabel'    => '<span>next</span>',
                     'class'            => 'EndlessListLinkPager',

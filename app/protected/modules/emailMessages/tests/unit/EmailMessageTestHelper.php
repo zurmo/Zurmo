@@ -58,7 +58,7 @@
             $saved = $emailMessage->save();
             if (!$saved)
             {
-                throw new NotSupportedException($message, $code, $previous);
+                throw new NotSupportedException();
             }
             return $emailMessage;
         }

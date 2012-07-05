@@ -122,16 +122,16 @@
             {
                 try
                 {
-                    $castedDownmodel = $item->castDown(array($modelDerivationPathToItem));
-                    if (get_class($castedDownmodel) == $castDownModelClassName)
+                    $castedDownModel = $item->castDown(array($modelDerivationPathToItem));
+                    if (get_class($castedDownModel) == $castDownModelClassName)
                     {
-                        if (strval($castedDownmodel) != null)
+                        if (strval($castedDownModel) != null)
                         {
-                            $params          = array('label' => strval($castedDownmodel));
-                            $moduleClassName = $castedDownmodel->getModuleClassName();
+                            $params          = array('label' => strval($castedDownModel));
+                            $moduleClassName = $castedDownModel->getModuleClassName();
                             $moduleId        = $moduleClassName::getDirectoryName();
                             $element         = new DetailsLinkActionElement('default', $moduleId,
-                                                                            $castedDownmodel->id, $params);
+                                                                            $castedDownModel->id, $params);
                             $existingModels[] = $element->render();
                         }
                     }
@@ -144,24 +144,9 @@
             return self::resolveStringValueModelsDataToStringContent($existingModels);
         }
 
-        protected static function resolveStringValueModelsDataToStringContent($modelsAndStringData)
-        {
-            assert('is_array($modelsAndStringData)');
-            $content = null;
-            foreach ($modelsAndStringData as $modelStringContent)
-            {
-                if ($content != null)
-                {
-                    $content .= ', ';
-                }
-                $content .= $modelStringContent;
-            }
-            return $content;
-        }
-
         protected static function getFirstActivityItemStringContent($relationModelClassNames, RedBeanModel $model)
         {
-            assert('is_string($relationModelClassNames)');
+            assert('is_array($relationModelClassNames)');
             foreach ($relationModelClassNames as $relationModelClassName)
             {
                 //ASSUMES ONLY A SINGLE ATTACHED ACTIVITYITEM PER RELATION TYPE.

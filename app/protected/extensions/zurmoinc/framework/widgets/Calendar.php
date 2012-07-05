@@ -53,7 +53,7 @@
 
         protected $dataProvider;
 
-        public $cssFile = 'css/jquery-ui.css';
+        public $cssFile = null;
 
         /**
          * Initialize the Calendar Widget

@@ -32,3 +32,7 @@ input[type="button"] {
 .calendar-events-6 span :before {
   top: 10px !important;
 }
+/* remove label borders in IE6 because IE6 does not support transparency */
+* html .ui-multiselect-checkboxes label {
+  border: none;
+}

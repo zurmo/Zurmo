@@ -48,5 +48,10 @@
             assert('$this->model->{$this->attribute} instanceof Role');
             return parent::renderControlEditable();
         }
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'Select a Role');
+        }
     }
 ?>

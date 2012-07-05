@@ -40,6 +40,7 @@
             Yii::app()->gameHelper;
             Yii::app()->gamificationObserver; //runs init();
             Yii::app()->gameHelper->resetDeferredPointTypesAndValuesByUserIdToAdd();
+            Yii::app()->emailHelper->sendEmailThroughTransport = false;
         }
 
         public static function tearDownAfterClass()

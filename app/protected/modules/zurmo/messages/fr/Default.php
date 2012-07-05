@@ -619,7 +619,7 @@
             => 'Visitez <strong>Zurmo Inc.</strong>: {url}.',
         'Visit the <strong>Zurmo Open Source Project</strong> at {url}.'
             => 'Visitez le <strong>Project Zurmo Open Source</strong>: {url}.',
-        'Want to export your data directly to Excel?  Search for the data you need and hit the Export button.'
+        'Want to export your data directly to Excel? Search for the data you need and hit the Export button.'
             => 'Pour exporter vos données vers excel, exécutez une recherche et cliquez "Exporter".',
         'Website'
             => 'Site web',

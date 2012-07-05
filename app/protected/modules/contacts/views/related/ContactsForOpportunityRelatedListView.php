@@ -41,12 +41,8 @@
                                     'uniqueLayoutId'         => 'eval:$this->uniqueLayoutId',
                                 //TODO: fix this 'eval' of $this->uniqueLayoutId above so that it can properly work being set/get from DB then getting evaluated
                                 //currently it will not work correctly since in the db it would store a static value instead of it still being dynamic
-                                    'ajaxOptions' => array(
-                                        'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                                        'update'  => '#modalContainer',
-                                    ),
+                                    'ajaxOptions' => 'eval:static::resolveAjaxOptionsForSelectList()',
                                     'htmlOptions' => array( 'id' => 'SelectContactsForOpportunityFromRelatedListLink',
-                                                            'class' => 'simple-select',
                                                             'live' => false) //This is there are no double bindings
             );
             $metadata['global']['panels'] = array(
@@ -103,6 +99,13 @@
         {
             return Yii::t('Default', 'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
+        }
+
+        protected static function resolveAjaxOptionsForSelectList()
+        {
+            $title = Yii::t('Default', 'ContactsModuleSingularLabel Search',
+                            LabelUtil::getTranslationParamsForAllModules());
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
     }
 ?>

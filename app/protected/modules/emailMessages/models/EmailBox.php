@@ -31,6 +31,8 @@
     {
         const NOTIFICATIONS_NAME   = 'System Notifications';
 
+        const USER_DEFAULT_NAME    = 'Default';
+
         protected $isNotifications = false;
 
         public static function getByName($name)
@@ -83,6 +85,21 @@
                     $folder           = new EmailFolder();
                     $folder->name     = EmailFolder::getDefaultOutboxErrorName();
                     $folder->type     = EmailFolder::TYPE_OUTBOX_ERROR;
+                    $folder->emailBox = $box;
+                    $box->folders->add($folder);
+                    $folder           = new EmailFolder();
+                    $folder->name     = EmailFolder::getDefaultInboxName();
+                    $folder->type     = EmailFolder::TYPE_INBOX;
+                    $folder->emailBox = $box;
+                    $box->folders->add($folder);
+                    $folder           = new EmailFolder();
+                    $folder->name     = EmailFolder::getDefaultArchivedName();
+                    $folder->type     = EmailFolder::TYPE_ARCHIVED;
+                    $folder->emailBox = $box;
+                    $box->folders->add($folder);
+                    $folder           = new EmailFolder();
+                    $folder->name     = EmailFolder::getDefaultArchivedUnmatchedName();
+                    $folder->type     = EmailFolder::TYPE_ARCHIVED_UNMATCHED;
                     $folder->emailBox = $box;
                     $box->folders->add($folder);
                     $saved            = $box->save();

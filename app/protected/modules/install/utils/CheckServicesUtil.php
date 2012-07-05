@@ -57,13 +57,13 @@
                          'InstanceFolders',
                          'APC',
                          'Soap',
-                         'Tidy',
                          'Curl',
                          'Yii',
                          'RedBean',
                          'MbString',
                          'Memcache',
-                         'SetIncludePath'
+                         'SetIncludePath',
+                         'IMAP'
             );
         }
 

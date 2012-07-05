@@ -35,7 +35,6 @@
 
         public function testRun()
         {
-            $quote = DatabaseCompatibilityUtil::getQuote();
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
             $billy                      = User::getByUsername('billy');

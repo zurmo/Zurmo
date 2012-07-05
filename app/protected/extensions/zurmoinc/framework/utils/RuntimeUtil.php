@@ -59,5 +59,27 @@
             }
             return RuntimeUtil::$classNamesToHierarchies[$key];
         }
+
+        /**
+         * Given a modelClassName, find the deriviation path to Item. This is used by the castDown method
+         * for example in RedBeanModel.
+         * @param string $relationModelClassName
+         * @return array of derivation path.
+         */
+        public static function getModelDerivationPathToItem($modelClassName)
+        {
+            assert('is_string($modelClassName)');
+            $modelDerivationPath       = self::getClassHierarchy($modelClassName, 'RedBeanModel');
+            $modelDerivationPathToItem = array();
+            foreach ($modelDerivationPath as $modelClassName)
+            {
+                if ($modelClassName == 'Item')
+                {
+                    break;
+                }
+                $modelDerivationPathToItem[] = $modelClassName;
+            }
+            return array_reverse($modelDerivationPathToItem);
+        }
     }
 ?>

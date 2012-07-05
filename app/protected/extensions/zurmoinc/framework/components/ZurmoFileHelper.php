@@ -33,6 +33,9 @@
          * Override to handle custom MimeType file if no mime extension can be found using built in methods.
          * Checks first the zurmo provided mime type database.  This is done first to ensure that extensions are not
          * incorrectly reported.
+         * @param mixed $file - $file can be file or string that contain filename
+         * @param array $magicFile
+         * @param boolean $checkExtension
          * @see CFileHandler::getMimeType
          */
         public static function getMimeType($file, $magicFile = null, $checkExtension = true)
@@ -46,7 +49,7 @@
                 }
             }
 
-            if (function_exists('finfo_open'))
+            if (is_file($file) && function_exists('finfo_open'))
             {
                 if (defined('FILEINFO_MIME_TYPE'))
                 {
@@ -80,6 +83,8 @@
 
         /**
          * Override to handle custom MimeType file if no mime extension can be found using built in methods.
+         * @param mixed $file - $file can be string(filename) or file
+         * @param array $magicFile
          * @see CFileHandler::getMimeTypeByExtension
          */
         public static function getMimeTypeByExtension($file, $magicFile = null)
@@ -96,7 +101,11 @@
                     $extensions = $magicFile;
                 }
             }
-            if (($ext = pathinfo($file, PATHINFO_EXTENSION)) !== '')
+
+            // Get file extension, allow $file to be filename string
+            $filenameArray = explode('.', $file);
+            $ext = end($filenameArray);
+            if ($ext !== '')
             {
                 $ext = strtolower($ext);
                 if (isset($extensions[$ext]))

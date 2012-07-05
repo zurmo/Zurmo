@@ -80,7 +80,6 @@
             ));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['Calendar'];
-            $content .= "<div id=\"dayMeetingsModalContainer\"></div>\n";
             $content .= CHtml::textField('calendarSelectedDate' . $this->uniqueLayoutId,
                                          null,
                                          array('id'    => 'calendarSelectedDate' . $this->uniqueLayoutId,

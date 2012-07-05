@@ -89,9 +89,7 @@
             //Set ajax mode for modal map render view
             Yii::app()->getClientScript()->setToAjaxMode();
 
-            echo $this->renderModalMapView($this, $modalMapAddressData,
-                                           Yii::t('Default', 'Address Location on Map',
-                                           LabelUtil::getTranslationParamsForAllModules()));
+            echo $this->renderModalMapView($this, $modalMapAddressData);
         }
 
         /**
@@ -100,7 +98,6 @@
          */
         protected function renderModalMapView(CController $controller,
                                            $modalMapAddressData,
-                                           $pageTitle = null,
                                            $stateMetadataAdapterClassName = null)
         {
             $renderAndMapModalView = new AddressMapModalView($controller->getId(),
@@ -109,10 +106,7 @@
                                                              'modal'
                                          );
 
-            $view = new ModalView($controller,
-                                  $renderAndMapModalView,
-                                  'modalContainer',
-                                  $pageTitle);
+            $view = new ModalView($controller, $renderAndMapModalView);
             return $view->render();
         }
     }

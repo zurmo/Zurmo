@@ -45,8 +45,8 @@
             }
             else
             {
-                $this->message .= Yii::t('Default', 'There is problem with php set_include_path command. ' .
-                    'Command can fail if "php_admin_value include_path" directive set in Apache configuration.');
+                $this->message .= Yii::t('Default', 'There is a problem with php set_include_path command. ' .
+                    'Command can fail if "php_admin_value include_path" directive is set in Apache configuration.');
             }
             set_include_path($originalPath);
             return $passed;

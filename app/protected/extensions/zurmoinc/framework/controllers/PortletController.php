@@ -82,10 +82,7 @@
                 'uniquePortletPageId'   => $portlet->getUniquePortletPageId(),
             );
             $configurableView = $portlet->getView()->getConfigurationView();
-            $view = new ModalView($this,
-                $configurableView,
-                'modalContainer',
-                Yii::t('Default', 'Edit Portlet'));
+            $view = new ModalView($this, $configurableView);
             echo $view->render();
         }
 

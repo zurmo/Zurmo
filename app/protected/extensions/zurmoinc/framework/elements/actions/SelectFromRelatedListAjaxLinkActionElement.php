@@ -26,6 +26,16 @@
 
     class SelectFromRelatedListAjaxLinkActionElement extends AjaxLinkActionElement
     {
+        public function __construct($controllerId, $moduleId, $modelId, $params = array())
+        {
+            if (!isset($params['htmlOptions']))
+            {
+                $params['htmlOptions'] = array();
+            }
+            $params['htmlOptions'] = array_merge(array('class' => 'simple-select'), $params['htmlOptions']);
+            parent::__construct($controllerId, $moduleId, $modelId, $params);
+        }
+
         public function getActionType()
         {
             return null;

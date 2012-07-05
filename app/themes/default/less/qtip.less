@@ -140,17 +140,23 @@ span.tooltip{
     //color: #555;
 }
     .ui-tooltip-default .ui-tooltip-titlebar{
-        background-color: #FFEF93;
+        //background-color: #FFEF93;
+        font-weight:bold;
+        color:@themeColor;
+        .t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+        #gradient > .vertical(#f6f6f6, #ededed);
+        .b-shadow(inset 0 1px 0 0 #ffffff);
+        border-bottom:1px solid #dfdfdf;
     }
 
     .ui-tooltip-default .ui-tooltip-icon{
-        border-color: #CCC;
-        background: #F1F1F1;
-        color: #777;
+        border-color: #fff;
+        background: @themeColor2;
+        color: #fff;
     }
 
     .ui-tooltip-default .ui-tooltip-titlebar .ui-state-hover{
-        border-color: #AAA;
+        //border-color: #AAA;
         color: #111;
     }
 

@@ -37,34 +37,62 @@
             => 'Une message texte de Zurmo',
         'Access Email Configuration'
             => 'Accès à la configuration email',
-        'Access EmailMessagesModulePluralLabel Tab'
-            => 'Accès aux EmailMessagesModulePluralLabel',
+        'Access Emails Tab'
+            => 'Accès aux Emails',
+        'Archived'
+            => 'Éléments Archivés',
+        'Archived Unmatched'
+            => 'Archivés non trouvés',
+        'Body'
+            => 'Corps',
+        'Cc'
+            => 'Cc', // Same Word Translated
+        'Cc Recipients'
+            => 'Destinataires Cc',
         'Clear Old Sent Notifications Email Job'
             => 'Supprimer les vieux messages de notification',
-        'Create EmailMessagesModulePluralLabel'
-            => 'Créer EmailMessagesModulePluralLabel',
-        'Delete EmailMessagesModulePluralLabel'
-            => 'Supprimer EmailMessagesModulePluralLabel',
+        'Could not connect to IMAP server.'
+            => 'La vérification du compte IMAP a échoué.',
+        'Create Emails'
+            => 'Créer Emails',
+        'Delete Emails'
+            => 'Supprimer Emails',
         'Draft'
             => 'Brouillon',
+        'Email address does not exist in system.'
+            => 'L\'adresse email n\'existe pas.',
+        'Email Archiving Configuration (IMAP)'
+            => 'Paramètres du compte pour les mails archivés (IMAP)',
         'Email Configuration'
             => 'Paramètres Email',
+        'Email configuration saved successfully.'
+            => 'Configuration sauvegardée avec succès!',
+        'Emails'
+            => 'Emails', // Same Word Translated
         'Error Code:'
             => 'Code d\'erreur:',
         'Error Message:'
             => 'Message d\'erreur:',
         'Every 1 minute.'
             => 'Chaque minute.',
+        'Folder'
+            => 'Dossier',
+        'From'
+            => 'De',
         'From Address'
             => 'Adresse expéditeur',
         'From Name'
             => 'Nom expéditeur',
+        'from: {senderContent}'
+            => 'de: {senderContent}',
         'Host'
             => 'Nom d\'hôte',
         'Html Content'
             => 'Contenu HTML',
         'Inbox'
             => 'Boîte de réception',
+        'Invalid email address.'
+            => 'L\'adresse email n\'est pas valide.',
         'Manage Email Configuration'
             => 'Configuration Email',
         'Message failed to send'
@@ -83,6 +111,8 @@
             => 'Nom',
         'Port'
             => 'Port', // Same Word Translated
+        'Process Inbound Email Job'
+            => 'Job traiter les emails entrants ',
         'Process Outbound Email Job'
             => 'Démarrer le processus du courrier sortant',
         'Response from Server'
@@ -95,16 +125,30 @@
             => 'Envoyer un message test',
         'Sent'
             => 'Message envoyé.',
+        'SSL connection'
+            => 'Sécurity SSL',
+        'Successfully connected to IMAP server.'
+            => 'Connexion établie avec succès.',
+        'Test Connection'
+            => 'Tester la connexion',
+        'Test IMAP connection'
+            => 'Tester la connexion IMAP',
         'Test Message Results'
             => 'Résultats du message test',
         'Testing Outbound Email Connection Job'
             => 'Teste des paramètres du compte email',
         'Text Content'
             => 'Message',
+        'To'
+            => 'À',
         'To Address'
             => 'Adresse destinataire',
         'To Name'
             => 'Nom destinataire',
+        'To Recipients'
+            => 'Aux destinataires',
+        'to: {recipientContent}'
+            => 'à: {recipientContent}',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Notifications du système.  Les notifications peuvent uniquement provenir d\'un utilisateur super admin.',
     );

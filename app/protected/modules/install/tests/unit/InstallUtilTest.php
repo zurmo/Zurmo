@@ -223,17 +223,6 @@
             }
         }
 
-        public function testCheckTidy()
-        {
-            InstallUtil::checkTidy('10.1.3', $expectedVersion);
-            $this->assertFalse(InstallUtil::checkTidy('2.1.3',        $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkTidy($actualVersion, $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
-            $this->assertTrue (InstallUtil::checkTidy('1.9.7',        $actualVersion));
-            $this->assertEquals($expectedVersion, $actualVersion);
-        }
-
         /**
         * Simple test to confirm the check doesnt break.
         */

@@ -154,6 +154,15 @@
         }
 
         /**
+         * (non-PHPdoc)
+         * @see CActiveForm::radioButtonList()
+         */
+        public function radioButtonList($model, $attribute, $data, $htmlOptions = array())
+        {
+            return ZurmoHtml::activeRadioButtonList($model, $attribute, $data, $htmlOptions);
+        }
+
+        /**
          * Override to support adding label class = 'hasCheckBox'
          * (non-PHPdoc)
          * @see CActiveForm::checkBox()

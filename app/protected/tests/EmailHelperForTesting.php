@@ -30,6 +30,8 @@
      */
     class EmailHelperForTesting extends EmailHelper
     {
+        public $sendEmailThroughTransport = false;
+
         /**
          * Override to avoid actually sending emails out through transport.
          * (non-PHPdoc)
@@ -37,14 +39,107 @@
          */
         protected function sendEmail(Mailer $mailer, EmailMessage $emailMessage)
         {
-            $emailMessage->error    = null;
-            $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
+            if (!$this->sendEmailThroughTransport)
+            {
+                $emailMessage->error    = null;
+                $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
+            }
+            else
+            {
+                parent::sendEmail($mailer, $emailMessage);
+            }
         }
 
         //For testing only
         public function getSentCount()
         {
             return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT));
+        }
+
+        // For testing only
+        public function sendRawEmail($subject, $from, $to, $textContent = '', $htmlContent = '', $cc = null, $bcc = null, $attachments = null)
+        {
+            assert('is_string($subject) && $subject != ""');
+            assert('is_string($from)    && $from != ""');
+            assert('(is_array($to) || is_string($to)) && !empty($to)');
+            assert('is_string($textContent)');
+            assert('is_string($htmlContent)');
+            assert('$textContent != ""  || $htmlContent != ""');
+            assert('is_array($cc)       || !isset($cc)');
+            assert('is_array($bcc)      || !isset($bcc)');
+            assert('is_array($attachments) || !isset($attachments)');
+
+            $mailer           = $this->getOutboundMailer();
+            $mailer->mailer   = $this->outboundType;
+            $mailer->host     = $this->outboundHost;
+            $mailer->port     = $this->outboundPort;
+            $mailer->username = $this->outboundUsername;
+            $mailer->password = $this->outboundPassword;
+
+            $mailer->Subject  = $subject;
+            if ($htmlContent == null && $textContent != null)
+            {
+                $mailer->body     = $textContent;
+                $mailer->altBody  = $textContent;
+            }
+            elseif ($htmlContent != null && $textContent == null)
+            {
+                $mailer->body     = $htmlContent;
+            }
+            elseif ($htmlContent != null && $textContent != null)
+            {
+                $mailer->body     = $htmlContent;
+                $mailer->altBody  = $textContent;
+            }
+
+            $mailer->From = $from;
+
+            if (is_array($to) && !empty($to))
+            {
+                foreach ($to as $recipientEmail)
+                {
+                    $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_TO);
+                }
+            }
+            else
+            {
+                $mailer->addAddressByType($to, '', EmailMessageRecipient::TYPE_TO);
+            }
+
+            if (is_array($cc) && !empty($cc))
+            {
+                foreach ($cc as $recipientEmail)
+                {
+                    $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_CC);
+                }
+            }
+
+            if (is_array($bcc) && !empty($bcc))
+            {
+                foreach ($bcc as $recipientEmail)
+                {
+                    $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_BCC);
+                }
+            }
+
+            if (isset($attachments) && !empty($attachments))
+            {
+                foreach ($attachments as $file)
+                {
+                    $mailer->attachFromPath($file);
+                }
+            }
+
+            $acceptedRecipients = $mailer->send();
+            if ($acceptedRecipients > 0)
+            {
+                // Do nothing
+            }
+            else
+            {
+                // To-Do: make exception or something else
+                echo "There was error while sending email";
+            }
         }
     }
 ?>

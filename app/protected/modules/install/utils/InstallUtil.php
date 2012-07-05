@@ -242,6 +242,14 @@
         }
 
         /**
+        * @returns true if IMAP extension is loaded, or false if not loaded.
+        */
+        public static function checkImap()
+        {
+            return extension_loaded("imap");
+        }
+
+        /**
         * @returns true if all $_SERVER variable are loaded correctly, otherwise return false.
         * Required by Yii framework.
         */
@@ -284,19 +292,6 @@
         {
             $actualVersion = phpversion('memcache');
             if ($actualVersion != false && extension_loaded('memcache'))
-            {
-                return self::checkVersion($minimumRequiredVersion, $actualVersion);
-            }
-            return false;
-        }
-
-        /**
-         * @returns true, or the Tidy version if less than required, or false if not installed.
-         */
-        public static function checkTidy($minimumRequiredVersion, /* out */ &$actualVersion)
-        {
-            $actualVersion = phpversion('tidy');
-            if ($actualVersion !== null)
             {
                 return self::checkVersion($minimumRequiredVersion, $actualVersion);
             }

@@ -31,7 +31,7 @@
             return array_merge(parent::filters(),
                 array(
                     array(
-                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' - index, welcome, hideWelcome',
+                        ZurmoBaseController::RIGHTS_FILTER_PATH . ' - index, welcome, hideWelcome, getTip',
                         'moduleClassName' => 'HomeModule',
                         'rightName' => HomeModule::RIGHT_ACCESS_DASHBOARDS,
                    ),
@@ -202,6 +202,15 @@
             $dashboard->delete();
             unset($dashboard);
             $this->redirect(array('default/index'));
+        }
+
+        /**
+         * Retrieves a random tip
+         */
+        public function actionGetTip()
+        {
+            $tipContent = ZurmoTipsUtil::getRandomTipResolvedForCurrentUser();
+            echo CJSON::encode($tipContent);
         }
     }
 ?>

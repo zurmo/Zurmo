@@ -29,11 +29,13 @@
      */
     class EmailFolder extends Item
     {
-        const TYPE_INBOX        = 'Inbox';
-        const TYPE_SENT         = 'Sent';
-        const TYPE_OUTBOX       = 'Outbox';
-        const TYPE_DRAFT        = 'Draft';
-        const TYPE_OUTBOX_ERROR = 'OutboxError';
+        const TYPE_INBOX               = 'Inbox';
+        const TYPE_SENT                = 'Sent';
+        const TYPE_OUTBOX              = 'Outbox';
+        const TYPE_DRAFT               = 'Draft';
+        const TYPE_OUTBOX_ERROR        = 'OutboxError';
+        const TYPE_ARCHIVED            = 'Archived';
+        const TYPE_ARCHIVED_UNMATCHED  = 'ArchivedUnmatched';
 
         public static function getDefaultDraftName()
         {
@@ -58,6 +60,16 @@
         public static function getDefaultOutboxErrorName()
         {
             return Yii::t('Default', 'Outbox Error');
+        }
+
+        public static function getDefaultArchivedName()
+        {
+            return Yii::t('Default', 'Archived');
+        }
+
+        public static function getDefaultArchivedUnmatchedName()
+        {
+            return Yii::t('Default', 'Archived Unmatched');
         }
 
         public static function getByBoxAndType(EmailBox $box, $type)
@@ -131,7 +143,7 @@
                     array('name',          'type',    'type' => 'string'),
                     array('name',          'length',  'min'  => 3, 'max' => 64),
                     array('type',          'type',    'type' => 'string'),
-                    array('type',          'length',  'min'  => 3, 'max' => 12),
+                    array('type',          'length',  'min'  => 3, 'max' => 20),
                     //If we didn't need emailBox required,
                     //we could use HAS_MANY_BELONGS_TO as the emailBox relation
                     array('emailBox',      'required'),

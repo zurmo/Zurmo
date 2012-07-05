@@ -59,7 +59,6 @@
             $jobInProcess->forget();
             $monitorJob->run();
             $this->assertEquals(1, count(Notification::getAll()));
-
             //Confirm an email was sent
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(1, Yii::app()->emailHelper->getSentCount());

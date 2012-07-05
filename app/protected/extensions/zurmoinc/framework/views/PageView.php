@@ -67,19 +67,12 @@
             }
             if (YII_DEBUG)
             {
-                if ($this->validate($content))
-                {
-                    $content = $this->tidy($content);
-                }
-                else
-                {
-                    echo '<span style="background-color: yellow; color: #c00000">Skipping tidy so that the line numbers in the error messages match the source, (if there are any).</span><br />';
-                }
+                $this->validate($content);
                 if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= '<span>Total page view time including validation and tidy: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    $performanceMessage .= '<span>Total page view time including validation: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
                     $performanceMessage .= '<span>Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
                 }
             }
@@ -109,38 +102,6 @@
                 $content .= '<span style="background-color: lightgreen; color: green">Database: \'' . Yii::app()->db->connectionString . '\', username: \'' . Yii::app()->db->username . '\'.</span><br />';
             }
             return $content;
-        }
-
-        /**
-         * Tidies the page content as Xhtml with numerical
-         * entities. In YII_DEBUG mode the source is indented.
-         * @see http://php.net/manual/en/book.tidy.php
-         */
-        protected static function tidy($content)
-        {
-            $tidyServiceHelper = new TidyServiceHelper();
-            if (!$tidyServiceHelper->runCheckAndGetIfSuccessful())
-            {
-                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has not been tidied, because tidy extension is not loaded.</div><br />';
-                return $content;
-            }
-            else
-            {
-                $tidy = new Tidy();
-                $tidyConfig = array(
-                    'accessibility-check' => 3,
-                    'indent'              => defined('YII_DEBUG'),
-                    'newline'             => 'LF',
-                    'numeric-entities'    => true,
-                    'output-xhtml'        => true,
-                    'quote-ampersand'     => false,
-                    'wrap'                => 0,
-                );
-                $tidy->parseString($content, $tidyConfig);
-                $content = $tidy->root()->value;
-                $content .= '<div class="xhtml-validation-info">Page is valid XHTML and has been tidied.</div><br />';
-                return $content;
-            }
         }
 
         /**

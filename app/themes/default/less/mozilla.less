@@ -25,20 +25,50 @@
 	.has-model-select a{
 		top:25px !important;
 	}
+	
     #owner-box{
     	.has-model-select a{
 			top:23px !important;
 		}
     }
+    
     .has-date-select button{
 		top:1px !important;
 	}
+	
 	#NoteInlineEditView{
 		.has-model-select a{
 			top:11px !important;
 		}
 		.has-date-select button{
 			top:11px !important;
+		}
+	}
+	
+	#NoteEditAndDetailsView{
+		div.has-model-select{
+			a{
+				top:26px !important;
+				//border:1px solid red;
+				&:before{
+					top:-3px;
+					margin-left:8px;
+				}
+			}
+		}
+		div.has-date-select{
+			button{
+				&:before{
+					top:-3px;
+				}
+			}
+		}
+		#permissions-module #owner-box{
+			div.has-model-select{
+				a{
+					top:23px !important;
+				}
+			}
 		}
 	}
 	

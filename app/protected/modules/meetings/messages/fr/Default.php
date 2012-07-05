@@ -59,8 +59,6 @@
             => 'MeetingsModulePluralLabel pour ContactsModuleSingularLabel',
         'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel'
             => 'MeetingsModulePluralLabel pour OpportunitiesModuleSingularLabel',
-        'MeetingsModulePluralLabel On {displayStringTime}'
-            => 'MeetingsModulePluralLabel Le {displayStringTime}',
         'MeetingsModuleSingularLabel'
             => 'MeetingsModuleSingularLabel', // Same Word Translated
         'MeetingsModuleSingularLabel Day Summary'

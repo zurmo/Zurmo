@@ -44,7 +44,7 @@
          */
         public $blankDisplay = '&#160;';
 
-        //extendedGridView
+        public $cssFile = false;
 
         public function init()
         {

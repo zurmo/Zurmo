@@ -42,12 +42,12 @@
             $box->name        = $name;
             $box->user        = $user;
             $folder           = new EmailFolder();
-            $folder->name     = EmailFolder::getDefaultSentName();
+            $folder->name     = EmailFolder::getDefaultDraftName();
             $folder->type     = EmailFolder::TYPE_DRAFT;
             $folder->emailBox = $box;
             $box->folders->add($folder);
             $folder           = new EmailFolder();
-            $folder->name     = EmailFolder::getDefaultSentName();
+            $folder->name     = EmailFolder::getDefaultInboxName();
             $folder->type     = EmailFolder::TYPE_INBOX;
             $folder->emailBox = $box;
             $box->folders->add($folder);
@@ -61,12 +61,45 @@
             $folder->type     = EmailFolder::TYPE_OUTBOX;
             $folder->emailBox = $box;
             $box->folders->add($folder);
+            $folder           = new EmailFolder();
+            $folder->name     = EmailFolder::getDefaultOutboxErrorName();
+            $folder->type     = EmailFolder::TYPE_OUTBOX_ERROR;
+            $folder->emailBox = $box;
+            $box->folders->add($folder);
+            $folder           = new EmailFolder();
+            $folder->name     = EmailFolder::getDefaultArchivedName();
+            $folder->type     = EmailFolder::TYPE_ARCHIVED;
+            $folder->emailBox = $box;
+            $box->folders->add($folder);
+            $folder           = new EmailFolder();
+            $folder->name     = EmailFolder::getDefaultArchivedUnmatchedName();
+            $folder->type     = EmailFolder::TYPE_ARCHIVED_UNMATCHED;
+            $folder->emailBox = $box;
+            $box->folders->add($folder);
             $saved            = $box->save();
             if (!$saved)
             {
                 throw new NotSupportedException();
             }
             return $box;
+        }
+
+        public static function getDefaultEmailBoxByUser(User $user)
+        {
+            assert('$user->id > 0');
+            if ($user->emailBoxes->count() == 0)
+            {
+                return self::createBoxAndDefaultFoldersByUserAndName($user, EmailBox::USER_DEFAULT_NAME);
+            }
+            elseif ($user->emailBoxes->count() > 1)
+            {
+                //Until multiple boxes are supported against a user, this is not supported
+                throw new NotSupportedException();
+            }
+            else
+            {
+                return $user->emailBoxes->offsetGet(0);
+            }
         }
     }
 ?>

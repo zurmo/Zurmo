@@ -71,6 +71,8 @@
             => 'Layout Id', // Same Word Translated
         'Layout Type'
             => 'Layout-Typ',
+        'Next Tip'
+            => 'Nächste Tipp',
         'Read the wiki'
             => 'Wiki Lesen',
         'Return to Home'

@@ -150,15 +150,17 @@
                                                                          'latitude'      => $addressModel->latitude,
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
-            $content      = CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl, array(
-                                'onclick'    => '$("#modalContainer").dialog("open"); return false;',
-                                'update'     => '#modalContainer',
-                                'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
-                                'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
-                                ),
+            $content      = CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl,
+                                static::resolveAjaxOptionsForMapLink(),
                                 array('id' => $id, 'class' => 'map-link')
             );
             return $content;
+        }
+
+        protected static function resolveAjaxOptionsForMapLink()
+        {
+            $title = Yii::t('Default', 'Address Location on Map');
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function renderError()

@@ -131,6 +131,10 @@
             => 'Der Name des Hosts, auf dem Zurmo installiert werden soll.',
         'If this website is in production mode, please remove the app/test.php file.'
             => 'Wenn diese Web-Seite in Produktion ist, entfernen Sie bitte die Datei app/test.php.',
+        'IMAP extension is loaded.'
+            => 'IMAP Extension wird geladen.',
+        'IMAP extension is not loaded.'
+            => 'IMAP Extension ist nicht geladen.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -274,14 +278,12 @@
             => 'Der relative Pfad, wo Zurmo installiert werden soll.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
             => 'Das System hat erkannt, dass die hostInfo und / oder ScriptUrl nicht eingerichtet sind. Bitte öffnen Sie die perInstance.php config-Datei und  konfigurieren dieser Parameter.',
-        'There is problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
+        'There is a problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
             => 'Es gibt ein Problem mit PHP set_include_path. Der Befehl kann fehlschlagen, wenn die Richtlinie "php_admin_value include_path" in der Apache-Konfiguration aktiviert ist.',
         'There was a problem creating the database Error code:'
             => 'Es gab ein Problem beim Erstellen der Datenbank Fehlercode:',
         'There was a problem creating the user Error code:'
             => 'Es gab ein Problem beim Erstellen des Benutzers Fehlercode:',
-        'Tidy'
-            => 'Tidy', // Same Word Translated
         'User who can connect to the database.'
             => 'Benutzer, die mit der Datenbank verbinden kann.',
         'User`s password.'

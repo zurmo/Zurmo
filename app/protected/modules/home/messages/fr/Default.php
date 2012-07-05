@@ -71,6 +71,8 @@
             => 'ID mise en page',
         'Layout Type'
             => 'Format des colonnes',
+        'Next Tip'
+            => 'Suivant',
         'Read the wiki'
             => 'Lire le wiki',
         'Return to Home'

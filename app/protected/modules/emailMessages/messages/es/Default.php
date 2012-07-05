@@ -38,34 +38,62 @@
             => 'Un mensaje de texto de Zurmo',
         'Access Email Configuration'
             => 'Acceso a la configuración email',
-        'Access EmailMessagesModulePluralLabel Tab'
-            => 'Acceso a EmailMessagesModulePluralLabel',
+        'Access Emails Tab'
+            => 'Acceso a Emails',
+        'Archived'
+            => 'Elemento archivado',
+        'Archived Unmatched'
+            => 'Elemento archivado inigualable',
+        'Body'
+            => 'Cuerpo',
+        'Cc'
+            => 'Cc', // Same Word Translated
+        'Cc Recipients'
+            => 'Destinatarios de CC',
         'Clear Old Sent Notifications Email Job'
             => 'Eliminar mensajes de notificación viejos',
-        'Create EmailMessagesModulePluralLabel'
-            => 'Crear EmailMessagesModulePluralLabel',
-        'Delete EmailMessagesModulePluralLabel'
-            => 'Eliminar EmailMessagesModulePluralLabel',
+        'Could not connect to IMAP server.'
+            => 'Verificación de la cuenta IMAP ha fallado.',
+        'Create Emails'
+            => 'Crear Emails',
+        'Delete Emails'
+            => 'Eliminar Emails',
         'Draft'
             => 'Borrador ',
+        'Email address does not exist in system.'
+            => 'La dirección de email no existe.',
+        'Email Archiving Configuration (IMAP)'
+            => 'Configuración de la cuenta para los emails archivados (IMAP)',
         'Email Configuration'
             => 'Configuraciones de Email',
+        'Email configuration saved successfully.'
+            => 'Configuración de email correctamente guardado.',
+        'Emails'
+            => 'Emails', // Same Word Translated
         'Error Code:'
             => 'Código de error:',
         'Error Message:'
             => 'Mensaje de error:',
         'Every 1 minute.'
             => 'Cada minuto.',
+        'Folder'
+            => 'Carpeta',
+        'From'
+            => 'De',
         'From Address'
             => 'Dirección del remitente',
         'From Name'
             => 'Nombre del remitente',
+        'from: {senderContent}'
+            => 'de: {senderContent}',
         'Host'
             => 'Nombre de host',
         'Html Content'
             => 'Contenido HTML',
         'Inbox'
             => 'Buzón de entrada',
+        'Invalid email address.'
+            => 'Dirección de email no válida.',
         'Manage Email Configuration'
             => 'Configuración del email',
         'Message failed to send'
@@ -84,6 +112,8 @@
             => 'Nombre',
         'Port'
             => 'Puerto',
+        'Process Inbound Email Job'
+            => 'Procesar el trabajo de email entrante',
         'Process Outbound Email Job'
             => 'Inicie el proceso de correo saliente',
         'Response from Server'
@@ -96,16 +126,30 @@
             => 'Enviar un mensaje de prueba',
         'Sent'
             => 'Mensaje enviado.',
+        'SSL connection'
+            => 'Conexión SSL',
+        'Successfully connected to IMAP server.'
+            => 'Conectado correctamente al servidor IMAP.',
+        'Test Connection'
+            => 'Probar conexión',
+        'Test IMAP connection'
+            => 'Prueba conexión IMAP',
         'Test Message Results'
             => 'Resultados del mensaje de prueba',
         'Testing Outbound Email Connection Job'
             => 'Los parámetros de prueba para la cuenta de email',
         'Text Content'
             => 'Mensaje',
+        'To'
+            => 'Para',
         'To Address'
             => 'Dirección de destino',
         'To Name'
             => 'Nombre del destinatario',
+        'To Recipients'
+            => 'Para destinatarios',
+        'to: {recipientContent}'
+            => 'Para: {recipientContent}',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Zurmo envía notificaciones del sistema. Las notificaciones deben aparecer como provenientes de un usuario de super administrator.',
     );

@@ -82,15 +82,15 @@
         protected static function getJobDataByType($type)
         {
             assert('is_string($type) && $type != ""');
-            $jobClassName                           = $type . 'Job';
-            $lastCompletedJobLog                    = self::getLastCompletedJobLogByType($type);
-            $jobInProcess                           = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
+            $jobClassName                              = $type . 'Job';
+            $lastCompletedJobLog                       = self::getLastCompletedJobLogByType($type);
+            $jobInProcess                              = self::getIfJobIsInProcessOtherwiseReturnNullByType($type);
             $jobData = array();
-            $jobData['label']                       = $jobClassName::getDisplayName();
-            $jobData['lastCompletedRunContent']     = self::makeLastCompletedRunContentByJobLog($lastCompletedJobLog);
-            $jobData['statusContent']               = self::makeStatusContentByJobInProcess($jobInProcess);
-            $jobData['status']                      = self::resolveStatusByJobInProcess($jobInProcess);
-            $jobData['recommendedFrequencyContent'] = $jobClassName::getRecommendedRunFrequencyContent();
+            $jobData['label']                          = $jobClassName::getDisplayName();
+            $jobData['lastCompletedRunEncodedContent'] = self::makeLastCompletedRunEncodedContentByJobLog($lastCompletedJobLog);
+            $jobData['statusContent']                  = self::makeStatusContentByJobInProcess($jobInProcess);
+            $jobData['status']                         = self::resolveStatusByJobInProcess($jobInProcess);
+            $jobData['recommendedFrequencyContent']    = $jobClassName::getRecommendedRunFrequencyContent();
             return $jobData;
         }
 
@@ -108,18 +108,25 @@
             return $jobInProcess;
         }
 
-        protected static function makeLastCompletedRunContentByJobLog($jobLog)
+        protected static function makeLastCompletedRunEncodedContentByJobLog($jobLog)
         {
             assert('$jobLog instanceof JobLog || $jobLog == null');
             if ($jobLog == null)
             {
-                return Yii::t('Default', 'Never');
+                return CHtml::tag('span', array('class' => 'jobHasNeverRun'), Yii::t('Default', 'Never'));
             }
-            $content = DateTimeUtil::
-                           convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
             if ($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
+                $content  = DateTimeUtil::
+                           convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
                 $content .= ' ' . Yii::t('Default', '[with errors]');
+                $content  = CHtml::tag('span', array('class' => 'jobHasErrors'), $content);
+            }
+            else
+            {
+                $content = DateTimeUtil::
+                           convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
+                $content  = CHtml::tag('span', array('class' => 'jobRanSuccessfully'), $content);
             }
             return $content;
         }

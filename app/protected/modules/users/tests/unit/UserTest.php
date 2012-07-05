@@ -154,14 +154,14 @@
         public function testSearchByPartialName()
         {
             $user1= User::getByUsername('dick');
-            $users = UserModelSearch::getUsersByPartialFullName('di', 5);
+            $users = UserSearch::getUsersByPartialFullName('di', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user1->id,     $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
             $user2 = User::getByUsername('bill');
-            $users = UserModelSearch::getUsersByPartialFullName('bi', 5);
+            $users = UserSearch::getUsersByPartialFullName('bi', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user2->id,     $users[0]->id);
             $this->assertEquals('bill',         $users[0]->username);
@@ -183,7 +183,7 @@
             $user4->setPassword('graham');
             $this->assertTrue($user4->save());
 
-            $users = UserModelSearch::getUsersByPartialFullName('di', 5);
+            $users = UserSearch::getUsersByPartialFullName('di', 5);
             $this->assertEquals(3, count($users));
             $this->assertEquals($user1->id,      $users[0]->id);
             $this->assertEquals('dick',          $users[0]->username);
@@ -195,19 +195,19 @@
             $this->assertEquals('graham',        $users[2]->username);
             $this->assertEquals('Graham Dillon', $users[2]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('g', 5);
+            $users = UserSearch::getUsersByPartialFullName('g', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user4->id,      $users[0]->id);
             $this->assertEquals('graham',        $users[0]->username);
             $this->assertEquals('Graham Dillon', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('G', 5);
+            $users = UserSearch::getUsersByPartialFullName('G', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user4->id,      $users[0]->id);
             $this->assertEquals('graham',        $users[0]->username);
             $this->assertEquals('Graham Dillon', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('Dil', 5);
+            $users = UserSearch::getUsersByPartialFullName('Dil', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user4->id,      $users[0]->id);
             $this->assertEquals('graham',        $users[0]->username);
@@ -221,38 +221,38 @@
         {
             $user = User::getByUsername('dick');
 
-            $users = UserModelSearch::getUsersByPartialFullName('dick', 5);
+            $users = UserSearch::getUsersByPartialFullName('dick', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('dick ', 5);
+            $users = UserSearch::getUsersByPartialFullName('dick ', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('dick d', 5);
+            $users = UserSearch::getUsersByPartialFullName('dick d', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
             $user = User::getByUsername('dick');
-            $users = UserModelSearch::getUsersByPartialFullName('dick di', 5);
+            $users = UserSearch::getUsersByPartialFullName('dick di', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('Dick di', 5);
+            $users = UserSearch::getUsersByPartialFullName('Dick di', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
             $this->assertEquals('Dick Dickson', $users[0]->getFullName());
 
-            $users = UserModelSearch::getUsersByPartialFullName('dick Di', 5);
+            $users = UserSearch::getUsersByPartialFullName('dick Di', 5);
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id,      $users[0]->id);
             $this->assertEquals('dick',         $users[0]->username);
@@ -871,7 +871,7 @@
             $modelClassNames = UsersModule::getModelClassNames();
             $this->assertEquals(3, count($modelClassNames));
             $this->assertEquals('User', $modelClassNames[0]);
-            $this->assertEquals('UserModelSearch', $modelClassNames[1]);
+            $this->assertEquals('UserSearch', $modelClassNames[1]);
         }
 
         public function testLogAuditEventsListForCreatedAndModifedCreatingFirstUser()

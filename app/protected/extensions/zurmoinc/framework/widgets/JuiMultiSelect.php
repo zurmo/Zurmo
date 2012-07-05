@@ -95,7 +95,6 @@
         public function run()
         {
             $this->registerClientScripts();
-            $this->registerCssFile();
             $htmlOptions = array_merge($this->htmlOptions,
                 array('id'       => $this->inputId,
                       'multiple' => true,
@@ -119,11 +118,6 @@
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('ext.zurmoinc.framework.widgets.assets')) . '/juiMultiSelect/jquery.multiselect.js');
-        }
-
-        protected function registerCssFile()
-        {
-            Yii::app()->getClientScript()->registerCssFile($this->themeUrl . '/' . $this->theme . '/css/jquery-multiselect.css');
         }
 
         protected function renderJavaScript($options)

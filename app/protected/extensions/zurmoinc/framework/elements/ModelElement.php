@@ -164,19 +164,27 @@
             $content = ZurmoHtml::ajaxLink('<span>' . Yii::t('Default', 'Select') . '</span>',
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation(),
-                )), array(
-                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                    'update' => '#modalContainer',
-                    'beforeSend' => 'js:function(){$(\'#' . $id . '\').parent().addClass(\'modal-model-select-link\');}',
-                    'complete'   => 'js:function(){$(\'#' . $id . '\').parent().removeClass(\'modal-model-select-link\');}'
-                    ),
-                    array(
-                    'id'        => $id,
-                    'style'     => $this->getSelectLinkStartingStyle(),
-                    'namespace' => 'selectLink',
-                    )
+                )),
+                static::resolveAjaxOptionsForSelectingModel($id),
+                array(
+                'id'        => $id,
+                'style'     => $this->getSelectLinkStartingStyle(),
+                'namespace' => 'selectLink',
+                )
             );
             return $content;
+        }
+
+        protected static function resolveAjaxOptionsForSelectingModel($formId)
+        {
+            assert('is_string($formId)');
+            $title = static::getModalTitleForSelectingModel();
+            return   ModalView::getAjaxOptionsForModalLink($title);
+        }
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return null;
         }
 
         protected function getSelectLinkControllerId()

@@ -293,5 +293,119 @@
             $compareQueryPart = "!= ''"; // Not Coding Standard
             $this->assertEquals($compareQueryPart, $queryPart);
         }
+
+        public function testBulkInsert()
+        {
+            $model          = new TestDatabaseBulkInsertModel();
+            $model->number  = 9999;
+            $model->string  = 'adasd';
+            $model->save();
+            $model->delete();
+
+            // Test with different quatations.
+            $tableName      = TestDatabaseBulkInsertModel::getTableName('TestDatabaseBulkInsertModel');
+            $columnNames    = array('number', 'string');
+            $insertData     = array(
+                array(999  , 'It\'s string with quatation.'),
+                array(1000 , "It\`s string with quatation."),
+                array(1001 , 'It\'s string with "quatation".')
+            );
+            DatabaseCompatibilityUtil::bulkInsert($tableName, $insertData, $columnNames, 3);
+
+            $bulkInsertedRows      = R::getAll("select * from $tableName order by id");
+            $this->assertEquals(count($bulkInsertedRows), 3);
+            for ($i = 0; $i < 3; $i++)
+            {
+                $this->assertEquals($bulkInsertedRows[$i]['number'], $insertData[$i][0]);
+                $this->assertEquals($bulkInsertedRows[$i]['string'], $insertData[$i][1]);
+            }
+
+            $models = TestDatabaseBulkInsertModel::getAll();
+            if (count($models) > 0)
+            {
+                foreach ($models as $model)
+                {
+                    $model->delete();
+                }
+            }
+
+            // Test when there are less rows of data then bulk quantity for one loop.
+            $tableName      = TestDatabaseBulkInsertModel::getTableName('TestDatabaseBulkInsertModel');
+            $columnNames    = array('number', 'string');
+            $numberOfRows   = 50;
+            $bulkQuantity   = 100;
+            $insertData  = $this->createDumpDataForBulkInsert($numberOfRows);
+
+            DatabaseCompatibilityUtil::bulkInsert($tableName, $insertData, $columnNames, $bulkQuantity);
+            $bulkInsertedRows      = R::getAll("select * from $tableName order by id");
+            $this->assertEquals(count($bulkInsertedRows), $numberOfRows);
+            for ($i = 0; $i < $numberOfRows; $i++)
+            {
+                $this->assertEquals($bulkInsertedRows[$i]['number'], $insertData[$i][0]);
+                $this->assertEquals($bulkInsertedRows[$i]['string'], $insertData[$i][1]);
+            }
+
+            $models = TestDatabaseBulkInsertModel::getAll();
+            if (count($models) > 0)
+            {
+                foreach ($models as $model)
+                {
+                    $model->delete();
+                }
+            }
+
+            // Test when there is much data, for multiple loops of bulk insert.
+            $numberOfRows         = 520;
+            $insertData  = $this->createDumpDataForBulkInsert($numberOfRows);
+            $bulkQuantity         = 100;
+            $importDataForOneLoop = array();
+            foreach ($insertData as $row)
+            {
+                $importDataForOneLoop[] = $row;
+                if (count($importDataForOneLoop) > $bulkQuantity)
+                {
+                    DatabaseCompatibilityUtil::bulkInsert($tableName, $importDataForOneLoop, $columnNames, $bulkQuantity);
+                    $importDataForOneLoop = array();
+                }
+            }
+            $this->assertFalse(count($importDataForOneLoop) > $bulkQuantity);
+            if (count($importDataForOneLoop) > 0)
+            {
+                DatabaseCompatibilityUtil::bulkInsert($tableName, $importDataForOneLoop, $columnNames, $bulkQuantity);
+            }
+
+            $bulkInsertedRows      = R::getAll("select * from $tableName order by id");
+            $this->assertEquals(count($bulkInsertedRows), $numberOfRows);
+            for ($i = 0; $i < $numberOfRows; $i++)
+            {
+                $this->assertEquals($bulkInsertedRows[$i]['number'], $insertData[$i][0]);
+                $this->assertEquals($bulkInsertedRows[$i]['string'], $insertData[$i][1]);
+            }
+        }
+
+        protected function createDumpDataForBulkInsert($number)
+        {
+            assert('is_numeric($number) && $number > 0'); // Not Coding Standard
+            $data = array();
+            for ($i = 0; $i < $number; $i++)
+            {
+                $data[$i] = array(
+                    $i, $this->generateRandString(20)
+                );
+            }
+            return $data;
+        }
+
+        protected function generateRandString($length)
+        {
+            $chars  = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            $size   = strlen($chars);
+            $str    = '';
+            for ($i = 0; $i < $length; $i++)
+            {
+                $str .= $chars[rand(0, $size - 1)];
+            }
+            return $str;
+        }
     }
 ?>

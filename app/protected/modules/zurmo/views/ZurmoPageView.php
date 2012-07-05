@@ -33,12 +33,7 @@
 
         protected function getStyles()
         {
-            return array('cgrid-view',
-                         'designer',
-                         'form',
-                         'jquery-ui',
-                         'main',
-                         'theme');
+            return array();
         }
     }
 ?>

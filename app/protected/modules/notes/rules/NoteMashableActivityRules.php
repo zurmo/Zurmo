@@ -62,12 +62,12 @@
                 {
                     return "<span>{modelStringContent}</span><br/><span>{relatedModelsByImportanceContent} " .
                            "</span><span class='less-pronounced-text'>" .
-                           Yii::t('Default', 'by {ownerStringContent}') . "</span>";
+                           Yii::t('Default', 'by {ownerStringContent}') . "</span><span>{extraContent}</span>";
                 }
                 else
                 {
                     return "<span>{modelStringContent} </span><span class='less-pronounced-text'>" .
-                           Yii::t('Default', 'by {ownerStringContent}') . "</span>";
+                           Yii::t('Default', 'by {ownerStringContent}') . "</span><span>{extraContent}</span>";
                 }
             }
             else
@@ -79,7 +79,7 @@
                 }
                 else
                 {
-                    return "<span>{modelStringContent}</span>";
+                    return "<span>{modelStringContent}</span><span>{extraContent}</span>";
                 }
             }
         }

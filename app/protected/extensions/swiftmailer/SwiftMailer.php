@@ -49,6 +49,8 @@ class SwiftMailer extends Mailer
      */
     public $altBody=null;
 
+    public $attachments = array();
+
     protected $toAddressesAndNames = array();
 
     protected $ccAddressesAndNames = array();
@@ -132,6 +134,15 @@ class SwiftMailer extends Mailer
         if($this->altBody) {
             $message->setBody($this->altBody);
         }
+
+        if (!empty($this->attachments))
+        {
+            foreach ($this->attachments as $attachment)
+            {
+                $message->attach($attachment);
+            }
+        }
+
         $result = $mailer->send($message);
         $this->clearAddresses();
         return $result;
@@ -199,5 +210,33 @@ class SwiftMailer extends Mailer
             $transport = static::sendmailTransport($this->sendmailCommand);
         }
         return $transport;
+    }
+
+    /**
+    * Create Swift_Attachment based on dynamic content(for example when content
+    * is stored in database), filename and type.
+    *
+    * @param binary $content
+    * @param string $filename, for example 'image.png'
+    * @param string $contentType, for example 'application/octet-stream'
+    * @see SwiftMailer::attachment()
+    */
+    public function attachDynamicContent($content, $filename, $contentType)
+    {
+        $attachment = Swift_Attachment::newInstance($content, $filename, $contentType);
+        $this->attachments[] = $attachment;
+        return $attachment;
+    }
+
+    /**
+     * Create Swift_Attachment based on file.
+     * @param string $path
+     * @return Swift_Mime_Attachment
+     */
+    public function attachFromPath($path)
+    {
+        $attachment = Swift_Attachment::fromPath($path);
+        $this->attachments[] = $attachment;
+        return $attachment;
     }
 }

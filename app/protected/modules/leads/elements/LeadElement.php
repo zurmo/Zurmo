@@ -45,5 +45,10 @@
             $id = $this->getIdForHiddenField();
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $id, 'label' => $label));
         }
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'LeadsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
+        }
     }
 ?>

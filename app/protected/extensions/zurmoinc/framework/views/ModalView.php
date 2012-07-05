@@ -33,26 +33,10 @@
         /**
          * TODO
          */
-        protected $uniqueId;
-
-        /**
-         * TODO
-         */
-        protected $pageTitle;
-
-        public $height = 'auto';
-
-        public $width  = 600;
-
-        /**
-         * TODO
-         */
-        public function __construct(CController $controller, View $view, $uniqueId, $pageTitle)
+        public function __construct(CController $controller, View $view)
         {
-            $this->view = $view;
+            $this->view       = $view;
             $this->controller = $controller;
-            $this->uniqueId = $uniqueId;
-            $this->pageTitle = $pageTitle;
         }
 
         public function render()
@@ -63,28 +47,45 @@
         }
 
         /**
-         * Renders content for a view including a modal popup
-         * container. Triggers the popup to appear upon render
+         * Renders content for a view.
          * @return A string containing the element's content.
          */
         protected function renderContent()
         {
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("ModalView");
-            $cClipWidget->beginWidget('zii.widgets.jui.CJuiDialog', array(
-                'id' => 'modalContainer',
-                'options' => array(
-                    'title'    => $this->pageTitle,
-                    'autoOpen' => true,
-                    'modal'    => true,
-                    'height'   => $this->height,
-                    'width'    => $this->width,
-                ),
-            ));
-            echo $this->view->render();
-            $cClipWidget->endWidget('zii.widgets.jui.CJuiDialog');
-            $cClipWidget->endClip();
-            return $cClipWidget->getController()->clips['ModalView'];
+            return $this->view->render();
+        }
+
+        public static function getAjaxOptionsForModalLink($title, $containerId = 'modalContainer', $height = 'auto', $width = 600)
+        {
+            assert('is_string($containerId)');
+            assert('is_string($title)');
+            assert('$height == "auto" || is_int($height)');
+            assert('is_int($width)');
+            return array(
+                    'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width),
+                    'update'     => '#' . $containerId);
+        }
+
+        public static function getAjaxBeforeSendOptionForModalLinkContent($title, $containerId = 'modalContainer', $height = 'auto', $width = 600)
+        {
+            assert('is_string($containerId)');
+            assert('is_string($title)');
+            assert('$height == "auto" || is_int($height)');
+            assert('is_int($width)');
+            if ($height == 'auto')
+            {
+                $heightContent = "'auto'";
+            }
+            else
+            {
+                $heightContent = $height;
+            }
+            // Begin Not Coding Standard
+            return "js:function(){jQuery('#" . $containerId . "').html('');" .
+                                    "makeLargeLoadingSpinner('" . $containerId . "');" .
+                                    "jQuery('#" . $containerId . "').dialog({'title':'" . $title . "','autoOpen':true," .
+                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':'center'}); return true;}";
+            // End Not Coding Standard
         }
     }
 ?>

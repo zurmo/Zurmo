@@ -206,9 +206,7 @@
                                             $_GET['modalTransferInformation']['sourceIdFieldId'],
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
-            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
-                                                Yii::t('Default', 'OpportunitiesModuleSingularLabel Search',
-                                                LabelUtil::getTranslationParamsForAllModules()));
+            echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider);
         }
 
         public function actionDelete($id)
@@ -227,18 +225,13 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null,
                                                     $stateMetadataAdapterClassName = null)
         {
-            $pageTitle = Yii::t('Default',
-                                'OpportunitiesModuleSingularLabel Search',
-                                 LabelUtil::getTranslationParamsForAllModules());
             parent::actionSelectFromRelatedList($portletId,
                                                     $uniqueLayoutId,
                                                     $relationAttributeName,
                                                     $relationModelId,
-                                                    $relationModuleId,
-                                                    $pageTitle);
+                                                    $relationModuleId);
         }
 
         protected function getSearchFormClassName()

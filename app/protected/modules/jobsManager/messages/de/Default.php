@@ -49,6 +49,8 @@
             => 'Fertiggestellt',
         'Completed with Errors'
             => 'Abgeschlossen mit Fehlern',
+        'Cron or scheduled job name: {type}'
+            => 'Cron oder geplanten Job-Name: {type}',
         'Enable Minify for CSS and JavaScript files.'
             => 'Aktivieren minify für CSS-und JavaScript-Dateien.',
         'End Date Time'

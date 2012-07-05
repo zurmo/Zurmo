@@ -376,6 +376,7 @@ a.remove:hover .icon:after {
   border-radius: 5px;
 }
 #InstallPageView .AppContainer a {
+  margin: auto 10px;
   cursor: pointer;
   padding: 0 15px 0 15px;
   line-height: 23px;
@@ -404,7 +405,6 @@ a.remove:hover .icon:after {
   -o-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
-  margin: auto 10px;
 }
 #InstallPageView .AppContainer a:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
@@ -421,6 +421,14 @@ a.remove:hover .icon:after {
 }
 #InstallPageView .AppContainer a.loading .z-icon {
   display: none;
+}
+#InstallPageView #save {
+  color: #fff !important;
+  -webkit-text-shadow: none !important;
+  -moz-text-shadow: none !important;
+  -o-text-shadow: none !important;
+  -ms-text-shadow: none !important;
+  text-shadow: none !important;
 }
 #InstallPageView ul {
   list-style: inside;
@@ -522,6 +530,9 @@ a.remove:hover .icon:after {
 #InstallPageView #install-form td {
   width: 37%;
 }
+#InstallPageView #install-form th + td {
+  vertical-align: top;
+}
 #InstallPageView #install-form tr td:last-child {
   padding-left: 15px;
 }
@@ -530,6 +541,10 @@ a.remove:hover .icon:after {
   color: #666;
   font-weight: 400 !important;
   padding-top: 12px;
+}
+#InstallPageView #install-form .hasCheckBox {
+  padding-top: 0;
+  margin-left: 0;
 }
 #logging-table,
 #progress-table {
@@ -820,9 +835,9 @@ table.configuration-list tr td:last-child a:before {
 }
 #ModulePermissionsEditAndDetailsView th {
   /*text-align:left;
-		font-size: 12px !important;
-		color: #666;
-		font-weight: 400 !important;*/
+        font-size: 12px !important;
+        color: #666;
+        font-weight: 400 !important;*/
 
 }
 .multiselect-holder {
@@ -1190,6 +1205,23 @@ table.configuration-list tr td:last-child a:before {
 #JobLogsModalListView th:first-child {
   padding-left: 15px;
 }
+#JobLogsModalListView .tooltip,
+#jobs-frequency .tooltip {
+  margin-top: -2px;
+}
+#JobLogsModalListView .job-label,
+#jobs-frequency .job-label {
+  margin-left: 25px;
+}
+.jobHasErrors {
+  color: #cc0000;
+}
+.jobRanSuccessfully {
+  color: #7BB730;
+}
+.jobHasNeverRun {
+  color: #b38b01;
+}
 /*Languages*/
 #LanguagesCollectionView form {
   padding: 0;
@@ -1408,21 +1440,21 @@ table.configuration-list tr td:last-child a:before {
 }
 #UsersPageView {
   /*
-	.DetailsView{
-		table{
-			margin-left:8px;
-		}
-		td{
-			text-align:left;
-			padding-left:15px;
-		}
-		th{
-			text-align:left;
-			font-size: 12px !important;
-			color: #666;
-		}
-	}
-	*/
+    .DetailsView{
+        table{
+            margin-left:8px;
+        }
+        td{
+            text-align:left;
+            padding-left:15px;
+        }
+        th{
+            text-align:left;
+            font-size: 12px !important;
+            color: #666;
+        }
+    }
+    */
 
 }
 #UsersPageView .panel {
@@ -1474,10 +1506,10 @@ table.configuration-list tr td:last-child a:before {
   outline: none;
 }
 /*Email Config*/
-#OutboundEmailConfigurationEditAndDetailsView .panel {
+#EmailConfigurationEditAndDetailsView .panel {
   width: 100% !important;
 }
-#SendATestEmailToButton {
+.EmailTestingButton {
   cursor: pointer;
   padding: 0 15px 0 15px;
   line-height: 23px;
@@ -1507,20 +1539,20 @@ table.configuration-list tr td:last-child a:before {
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
 }
-#SendATestEmailToButton:not(.attachLoading) {
+.EmailTestingButton:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
-#SendATestEmailToButton:hover {
+.EmailTestingButton:hover {
   color: #7bb730 !important;
 }
-#SendATestEmailToButton:active {
+.EmailTestingButton:active {
   color: #656565;
   box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #ffffff;
 }
-#SendATestEmailToButton.loading .z-spinner {
+.EmailTestingButton.loading .z-spinner {
   display: inline-block;
 }
-#SendATestEmailToButton.loading .z-icon {
+.EmailTestingButton.loading .z-icon {
   display: none;
 }
 #TestEmailMessageView {
@@ -2691,6 +2723,14 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   padding-left: 15px;
   padding-right: 15px;
 }
+.lead-conversion-radiobutton {
+  display: block;
+  margin-bottom: 10px;
+}
+.lead-conversion-radiobutton label {
+  float: none !important;
+  margin-left: 20px;
+}
 .modal-settings .wide.form {
   padding: 15px !important;
   background-color: #f5f5f5;
@@ -3310,6 +3350,19 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   #NoteInlineEditView .has-date-select button {
     top: 11px !important;
   }
+  #NoteEditAndDetailsView div.has-model-select a {
+    top: 26px !important;
+  }
+  #NoteEditAndDetailsView div.has-model-select a:before {
+    top: -3px;
+    margin-left: 8px;
+  }
+  #NoteEditAndDetailsView div.has-date-select button:before {
+    top: -3px;
+  }
+  #NoteEditAndDetailsView #permissions-module #owner-box div.has-model-select a {
+    top: 23px !important;
+  }
   #JobsCollectionView .tooltip {
     margin-top: -11px;
   }
@@ -3445,15 +3498,36 @@ span.tooltip {
 /* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
 /*! Default tooltip style */
 .ui-tooltip-default .ui-tooltip-titlebar {
-  background-color: #FFEF93;
+  font-weight: bold;
+  color: #262877;
+  -webkit-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+  -moz-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+  -o-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+  -ms-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+  text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+  background-color: #ededed;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f6f6f6), to(#ededed));
+  background-image: -moz-linear-gradient(top, #f6f6f6, #ededed);
+  background-image: -ms-linear-gradient(top, #f6f6f6, #ededed);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f6f6f6), color-stop(100%, #ededed));
+  background-image: -webkit-linear-gradient(top, #f6f6f6, #ededed);
+  background-image: -o-linear-gradient(top, #f6f6f6, #ededed);
+  background-image: linear-gradient(top, #f6f6f6, #ededed);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ededed', GradientType=0);
+  -webkit-box-shadow: inset 0 1px 0 0 #ffffff;
+  -moz-box-shadow: inset 0 1px 0 0 #ffffff;
+  -o-box-shadow: inset 0 1px 0 0 #ffffff;
+  -ms-box-shadow: inset 0 1px 0 0 #ffffff;
+  box-shadow: inset 0 1px 0 0 #ffffff;
+  border-bottom: 1px solid #dfdfdf;
 }
 .ui-tooltip-default .ui-tooltip-icon {
-  border-color: #CCC;
-  background: #F1F1F1;
-  color: #777;
+  border-color: #fff;
+  background: #7bb730;
+  color: #fff;
 }
 .ui-tooltip-default .ui-tooltip-titlebar .ui-state-hover {
-  border-color: #AAA;
   color: #111;
 }
 /* Tips plugin */
@@ -4725,6 +4799,9 @@ span.tooltip {
 .help-section li {
   margin-bottom: 10px;
 }
+#tip-of-day-next-page-link {
+  margin-left: 16px;
+}
 .hide-welcome {
   display: block;
   clear: both;
@@ -5235,8 +5312,17 @@ section {
   box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
 }
 #app-search {
-  margin-left: 40px;
+  margin-left: 3%;
   width: 341px;
+  display: block;
+}
+#app-search .z-spinner {
+  z-index: 999999;
+  position: absolute;
+  margin-left: 316px;
+  margin-top: 11px;
+  float: none;
+  display: block !important;
 }
 #globalSearchInput {
   font-style: italic;
@@ -5256,6 +5342,62 @@ section {
   color: #545454;
   font-style: normal;
 }
+.autocomplete-icon-AccountsModule:before {
+  content: "P";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-ContactsModule:before {
+  content: "y";
+  font-weight: normal;
+  font-size: 22px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-LeadsModule:before {
+  content: ".";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-OpportunitiesModule:before {
+  content: "9";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-TasksModule:before {
+  content: "4";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-NotesModule:before {
+  content: "3";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-MeetingsModule:before {
+  content: "U";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+}
+.autocomplete-icon-UsersModule:before {
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+  content: "e";
+}
 .global-search-loopa {
   padding: 0;
   margin: 7px 0 0 0;
@@ -5269,6 +5411,73 @@ section {
 }
 #globalSearchInput .ui-multiselect-menu {
   min-width: 225px !important;
+}
+.ui-multiselect {
+  padding: 0;
+  text-align: left;
+}
+.ui-multiselect span.ui-icon {
+  float: right;
+}
+.ui-multiselect-single .ui-multiselect-checkboxes input {
+  position: absolute !important;
+  top: auto !important;
+  left: -9999px;
+}
+.ui-multiselect-single .ui-multiselect-checkboxes label {
+  padding: 5px !important;
+}
+.ui-multiselect-header {
+  margin-bottom: 0;
+  padding: 0;
+}
+.ui-multiselect-header ul li {
+  float: left;
+  padding: 0 0 0 0;
+}
+.ui-multiselect-header a {
+  text-decoration: none;
+}
+.ui-multiselect-header a:hover {
+  text-decoration: underline;
+}
+.ui-multiselect-header span.ui-icon {
+  float: left;
+}
+.ui-multiselect-header li.ui-multiselect-close {
+  float: right;
+  text-align: right;
+  padding-right: 0;
+}
+.ui-multiselect-menu {
+  display: none;
+  padding: 0;
+  position: absolute;
+  z-index: 10000;
+}
+.ui-multiselect-checkboxes {
+  position: relative;
+  overflow-y: auto;
+}
+.ui-multiselect-checkboxes label {
+  cursor: default;
+  display: block;
+}
+.ui-multiselect-checkboxes label input {
+  position: relative;
+  top: 1px;
+}
+.ui-multiselect-checkboxes li {
+  clear: both;
+  padding-right: 0;
+}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label {
+  text-align: center;
+  font-weight: bold;
+}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a {
+  display: block;
+  text-decoration: none;
 }
 .AppContainer {
   min-width: 900px;
@@ -5289,6 +5498,13 @@ section {
   border-radius: 0 0 5px 5px;
   z-index: 0;
   position: relative;
+}
+.AppContent {
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
 }
 #HeaderView {
   position: relative;
@@ -5668,6 +5884,9 @@ section {
 }
 #RecentlyViewedView li.type-NotesModule em:before {
   content: "3";
+}
+#RecentlyViewedView li.type-EmailMessageModule em:before {
+  content: "g";
 }
 /*=Content*/
 .AppContent {
@@ -6098,7 +6317,7 @@ section {
 }
 /*=Forms with clearfix issues
 #ZurmoConfigurationEditAndDetailsView,
-#OutboundEmailConfigurationEditAndDetailsView,
+#EmailConfigurationEditAndDetailsView,
 #MapConfigurationView,
 #AccountConvertToView,
 #AccountsMassEditView{
@@ -6168,27 +6387,27 @@ table.items th {
 }
 tr.odd {
   background: none;
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  -ms-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.05s ease-out;
+  -moz-transition: all 0.05s ease-out;
+  -o-transition: all 0.05s ease-out;
+  -ms-transition: all 0.05s ease-out;
+  transition: all 0.05s ease-out;
 }
 tr.even {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  -ms-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.05s ease-out;
+  -moz-transition: all 0.05s ease-out;
+  -o-transition: all 0.05s ease-out;
+  -ms-transition: all 0.05s ease-out;
+  transition: all 0.05s ease-out;
 }
 table.items tr:hover {
   background-color: #D4E7BC;
   color: #262877;
-  -webkit-transition: all 0.35s ease-out;
-  -moz-transition: all 0.35s ease-out;
-  -o-transition: all 0.35s ease-out;
-  -ms-transition: all 0.35s ease-out;
-  transition: all 0.35s ease-out;
+  -webkit-transition: all 0.05s ease-out;
+  -moz-transition: all 0.05s ease-out;
+  -o-transition: all 0.05s ease-out;
+  -ms-transition: all 0.05s ease-out;
+  transition: all 0.05s ease-out;
 }
 table.items tr:hover .pencil {
   visibility: visible;
@@ -6435,7 +6654,7 @@ a.attachLoading:active {
   top: -34px;
   right: 8px;
 }
-.portlet-toolbar a {
+.portlet-toolbar .icon-create {
   padding: 0 15px 0 15px;
   line-height: 23px;
   margin: 0;
@@ -6463,10 +6682,10 @@ a.attachLoading:active {
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
 }
-.portlet-toolbar a:not(.attachLoading) {
+.portlet-toolbar .icon-create:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
-.portlet-toolbar a:before {
+.portlet-toolbar .icon-create:before {
   content: "Y";
   font-weight: normal;
   font-size: 24px;
@@ -6483,10 +6702,10 @@ a.attachLoading:active {
   margin-left: 0;
   color: #7bb730;
 }
-.portlet-toolbar a:hover {
+.portlet-toolbar .icon-create:hover {
   color: #7bb730 !important;
 }
-.portlet-toolbar a:active {
+.portlet-toolbar .icon-create:active {
   color: #656565;
   -webkit-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
   -moz-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
@@ -6497,6 +6716,7 @@ a.attachLoading:active {
 a.simple-select {
   color: #262877 !important;
   background: none !important;
+  background-image: none !important;
   -webkit-box-shadow: none  !important;
   -moz-box-shadow: none  !important;
   -o-box-shadow: none  !important;
@@ -6514,6 +6734,9 @@ a.simple-select {
 }
 a.simple-select:before {
   content: "" !important;
+}
+.portlet-toolbar a.simple-select {
+  background: none !important;
 }
 /*=Popup Modals*/
 .ui-dialog {
@@ -6622,6 +6845,11 @@ a.simple-select:before {
 }
 .ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick:hover {
   background: transparent url(../images/widget-close-btn.png) left top no-repeat;
+}
+.big-spinner {
+  margin-left: 270px;
+  margin-top: 30px;
+  display: block;
 }
 .ui-resizable-handle {
   z-index: 0;
@@ -7945,6 +8173,9 @@ div.wide.form label.hasCheckBox {
   color: #7bb730;
   margin-left: 2px;
 }
+#NoteEditAndDetailsView .has-model-select a {
+  top: 24px !important;
+}
 #inline-edit-form table + table {
   float: left;
   -moz-box-sizing: border-box;
@@ -8337,6 +8568,17 @@ div.hasHalfs .twoThirds {
   color: #262877 !important;
   outline: none;
 }
+/*=Meeting/Task Single View*/
+#NoteEditAndDetailsView .details-table,
+#TaskEditAndDetailsView .details-table,
+#MeetingEditAndDetailsView .details-table {
+  margin-right: 0 !important;
+}
+#NoteEditAndDetailsView .view-toolbar,
+#TaskEditAndDetailsView .view-toolbar,
+#MeetingEditAndDetailsView .view-toolbar {
+  margin-top: 0 !important;
+}
 /*=Latest Activity*/
 .less-pronounced-text {
   font-style: italic;
@@ -8573,6 +8815,17 @@ div.hasHalfs .twoThirds {
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 28px;
 }
+.LatestActivitiesListView .EmailMessage:after,
+.LatestActivitiesView .EmailMessage:after {
+  content: "g";
+  position: relative;
+  top: -3px;
+  color: #666 !important;
+  font-weight: normal;
+  font-size: 42px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 28px;
+}
 #activities-rollup-tooltip {
   position: relative;
   margin-top: -9px;
@@ -8675,6 +8928,8 @@ div.hasHalfs .twoThirds {
 }
 /*=Auto Complete*/
 .ui-autocomplete {
+  margin-top: 2px;
+  width: 335px;
   border: 1px solid #b6b6b6;
   background-color: #ebebeb;
   background-repeat: repeat-x;
@@ -8691,25 +8946,38 @@ div.hasHalfs .twoThirds {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: left;
+  z-index: 9999999;
+  position: relative;
 }
 .ui-autocomplete li {
   list-style: none;
 }
 .ui-autocomplete li a {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #CCC;
   color: #666;
   font-size: 11px;
+  line-height: 100%;
   font-weight: normal;
   display: block;
-  padding: 5px 10px 5px 10px;
+  padding: 6px 10px 6px 10px;
   margin: 0 2px;
 }
 .ui-autocomplete li a:hover,
-.ui-autocomplete li a #ui-active-menuitem,
-.ui-autocomplete li a .ui-state-hover {
+.ui-autocomplete li a#ui-active-menuitem,
+.ui-autocomplete li a.ui-state-hover {
   background: #7bb730 !important;
   color: #fff !important;
+  cursor: pointer !important;
+}
+.ui-autocomplete li:first-child a {
+  border-top: none;
+}
+.ui-autocomplete li:last-child a {
+  border-bottom: none;
 }
 /*=Flash Message View*/
 #FlashMessageView {

@@ -45,10 +45,7 @@
                                 ),
                             array('type' => 'AddPortletAjaxLink',
                                 'uniqueLayoutId' => 'eval:$this->uniqueLayoutId',
-                                'ajaxOptions' => array(
-                                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                                    'update' => '#modalContainer',
-                                ),
+                                'ajaxOptions' => 'eval:static::resolveAjaxOptionsForAddPortlet()',
                                 'htmlOptions' => array('id' => 'AddPortletLink',
                                     'class' => 'icon-add'
                                 )
@@ -86,6 +83,12 @@
                 )
             );
             return $metadata;
+        }
+
+        protected static function resolveAjaxOptionsForAddPortlet()
+        {
+            $title = Yii::t('Default', 'Add Portlet');
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
     }
 ?>

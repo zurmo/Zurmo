@@ -32,10 +32,9 @@
         /**
          * @return rendered content from view as string.
          */
-        public static function renderList(CController $controller, $dataProvider, $pageTitle = null)
+        public static function renderList(CController $controller, $dataProvider)
         {
             assert('$dataProvider instanceof RedBeanModelDataProvider');
-            assert('$pageTitle == null || is_string($pageTitle)');
             $auditEventsListView = new AuditEventsModalListView(
                 $controller->getId(),
                 $controller->getModule()->getId(),
@@ -43,10 +42,7 @@
                 $dataProvider,
                 'modal'
             );
-            $view = new ModalView($controller,
-                $auditEventsListView,
-                'modalContainer',
-                $pageTitle);
+            $view = new ModalView($controller, $auditEventsListView);
             return $view->render();
         }
 

@@ -53,10 +53,8 @@
 
         protected function getAjaxLinkOptions()
         {
-            return array(
-                'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                'update' => '#modalContainer',
-            );
+            $title = Yii::t('Default', 'Audit Trail');
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function getDefaultLabel()

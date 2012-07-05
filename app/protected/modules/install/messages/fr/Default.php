@@ -130,6 +130,10 @@
             => 'Le nom de l\'hôte où Zurmo va être installé.',
         'If this website is in production mode, please remove the app/test.php file.'
             => 'Si ce site web est en production, veuillez supprimer le fichier app/test.php.',
+        'IMAP extension is loaded.'
+            => 'L\'extension IMAP est chargée.',
+        'IMAP extension is not loaded.'
+            => 'L\'extension IMAP n\'est pas chargée.',
         'In all likelihood, these items were supplied to you by your Web Host. ' .
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -274,14 +278,12 @@
             => 'Le chemin d\'accès relatif où Zurmo va être installé.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
             => 'Le système a détecté que hostInfo et/ou scriptUrl ne sont pas configurés. Veuillez ouvrir le fichier config perInstance.php et configurer les paramètres.',
-        'There is problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
+        'There is a problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
             => 'Il y a un problème avec la commande php set_include_path. La commande peut échouer si la directive "php_admin_value include_path" est activée dans la configuration Apache.',
         'There was a problem creating the database Error code:'
             => 'Il y a eu un problème lors de la création de la base de données d\'erreurs',
         'There was a problem creating the user Error code:'
             => 'Il y a eu un problème lors de la création du code d\'erreur d\'utilisateur',
-        'Tidy'
-            => 'Tidys',
         'User who can connect to the database.'
             => 'L\'utilisateur qui connecte à la base de données.',
         'User`s password.'

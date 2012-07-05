@@ -71,6 +71,8 @@
             => 'ID del Layout',
         'Layout Type'
             => 'Formato del Layout',
+        'Next Tip'
+            => 'Prossimo',
         'Read the wiki'
             => 'Leggere il wiki',
         'Return to Home'

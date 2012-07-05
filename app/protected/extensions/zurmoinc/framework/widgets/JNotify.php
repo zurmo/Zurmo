@@ -37,7 +37,7 @@
 
         public $statusBarId             = 'StatusBar';
 
-        public $cssFile                 = 'css/jquery-ui.css';
+        public $cssFile                 = null;
 
         /**
          * Initialize the JNotify Widget

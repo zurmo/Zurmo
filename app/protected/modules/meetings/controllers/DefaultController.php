@@ -26,7 +26,7 @@
 
     class MeetingsDefaultController extends ActivityModelsDefaultController
     {
-        public function actionDaysMeetingsFromCalendarModalList($stringTime, $displayStringTime, $redirectUrl)
+        public function actionDaysMeetingsFromCalendarModalList($stringTime, $redirectUrl)
         {
             if (isset($_GET['ownerOnly']))
             {
@@ -45,9 +45,6 @@
             {
                 $relationModel = null;
             }
-            $pageTitle = Yii::t('Default', 'MeetingsModulePluralLabel On {displayStringTime}',
-                         array_merge(LabelUtil::getTranslationParamsForAllModules(),
-                             array('{displayStringTime}' => $displayStringTime)));
             Yii::app()->getClientScript()->setToAjaxMode();
             $meetingsView = new DaysMeetingsFromCalendarModalListView(
                 $this->getId(),
@@ -57,10 +54,7 @@
                 $ownerOnly,
                 $relationModel
             );
-            $view = new ModalView($this,
-                $meetingsView,
-                'dayMeetingsModalContainer',
-                $pageTitle);
+            $view = new ModalView($this, $meetingsView);
             echo $view->render();
         }
     }

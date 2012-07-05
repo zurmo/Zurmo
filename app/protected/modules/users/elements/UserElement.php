@@ -53,5 +53,10 @@
             assert('$this->model->{$this->attribute} instanceof User');
             return parent::renderControlEditable();
         }
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'User Search');
+        }
     }
 ?>

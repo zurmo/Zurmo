@@ -39,6 +39,12 @@
 
          public $route;
 
+         /**
+          * Handled by application styling
+          * @var string or false
+          */
+         public $cssFile = false;
+
         /**
          * Override from CBasePager in order to utilize
          * pagination class which allows for custom

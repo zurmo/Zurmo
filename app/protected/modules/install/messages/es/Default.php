@@ -130,6 +130,10 @@
             => 'El nombre del host donde Zurmo se instalará.',
         'If this website is in production mode, please remove the app/test.php file.'
             => 'Sí, la página está en producción, por favor, elimine la aplicación del archivo app/test.php.',
+        'IMAP extension is loaded.'
+            => 'Extensión de IMAP está cargado.',
+        'IMAP extension is not loaded.'
+            => 'Extensión de IMAP no está cargado.',
         'In all likelihood, these items were supplied to you by your Web Host. '.
         'If you do not have this information, then you will need to contact them ' .
         'before you can continue. If you\'re all ready...'
@@ -274,14 +278,12 @@
             => 'La ruta relativa en Zurmo se instalará.',
         'The system has detected that the hostInfo and/or scriptUrl are not set up. Please open the perInstance.php config file and set up these parameters.'
             => 'El sistema ha detectado que hostinfo y/o ScirptUrl no se configuran. Por favor, abra el archivo de configuración perInstance.php y configurar estos parámetros.',
-        'There is problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
+        'There is a problem with php set_include_path command. Command can fail if "php_admin_value include_path" directive is set in Apache configuration.'
             => 'Existe un problema con php set_include_path. El comando puede fallar si la directiva "php_admin_value include_path" está activado en la configuración de Apache. ',
         'There was a problem creating the database Error code:'
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'
             => 'Hubo un problema al crear el código de error de usuario',
-        'Tidy'
-            => 'Ordenado',
         'User who can connect to the database.'
             => 'El usuario que puede conectarse a la base de datos.',
         'User`s password.'

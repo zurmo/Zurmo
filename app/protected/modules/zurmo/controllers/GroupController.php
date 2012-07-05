@@ -124,10 +124,7 @@
             );
             Yii::app()->getClientScript()->setToAjaxMode();
             $pageTitle           = Yii::t('Default', 'Select a Parent Group');
-            $view                = new ModalView($this,
-                                        $groupsModalTreeView,
-                                        'modalContainer',
-                                        $pageTitle);
+            $view                = new ModalView($this, $groupsModalTreeView);
             echo $view->render();
         }
 

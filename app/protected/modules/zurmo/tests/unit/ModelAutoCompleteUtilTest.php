@@ -238,20 +238,20 @@
 
                 //Test where no results are expected.
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('weqqw', 5, $super);
-                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found', 'iconClass' => '')), $data);
 
                 //Test where one account is expected searching by account name.
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('Rabbit', 5, $super);
                 $this->assertEquals(1, count($data));
-                $this->assertEquals('Rabbit Systems - Account', $data[0]['label']);
+                $this->assertEquals('Rabbit Systems', $data[0]['label']);
 
                 //test anyEmail where results are across more than one module. This will also pick up an opportunity that
                 //has the name 'animal' in it.
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super);
                 $this->assertEquals(3, count($data));
-                $this->assertEquals('The Zoo - Account', $data[0]['label']);
-                $this->assertEquals('Big Elephant - Contact', $data[1]['label']);
-                $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
+                $this->assertEquals('The Zoo', $data[0]['label']);
+                $this->assertEquals('Big Elephant', $data[1]['label']);
+                $this->assertEquals('Animal Crackers', $data[2]['label']);
             }
         }
 
@@ -269,17 +269,17 @@
 
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super, array('accounts'));
                 $this->assertEquals(1, count($data));
-                $this->assertEquals('The Zoo - Account', $data[0]['label']);
+                $this->assertEquals('The Zoo', $data[0]['label']);
 
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super, array('contacts'));
                 $this->assertEquals(1, count($data));
-                $this->assertEquals('Big Elephant - Contact', $data[0]['label']);
+                $this->assertEquals('Big Elephant', $data[0]['label']);
 
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, $super,
                                                                                    array('contacts', 'opportunities'));
                 $this->assertEquals(2, count($data));
-                $this->assertEquals('Big Elephant - Contact', $data[0]['label']);
-                $this->assertEquals('Animal Crackers - Opportunity', $data[1]['label']);
+                $this->assertEquals('Big Elephant', $data[0]['label']);
+                $this->assertEquals('Animal Crackers', $data[1]['label']);
             }
         }
 
@@ -302,7 +302,7 @@
                 $this->assertEquals(Right::DENY, $jimmy->getEffectiveRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES));
                 Yii::app()->user->userModel = $jimmy;
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found', 'iconClass' => '')), $data);
 
                 //Give Jimmy access to the module, he still will not be able to see results.
                 Yii::app()->user->userModel = $super;
@@ -313,7 +313,7 @@
                 $this->assertTrue  ($jimmy->save());
                 Yii::app()->user->userModel = $jimmy;
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
-                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found')), $data);
+                $this->assertEquals(array(array('href' => '', 'label' => 'No Results Found', 'iconClass' => '')), $data);
 
                 //Give Jimmy read on 1 model.  The search then should pick up this model.
                 Yii::app()->user->userModel = $super;
@@ -327,7 +327,7 @@
                 Yii::app()->user->userModel = $jimmy;
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
                 $this->assertEquals(1, count($data));
-                $this->assertEquals('The Zoo - Account',             $data[0]['label']);
+                $this->assertEquals('The Zoo',             $data[0]['label']);
 
                 //Give Jimmy read on 2 more models.  The search then should pick up these models.
                 Yii::app()->user->userModel = $super;
@@ -348,9 +348,9 @@
                 Yii::app()->user->userModel = $jimmy;
                 $data = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm('animal', 5, Yii::app()->user->userModel);
                 $this->assertEquals(3, count($data));
-                $this->assertEquals('The Zoo - Account',             $data[0]['label']);
-                $this->assertEquals('Big Elephant - Contact',        $data[1]['label']);
-                $this->assertEquals('Animal Crackers - Opportunity', $data[2]['label']);
+                $this->assertEquals('The Zoo',             $data[0]['label']);
+                $this->assertEquals('Big Elephant',        $data[1]['label']);
+                $this->assertEquals('Animal Crackers', $data[2]['label']);
             }
         }
     }

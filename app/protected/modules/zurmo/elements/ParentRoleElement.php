@@ -53,5 +53,10 @@
             $htmlOptions['value']      = $this->getName();
             return $this->form->textField($this->model, $this->attribute, $htmlOptions);
         }
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'Select a Parent Role');
+        }
     }
 ?>

@@ -69,5 +69,15 @@
     {
         $common_config['params']['testGoogleGeoCodeApiKey'] = null;
     }
+
+    if (isset($emailTestAccounts) && !empty($emailTestAccounts))
+    {
+        $common_config['params']['emailTestAccounts'] = $emailTestAccounts;
+    }
+
+    if (isset($testApiUrl))
+    {
+        $common_config['params']['testApiUrl'] = $testApiUrl;
+    }
     return $common_config;
 ?>

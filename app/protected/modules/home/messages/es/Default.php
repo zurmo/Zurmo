@@ -71,6 +71,8 @@
             => 'Id de Diseño',
         'Layout Type'
             => 'Tipo de Diseño',
+        'Next Tip'
+            => 'Siguiente consejo',
         'Read the wiki'
             => 'Leer el wiki',
         'Return to Home'

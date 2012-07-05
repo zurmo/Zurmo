@@ -26,6 +26,16 @@
 
     class CreateFromRelatedListLinkActionElement extends RelatedListLinkActionElement
     {
+        public function __construct($controllerId, $moduleId, $modelId, $params = array())
+        {
+            if (!isset($params['htmlOptions']))
+            {
+                $params['htmlOptions'] = array();
+            }
+            $params['htmlOptions'] = array_merge(array('class' => 'icon-create'), $params['htmlOptions']);
+            parent::__construct($controllerId, $moduleId, $modelId, $params);
+        }
+
         protected function getDefaultLabel()
         {
             return Yii::t('Default', 'Create');

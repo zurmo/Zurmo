@@ -95,6 +95,33 @@
             }
         }
 
+        /**
+         * This function overrides the activeRadioButtonList from CHtml to properly call radioButtonList in ZurmoHtml
+         */
+        public static function activeRadioButtonList($model, $attribute, $data, $htmlOptions = array())
+        {
+            self::resolveNameID($model, $attribute, $htmlOptions);
+            $selection = self::resolveValue($model, $attribute);
+            if ($model->hasErrors($attribute))
+            {
+                self::addErrorCss($htmlOptions);
+            }
+            $name = $htmlOptions['name'];
+            unset($htmlOptions['name']);
+            if (array_key_exists('uncheckValue', $htmlOptions))
+            {
+                $uncheck = $htmlOptions['uncheckValue'];
+                unset($htmlOptions['uncheckValue']);
+            }
+            else
+            {
+                $uncheck = '';
+            }
+            $hiddenOptions = isset($htmlOptions['id']) ? array('id' => self::ID_PREFIX . $htmlOptions['id']) : array('id' => false);
+            $hidden = $uncheck !== null ? self::hiddenField($name, $uncheck, $hiddenOptions) : '';
+            return $hidden . self::radioButtonList($name, $selection, $data, $htmlOptions);
+        }
+
          /**
           * This function overrides the radioButtonList from CHtml and excepts a new variable which consists of select
           * box to be appended to the label element.

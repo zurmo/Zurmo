@@ -35,5 +35,10 @@
         protected $idAttributeId = 'accountId';
 
         protected $nameAttributeName = 'accountName';
+
+        protected static function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'AccountsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
+        }
     }
 ?>

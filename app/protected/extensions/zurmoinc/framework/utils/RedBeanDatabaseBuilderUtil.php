@@ -84,7 +84,33 @@
                     try
                     {
                         $model->setScenario('autoBuildDatabase');
-                        if (!$model->save())
+                        $saved = $model->save();
+
+                        if ($saved)
+                        {
+                            $metadata = $model->getMetadata();
+                            foreach ($metadata as $unused => $classMetadata)
+                            {
+                                if (!empty($classMetadata['relations']))
+                                {
+                                    foreach ($classMetadata['relations'] as $relationName => $relationTypeModelClassNameAndOwns)
+                                    {
+                                        $relationType          = $relationTypeModelClassNameAndOwns[0];
+                                        $relatedModelClassName = $relationTypeModelClassNameAndOwns[1];
+                                        $owned                 = isset($relationTypeModelClassNameAndOwns[2]) &&
+                                                               $relationTypeModelClassNameAndOwns[2] == RedBeanModel::OWNED;
+                                        if (get_class($model) == get_class($model->$relationName) &&
+                                                    $model->id == $model->$relationName->id)
+                                        {
+                                            $messageLogger->addInfoMessage("Unset {$modelClassName}->{$relationName} to avoid recursion and thread stack overrun.");
+                                            $model->$relationName = null;
+                                            $model->save();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
                         {
                             $messageLogger->addErrorMessage("*** Saving the sample $modelClassName failed.");
                             $errors = $model->getErrors();

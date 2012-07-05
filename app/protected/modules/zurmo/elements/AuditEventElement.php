@@ -29,7 +29,7 @@
      */
     class AuditEventElement extends ModelElement
     {
-            protected function renderEditable()
+        protected function renderEditable()
         {
             throw NotSupportedException();
         }

@@ -113,11 +113,7 @@
                                     'JobLog',
                                     $dataProvider,
                                     'modal');
-            $view = new ModalView($this,
-                            $jobLogsListView,
-                            'modalContainer',
-                            Yii::t('Default', 'Job Log for {jobDisplayName}',
-                                   array('{jobDisplayName}' => $jobClassName::getDisplayName())));
+            $view = new ModalView($this, $jobLogsListView);
             echo $view->render();
         }
 

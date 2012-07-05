@@ -35,18 +35,18 @@
             $searchAttributeData['clauses'] = array(
                 1 => array(
                     'attributeName'        => 'sender',
-                    'relatedAttributeName' => 'person',
+                    'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'equals',
                     'value'                => $relationItemId,
                 ),
                 2 => array(
                     'attributeName'        => 'recipients',
-                    'relatedAttributeName' => 'person',
+                    'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'equals',
                     'value'                => $relationItemId,
                 )
             );
-            $searchAttributeData['structure'] = '1 or 2';
+            $searchAttributeData['structure'] = '(1 or 2)';
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 
@@ -56,13 +56,13 @@
             $searchAttributeData['clauses'] = array(
                 1 => array(
                     'attributeName'        => 'sender',
-                    'relatedAttributeName' => 'person',
+                    'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'oneOf',
                     'value'                => $relationItemIds,
                 ),
                 2 => array(
                     'attributeName'        => 'recipients',
-                    'relatedAttributeName' => 'person',
+                    'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'oneOf',
                     'value'                => $relationItemIds,
                 )
@@ -87,6 +87,123 @@
          */
         public function getLatestActivityExtraDisplayStringByModel($model)
         {
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see MashableActivityRules::getSummaryContentTemplate()
+         */
+        public function getSummaryContentTemplate($ownedByFilter, $viewModuleClassName)
+        {
+            assert('is_string($ownedByFilter)');
+            assert('is_string($viewModuleClassName)');
+            return "<span class='less-pronounced-text'>" .
+                   "{relatedModelsByImportanceContent} </span><br/><span>{modelStringContent}</span>";
+        }
+
+        public function renderRelatedModelsByImportanceContent(RedBeanModel $model)
+        {
+            $content = null;
+            if ($model->sender != null  && $model->sender->id > 0)
+            {
+                $content .= Yii::t('Default', 'from: {senderContent}',
+                                    array('{senderContent}' => static::getSenderContent($model->sender)));
+            }
+            if ($model->recipients->count() > 0)
+            {
+                if ($content != null)
+                {
+                    $content .= ' ';
+                }
+                $content .= Yii::t('Default', 'to: {recipientContent}',
+                                    array('{recipientContent}' => static::getRecipientsContent($model->recipients)));
+            }
+            return $content;
+        }
+
+        public static function getSenderContent(EmailMessageSender $emailMessageSender)
+        {
+            $existingModels  = array();
+            if ($emailMessageSender->personOrAccount->id < 0)
+            {
+                return $emailMessageSender->fromAddress . ' ' . $emailMessageSender->fromName;
+            }
+            $castedDownModel = self::castDownItem($emailMessageSender->personOrAccount);
+            try
+            {
+                if (strval($castedDownModel) != null)
+                            {
+                                $params          = array('label' => strval($castedDownModel));
+                                $moduleClassName = $castedDownModel->getModuleClassName();
+                                $moduleId        = $moduleClassName::getDirectoryName();
+                                $element         = new DetailsLinkActionElement('default', $moduleId,
+                                                                                $castedDownModel->id, $params);
+                                $existingModels[] = $element->render();
+                            }
+                return self::resolveStringValueModelsDataToStringContent($existingModels);
+            }
+            catch (AccessDeniedSecurityException $e)
+            {
+                return $emailMessageSender->fromAddress;
+            }
+        }
+
+        public static function getRecipientsContent(RedBeanOneToManyRelatedModels $recipients, $type = null)
+        {
+            assert('$type == null || $type == EmailMessageRecipient::TYPE_TO ||
+                    EmailMessageRecipient::TYPE_CC || EmailMessageRecipient::TYPE_BCC');
+            $existingModels  = array();
+            if ($recipients->count() == 0)
+            {
+                return;
+            }
+            foreach ($recipients as $recipient)
+            {
+                if ($type == null || $recipient->type == $type)
+                {
+                    if ($recipient->personOrAccount->id < 0)
+                    {
+                        $existingModels[] = $recipient->toAddress . ' ' . $recipient->toName;
+                    }
+                    else
+                    {
+                        $castedDownModel = self::castDownItem($recipient->personOrAccount);
+                        try
+                        {
+                            if (strval($castedDownModel) != null)
+                                        {
+                                            $params          = array('label' => strval($castedDownModel));
+                                            $moduleClassName = $castedDownModel->getModuleClassName();
+                                            $moduleId        = $moduleClassName::getDirectoryName();
+                                            $element         = new DetailsLinkActionElement('default', $moduleId,
+                                                                                            $castedDownModel->id, $params);
+                                            $existingModels[] = $element->render();
+                                        }
+                        }
+                        catch (AccessDeniedSecurityException $e)
+                        {
+                            $existingModels[] = $recipient->toAddress . ' ' . $recipient->toName;
+                        }
+                    }
+                }
+            }
+            return self::resolveStringValueModelsDataToStringContent($existingModels);
+        }
+
+        protected static function castDownItem(Item $item)
+        {
+            foreach (array('Contact', 'User', 'Account') as $modelClassName)
+            {
+                try
+                {
+                    $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem($modelClassName);
+                    return $item->castDown(array($modelDerivationPathToItem));
+                }
+                catch (NotFoundException $e)
+                {
+                }
+            }
+            throw new NotSupportedException();
         }
     }
 ?>

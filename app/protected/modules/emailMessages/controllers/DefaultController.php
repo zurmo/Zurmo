@@ -41,23 +41,33 @@
             );
         }
 
+        public function actionDetails($id, $redirectUrl = null)
+        {
+            $emailMessage          = EmailMessage::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($emailMessage);
+            $detailsView           = new EmailMessageDetailsView($this->getId(), $this->getModule()->getId(), $emailMessage);
+            $view              = new EmailMessagesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $detailsView));
+            echo $view->render();
+        }
+
         public function actionConfigurationEdit()
         {
-            $configurationForm = OutboundEmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {
                 $configurationForm->setAttributes($_POST[$postVariableName]);
                 if ($configurationForm->validate())
                 {
-                    OutboundEmailConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
+                    EmailConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'Outbound email configuration saved successfully.')
+                        Yii::t('Default', 'Email configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }
             }
-            $editView = new OutboundEmailConfigurationEditAndDetailsView(
+            $editView = new EmailConfigurationEditAndDetailsView(
                                     'Edit',
                                     $this->getId(),
                                     $this->getModule()->getId(),
@@ -74,7 +84,7 @@
          */
         public function actionSendTestMessage()
         {
-            $configurationForm = OutboundEmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {
@@ -129,10 +139,61 @@
                 }
                 Yii::app()->getClientScript()->setToAjaxMode();
                 $messageView = new TestEmailMessageView($messageContent);
+                $view = new ModalView($this, $messageView);
+                echo $view->render();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        /**
+        * Assumes before calling this, the inbound settings have been validated in the form.
+        */
+        public function actionTestImapConnection()
+        {
+            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $postVariableName   = get_class($configurationForm);
+            if (isset($_POST[$postVariableName]))
+            {
+                $configurationForm->setAttributes($_POST[$postVariableName]);
+
+                $imap = new ZurmoImap();
+
+                $imap->imapHost     = $configurationForm->imapHost;
+                $imap->imapUsername = $configurationForm->imapUsername;
+                $imap->imapPassword = $configurationForm->imapPassword;
+                $imap->imapPort     = $configurationForm->imapPort;
+                $imap->imapSSL      = $configurationForm->imapSSL;
+                $imap->imapFolder   = $configurationForm->imapFolder;
+
+                try
+                {
+                    $connect = $imap->connect();
+                }
+                catch (Exception $e)
+                {
+                    $connect = false;
+                    $messageContent = Yii::t('Default', 'Could not connect to IMAP server.') . "\n";
+                }
+
+                if (isset($connect) && $connect == true)
+                {
+                    $messageContent = Yii::t('Default', 'Successfully connected to IMAP server.') . "\n";
+                }
+                else
+                {
+                    $messageContent = Yii::t('Default', 'Could not connect to IMAP server.') . "\n";
+                }
+
+                Yii::app()->getClientScript()->setToAjaxMode();
+                $messageView = new TestImapConnectionMessageView($messageContent);
                 $view = new ModalView($this,
                                       $messageView,
                                       'modalContainer',
-                                      Yii::t('Default', 'Test Message Results'));
+                                      Yii::t('Default', 'Test Message Results')
+                );
                 echo $view->render();
             }
             else

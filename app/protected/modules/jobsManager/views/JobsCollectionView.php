@@ -128,7 +128,7 @@
                 $content .= '<tr>';
                 $content .= '<td>' . $this->renderViewJobLogLinkContent($type);
                 $content .=          '&#160;' . CHtml::encode($jobData['label']) . '</td>';
-                $content .= '<td>' . CHtml::encode($jobData['lastCompletedRunContent']) . '</td>';
+                $content .= '<td>' . $jobData['lastCompletedRunEncodedContent'] . '</td>';
                 $content .= '<td>' . CHtml::encode($jobData['statusContent']) . '</td>';
                 $content .= '<td>' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
                 $content .= '</tr>';
@@ -182,18 +182,22 @@
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
                                            array('type' => $type));
             $label = Yii::t('Default', 'Job Log');
-            return CHtml::ajaxLink($label, $route,
-                array(
-                    'onclick' => '$("#modalContainer").dialog("open"); return false;',
-                    'update' => '#modalContainer',
-                )
-            );
+            return CHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type));
+        }
+
+        protected static function resolveAjaxOptionsForJobLogLink($type)
+        {
+            assert('is_string($type) && $type != ""');
+            $jobClassName = $type . 'Job';
+            $title        = Yii::t('Default', 'Job Log for {jobDisplayName}',
+                                              array('{jobDisplayName}' => $jobClassName::getDisplayName()));
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function renderSuggestedFrequencyContent()
         {
             $content  = '<h3>' . Yii::t('Default', 'How often should I run each Job?') . '</h3>';
-            $content .= '<table>';
+            $content .= '<table id="jobs-frequency">';
             $content .= '<colgroup>';
             $content .= '<col style="width:40%" /><col style="width:60%" />';
             $content .= '</colgroup>';
@@ -209,10 +213,16 @@
 
             foreach ($this->jobsData as $type => $jobData)
             {
+                $title    = Yii::t('Default', 'Cron or scheduled job name: {type}', array('{type}' => $type));
                 $content .= '<tr>';
-                $content .= '<td>' . CHtml::encode($jobData['label']) . '</td>';
+                $content .= '<td>';
+                $content .= '<span id="suggested-frequency-job-tooltip-' . $type . '" class="tooltip" title="' . $title . '">';
+                $content .= '?</span><span class="job-label">' . CHtml::encode($jobData['label']) . '</span>';
+                $content .= '</td>';
                 $content .= '<td>' . CHtml::encode($jobData['recommendedFrequencyContent']) . '</td>';
                 $content .= '</tr>';
+                $qtip     = new ZurmoTip();
+                $qtip->addQTip("#suggested-frequency-job-tooltip-$type");
             }
             $content .= '</tbody>';
             $content .= '</table>';

@@ -202,8 +202,6 @@
                                             $_GET['modalTransferInformation']['sourceNameFieldId']
             );
             echo ModalSearchListControllerUtil::setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider,
-                                                Yii::t('Default', 'ContactsModuleSingularLabel Search',
-                                                LabelUtil::getTranslationParamsForAllModules()),
                                                 'ContactsStateMetadataAdapter');
         }
 
@@ -224,18 +222,13 @@
                                                     $relationAttributeName,
                                                     $relationModelId,
                                                     $relationModuleId,
-                                                    $pageTitle = null,
                                                     $stateMetadataAdapterClassName = null)
         {
-            $pageTitle = Yii::t('Default',
-                                'ContactsModuleSingularLabel Search',
-                                 LabelUtil::getTranslationParamsForAllModules());
             parent::actionSelectFromRelatedList($portletId,
                                                 $uniqueLayoutId,
                                                 $relationAttributeName,
                                                 $relationModelId,
                                                 $relationModuleId,
-                                                $pageTitle,
                                                 'ContactsStateMetadataAdapter');
         }
 

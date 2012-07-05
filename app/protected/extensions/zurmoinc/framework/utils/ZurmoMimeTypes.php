@@ -36,6 +36,7 @@
         'docx' => 'application/msword',
         'pptx' => 'application/vnd.ms-powerpoint',
         'xlsx' => 'application/vnd.ms-excel',
+        'csv' =>  'text/csv',
     ));
     return $extensions;
 ?>

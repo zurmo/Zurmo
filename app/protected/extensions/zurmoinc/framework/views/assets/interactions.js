@@ -126,8 +126,7 @@ function setupCheckboxStyling( $context ) {
 }
 
 
-function makeSmallLoadingSpinner(id)
-{
+function makeSmallLoadingSpinner(id){
 	$( '.z-spinner', '#' + id ).spin({
 		lines : 11, // The number of lines to draw
 		length : 4, // The length of each line
@@ -146,16 +145,15 @@ function makeSmallLoadingSpinner(id)
 	});	
 }
 
-function makeLargeLoadingSpinner(id)
-{	
-	$('body').append('<div class="overlay-spinner"><span class="big-spinner"></span></div>')
-	$('.big-spinner', id).spin({
+function makeLargeLoadingSpinner(id){	
+	$('#' + id).append('<span class="big-spinner"></span>');
+	$('.big-spinner', '#' + id).spin({
 		lines : 10, // The number of lines to draw
 		length : 8, // The length of each line
 		width : 5, // The line thickness
 		radius : 8, // The radius of the inner circle
 		rotate : 0, // The rotation offset
-		color : '#000', // #rgb or #rrggbb
+		color : '#CCCCCC', // #rgb or #rrggbb
 		speed : 2, // Rounds per second
 		trail : 37, // Afterglow percentage
 		shadow : false, // Whether to render a shadow
@@ -166,6 +164,30 @@ function makeLargeLoadingSpinner(id)
 		left : 0 // Left position relative to parent in px
 	});
 }
+
+function makeGlobalSearchSpinner(id, state){
+	if ( state === true ){
+		$( '.z-spinner', '#' + id ).spin({
+			lines : 9, // The number of lines to draw
+			length : 3, // The length of each line
+			width : 2, // The line thickness
+			radius : 4, // The radius of the inner circle
+			rotate : 0, // The rotation offset
+			color : '#999', // #rgb or #rrggbb
+			speed : 2, // Rounds per second
+			trail : 100, // Afterglow percentage
+			shadow : false, // Whether to render a shadow
+			hwaccel : false, // Whether to use hardware acceleration
+			className : 'spinner', // The CSS class to assign to the spinner
+			zIndsex : 2e9, // The z-index (defaults to 2000000000)
+			top : 0, // Top position relative to parent in px
+			left : 0 // Left position relative to parent in px
+		});	
+	} else {
+		$( '.z-spinner', '#' + id ).spin(false);
+	}
+}
+
 
 
 

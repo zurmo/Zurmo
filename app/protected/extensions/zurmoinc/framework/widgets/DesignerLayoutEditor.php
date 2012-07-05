@@ -79,11 +79,6 @@
         public $canRemoveRows;
 
         /**
-         *  @var string, which css file to utilize.
-         */
-        public $designerCssFile = 'css/designer.css';
-
-        /**
          * @var DesignerLayoutAttributes object.
          */
         public $designerLayoutAttributes;
