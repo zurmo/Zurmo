@@ -127,9 +127,9 @@
                     $htmlContent = Yii::t('Default', 'Email address does not exist in system.') . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "NoRighsForModule":
-                    $subject = Yii::t('Default', 'No rights for modules or connected person or account.');
-                    $textContent = Yii::t('Default', 'You do not have rights to access email message module or to create new email message or no rights to connect email message with contact, account or user.') . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', 'You do not have rights to access email message module or to create new email message or no rights to connect email message with contact, account or user.') . "<br><br>" . $originalMessage->htmlBody;
+                    $subject = Yii::t('Default', 'Missing Rights.');
+                    $textContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system.') . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system.') . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "SenderNotExtracted":
                     $subject = Yii::t('Default', "Sender info can't be extracted from email message.");

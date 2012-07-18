@@ -67,21 +67,6 @@
                 $content .= '<td>';
                 $content .= $information['displayName'];
                 $content .= '</td>';
-                if ($information['canRemoveFrom'])
-                {
-                    $route = $this->moduleId . '/' . $this->controllerId . '/AttributeDetails/';
-                    $removeLinkContent = CHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
-                        array(
-                            'groupId' => $groupId
-                        )
-                        //&#160
-                    ));
-                }
-                else
-                {
-                    $removeLinkContent = null;
-                }
-                //$content .= '<td>' . $removeLinkContent . '</td>';
                 $content .= '</tr>';
             }
             $content .= '</tbody>';

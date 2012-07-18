@@ -112,6 +112,8 @@
             => 'El valor de thread_stack en la base de datos cumple con los requisitos mínimos.',
         'Database username'
             => 'Nombre de usuario de base de datos',
+        'Do not use the RedBean Legacy version'
+            => 'No utilice la versión RedBean Legacy',
         'Dropping existing tables.'
             => 'Eliminación de las tablas existentes',
         'Error code:'

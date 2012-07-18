@@ -117,53 +117,38 @@
   <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/h1</td>
-  <td>exact:Field: functesttextareafield_${randomSuffix}</td>
-</tr>
-<tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
-  <td>Text Area</td>
-</tr>
-<tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
-  <td>functesttextareafield_${randomSuffix}</td>
-</tr>
-<tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
-  <td>functesttextareafield_${randomSuffix}</td>
-</tr>
-<tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
-  <td>This is a sample text area</td>
-</tr>
-<tr>
-  <td>assertNotEditable</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
+  <td>verifyTextPresent</td>
+  <td>Designer Home</td>
   <td></td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
-  <td>on</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+  <td>Create Field</td>
 </tr>
 <tr>
-  <td>assertNotEditable</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+  <td>Accounts: Custom Fields</td>
+</tr>
+<tr>
+  <td>verifyTextPresent</td>
+  <td>functesttextareafield_${randomSuffix}</td>
   <td></td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
-  <td>on</td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Edit</td>
+  <td>click</td>
+  <td>id=edit-link-functesttextareafield_${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
   <td></td>
 </tr>
 <tr>
@@ -197,24 +182,24 @@
   <td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/h1</td>
-  <td>exact:Field: functesttextareafield_${randomSuffix}</td>
-</tr>
-<tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
-  <td>This is a changed sample text area</td>
-</tr>
-<tr>
-  <td>assertNotEditable</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
+  <td>verifyTextPresent</td>
+  <td>Designer Home</td>
   <td></td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>//div[@id='TextAreaAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
-  <td>off</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+  <td>Accounts: Custom Fields</td>
+</tr>
+<tr>
+  <td>verifyTextPresent</td>
+  <td></td>
+  <td>functesttextareafield_${randomSuffix}</td>
+</tr>
+<tr>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

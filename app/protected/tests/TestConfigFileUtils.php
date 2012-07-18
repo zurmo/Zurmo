@@ -72,16 +72,9 @@ EOD;
             'outboundPort'     => '',
             'outboundUsername' => '',
             'outboundPassword' => '',
+            'outboundSecurity' => '',
         ),
         'dropboxImapSettings' => array(
-            'imapHost'         => '',
-            'imapUsername'     => '',
-            'imapPassword'     => '',
-            'imapPort'         => '',
-            'imapSSL'          => '',
-            'imapFolder'       => '',
-        ),
-        'userImapSettings' => array(
             'imapHost'         => '',
             'imapUsername'     => '',
             'imapPassword'     => '',
@@ -94,6 +87,15 @@ EOD;
             'outboundPort'     => '',
             'outboundUsername' => '',
             'outboundPassword' => '',
+            'outboundSecurity' => '',
+        ),
+        'userImapSettings' => array(
+            'imapHost'         => '',
+            'imapUsername'     => '',
+            'imapPassword'     => '',
+            'imapPort'         => '',
+            'imapSSL'          => '',
+            'imapFolder'       => '',
         ),
         'testEmailAddress'     => '',
     );

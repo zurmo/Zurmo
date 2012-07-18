@@ -106,9 +106,14 @@
             $content = $leftVerticalGridView->render();
             if ($renderRightSide)
             {
+                $this->setCssClasses(array_merge($this->getCssClasses(), array('double-column')));
                 $rightVerticalGridView  = new GridView(1, 1);
                 $rightVerticalGridView->setView($rightTopView, 0, 0);
                 $content .= $rightVerticalGridView->render();
+            }
+            else
+            {
+                $this->setCssClasses(array_merge($this->getCssClasses(), array('single-column')));
             }
             return $content;
         }

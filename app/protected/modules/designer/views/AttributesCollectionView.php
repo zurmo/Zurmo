@@ -74,12 +74,12 @@
                     else
                     {
                         $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
-                            array(
-                                'moduleClassName' => $this->moduleClassName,
-                                'attributeTypeName' => $information['elementType'],
-                                'attributeName' => $attributeName,
-                            )
-                        ));
+                                                            array('moduleClassName' => $this->moduleClassName,
+                                                                  'attributeTypeName' => $information['elementType'],
+                                                                  'attributeName' => $attributeName)
+                                                          ),
+                                                          array('id' => 'edit-link-' . $attributeName)
+                                                  );
                     }
                     $content .= '<li>';
                     $content .= '<h4>' . $information['attributeLabel'] . '</h4>';

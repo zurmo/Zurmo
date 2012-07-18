@@ -37,17 +37,26 @@
                                                                                 Yii::t('Default', 'RedBean'));
             if ($passed)
             {
-                $patched        = InstallUtil::checkRedBeanPatched();
-                $this->message .= "\n";
-                if ($patched)
+                if (InstallUtil::checkRedBeanIsNotLegacy())
                 {
-                    $this->message .= Yii::t('Default', 'RedBean file is patched correctly');
+                    $patched        = InstallUtil::checkRedBeanPatched();
+                    $this->message .= "\n";
+                    if ($patched)
+                    {
+                        $this->message .= Yii::t('Default', 'RedBean file is patched correctly');
+                    }
+                    else
+                    {
+                        $this->message .= Yii::t('Default', 'RedBean file is missing patch.');
+                    }
+                    return $patched;
                 }
                 else
                 {
-                    $this->message .= Yii::t('Default', 'RedBean file is missing patch.');
+                    $this->message .= "\n";
+                    $this->message .= Yii::t('Default', 'Do not use the RedBean Legacy version');
+                    return false;
                 }
-                return $patched;
             }
             return $passed;
         }

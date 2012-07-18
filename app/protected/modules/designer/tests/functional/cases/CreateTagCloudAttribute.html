@@ -147,59 +147,39 @@
     <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/h1</td>
-    <td>exact:Field: tagcloudfield_${randomSuffix}</td>
+  <td>verifyTextPresent</td>
+  <td>Designer Home</td>
+  <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
-    <td>Tag Cloud</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+  <td>Create Field</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
-    <td>tagcloudfield_${randomSuffix}</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+  <td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
-    <td>tagcloudfield_${randomSuffix}</td>
+  <td>verifyTextPresent</td>
+  <td>tagcloudfield_${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
-    <td>test3</td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 <tr>
-    <td>assertNotEditable</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
-    <td></td>
+  <td>click</td>
+  <td>id=edit-link-tagcloudfield_${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[5]/td/label/input</td>
-    <td>on</td>
-</tr>
-<tr>
-    <td>assertNotEditable</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
-    <td></td>
-</tr>
-<tr>
-    <td>verifyValue</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
-    <td>on</td>
-</tr>
-<tr>
-    <td>compareText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td</td>
-    <td>test1<br />test2<br />test3</td>
-</tr>
-<tr>
-    <td>clickAndWait</td>
-    <td>link=Edit</td>
-    <td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -257,29 +237,24 @@
     <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/h1</td>
-    <td>exact:Field: tagcloudfield_${randomSuffix}</td>
+  <td>verifyTextPresent</td>
+  <td>Designer Home</td>
+  <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
-    <td>test4</td>
+  <td>assertText</td>
+  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+  <td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-    <td>assertNotEditable</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
-    <td></td>
+  <td>verifyTextPresent</td>
+  <td></td>
+  <td>tagcloudfield_${randomSuffix}</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[6]/td/label/input</td>
-    <td>off</td>
-</tr>
-<tr>
-    <td>compareText</td>
-    <td>//div[@id='TagCloudAttributeDetailsView']/div/div[2]/table/tbody/tr[7]/td</td>
-    <td>test1<br />test2<br />test3<br />test4</td>
+  <td>verifyTextPresent</td>
+  <td>Accounts: Standard Fields</td>
+  <td></td>
 </tr>
 </tbody></table>
 </body>

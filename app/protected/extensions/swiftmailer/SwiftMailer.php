@@ -33,6 +33,10 @@ class SwiftMailer extends Mailer
      */
     public $password;
     /**
+     * SMTP security
+     */
+    public $security = null;
+    /**
      * @param string Message Subject
      */
     public $Subject;
@@ -179,9 +183,9 @@ class SwiftMailer extends Mailer
         return Swift_Image;
     }
 
-    public function smtpTransport($host = null, $port = null)
+    public function smtpTransport($host = null, $port = null, $security = null)
     {
-        return Swift_SmtpTransport::newInstance($host, $port);
+        return Swift_SmtpTransport::newInstance($host, $port, $security);
     }
 
     public function sendmailTransport($command = null)
@@ -198,8 +202,8 @@ class SwiftMailer extends Mailer
     {
         if($this->mailer == 'smtp')
         {
-            $transport = static::smtpTransport($this->host, $this->port);
-            $transport->setUsername($this->username)->setPassword($this->password);
+            $transport = static::smtpTransport($this->host, $this->port, $this->security);
+            $transport->setUsername($this->username)->setPassword($this->password)->setEncryption($this->security);
         }
         elseif($this->mailer == 'mail')
         {

@@ -31,6 +31,10 @@
     {
         public function testApiServerUrl()
         {
+            if (!$this->isApiTestUrlConfigured())
+            {
+                $this->markTestSkipped(Yii::t('Default', 'API test url is not configured in perInstanceTest.php file.'));
+            }
             $this->assertTrue(strlen($this->serverUrl) > 0);
         }
 
@@ -86,6 +90,9 @@
             $this->assertEquals('The ID specified was invalid.', $response['message']);
         }
 
+        /**
+        * @depends testApiServerUrl
+        */
         public function testCreateAccount()
         {
             $super = User::getByUsername('super');
@@ -527,6 +534,9 @@
             $this->assertEquals('Fifth Account', $response['data']['items'][1]['name']);
         }
 
+        /**
+        * @depends testApiServerUrl
+        */
         public function testEditAccountWithIncompleteData()
         {
             $super = User::getByUsername('super');
@@ -560,6 +570,9 @@
             $this->assertEquals(1, count($response['errors']));
         }
 
+        /**
+        * @depends testApiServerUrl
+        */
         public function testEditAccountWIthIncorrectDataType()
         {
             $super = User::getByUsername('super');

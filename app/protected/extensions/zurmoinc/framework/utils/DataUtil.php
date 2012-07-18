@@ -56,6 +56,7 @@
                             {
                                 $data[$attributeName] = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero($value);
                             }
+                            $data[$attributeName] = self::purifyHtml($data[$attributeName]);
                         }
                     }
                     else
@@ -97,6 +98,7 @@
                                 $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']); // Not Coding Standard
                             }
                         }
+                        array_walk_recursive($data[$attributeName], array('DataUtil', 'purifyHtmlAndModifyInput'));
                     }
                 }
             }
@@ -134,6 +136,37 @@
                 unset($sanitizedData[$elementName]);
             }
             return $sanitizedData;
+        }
+
+        /**
+         * Purify string content
+         * @param string $text
+         * @return string
+         */
+        public static function purifyHtml($text)
+        {
+            if (is_string($text))
+            {
+                $purifier = new CHtmlPurifier();
+                $text = $purifier->purify($text);
+            }
+            return $text;
+        }
+
+        /**
+         * Purify string content
+         * This function should be used in recurcive functions, like array_walk_recursive().
+         * It doesn't return data, but instead modify input argument, so use it carefully.
+         * As side effect it modify provided element
+         * @param mixed $item
+         */
+        public static function purifyHtmlAndModifyInput(&$item)
+        {
+            assert('is_scalar($item) || empty($item)');
+            if (!empty($item))
+            {
+                $item = self::purifyHtml($item);
+            }
         }
     }
 ?>

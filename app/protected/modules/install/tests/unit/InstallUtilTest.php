@@ -283,6 +283,11 @@
             $this->assertEquals($expectedVersion, $actualVersion);
         }
 
+        public function testCheckRedBeanIsNotLegacy()
+        {
+            $this->assertTrue(InstallUtil::checkRedBeanIsNotLegacy());
+        }
+
         public function testCheckRedBeanPatched()
         {
             $this->assertTrue(InstallUtil::checkRedBeanPatched());

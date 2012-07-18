@@ -41,9 +41,9 @@
          * (non-PHPdoc)
          * @see SwiftMailer::smtpTransport()
          */
-        public function smtpTransport($host = null, $port = null)
+        public function smtpTransport($host = null, $port = null, $security = null)
         {
-            return ZurmoSwiftSmtpTransport::newInstance($host, $port);
+            return ZurmoSwiftSmtpTransport::newInstance($host, $port, $security);
         }
 
         /**

@@ -384,6 +384,16 @@
             return array();
         }
 
+        public static function getConfigureSubMenuItems()
+        {
+            $metadata = self::getMetadata();
+            if (!empty($metadata['global']['configureSubMenuItems']))
+            {
+                return $metadata['global']['configureSubMenuItems'];
+            }
+            return array();
+        }
+
         public static function getShortCutsCreateMenuItems()
         {
             $calledClass = get_called_class();

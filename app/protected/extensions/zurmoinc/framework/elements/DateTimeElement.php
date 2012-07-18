@@ -60,7 +60,7 @@
                     'closeText'       => Yii::t('Default', 'Done'),
                     'showOn'          => 'both',
                     'buttonImageOnly' => false,
-                    'buttonText'      => '<span>Date</span>',
+                    'buttonText'      => '<span><!--Date--></span>',
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                     'timeFormat'      => YiiToJqueryUIDatePickerLocalization::resolveTimeFormat(

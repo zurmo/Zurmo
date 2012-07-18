@@ -69,7 +69,8 @@
   /*empty*/
 
 }
-.zLink {
+.zLink,
+.z-link {
   background: #262877;
   padding: 1px 4px;
   -webkit-border-radius: 2px;
@@ -77,9 +78,10 @@
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  color: #fff;
+  color: #fff !important;
 }
-.zLink:hover {
+.zLink:hover,
+.z-link:hover {
   color: #fff !important;
   text-decoration: underline;
 }
@@ -1720,14 +1722,11 @@ table.configuration-list tr td:last-child a:before {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  color: #fff;
+  color: #fff !important;
 }
 #ImportWizardMappingView #sample-column-header a:hover {
   color: #fff !important;
   text-decoration: underline;
-}
-#ImportWizardMappingView .has-model-select a {
-  top: 1px;
 }
 /*=Step 5, process details*/
 #ImportWizardDataAnalysisCompleteView > div {
@@ -2353,7 +2352,8 @@ div.wide.form .errorMessage {
   color: #B3B3B3;
 }
 .ui-datepicker .ui-datepicker-calendar td.ui-datepicker-today {
-  background: #b5b6e7;
+  background-image: none !important;
+  background: #b5b6e7 !important;
 }
 .ui-datepicker .ui-datepicker-buttonpane {
   border-top: 1px solid #BBB;
@@ -3324,44 +3324,6 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   input[type="submit"],
   input[type="button"] {
     height: 26px;
-  }
-  /*
-  	.panel, #permissions-module{
-  		.has-date-select, .has-model-select{
-  			a, button{
-              	&:before{
-                  	top:-3px;
-              	}
-             }
-  		}
-  	}*/
-  .has-model-select a {
-    top: 25px !important;
-  }
-  #owner-box .has-model-select a {
-    top: 23px !important;
-  }
-  .has-date-select button {
-    top: 1px !important;
-  }
-  #NoteInlineEditView .has-model-select a {
-    top: 11px !important;
-  }
-  #NoteInlineEditView .has-date-select button {
-    top: 11px !important;
-  }
-  #NoteEditAndDetailsView div.has-model-select a {
-    top: 26px !important;
-  }
-  #NoteEditAndDetailsView div.has-model-select a:before {
-    top: -3px;
-    margin-left: 8px;
-  }
-  #NoteEditAndDetailsView div.has-date-select button:before {
-    top: -3px;
-  }
-  #NoteEditAndDetailsView #permissions-module #owner-box div.has-model-select a {
-    top: 23px !important;
   }
   #JobsCollectionView .tooltip {
     margin-top: -11px;
@@ -5499,13 +5461,67 @@ section {
   z-index: 0;
   position: relative;
 }
-.AppContent {
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
-  -ms-border-radius: 0 0 5px 5px;
-  -o-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
+/*
+.AppContent{
+     .radius(0 0 5px 5px);
+    .single-column{
+    	background:pink !important;
+		padding-right:0 !important;
+		.GridView{
+			display:block;
+			width:100% !important;
+		}
+		.GridView:first-child{
+			display:block;
+			width:100% !important;
+		}
+		.panel{
+			width:70%;
+			float:left;
+			td, th{
+				padding-bottom:10px !important;
+			}
+		}
+		.details-table{
+			.clearfix();
+		}
+		#right-side-edit-view-panel{
+			top:55px;
+		}
+	}
 }
+*/
+/*
+
+.single-coloumn-details-view,
+#ConversationDetailsView,
+#ConversationDetailsAndRelationsView{
+	&.AppContent{
+		padding-right:0;
+	}
+	.GridView{
+		display:none;
+	}
+	.GridView:first-child{
+		display:block;
+		width:100%;
+	}
+	.panel{
+		width:70%;
+		float:left;
+		td, th{
+			padding-bottom:10px !important;
+		}
+	}
+	.details-table{
+		.clearfix();
+	}
+	#right-side-edit-view-panel{
+		top:55px;
+	}
+	
+}
+*/
 #HeaderView {
   position: relative;
   z-index: 9999;
@@ -5517,7 +5533,7 @@ section {
 #ShortcutsMenu {
   position: absolute;
   float: right;
-  right: 40px;
+  right: 3%;
   top: 8px;
 }
 #ShortcutsMenu > li {
@@ -5890,6 +5906,11 @@ section {
 }
 /*=Content*/
 .AppContent {
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
   padding: 20px 20px 0 20px;
   margin-left: 172px;
   margin-bottom: 20px;
@@ -5903,6 +5924,12 @@ section {
   background-image: linear-gradient(#f6f6f6, #ffffff 100px, #ffffff);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff', GradientType=0);
   zoom: 1;
+  /*> .MetadataView{
+    	padding-right:20px;
+    	.box-sizing();
+    	.clearfix();
+    }*/
+
 }
 .AppContent:before {
   content: "";
@@ -5912,6 +5939,43 @@ section {
   content: "";
   display: table;
   clear: both;
+}
+.AppContent .single-column {
+  padding-right: 0 !important;
+}
+.AppContent .single-column > .GridView {
+  display: block;
+  width: 100% !important;
+}
+.AppContent .single-column .panel {
+  width: 70%;
+  float: left;
+}
+.AppContent .single-column .panel td,
+.AppContent .single-column .panel th {
+  padding-bottom: 10px !important;
+}
+.AppContent .single-column .juiportlet-widget,
+.AppContent .single-column .details-table {
+  margin-right: 0 !important;
+}
+.AppContent .single-column .details-table {
+  zoom: 1;
+}
+.AppContent .single-column .details-table:before {
+  content: "";
+  display: table;
+}
+.AppContent .single-column .details-table:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.AppContent .single-column #right-side-edit-view-panel {
+  top: 55px;
+}
+.AppContent .single-column #inline-edit-form .panel {
+  width: 100%;
 }
 /*=dashboard*/
 #HomePageView .AppContent {
@@ -6654,7 +6718,8 @@ a.attachLoading:active {
   top: -34px;
   right: 8px;
 }
-.portlet-toolbar .icon-create {
+.portlet-toolbar .icon-create,
+.portlet-toolbar a {
   padding: 0 15px 0 15px;
   line-height: 23px;
   margin: 0;
@@ -6682,8 +6747,22 @@ a.attachLoading:active {
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
 }
-.portlet-toolbar .icon-create:not(.attachLoading) {
+.portlet-toolbar .icon-create:not(.attachLoading),
+.portlet-toolbar a:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+.portlet-toolbar .icon-create:hover,
+.portlet-toolbar a:hover {
+  color: #7bb730 !important;
+}
+.portlet-toolbar .icon-create:active,
+.portlet-toolbar a:active {
+  color: #656565;
+  -webkit-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+  -moz-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+  -o-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+  -ms-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+  box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 }
 .portlet-toolbar .icon-create:before {
   content: "Y";
@@ -6702,16 +6781,39 @@ a.attachLoading:active {
   margin-left: 0;
   color: #7bb730;
 }
-.portlet-toolbar .icon-create:hover {
-  color: #7bb730 !important;
+.portlet-toolbar .icon-delete:before {
+  content: "_";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  color: #fff;
+  margin-left: 0;
+  color: #7bb730;
 }
-.portlet-toolbar .icon-create:active {
-  color: #656565;
-  -webkit-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
-  -moz-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
-  -o-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
-  -ms-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
-  box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
+.portlet-toolbar .icon-edit:before {
+  content: "!";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+  color: #fff;
+  margin-left: 0;
+  color: #7bb730;
 }
 a.simple-select {
   color: #262877 !important;
@@ -7288,6 +7390,9 @@ div.wide.form label.hasCheckBox {
 .search-view-1 label {
   padding-top: 7px;
   padding-right: 10px;
+  width: 100%;
+  display: block;
+  text-align: left;
 }
 .search-view-1 #cancel-advanced-search {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
@@ -7489,8 +7594,8 @@ div.wide.form label.hasCheckBox {
   position: relative;
   z-index: 0;
 }
-#edit-form #permissions-module #owner-box .has-model-select a {
-  top: 23px;
+#edit-form #permissions-module .ui-autocomplete {
+  width: auto !important;
 }
 #edit-form #permissions-module input[type="text"] {
   margin-bottom: 4px;
@@ -7548,6 +7653,13 @@ div.wide.form label.hasCheckBox {
 .panel .has-date-select button {
   top: 1px !important;
 }
+.has-model-select {
+  clear: left;
+  padding: 0 !important;
+}
+.has-model-select input {
+  margin: 0 !important;
+}
 .has-model-select a {
   background: url(../images/dropdown-general.png) left top no-repeat;
   width: 28px;
@@ -7556,26 +7668,28 @@ div.wide.form label.hasCheckBox {
   float: right;
   z-index: 5000;
   position: absolute;
-  right: 0;
-  top: 24px;
-  margin-right: 1px;
-}
-.has-model-select a:before {
-  content: "Y";
-  font-weight: normal;
-  font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
-  margin-left: 7px;
-  position: relative;
-  top: 2px;
-  color: #8b8b8b;
+  right: 1px;
+  bottom: 1px;
 }
 .has-model-select a:hover:before {
   color: #525252 !important;
 }
 .has-model-select a span {
+  width: 100%;
+  height: 100%;
+  line-height: 24px;
   display: block;
-  text-indent: -9999px;
+  text-align: center;
+  vertical-align: center;
+}
+.has-model-select a span:before {
+  content: "Y";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  color: #8b8b8b;
+  text-align: center;
+  vertical-align: bottom;
 }
 .has-date-select button {
   background: url(../images/dropdown-general.png) left top no-repeat;
@@ -7585,29 +7699,31 @@ div.wide.form label.hasCheckBox {
   float: right;
   z-index: 10009;
   position: absolute;
-  right: 0;
-  top: 2px;
-  margin-right: 1px;
+  right: 1px;
+  bottom: 1px;
   border: none;
   padding: 0;
   cursor: pointer;
-}
-.has-date-select button:before {
-  content: "U";
-  font-weight: normal;
-  font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
-  margin-left: 1px;
-  position: relative;
-  top: 2px;
-  color: #8b8b8b;
 }
 .has-date-select button:hover:before {
   color: #525252 !important;
 }
 .has-date-select button span {
+  width: 100%;
+  height: 100%;
+  line-height: 24px;
   display: block;
-  text-indent: -9999px;
+  text-align: center;
+  vertical-align: center;
+}
+.has-date-select button span:before {
+  content: "U";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  color: #8b8b8b;
+  text-align: center;
+  vertical-align: bottom;
 }
 .beforeOptOutCheckBox {
   float: left;
@@ -7669,6 +7785,9 @@ div.wide.form label.hasCheckBox {
 }
 .details-table p {
   color: #545454 !important;
+  width: 100%;
+  float: none;
+  clear: left;
 }
 .details-table p a {
   color: #262877 !important;
@@ -8066,24 +8185,6 @@ div.wide.form label.hasCheckBox {
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
-}
-#NoteInlineEditView .has-model-select {
-  position: relative;
-}
-#NoteInlineEditView .has-model-select a {
-  top: 11px !important;
-}
-#NoteInlineEditView .has-model-select a:before {
-  top: 4px;
-}
-#NoteInlineEditView .has-date-select {
-  position: relative;
-}
-#NoteInlineEditView .has-date-select button {
-  top: 11px !important;
-}
-#NoteInlineEditView .has-date-select button:before {
-  top: 1px;
 }
 #NoteInlineEditView td {
   width: 100%;
@@ -9205,12 +9306,6 @@ div.hasHalfs .twoThirds {
 #LeadConvertView #AccountConvertToView > div {
   margin-right: 0;
 }
-#LeadConvertView .has-model-select {
-  position: relative;
-}
-#LeadConvertView .has-model-select a {
-  top: 1px !important;
-}
 .lead-conversion-actions {
   padding: 10px;
 }
@@ -9222,7 +9317,7 @@ div.hasHalfs .twoThirds {
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px;
-  color: #fff;
+  color: #fff !important;
 }
 .lead-conversion-actions a:hover {
   color: #fff !important;

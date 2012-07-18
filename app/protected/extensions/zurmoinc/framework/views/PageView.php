@@ -34,6 +34,13 @@
      */
     class PageView extends View
     {
+        /**
+         * Flags that the error handler was called.
+         */
+        public static $foundErrors = false;
+
+        public static $xhtmlValidationErrors = array();
+
         private $containedView;
 
         /**
@@ -68,6 +75,13 @@
             if (YII_DEBUG)
             {
                 $this->validate($content);
+                if (!empty(self::$xhtmlValidationErrors))
+                {
+                    foreach (self::$xhtmlValidationErrors as $error)
+                    {
+                        $content = $this->appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $error);
+                    }
+                }
                 if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
@@ -95,11 +109,13 @@
                 {
                     $performanceMessage .= 'Timing: ' . $id . ' total time: ' . number_format(($time), 3) . "</br>";
                 }
-                $content .= '<div class="performance-info">' . $performanceMessage . '</div>';
+                $performanceMessageHtml = '<div class="performance-info">' . $performanceMessage . '</div>';
+                $content = $this->appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $performanceMessageHtml);
             }
             if (YII_DEBUG && Yii::app()->isApplicationInstalled())
             {
-                $content .= '<span style="background-color: lightgreen; color: green">Database: \'' . Yii::app()->db->connectionString . '\', username: \'' . Yii::app()->db->username . '\'.</span><br />';
+                $dbInfoHtml = '<span style="background-color: lightgreen; color: green">Database: \'' . Yii::app()->db->connectionString . '\', username: \'' . Yii::app()->db->username . '\'.</span><br />';
+                $content = $this->appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $dbInfoHtml);
             }
             return $content;
         }
@@ -133,18 +149,13 @@
             }
             else
             {
-                echo '<span style="background-color: yellow; color: #c00000">Loading found errors, skipping validation.</span><br />';
+                self::$xhtmlValidationErrors[] = '<span style="background-color: yellow; color: #c00000">Loading found errors, skipping validation.</span><br />';
             }
 
             restore_error_handler();
 
             return $valid;
         }
-
-        /**
-         * Flags that the error handler was called.
-         */
-        public static $foundErrors = false;
 
         /**
          * Error handler that writes the errors directly to
@@ -156,10 +167,10 @@
 
             if ($first)
             {
-                echo '<span style="background-color: yellow; color: #c00000;"><b>THIS IS NOT A VALID XHTML FILE</b></span><br />';
+                self::$xhtmlValidationErrors[] = '<span style="background-color: yellow; color: #c00000;"><b>THIS IS NOT A VALID XHTML FILE</b></span><br />';
                 $first = false;
             }
-            echo "<span style=\"background-color: yellow; color: #c00000;\">$errstr</span><br />";
+            self::$xhtmlValidationErrors[] = "<span style=\"background-color: yellow; color: #c00000;\">$errstr</span><br />";
 
             self::$foundErrors = true;
         }
@@ -351,6 +362,20 @@
                 }
             }
             return $scriptData;
+        }
+
+        /**
+         * Add additional html conent before html body end("</body>") tag and html end tag ("</html>")
+         * @param string $content
+         * @param string $additionalContent
+         * @return string
+         */
+        public function appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $additionalContent)
+        {
+            $content = str_replace($this->renderXHtmlBodyEnd() . $this->renderXHtmlEnd() ,
+                                   $additionalContent . $this->renderXHtmlBodyEnd() . $this->renderXHtmlEnd(),
+                                   $content );
+            return $content;
         }
     }
 ?>

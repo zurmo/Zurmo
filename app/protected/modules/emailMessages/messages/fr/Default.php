@@ -75,6 +75,8 @@
             => 'Message d\'erreur:',
         'Every 1 minute.'
             => 'Chaque minute.',
+        'Extra Mail Settings'
+            => 'Paramètres supplémentaires',
         'Folder'
             => 'Dossier',
         'From'
@@ -99,6 +101,8 @@
             => 'Message non envoyé',
         'Message successfully sent'
             => 'Message envoyé avec succès',
+        'Missing Rights'
+            => 'Droits manquants',
         'Outbound Email Configuration (SMTP)'
             => 'Serveur de courrier sortant (SMTP)',
         'Outbound email configuration saved successfully.'
@@ -126,7 +130,7 @@
         'Sent'
             => 'Message envoyé.',
         'SSL connection'
-            => 'Sécurity SSL',
+            => 'Sécurité SSL',
         'Successfully connected to IMAP server.'
             => 'Connexion établie avec succès.',
         'Test Connection'
@@ -149,6 +153,8 @@
             => 'Aux destinataires',
         'to: {recipientContent}'
             => 'à: {recipientContent}',
+        'You do not have rights to access, create, or connect emails in the system.'
+            => 'Vous n\'avez pas l\'autorisation d\'accèder, créer, or connecter les emails dans le système.',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Notifications du système.  Les notifications peuvent uniquement provenir d\'un utilisateur super admin.',
     );

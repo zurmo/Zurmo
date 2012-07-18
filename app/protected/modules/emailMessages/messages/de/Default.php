@@ -75,6 +75,8 @@
             => 'Fehlermeldung:',
         'Every 1 minute.'
             => 'Jede Minute.',
+        'Extra Mail Settings'
+            => 'Erweiterte Einstellungen',
         'Folder'
             => 'Ordner',
         'From'
@@ -99,6 +101,8 @@
             => 'Nachricht nicht gesendet',
         'Message successfully sent'
             => 'Nachricht erfolgreich gesendet',
+        'Missing Rights'
+            => 'Fehlende Rechte',
         'Outbound Email Configuration (SMTP)'
             => 'Postausgangsserver (SMTP)',
         'Outbound email configuration saved successfully.'
@@ -149,6 +153,8 @@
             => 'An Empfänger',
         'to: {recipientContent}'
             => 'an: {recipientContent}',
+        'You do not have rights to access, create, or connect emails in the system.'
+            => 'Du hast keine Rechte auf Zugang, erstellen oder zu verknüpfen E-Mails in das System.',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Zurmo sendet System Benachrichtigungen. Die Benachrichtigungen müssen von einem Super-administrativen Benutzerrechten angezeigt werden.',
     );

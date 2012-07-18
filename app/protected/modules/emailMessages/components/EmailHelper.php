@@ -60,6 +60,12 @@
         public $outboundPassword;
 
         /**
+         * Outbound mail server security. Options: null, 'ssl', 'tls'
+         * @var string
+         */
+        public $outboundSecurity;
+
+        /**
          * Contains array of settings to load during initialization from the configuration table.
          * @see loadOutboundSettings
          * @var array
@@ -69,7 +75,8 @@
             'outboundHost',
             'outboundPort',
             'outboundUsername',
-            'outboundPassword'
+            'outboundPassword',
+            'outboundSecurity'
         );
 
         /**
@@ -187,6 +194,7 @@
             $mailer->port     = $this->outboundPort;
             $mailer->username = $this->outboundUsername;
             $mailer->password = $this->outboundPassword;
+            $mailer->security = $this->outboundSecurity;
             $mailer->Subject  = $emailMessage->subject;
             if ($emailMessage->content->htmlContent == null && $emailMessage->content->textContent != null)
             {

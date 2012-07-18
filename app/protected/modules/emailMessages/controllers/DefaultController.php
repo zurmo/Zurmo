@@ -53,21 +53,55 @@
 
         public function actionConfigurationEdit()
         {
-            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $view = new ConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                                  makeStandardViewForCurrentUser($this, new EmailConfigurationListView()));
+            echo $view->render();
+        }
+
+        public function actionConfigurationEditOutbound()
+        {
+            $configurationForm = EmailSmtpConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {
                 $configurationForm->setAttributes($_POST[$postVariableName]);
                 if ($configurationForm->validate())
                 {
-                    EmailConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
+                    EmailSmtpConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
                     Yii::app()->user->setFlash('notification',
                         Yii::t('Default', 'Email configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }
             }
-            $editView = new EmailConfigurationEditAndDetailsView(
+            $editView = new EmailSmtpConfigurationEditAndDetailsView(
+                                    'Edit',
+                                    $this->getId(),
+                                    $this->getModule()->getId(),
+                                    $configurationForm);
+            $editView->setCssClasses( array('AdministrativeArea') );
+            $view = new ZurmoConfigurationPageView(ZurmoDefaultAdminViewUtil::
+                                         makeStandardViewForCurrentUser($this, $editView));
+            echo $view->render();
+        }
+
+        public function actionConfigurationEditArchiving()
+        {
+            $configurationForm = EmailArchivingConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $postVariableName   = get_class($configurationForm);
+            if (isset($_POST[$postVariableName]))
+            {
+                $configurationForm->setAttributes($_POST[$postVariableName]);
+                if ($configurationForm->validate())
+                {
+                    EmailArchivingConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
+                    Yii::app()->user->setFlash('notification',
+                        Yii::t('Default', 'Email configuration saved successfully.')
+                    );
+                    $this->redirect(Yii::app()->createUrl('configuration/default/index'));
+                }
+            }
+            $editView = new EmailArchivingConfigurationEditAndDetailsView(
                                     'Edit',
                                     $this->getId(),
                                     $this->getModule()->getId(),
@@ -84,7 +118,7 @@
          */
         public function actionSendTestMessage()
         {
-            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $configurationForm = EmailSmtpConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {
@@ -96,6 +130,7 @@
                     $emailHelper->outboundPort     = $configurationForm->port;
                     $emailHelper->outboundUsername = $configurationForm->username;
                     $emailHelper->outboundPassword = $configurationForm->password;
+                    $emailHelper->outboundSecurity = $configurationForm->security;
                     $userToSendMessagesFrom        = User::getById((int)$configurationForm->userIdOfUserToSendNotificationsAs);
 
                     $emailMessage              = new EmailMessage();
@@ -153,7 +188,7 @@
         */
         public function actionTestImapConnection()
         {
-            $configurationForm = EmailConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $configurationForm = EmailArchivingConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {

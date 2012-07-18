@@ -165,45 +165,10 @@
             }
         }
 
-        protected static function resolveAttributeDetailsTitle(AttributeForm $model)
-        {
-            return Yii::t('Default', 'Field')   . ': ' .strval($model);
-        }
-
         protected function actionAttributeValidate($attributeForm)
         {
             echo ZurmoActiveForm::validate($attributeForm);
             Yii::app()->end(0, false);
-        }
-
-        public function actionAttributeDetails()
-        {
-            assert('!empty($_GET["moduleClassName"])');
-            assert('!empty($_GET["attributeTypeName"])');
-            assert('!empty($_GET["attributeName"])');
-            $moduleClassName = $_GET['moduleClassName'];
-            $module          = new $_GET['moduleClassName'](null, null);
-            $modelClassName  = $moduleClassName::getPrimaryModelName();
-            $model           = new $modelClassName();
-            $attributeForm   = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
-            $title           = static::resolveAttributeDetailsTitle($attributeForm);
-            $breadcrumbLinks = array(
-                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
-                    array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
-                $title,
-            );
-            $canvasView = new ActionBarAndAttributeDetailsView(
-                        $this->getId(),
-                        $this->getModule()->getId(),
-                        $module,
-                        $_GET['attributeTypeName'],
-                        $modelClassName,
-                        $attributeForm,
-                        $title
-            );
-            $view = new DesignerPageView(ZurmoDefaultAdminViewUtil::
-                            makeViewWithBreadcrumbsForCurrentUser($this, $canvasView, $breadcrumbLinks, 'DesignerBreadCrumbView'));
-            echo $view->render();
         }
 
         protected function actionAttributeSave($attributeForm, $model)
@@ -226,9 +191,7 @@
             }
             RedBeanModelsCache::forgetAll(); //Ensures existing models that are cached see the new dropdown.
             $routeParams = array_merge(
-                array('default/attributeDetails'),
-                $_GET,
-                array('attributeName' => $attributeForm->attributeName)
+                array('default/attributesList'), $_GET
             );
             $this->redirect($routeParams);
         }

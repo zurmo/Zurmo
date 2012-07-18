@@ -197,6 +197,17 @@
                                                     array('titleLabel', 'descriptionLabel'));
         }
 
+        public static function getAccessibleConfigureSubMenuByCurrentUser($moduleClassName)
+        {
+            assert('is_string($moduleClassName)');
+            $user      = Yii::app()->user->userModel;
+            $metadata  = $moduleClassName::getConfigureSubMenuItems();
+            $menuItems = MenuUtil::resolveModuleMenuForAccess($moduleClassName, $metadata, $user);
+            return self::resolveMenuItemsForLanguageLocalization(  $menuItems,
+                                                    $moduleClassName,
+                                                    array('titleLabel', 'descriptionLabel'));
+        }
+
         public static function getOrderedAccessibleHeaderMenuForCurrentUser()
         {
             $headerMenuItems = static::getAccessibleHeaderMenuForCurrentUser();

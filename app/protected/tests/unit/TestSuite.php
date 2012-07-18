@@ -42,22 +42,22 @@
             $usage = "\n"                                                                                                    .
                      "  Usage: phpunit [phpunit options] TestSuite.php <All|Framework|Misc|moduleName|TestClassName> [custom options]\n" .
                      "\n"                                                                                                    .
-                     "    All                    Run all tests.\n"                                                           .
-                     "    Framework              Run the tests in app/protected/extensions/framework/tests/unit.\n"          .
-                     "    Misc                   Run the tests in app/protected/tests/unit.\n"                               .
-                     "    moduleName             Run the tests in app/protected/modules/moduleName/tests/unit.\n"            .
-                     "    TestClassName          Run the tests in TestClassName.php, wherever that happens to be.\n"         .
+                     "    All                     Run all tests.\n"                                                           .
+                     "    Framework               Run the tests in app/protected/extensions/framework/tests/unit.\n"          .
+                     "    Misc                    Run the tests in app/protected/tests/unit.\n"                               .
+                     "    moduleName              Run the tests in app/protected/modules/moduleName/tests/unit.\n"            .
+                     "    TestClassName           Run the tests in TestClassName.php, wherever that happens to be.\n"         .
                      "\n"                                                                                                    .
                      "  Custom Options:\n"                                                                                   .
                      "\n"                                                                                                    .
-                     "    --only-walkthroughs    For the specified test, only includes tests under a walkthroughs directory.\n" .
-                     "    --exclude-walkthroughs For the specified test, exclude tests under a walkthroughs directory.\n"       .
-                     "    --only-benchmarks      For the specified test, only includes tests under a benchmarks directory.\n" .
-                     "    --exclude-benchmarks   For the specified test, exclude tests under a benchmarks directory.\n"      .
-                     "    --reuse-schema         Reload a previously auto build database. (Will auto build if there is no\n" .
-                     "                           previous one. The auto built schema is dumped to the system temp dir in\n"  .
-                     "                           autobuild.sql.)\n"                                                          .
-                     "    --no-freeze            Don't auto build and freeze the database.\n"                                .
+                     "    --only-walkthroughs     For the specified test, only includes tests under a walkthroughs directory.\n" .
+                     "    --exclude-walkthroughs  For the specified test, exclude tests under a walkthroughs directory.\n"       .
+                     "    --only-benchmarks       For the specified test, only includes tests under a benchmarks directory.\n" .
+                     "    --exclude-benchmarks    For the specified test, exclude tests under a benchmarks directory.\n"      .
+                     "    --reuse-schema          Reload a previously auto build database. (Will auto build if there is no\n" .
+                     "                            previous one. The auto built schema is dumped to the system temp dir in\n"  .
+                     "                            autobuild.sql.)\n"                                                          .
+                     "    --no-freeze             Don't auto build and freeze the database.\n"                                .
                      "\n"                                                                                                    .
                      "  Examples:\n"                                                                                         .
                      "\n"                                                                                                    .
@@ -71,12 +71,12 @@
                      "    To run specific tests use the phpunit --filter <regex> option.\n"                                  . // Not Coding Standard
                      "    phpunit has its own options. Check phpunit --help.\n\n";                                             // Not Coding Standard
 
-            $onlyWalkthroughs    =  self::customOptionSet('--only-walkthroughs',    $argv);
-            $excludeWalkthroughs =  self::customOptionSet('--exclude-walkthroughs', $argv);
-            $onlyBenchmarks      =  self::customOptionSet('--only-benchmarks',      $argv);
-            $excludeBenchmarks   =  self::customOptionSet('--exclude-benchmarks',   $argv);
-            $reuse               =  self::customOptionSet('--reuse-schema',         $argv);
-            $freeze              = !self::customOptionSet('--no-freeze',            $argv);
+            $onlyWalkthroughs     =  self::customOptionSet('--only-walkthroughs',     $argv);
+            $excludeWalkthroughs  =  self::customOptionSet('--exclude-walkthroughs',  $argv);
+            $onlyBenchmarks       =  self::customOptionSet('--only-benchmarks',       $argv);
+            $excludeBenchmarks    =  self::customOptionSet('--exclude-benchmarks',    $argv);
+            $reuse                =  self::customOptionSet('--reuse-schema',          $argv);
+            $freeze               = !self::customOptionSet('--no-freeze',             $argv);
 
             if ($argv[count($argv) - 2] != 'TestSuite.php')
             {
@@ -91,10 +91,10 @@
                 exit;
             }
 
-            $whatToTest          = $argv[count($argv) - 1];
-            $includeUnitTests    = !$onlyWalkthroughs && !$onlyBenchmarks;
-            $includeWalkthroughs = !$excludeWalkthroughs && !$onlyBenchmarks;
-            $includeBenchmarks   = !$excludeBenchmarks && !$onlyWalkthroughs;
+            $whatToTest           = $argv[count($argv) - 1];
+            $includeUnitTests     = !$onlyWalkthroughs && !$onlyBenchmarks;
+            $includeWalkthroughs  = !$excludeWalkthroughs && !$onlyBenchmarks;
+            $includeBenchmarks    = !$excludeBenchmarks && !$onlyWalkthroughs;
 
             echo "Testing with database: '"  . Yii::app()->db->connectionString . '\', ' .
                               'username: \'' . Yii::app()->db->username         . "'.\n";

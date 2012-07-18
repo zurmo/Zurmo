@@ -75,6 +75,8 @@
             => 'Messaggio d\'errore',
         'Every 1 minute.'
             => 'Ogni minuto',
+        'Extra Mail Settings'
+            => 'Impostazioni avanzate',
         'Folder'
             => 'Cartella',
         'From'
@@ -99,6 +101,8 @@
             => 'Messaggio non inviato',
         'Message successfully sent'
             => 'Messaggio inviato con successo',
+        'Missing Rights'
+            => 'Diritti mancanti',
         'Outbound Email Configuration (SMTP)'
             => 'Server di posta in uscita (SMTP)',
         'Outbound email configuration saved successfully.'
@@ -149,6 +153,8 @@
             => 'Ai Destinatari',
         'to: {recipientContent}'
             => 'a: {recipientContent}',
+        'You do not have rights to access, create, or connect emails in the system.'
+            => 'Non si dispone di diritti di accesso, creare o collegare e-mails nel sistema.',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Notificazioni del sistema.  Le notificazioni devono mandare di un utente super admin.',
     );

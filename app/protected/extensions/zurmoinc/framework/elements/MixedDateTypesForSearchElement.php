@@ -120,7 +120,7 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
-                    'buttonText'      => '<span>Date</span>',
+                    'buttonText'      => '<span><!--Date--></span>',
                     'showButtonPanel' => true,
                     'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
@@ -149,7 +149,7 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
-                    'buttonText'      => '<span>Date</span>',
+                    'buttonText'      => '<span><!--Date--></span>',
                     'showButtonPanel' => true,
                     'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
