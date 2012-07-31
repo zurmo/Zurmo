@@ -114,6 +114,8 @@
             => 'Error de buzón de salida',
         'Person'
             => 'Nombre',
+        'Person or Account'
+            => 'Person or Account', // Same Word Translated
         'Port'
             => 'Puerto',
         'Process Inbound Email Job'

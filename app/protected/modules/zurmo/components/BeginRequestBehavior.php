@@ -73,6 +73,7 @@
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleUserTimeZoneConfirmed'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadActivitiesObserver'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadConversationsObserver'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadGamification'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAndUpdateCurrencyRates'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleResolveCustomData'));
@@ -378,6 +379,12 @@
         {
             $activitiesObserver = new ActivitiesObserver();
             $activitiesObserver->init(); //runs init();
+        }
+
+        public function handleLoadConversationsObserver($event)
+        {
+            $conversationsObserver = new ConversationsObserver();
+            $conversationsObserver->init(); //runs init();
         }
 
         public function handleLoadGamification($event)

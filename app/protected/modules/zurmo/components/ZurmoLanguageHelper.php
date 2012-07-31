@@ -106,6 +106,13 @@
                 {
                     $data[$language] = Yii::app()->getLocale($this->getForCurrentUser())->getLanguage($language);
                 }
+
+                // In case the language name in local language is not available,
+                // fallback to the base language for the language name.
+                if (!isset($data[$language]))
+                {
+                    $data[$language] = Yii::app()->getLocale($this->baseLanguage)->getLanguage($language);
+                }
             }
             return $data;
         }

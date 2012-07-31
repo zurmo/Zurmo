@@ -117,7 +117,7 @@
         {
             assert('is_string($castDownModelClassName)');
             $existingModels = array();
-            $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($castDownModelClassName);
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem($castDownModelClassName);
             foreach ($model->activityItems as $item)
             {
                 try
@@ -154,7 +154,7 @@
                 {
                     try
                     {
-                        $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($relationModelClassName);
+                        $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem($relationModelClassName);
                         $castedDownModel = $item->castDown(array($modelDerivationPathToItem));
                         return strval($castedDownModel);
                     }

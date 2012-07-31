@@ -100,9 +100,13 @@
                 'value'    => $this->getId(),
             );
             $content       = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
-            $inputContent  = $this->renderTextField($this->getIdForHiddenField());
-            $inputContent .= $this->renderSelectLink();
-            return $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
+            if(!$this->showOnlyHiddenInputForEditable())
+            {
+                $inputContent  = $this->renderTextField($this->getIdForHiddenField());
+                $inputContent .= $this->renderSelectLink();
+                $content       = $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
+            }
+            return $content;
         }
 
         /**
@@ -336,6 +340,21 @@
             }
             return true;
         }
+
+        /**
+         * Determines if the editable content should only include the hidden input.  This is utilized if there is
+         * a security edge case that needs to be gracefully handled.
+         */
+        protected function showOnlyHiddenInputForEditable()
+        {
+            if (isset($this->params['onlyHiddenInput']) && $this->params['onlyHiddenInput'])
+            {
+                return true;
+            }
+            return false;
+        }
+
+
 
         /**
          * Gets the moduleId statically. You can override this method and get the moduleId in a non-static way

@@ -44,6 +44,7 @@
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_ACCESS_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_CREATE_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_DELETE_LEADS, Right::ALLOW);
+            $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_CONVERT_LEADS, Right::ALLOW);
             $everyone->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_ACCESS_OPPORTUNITIES, Right::ALLOW);
             $everyone->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_CREATE_OPPORTUNITIES, Right::ALLOW);
             $everyone->setRight('OpportunitiesModule', OpportunitiesModule::RIGHT_DELETE_OPPORTUNITIES, Right::ALLOW);
@@ -60,6 +61,9 @@
             $everyone->setRight('HomeModule',          HomeModule::RIGHT_CREATE_DASHBOARDS, Right::ALLOW);
             $everyone->setRight('HomeModule',          HomeModule::RIGHT_DELETE_DASHBOARDS, Right::ALLOW);
             $everyone->setRight('ExportModule',        ExportModule::RIGHT_ACCESS_EXPORT, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_ACCESS_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS, Right::ALLOW);
             $saved = $everyone->save();
             assert('$saved');
         }

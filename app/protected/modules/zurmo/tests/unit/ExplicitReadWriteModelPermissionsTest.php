@@ -93,6 +93,10 @@
             $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group4));
             $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group5));
             $this->assertFalse($explicitReadWriteModelPermissions->isReadOrReadWritePermitable($group6));
+
+            $this->assertEquals(1, count($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove()));
+            $explicitReadWriteModelPermissions->removeAllReadWritePermitables();
+            $this->assertEquals(3, count($explicitReadWriteModelPermissions->getReadWritePermitablesToRemove()));
         }
     }
 ?>

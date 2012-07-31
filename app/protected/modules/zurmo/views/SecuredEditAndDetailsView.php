@@ -82,9 +82,10 @@
 
         protected function renderAfterFormLayoutForDetailsContent()
         {
-            $content = parent::renderAfterFormLayoutForDetailsContent();
+            $content  = parent::renderAfterFormLayoutForDetailsContent();
             if ($this->getModel() instanceof OwnedSecurableItem)
             {
+                $content .= '<p>';
                 if ($content != null)
                 {
                     $content .= '<br/>';
@@ -104,6 +105,7 @@
                 $element  = new DerivedExplicitReadWriteModelPermissionsElement($this->getModel(), 'null');
                 $element->nonEditableTemplate = '{label} {content}';
                 $content .= $element->render();
+                $content .= '</p>';
             }
             return $content;
         }

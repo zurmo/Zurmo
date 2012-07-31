@@ -30,28 +30,6 @@
     class ActivitiesUtil
     {
         /**
-         * Given a modelClassName, find the deriviation path to Item. This is used by the castDown method
-         * for example in RedBeanModel.
-         * @param string $relationModelClassName
-         * @return array of derivation path.
-         */
-        public static function getModelDerivationPathToItem($modelClassName)
-        {
-            assert('is_string($modelClassName)');
-            $modelDerivationPath = RuntimeUtil::getClassHierarchy($modelClassName, 'RedBeanModel');
-            $modelDerivationPathToItem = array();
-            foreach ($modelDerivationPath as $modelClassName)
-            {
-                if ($modelClassName == 'Item')
-                {
-                    break;
-                }
-                $modelDerivationPathToItem[] = $modelClassName;
-            }
-            return array_reverse($modelDerivationPathToItem);
-        }
-
-        /**
          * Renders and returns string content of summary content for the given model.
          * @param RedBeanModel $model
          * @param mixed $redirectUrl
@@ -109,7 +87,7 @@
 
         protected static function renderOwnerStringContent($model)
         {
-            if ($model instanceof MashableActivity)
+            if ($model instanceof OwnedSecurableItem)
             {
                 return strval($model->owner);
             }

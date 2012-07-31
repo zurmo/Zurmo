@@ -73,6 +73,8 @@
             => 'Modifié',
         'Clear'
             => 'Effacer',
+        'Click Here'
+            => 'Cliquez ici',
         'Create'
             => 'Créer',
         'Created By User'
@@ -219,6 +221,10 @@
             => 'donnée',
         'records'
             => 'données',
+        'Related'
+            => 'Associé',
+        'Related to'
+            => 'Associé à',
         'Remove'
             => 'Supprimer',
         'Return to List'

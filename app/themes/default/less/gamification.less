@@ -7,21 +7,21 @@
 }
 
 .icon-leaderboard-weekly:before{
-	content:"w";
+	content:"x";
     .view-toolbar-icons();
-    padding-top: 1px;
+	top:-2px;
 }
 
 .icon-leaderboard-monthly:before{
-	content:"w";
+	content:":";
     .view-toolbar-icons();
-    padding-top: 1px;
+   top:-2px;
 }
 
 .icon-leaderboard-overall:before{
-	content:"t";
+	content:";";
     .view-toolbar-icons();
-    padding-top: 1px;
+    top:-2px;
 }
 
 .points{
@@ -317,6 +317,23 @@
 		content: "4";
 	}
 }
+.game-badge-CreateComment,
+.CreateComment{
+	.badge-icon:before{
+		content: "b";
+	}
+}
+.game-badge-CreateConversation,
+.CreateConversation{
+	.badge-icon:before{
+		content: "O";
+	}
+}
+
+
+
+
+
 
 /*Night Icons*/
 .game-badge-NightOwl,

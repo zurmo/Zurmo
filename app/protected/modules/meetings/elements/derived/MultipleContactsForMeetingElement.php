@@ -111,7 +111,7 @@
         protected function getExistingContactRelationsIdsAndLabels()
         {
             $existingContacts = array();
-            $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem('Contact');
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem('Contact');
             foreach ($this->model->activityItems as $item)
             {
                 try

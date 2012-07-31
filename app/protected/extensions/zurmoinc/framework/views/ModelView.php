@@ -38,42 +38,44 @@
             parent::assertMetadataIsValid($metadata);
             $attributeNames = array();
             $derivedTypes   = array();
-            assert('is_array($metadata["global"]["panels"])');
-            foreach ($metadata["global"]["panels"] as $panel)
+            if (isset($metadata['global']['panels']))
             {
-                assert('is_array($panel["rows"])');
-                foreach ($panel["rows"] as $row)
+                foreach ($metadata["global"]["panels"] as $panel)
                 {
-                    $cellCount = 0;
-                    assert('is_array($row["cells"])');
-                    foreach ($row["cells"] as $cell)
+                    assert('is_array($panel["rows"])');
+                    foreach ($panel["rows"] as $row)
                     {
-                        if (is_array($cell['elements']))
+                        $cellCount = 0;
+                        assert('is_array($row["cells"])');
+                        foreach ($row["cells"] as $cell)
                         {
-                            assert('count($cell["elements"]) == 1');
-                            $elementInformation = $cell['elements'][0];
-                            if ($elementInformation['attributeName'] == 'null')
+                            if (is_array($cell['elements']))
                             {
-                                assert('!in_array($elementInformation["type"], $derivedTypes)');
-                                $derivedTypes[] = $elementInformation['type'];
-                                $elementclassname = $elementInformation['type'] . 'Element';
-                                assert('class_exists($elementclassname)');
+                                assert('count($cell["elements"]) == 1');
+                                $elementInformation = $cell['elements'][0];
+                                if ($elementInformation['attributeName'] == 'null')
+                                {
+                                    assert('!in_array($elementInformation["type"], $derivedTypes)');
+                                    $derivedTypes[] = $elementInformation['type'];
+                                    $elementclassname = $elementInformation['type'] . 'Element';
+                                    assert('class_exists($elementclassname)');
+                                }
+                                elseif ($elementInformation['attributeName'] == null)
+                                {
+                                    assert('$elementInformation["type"] == "Null"'); // Not Coding Standard
+                                }
+                                else
+                                {
+                                    /* Is attribute present more than once on the view? */
+                                    assert('!in_array($elementInformation["attributeName"], $attributeNames)');
+                                    $attributeNames[] = $elementInformation['attributeName'];
+                                    assert('is_string($elementInformation["attributeName"])');
+                                }
                             }
-                            elseif ($elementInformation['attributeName'] == null)
-                            {
-                                assert('$elementInformation["type"] == "Null"'); // Not Coding Standard
-                            }
-                            else
-                            {
-                                /* Is attribute present more than once on the view? */
-                                assert('!in_array($elementInformation["attributeName"], $attributeNames)');
-                                $attributeNames[] = $elementInformation['attributeName'];
-                                assert('is_string($elementInformation["attributeName"])');
-                            }
+                            $cellCount++;
+                            $designerRules = DesignerRulesFactory::createDesignerRulesByView(get_called_class());
+                            assert('$cellCount <= $designerRules->maxCellsPerRow()');
                         }
-                        $cellCount++;
-                        $designerRules = DesignerRulesFactory::createDesignerRulesByView(get_called_class());
-                        assert('$cellCount <= $designerRules->maxCellsPerRow()');
                     }
                 }
             }

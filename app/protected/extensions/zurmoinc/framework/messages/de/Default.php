@@ -73,6 +73,8 @@
             => 'Geändert',
         'Clear'
             => 'Löschen',
+        'Click Here'
+            => 'Hier klicken',
         'Create'
             => 'Erstellen',
         'Created By User'
@@ -219,6 +221,10 @@
             => 'Datensatz',
         'records'
             => 'Datensätze',
+        'Related'
+            => 'Bezug',
+        'Related to'
+            => 'In Bezug auf',
         'Remove'
             => 'Entfernen',
         'Return to List'

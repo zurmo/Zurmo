@@ -46,10 +46,17 @@
                 'attributeName' => null,
                 'type'          => 'Null' // Not Coding Standard
             );
+            $super = User::getByUsername('super');
             $betty = User::getByUsername('betty');
             $billy = User::getByUsername('billy');
-            $contactForBetty = ContactTestHelper::createContactByNameForOwner("betty's contact", $betty);
+            $accountForBetty = AccountTestHelper::createAccountByNameForOwner("betty's account", $betty);
+            $accountForSuper = AccountTestHelper::createAccountByNameForOwner("super's account", $super);
+            $contactForBetty = ContactTestHelper::createContactWithAccountByNameForOwner("betty's contact",
+                                                                                         $betty, $accountForBetty);
             $contactForBilly = ContactTestHelper::createContactByNameForOwner("betty's contact", $billy);
+            $contactForBettyButAccountForSuper = ContactTestHelper::
+                                                 createContactWithAccountByNameForOwner("betty's contact",
+                                                                                        $betty, $accountForSuper);
 
             //Testing a non ModelElement.
             $elementInformation = array(
@@ -74,6 +81,26 @@
             $this->assertTrue($betty->save());
             $referenceElementInformation = $elementInformation;
             FormLayoutSecurityUtil::resolveElementForEditableRender($contactForBetty, $referenceElementInformation, $betty);
+            $this->assertEquals($elementInformation, $referenceElementInformation);
+
+            //Testing where Betty can access the accounts, module, but she cannot view the account.
+            $elementInformation = array(
+                'attributeName' => 'account',
+                'type'          => 'Account'
+            );
+            $referenceElementInformation = $elementInformation;
+            FormLayoutSecurityUtil::resolveElementForEditableRender($contactForBettyButAccountForSuper, $referenceElementInformation, $betty);
+            $this->assertEquals($nullElementInformation, $referenceElementInformation);
+
+            //Testing where Betty can access the accounts, module, and now can read the super account.
+            $accountForSuper->addPermissions($betty, Permission::READ);
+            $this->assertTrue($accountForSuper->save());
+            $elementInformation = array(
+                'attributeName' => 'account',
+                'type'          => 'Account'
+            );
+            $referenceElementInformation = $elementInformation;
+            FormLayoutSecurityUtil::resolveElementForEditableRender($contactForBettyButAccountForSuper, $referenceElementInformation, $betty);
             $this->assertEquals($elementInformation, $referenceElementInformation);
 
             //Testing UserElement.

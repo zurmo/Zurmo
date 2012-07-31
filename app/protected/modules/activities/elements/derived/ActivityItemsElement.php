@@ -25,185 +25,44 @@
      ********************************************************************************/
 
     /**
-     * User interface element for managing related model relations for activities. This class supports a HAS_ONE
-     * only.  If you need to support HAS_MANY models you will need to extend this class.
+     * User interface element for managing related model relations for activities.
      *
      */
-    class ActivityItemsElement extends ModelsElement implements DerivedElementInterface, ElementActionTypeInterface
+    class ActivityItemsElement extends RelatedItemsElement
     {
-        public $editableTemplate = '<th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td></tr>{content}{error}<tr><th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td>';
-
-        public $nonEditableTemplate = '<th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td></tr>{content}<tr><th class="hidden-element"></th><td class="hidden-element" colspan="{colspan}"></td>';
-
         /**
          * The action type of the related model
          * for which the autocomplete/select popup are calling.
          */
         protected static $editableActionType = 'ActivityItemsModalList';
 
+        protected static function getRelatedItemsModelClassNames()
+        {
+            $metadata       = Activity::getMetadata();
+            return $metadata['Activity']['activityItemsModelClassNames'];
+        }
+
+        protected static function getRelatedItemFormClassName()
+        {
+            return 'ActivityItemForm';
+        }
+
+        protected function getRelatedItemsFromModel()
+        {
+            return $this->model->activityItems;
+        }
+
         protected function renderControlNonEditable()
         {
             assert('$this->model instanceof Activity');
-            $metadata     = Activity::getMetadata();
-            return $this->renderNonEditableElementsForRelationsByRelationsData($metadata['Activity']['activityItemsModelClassNames']);
+            return parent::renderControlNonEditable();
         }
 
         protected function renderControlEditable()
         {
             assert('$this->model instanceof Activity');
             assert('!isset($this->params["inputPrefix"])'); //Not supported at this time.
-            $metadata     = Activity::getMetadata();
-            return $this->renderElementsForRelationsByRelationsData($metadata['Activity']['activityItemsModelClassNames']);
-        }
-
-        protected function renderElementsForRelationsByRelationsData($relationModelClassNames)
-        {
-            $content = null;
-            foreach ($relationModelClassNames as $relationModelClassName)
-            {
-                $activityItemForm = null;
-                //ASSUMES ONLY A SINGLE ATTACHED ACTIVITYITEM PER RELATION TYPE.
-                foreach ($this->model->activityItems as $item)
-                {
-                    try
-                    {
-                        $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($relationModelClassName);
-                        $castedDownModel           = $item->castDown(array($modelDerivationPathToItem));
-                        $activityItemForm         = new ActivityItemForm($castedDownModel);
-                        break;
-                    }
-                    catch (NotFoundException $e)
-                    {
-                    }
-                }
-                if ($activityItemForm == null)
-                {
-                    $relationModel     = new $relationModelClassName();
-                    $activityItemForm  = new ActivityItemForm($relationModel);
-                }
-                $modelElementClassName = ActivityItemRelationToModelElementUtil::resolveModelElementClassNameByActionSecurity(
-                                              $relationModelClassName, Yii::app()->user->userModel);
-                if ($modelElementClassName != null)
-                {
-                    $element  = new $modelElementClassName($activityItemForm,
-                                                           $relationModelClassName,
-                                                           $this->form);
-                    assert('$element instanceof ModelElement');
-                    $element->editableTemplate = $this->getActivityItemEditableTemplate();
-                    $content .= $element->render();
-                }
-            }
-            return $content;
-        }
-
-        protected function renderNonEditableElementsForRelationsByRelationsData($relationModelClassNames)
-        {
-            $content = null;
-            foreach ($relationModelClassNames as $relationModelClassName)
-            {
-                $activityItemForm = null;
-                //ASSUMES ONLY A SINGLE ATTACHED ACTIVITYITEM PER RELATION TYPE.
-                foreach ($this->model->activityItems as $item)
-                {
-                    try
-                    {
-                        $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($relationModelClassName);
-                        $castedDownModel = $item->castDown(array($modelDerivationPathToItem));
-                        $activityItemForm = new ActivityItemForm($castedDownModel);
-                        break;
-                    }
-                    catch (NotFoundException $e)
-                    {
-                        //do nothing
-                    }
-                }
-                if ($activityItemForm != null)
-                {
-                    $modelElementClassName = ActivityItemRelationToModelElementUtil::resolveModelElementClassNameByActionSecurity(
-                                          $relationModelClassName, Yii::app()->user->userModel);
-                    if ($modelElementClassName != null)
-                    {
-                        $element  = new $modelElementClassName($activityItemForm, $relationModelClassName, $this->form);
-                        assert('$element instanceof ModelElement');
-                        $element->nonEditableTemplate = $this->getActivityItemNonEditableTemplate();
-                        $content .= $element->render();
-                    }
-                }
-            }
-            return $content;
-        }
-
-        protected function getActivityItemEditableTemplate()
-        {
-            $template  = "<tr><th>\n";
-            $template .=  "{label}";
-            $template .= "</th><td colspan=\"3\">\n";
-            $template .= '{content}{error}';
-            $template .= "</td></tr>\n";
-            return $template;
-        }
-
-        protected function getActivityItemNonEditableTemplate()
-        {
-            $template  = "<tr><th>\n";
-            $template .=  "{label}";
-            $template .= "</th><td colspan=\"3\">\n";
-            $template .= '{content}';
-            $template .= "</td></tr>\n";
-            return $template;
-        }
-
-        protected function renderError()
-        {
-        }
-
-        protected function renderLabel()
-        {
-            return CHtml::label(Yii::t('Default', 'Related to'), false);
-        }
-
-        public static function getDisplayName()
-        {
-            $metadata        = Activity::getMetadata();
-            $content         =  Yii::t('Default', 'Related') . '&#160;';
-            $relationContent = null;
-            foreach ($metadata['Activity']['activityItemsModelClassNames'] as $relationModelClassName)
-            {
-                if ($relationContent != null)
-                {
-                    $relationContent .= ',&#160;';
-                }
-                $relationContent .= $relationModelClassName::getModelLabelByTypeAndLanguage('Plural');
-            }
-            return $content . $relationContent;
-        }
-
-        /**
-         * Get the attributeNames of attributes used in
-         * the derived element. For this element, there are no attributes from the model.
-         * @return array - empty
-         */
-        public static function getModelAttributeNames()
-        {
-            return array();
-        }
-
-        /**
-         * Gets the action type for the related model's action
-         * that is called by the select button or the autocomplete
-         * feature in the Editable render.
-         */
-        public static function getEditableActionType()
-        {
-            return static::$editableActionType;
-        }
-
-        /**
-         * Currently ActivityItems is not supported in non editable views.
-         */
-        public static function getNonEditableActionType()
-        {
-            throw new NotImplementedException();
+            return parent::renderControlEditable();
         }
     }
 ?>

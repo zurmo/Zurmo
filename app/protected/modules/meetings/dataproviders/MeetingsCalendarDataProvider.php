@@ -52,7 +52,7 @@
                 }
                 else
                 {
-                    $data[$localTimeZoneAdjustedDate] = array('date' => $localTimeZoneAdjustedDate, 'quantity' => 1);
+                    $data[$localTimeZoneAdjustedDate] = array('date' => $localTimeZoneAdjustedDate, 'quantity' => 1, 'dbDate' => $row['startdatetime']);
                 }
             }
             foreach ($data as $key => $item)

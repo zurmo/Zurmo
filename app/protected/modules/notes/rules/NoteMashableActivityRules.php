@@ -31,20 +31,7 @@
     {
         public function getLatestActivityExtraDisplayStringByModel($model)
         {
-            $content = null;
-            if ($model->files->count() > 0)
-            {
-                foreach ($model->files as $fileModel)
-                {
-                    if ($content != null)
-                    {
-                        $content .= ', ';
-                    }
-                $content .= FileModelDisplayUtil::renderDownloadLinkContentByRelationModelAndFileModel($model,
-                                                                                                       $fileModel);
-                }
-            }
-            return $content;
+            return FileModelDisplayUtil::renderFileDataDetailsWithDownloadLinksContent($model, 'files');
         }
 
         /**

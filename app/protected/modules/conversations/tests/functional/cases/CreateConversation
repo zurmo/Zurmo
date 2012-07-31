@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateConversation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomTitle</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[6]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a.icon-create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Conversation_description</td>
+	<td>This is a new conversation.<br />It was created by a functional test.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Subject cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Conversation_subject</td>
+	<td>New Conversation ${randomTitle}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#ConversationItemForm_Account_SelectLink &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Praxis Corporation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#ConversationItemForm_Opportunity_SelectLink &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=OpportunitiesSearchForm_anyMixedAttributes</td>
+	<td>cro</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=OpportunitiesSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=tr.even &gt; td &gt; a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h1</td>
+	<td>New Conversation ${randomTitle}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=div.comment-content</td>
+	<td>This is a new conversation.<br /> It was created by a functional test.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Praxis Corporation</td>
+	<td>Praxis Corporation</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Cross Country Shipments</td>
+	<td>Cross Country Shipments</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Comment_description</td>
+	<td>Can you see my first comment?</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=#CommentList &gt; div.comment &gt; div.comment-content</td>
+	<td>exact:Can you see my first comment?</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=Comment_description_em_</td>
+	<td>Description cannot be blank.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=token-input-ConversationParticipantsForm_item_ids</td>
+	<td>jil</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ConversationParticipantsForm_item_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=li.token-input-dropdown-item2.token-input-selected-dropdown-item</td>
+	<td>Jill Smith</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ConversationParticipantsForm_item_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='NotificationBar']/div/div/span[2]</td>
+	<td>Participants updated successfully</td>
+</tr>
+</tbody></table>
+</body>
+</html>

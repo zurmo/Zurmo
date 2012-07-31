@@ -73,6 +73,8 @@
             => 'Cambiado',
         'Clear'
             => 'Borrar',
+        'Click Here'
+            => 'Haga clic aquí',
         'Create'
             => 'Crear',
         'Created By User'
@@ -219,6 +221,10 @@
             => 'registro',
         'records'
             => 'registros',
+        'Related'
+            => 'Relacionados',
+        'Related to'
+            => 'Relacionados con',
         'Remove'
             => 'Eliminar',
         'Return to List'

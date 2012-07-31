@@ -147,10 +147,12 @@
         {
             $month     = str_pad($_GET['month'], 2, '0', STR_PAD_LEFT);
             $year      = $_GET['year'];
-            $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();
+            $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();            
             foreach ($dayEvents as $event)
             {
-                echo "calendarEvents[new Date('" . $event['date'] . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
+                $dateTimestamp = DateTimeUtil::convertDbFormatDateTimeToTimestamp($event['dbDate']);
+                $dateForJavascript = date('M j, Y', $dateTimestamp);             
+                echo "console.log('" . $dateForJavascript . "');calendarEvents[new Date('" . $dateForJavascript . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
             }
         }
 

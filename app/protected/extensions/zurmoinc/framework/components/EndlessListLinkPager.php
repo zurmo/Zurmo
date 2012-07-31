@@ -81,7 +81,6 @@
             $pagerId = $gridId . "-endless-page";
             // Begin Not Coding Standard
             Yii::app()->clientScript->registerScript('pagerEndlessLink', "
-                //$('body').undelegate('click', '#" . $pagerId . "');
                 $('#" . $pagerId . "').unbind('click');
                 $('#" . $pagerId . "').bind('click', function(event)
                     {

@@ -73,6 +73,8 @@
             => 'Giorni de scandenza delle password',
         'Profile'
             => 'Profile', // Same Word Translated
+        'Quick Tip'
+            => 'Punta Rapida',
         'Sign in Via Mobile'
             => 'Login  mobile',
         'Sign in Via Web'
@@ -103,5 +105,7 @@
             => 'Utenti',
         'Users Home'
             => 'Utenti Home',
+        'Users cannot be deleted.  You can however change their status to inactive.'
+            => 'Gli utenti non possono essere cancellati. È tuttavia possibile cambiare il proprio status di inattivo.',
     );
 ?>

@@ -50,7 +50,7 @@
             $content  = $form->errorSummary($this->model);
             $content .= '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td><div id="permissions-module">' . "\n";
+            $content .= '<tr><td><div id="right-side-edit-view-panel">' . "\n";
             $content .= $element->render();
             $content .= '</div></td></tr>'  . "\n";
             $content .= '</tbody>'    . "\n";

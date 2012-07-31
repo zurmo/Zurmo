@@ -42,7 +42,7 @@
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
 
             $this->assertEquals(3, count($menu));
-            $this->assertEquals(4, count($menu['items']));
+            $this->assertEquals(5, count($menu['items']));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(0, count($menu));
@@ -76,7 +76,7 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $menu = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
-            $this->assertEquals(5, count($menu));
+            $this->assertEquals(6, count($menu));
             $menu = MenuUtil::getAccessibleModuleTabMenuByUser('AccountsModule', Yii::app()->user->userModel);
             $this->assertEquals(1, count($menu));
             Yii::app()->user->userModel = User::getByUsername('billy');
@@ -151,6 +151,11 @@
                             'label' => 'Contact',
                             'url'   => array('/contacts/default/create'),
                             'right' => ContactsModule::RIGHT_CREATE_CONTACTS,
+                        ),
+                        array(
+                            'label' => 'Conversation',
+                            'url'   => array('/conversations/default/create'),
+                            'right' => ConversationsModule::RIGHT_CREATE_CONVERSATIONS,
                         ),
                         array(
                             'label' => 'Lead',

@@ -58,6 +58,7 @@
             GamePointUtil::addPointsByPointData(Yii::app()->user->userModel, $pointTypeAndValueData);
             Yii::app()->gameHelper->processDeferredPoints();
             $data = GamePointUtil::getUserLeaderboardData(GamePointUtil::LEADERBOARD_TYPE_WEEKLY);
+            $this->assertTrue(Yii::app()->gameHelper->enabled); //test to see if enabled when running all tests
             $this->assertTrue(count($data) > 0);
             $data = GamePointUtil::getUserLeaderboardData(GamePointUtil::LEADERBOARD_TYPE_MONTHLY);
             $this->assertTrue(count($data) > 0);

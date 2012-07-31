@@ -30,6 +30,16 @@
      */
     class PostUtil extends DataUtil
     {
+        public static function getData()
+        {
+            $getData = array();
+            if (isset($_POST))
+            {
+                $getData = $_POST;
+            }
+            return $getData;
+        }
+
         public static function sanitizePostForSavingMassEdit($postVariableName)
         {
             foreach ($_POST[$postVariableName] as $attributeName => $values)

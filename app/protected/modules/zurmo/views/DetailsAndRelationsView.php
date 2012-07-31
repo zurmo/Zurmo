@@ -63,8 +63,8 @@
             else
             {
                 $leftTopView    = new $detailsViewClassName($this->params["controllerId"],
-                                                                            $this->params["relationModuleId"],
-                                                                            $this->params["relationModel"]);
+                                                            $this->params["relationModuleId"],
+                                                            $this->params["relationModel"]);
             }
             $leftBottomView = new ModelRelationsSecuredPortletFrameView($this->controllerId,
                                                                         $this->moduleId,

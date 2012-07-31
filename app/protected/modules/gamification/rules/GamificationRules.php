@@ -73,6 +73,12 @@
         const SCORE_CATEGORY_TIME_SENSITIVE_ACTION = 'TimeSensitiveAction';
 
         /**
+         * Whether to score when a model is updated or not.
+         * @var boolean
+         */
+        protected $scoreOnUpdate = true;
+
+        /**
          * Given a model class name attach scoring events to that class. Every model will then invoke the scoring event.
          * @param string $modelClassName
          */
@@ -99,6 +105,10 @@
                 $scoreType           = static::resolveCreateScoreTypeByModel($model);
                 $category            = static::SCORE_CATEGORY_CREATE_MODEL;
                 $gameScore           = GameScore::resolveToGetByTypeAndPerson($scoreType, Yii::app()->user->userModel);
+            }
+            elseif(!$this->scoreOnUpdate)
+            {
+                return;
             }
             else
             {

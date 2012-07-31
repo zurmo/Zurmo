@@ -70,52 +70,10 @@
                 $content .= '</div></div>';
             }
             $content .= $this->renderFormLayout();
-            $content .= '<p>' . $this->renderAfterFormLayoutForDetailsContent() . '</p>';
+            $content .= $this->renderRightSideContent();
+            $content .= $this->renderAfterFormLayoutForDetailsContent();
             $content .= '</div>';
             return $content;
-        }
-
-        /**
-         * Render a menu above the form layout. This includes buttons and/or
-         * links to go to different views or process actions such as save or delete
-         * @return A string containing the element's content.
-          */
-        protected function renderActionElementMenu()
-        {
-            $metadata  = $this::getMetadata();
-            $menuItems = array('label' => Yii::t('Default', 'Options'), 'items' => array());
-            if (isset($metadata['global']['toolbar']) && is_array($metadata['global']['toolbar']['elements']))
-            {
-                foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
-                {
-                    $elementclassname = $elementInformation['type'] . 'ActionElement';
-                    $params = array_slice($elementInformation, 1);
-                    array_walk($params, array($this, 'resolveEvaluateSubString'));
-                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
-                    if (!$this->shouldRenderToolBarElement($element, $elementInformation))
-                    {
-                        continue;
-                    }
-                    if ($element->isFormRequiredToUse())
-                    {
-                        throw new NotSupportedException();
-                    }
-                    $menuItems['items'][] = $element->renderMenuItem();
-                }
-            }
-            if (count($menuItems['items']) > 0)
-            {
-                $cClipWidget = new CClipWidget();
-                $cClipWidget->beginClip("DetailsOptionMenu");
-                $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
-                    'htmlOptions' => array('id' => 'OptionsMenu'),
-                    'items'                   => array($menuItems),
-                    'navContainerClass'       => 'nav-single-container',
-                    'navBarClass'             => 'nav-single-bar',
-                ));
-                $cClipWidget->endClip();
-                return $cClipWidget->getController()->clips['DetailsOptionMenu'];
-            }
         }
 
         protected function renderTitleContent()
@@ -124,6 +82,10 @@
             {
                 return '<h1>' . $this->title . "</h1>";
             }
+        }
+
+        protected function renderRightSideContent($form = null)
+        {
         }
 
         protected function renderAfterFormLayoutForDetailsContent()
@@ -170,6 +132,7 @@
             assert('is_array($metadata)');
             assert('is_int($maxCellsPerRow)');
             assert('$form == null || $form instanceof ZurmoActiveForm');
+            $maximumColumnCount = DetailsViewFormLayout::getMaximumColumnCountForAllPanels($metadata);
             foreach ($metadata['global']['panels'] as $panelNumber => $panel)
             {
                 foreach ($panel['rows'] as $rowIndex => $row)
@@ -180,7 +143,8 @@
                         {
                             foreach ($cell['elements'] as $elementIndex => $elementInformation)
                             {
-                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow)
+                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow
+                                    && count($row['cells']) < $maximumColumnCount)
                                 {
                                     $elementInformation['wide'] = true;
                                 }
@@ -377,7 +341,7 @@
             parent::assertMetadataIsValid($metadata);
             $attributeNames = array();
             $derivedTypes   = array();
-            assert('is_int($metadata["global"]["panelsDisplayType"])');
+            assert('!isset($metadata["global"]["panelsDisplayType"]) || is_int($metadata["global"]["panelsDisplayType"])');
         }
 
         /**

@@ -78,7 +78,7 @@
                 $content .= $this->renderDivTagByPanelNumber($panelNumber);
                 $content .= $this->renderPanelHeaderByPanelNumberAndPanel($panelNumber, $panel);
                 $content .= '<table>';
-                $content .= TableUtil::getColGroupContent($this->getMaximumColumnCountForAllPanels(), $this->labelsHaveOwnCells);
+                $content .= TableUtil::getColGroupContent(static::getMaximumColumnCountForAllPanels($this->metadata), $this->labelsHaveOwnCells);
                 $content .= '<tbody>';
 
                 foreach ($panel['rows'] as $row)

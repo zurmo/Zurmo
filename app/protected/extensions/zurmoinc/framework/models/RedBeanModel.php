@@ -1230,7 +1230,7 @@
             }
             else
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException('Invalid Attribute: ' . $attributeName);
             }
         }
 
@@ -2130,6 +2130,7 @@
             {
                 $this->deleteOwnedRelatedModels  ($modelClassName);
                 $this->deleteForeignRelatedModels($modelClassName);
+                $this->deleteManyManyRelations ($modelClassName);
             }
             foreach ($this->modelClassNameToBean as $modelClassName => $bean)
             {
@@ -2211,6 +2212,24 @@
             $foreignKeyName = strtolower($modelClassName) . '_id';
             $beans = RedBean_Plugin_Finder::where($tableName, "$foreignKeyName = $id");
             return self::makeModels($beans, $relatedModelClassName);
+        }
+
+        protected function deleteManyManyRelations($modelClassName)
+        {
+            $metadata = $this->getMetadata();
+            if (isset($metadata[$modelClassName]['relations']))
+            {
+                foreach ($metadata[$modelClassName]['relations'] as $relationName => $relationTypeModelClassNameAndOwns)
+                {
+                    assert('in_array(count($relationTypeModelClassNameAndOwns), array(2, 3, 4))');
+                    $relationType           = $relationTypeModelClassNameAndOwns[0];
+                    if($relationType == self::MANY_MANY)
+                    {
+                        $this->{$relationName}->removeAll();
+                        $this->{$relationName}->save();
+                    }
+                }
+            }
         }
 
         /**

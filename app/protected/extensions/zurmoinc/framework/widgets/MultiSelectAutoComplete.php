@@ -32,7 +32,7 @@
     {
         public $scriptFile = 'jquery.tokeninput.js';
 
-        public $cssFile = 'token-input.css';
+        public $cssFile = null;
 
         /**
          * Input field name.
@@ -50,9 +50,21 @@
 
         /**
          * The text to show in the dropdown label which appears when you first click in the search field. default:
-         * �Type in a search term�
+         * Type a search term
          */
         public $hintText;
+
+        /**
+         * Callback function when an item is added
+         * @var string
+         */
+        public $onAdd;
+
+        /**
+         * Callback function when an item is deleted
+         * @var string
+         */
+        public $onDelete;
 
         /**
          * Prepopulate the tokeninput with existing data. Set to an array of JSON objects,
@@ -78,7 +90,15 @@
             $javaScript .= "queryParam: 'term',"; // Not Coding Standard
             if ($this->hintText != null)
             {
-                $javaScript .= "hintText: '" . $this->hintText . "',"; // Not Coding Standard
+                $javaScript .= "hintText: '" . Yii::app()->format->text($this->hintText) . "',"; // Not Coding Standard
+            }
+            if ($this->onAdd != null)
+            {
+                $javaScript .= "onAdd: " . $this->onAdd . ","; // Not Coding Standard
+            }
+            if ($this->onDelete != null)
+            {
+                $javaScript .= "onDelete: " . $this->onDelete . ","; // Not Coding Standard
             }
             if ($this->jsonEncodedIdsAndLabels != null)
             {

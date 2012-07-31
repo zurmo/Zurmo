@@ -29,6 +29,27 @@
      */
     class AccountLatestActivtiesForPortletView extends LatestActivtiesForPortletView
     {
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            return array_merge($metadata, array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'                    => 'CreateConversationFromRelatedListLink',
+                                  'modelClassName'			=> 'Conversation',
+                                  'routeParameters'         =>
+                                    array('relationAttributeName'    => 'notUsed',
+                                            'relationModelClassName' => 'Account',
+                                            'relationModelId'        => 'eval:$this->params["relationModel"]->id',
+                                            'relationModuleId'       => 'accounts',
+                                            'redirectUrl'            => 'eval:Yii::app()->request->getRequestUri()')
+                        ),
+                    ),
+                ),
+            )));
+        }
+
         public function getLatestActivitiesViewClassName()
         {
             return 'LatestActivitiesForAccountListView';

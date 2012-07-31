@@ -208,6 +208,13 @@
             return $content;
         }
 
+        protected function runControllerShouldResultInAjaxAccessFailureAndGetContent($route)
+        {
+            $content = $this->runControllerWithExitExceptionAndGetContent($route);
+            $this->assertFalse(strpos($content, 'failure') === false);
+            return $content;
+        }
+
         protected function resetGetArray()
         {
             $_GET = array();

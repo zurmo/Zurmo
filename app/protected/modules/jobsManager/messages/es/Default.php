@@ -43,8 +43,6 @@
             => 'Limpie los registros de trabajos antiguos.',
         'Clear the assets folder on server(optional).'
             => 'Limpie la carpeta Assets en el servidor (opionale).',
-        'Click Here'
-            => 'Haga clic aquí',
         'Completed'
             => 'Finalizado',
         'Completed with Errors'

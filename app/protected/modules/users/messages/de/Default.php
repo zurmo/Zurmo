@@ -73,6 +73,8 @@
             => 'Kennwort Ablauf Tage',
         'Profile'
             => 'Profil',
+        'Quick Tip'
+            => 'Quick-Tipp',
         'Sign in Via Mobile'
             => 'Anmelden via Mobile',
         'Sign in Via Web'
@@ -103,5 +105,7 @@
             => 'Benutzern',
         'Users Home'
             => 'Startseite Benutzerkonto',
+        'Users cannot be deleted.  You can however change their status to inactive.'
+            => 'Benutzer kann nicht gelöscht werden. Allerdings können Sie seinen Status auf inaktiv zu ändern.',
     );
 ?>

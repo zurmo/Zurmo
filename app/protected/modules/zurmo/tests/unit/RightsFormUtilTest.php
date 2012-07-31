@@ -91,6 +91,26 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'ConversationsModule'  => array(
+                    'RIGHT_CREATE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_CREATE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_DELETE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_ACCESS_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'DesignerModule' => array(
                     'RIGHT_ACCESS_DESIGNER'   => array(
                         'displayName' => DesignerModule::RIGHT_ACCESS_DESIGNER,
@@ -441,6 +461,26 @@
                     ),
                     'RIGHT_ACCESS_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_ACCESS_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'ConversationsModule'  => array(
+                    'RIGHT_CREATE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_CREATE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_DELETE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_ACCESS_CONVERSATIONS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -797,6 +837,26 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'ConversationsModule'  => array(
+                    'RIGHT_CREATE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_CREATE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_DELETE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_ACCESS_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
                 'DesignerModule' => array(
                     'RIGHT_ACCESS_DESIGNER'   => array(
                         'displayName' => DesignerModule::RIGHT_ACCESS_DESIGNER,
@@ -1142,6 +1202,26 @@
                     ),
                     'RIGHT_ACCESS_CONTACTS'   => array(
                         'displayName' => ContactsModule::RIGHT_ACCESS_CONTACTS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'ConversationsModule'  => array(
+                    'RIGHT_CREATE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_CREATE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_DELETE_CONVERSATIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_CONVERSATIONS'   => array(
+                        'displayName' => ConversationsModule::RIGHT_ACCESS_CONVERSATIONS,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

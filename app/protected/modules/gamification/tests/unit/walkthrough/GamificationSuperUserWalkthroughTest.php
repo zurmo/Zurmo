@@ -58,6 +58,8 @@
             $this->assertfalse(strpos($content, 'Leaderboard') === false);
             $this->setGetArray(array(
                 'type' => GamePointUtil::LEADERBOARD_TYPE_OVERALL));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('gamification/default/leaderboard');
+            $this->assertfalse(strpos($content, 'Leaderboard') === false);
         }
 
         public function testGameNotificationsComingUpCorrectly()

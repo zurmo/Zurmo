@@ -106,10 +106,11 @@
          * Get the maximum column count across all panels from the metadata.
          * @return integer column count.
          */
-        protected function getMaximumColumnCountForAllPanels()
+        public static function getMaximumColumnCountForAllPanels($metadata)
         {
+            assert('is_array($metadata)');
             $columnCount = 0;
-            foreach ($this->metadata['global']['panels'] as $panel)
+            foreach ($metadata['global']['panels'] as $panel)
             {
                 foreach ($panel['rows'] as $row)
                 {

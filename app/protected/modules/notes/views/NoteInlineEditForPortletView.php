@@ -27,44 +27,8 @@
     /**
      * Class used for wrapping a note inline edit view into a portlet ready view.
      */
-    class NoteInlineEditForPortletView extends ConfigurableMetadataView
-                                                                  implements PortletViewInterface
+    class NoteInlineEditForPortletView extends InlineEditForPortletView
     {
-        /**
-         * Portlet parameters passed in from the portlet.
-         * @var array
-         */
-        protected $params;
-
-        protected $controllerId;
-
-        protected $moduleId;
-
-        protected $model;
-
-        protected $uniqueLayoutId;
-
-        protected $viewData;
-
-        /**
-         * Some extra assertions are made to ensure this view is used in a way that it supports.
-         */
-        public function __construct($viewData, $params, $uniqueLayoutId)
-        {
-            assert('is_array($viewData) || $viewData == null');
-            assert('isset($params["relationModuleId"])');
-            assert('isset($params["relationModel"])');
-            assert('isset($params["portletId"])');
-            assert('is_string($uniqueLayoutId)');
-            $this->moduleId       = $params['relationModuleId'];
-            $this->viewData       = $viewData;
-            $this->params         = $params;
-            $this->uniqueLayoutId = $uniqueLayoutId;
-        }
-
-        public static function getDefaultMetadata()
-        {
-        }
 
         public function getTitle()
         {
@@ -72,13 +36,7 @@
             return $title;
         }
 
-        public function renderContent()
-        {
-            $content  = $this->renderNoteInlineEditContent();
-            return $content;
-        }
-
-        protected function renderNoteInlineEditContent()
+        protected function renderInlineEditContent()
         {
             if (null != $messageContent = RequiredAttributesValidViewUtil::
                                          resolveValidView('NotesModule', $this->getInlineEditViewClassName()))
@@ -97,42 +55,6 @@
             $inlineView    = new $inlineViewClassName($note, 'default', 'notes', 'inlineCreateSave',
                                                       $urlParameters, $uniquePageId);
             return $inlineView->render();
-        }
-
-        /**
-         * After a portlet action is completed, the portlet must be refreshed. This is the url to correctly
-         * refresh the portlet content.
-         */
-        protected function getPortletDetailsUrl()
-        {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/defaultPortlet/details',
-                                                        array_merge($_GET, array( 'portletId' =>
-                                                                                    $this->params['portletId'],
-                                                            'uniqueLayoutId' => $this->uniqueLayoutId)));
-        }
-
-        /**
-         * Url to go to after an action is completed. Typically returns user to either a model's detail view or
-         * the home page dashboard.
-         */
-        protected function getNonAjaxRedirectUrl()
-        {
-            return Yii::app()->createUrl('/' . $this->moduleId . '/default/details',
-                                                        array( 'id' => $this->params['relationModel']->id));
-        }
-
-        public static function canUserConfigure()
-        {
-            return false;
-        }
-
-        /**
-         * What kind of PortletRules this view follows
-         * @return PortletRulesType as string.
-         */
-        public static function getPortletRulesType()
-        {
-            return 'ModelDetails';
         }
 
         public function getInlineEditViewClassName()

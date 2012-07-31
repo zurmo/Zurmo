@@ -49,10 +49,6 @@
             => 'Meine',
         'No Activities found.'
             => 'Keine Aktivitäten gefunden.',
-        'Related'
-            => 'Bezug',
-        'Related to'
-            => 'In Bezug auf',
         'Roll Up'
             => 'Roll Up', // Same Word Translated
         'Show more'

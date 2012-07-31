@@ -42,7 +42,8 @@
             $postData           = array();
             $model              = new OwnedSecurableTestItem();
             $this->assertFalse($model->hasErrors());
-            $model = ZurmoControllerUtil::saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
+            $controllerUtil = new ZurmoControllerUtil();
+            $model = $controllerUtil->saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             $this->assertFalse($savedSucessfully);
             $this->assertNull($modelToStringValue);
             $this->assertTrue($model->hasErrors());
@@ -64,7 +65,8 @@
             $postData           = array('member' => 'abc');
             $model              = new OwnedSecurableTestItem();
             $this->assertFalse($model->hasErrors());
-            $model = ZurmoControllerUtil::saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
+            $controllerUtil = new ZurmoControllerUtil();
+            $model = $controllerUtil->saveModelFromPost($postData, $model, $savedSucessfully, $modelToStringValue);
             $this->assertTrue($savedSucessfully);
             $this->assertEquals('abc', $modelToStringValue);
             $this->assertFalse($model->hasErrors());

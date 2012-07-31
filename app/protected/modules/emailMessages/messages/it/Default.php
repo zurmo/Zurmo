@@ -113,6 +113,8 @@
             => 'Errore con la posta in uscita',
         'Person'
             => 'Persona',
+        'Person or Account'
+            => 'Person or Account', // Same Word Translated
         'Port'
             => 'Porta',
         'Process Inbound Email Job'

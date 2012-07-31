@@ -43,8 +43,6 @@
             => 'Reinigen Sie die alte Job-Protokolle.',
         'Clear the assets folder on server(optional).'
             => 'Reinigen Sie den Ordner Assets auf dem Server (opionale).',
-        'Click Here'
-            => 'Hier klicken',
         'Completed'
             => 'Fertiggestellt',
         'Completed with Errors'

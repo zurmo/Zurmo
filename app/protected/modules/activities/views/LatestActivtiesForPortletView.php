@@ -46,6 +46,8 @@
 
         protected $viewData;
 
+        abstract protected function getLatestActivitiesViewClassName();
+
         /**
          * Some extra assertions are made to ensure this view is used in a way that it supports.
          */
@@ -80,7 +82,9 @@
 
         public function renderContent()
         {
-            return $this->renderLatestActivitiesContent();
+            $content  = $this->renderActionContent();
+            $content .= $this->renderLatestActivitiesContent();
+            return $content;
         }
 
         protected function renderLatestActivitiesContent()
@@ -188,6 +192,41 @@
             return 'ActivitiesModule';
         }
 
-        abstract protected function getLatestActivitiesViewClassName();
+        protected function renderActionContent()
+        {
+            $actionElementContent = $this->renderActionElementMenu(Yii::t('Default', 'Create'));
+            $content              = null;
+            if ($actionElementContent != null)
+            {
+                $content .= '<div class="view-toolbar-container toolbar-mbmenu clearfix"><div class="view-toolbar">';
+                $content .= $actionElementContent;
+                $content .= '</div></div>';
+            }
+            return $content;
+        }
+
+        /**
+         * Expects there to be a modelClassName parameter passed through the elementInformation that can be used
+         * to compare the Rights security on based on the actionType of the element.
+         * (non-PHPdoc)
+         * @see MetadataView::shouldRenderToolBarElement()
+         */
+        protected function shouldRenderToolBarElement($element, $elementInformation)
+        {
+            assert('$element instanceof ActionElement');
+            assert('is_array($elementInformation)');
+            if (!parent::shouldRenderToolBarElement($element, $elementInformation))
+            {
+                return false;
+            }
+            if(isset($elementInformation['modelClassName']))
+            {
+                $modelClassName = $elementInformation['modelClassName'];
+                //Todo: figure out how to not need to new up a new model.
+                return ActionSecurityUtil::canCurrentUserPerformAction( $element->getActionType(),
+                                                                        new $modelClassName(false));
+            }
+            return true;
+        }
     }
 ?>

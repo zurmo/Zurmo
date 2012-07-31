@@ -327,7 +327,8 @@
             foreach ($securableItem->permissions as $permission)
             {
                 $permission->castDownPermitable();
-                if ($permission->permitable instanceof Group && $permission->type == Permission::ALLOW)
+                if (($permission->permitable instanceof Group || $permission->permitable instanceof User)
+                     && $permission->type == Permission::ALLOW)
                 {
                     if (Permission::WRITE == ($permission->permissions & Permission::WRITE))
                     {

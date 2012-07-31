@@ -107,8 +107,6 @@
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
                 'htmlOptions' => array('id' => 'ListViewMassActionMenu'),
                 'items'                   => array($menuItems),
-                'navContainerClass'       => 'nav-single-container',
-                'navBarClass'             => 'nav-single-bar',
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['ActionMenu'];

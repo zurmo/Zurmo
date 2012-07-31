@@ -42,7 +42,7 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
-                        'NoteActivityItems',
+                        'ActivityItems',
                         'Files',
                     ),
                     'nonPlaceableAttributeNames' => array(
@@ -84,7 +84,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'NoteActivityItems'),
+                                                array('attributeName' => 'null', 'type' => 'ActivityItems'),
                                             ),
                                         ),
                                     )

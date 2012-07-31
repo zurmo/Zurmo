@@ -17,13 +17,13 @@ $(window).ready(function(){
     //Main nav hover
      $('#MenuView a, #RecentlyViewedView a').hover(
         function(){
-            $('span:first-child', this).stop(true, true).fadeTo( 50, 1, 'linear' );
-            $('span:last-child', this).stop(true, true).animate({ color : '#555', color: '#fff' }, 50, 'linear');
+            $('> span:first-child', this).stop(true, true).fadeTo( 50, 1, 'linear' );
+            $('> span:last-child', this).stop(true, true).animate({ color : '#555', color: '#fff' }, 50, 'linear');
         },
         function(){
             if ( $(this).parent().hasClass('active') === false ){
-                $('span:first-child',this).stop(true, true).fadeTo( 100, 0, 'linear' );
-                $('span:last-child', this).stop(true, true).animate({ color : '#fff', color: '#555' }, 100, 'linear');
+                $('> span:first-child',this).stop(true, true).fadeTo( 100, 0, 'linear' );
+                $('> span:last-child', this).stop(true, true).animate({ color : '#fff', color: '#555' }, 100, 'linear');
             }
         }
     );

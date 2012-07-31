@@ -85,15 +85,9 @@
             Yii::app()->end(0, false);
         }
 
-        /**
-         * Override to handle incoming file upload information.
-         * @see ActivitiesModuleController::resolveModelsHasManyRelationsFromPost()
-         */
-        protected function resolveModelsHasManyRelationsFromPost(& $model)
+        protected static function getZurmoControllerUtil()
         {
-            assert('$model instanceof Activity');
-            parent::resolveModelsHasManyRelationsFromPost($model);
-            FileModelUtil::resolveModelsHasManyFilesFromPost($model, 'files', 'filesIds');
+            return new ModelHasFilesAndRelatedItemsZurmoControllerUtil('activityItems', 'ActivityItemForm');
         }
     }
 ?>

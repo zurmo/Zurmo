@@ -33,17 +33,17 @@
         protected function renderControlNonEditable()
         {
             assert('$this->model instanceof Item');
-            $content = null;
+            $content = '<ul class="attachments">';
+            $content .= '<li><strong>' . Yii::t('Default', 'Attachments'). '</strong></li>';
             foreach ($this->model->files as $fileModel)
             {
-                if ($content != null)
-                {
-                    $content .= "<br/>";
-                }
+                $content .= '<li><span class="icon-attachment"></span>';   
                 $content .= FileModelDisplayUtil::renderDownloadLinkContentByRelationModelAndFileModel($this->model,
                                                                                                        $fileModel);
                 $content .= ' ' . FileModelDisplayUtil::convertSizeToHumanReadableAndGet((int)$fileModel->size);
+                $content .= '</li>';
             }
+            $content .= '</ul>';
             return $content;
         }
 

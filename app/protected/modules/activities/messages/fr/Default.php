@@ -31,7 +31,7 @@
     return array(
         'Activities'
             => 'Activités',
-         'Activity'
+        'Activity'
             => 'Activité',
         'Activity Items'
             => 'Éléments d\'activité',
@@ -49,10 +49,6 @@
             => 'À moi',
         'No Activities found.'
             => 'Aucune Activité trouvée.',
-        'Related'
-            => 'Associé',
-        'Related to'
-            => 'Associé à',
         'Roll Up'
             => 'Rollup',
         'Show more'

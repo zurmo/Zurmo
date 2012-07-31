@@ -59,10 +59,10 @@
             $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
             InstallUtil::autoBuildDatabase($messageLogger);
             $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //There are only 4 extra rows that are not being removed during the autobuild process.
+            //There are only 1 extra rows that are not being removed during the autobuild process.
             //These need to eventually be fixed so they are properly removed, except currency which is ok.
-            //contact_Opportunity, (1) _group__user (1), currency (1)
-            $this->assertEquals($beforeRowCount, ($afterRowCount - 3));
+            //currency (1)
+            $this->assertEquals($beforeRowCount, ($afterRowCount - 1));
             if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();

@@ -122,32 +122,32 @@
             switch ($messageType)
             {
                 case "OwnerNotExist":
-                    $subject = Yii::t('Default', 'Invalid email address.');
+                    $subject = Yii::t('Default', 'Invalid email address');
                     $textContent = Yii::t('Default', 'Email address does not exist in system.') . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', 'Email address does not exist in system.') . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "NoRighsForModule":
-                    $subject = Yii::t('Default', 'Missing Rights.');
+                    $subject = Yii::t('Default', 'Missing Rights');
                     $textContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system.') . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system.') . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "SenderNotExtracted":
-                    $subject = Yii::t('Default', "Sender info can't be extracted from email message.");
+                    $subject = Yii::t('Default', "Sender info can't be extracted from email message");
                     $textContent = Yii::t('Default', "Sender info can't be extracted from email message.") . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', "Sender info can't be extracted from email message.") . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "RecipientNotExtracted":
-                    $subject = Yii::t('Default', "Recipient info can't be extracted from email message.");
+                    $subject = Yii::t('Default', "Recipient info can't be extracted from email message");
                     $textContent = Yii::t('Default', "Recipient info can't be extracted from email message.") . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', "Recipient info can't be extracted from email message.") . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "EmailMessageNotValidated":
-                    $subject = Yii::t('Default', "Email message could not be validated.");
+                    $subject = Yii::t('Default', "Email message could not be validated");
                     $textContent = Yii::t('Default', "Email message could not be validated.") . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', "Email message could not be validated.") . "<br><br>" . $originalMessage->htmlBody;
                     break;
                 case "EmailMessageNotSaved":
-                    $subject = Yii::t('Default', "Email message could not be saved.");
+                    $subject = Yii::t('Default', "Email message could not be saved");
                     $textContent = Yii::t('Default', "Email message could not be saved.") . "\n\n" . $originalMessage->textBody;
                     $htmlContent = Yii::t('Default', "Email message could not be saved.") . "<br><br>" . $originalMessage->htmlBody;
                     break;

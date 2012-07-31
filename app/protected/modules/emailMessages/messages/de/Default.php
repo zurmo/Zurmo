@@ -113,6 +113,8 @@
             => 'Postausgang Fehler ',
         'Person'
             => 'Name',
+        'Person or Account'
+            => 'Person or Account', // Same Word Translated
         'Port'
             => 'Port', // Same Word Translated
         'Process Inbound Email Job'

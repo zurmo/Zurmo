@@ -64,7 +64,7 @@
         protected static function getExistingContactRelationsLabels($activityItems)
         {
             $existingContacts = array();
-            $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem('Contact');
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem('Contact');
             foreach ($activityItems as $item)
             {
                 try
@@ -86,7 +86,7 @@
         protected static function getNonExistingContactRelationsLabels($activityItems)
         {
             $existingContacts = array();
-            $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem('Contact');
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem('Contact');
             foreach ($activityItems as $item)
             {
                 try
@@ -117,7 +117,7 @@
                 {
                     try
                     {
-                        $modelDerivationPathToItem = ActivitiesUtil::getModelDerivationPathToItem($relationModelClassName);
+                        $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem($relationModelClassName);
                         $castedDownModel           = $item->castDown(array($modelDerivationPathToItem));
                         if ($content != null)
                         {

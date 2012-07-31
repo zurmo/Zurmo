@@ -168,5 +168,50 @@
             assert('is_array($elementInformation)');
             return true;
         }
+
+        /**
+         * Render a menu above the form layout. This includes buttons and/or
+         * links to go to different views or process actions such as save or delete
+         * @return A string containing the element's content.
+          */
+        protected function renderActionElementMenu($title = null)
+        {
+            if($title == null)
+            {
+                $title = Yii::t('Default', 'Options');
+            }
+            $metadata  = $this::getMetadata();
+            $menuItems = array('label' => $title, 'items' => array());
+            if (isset($metadata['global']['toolbar']) && is_array($metadata['global']['toolbar']['elements']))
+            {
+                foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
+                {
+                    $elementclassname = $elementInformation['type'] . 'ActionElement';
+                    $params = array_slice($elementInformation, 1);
+                    array_walk($params, array($this, 'resolveEvaluateSubString'));
+                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+                    if (!$this->shouldRenderToolBarElement($element, $elementInformation))
+                    {
+                        continue;
+                    }
+                    if ($element->isFormRequiredToUse())
+                    {
+                        throw new NotSupportedException();
+                    }
+                    $menuItems['items'][] = $element->renderMenuItem();
+                }
+            }
+            if (count($menuItems['items']) > 0)
+            {
+                $cClipWidget = new CClipWidget();
+                $cClipWidget->beginClip("OptionMenu");
+                $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                    'htmlOptions' => array('class' => 'options-menu'),
+                    'items'                   => array($menuItems),
+                ));
+                $cClipWidget->endClip();
+                return $cClipWidget->getController()->clips['OptionMenu'];
+            }
+        }
     }
 ?>

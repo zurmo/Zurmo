@@ -97,8 +97,6 @@
             $cClipWidget->beginClip("headerMenu");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
                 'items'                   => $menuItems,
-                'navContainerClass'       => 'nav-single-container',
-                'navBarClass'             => 'nav-single-bar',
                 'htmlOptions' => array('id' => $menuId),
             ));
             $cClipWidget->endClip();

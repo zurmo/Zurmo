@@ -73,6 +73,8 @@
             => 'Vida útil mínima de las contraseñas',
         'Profile'
             => 'Perfil',
+        'Quick Tip'
+            => 'Consejo rápido',
         'Sign in Via Mobile'
             => 'Conexión móvil',
         'Sign in Via Web'
@@ -103,5 +105,7 @@
             => 'Usuarios',
         'Users Home'
             => 'Accueil Utilisateurs',
+        'Users cannot be deleted.  You can however change their status to inactive.'
+            => 'No se puede eliminar usuarios. Sin embargo, puede cambiar su estado a inactivo.',
     );
 ?>

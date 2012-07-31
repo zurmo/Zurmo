@@ -350,6 +350,14 @@ table.configuration-list{
     }
 }
 
+#LanguagesCollectionView{
+    tr:last-child{
+        td{
+            border-bottom: none !important;
+        }
+    }
+}
+
 /*Jobs*/
 #JobsCollectionView{
     .form form{
@@ -570,22 +578,6 @@ table.configuration-list{
     .AppContent {
         //padding-right:0;
     }
-    /*
-    .DetailsView{
-        table{
-            margin-left:8px;
-        }
-        td{
-            text-align:left;
-            padding-left:15px;
-        }
-        th{
-            text-align:left;
-            font-size: 12px !important;
-            color: #666;
-        }
-    }
-    */
     .panel{
         width:100% !important;
         .box-sizing();
@@ -597,6 +589,11 @@ table.configuration-list{
     #edit-form{
         padding-right:30px;
     }
+}
+#UserCreateView{
+	.panel{
+        width:70% !important;
+   }
 }
 
 .panelTitle{
@@ -689,7 +686,7 @@ table.configuration-list{
     h3{
         margin-bottom:15px;
     }
-    #permissions-module {
+    #right-side-edit-view-panel {
         width: 60% !important;
         float: none !important;
     }
@@ -719,7 +716,7 @@ table.configuration-list{
 
 /*= Step 3*/
 #ImportWizardSetModelPermissionsView{
-    #permissions-module{
+    #right-side-edit-view-panel{
         position:relative !important;
         top:0 !important;
         right:0 !important;

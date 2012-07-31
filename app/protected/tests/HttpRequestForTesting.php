@@ -54,5 +54,15 @@
             echo 'Testing download.';
             Yii::app()->end(0, false);
         }
+
+        /**
+         * Override to avoid when parameters such as SERVER_NAME are not available via unit testing.
+         * (non-PHPdoc)
+         * @see CHttpRequest::getHostInfo()
+         */
+        public function getHostInfo($schema = '')
+        {
+            return 'localhost';
+        }
     }
 ?>

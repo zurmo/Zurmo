@@ -43,8 +43,6 @@
             => 'Pulire i vecchi job logs.',
         'Clear the assets folder on server(optional).'
             => 'Pulisci la cartella Assets nel server (opionale).',
-        'Click Here'
-            => 'Clicca qui',
         'Completed'
             => 'Terminato',
         'Completed with Errors'

@@ -73,6 +73,8 @@
             => 'Cambiato',
         'Clear'
             => 'Cancella',
+        'Click Here'
+            => 'Clicca qui',
         'Create'
             => 'Crea',
         'Created By User'
@@ -219,6 +221,10 @@
             => 'record', // Same Word Translated
         'records'
             => 'record',
+        'Related'
+            => 'Collegato',
+        'Related to'
+            => 'Collegato a',
         'Remove'
             => 'Rimuovi',
         'Return to List'

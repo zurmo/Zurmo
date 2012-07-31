@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(Don\'t worry you can turn it on again)'
+            => '(vous pouvez rétablir son affichage)',
         '1 Column'
             => '1 colonne',
         '2 Columns'
@@ -53,8 +55,8 @@
             => 'Supprimer le tableau de bord',
         'Delete Dashboards'
             => 'Supprimer les Tableaux de bord',
-        'Don\'t show me this screen again (Don\'t worry you can turn it on again)'
-            => 'Ne plus afficher cette page (vous pouvez rétablir son affichage)',
+        'Don\'t show me this screen again'
+            => 'Ne plus afficher cette page',
         'Edit Dashboard'
             => 'Modifier le tableau de bord',
         'Go to the dashboard'

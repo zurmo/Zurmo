@@ -128,6 +128,17 @@
             }
         }
 
+        public function removeAllReadWritePermitables()
+        {
+            foreach($this->readWritePermitables as $permitable)
+            {
+                if (!isset($this->readWritePermitablesToRemove[$permitable->id]))
+                {
+                    $this->readWritePermitablesToRemove[$permitable->id] = $permitable;
+                }
+            }
+        }
+
         /**
          * @return integer count of read only permitables
          */

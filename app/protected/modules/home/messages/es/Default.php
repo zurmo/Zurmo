@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(Don\'t worry you can turn it on again)'
+            => '(se puede regresar)',
         '1 Column'
             => '1 Columna',
         '2 Columns'
@@ -53,8 +55,8 @@
             => 'Eliminar Panel de Portlets',
         'Delete Dashboards'
             => 'Eliminar Panel de Portlets',
-        'Don\'t show me this screen again (Don\'t worry you can turn it on again)'
-            => 'No volver a mostrar esta ventana (se puede regresar)',
+        'Don\'t show me this screen again'
+            => 'No volver a mostrar esta ventana',
         'Edit Dashboard'
             => 'Editar el Panel de Portlets',
         'Go to the dashboard'

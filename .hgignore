@@ -30,3 +30,11 @@ app/report
 .DS_Store
 .settings
 README.md
+.idea/.name
+.idea/ZurmoUI.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/workspace.xml

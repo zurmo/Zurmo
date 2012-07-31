@@ -73,6 +73,8 @@
             => 'Durée de vie minimale des mots de passe',
         'Profile'
             => 'Profil',
+        'Quick Tip'
+            => 'Astuce',
         'Sign in Via Mobile'
             => 'Connexion mobile',
         'Sign in Via Web'
@@ -103,5 +105,7 @@
             => 'Utilisateurs',
         'Users Home'
             => 'Inicio de Usuarios',
+        'Users cannot be deleted.  You can however change their status to inactive.'
+            => 'Il n\'est pas possible de supprimer un utilisateur, mais vous pouvez le rendre inactif.',
     );
 ?>

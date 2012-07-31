@@ -32,12 +32,24 @@
         /**
          * Because notes is a simpler model that is typically displayed inline, the labels should display above
          * each of the relation inputs.
-         * @see ActivityItemsElement::getActivityItemEditableTemplate()
+         * @see ActivityItemsElement::getRelatedItemEditableTemplate()
          */
-        protected function getActivityItemEditableTemplate()
+        protected function getRelatedItemEditableTemplate()
         {
-            $editableTemplate = "<tr><td colspan='3'>\n";
+            $editableTemplate = "<tr><td colspan='{colspan}'>\n";
             $editableTemplate .= '{label}<br/>{content}{error}';
+            $editableTemplate .= "</td></tr>\n";
+            return $editableTemplate;
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see RelatedItemsElement::getRelatedItemEditableTemplate()
+         */
+        protected function getRelatedItemEditableHiddenInputOnlyTemplate()
+        {
+            $editableTemplate = "<tr><td colspan='{colspan}'>\n";
+            $editableTemplate .= '{content}{error}';
             $editableTemplate .= "</td></tr>\n";
             return $editableTemplate;
         }

@@ -148,6 +148,7 @@
             if (is_string($text))
             {
                 $purifier = new CHtmlPurifier();
+                $purifier->options = array('Cache.SerializerPermissions' => 0777);
                 $text = $purifier->purify($text);
             }
             return $text;

@@ -78,6 +78,7 @@ EOD;
         $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
         $messageLogger = new MessageLogger($messageStreamer);
         InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+        ReadPermissionsOptimizationUtil::rebuild();
         $endTime = microtime(true);
         $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
         $messageStreamer->add(Yii::t('Default', 'Total run time: {formattedTime} seconds.',

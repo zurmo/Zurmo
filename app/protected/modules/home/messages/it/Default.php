@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '(Don\'t worry you can turn it on again)'
+            => '(è possibile riattivarla)',
         '1 Column'
             => '1 Colonna',
         '2 Columns'
@@ -53,8 +55,8 @@
             => 'Elimina Dashboard',
         'Delete Dashboards'
             => 'Elimina i Dashboards',
-        'Don\'t show me this screen again (Don\'t worry you can turn it on again)'
-            => 'Non visualizzare più questa finestra (è possibile riattivarla)',
+        'Don\'t show me this screen again'
+            => 'Non visualizzare più questa finestra',
         'Edit Dashboard'
             => 'Modifica Dashboard',
         'Go to the dashboard'

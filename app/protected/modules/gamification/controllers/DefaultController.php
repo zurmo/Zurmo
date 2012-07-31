@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class GamificationDefaultController extends ZurmoBaseController
+    class GamificationDefaultController extends ZurmoModuleController
     {
         public function actionIndex()
         {

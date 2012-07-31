@@ -46,13 +46,26 @@
             $attributeName    = $elementInformation['attributeName'];
             if (is_subclass_of($elementclassname, 'ModelElement'))
             {
+                $editableActionType = $elementclassname::getEditableActionType();
                 if (!ActionSecurityUtil::canUserPerformAction(
-                    $elementclassname::getEditableActionType(), $model->$attributeName, $user))
+                    $editableActionType, $model->$attributeName, $user))
                 {
                     $elementInformation['attributeName'] = null;
                     $elementInformation['type']          = 'Null'; // Not Coding Standard
                     //TODO: potentially throw misconfiguration exception if field is required
                     //instead of just setting a null element.
+                }
+                //If there is already an existing model, but the user cannot view it, then this should be disabled
+                //otherwise the user can accidentially wipe this out since it will appear in the UI as if it is not
+                //populated.
+                elseif($editableActionType == 'ModalList' &&
+                       $model->{$attributeName} != null &&
+                       $model->{$attributeName} instanceof RedBeanModel &
+                       $model->{$attributeName}->id > 0 &&
+                       !ActionSecurityUtil::canUserPerformAction('Details', $model->{$attributeName}, $user))
+                {
+                    $elementInformation['attributeName'] = null;
+                    $elementInformation['type']          = 'Null'; // Not Coding Standard
                 }
             }
             if (is_subclass_of($elementclassname, 'ModelsElement'))

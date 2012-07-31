@@ -40,6 +40,7 @@
                 $items = MenuUtil::getVisibleAndOrderedTabMenuByCurrentUser();
                 GeneralCache::cacheEntry(self::getMenuViewItemsCacheIdentifier(), $items);
             }
+            static::resolveTabMenuForDynamicLabelContent($items);
             return $items;
         }
 
@@ -455,6 +456,21 @@
                 }
             }
             return $menuItems;
+        }
+
+        protected static function resolveTabMenuForDynamicLabelContent(& $items)
+        {
+            foreach ($items as $key => $item)
+            {
+                if (isset($items[$key]['dynamicLabelContent']))
+                {
+                    MetadataUtil::resolveEvaluateSubString($items[$key]['dynamicLabelContent']);
+                    if(isset($items[$key]['items']))
+                    {
+                        static::resolveTabMenuForDynamicLabelContent($items[$key]['items']);
+                    }
+                }
+            }
         }
     }
 ?>

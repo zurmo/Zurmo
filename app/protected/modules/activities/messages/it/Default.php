@@ -49,10 +49,6 @@
             => 'Le miei',
         'No Activities found.'
             => 'Nessuna attività trovato.',
-        'Related'
-            => 'Collegato',
-        'Related to'
-            => 'Collegato a',
         'Roll Up'
             => 'Roll Up', // Same Word Translated
         'Show more'

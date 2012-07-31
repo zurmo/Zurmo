@@ -29,6 +29,26 @@
      */
     class OpportunityLatestActivtiesForPortletView extends LatestActivtiesForPortletView
     {
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            return array_merge($metadata, array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'                   => 'CreateConversationFromRelatedListLink',
+                                  'routeParameters'         =>
+                                    array('relationAttributeName'    => 'notUsed',
+                                            'relationModelClassName' => 'Opportunity',
+                                            'relationModelId'        => 'eval:$this->params["relationModel"]->id',
+                                            'relationModuleId'       => 'opportunities',
+                                            'redirectUrl'            => 'eval:Yii::app()->request->getRequestUri()')
+                        ),
+                    ),
+                ),
+            )));
+        }
+
         public function getLatestActivitiesViewClassName()
         {
             return 'LatestActivitiesForOpportunityListView';
