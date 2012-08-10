@@ -91,6 +91,8 @@
             => 'Datum',
         'Date Time'
             => 'Datum Uhrzeit',
+        'Default data loaded for {moduleName}'
+            => 'Standard Daten für {moduleName} geladen',
         'Default Value'
             => 'Ausgangswert',
         'Delete'

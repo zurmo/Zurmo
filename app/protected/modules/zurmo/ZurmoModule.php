@@ -96,12 +96,12 @@
                     array(
                         'label' => 'Forums',
                         'url' => 'http://zurmo.org/forums/',
-                        'order' => 7,
+                        'order' => 8,
                     ),
                     array(
                         'label' => 'About Zurmo',
                         'url' => array('/zurmo/default/about'),
-                        'order' => 8,
+                        'order' => 9,
                     ),
                 ),
                 'adminTabMenuItemsModuleOrdering' => array(

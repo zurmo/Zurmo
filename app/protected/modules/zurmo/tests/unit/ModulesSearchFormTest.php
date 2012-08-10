@@ -190,7 +190,7 @@
                     'value'                => 'ABC Company',
                 ),
             );
-            $compareStructure = '(1 or 2) or (3 or 4) or 5';
+            $compareStructure = '((1 or 2) or (3 or 4) or 5)';
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }
@@ -265,7 +265,6 @@
                 ),
             );
             $compareStructure = '(1 or 2)';
-
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);
         }

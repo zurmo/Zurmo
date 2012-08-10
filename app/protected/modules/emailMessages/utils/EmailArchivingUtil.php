@@ -187,7 +187,7 @@
         }
 
         /**
-         * Get Contact or Account or User, based on meail address
+         * Get Contact or Account or User, based on email address
          * @param string $emailAddress
          * @param boolean $userCanAccessContacts
          * @param boolean $userCanAccessLeads

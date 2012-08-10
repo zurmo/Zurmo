@@ -31,13 +31,6 @@
      */
     class TitleBarView extends View
     {
-        /**
-         * Rendering the MenuView with overflow would cause
-         * some portions of the MenuView to be cut off in the
-         * user interface
-         */
-        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false;
-
         protected $title;
 
         protected $description;

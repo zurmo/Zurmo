@@ -93,7 +93,7 @@
             $unionSql = static::makeUnionSql($this->modelClassNamesAndSearchAttributeData,
                                              $this->modelClassNamesAndSortAttributes,
                                              $this->sortDescending, $offset, $limit);
-                                             return $this->makeModelsBySql($unionSql);
+            return $this->makeModelsBySql($unionSql);
         }
 
        /**

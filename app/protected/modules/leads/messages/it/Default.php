@@ -29,6 +29,10 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>"Lead, follow, or get out of the way."</h2> ' .
+        '<i>- Thomas Paine</i></i><div class="large-icon"></div><p>Leads are potential clients that should be followed up ' .
+        'on.  Be the first to create a Lead or get out of the way so someone else can.</p>'
+            => '<h2>"Lead, follow, or get out of the way."</h2> <i>- Thomas Paine</i></i><div class="large-icon"></div><p>Leads are potential clients that should be followed up on.  Be the first to create a Lead or get out of the way so someone else can.</p>',  // Same Word Translated
         'Access LeadsModulePluralLabel Tab'
             => 'Acceso ai LeadsModulePluralLabel',
         'AccountsModuleSingularLabel Optional'
@@ -37,6 +41,10 @@
             => 'AccountsModuleSingularLabel obbligatorio',
         'Complete LeadsModuleSingularLowerCaseLabel conversion without selecting or creating an AccountsModuleSingularLowerCaseLabel.'
             => 'Complete la conversione di un LeadsModuleSingularLowerCaseLabel senza selezionare o creare un AccountsModuleSingularLowerCaseLabel.',
+        'ContactsModuleSingularLabel or LeadsModuleSingularLabel ID'
+            => 'ID ContactsModuleSingularLabel o LeadsModuleSingularLabel',
+        'ContactsModuleSingularLabel or LeadsModuleSingularLabel Name'
+            => 'Nome ContactsModuleSingularLabel o LeadsModuleSingularLabel',
         'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently you do not have access to the AccountsModulePluralLowerCaseLabel module. Please contact your administrator.'
             => 'La conversione richiede un AccountsModuleSingularLowerCaseLabel, ma non avete acceso al modulo AccountsModulePluralLowerCaseLabel.  Prego di contattare il amministratore.',
         'Conversion requires access to the ContactsModulePluralLowerCaseLabel module which you do not have. Please contact your administrator.'
@@ -69,6 +77,10 @@
             => 'LeadsModuleSingularLabel', // Same Word Translated
         'LeadsModuleSingularLabel Conversion'
             => 'Conversione di LeadsModuleSingularLabel',
+        'LeadsModuleSingularLabel ID'
+            => 'ID LeadsModuleSingularLabel',
+        'LeadsModuleSingularLabel Name'
+            => 'Nome completo',
         'LeadsModuleSingularLabel Search'
             => 'Ricerca LeadsModuleSingularLabel',
         'LeadsModuleSingularLabel successfully converted.'

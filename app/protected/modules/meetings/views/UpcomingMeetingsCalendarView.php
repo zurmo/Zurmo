@@ -104,7 +104,7 @@
                     type     : 'GET',
                     'beforeSend' : function(){
                                         jQuery('#modalContainer').html('');
-										makeLargeLoadingSpinner('modalContainer');
+                    makeLargeLoadingSpinner('modalContainer');
                                         jQuery('#modalContainer').dialog({'title': dateText,
                                                                           'autoOpen':true,
                                                                           'modal': true,
@@ -147,11 +147,11 @@
         {
             $month     = str_pad($_GET['month'], 2, '0', STR_PAD_LEFT);
             $year      = $_GET['year'];
-            $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();            
+            $dayEvents = $this->makeDataProvider($year . '-' . $month . '-01')->getData();
             foreach ($dayEvents as $event)
             {
                 $dateTimestamp = DateTimeUtil::convertDbFormatDateTimeToTimestamp($event['dbDate']);
-                $dateForJavascript = date('M j, Y', $dateTimestamp);             
+                $dateForJavascript = date('M j, Y', $dateTimestamp);
                 echo "console.log('" . $dateForJavascript . "');calendarEvents[new Date('" . $dateForJavascript . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
             }
         }

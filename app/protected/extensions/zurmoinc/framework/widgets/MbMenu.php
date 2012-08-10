@@ -141,7 +141,7 @@
                 $this->getController()->getRoute(),
                 $hasActiveChild
             );
-            if(isset($this->htmlOptions['class']))
+            if (isset($this->htmlOptions['class']))
             {
                 $this->htmlOptions['class'] .= ' nav';
             }
@@ -149,7 +149,6 @@
             {
                 $this->htmlOptions['class'] = 'nav';
             }
-
         }
 
         /**
@@ -216,7 +215,7 @@
 
         protected static function resolveAndGetSpanAndDynamicLabelContent($item)
         {
-            if(isset($item['dynamicLabelContent']))
+            if (isset($item['dynamicLabelContent']))
             {
                 return CHtml::tag('span', array(), $item['dynamicLabelContent']);
             }

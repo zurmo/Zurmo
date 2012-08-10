@@ -104,12 +104,14 @@
                 }
             }";
             // End Not Coding Standard
-            $options = CJavaScript::encode($this->options);            
+            $options = CJavaScript::encode($this->options);
             if ($this->language != '' && $this->language != 'en')
             {
                 $this->registerScriptFile($this->i18nScriptFile);
                 $js = "jQuery('#{$id}').datepicker(jQuery.extend({showMonthAfterYear:false}, jQuery.datepicker.regional['{$this->language}'], {$options}));";
-            } else {
+            }
+            else
+            {
                 $js = "jQuery('#{$id}').datepicker($options);";
             }
             $js .= 'addSpansToDatesOnCalendar("' . $id . '");';
@@ -132,7 +134,7 @@
                 foreach ($this->dayEvents as $event)
                 {
                     $dateTimestamp = DateTimeUtil::convertDbFormatDateTimeToTimestamp($event['dbDate']);
-                    $dateForJavascript = date('M j, Y', $dateTimestamp);                
+                    $dateForJavascript = date('M j, Y', $dateTimestamp);
                     $script .= "calendarEvents[new Date('" . $dateForJavascript . "')] = new CalendarEvent('" . $event['label'] . "', '" . $event['className'] . "'); \n";
                 }
             }

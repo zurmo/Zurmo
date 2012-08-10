@@ -33,11 +33,11 @@
         {
             $metadata                = Conversation::getMetadata();
             $observedModelClassNames = $metadata['Conversation']['conversationItemsModelClassNames'];
-            if($observedModelClassNames == null)
+            if ($observedModelClassNames == null)
             {
                 return;
             }
-            foreach($observedModelClassNames as $modelClassName)
+            foreach ($observedModelClassNames as $modelClassName)
             {
                 $modelClassName::model()->attachEventHandler('onAfterDelete', array($this, 'deleteConversationItems'));
             }

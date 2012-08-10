@@ -128,7 +128,7 @@
         {
             if ($this->hasDashboardAccess)
             {
-                $label    = '<span></span>' . Yii::t('Default', '(Don\'t show me this screen again)');
+                $label    = '<span></span>' . Yii::t('Default', 'Don\'t show me this screen again');
                 $content  = '<div class="hide-welcome">'.CHtml::link($label, Yii::app()->createUrl('home/default/hideWelcome'));
                 $content .= ' <i>(' . Yii::t('Default', 'Don\'t worry you can turn it on again') . ')</i></div>';
                 return $content;

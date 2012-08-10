@@ -664,7 +664,7 @@
             usort($messagesSorted, 'lowercaseCompare');
             if ($messages !== $messagesSorted)
             {
-                $problems[] = 'Messages not in alphabetical order in ' . $shortFileName . ': ' . compareArrays($messages, $messagesSorted);
+                $problems[] = 'Messages not in alphabetical order in ' . $messagesDirectoryName . ': ' . compareArrays($messages, $messagesSorted);
             }
         }
         return $problems;

@@ -36,10 +36,11 @@
         public static function makeFormFromUserConfigurationByUser(User $user)
         {
             assert('$user instanceOf User && $user->id > 0');
-            $form                           = new UserConfigurationForm($user->id);
-            $form->listPageSize             = Yii::app()->pagination->getByUserAndType($user, 'listPageSize');
-            $form->subListPageSize          = Yii::app()->pagination->getByUserAndType($user, 'subListPageSize');
-            $form->hideWelcomeView          = static::resolveAndGetHideWelcomeViewValue($user);
+            $form                            = new UserConfigurationForm($user->id);
+            $form->listPageSize              = Yii::app()->pagination->getByUserAndType($user, 'listPageSize');
+            $form->subListPageSize           = Yii::app()->pagination->getByUserAndType($user, 'subListPageSize');
+            $form->hideWelcomeView           = static::resolveAndGetHideWelcomeViewValue($user);
+            $form->turnOffEmailNotifications = static::resolveAndGetTurnOffEmailNotificationsValue($user);
             return $form;
         }
 
@@ -52,6 +53,7 @@
             Yii::app()->pagination    ->setByUserAndType($user, 'listPageSize',    (int)$form->listPageSize);
             Yii::app()->pagination    ->setByUserAndType($user, 'subListPageSize', (int)$form->subListPageSize);
             static::setHideWelcomeViewValue($user, (bool)$form->hideWelcomeView);
+            static::setTurnOffEmailNotificationsValue($user, (bool)$form->turnOffEmailNotifications);
         }
 
         /**
@@ -62,7 +64,8 @@
         {
             Yii::app()->pagination    ->setForCurrentUserByType('listPageSize',    (int)$form->listPageSize);
             Yii::app()->pagination    ->setForCurrentUserByType('subListPageSize', (int)$form->subListPageSize);
-            static::setHideWelcomeViewValue(Yii::app()->user->userModel, (bool)$form->hideWelcomeView);
+            static::setHideWelcomeViewValue          (Yii::app()->user->userModel, (bool)$form->hideWelcomeView);
+            static::setTurnOffEmailNotificationsValue(Yii::app()->user->userModel, (bool)$form->turnOffEmailNotifications);
         }
 
         public static function resolveAndGetHideWelcomeViewValue(User $user)
@@ -82,6 +85,25 @@
         {
             assert('is_bool($value)');
             ZurmoConfigurationUtil::setByUserAndModuleName($user, 'ZurmoModule', 'hideWelcomeView', $value);
+        }
+
+        public static function resolveAndGetTurnOffEmailNotificationsValue(User $user)
+        {
+            assert('$user instanceOf User && $user->id > 0');
+            if ( null != $turnOff = ZurmoConfigurationUtil::getByUserAndModuleName($user, 'ZurmoModule', 'turnOffEmailNotifications'))
+            {
+                return $turnOff;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static function setTurnOffEmailNotificationsValue(User $user, $value)
+        {
+            assert('is_bool($value)');
+            ZurmoConfigurationUtil::setByUserAndModuleName($user, 'ZurmoModule', 'turnOffEmailNotifications', $value);
         }
     }
 ?>

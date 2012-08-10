@@ -123,7 +123,8 @@
                         $existingPeople[] = array('id' => $contact->getClassId('Item'),
                                                     'name' => strval($contact));
                     }
-                    else {
+                    else
+                    {
                         throw new NotFoundException();
                     }
                 }

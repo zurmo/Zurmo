@@ -105,10 +105,10 @@
             => 'Layouts de dettaglio e modifica',
         'Details View'
             => 'Layout dettaglio',
-        'Display {label} when'
-            => 'Esporre {label} quando',
         'Display Name'
             => 'Etichetta campo',
+        'Display {label} when'
+            => 'Esporre {label} quando',
         'Dropdown Dependency Mapping'
             => 'Mapping della lista a cascata dipendenta',
         'Each item must be uniquely named'

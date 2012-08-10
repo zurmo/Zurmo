@@ -33,14 +33,6 @@
     abstract class View
     {
         /**
-         * Some views will need to set this to false in order to avoid
-         * some portions of the view being cut off in the user interface.
-         * @see MenuView, TitleBarView for examples of views that set this
-         * value to false.
-         */
-        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false; //true
-
-        /**
          * Extra classes defined to add to the div style for the view.
          * @var array
          */
@@ -107,22 +99,15 @@
                 $classes = " class=\"$classes\"";
             }
             $calledClass = get_called_class();
-            if ($calledClass::RENDER_CONTENT_IN_DIV_WITH_OVERFLOW)
+            if (YII_DEBUG)
             {
-                return "<div $id$classes style=\"overflow: auto;\">$content</div>";
+                $reflection = new ReflectionClass( $calledClass );
+                $classFile = $reflection->getFileName();
+                return "<!--Called in: $classFile--><div" . $id . $classes . $this->getViewStyle() . ">$content</div>";
             }
             else
             {
-                if (YII_DEBUG)
-                {
-                    $reflection = new ReflectionClass( $calledClass );
-                    $classFile = $reflection->getFileName();
-                    return "<!--Called in: $classFile--><div $id $classes>$content</div>";
-                }
-                else
-                {
-                    return "<div $id $classes>$content</div>";
-                }
+                return "<div" . $id . $classes . $this->getViewStyle() . ">$content</div>";
             }
         }
 
@@ -139,6 +124,11 @@
         public function getCssClasses()
         {
             return $this->cssClasses;
+        }
+
+        protected function getViewStyle()
+        {
+            return null;
         }
     }
 ?>

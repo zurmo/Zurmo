@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>MatchUnmatchedArchivedEmails</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MatchUnmatchedArchivedEmails</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/zurmo/app/index.php/emailMessages/default/matchingList</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.email-matching-show-more</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Select Contact / Lead or</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Contact or Lead Name cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Create Lead</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>First Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>exact:Last Name *</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Select Contact / Lead</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#AnyContactSelectForm_3_contacts_SelectLink &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContactsSearchForm_anyMixedAttributes</td>
+	<td>lisa g</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=ContactsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; a</td>
+	<td>Lisa Green</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=td &gt; a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>From: Lisa Green</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.email-matching-show-more</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Create Lead</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>id=Lead_2_primaryEmail_emailAddress</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#dk_container_Lead_2_title_value &gt; a.dk_toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'Mr.')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=New</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=New</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Lead_2_primaryEmail_optOut</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#save-lead-2 &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>To: Bobby Bobson</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[3]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=LeadsSearchForm_anyMixedAttributes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=LeadsSearchForm_anyMixedAttributes</td>
+	<td>bobby</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=LeadsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//a[contains(text(),'Bobby Bobson')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(text(),'Bobby Bobson')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=td</td>
+	<td>Mr. Bobby Bobson</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td</td>
+	<td>New</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[10]/td</td>
+	<td>bob.message@zurmotest.com (Opted Out)</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>July 23, 2012<br />From: Super User To: Bobby Bobson <br />A test unmatched archived sent email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[4]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ContactsSearchForm_anyMixedAttributes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContactsSearchForm_anyMixedAttributes</td>
+	<td>lisa g</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Lisa Green</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>css=table.items.0.0</td>
+	<td>July 23, 2012<br />From: Lisa Green To: Super User <br />A test unmatched archived received email</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

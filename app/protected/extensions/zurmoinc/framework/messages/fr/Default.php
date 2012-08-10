@@ -91,6 +91,8 @@
             => 'Date', // Same Word Translated
         'Date Time'
             => 'Date/Heure',
+        'Default data loaded for {moduleName}'
+            => 'Données par défaut chargées pour {moduleName}',
         'Default Value'
             => 'Valeur par défault',
         'Delete'

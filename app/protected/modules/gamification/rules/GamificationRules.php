@@ -106,7 +106,7 @@
                 $category            = static::SCORE_CATEGORY_CREATE_MODEL;
                 $gameScore           = GameScore::resolveToGetByTypeAndPerson($scoreType, Yii::app()->user->userModel);
             }
-            elseif(!$this->scoreOnUpdate)
+            elseif (!$this->scoreOnUpdate)
             {
                 return;
             }

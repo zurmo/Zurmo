@@ -93,18 +93,6 @@
                         'label' => 'LeadsModulePluralLabel',
                         'url'   => array('/leads/default'),
                         'right' => self::RIGHT_ACCESS_LEADS,
-                        'items' => array(
-                            array(
-                                'label' => 'Create LeadsModuleSingularLabel',
-                                'url'   => array('/leads/default/create'),
-                                'right' => self::RIGHT_CREATE_LEADS
-                            ),
-                            array(
-                                'label' => 'LeadsModulePluralLabel',
-                                'url'   => array('/leads/default'),
-                                'right' => self::RIGHT_ACCESS_LEADS
-                            ),
-                        )
                     ),
                 ),
                 'shortcutsCreateMenuItems' => array(

@@ -566,7 +566,7 @@
                     array('hash',     'type',    'type' => 'string'),
                     array('hash',     'length',  'min'   => 32, 'max' => 32),
                     array('language', 'type',    'type'  => 'string'),
-                    array('language', 'length',  'max'   => 5),
+                    array('language', 'length',  'max'   => 10),
                     array('timeZone', 'type',    'type'  => 'string'),
                     array('timeZone', 'length',  'max'   => 64),
                     array('timeZone', 'default', 'value' => 'UTC'),

@@ -62,9 +62,9 @@
             assert('$conversation->id > 0');
             assert('$user->id > 0');
             $save = false;
-            if($user == $conversation->owner)
+            if ($user == $conversation->owner)
             {
-                if(!$conversation->ownerHasReadLatest)
+                if (!$conversation->ownerHasReadLatest)
                 {
                     $conversation->ownerHasReadLatest = true;
                     $save                             = true;
@@ -72,16 +72,16 @@
             }
             else
             {
-                foreach($conversation->conversationParticipants as $position => $participant)
+                foreach ($conversation->conversationParticipants as $position => $participant)
                 {
-                    if($participant->person->getClassId('Item') == $user->getClassId('Item') && !$participant->hasReadLatest)
+                    if ($participant->person->getClassId('Item') == $user->getClassId('Item') && !$participant->hasReadLatest)
                     {
                         $conversation->conversationParticipants[$position]->hasReadLatest = true;
                         $save                                                             = true;
                     }
                 }
             }
-            if($save)
+            if ($save)
             {
                 $conversation->save();
             }
@@ -91,15 +91,15 @@
         {
             assert('$conversation->id > 0');
             assert('$user->id > 0');
-            if($user->isSame($conversation->owner))
+            if ($user->isSame($conversation->owner))
             {
                 return $conversation->ownerHasReadLatest;
             }
             else
             {
-                foreach($conversation->conversationParticipants as $position => $participant)
+                foreach ($conversation->conversationParticipants as $position => $participant)
                 {
-                    if($participant->person->getClassId('Item') == $user->getClassId('Item'))
+                    if ($participant->person->getClassId('Item') == $user->getClassId('Item'))
                     {
                         return $participant->hasReadLatest;
                     }

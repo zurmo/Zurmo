@@ -51,13 +51,13 @@
             assert('$model instanceof Item');
             parent::afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions);
             FileModelUtil::resolveModelsHasManyFilesFromPost($model, 'files', 'filesIds');
-            if($this->relatedModel->getRelationType($this->relationName) == RedBeanModel::HAS_MANY)
+            if ($this->relatedModel->getRelationType($this->relationName) == RedBeanModel::HAS_MANY)
             {
-                if(!$this->relatedModel->{$this->relationName}->contains($model))
+                if (!$this->relatedModel->{$this->relationName}->contains($model))
                 {
                     $this->relatedModel->{$this->relationName}->add($model);
                     $saved = $this->relatedModel->save();
-                    if(!$saved)
+                    if (!$saved)
                     {
                         throw new FailedToSaveModelException();
                     }

@@ -55,23 +55,25 @@
             return $this->view->render();
         }
 
-        public static function getAjaxOptionsForModalLink($title, $containerId = 'modalContainer', $height = 'auto', $width = 600)
+        public static function getAjaxOptionsForModalLink($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center')
         {
             assert('is_string($containerId)');
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
+            assert('is_string($position)');
             return array(
-                    'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width),
+                    'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width, $position),
                     'update'     => '#' . $containerId);
         }
 
-        public static function getAjaxBeforeSendOptionForModalLinkContent($title, $containerId = 'modalContainer', $height = 'auto', $width = 600)
+        public static function getAjaxBeforeSendOptionForModalLinkContent($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center')
         {
             assert('is_string($containerId)');
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
+            assert('is_string($position)');
             if ($height == 'auto')
             {
                 $heightContent = "'auto'";
@@ -84,7 +86,7 @@
             return "js:function(){jQuery('#" . $containerId . "').html('');" .
                                     "makeLargeLoadingSpinner('" . $containerId . "');" .
                                     "jQuery('#" . $containerId . "').dialog({'title':'" . $title . "','autoOpen':true," .
-                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':'center'}); return true;}";
+                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':'" . $position . "'}); return true;}";
             // End Not Coding Standard
         }
     }

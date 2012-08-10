@@ -105,10 +105,10 @@
             => 'Vista de formularios',
         'Details View'
             => 'Vista de detalles',
-        'Display {label} when'
-            => 'Mostrar {label} cuando',
         'Display Name'
             => 'Etiqueta del campo',
+        'Display {label} when'
+            => 'Mostrar {label} cuando',
         'Dropdown Dependency Mapping'
             => 'Mapping de la dependencia de la lista desplegable',
         'Each item must be uniquely named'

@@ -102,7 +102,7 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $menu = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
-            $this->assertEquals(8, count($menu));
+            $this->assertEquals(9, count($menu));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getOrderedAccessibleHeaderMenuForCurrentUser();
             $this->assertEquals(3, count($menu));

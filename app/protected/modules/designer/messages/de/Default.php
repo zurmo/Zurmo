@@ -105,10 +105,10 @@
             => 'Detail und Bearbeiten Ansicht',
         'Details View'
             => 'Detailansicht',
-        'Display {label} when'
-            => '{label} anzeigen wenn',
         'Display Name'
             => 'Display Name', // Same Word Translated
+        'Display {label} when'
+            => '{label} anzeigen wenn',
         'Dropdown Dependency Mapping'
             => 'Mapping der Dropdown-Liste Abhängigkeit',
         'Each item must be uniquely named'

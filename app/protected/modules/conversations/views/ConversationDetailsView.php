@@ -132,7 +132,7 @@
                                                     array('id' => $this->model->id,
                                                           'uniquePageId' => $uniquePageId));
             $urlParameters = array('relatedModelId'           => $this->model->id,
-                                   'relatedModelClassName' 	  => 'Conversation',
+                                   'relatedModelClassName'    => 'Conversation',
                                    'relatedModelRelationName' => 'comments',
                                    'redirectUrl'              => $redirectUrl); //After save, the url to go to.
 

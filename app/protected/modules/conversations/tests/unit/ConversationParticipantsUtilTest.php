@@ -85,7 +85,7 @@
 
             //test adding 2 more participants
             $postData            = array();
-            $postData['itemIds'] = $super->getClassId('Item'). ',' . $steven->getClassId('Item') . ',' . $mary->getClassId('Item');
+            $postData['itemIds'] = $super->getClassId('Item'). ',' . $steven->getClassId('Item') . ',' . $mary->getClassId('Item'); // Not Coding Standard
             ConversationParticipantsUtil::resolveConversationHasManyParticipantsFromPost(
                                             $conversation, $postData, $explicitReadWriteModelPermissions);
             $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
@@ -105,7 +105,7 @@
 
             //test removing a participant (remove steven)
             $postData            = array();
-            $postData['itemIds'] = $super->getClassId('Item') . ',' . $mary->getClassId('Item');
+            $postData['itemIds'] = $super->getClassId('Item') . ',' . $mary->getClassId('Item'); // Not Coding Standard
             ConversationParticipantsUtil::resolveConversationHasManyParticipantsFromPost(
                                             $conversation, $postData, $explicitReadWriteModelPermissions);
             $this->assertTrue($conversation->save());
@@ -134,8 +134,6 @@
             $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();
             $this->assertEquals(0, count($readWritePermitables));
             $this->assertEquals(0, $conversation->conversationParticipants->count());
-
-
         }
     }
 ?>

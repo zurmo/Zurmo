@@ -76,7 +76,7 @@
                     'data' => 'js:$("#' . $this->params['formName'] . '").serialize()',
                     'url'  =>  $this->getUpdateParticipantsUrl(),
                     'success' => "function(data, textStatus, jqXHR){
-                            if(data == 'redirectToList')
+                            if (data == 'redirectToList')
                             {
                                 window.location = '" . $this->getParticipatingInListUrl() . "';
                             }

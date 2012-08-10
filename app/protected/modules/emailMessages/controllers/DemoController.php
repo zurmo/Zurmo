@@ -159,5 +159,117 @@
                 throw new NotSupportedException();
             }
         }
+
+        /**
+         * Special method to load archived, but unmatched emails. This is for use with the @see ArchivedEmailMatchingListView
+         */
+        public function actionLoadUnmatchedSampler()
+        {
+            if (Yii::app()->user->userModel->username != 'super')
+            {
+                throw new NotSupportedException();
+            }
+            $box                  = EmailBoxUtil::getDefaultEmailBoxByUser(Yii::app()->user->userModel);
+
+                    //#1 Create Archived - Sent
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->subject     = 'A test unmatched archived sent email';
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = 'My First Message';
+            $emailContent->htmlContent = 'Some fake HTML content';
+            $emailMessage->content     = $emailContent;
+            //Sending is current user (super)
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = 'super@zurmotest.com';
+            $sender->fromName          = 'Super User';
+            $sender->personOrAccount   = Yii::app()->user->userModel;
+            $emailMessage->sender      = $sender;
+            //Recipient is BobMessage
+            $recipient                  = new EmailMessageRecipient();
+            $recipient->toAddress       = 'bob.message@zurmotest.com';
+            $recipient->toName          = 'Bobby Bobson';
+            $recipient->type            = EmailMessageRecipient::TYPE_TO;
+            $emailMessage->recipients->add($recipient);
+            $emailMessage->folder       = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+            $emailMessage->sentDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $saved = $emailMessage->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+
+            //#2 Create Archived - Received
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->subject     = 'A test unmatched archived received email';
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = 'My Second Message';
+            $emailContent->htmlContent = 'Some fake HTML content';
+            $emailMessage->content     = $emailContent;
+            //Sending is current user (super)
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = 'bob.message@zurmotest.com';
+            $sender->fromName          = 'Bobby Bobson';
+            $emailMessage->sender      = $sender;
+            //Recipient is BobMessage
+            $recipient                  = new EmailMessageRecipient();
+            $recipient->toAddress       = 'super@zurmotest.com';
+            $recipient->toName          = 'Super User';
+            $recipient->type            = EmailMessageRecipient::TYPE_TO;
+            $recipient->personOrAccount = Yii::app()->user->userModel;
+            $emailMessage->recipients->add($recipient);
+            $emailMessage->folder       = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+            $emailMessage->sentDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $saved = $emailMessage->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        public function actionSendDemoEmailNotifications()
+        {
+            if (Yii::app()->user->userModel->username != 'super')
+            {
+                throw new NotSupportedException();
+            }
+            $template        = "{message}<br/>";
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageLogger = new MessageLogger($messageStreamer);
+
+            if (Yii::app()->user->userModel->primaryEmail->emailAddress == null)
+            {
+                $messageLogger->addErrorMessage('Cannot send test emails because the current user does not have an email address');
+                Yii::app()->end(0, false);
+            }
+            $messageLogger->addInfoMessage('Using type:' . Yii::app()->emailHelper->outboundType);
+            $messageLogger->addInfoMessage('Using host:' . Yii::app()->emailHelper->outboundHost);
+            $messageLogger->addInfoMessage('Using port:' . Yii::app()->emailHelper->outboundPort);
+            $messageLogger->addInfoMessage('Using username:' . Yii::app()->emailHelper->outboundUsername);
+            if (Yii::app()->emailHelper->outboundPassword != null)
+            {
+                $messageLogger->addInfoMessage('Using password: Yes');
+            }
+            else
+            {
+                $messageLogger->addInfoMessage('Using password: No');
+            }
+            $modules = Module::getModuleObjects();
+            foreach ($modules as $module)
+            {
+                $notificationClassNames = $module::getAllClassNamesByPathFolder('data');
+                foreach ($notificationClassNames as $notificationClassName)
+                {
+                    if (!strpos($notificationClassName, 'DemoEmailNotifications') === false)
+                    {
+                        $demoNotification = new $notificationClassName();
+                        $demoNotification->run(Yii::app()->user->userModel, $messageLogger);
+                    }
+                }
+            }
+            Yii::app()->emailHelper->sendQueued();
+        }
     }
 ?>

@@ -32,9 +32,7 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default',
-                          'Create AccountsModuleSingularLabel',
-                          LabelUtil::getTranslationParamsForAllModules());
+            return Yii::t('Default', 'Create AccountsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getMessageContent()

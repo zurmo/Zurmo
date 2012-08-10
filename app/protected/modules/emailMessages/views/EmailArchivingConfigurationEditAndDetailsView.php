@@ -48,7 +48,7 @@
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
-                            'title' => Yii::t("Default", "Email Archiving Configuration (IMAP)"),
+                            'title' => Yii::t('Default', 'Email Archiving Configuration (IMAP)'),
                             'rows' => array(
                                 array('cells' =>
                                     array(

@@ -29,7 +29,6 @@
      */
     class NoteInlineEditForPortletView extends InlineEditForPortletView
     {
-
         public function getTitle()
         {
             $title  = Yii::t('Default', 'Notes');

@@ -30,7 +30,7 @@
         {
             return array(
                 'name'        => 'subject',
-                'header'	  => false,
+                'header'      => false,
                 'type'        => 'raw',
                 'value'       => 'ConversationsUtil::renderSubjectAndLatestForDisplayView($data)',
                 'htmlOptions' => array('style' => 'width:40%;'),

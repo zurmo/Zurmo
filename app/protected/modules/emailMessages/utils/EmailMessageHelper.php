@@ -84,4 +84,37 @@
                 return false;
             }
         }
+
+        public static function sendTestEmail(EmailHelper $emailHelper, User $userToSendMessagesFrom, $toAddress)
+        {
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = EmailNotificationUtil::
+                                            resolveNotificationTextTemplate(
+                                            Yii::t('Default', 'A test text message from Zurmo.'));
+            $emailContent->htmlContent = EmailNotificationUtil::
+                                            resolveNotificationHtmlTemplate(
+                                            Yii::t('Default', 'A test text message from Zurmo.'));
+            $emailMessage->content     = $emailContent;
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = $emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
+            $sender->fromName          = strval($userToSendMessagesFrom);
+            $emailMessage->sender      = $sender;
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = $toAddress;
+            $recipient->toName         = 'Test Recipient';
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
+            $emailMessage->recipients->add($recipient);
+            $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
+            $validated                 = $emailMessage->validate();
+            if (!$validated)
+            {
+                throw new NotSupportedException();
+            }
+            $emailHelper->sendImmediately($emailMessage);
+            return $emailMessage;
+        }
     }

@@ -34,13 +34,6 @@
         }
 
         /**
-         * Rendering the MenuView with overflow would cause
-         * some portions of the MenuView to be cut off in the
-         * user interface
-         */
-        const RENDER_CONTENT_IN_DIV_WITH_OVERFLOW = false;
-
-        /**
          * Will attemp to get the menu items from cache, otherwise from the appropriate storage, and cache the information
          * for the next call to this method.
          * @see View::renderContent()

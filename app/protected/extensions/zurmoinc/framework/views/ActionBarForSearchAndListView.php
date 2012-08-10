@@ -63,7 +63,6 @@
          */
         protected $activeActionElementType;
 
-
         public function __construct($controllerId, $moduleId, RedBeanModel $model, $listViewGridId,
                                     $pageVarName, $listViewRowsAreSelectable, $activeActionElementType = null)
         {

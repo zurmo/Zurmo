@@ -357,7 +357,7 @@
                 ),
             );
 
-            $compareStructure = '1 or 2 or 3';
+            $compareStructure = '(1 or 2 or 3)';
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }

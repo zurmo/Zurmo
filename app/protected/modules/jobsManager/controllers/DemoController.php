@@ -44,6 +44,7 @@
             $jobLog->isProcessed   = true;
             $jobLog->message       = 'An error message about something' . "\n" . 'This is after a line break.';
             $saved                 = $jobLog->save();
+            echo 'Job Log Id: ' . $jobLog->id;
         }
     }
 ?>

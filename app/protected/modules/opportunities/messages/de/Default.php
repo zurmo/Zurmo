@@ -29,6 +29,12 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>"In the middle of difficulty lies Opportunity."</h2> ' .
+                                     '<i>- Albert Einstein</i></i><div class="large-icon"></div><p>In the middle of a well-implemented ' .
+                                     'CRM system lies Opportunities, or expressions of potential revenue. ' .
+                                     'Nothing difficult about creating an Opportunity, so go ahead and create the ' .
+                                     'first one!</p>'
+            => '<h2>"In the middle of difficulty lies Opportunity."</h2> <i>- Albert Einstein</i></i><div class="large-icon"></div><p>In the middle of a well-implemented CRM system lies Opportunities, or expressions of potential revenue. Nothing difficult about creating an Opportunity, so go ahead and create the first one!</p>', // Same Word Translated
         'Access OpportunitiesModulePluralLabel Tab'
             => 'Zugang OpportunitiesModulePluralLabel Tab',
         'Close Date'

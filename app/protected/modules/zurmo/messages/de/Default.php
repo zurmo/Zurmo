@@ -75,6 +75,8 @@
             => 'Aktive Sprachen können von den Benutzern verwendet werden. Das System Sprache und jeder Sprache in Verwendung durch einen Benutzer kann nicht inaktiviert werden',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Besitzer',
+        'Add Comment'
+            => 'Kommentar hinzufügen',
         'Add Currency'
             => 'Währung hinzufügen',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -133,10 +135,14 @@
             => 'Banking', // Same Word Translated
         'Business Services'
             => 'Handelsdienstleistungen',
+        'by <strong>{ownerStringContent}</strong>'
+            => 'von <strong> {ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'von {ownerStringContent}',
         'Cancel'
             => 'Abbrechen',
+        'Cancel changes'
+            => 'Änderungen stornieren',
         'Changes to active currencies saved successfully.'
             => 'Änderungen an aktiven Währungen erfolgreich geändert.',
         'Changes to active languages saved successfully.'

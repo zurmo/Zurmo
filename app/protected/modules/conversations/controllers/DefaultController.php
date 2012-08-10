@@ -138,7 +138,7 @@
         public function actionUpdateParticipants($id)
         {
             $postData     = PostUtil::getData();
-            if(isset($postData['ConversationParticipantsForm']))
+            if (isset($postData['ConversationParticipantsForm']))
             {
                 $conversation                      = Conversation::getById((int)$id);
                 $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($conversation);
@@ -148,13 +148,13 @@
                                                                    $postData['ConversationParticipantsForm'],
                                                                    $explicitReadWriteModelPermissions);
                 $saved = $conversation->save();
-                if($saved)
+                if ($saved)
                 {
                     $success                   = ExplicitReadWriteModelPermissionsUtil::
                                                  resolveExplicitReadWriteModelPermissions($conversation,
                                                                                           $explicitReadWriteModelPermissions);
                     $currentUserIsParticipant  = ConversationParticipantsUtil::isUserAParticipant($conversation, Yii::app()->user->userModel);
-                    if($currentUserWasParticipant && !$currentUserIsParticipant)
+                    if ($currentUserWasParticipant && !$currentUserIsParticipant)
                     {
                         echo 'redirectToList';
                     }
@@ -181,7 +181,7 @@
         public function actionCreateFromRelation($relationAttributeName, $relationModelId, $relationModuleId, $redirectUrl)
         {
             $getData              = GetUtil::getData();
-            if(null == ArrayUtil::getArrayValue($getData, 'relationModelClassName'))
+            if (null == ArrayUtil::getArrayValue($getData, 'relationModelClassName'))
             {
                 throw new NotSupportedException();
             }
@@ -201,7 +201,6 @@
                                              makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }
-
 
         /**
          * Override to handle the special scenario of relations for a conversation. Since relations are done in the
@@ -232,10 +231,10 @@
         {
             $comment       = new Comment();
             $redirectUrl   = Yii::app()->createUrl('/conversations/default/inlineCreateCommentFromAjax',
-                                                    array('id'		     => $id,
+                                                    array('id'           => $id,
                                                           'uniquePageId' => $uniquePageId));
             $urlParameters = array('relatedModelId'           => (int)$id,
-                                   'relatedModelClassName' 	  => 'Conversation',
+                                   'relatedModelClassName'    => 'Conversation',
                                    'relatedModelRelationName' => 'comments',
                                    'redirectUrl'              => $redirectUrl); //After save, the url to go to.
             $uniquePageId  = 'CommentInlineEditForConversationView';

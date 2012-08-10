@@ -105,7 +105,8 @@
          */
         protected function renderError()
         {
-            return $this->form->error($this->model, $this->attribute);
+            return $this->form->error($this->model, $this->attribute,
+                    array('inputID' => $this->getEditableInputId()));
         }
 
         /**

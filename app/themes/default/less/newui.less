@@ -21,6 +21,7 @@
 @import 'welcome.less';
 @import 'tablet.less';
 @import 'conversations.less';
+@import 'email.less';
 
 @font-face {
     font-family: 'ZurmoGamificationSymblyReguRg';
@@ -145,6 +146,11 @@ body{
     font-size:11px;
     color:#545454;
     -webkit-font-smoothing: antialiased;
+    /* @doubtful_existance: I don’t think these even exist? Can’t hurt much, I guess. */
+-moz-font-smoothing: antialiased;
+-o-font-smoothing: antialiased;
+/* end @doubtful_existance */
+font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -480,16 +486,22 @@ footer, header, hgroup, menu, nav, section {
 #settings-header-menu{
     > li{
         position: relative;
+        .t-shadow(none) !important;
+        a{
+            .t-shadow(none) !important;
+        }
     }
     > li > a span{
         display:inline-block;
         text-indent:-9999px;
+        .t-shadow(none) !important;
     }
     > li > a:after{
         content: "n"; //Q o n
-        color:#d4d5e3;
-        .symbly(22px);
-        margin-top:1px;
+        color:#ccc;
+        .symbly(26px);
+        //.opacity(75);
+        //font-smooth:always;
     }
     ul{
         margin-left:-97px;
@@ -1138,9 +1150,16 @@ footer, header, hgroup, menu, nav, section {
 /*=dashboard*/
 #HomePageView .AppContent{
     padding-right:0;
+    &#DashboardEditView{
+        padding-right:20px;
+    }
 }
 #HomeDashboardView{
 	margin-top:15px;
+    .parent > ul{
+        min-width: 160px;
+        margin-top:0;
+    }
 }
 
 /*=Inner toolbar*/
@@ -1207,7 +1226,7 @@ footer, header, hgroup, menu, nav, section {
         list-style:none;
     }
     .parent > ul{
-        margin-top:-2px;
+        margin-top:0;
         .headerDropDown();
         left:auto;
     }
@@ -1240,6 +1259,13 @@ footer, header, hgroup, menu, nav, section {
 
 .icon-add:before{
     content: "Y";
+    .view-toolbar-icons();
+    top:-2px;
+}
+
+#HomeDashboardView .parent > a:before,
+.icon-change-dashborad:before{
+    content: "/";
     .view-toolbar-icons();
     top:-2px;
 }
@@ -2771,6 +2797,9 @@ div.wide.form{
             }
         }
     }
+    .form-toolbar{
+        border-top:none;
+    }
 }
 
 #inline-edit-form{
@@ -2805,7 +2834,11 @@ div.wide.form{
     .view-toolbar-container{
         a{
             float:right;
+            clear: both;
         }
+    }
+    .form-toolbar{
+        border-top:none;
     }
     textarea{
         line-height: 130%;
@@ -3586,14 +3619,24 @@ div.hasHalfs{
         background:none !important;
         .b-shadow(none);
     }
+    .panel{
+        width: 100% !important;
+    }
     #edit-form{
         border:none !important;
         background:none !important;
         .b-shadow(none);
+        padding-bottom: 0 !important;
         table{
             width:100%;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
         }
     }
+    form table{
+        padding-bottom: 15px !important;
+    }
+    
     #account-skip-form{
         th{
             text-align:center !important;

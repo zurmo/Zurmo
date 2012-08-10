@@ -91,9 +91,9 @@
 
         protected static function addItemIdToPostData(& $postData, $itemId)
         {
-            if(isset($postData['itemIds']))
+            if (isset($postData['itemIds']))
             {
-                $postData['itemIds'] .= ',' . $itemId;
+                $postData['itemIds'] .= ',' . $itemId; // Not Coding Standard
             }
             else
             {

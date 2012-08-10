@@ -29,6 +29,10 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '$_SERVER does not have {vars}.'
+            => '$_SERVER no tiene {vars}.',
+        '$_SERVER is accessible.'
+            => '$_SERVER es accesible',
         'Apache'
             => 'Apache', // Same Word Translated
         'APC'
@@ -116,6 +120,8 @@
             => 'No utilice la versión RedBean Legacy',
         'Dropping existing tables.'
             => 'Eliminación de las tablas existentes',
+        'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.'
+            => '$_SERVER["REQUEST_URI"] o $_SERVER["QUERY_STRING"] no existe.',
         'Error code:'
             => 'Código de error:',
         'FAIL'
@@ -286,6 +292,8 @@
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'
             => 'Hubo un problema al crear el código de error de usuario',
+        'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]'
+            => 'No se puede determinar info ruta URL. Por favor, asegúrese $_SERVER ["PATH_INFO"]',
         'User who can connect to the database.'
             => 'El usuario que puede conectarse a la base de datos.',
         'User`s password.'
@@ -332,5 +340,5 @@
             => '{folderPath} falta',
         '{folderPath} is not writable.'
             => '{folderPath} no se puede escribir.',
-    ); // Not Coding Standard
+    );
 ?>

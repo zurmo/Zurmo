@@ -57,7 +57,7 @@
             );
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
             $textField   = $form->textField($model, $attribute, $htmlOptions);
-            $error       = $form->error    ($model, $attribute);
+            $error       = $form->error    ($model, $attribute, array('inputID' => $id));
             if ($model->$attribute != null)
             {
                  $label = null;

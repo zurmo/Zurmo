@@ -118,18 +118,18 @@
                 ),
                 'relations' => array(
                     'comments'                 => array(RedBeanModel::HAS_MANY,  'Comment', RedBeanModel::OWNED, 'relatedModel'),
-                    'conversationItems'	 	   => array(RedBeanModel::MANY_MANY, 'Item'),
+                    'conversationItems'        => array(RedBeanModel::MANY_MANY, 'Item'),
                     'conversationParticipants' => array(RedBeanModel::HAS_MANY,  'ConversationParticipant', RedBeanModel::OWNED),
                     'files'                    => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED, 'relatedModel'),
                 ),
                 'rules' => array(
-                    array('description',    	'type',    'type' => 'string'),
-                    array('latestDateTime', 	'required'),
-                    array('latestDateTime', 	'readOnly'),
-                    array('latestDateTime', 	'type', 'type' => 'datetime'),
-                    array('subject',           	'required'),
-                    array('subject',          	'type',    'type' => 'string'),
-                    array('subject',           	'length',  'min'  => 3, 'max' => 255),
+                    array('description',        'type',    'type' => 'string'),
+                    array('latestDateTime',     'required'),
+                    array('latestDateTime',     'readOnly'),
+                    array('latestDateTime',     'type', 'type' => 'datetime'),
+                    array('subject',            'required'),
+                    array('subject',            'type',    'type' => 'string'),
+                    array('subject',            'length',  'min'  => 3, 'max' => 255),
                     array('ownerHasReadLatest', 'boolean'),
                 ),
                 'elements' => array(
@@ -177,29 +177,29 @@
         {
             if (parent::beforeSave())
             {
-                if($this->comments->isModified() || $this->getIsNewModel())
+                if ($this->comments->isModified() || $this->getIsNewModel())
                 {
                     $this->unrestrictedSet('latestDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
-                    if($this->getIsNewModel())
+                    if ($this->getIsNewModel())
                     {
                         $this->ownerHasReadLatest = true;
                     }
                 }
-                if($this->comments->isModified())
+                if ($this->comments->isModified())
                 {
-                    foreach($this->comments as $comment)
+                    foreach ($this->comments as $comment)
                     {
-                        if($comment->id < 0)
+                        if ($comment->id < 0)
                         {
-                            if(Yii::app()->user->userModel != $this->owner)
+                            if (Yii::app()->user->userModel != $this->owner)
                             {
                                 $this->ownerHasReadLatest = false;
                             }
-                            foreach($this->conversationParticipants as $position => $participant)
+                            foreach ($this->conversationParticipants as $position => $participant)
                             {
                                 //At this point the createdByUser is not populated yet in the comment, so we can
                                 //use the current user.
-                                if($participant->person != Yii::app()->user->userModel)
+                                if ($participant->person != Yii::app()->user->userModel)
                                 {
                                     $this->conversationParticipants[$position]->hasReadLatest = false;
                                 }

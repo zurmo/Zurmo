@@ -44,7 +44,6 @@
             return $this->description;
         }
 
-
         /**
          * Given a related model type, a related model id, and a page size, return a list of comment models.
          * @param string $type
@@ -59,7 +58,7 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Comment');
             $orderByColumnName = RedBeanModelDataProvider::
                                  resolveSortAttributeColumnName('Comment', $joinTablesAdapter, 'createdDateTime');
-            $where             = "relatedmodel_type = '" . strtolower($type) . "' AND relatedmodel_id = '" . $relatedId. "'";
+            $where             = "relatedmodel_type = '" . strtolower($type) . "' AND relatedmodel_id = '" . $relatedId . "'";
             $orderBy           = $orderByColumnName . ' desc';
             return self::getSubset($joinTablesAdapter, null, $pageSize, $where, $orderBy);
         }

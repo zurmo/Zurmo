@@ -79,10 +79,7 @@
                 if (static::isJobInProcessOverThreashold($jobInProcess, 'Monitor'))
                 {
                     $messageLogger->addInfoMessage("Existing monitor job is stuck");
-                    $message                    = new NotificationMessage();
-                    $message->textContent       = MonitorJob::getStuckStringContent();
-                    $rules                      = new StuckMonitorJobNotificationRules();
-                    NotificationsUtil::submit($message, $rules);
+                    self::makeMonitorStuckJobNotification();
                 }
             }
             catch (NotFoundException $e)
@@ -112,6 +109,15 @@
                 $jobLog->isProcessed = false;
                 $jobLog->save();
             }
+        }
+
+        public static function makeMonitorStuckJobNotification()
+        {
+            $message                    = new NotificationMessage();
+            $message->textContent       = MonitorJob::getStuckStringContent();
+            $message->htmlContent       = MonitorJob::getStuckStringContent();
+            $rules                      = new StuckMonitorJobNotificationRules();
+            NotificationsUtil::submit($message, $rules);
         }
 
         /**

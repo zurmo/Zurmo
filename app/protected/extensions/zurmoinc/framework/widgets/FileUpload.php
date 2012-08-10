@@ -223,8 +223,6 @@ EOD;
             echo '</label>' . $this->renderMaxSizeContent($this->maxSize)   . "\n";
             echo '</div><div class="clear"></div>'                          . "\n";
             echo '<div class="fileupload-content">'                         . "\n";
-            //echo '<table class="files"><tbody><tr><td colspan="6">'         . "\n";
-            //echo '</td></tr></tbody></table>'                               . "\n";
             echo '<table class="files"><tbody></tbody></table>'             . "\n";
             echo '</div>'                                                   . "\n";
             echo '</div>'                                                   . "\n";

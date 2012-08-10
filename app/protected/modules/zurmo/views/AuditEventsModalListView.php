@@ -28,7 +28,7 @@
     {
         public function __construct($controllerId, $moduleId, $modelClassName, $dataProvider, $gridIdSuffix = null)
         {
-            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), false, $gridIdSuffix);
+            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), $gridIdSuffix);
             $this->rowsAreSelectable = false;
         }
 

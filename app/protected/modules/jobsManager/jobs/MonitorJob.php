@@ -65,10 +65,7 @@
             {
                 if (JobsManagerUtil::isJobInProcessOverThreashold($jobInProcess, $jobInProcess->type))
                 {
-                    $message                    = new NotificationMessage();
-                    $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
-                    $rules                      = new StuckJobsNotificationRules();
-                    NotificationsUtil::submit($message, $rules);
+                    self::makeJobStuckNotification();
                 }
             }
             $jobLogs = static::getNonMonitorJobLogsUnprocessed();
@@ -125,6 +122,15 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
             $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
             return JobLog::getSubset($joinTablesAdapter, null, null, $where, null);
+        }
+
+        public static function makeJobStuckNotification()
+        {
+            $message                    = new NotificationMessage();
+            $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
+            $message->htmlContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
+            $rules                      = new StuckJobsNotificationRules();
+            NotificationsUtil::submit($message, $rules);
         }
     }
 ?>

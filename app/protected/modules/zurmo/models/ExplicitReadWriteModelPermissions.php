@@ -130,7 +130,7 @@
 
         public function removeAllReadWritePermitables()
         {
-            foreach($this->readWritePermitables as $permitable)
+            foreach ($this->readWritePermitables as $permitable)
             {
                 if (!isset($this->readWritePermitablesToRemove[$permitable->id]))
                 {

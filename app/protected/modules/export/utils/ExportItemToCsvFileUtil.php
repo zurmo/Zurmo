@@ -69,7 +69,7 @@
          * @param string $enclosure
          * @param string $eol
          */
-        protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"', $eol = "\n") // Not Coding Standard
+        protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"') // Not Coding Standard
         {
             $fp = fopen('php://temp', 'r+'); // Not Coding Standard
 
@@ -77,14 +77,8 @@
             {
                 return false;
             }
-
             rewind($fp);
             $csv = fgets($fp);
-
-            if ($eol != PHP_EOL)
-            {
-                $csv = substr($csv, 0, (0 - strlen(PHP_EOL))) . $eol;
-            }
             return $csv;
         }
 

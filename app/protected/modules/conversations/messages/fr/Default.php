@@ -29,10 +29,15 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>"A single conversation with a wise man is better than ten years of study."' .
+                                     '</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>' .
+                                     'Start a conversation with someone "wise" in your organization about a record ' .
+                                     'in the CRM or perhaps something unrelated.  When you are conversing within the ' .
+                                     'CRM, it is better than "ten" replies in email.' .
+                                     'customer we interact with."</p>'
+            => '<h2>"A single conversation with a wise man is better than ten years of study."</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>Start a conversation with someone "wise" in your organization about a record in the CRM or perhaps something unrelated.  When you are conversing within the CRM, it is better than "ten" replies in email.customer we interact with."</p>', // Same Word Translated
         'Access Conversations Tab'
             => 'Accès aux Conversations',
-        'Add Comment'
-            => 'Ajouter commentaire',
         'Conversation'
             => 'Conversation', // Same Word Translated
         'Conversation Latest'
@@ -63,9 +68,11 @@
             => 'Tapez le nom d\'utilisateur',
         'You have been invited to participate in a conversation'
             => 'Vous avez été séléctionné pour joindre une conversation',
+        '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
+        'would like you to join a conversation {strongStartTag}"{conversationSubject}"{strongEndTag}'
+            => '{headerStartTag}Participer à la conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
+               'vouz invite à joindre la conversation {strongStartTag}"{conversationSubject}"{strongEndTag}',
         '{n} Conversation created|{n} Conversations created'
             => '{n} Conversation crée|{n} Conversations crées',
-        '{ownerName} would like you to join a conversation "{conversationSubject}".'
-            => '{ownerName} vouz invite à joindre la conversation "{conversationSubject}".',
     );
 ?>

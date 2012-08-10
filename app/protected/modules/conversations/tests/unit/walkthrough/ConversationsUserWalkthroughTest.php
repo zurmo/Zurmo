@@ -54,7 +54,7 @@
             $steven->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS);
             $steven->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS);
             $saved = $steven->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -62,7 +62,7 @@
             $sally->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS);
             $sally->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS);
             $saved = $sally->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -70,7 +70,7 @@
             $mary->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS);
             $mary->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS);
             $saved = $mary->save();
-            if(!$saved)
+            if (!$saved)
             {
                 throw new NotSupportedException();
             }
@@ -144,8 +144,8 @@
 
             //Test inviting steven and sally (via detailview)
             $this->setGetArray(array('id' => $conversations[0]->id));
-            $this->setPostArray(array('ConversationParticipantsForm' => array('itemIds' => $mary->getClassId('Item') . ',' .
-                                                                                           $steven->getClassId('Item') . ',' .
+            $this->setPostArray(array('ConversationParticipantsForm' => array('itemIds' => $mary->getClassId('Item') . ',' . // Not Coding Standard
+                                                                                           $steven->getClassId('Item') . ',' . // Not Coding Standard
                                                                                            $sally->getClassId('Item'))));
             $this->runControllerWithNoExceptionsAndGetContent('conversations/default/updateParticipants', true);
             $this->assertEquals(3, Yii::app()->emailHelper->getQueuedCount());
@@ -159,7 +159,7 @@
 
             //Uninvite mary (via detailview)
             $this->setGetArray(array('id' => $conversations[0]->id));
-            $this->setPostArray(array('ConversationParticipantsForm' => array('itemIds' => $steven->getClassId('Item') . ',' .
+            $this->setPostArray(array('ConversationParticipantsForm' => array('itemIds' => $steven->getClassId('Item') . ',' . // Not Coding Standard
                                                                                            $sally->getClassId('Item'))));
             $this->runControllerWithNoExceptionsAndGetContent('conversations/default/updateParticipants', true);
             $this->assertEquals(3, Yii::app()->emailHelper->getQueuedCount());
@@ -176,7 +176,7 @@
          */
         public function testAddingCommentsAndUpdatingActivityStampsOnConversation()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }
@@ -230,7 +230,7 @@
                 $content = $this->runControllerWithRedirectExceptionAndGetContent('comments/default/inlineCreateSave');
                 $this->fail();
             }
-            catch(AccessDeniedSecurityException $e)
+            catch (AccessDeniedSecurityException $e)
             {
                 //success.
             }
@@ -267,7 +267,7 @@
          */
         public function testUserEditAndDeletePermissions()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }
@@ -296,7 +296,7 @@
             $this->setGetArray(array('relatedModelId'             => $conversations[0]->id,
                                      'relatedModelClassName'      => 'Conversation',
                                      'relatedModelRelationName'   => 'comments',
-                                     'id'               		  => $maryCommentId));
+                                     'id'                         => $maryCommentId));
             $this->runControllerWithNoExceptionsAndGetContent('comments/default/deleteViaAjax', true);
             $conversationId  = $conversations[0]->id;
             $conversations[0]->forget();
@@ -307,7 +307,7 @@
             $this->setGetArray(array('relatedModelId'             => $conversations[0]->id,
                                      'relatedModelClassName'      => 'Conversation',
                                      'relatedModelRelationName'   => 'comments',
-                                     'id'               		  => $superCommentId));
+                                     'id'                         => $superCommentId));
             $this->runControllerShouldResultInAjaxAccessFailureAndGetContent('comments/default/deleteViaAjax');
             $conversationId  = $conversations[0]->id;
             $conversations[0]->forget();
@@ -334,7 +334,7 @@
          */
         public function testDetailViewPortletFilteringOnConversations()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }
@@ -394,7 +394,7 @@
          */
         public function testListViewFiltering()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }
@@ -416,7 +416,7 @@
          */
         public function testCreateFromModel()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }
@@ -458,7 +458,7 @@
          */
         public function testCommentsAjaxListForRelatedModel()
         {
-            if(!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
             {
                 return;
             }

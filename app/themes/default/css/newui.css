@@ -125,14 +125,14 @@
   -o-box-shadow: inset 0 0 0 2px #ffffff;
   -ms-box-shadow: inset 0 0 0 2px #ffffff;
   box-shadow: inset 0 0 0 2px #ffffff;
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
   -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
   -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
@@ -319,14 +319,14 @@ a.remove:hover .icon:after {
 }
 #InstallAccessFailurePageView,
 #ErrorPageView {
-  background-color: #f6f6f6;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), color-stop(100px, #ffffff), to(#f6f6f6));
-  background-image: -webkit-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6);
-  background-image: -moz-linear-gradient(top, #f6f6f6, #ffffff 100px, #f6f6f6);
-  background-image: -ms-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6);
-  background-image: -o-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6);
-  background-image: linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6);
+  background-color: #f6f6f6 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), color-stop(100px, #ffffff), to(#f6f6f6)) ;
+  background-image: -webkit-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6) ;
+  background-image: -moz-linear-gradient(top, #f6f6f6, #ffffff 100px, #f6f6f6) ;
+  background-image: -ms-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6) ;
+  background-image: -o-linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6) ;
+  background-image: linear-gradient(#f6f6f6, #ffffff 100px, #f6f6f6) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#f6f6f6', GradientType=0);
   -webkit-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
   -moz-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
@@ -713,6 +713,7 @@ a.remove:hover .icon:after {
   position: absolute;
   right: 15px;
   top: 14px;
+  vertical-align: middle;
 }
 .configuration-list li a:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
@@ -733,11 +734,13 @@ a.remove:hover .icon:after {
 .configuration-list li a:before {
   content: "n";
   font-weight: normal;
-  font-size: 16px;
+  font-size: 20px;
   font-family: "ZurmoGamificationSymblyReguRg";
   margin-right: 5px;
   position: relative;
   top: 0px;
+  font-weight: normal !important;
+  vertical-align: middle;
 }
 table.configuration-list {
   zoom: 1;
@@ -2194,14 +2197,14 @@ div.wide.form .errorMessage {
 }
 .ui-datepicker {
   z-index: 10000;
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
   -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
@@ -3136,14 +3139,14 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
 #layout-container .movable-cell-element.ui-state-default {
@@ -3306,6 +3309,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 }
 /*Target only Mozilla/Gecko Browsers*/
 @-moz-document url-prefix() {
+  body {
+    font-smooth: always !important;
+  }
   .form input[type="text"],
   .form input[type="password"],
   .form select.multiple,
@@ -3950,14 +3956,14 @@ span.tooltip {
   -o-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
   -ms-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
-  background-color: #eeeeee;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), color-stop(80%, #eeeeee), to(#eeeeee));
-  background-image: -webkit-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee);
-  background-image: -moz-linear-gradient(top, #f5f5f5, #eeeeee 80%, #eeeeee);
-  background-image: -ms-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee);
-  background-image: -o-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee);
-  background-image: linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee);
+  background-color: #eeeeee ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5f5f5), color-stop(80%, #eeeeee), to(#eeeeee)) ;
+  background-image: -webkit-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee) ;
+  background-image: -moz-linear-gradient(top, #f5f5f5, #eeeeee 80%, #eeeeee) ;
+  background-image: -ms-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee) ;
+  background-image: -o-linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee) ;
+  background-image: linear-gradient(#f5f5f5, #eeeeee 80%, #eeeeee) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
 }
 .game-badge:after,
@@ -4586,14 +4592,14 @@ span.tooltip {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
 .ModalGameNotification a {
@@ -4959,7 +4965,7 @@ span.tooltip {
   font-size: 12px;
 }
 .comment:hover .delete-comment {
-  visibility: visible;
+  visibility: visible !important;
 }
 .comment.unread {
   font-weight: bold;
@@ -5049,6 +5055,158 @@ span.tooltip {
   color: #262877;
   font-weight: bold;
 }
+#ArchivedEmailMatchingListView .items td {
+  padding-right: 10px;
+}
+.email-archive-item {
+  border: none !important;
+  background: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+  box-shadow: none !important;
+  margin: 0 0 0 0 !important;
+  padding: 0 !important;
+}
+.email-archive-item .lead-conversion-actions {
+  padding-left: 0;
+}
+.email-archive-item .wide.form {
+  background: none !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+  box-shadow: none !important;
+  padding-bottom: 15px;
+  margin-bottom: 0;
+}
+.email-archive-item .wide.form > form {
+  padding: 0;
+}
+.email-archive-item .wide.form > form table {
+  padding-bottom: 15px !important;
+}
+.email-archive-item .matching-actions-and-content form {
+  padding-bottom: 0;
+}
+.email-archive-item tr:hover {
+  background: none !important;
+}
+.email-archive-item th,
+.email-archive-item td {
+  background: none !important;
+  height: auto !important;
+  line-height: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+}
+.email-archive-item .email-matching-summary-content span {
+  line-height: 150%;
+  font-weight: bold;
+  color: #525252;
+  font-size: 11px;
+}
+.email-archive-item .email-from,
+.email-archive-item .email-to {
+  display: block;
+  font-weight: 400 !important;
+}
+.email-archive-item .email-from strong,
+.email-archive-item .email-to strong {
+  font-weight: bold;
+  color: #999;
+}
+.email-archive-item .beforeOptOutCheckBox + .hasCheckBox {
+  left: 0 !important;
+}
+.email-archive-item .beforeOptOutCheckBox + .hasCheckBox label.hasCheckBox {
+  margin-right: 0;
+  margin-left: 5px;
+}
+.email-archive-item .beforeOptOutCheckBox + .hasCheckBox label.hasCheckBox + label {
+  margin-left: 5px;
+  margin-right: 0;
+}
+.email-matching-actions {
+  margin: 15px 0 5px 0;
+  display: block;
+}
+.email-matching-actions a {
+  background: #262877;
+  padding: 1px 4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  color: #fff !important;
+}
+.email-matching-actions a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+.email-matching-show-more,
+.email-matching-show-less {
+  margin-top: 10px;
+  cursor: pointer;
+}
+.email-matching-show-less {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.matching-actions-and-content {
+  border-top: 1px solid #fff;
+}
+.icon-down-arrow {
+  font-weight: normal;
+  color: #545454 !important;
+}
+.icon-down-arrow:before {
+  position: relative;
+  color: #545454 !important;
+  content: "6";
+  font-weight: normal;
+  font-size: 18px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  top: 1px;
+  margin: 0 4px 0 0;
+}
+.icon-up-arrow {
+  font-weight: normal;
+  color: #545454 !important;
+}
+.icon-up-arrow:before {
+  position: relative;
+  color: #545454 !important;
+  content: "5";
+  font-weight: normal;
+  font-size: 18px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  top: 1px;
+  margin: 0 4px 0 0;
+}
+.expanded {
+  background-color: #f5f5f5 !important;
+  background-repeat: no-repeat !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) !important;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) !important;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) !important;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) !important;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) !important;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+}
+.expanded > td {
+  padding-bottom: 0 !important;
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff;
+  -moz-box-shadow: inset 0 0 0 2px #ffffff;
+  -o-box-shadow: inset 0 0 0 2px #ffffff;
+  -ms-box-shadow: inset 0 0 0 2px #ffffff;
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
 @font-face {
   font-family: 'ZurmoGamificationSymblyReguRg';
   src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');
@@ -5096,6 +5254,13 @@ body {
   font-size: 11px;
   color: #545454;
   -webkit-font-smoothing: antialiased;
+  /* @doubtful_existance: I don’t think these even exist? Can’t hurt much, I guess. */
+
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  /* end @doubtful_existance */
+
+  font-smoothing: antialiased;
 }
 h1,
 h2,
@@ -5478,18 +5643,34 @@ section {
 }
 #settings-header-menu > li {
   position: relative;
+  -webkit-text-shadow: none !important;
+  -moz-text-shadow: none !important;
+  -o-text-shadow: none !important;
+  -ms-text-shadow: none !important;
+  text-shadow: none !important;
+}
+#settings-header-menu > li a {
+  -webkit-text-shadow: none !important;
+  -moz-text-shadow: none !important;
+  -o-text-shadow: none !important;
+  -ms-text-shadow: none !important;
+  text-shadow: none !important;
 }
 #settings-header-menu > li > a span {
   display: inline-block;
   text-indent: -9999px;
+  -webkit-text-shadow: none !important;
+  -moz-text-shadow: none !important;
+  -o-text-shadow: none !important;
+  -ms-text-shadow: none !important;
+  text-shadow: none !important;
 }
 #settings-header-menu > li > a:after {
   content: "n";
-  color: #d4d5e3;
+  color: #ccc;
   font-weight: normal;
-  font-size: 22px;
+  font-size: 26px;
   font-family: "ZurmoGamificationSymblyReguRg";
-  margin-top: 1px;
 }
 #settings-header-menu ul {
   margin-left: -97px;
@@ -6199,14 +6380,14 @@ section {
   padding: 20px 20px 0 20px;
   margin-left: 172px;
   margin-bottom: 20px;
-  background-color: #ffffff;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), color-stop(100px, #ffffff), to(#ffffff));
-  background-image: -webkit-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff);
-  background-image: -moz-linear-gradient(top, #f6f6f6, #ffffff 100px, #ffffff);
-  background-image: -ms-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff);
-  background-image: -o-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff);
-  background-image: linear-gradient(#f6f6f6, #ffffff 100px, #ffffff);
+  background-color: #ffffff ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), color-stop(100px, #ffffff), to(#ffffff)) ;
+  background-image: -webkit-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff) ;
+  background-image: -moz-linear-gradient(top, #f6f6f6, #ffffff 100px, #ffffff) ;
+  background-image: -ms-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff) ;
+  background-image: -o-linear-gradient(#f6f6f6, #ffffff 100px, #ffffff) ;
+  background-image: linear-gradient(#f6f6f6, #ffffff 100px, #ffffff) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff', GradientType=0);
   zoom: 1;
   /*> .MetadataView{
@@ -6266,8 +6447,15 @@ section {
 #HomePageView .AppContent {
   padding-right: 0;
 }
+#HomePageView .AppContent#DashboardEditView {
+  padding-right: 20px;
+}
 #HomeDashboardView {
   margin-top: 15px;
+}
+#HomeDashboardView .parent > ul {
+  min-width: 160px;
+  margin-top: 0;
 }
 /*=Inner toolbar*/
 .view-toolbar-container {
@@ -6332,7 +6520,7 @@ section {
   list-style: none;
 }
 .view-toolbar .parent > ul {
-  margin-top: -2px;
+  margin-top: 0;
   z-index: 9999;
   min-width: 110px;
   display: none;
@@ -6408,6 +6596,21 @@ section {
 }
 .icon-add:before {
   content: "Y";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+#HomeDashboardView .parent > a:before,
+.icon-change-dashborad:before {
+  content: "/";
   font-weight: normal;
   font-size: 24px;
   font-family: "ZurmoGamificationSymblyReguRg";
@@ -8163,14 +8366,14 @@ div.wide.form a {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -8188,14 +8391,14 @@ div.wide.form a {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
 .ProgressView > div .form form,
@@ -8583,6 +8786,9 @@ div.wide.form a {
   color: #7bb730;
   margin-left: 2px;
 }
+#NoteInlineEditView .form-toolbar {
+  border-top: none;
+}
 #inline-edit-form table + table {
   float: left;
   -moz-box-sizing: border-box;
@@ -8613,6 +8819,10 @@ div.wide.form a {
 }
 #inline-edit-form .view-toolbar-container a {
   float: right;
+  clear: both;
+}
+#inline-edit-form .form-toolbar {
+  border-top: none;
 }
 #inline-edit-form textarea {
   line-height: 130%;
@@ -9626,6 +9836,9 @@ div.hasHalfs .twoThirds {
   -ms-box-shadow: none;
   box-shadow: none;
 }
+#LeadConvertView .panel {
+  width: 100% !important;
+}
 #LeadConvertView #edit-form {
   border: none !important;
   background: none !important;
@@ -9634,9 +9847,15 @@ div.hasHalfs .twoThirds {
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
+  padding-bottom: 0 !important;
 }
 #LeadConvertView #edit-form table {
   width: 100%;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+#LeadConvertView form table {
+  padding-bottom: 15px !important;
 }
 #LeadConvertView #account-skip-form th {
   text-align: center !important;
@@ -9760,14 +9979,14 @@ div.hasHalfs .twoThirds {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
-  background-color: #f5f5f5;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5));
-  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
-  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5);
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
 #AboutView #aboutText {

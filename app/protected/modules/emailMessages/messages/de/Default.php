@@ -29,12 +29,16 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<span class="email-from"><strong>From:</strong> {senderContent}</span>'
+            => '<span class="email-von"><strong>Von:</strong> {senderContent}</span>',
+        '<span class="email-to"><strong>To:</strong> {recipientContent}</span>'
+            => '<span class="email-an"><strong>AN:</strong> {senderContent}</span>',
         'A test email address must be entered before you can send a test email.'
             => 'Bitte geben Sie eine E-Mail-Adresse.',
         'A test email from Zurmo'
             => 'Eine Testnachricht von Zurmo',
-        'A test text message from Zurmo'
-            => 'Eine Textnachricht von Zurmo',
+        'A test text message from Zurmo.'
+            => 'Eine Textnachricht von Zurmo.',
         'Access Email Configuration'
             => 'Zugriff auf die E-Mail Konfiguration',
         'Access Emails Tab'
@@ -43,6 +47,8 @@
             => 'Archiviert',
         'Archived Unmatched'
             => 'Archivierte Artikel Unvergleichliche',
+        'At least one archived email message does not match any records in the system. <a href="{url}">Click here</a> to manually match them.'
+            => 'Mindestens eine archivierte E-Mail-Nachricht entsprecht keiner der Datensätze in das System. <a href="{url}">Klicken Sie hier</a> zu manuell entsprechen.',
         'Body'
             => 'Körper',
         'Cc'
@@ -55,18 +61,24 @@
             => 'IMAP-Konto fehlgeschlagen.',
         'Create Emails'
             => 'Emails erstellen',
+        'Data Cleanup'
+            => 'Datenbereinigung',
         'Delete Emails'
             => 'Emails entfernen',
         'Draft'
             => 'Entwurf',
-        'Email address does not exist in system.'
-            => 'Die E-Mail-Adresse existiert nicht.',
+        'Email address does not exist in system'
+            => 'Die E-Mail-Adresse existiert nicht',
         'Email Archiving Configuration (IMAP)'
             => 'Konto-Einstellungen für archivierte Mails (IMAP)',
         'Email Configuration'
             => 'E-Mail Parametern',
         'Email configuration saved successfully.'
             => 'E-Mail-Konfiguration wurde erfolgreich gespeichert.',
+        'Email message could not be saved'
+            => 'E-Mail-Nachricht kann nicht gespeichert werden',
+        'Email message could not be validated'
+            => 'E-Mail-Nachricht konnte nicht validiert werden',
         'Emails'
             => 'Emails', // Same Word Translated
         'Error Code:'
@@ -93,10 +105,16 @@
             => 'HTML-Inhalt',
         'Inbox'
             => 'Posteingang',
-        'Invalid email address.'
-            => 'Ungültige E-Mail-Adresse.',
+        'Invalid email address'
+            => 'Ungültige E-Mail-Adresse',
         'Manage Email Configuration'
             => 'E-Mail Konfiguration',
+        'Manage your email preferences'
+            => 'Deine E-Mail-Einstellungen verwalten',
+        'Match archived emails'
+            => 'Archivierte E-Mails entsprechen',
+        'Matching archived emails requires access to either ContactsModulePluralLowerCaseLabel or LeadsModulePluralLowerCaseLabel both of which you do not have. Please contact your administrator.'
+            => 'Passende archivierten E-Mails benötigt Zugriff auf entweder ContactsModulePluralLowerCaseLabel oder LeadsModulePluralLowerCaseLabel. Du hast keines. Bitte informierst du deinen Administrator.',
         'Message failed to send'
             => 'Nachricht nicht gesendet',
         'Message successfully sent'
@@ -113,22 +131,32 @@
             => 'Postausgang Fehler ',
         'Person'
             => 'Name',
-        'Person or Account'
-            => 'Person or Account', // Same Word Translated
+        'Person Or Account'
+            => 'Person Or Account', // Same Word Translated
         'Port'
             => 'Port', // Same Word Translated
         'Process Inbound Email Job'
             => 'Inbound Email Job verfahren',
         'Process Outbound Email Job'
             => 'Ausgehende E-Mail Prozess starten',
+        'Recipient info can\'t be extracted from email message'
+            => 'Empfänger Info kann nicht von E-Mail-Nachricht extrahiert werden',
         'Response from Server'
             => 'Server Response',
+        'Select ContactsModuleSingularLabel'
+            => 'Wähle ContactsModuleSingularLabel',
+        'Select ContactsModuleSingularLabel / LeadsModuleSingularLabel'
+            => 'Wähle ContactsModuleSingularLabel / LeadsModuleSingularLabel',
+        'Select LeadsModuleSingularLabel'
+            => 'Wähle LeadsModuleSingularLabel',
         'Send a test email to'
             => 'Senden eine Testnachricht  zu',
         'Send system notifications from'
             => 'Senden System-Meldungen von',
         'Send Test Email'
             => 'Eine Testnachricht senden',
+        'Sender info can\'t be extracted from email message'
+            => 'Absender Daten können nicht von E-Mail-Nachricht extrahiert werden',
         'Sent'
             => 'Nachricht wurde gesendet.',
         'SSL connection'
@@ -145,6 +173,8 @@
             => 'Prüfparameter für die E-Mail Konto',
         'Text Content'
             => 'Nachricht',
+        'This message sent from Zurmo'
+            => 'Diese Meldung ist aus Zurmo geschickt',
         'To'
             => 'An',
         'To Address'
@@ -155,8 +185,10 @@
             => 'An Empfänger',
         'to: {recipientContent}'
             => 'an: {recipientContent}',
-        'You do not have rights to access, create, or connect emails in the system.'
-            => 'Du hast keine Rechte auf Zugang, erstellen oder zu verknüpfen E-Mails in das System.',
+        'Unmatched Archived Emails'
+            => 'Unvergleichliche Archivierte E-Mails',
+        'You do not have rights to access, create, or connect emails in the system'
+            => 'Du hast keine Rechte auf Zugang, erstellen oder zu verknüpfen E-Mails in das System',
         'Zurmo sends out system notifications.  The notifications must appear as coming from a super administrative user.'
             => 'Zurmo sendet System Benachrichtigungen. Die Benachrichtigungen müssen von einem Super-administrativen Benutzerrechten angezeigt werden.',
     );

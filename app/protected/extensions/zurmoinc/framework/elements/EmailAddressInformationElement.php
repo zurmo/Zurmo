@@ -54,12 +54,13 @@
 
         protected function renderEditableEmailAddressTextField($model, $form, $inputNameIdPrefix, $attribute)
         {
+            $id = $this->getEditableInputId($inputNameIdPrefix, $attribute);
             $htmlOptions = array(
                 'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
-                'id'   => $this->getEditableInputId($inputNameIdPrefix, $attribute),
+                'id'   => $id,
             );
             $textField = $form->textField($model, $attribute, $htmlOptions);
-            $error     = $form->error    ($model, $attribute);
+            $error     = $form->error    ($model, $attribute, array('inputID' => $id));
             return $textField . $error;
         }
 
@@ -72,7 +73,7 @@
             );
             $label         = $form->labelEx ($model, $attribute, array('for'   => $id));
             $checkBoxField = $form->checkBox($model, $attribute, $htmlOptions);
-            $error         = $form->error   ($model, $attribute);
+            $error         = $form->error   ($model, $attribute, array('inputID' => $id));
             return '<div class="hasCheckBox">' . $checkBoxField . $label . $error . '</div>';
         }
 

@@ -55,7 +55,7 @@
             assert('$explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions');
             parent::afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions);
             $postData = PostUtil::getData();
-            if(isset($postData[$this->conversationParticipantFormName]))
+            if (isset($postData[$this->conversationParticipantFormName]))
             {
                 ConversationParticipantsUtil::
                     resolveConversationHasManyParticipantsFromPost($model,

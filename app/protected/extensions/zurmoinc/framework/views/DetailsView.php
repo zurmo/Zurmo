@@ -143,8 +143,8 @@
                         {
                             foreach ($cell['elements'] as $elementIndex => $elementInformation)
                             {
-                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow
-                                    && count($row['cells']) < $maximumColumnCount)
+                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow &&
+                                    count($row['cells']) < $maximumColumnCount)
                                 {
                                     $elementInformation['wide'] = true;
                                 }

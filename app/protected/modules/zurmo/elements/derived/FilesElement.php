@@ -37,7 +37,7 @@
             $content .= '<li><strong>' . Yii::t('Default', 'Attachments'). '</strong></li>';
             foreach ($this->model->files as $fileModel)
             {
-                $content .= '<li><span class="icon-attachment"></span>';   
+                $content .= '<li><span class="icon-attachment"></span>';
                 $content .= FileModelDisplayUtil::renderDownloadLinkContentByRelationModelAndFileModel($this->model,
                                                                                                        $fileModel);
                 $content .= ' ' . FileModelDisplayUtil::convertSizeToHumanReadableAndGet((int)$fileModel->size);

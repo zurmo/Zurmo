@@ -91,6 +91,8 @@
             => 'Data',
         'Date Time'
             => 'Data e Ora di Inizio',
+        'Default data loaded for {moduleName}'
+            => 'Dati di default caricati per {moduleName}',
         'Default Value'
             => 'Valore predefinito',
         'Delete'

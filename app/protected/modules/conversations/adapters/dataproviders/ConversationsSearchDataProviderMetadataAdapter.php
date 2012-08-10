@@ -43,6 +43,7 @@
         const LIST_TYPE_PARTICIPANT = 2;
 
         protected $type;
+
         /**
          * Override to add passing in type
          */
@@ -65,7 +66,7 @@
             $startingCount = $clauseCount + 1;
             $structure = '';
 
-            if($this->type == self::LIST_TYPE_CREATED)
+            if ($this->type == self::LIST_TYPE_CREATED)
             {
                 $adaptedMetadata['clauses'][$startingCount] = array(
                     'attributeName' => 'owner',

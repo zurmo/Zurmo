@@ -62,9 +62,9 @@
         {
             $content = '<div>';
             $content .= '<div>' . $this->renderHiddenRefreshLinkContent() . '</div>';
-            if(count($this->commentsData) > 0)
+            if (count($this->commentsData) > 0)
             {
-                if(count($this->commentsData) > $this->pageSize && $this->pageSize != null)
+                if (count($this->commentsData) > $this->pageSize && $this->pageSize != null)
                 {
                     $content .= '<div>' . $this->renderShowAllLinkContent() . '</div>';
                 }
@@ -103,12 +103,12 @@
         {
             $content  = null;
             $rows = 0;
-            foreach(array_reverse($this->commentsData) as $comment)
+            foreach (array_reverse($this->commentsData) as $comment)
             {
                 //Skip the first if the page size is smaller than what is returned.
-                if(count(($this->commentsData)) > $this->pageSize && $this->pageSize != null && $rows == 0)
+                if (count(($this->commentsData)) > $this->pageSize && $this->pageSize != null && $rows == 0)
                 {
-                    $rows ++;
+                    $rows++;
                     continue;
                 }
                 $stringContent  = '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
@@ -118,18 +118,18 @@
                 $stringContent .= '</span>';
                 $stringContent .= '<div class="comment-content">' . $comment->description . '</div>';
                 //attachments
-                if($comment->files->count() > 0)
+                if ($comment->files->count() > 0)
                 {
                     $stringContent .= FileModelDisplayUtil::renderFileDataDetailsWithDownloadLinksContent($comment, 'files', true);
                 }
-                if($comment->createdByUser == Yii::app()->user->userModel ||
+                if ($comment->createdByUser == Yii::app()->user->userModel ||
                    $this->relatedModel->createdByUser == Yii::app()->user->userModel ||
                    ($this->relatedModel instanceof OwnedSecurableItem && $this->relatedModel->owner == Yii::app()->user->userModel))
                 {
                     $stringContent .= '<span class="delete-comment">' . $this->renderDeleteLinkContent($comment) . '</span>';
                 }
                 $content .= '<div class="comment">' . $stringContent . '</div>';
-                $rows ++;
+                $rows++;
             }
             return $content;
         }
@@ -138,13 +138,15 @@
         {
             $url     =   Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/deleteViaAjax',
                             array_merge($this->getParams, array('id' => $comment->id)));
+            // Begin Not Coding Standard
             return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete Comment'), $url,
                          array('type'     => 'GET',
                                'complete' => "function(XMLHttpRequest, textStatus){
-                                              $('#deleteCommentLink" . $comment->id . "').closest('tr').remove();}"),
+                                              $('#deleteCommentLink" . $comment->id . "').parent().parent().remove();}"),
                          array('id'         => 'deleteCommentLink' . $comment->id,
                                 'class'     => 'deleteCommentLink' . $comment->id,
                                 'namespace' => 'delete'));
+            // End Not Coding Standard
         }
 
         public function isUniqueToAPage()

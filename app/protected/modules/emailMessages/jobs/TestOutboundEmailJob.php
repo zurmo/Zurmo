@@ -63,8 +63,8 @@
             $emailMessage->owner       = Yii::app()->user->userModel;
             $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
             $emailContent              = new EmailMessageContent();
-            $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo');
-            $emailContent->htmlContent = Yii::t('Default', 'A test text message from Zurmo');
+            $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo.');
+            $emailContent->htmlContent = Yii::t('Default', 'A test text message from Zurmo.');
             $emailMessage->content     = $emailContent;
             $sender                    = new EmailMessageSender();
             $sender->fromAddress       = Yii::app()->emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);

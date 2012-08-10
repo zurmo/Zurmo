@@ -29,10 +29,15 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>"A single conversation with a wise man is better than ten years of study."' .
+                                     '</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>' .
+                                     'Start a conversation with someone "wise" in your organization about a record ' .
+                                     'in the CRM or perhaps something unrelated.  When you are conversing within the ' .
+                                     'CRM, it is better than "ten" replies in email.' .
+                                     'customer we interact with."</p>'
+            => '<h2>"A single conversation with a wise man is better than ten years of study."</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>Start a conversation with someone "wise" in your organization about a record in the CRM or perhaps something unrelated.  When you are conversing within the CRM, it is better than "ten" replies in email.customer we interact with."</p>', // Same Word Translated
         'Access Conversations Tab'
             => 'Acceso a las conversaciones',
-        'Add Comment'
-            => 'Añadir comentario',
         'Conversation'
             => 'Conversación',
         'Conversation Latest'
@@ -63,9 +68,11 @@
             => 'Introduce el nombre de usuario',
         'You have been invited to participate in a conversation'
             => 'Usted está invitado a participar en una conversación',
+        '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
+        'would like you to join a conversation {strongStartTag}"{conversationSubject}"{strongEndTag}'
+            => '{headerStartTag}Participar en la conversación{headerEndTag}{headerLineBreak}{ownerName} ' .
+               'quiere que usted participa en la conversación {strongStartTag}"{conversationSubject}"{strongEndTag}',
         '{n} Conversation created|{n} Conversations created'
             => '{n} creados Conversación | {n} conversaciones creadas',
-        '{ownerName} would like you to join a conversation "{conversationSubject}".'
-            => '{ownerName} quiere que usted participa en la conversación.',
     );
 ?>

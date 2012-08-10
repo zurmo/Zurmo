@@ -97,7 +97,6 @@
             $this->assertEquals(0, $conversation->ownerHasReadLatest);
             $this->assertEquals(1, $conversation->conversationParticipants->offsetGet(0)->hasReadLatest);
 
-
             //Now try for Steven, nothing changes
             ConversationsUtil::markUserHasReadLatest($conversation, $steven);
             $id = $conversation->id;

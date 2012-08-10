@@ -180,7 +180,7 @@
 
             //Add steven as a conversation participant.
             $postData = array();
-            $postData['itemIds'] = $super->getClassId('Item') . ',' . $steven->getClassId('Item');
+            $postData['itemIds'] = $super->getClassId('Item') . ',' . $steven->getClassId('Item'); // Not Coding Standard
             ConversationParticipantsUtil::resolveConversationHasManyParticipantsFromPost($conversation,
                                                                                          $postData,
                                                                                          $explicitReadWriteModelPermissions);
@@ -228,7 +228,7 @@
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($conversation);
             $postData            = array();
-            $postData['itemIds'] = $super->getClassId('Item') . ',' . $mary->getClassId('Item');
+            $postData['itemIds'] = $super->getClassId('Item') . ',' . $mary->getClassId('Item'); // Not Coding Standard
             ConversationParticipantsUtil::resolveConversationHasManyParticipantsFromPost($conversation,
                                                                                          $postData,
                                                                                          $explicitReadWriteModelPermissions);
@@ -270,7 +270,7 @@
             $count   = R::getRow('select count(*) count from conversation_item');
             $this->assertEquals(1, $count['count']);
 
-            foreach($conversations as $conversation)
+            foreach ($conversations as $conversation)
             {
                 $conversationId = $conversation->id;
                 $conversation->forget();

@@ -72,6 +72,10 @@
                                                                     $appendStructureAsAnd);
                 }
             }
+            if (!$appendStructureAsAnd)
+            {
+                $structure = '(' . $structure . ')';
+            }
             $adaptedMetadata['structure'] = $structure;
             return $adaptedMetadata;
         }

@@ -84,7 +84,7 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $groups                 = Group::getAll();
+            $groups                 = Group::getAll('name');
             $compareData = array();
             foreach ($groups as $group)
             {

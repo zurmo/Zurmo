@@ -37,7 +37,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'                    => 'CreateConversationFromRelatedListLink',
-                                  'modelClassName'			=> 'Conversation',
+                                  'modelClassName'          => 'Conversation',
                                   'routeParameters'         =>
                                     array('relationAttributeName'    => 'notUsed',
                                             'relationModelClassName' => 'Account',

@@ -75,6 +75,8 @@
             => 'Le lingue attive sono disponibile ai utenti.  La lingua del sistema e qualunque lingua usata per un utente non si può essere inattiva.',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Proprietario',
+        'Add Comment'
+            => 'Aggiungi commento',
         'Add Currency'
             => 'Nuova Valuta',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -133,10 +135,14 @@
             => 'Bancaria',
         'Business Services'
             => 'Servizi di business',
+        'by <strong>{ownerStringContent}</strong>'
+            => 'di <strong>{ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'di {ownerStringContent}',
         'Cancel'
             => 'Annulla',
+        'Cancel changes'
+            => 'Annulla le modifiche',
         'Changes to active currencies saved successfully.'
             => 'Valute attive modificati con successo.',
         'Changes to active languages saved successfully.'

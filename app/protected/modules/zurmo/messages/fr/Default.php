@@ -75,6 +75,8 @@
             => 'Les langues actives sont disponibles aux utilisateurs. Impossible de désactiver la langue système ou une langue actuellement utilisée par un utilisateur',
         'Ad-hoc / Owner'
             => 'De circonstance / Resp. du compte',
+        'Add Comment'
+            => 'Ajouter commentaire',
         'Add Currency'
             => 'Ajouter la Devise',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -133,9 +135,13 @@
             => 'Bancaire',
         'Business Services'
             => 'Service de gestion',
+        'by <strong>{ownerStringContent}</strong>'
+            => 'par <strong>{ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'par {ownerStringContent}',
         'Cancel'
+            => 'Annuler',
+        'Cancel changes'
             => 'Annuler',
         'Changes to active currencies saved successfully.'
             => 'Les changements de devises actives sont effectués.',

@@ -243,7 +243,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $content = parent::renderRightSideFormLayoutForEdit($form);
-            $content .= "<h3>".Yii::t('Default', 'Quick Tip ') . '</h3>';
+            $content .= "<h3>".Yii::t('Default', 'Quick Tip') . '</h3>';
             $content .= Yii::t('Default', 'Users cannot be deleted.  You can however change their status to inactive.');
             return $content;
         }

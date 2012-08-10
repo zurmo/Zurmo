@@ -106,7 +106,7 @@
             $content = null;
             if ($model->sender != null  && $model->sender->id > 0)
             {
-                $content .= Yii::t('Default', 'from: {senderContent}',
+                $content .= Yii::t('Default', '<span class="email-from"><strong>From:</strong> {senderContent}</span>',
                                     array('{senderContent}' => static::getSenderContent($model->sender)));
             }
             if ($model->recipients->count() > 0)
@@ -115,7 +115,7 @@
                 {
                     $content .= ' ';
                 }
-                $content .= Yii::t('Default', 'to: {recipientContent}',
+                $content .= Yii::t('Default', '<span class="email-to"><strong>To:</strong> {recipientContent}</span>',
                                     array('{recipientContent}' => static::getRecipientsContent($model->recipients)));
             }
             return $content;

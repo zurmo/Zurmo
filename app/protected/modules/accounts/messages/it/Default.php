@@ -29,6 +29,11 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>"As we must Account for every idle word, so must we Account for every idle ' .
+                                     'silence."</h2><i>- Benjamin Franklin</i></i><div class="large-icon"></div><p>Be the first to create an Account and, ' .
+                                     'as Ben would say, "So must we Account for every company, organization, or ' .
+                                     'customer we interact with."</p>'
+            => '<h2>"As we must Account for every idle word, so must we Account for every idle silence."</h2><i>- Benjamin Franklin</i></i><div class="large-icon"></div><p>Be the first to create an Account and, as Ben would say, "So must we Account for every company, organization, or customer we interact with."</p>',  // Same Word Translated
         'Access AccountsModulePluralLabel Tab'
             => 'Acceso ai AccountsModulePluralLabel',
         'Account'

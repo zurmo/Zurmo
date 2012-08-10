@@ -531,7 +531,7 @@
             $user = UserTestHelper::createBasicUser('JosephSmith');
 
             // Provide data with wrong type.
-            $data['language']         = "AAAAAAA";
+            $data['language']         = "AAAAAAAAAAAA";
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
@@ -540,7 +540,7 @@
 
             $id = $user->id;
             $data = array();
-            $data['language']         = "AAAAAAA";
+            $data['language']         = "AAAAAAAAAAAA";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/users/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);

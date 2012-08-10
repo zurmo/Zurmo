@@ -98,6 +98,24 @@
                     $orderBy .= ' desc';
                 }
             }
+            else
+            {
+                try
+                {
+                    $sortAttribute = self::getSortAttributeName($this->modelClassName);
+                    if ($sortAttribute != null)
+                    {
+                        $orderBy = self::resolveSortAttributeColumnName($this->modelClassName, $joinTablesAdapter, $sortAttribute);
+                        if ($this->sortDescending)
+                        {
+                            $orderBy .= ' desc';
+                        }
+                    }
+                }
+                catch (NotImplementedException $e)
+                {
+                }
+            }
             $modelClassName = $this->modelClassName;
             return $modelClassName::getSubset($joinTablesAdapter, $offset, $limit, $where, $orderBy,
                                               $this->modelClassName, $joinTablesAdapter->getSelectDistinct());
@@ -137,7 +155,7 @@
                 if ($modelClassName == 'RedBeanModel')
                 {
                     //This means the sortAttribute value was not found.
-                    throw new notImplementedException();
+                    throw new NotImplementedException();
                 }
             }
             assert('isset($metadata[$modelClassName]["defaultSortAttribute"])');

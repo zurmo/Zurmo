@@ -176,7 +176,7 @@
           */
         protected function renderActionElementMenu($title = null)
         {
-            if($title == null)
+            if ($title == null)
             {
                 $title = Yii::t('Default', 'Options');
             }

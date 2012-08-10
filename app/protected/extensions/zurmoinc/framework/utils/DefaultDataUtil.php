@@ -50,8 +50,9 @@
                 {
                     $dataMaker = new $defaultDataMakerClassName();
                     $dataMaker->make();
-                    $messageLogger->addInfoMessage(Yii::t('Default', 'Default data loaded for ' .
-                                                   $module::getModuleLabelByTypeAndLanguage('Plural')));
+                    $messageLogger->addInfoMessage(Yii::t('Default', 'Default data loaded for {moduleName}',
+                                                   array('{moduleName}' =>
+                                                   $module::getModuleLabelByTypeAndLanguage('Plural'))));
                 }
             }
         }

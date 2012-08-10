@@ -74,18 +74,6 @@
                         'label' => 'ContactsModulePluralLabel',
                         'url'   => array('/contacts/default'),
                         'right' => self::RIGHT_ACCESS_CONTACTS,
-                        'items' => array(
-                            array(
-                                'label' => 'Create ContactsModuleSingularLabel',
-                                'url'   => array('/contacts/default/create'),
-                                'right' => self::RIGHT_CREATE_CONTACTS
-                            ),
-                            array(
-                                'label' => 'ContactsModulePluralLabel',
-                                'url'   => array('/contacts/default'),
-                                'right' => self::RIGHT_ACCESS_CONTACTS
-                            ),
-                        ),
                     ),
                 ),
                 'shortcutsCreateMenuItems' => array(

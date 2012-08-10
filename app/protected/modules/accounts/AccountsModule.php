@@ -72,18 +72,6 @@
                         'label' => 'AccountsModulePluralLabel',
                         'url'   => array('/accounts/default'),
                         'right' => self::RIGHT_ACCESS_ACCOUNTS,
-                        'items' => array(
-                            array(
-                                'label' => 'Create AccountsModuleSingularLabel',
-                                'url'   => array('/accounts/default/create'),
-                                'right' => self::RIGHT_CREATE_ACCOUNTS
-                            ),
-                            array(
-                                'label' => 'AccountsModulePluralLabel',
-                                'url'   => array('/accounts/default'),
-                                'right' => self::RIGHT_ACCESS_ACCOUNTS
-                            ),
-                        ),
                     ),
                 ),
                 'shortcutsCreateMenuItems' => array(

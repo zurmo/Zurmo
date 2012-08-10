@@ -100,7 +100,7 @@
                 'value'    => $this->getId(),
             );
             $content       = $this->form->hiddenField($this->model, $this->idAttributeId, $idInputHtmlOptions);
-            if(!$this->showOnlyHiddenInputForEditable())
+            if (!$this->showOnlyHiddenInputForEditable())
             {
                 $inputContent  = $this->renderTextField($this->getIdForHiddenField());
                 $inputContent .= $this->renderSelectLink();
@@ -165,7 +165,7 @@
         protected function renderSelectLink()
         {
             $id = $this->getIdForSelectLink();
-            $content = ZurmoHtml::ajaxLink('<span>' . Yii::t('Default', '<!--Select-->') . '</span>',
+            $content = ZurmoHtml::ajaxLink('<span><!--Select--></span>',
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation(),
                 )),
@@ -353,8 +353,6 @@
             }
             return false;
         }
-
-
 
         /**
          * Gets the moduleId statically. You can override this method and get the moduleId in a non-static way

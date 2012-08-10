@@ -58,7 +58,7 @@
                 //If there is already an existing model, but the user cannot view it, then this should be disabled
                 //otherwise the user can accidentially wipe this out since it will appear in the UI as if it is not
                 //populated.
-                elseif($editableActionType == 'ModalList' &&
+                elseif ($editableActionType == 'ModalList' &&
                        $model->{$attributeName} != null &&
                        $model->{$attributeName} instanceof RedBeanModel &
                        $model->{$attributeName}->id > 0 &&

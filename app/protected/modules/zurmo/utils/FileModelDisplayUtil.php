@@ -77,7 +77,7 @@
             if ($model->{$filesRelationName}->count() > 0)
             {
                 $content .= '<ul class="attachments">';
-                if($showHeaderLabel)
+                if ($showHeaderLabel)
                 {
                     $content .= '<li><strong>' . Yii::t('Default', 'Attachments'). '</strong></li>';
                 }

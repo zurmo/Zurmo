@@ -38,6 +38,7 @@
         {
             return array(
                 'configuration',
+                'leads',
                 'zurmo',
             );
         }
@@ -76,6 +77,14 @@
                         'descriptionLabel' => 'Manage Email Configuration',
                         'route'            => '/emailMessages/default/configurationEdit',
                         'right'            => self::RIGHT_ACCESS_CONFIGURATION,
+                    ),
+                ),
+                'headerMenuItems' => array(
+                    array(
+                        'label' => 'Data Cleanup',
+                        'url' => array('/emailMessages/default/matchingList'),
+                        'right' => self::RIGHT_ACCESS_EMAIL_MESSAGES,
+                        'order' => 7,
                     ),
                 ),
                 'configureSubMenuItems' => array(

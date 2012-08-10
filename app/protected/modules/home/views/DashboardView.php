@@ -34,6 +34,7 @@
 
         public function __construct($controllerId, $moduleId, $uniqueLayoutId, $model, $params)
         {
+            assert('$model instanceof Dashboard');
             $this->controllerId        = $controllerId;
             $this->moduleId            = $moduleId;
             $this->uniqueLayoutId      = $uniqueLayoutId;
@@ -101,7 +102,29 @@
             {
                 $content .= $deleteDashboardLinkActionElement->render();
             }
+            $content .= $this->renderChangeDashboardLinkActionContent();
             return $content;
+        }
+
+        protected function renderChangeDashboardLinkActionContent()
+        {
+            $dashboardsData = Dashboard::getRowsByUserId(Yii::app()->user->userModel->id);
+            if (count($dashboardsData) > 1)
+            {
+                foreach ($dashboardsData as $key =>  $dashboardData)
+                {
+                    if ($dashboardData['id'] == $this->model->id)
+                    {
+                        unset($dashboardsData[$key]);
+                    }
+                }
+                $changeDashboardLinkActionElement  = new ChangeDashboardLinkActionElement(
+                    $this->controllerId,
+                    $this->moduleId,
+                    $this->modelId,
+                    array('dashboardsData' => $dashboardsData));
+                return $changeDashboardLinkActionElement->render();
+            }
         }
     }
 ?>

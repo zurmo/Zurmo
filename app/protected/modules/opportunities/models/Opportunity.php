@@ -133,7 +133,7 @@
                     'stage'  => 'SalesStages',
                     'source' => 'LeadSources',
                 ),
-                'defaultSortAttribute' => 'lastName',
+                'defaultSortAttribute' => 'name',
                 'rollupRelations' => array(
                     'contacts',
                 ),

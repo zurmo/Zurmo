@@ -93,4 +93,74 @@
             }
             return $isSetEmailAccountsTestConfiguration;
         }
+
+        public static function createArchivedUnmatchedReceivedMessage(User $user)
+        {
+            if ($user->primaryEmail->emailAddress == null)
+            {
+                throw new NotSupportedException();
+            }
+            $box                       = EmailBoxUtil::getDefaultEmailBoxByUser($user);
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->subject     = 'A test unmatched archived received email';
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = 'My Second Message';
+            $emailContent->htmlContent = 'Some fake HTML content';
+            $emailMessage->content     = $emailContent;
+            //Sending is current user (super)
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = 'bob.message@zurmotest.com';
+            $sender->fromName          = 'Bobby Bobson';
+            $emailMessage->sender      = $sender;
+            //Recipient is BobMessage
+            $recipient                  = new EmailMessageRecipient();
+            $recipient->toAddress       = $user->primaryEmail->emailAddress;
+            $recipient->toName          = strval($user);
+            $recipient->type            = EmailMessageRecipient::TYPE_TO;
+            $recipient->personOrAccount = $user;
+            $emailMessage->recipients->add($recipient);
+            $emailMessage->folder       = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+            $saved = $emailMessage->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return $emailMessage;
+        }
+
+        public static function createArchivedUnmatchedSentMessage(User $user)
+        {
+            if ($user->primaryEmail->emailAddress == null)
+            {
+                throw new NotSupportedException();
+            }
+            $box                       = EmailBoxUtil::getDefaultEmailBoxByUser($user);
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->subject     = 'A test unmatched archived sent email';
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = 'My First Message';
+            $emailContent->htmlContent = 'Some fake HTML content';
+            $emailMessage->content     = $emailContent;
+            //Sending is current user (super)
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = $user->primaryEmail->emailAddress;
+            $sender->fromName          = strval($user);
+            $sender->personOrAccount   = Yii::app()->user->userModel;
+            $emailMessage->sender      = $sender;
+            //Recipient is BobMessage
+            $recipient                  = new EmailMessageRecipient();
+            $recipient->toAddress       = 'bob.message@zurmotest.com';
+            $recipient->toName          = 'Bobby Bobson';
+            $recipient->type            = EmailMessageRecipient::TYPE_TO;
+            $emailMessage->recipients->add($recipient);
+            $emailMessage->folder       = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+            $saved = $emailMessage->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return $emailMessage;
+        }
     }

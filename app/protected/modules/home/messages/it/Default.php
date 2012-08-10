@@ -29,8 +29,6 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-        '(Don\'t worry you can turn it on again)'
-            => '(è possibile riattivarla)',
         '1 Column'
             => '1 Colonna',
         '2 Columns'
@@ -57,6 +55,8 @@
             => 'Elimina i Dashboards',
         'Don\'t show me this screen again'
             => 'Non visualizzare più questa finestra',
+        'Don\'t worry you can turn it on again'
+            => 'è possibile riattivarla',
         'Edit Dashboard'
             => 'Modifica Dashboard',
         'Go to the dashboard'
@@ -79,6 +79,8 @@
             => 'Leggere il wiki',
         'Return to Home'
             => 'Ritorno a Home',
+        'Switch Dashboard'
+            => 'Cambiare Dashboard',
         'Tip of the Day'
             => 'Suggerimenti del giorno',
         'Using a CRM shouldn\'t be a chore. With Zurmo, you can earn points, ' .

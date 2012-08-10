@@ -40,6 +40,8 @@
 
         public $hideWelcomeView = false;
 
+        public $turnOffEmailNotifications = false;
+
         public function __construct($userId)
         {
             assert('is_int($userId) && $userId > 0');
@@ -58,13 +60,14 @@
         public function rules()
         {
             return array(
-                array('listPageSize',             'required'),
-                array('listPageSize',             'type',      'type' => 'integer'),
-                array('listPageSize',             'numerical', 'min' => 1),
-                array('subListPageSize',          'required'),
-                array('subListPageSize',          'type',      'type' => 'integer'),
-                array('subListPageSize',          'numerical', 'min' => 1),
-                array('hideWelcomeView',          'boolean'),
+                array('listPageSize',              'required'),
+                array('listPageSize',              'type',      'type' => 'integer'),
+                array('listPageSize',              'numerical', 'min' => 1),
+                array('subListPageSize',           'required'),
+                array('subListPageSize',           'type',      'type' => 'integer'),
+                array('subListPageSize',           'numerical', 'min' => 1),
+                array('hideWelcomeView',           'boolean'),
+                array('turnOffEmailNotifications', 'boolean')
             );
         }
 
@@ -74,6 +77,7 @@
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
                 'hideWelcomeView'           => Yii::t('Default', 'Hide welcome page'),
+                'turnOffEmailNotifications' => Yii::t('Default', 'Turn off email notifications')
             );
         }
     }

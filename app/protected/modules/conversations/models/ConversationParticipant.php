@@ -34,12 +34,12 @@
         {
             try
             {
-                if($this->person->id > 0)
+                if ($this->person->id > 0)
                 {
                     return strval($this->person);
                 }
             }
-            catch(NotFoundException $e)
+            catch (NotFoundException $e)
             {
             }
             return Yii::t('Default', '(Unnamed)');

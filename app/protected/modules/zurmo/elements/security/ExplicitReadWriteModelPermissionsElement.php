@@ -156,7 +156,7 @@
             {
                 return null;
             }
-            elseif(current($permitables) instanceof Group)
+            elseif (current($permitables) instanceof Group)
             {
                 if (current($permitables)->name == Group::EVERYONE_GROUP_NAME)
                 {

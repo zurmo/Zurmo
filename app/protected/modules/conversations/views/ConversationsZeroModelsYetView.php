@@ -32,8 +32,7 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default',
-                          'Create Conversation');
+            return Yii::t('Default', 'Create Conversation');
         }
 
         protected function getMessageContent()

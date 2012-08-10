@@ -2223,7 +2223,7 @@
                 {
                     assert('in_array(count($relationTypeModelClassNameAndOwns), array(2, 3, 4))');
                     $relationType           = $relationTypeModelClassNameAndOwns[0];
-                    if($relationType == self::MANY_MANY)
+                    if ($relationType == self::MANY_MANY)
                     {
                         $this->{$relationName}->removeAll();
                         $this->{$relationName}->save();

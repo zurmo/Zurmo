@@ -465,7 +465,7 @@
                 if (isset($items[$key]['dynamicLabelContent']))
                 {
                     MetadataUtil::resolveEvaluateSubString($items[$key]['dynamicLabelContent']);
-                    if(isset($items[$key]['items']))
+                    if (isset($items[$key]['items']))
                     {
                         static::resolveTabMenuForDynamicLabelContent($items[$key]['items']);
                     }

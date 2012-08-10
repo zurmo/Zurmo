@@ -133,31 +133,9 @@
                     $emailHelper->outboundSecurity = $configurationForm->security;
                     $userToSendMessagesFrom        = User::getById((int)$configurationForm->userIdOfUserToSendNotificationsAs);
 
-                    $emailMessage              = new EmailMessage();
-                    $emailMessage->owner       = Yii::app()->user->userModel;
-                    $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
-                    $emailContent              = new EmailMessageContent();
-                    $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo');
-                    $emailContent->htmlContent = Yii::t('Default', 'A test text message from Zurmo');
-                    $emailMessage->content     = $emailContent;
-                    $sender                    = new EmailMessageSender();
-                    $sender->fromAddress       = $emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
-                    $sender->fromName          = strval($userToSendMessagesFrom);
-                    $emailMessage->sender      = $sender;
-                    $recipient                 = new EmailMessageRecipient();
-                    $recipient->toAddress      = $configurationForm->aTestToAddress;
-                    $recipient->toName         = 'Test Recipient';
-                    $recipient->type           = EmailMessageRecipient::TYPE_TO;
-                    $emailMessage->recipients->add($recipient);
-                    $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
-                    $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
-                    $validated                 = $emailMessage->validate();
-                    if (!$validated)
-                    {
-                        throw new NotSupportedException();
-                    }
+                    $emailMessage = EmailMessageHelper::sendTestEmail($emailHelper, $userToSendMessagesFrom,
+                                                                      $configurationForm->aTestToAddress);
                     $messageContent  = null;
-                    $emailHelper->sendImmediately($emailMessage);
                     if (!$emailMessage->hasSendError())
                     {
                         $messageContent .= Yii::t('Default', 'Message successfully sent') . "\n";
@@ -235,6 +213,146 @@
             {
                 throw new NotSupportedException();
             }
+        }
+
+        public function actionMatchingList()
+        {
+            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', Yii::app()->user->userModel);
+            $userCanAccessLeads    = RightsUtil::canUserAccessModule('LeadsModule', Yii::app()->user->userModel);
+            EmailMessagesControllerSecurityUtil::
+                resolveCanUserProperlyMatchMessage($userCanAccessContacts, $userCanAccessLeads);
+            $pageSize         = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                'listPageSize', get_class($this->getModule()));
+            $emailMessage     = new EmailMessage(false);
+            $searchAttributes = array();
+            $metadataAdapter  = new ArchivedEmailMatchingSearchDataProviderMetadataAdapter(
+                $emailMessage,
+                Yii::app()->user->userModel->id,
+                $searchAttributes
+            );
+            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
+                $metadataAdapter,
+                'EmailMessage',
+                'RedBeanModelDataProvider',
+                'createdDateTime',
+                true,
+                $pageSize
+            );
+            $titleBarAndListView = new TitleBarAndListView(
+                                        $this->getId(),
+                                        $this->getModule()->getId(),
+                                        $emailMessage,
+                                        'EmailMessage',
+                                        $dataProvider,
+                                        'ArchivedEmailMatchingListView',
+                                        Yii::t('Default', 'Unmatched Archived Emails'),
+                                        array(),
+                                        false);
+            $view = new EmailMessagesPageView(ZurmoDefaultViewUtil::
+                                              makeStandardViewForCurrentUser($this, $titleBarAndListView));
+            echo $view->render();
+        }
+
+        public function actionCompleteMatch($id)
+        {
+            //!!!todo security checks?? think about it
+            $emailMessage          = EmailMessage::getById((int)$id);
+            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', Yii::app()->user->userModel);
+            $userCanAccessLeads    = RightsUtil::canUserAccessModule('LeadsModule', Yii::app()->user->userModel);
+            if (!$userCanAccessContacts && !$userCanAccessLeads)
+            {
+                throw new NotSupportedException();
+            }
+            $selectForm            = self::makeSelectForm($userCanAccessLeads, $userCanAccessContacts);
+
+            if (isset($_POST[get_class($selectForm)]))
+            {
+                if (isset($_POST['ajax']) && $_POST['ajax'] === 'select-contact-form-' . $id)
+                {
+                    $selectForm->setAttributes($_POST[get_class($selectForm)][$id]);
+                    $selectForm->validate();
+                    $errorData = array();
+                    foreach ($selectForm->getErrors() as $attribute => $errors)
+                    {
+                            $errorData[CHtml::activeId($selectForm, $attribute)] = $errors;
+                    }
+                    echo CJSON::encode($errorData);
+                    Yii::app()->end(0, false);
+                }
+                else
+                {
+                    $selectForm->setAttributes($_POST[get_class($selectForm)][$id]);
+                    $contact = Contact::getById((int)$selectForm->contactId);
+                    ArchivedEmailMatchingUtil::resolveContactToSenderOrRecipient($emailMessage, $contact);
+                    ArchivedEmailMatchingUtil::resolveEmailAddressToContactIfEmailRelationAvailable($emailMessage, $contact);
+                    $emailMessage->folder = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox,
+                                                                         EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+                    if (!$emailMessage->save())
+                    {
+                        throw new FailedToSaveModelException();
+                    }
+                }
+            }
+            else
+            {
+                static::attemptToMatchAndSaveLeadOrContact($emailMessage, 'Contact', (int)$id);
+                static::attemptToMatchAndSaveLeadOrContact($emailMessage, 'Lead', (int)$id);
+            }
+        }
+
+        protected static function attemptToMatchAndSaveLeadOrContact($emailMessage, $type, $emailMessageId)
+        {
+            assert('$type == "Contact" || $type == "Lead"');
+            assert('is_int($emailMessageId)');
+            if (isset($_POST[$type]))
+            {
+                if (isset($_POST['ajax']) && $_POST['ajax'] === strtolower($type) . '-inline-create-form-' . $emailMessageId)
+                {
+                    $contact = new Contact();
+                    $contact->setAttributes($_POST[$type][$emailMessageId]);
+                    $contact->validate();
+                    $errorData = array();
+                    foreach ($contact->getErrors() as $attribute => $errors)
+                    {
+                            $errorData[CHtml::activeId($contact, $attribute)] = $errors;
+                    }
+                    echo CJSON::encode($errorData);
+                    Yii::app()->end(0, false);
+                }
+                else
+                {
+                    $contact = new Contact();
+                    $contact->setAttributes($_POST[$type][$emailMessageId]);
+                    if (!$contact->save())
+                    {
+                        throw new FailedToSaveModelException();
+                    }
+                    ArchivedEmailMatchingUtil::resolveContactToSenderOrRecipient($emailMessage, $contact);
+                    $emailMessage->folder = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox,
+                                                                         EmailFolder::TYPE_ARCHIVED_UNMATCHED);
+                    if (!$emailMessage->save())
+                    {
+                        throw new FailedToSaveModelException();
+                    }
+                }
+            }
+        }
+
+        protected static function makeSelectForm($userCanAccessLeads, $userCanAccessContacts)
+        {
+            if ($userCanAccessLeads && $userCanAccessContacts)
+            {
+                $selectForm = new AnyContactSelectForm();
+            }
+            elseif (!$userCanAccessLeads && $userCanAccessContacts)
+            {
+                $selectForm = new ContactSelectForm();
+            }
+            else
+            {
+                $selectForm = new LeadSelectForm();
+            }
+            return $selectForm;
         }
     }
 ?>

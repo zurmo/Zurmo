@@ -51,7 +51,7 @@
                                    ' Use the Formula Name from the Available Fields grid below to create your formula.' .
                                    ' Example formula (field1 x field2) / field3');
             $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">';
-            $spanContent   .= Yii::t('Default', '?') . '</span>';
+            $spanContent   .= '</span>';
             if (count($attributeData) > 0)
             {
                 $content  = '<strong>' . Yii::t('Default', 'Available Fields:') . '</strong> ' . $spanContent;

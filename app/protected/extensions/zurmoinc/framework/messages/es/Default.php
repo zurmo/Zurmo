@@ -91,6 +91,8 @@
             => 'Fecha',
         'Date Time'
             => 'Fecha Hora',
+        'Default data loaded for {moduleName}'
+            => 'Datos predeterminados están cargados para {moduleName}',
         'Default Value'
             => 'Valor predeterminado',
         'Delete'

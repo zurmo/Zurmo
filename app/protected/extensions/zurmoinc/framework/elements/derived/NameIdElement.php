@@ -60,7 +60,7 @@
 
         protected function renderError()
         {
-            return $this->form->error($this->model, $this->nameAttributeName);
+            return $this->form->error($this->model, $this->nameAttributeName, array('inputID' => $this->getIdForTextField()));
         }
 
         protected function getIdForHiddenField()

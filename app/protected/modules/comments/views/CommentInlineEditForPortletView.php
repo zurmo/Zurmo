@@ -42,7 +42,7 @@
             $inlineViewClassName = $this->getInlineEditViewClassName();
 
             $urlParameters = array('relatedModelId'           => $this->params['relationModel']->id,
-                                   'relatedModelClassName' 	  => get_class($this->params['relationModel']),
+                                   'relatedModelClassName'    => get_class($this->params['relationModel']),
                                    'relatedModelRelationName' => static::getRelatedModelRelationName(),
                                    'redirectUrl' => $this->getPortletDetailsUrl()); //After save, the url to go to.
             $uniquePageId  = get_called_class();

@@ -31,6 +31,17 @@
             return true;
         }
 
+        public function resolveDisplayNameByView($viewClassName)
+        {
+            assert('is_string($viewClassName)');
+            $displayDescription = $viewClassName::getDisplayDescription();
+            if ($displayDescription != null)
+            {
+                return $this->getDisplayName() . ' - ' . $displayDescription;
+            }
+            return $this->getDisplayName();
+        }
+
         public function getDisplayName()
         {
             return Yii::t('Default', 'Inline Edit View');

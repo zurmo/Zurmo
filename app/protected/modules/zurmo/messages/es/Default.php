@@ -75,6 +75,8 @@
             => 'Idiomas activos pueden ser utilizados por los usuarios. El idioma del sistema y de cualquier idioma utilizado por un usuario no puede ser desactivado.',
         'Ad-hoc / Owner'
             => 'Ad-hoc / Propietario',
+        'Add Comment'
+            => 'Añadir comentario',
         'Add Currency'
             => 'Añadir divisa',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -133,10 +135,14 @@
             => 'Bancario',
         'Business Services'
             => 'Servicios de negocios',
+        'by <strong>{ownerStringContent}</strong>'
+            => 'de <strong>{ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'de {ownerStringContent}',
         'Cancel'
             => 'Cancelar',
+        'Cancel changes'
+            => 'Cancelar cambios',
         'Changes to active currencies saved successfully.'
             => 'Divisas activas cambiado con éxito.',
         'Changes to active languages saved successfully.'

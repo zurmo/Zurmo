@@ -95,6 +95,8 @@
             => 'El nombre de usuario es demasiado corto. Longitud mínima es de {minimumLength}.',
         'Time Zone'
             => 'Zona horaria',
+        'Turn off email notifications'
+            => 'Desactivar notificaciones de email',
         'User'
             => 'Usuario',
         'User configuration saved successfully.'
@@ -103,9 +105,9 @@
             => 'Busqueda de Usuarios',
         'Users'
             => 'Usuarios',
-        'Users Home'
-            => 'Accueil Utilisateurs',
         'Users cannot be deleted.  You can however change their status to inactive.'
             => 'No se puede eliminar usuarios. Sin embargo, puede cambiar su estado a inactivo.',
+        'Users Home'
+            => 'Accueil Utilisateurs',
     );
 ?>

@@ -219,7 +219,7 @@
             {
                 return false;
             }
-            if(isset($elementInformation['modelClassName']))
+            if (isset($elementInformation['modelClassName']))
             {
                 $modelClassName = $elementInformation['modelClassName'];
                 //Todo: figure out how to not need to new up a new model.

@@ -29,6 +29,10 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '$_SERVER does not have {vars}.'
+            => '$_SERVER non ha {vars}.',
+        '$_SERVER is accessible.'
+            => '$_SERVER è accessible. ',
         'Apache'
             => 'Apache', // Same Word Translated
         'APC'
@@ -116,6 +120,8 @@
             => 'Non utilizzare la versione RedBean Legacy',
         'Dropping existing tables.'
             => 'Rimuovendo tavole esistente.',
+        'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.'
+            => '$_SERVER["REQUEST_URI"] o $_SERVER["QUERY_STRING"] deve esistere.',
         'Error code:'
             => 'Codice Errore:',
         'FAIL'
@@ -286,6 +292,8 @@
             => 'C\'era un errore durante la creazione del database dei codice Errore:',
         'There was a problem creating the user Error code:'
             => 'C\'era un error durante la creazione del utente dei codice Errore:',
+        'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]'
+            => 'Impossibile determinare il percorso Informazioni URL. Assicurare $_SERVER["PATH_INFO"]',
         'User who can connect to the database.'
             => 'Utente che posso connettere al database.',
         'User`s password.'
