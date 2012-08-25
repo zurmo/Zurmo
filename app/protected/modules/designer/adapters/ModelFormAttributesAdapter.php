@@ -34,6 +34,11 @@
             $this->model = $model;
         }
 
+        public function getModel()
+        {
+            return $this->model;
+        }
+
         public function getAttributes()
         {
             $modelAttributes = $this->getModelAttributes();
@@ -51,7 +56,7 @@
         protected function getFormAttributes()
         {
             $attributes = array();
-            foreach ($this->model->getAttributes() as $attributeName => $notUsed)
+            foreach ($this->model->getSearchableAttributes() as $attributeName => $notUsed)
             {
                 ModelAttributeCollectionUtil::populateCollection(
                     $attributes,

@@ -59,6 +59,8 @@
             => 'Acceso a Administración',
         'Access Currency Configuration'
             => 'Acceso a Divisas',
+        'Access Developer Tools'
+            => 'Acceda a Herramientas para Desarrolladores',
         'Access Failure'
             => 'Falta de acceso',
         'Access Global Configuration'
@@ -77,6 +79,8 @@
             => 'Ad-hoc / Propietario',
         'Add Comment'
             => 'Añadir comentario',
+        'Add criteria'
+            => 'Añadir criterios',
         'Add Currency'
             => 'Añadir divisa',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -139,6 +143,8 @@
             => 'de <strong>{ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'de {ownerStringContent}',
+        'Cache has been successfully cleaned.'
+            => 'Caché se ha limpiado correctamente.',
         'Cancel'
             => 'Cancelar',
         'Cancel changes'
@@ -151,6 +157,8 @@
             => 'Tipo de gráfico',
         'City'
             => 'Ciudad',
+        'Clear Cache'
+            => 'Borrar caché',
         'Click on the Map link on records to see the customer location on Google Maps.'
             => 'Haga clic en el enlace para ver el mapa de localización con Google Maps.',
         'Close'
@@ -175,6 +183,8 @@
             => 'Crear role',
         'Create Roles'
             => 'Crear roles',
+        'Criteria Selected <span class="icon-clear">Z</span>'
+            => 'Criterios Seleccionados <span class="icon-clear">Z</span>',
         'Currencies: Create'
             => 'Divisas: crear',
         'Currencies: List'
@@ -189,6 +199,8 @@
             => 'Actualiza el tipo de cambio',
         'Currency Value'
             => 'Valor de divisa',
+        'Custom data updated successfully.'
+            => 'Datos personalizados se ha actualizado correctamente.',
         'Customer'
             => 'Cliente',
         'Dashboard portlet list page size'
@@ -215,12 +227,16 @@
             => 'Departamento',
         'Description'
             => 'Descripción',
+        'Developer Tools'
+            => 'Herramientas para Desarrolladores',
         'Dr.'
             => 'Dr.', // Same Word Translated
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Haga clic en el icono de configuración en la parte superior derecha de cada portlet para editar gráficos en el salpicadero.',
         'Email Address'
             => 'Dirección de email',
+        'Enable game notification popup'
+            => 'Activar la notificación popup de juego',
         'Energy'
             => 'Energía',
         'Event Name'
@@ -275,8 +291,12 @@
             => 'aquí',
         'Home'
             => 'Inicio',
+        'If there is new metadata to load using CustomManagement, use this option.'
+            => 'Si hay nuevos metadatos a cargar con CustomManagement, utilice esta opción.',
         'In Progress'
             => 'En progreso',
+        'In the case where you have reloaded the database, some cached items might still exist. This is a way to clear that cache.'
+            => 'Si hay nuevos metadatos a cargar con CustomManagement, utilice esta opción. En caso que haya recargado la base de datos, algunos elementos almacenados en caché aún puedan existir. Esta es una manera de limpiar esa caché.',
         'Inbound Call'
             => 'Llamada entrante',
         'Incorrect username or password.'
@@ -335,6 +355,8 @@
             => 'Vista de lista',
         'Load'
             => 'Cargar',
+        'Load a saved search'
+            => 'Cargar una búsqueda guardada',
         'Longitude'
             => 'Longitud',
         'Manage Active Languages'
@@ -369,6 +391,8 @@
             => ' El modelo no fue creado.',
         'Model was not updated.'
             => 'El modelo no ha sido actualizado.',
+        'Modify Structure'
+            => 'Cambiar la estructura',
         'Module Name - Plural'
             => 'Nombre del módulo - Plural',
         'Module Name - Plural (lowercase)'
@@ -495,10 +519,14 @@
             => 'Roles', // Same Word Translated
         'Roles Home'
             => 'Inicio de Roles',
+        'Run'
+            => 'Ejecutar',
         'Salutation'
             => 'Saludo',
         'Save Changes'
             => 'Guardar cambios',
+        'Save search'
+            => 'Guardar búsqueda',
         'Save yourself time and click the pencil icon to jump right in and edit your record.'
             => 'Haga clic en el icono del lápiz para editar rápidamente.',
         'Search'
@@ -515,6 +543,10 @@
             => 'Seguridad',
         'See more search results by clicking the down arrow at the bottom of the screen.'
             => 'Haga clic en la flecha hacia abajo para mostrar más resultados de búsqueda.',
+        'Select a field'
+            => 'Seleccione un campo',
+        'Select a Group'
+            => 'Seleccione un grupo',
         'Select a Parent Group'
             => 'Seleccione un grupo de padres',
         'Select a Parent Role'
@@ -609,6 +641,8 @@
             => 'Escriba un código de divisa o nombre para buscar',
         'Update'
             => 'Actualizar',
+        'Update Custom Data'
+            => 'Actualizar los datos personalizados',
         'Upload attachments to a record by clicking "More Options" when adding a note.'
             => 'Puedes subir archivos adjuntos a un registro haciendo clic en "Más opciones", al añadir una nota.',
         'User Membership'

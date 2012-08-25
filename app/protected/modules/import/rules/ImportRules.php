@@ -38,6 +38,14 @@
         private static $attributeImportRulesDataByModelAndImportRulesClassName = array();
 
         /**
+         * Used for testing.
+         */
+        public static function resetCache()
+        {
+            self::$attributeImportRulesDataByModelAndImportRulesClassName = null;
+        }
+
+        /**
          * @return string - If the class name is TestImportRules, then 'Test' will be returned.
          */
         public static function getType()
@@ -196,7 +204,8 @@
             {
                 return $attributeImportRulesData[$attributeIndexOrDerivedType];
             }
-            throw new NotSupportedException();
+            throw new NotSupportedException('Model Class Name' . $modelClassName .
+                                            'Attribute Name or Derived Type: ' . $attributeIndexOrDerivedType);
         }
 
         /**

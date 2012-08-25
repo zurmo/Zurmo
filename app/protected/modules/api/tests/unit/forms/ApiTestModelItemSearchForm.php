@@ -27,7 +27,7 @@
     /**
      * ApiTestModelItem search form.
      */
-    class ApiTestModelItemSearchForm extends SearchForm
+    class ApiTestModelItemSearchForm extends DynamicSearchForm
     {
     }
 ?>

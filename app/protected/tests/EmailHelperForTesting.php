@@ -56,8 +56,19 @@
             return count(EmailMessage::getAllByFolderType(EmailFolder::TYPE_SENT));
         }
 
-        // For testing only
-        public function sendRawEmail($subject, $from, $to, $textContent = '', $htmlContent = '', $cc = null, $bcc = null, $attachments = null)
+        /**
+         * For testing only
+         * @param string $subject
+         * @param string $from
+         * @param mixed(string || array) $to
+         * @param string $textContent
+         * @param string $htmlContent
+         * @param mixed(string || array) $cc
+         * @param mixed(string || array) $bcc
+         * @param array $attachments
+         * @param array $settings
+         */
+        public function sendRawEmail($subject, $from, $to, $textContent = '', $htmlContent = '', $cc = null, $bcc = null, $attachments = null, $settings = null)
         {
             assert('is_string($subject) && $subject != ""');
             assert('is_string($from)    && $from != ""');
@@ -70,11 +81,24 @@
             assert('is_array($attachments) || !isset($attachments)');
 
             $mailer           = $this->getOutboundMailer();
-            $mailer->mailer   = $this->outboundType;
-            $mailer->host     = $this->outboundHost;
-            $mailer->port     = $this->outboundPort;
-            $mailer->username = $this->outboundUsername;
-            $mailer->password = $this->outboundPassword;
+            if (!$settings)
+            {
+                $mailer->mailer   = $this->outboundType;
+                $mailer->host     = $this->outboundHost;
+                $mailer->port     = $this->outboundPort;
+                $mailer->username = $this->outboundUsername;
+                $mailer->password = $this->outboundPassword;
+                $mailer->security = $this->outboundSecurity;
+            }
+            else
+            {
+                //$mailer->mailer   = $settings['outboundType'];
+                $mailer->host     = $settings['outboundHost'];
+                $mailer->port     = $settings['outboundPort'];
+                $mailer->username = $settings['outboundUsername'];
+                $mailer->password = $settings['outboundPassword'];
+                $mailer->security = $settings['outboundSecurity'];
+            }
 
             $mailer->Subject  = $subject;
             if ($htmlContent == null && $textContent != null)

@@ -9,8 +9,8 @@ developer/api/html
 error_log
 protected/data
 protected/runtime
-redbean
-yii
+yii/demos
+yii/requirements
 syntax: glob
 app/protected/tests/unit/timeit.dat
 app/protected/tests/unit/results.txt
@@ -30,11 +30,4 @@ app/report
 .DS_Store
 .settings
 README.md
-.idea/.name
-.idea/ZurmoUI.iml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
-.idea/workspace.xml
+

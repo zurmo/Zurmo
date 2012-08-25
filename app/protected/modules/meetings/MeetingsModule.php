@@ -99,5 +99,20 @@
         {
             return true;
         }
+
+        /**
+         * Even though meetings are never globally searched, the search form can still be used by a specific
+         * search view for a module.  Either this module or a related module.  This is why a class is returned.
+         * @see modelsAreNeverGloballySearched controls it not being searchable though in the global search.
+         */
+        public static function getGlobalSearchFormClassName()
+        {
+            return 'MeetingsSearchForm';
+        }
+
+        public static function modelsAreNeverGloballySearched()
+        {
+            return true;
+        }
     }
 ?>

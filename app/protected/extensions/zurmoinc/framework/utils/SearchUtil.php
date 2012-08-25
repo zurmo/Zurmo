@@ -31,24 +31,25 @@
      */
     class SearchUtil
     {
-        const ANY_MIXED_ATTRIBUTES_SCOPE_NAME = 'anyMixedAttributesScope';
-
         /**
          * Get the search attributes array by resolving the GET array
-         * for the information. If the self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME is set, remove that
-         * from the array since this is utilized only directly from the $_GET string.
+         * for the information.  Remove any attributes from the array that are not searchable form attributes
          */
-        public static function resolveSearchAttributesFromGetArray($getArrayName)
+        public static function resolveSearchAttributesFromGetArray($getArrayName, $formModelClassName)
         {
             assert('is_string($getArrayName)');
+            assert('is_string($formModelClassName) && is_subclass_of($formModelClassName, "SearchForm")');
             $searchAttributes = array();
             if (!empty($_GET[$getArrayName]))
             {
                 $searchAttributes = SearchUtil::getSearchAttributesFromSearchArray($_GET[$getArrayName]);
-                if (isset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) ||
-                    key_exists(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME, $searchAttributes))
+                foreach ($formModelClassName::getNonSearchableAttributes() as $attribute)
                 {
-                    unset($searchAttributes[self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]);
+                    if (isset($searchAttributes[$attribute]) ||
+                        key_exists($attribute, $searchAttributes))
+                    {
+                        unset($searchAttributes[$attribute]);
+                    }
                 }
             }
             return $searchAttributes;
@@ -66,21 +67,21 @@
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
             assert('is_string($getArrayName)');
             $searchAttributes  = array();
-            if (!empty($_GET[$getArrayName]) && isset($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+            if (!empty($_GET[$getArrayName]) && isset($_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
             {
                 assert('$searchModel instanceof SearchForm');
-                if (!is_array($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
+                if (!is_array($_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
                 {
                     $sanitizedAnyMixedAttributesScope = null;
                 }
-                elseif (count($_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) == 1 &&
-                       $_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME][0] == 'All')
+                elseif (count($_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]) == 1 &&
+                       $_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME][0] == 'All')
                 {
                     $sanitizedAnyMixedAttributesScope = null;
                 }
                 else
                 {
-                    $sanitizedAnyMixedAttributesScope = $_GET[$getArrayName][self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME];
+                    $sanitizedAnyMixedAttributesScope = $_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME];
                 }
                 $searchModel->setAnyMixedAttributesScope($sanitizedAnyMixedAttributesScope);
             }
@@ -155,8 +156,9 @@
          */
         public static function getSearchAttributesFromSearchArray($searchArray)
         {
+            assert('$searchArray != null');
             array_walk_recursive($searchArray, 'SearchUtil::changeEmptyValueToNull');
-            SearchUtil::changeEmptyArrayValuesToNull($searchArray);
+            self::changeEmptyArrayValuesToNull($searchArray);
             return $searchArray;
         }
 
@@ -187,8 +189,24 @@
                         if ($subValue == null)
                         {
                             unset($searchArray[$key]['values'][$subKey]);
+                            $searchArray[$key]['values'] = array_values($searchArray[$key]['values']);
                         }
                     }
+                }
+                if (is_array($value) && isset($value['value']) && is_array($value['value']))
+                {
+                    foreach ($value['value'] as $subKey => $subValue)
+                    {
+                        if ($subValue == null)
+                        {
+                            unset($searchArray[$key]['value'][$subKey]);
+                            $searchArray[$key]['value'] = array_values($searchArray[$key]['value']);
+                        }
+                    }
+                }
+                elseif (is_array($value))
+                {
+                    self::changeEmptyArrayValuesToNull($searchArray[$key]);
                 }
             }
         }
@@ -202,6 +220,7 @@
         public static function getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray)
         {
             array_walk_recursive($searchArray, 'SearchUtil::changeEmptyValueToNullExceptNumeric');
+            self::changeEmptyArrayValuesToNull($searchArray);
             return $searchArray;
         }
 
@@ -253,6 +272,116 @@
                 $searchAttributesReadyToSetToModel[$attributeName] = $data;
             }
             return $searchAttributesReadyToSetToModel;
+        }
+
+        /**
+         * @param string $getArrayName
+         */
+        public static function getDynamicSearchAttributesFromGetArray($getArrayName)
+        {
+            assert('is_string($getArrayName)');
+            if (!empty($_GET[$getArrayName]) &&
+                isset($_GET[$getArrayName][DynamicSearchForm::DYNAMIC_NAME]))
+            {
+                $dynamicSearchAttributes = SearchUtil::getSearchAttributesFromSearchArray($_GET[$getArrayName][DynamicSearchForm::DYNAMIC_NAME]);
+                if (isset($dynamicSearchAttributes[DynamicSearchForm::DYNAMIC_STRUCTURE_NAME]))
+                {
+                    unset($dynamicSearchAttributes[DynamicSearchForm::DYNAMIC_STRUCTURE_NAME]);
+                }
+                foreach ($dynamicSearchAttributes as $key => $data)
+                {
+                    if (is_string($data) && $data == 'undefined')
+                    {
+                        unset($dynamicSearchAttributes[$key]);
+                    }
+                }
+                return $dynamicSearchAttributes;
+            }
+        }
+
+        /**
+         * @param object DynamicSearchForm $searchModel
+         * @param array $dynamicSearchAttributes
+         */
+        public static function sanitizeDynamicSearchAttributesByDesignerTypeForSavingModel(DynamicSearchForm $searchModel,
+                                                                                           $dynamicSearchAttributes)
+        {
+            assert('is_array($dynamicSearchAttributes)');
+            $sanitizedDynamicSearchAttributes = array();
+            foreach ($dynamicSearchAttributes as $key => $searchAttributeData)
+            {
+                $attributeIndexOrDerivedType = $searchAttributeData['attributeIndexOrDerivedType'];
+                $structurePosition           = $searchAttributeData['structurePosition'];
+                unset($searchAttributeData['attributeIndexOrDerivedType']);
+                unset($searchAttributeData['structurePosition']);
+                self::processDynamicSearchAttributesDataForSavingModelRecursively($searchModel, $searchAttributeData);
+                $sanitizedDynamicSearchAttributes[$key] = $searchAttributeData;
+                $sanitizedDynamicSearchAttributes[$key]['attributeIndexOrDerivedType'] = $attributeIndexOrDerivedType;
+                $sanitizedDynamicSearchAttributes[$key]['structurePosition']           = $structurePosition;
+            }
+            return $sanitizedDynamicSearchAttributes;
+        }
+
+        protected static function processDynamicSearchAttributesDataForSavingModelRecursively($searchModel, & $searchAttributeData)
+        {
+            $processRecursively = false;
+            foreach ($searchAttributeData as $attributeName => $attributeData)
+            {
+                if ( isset($attributeData['relatedModelData']) &&
+                    is_array($attributeData) &&
+                    $attributeData['relatedModelData'] == true)
+                {
+                    assert('count($attributeData) == 2');
+                    $processRecursively = true;
+                    break;
+                }
+            }
+            if ($processRecursively)
+            {
+                $modelToUse      = self::resolveModelToUseByModelAndAttributeName($searchModel, $attributeName);
+                self::processDynamicSearchAttributesDataForSavingModelRecursively($modelToUse,
+                                                                                 $searchAttributeData[$attributeName]);
+            }
+            else
+            {
+                $searchAttributeData = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel, $searchAttributeData);
+            }
+        }
+
+        /**
+         * Given a model and an attribute that is a relation, ascertain the correct model to use.  If a search form
+         * model is available then use that otherwise use the appropriate related model.
+         * @param object $model SearchForm or RedBeanModel
+         * @param string $attributeName
+         */
+        public static function resolveModelToUseByModelAndAttributeName($model, $attributeName)
+        {
+            assert('$model instanceof SearchForm || $model instanceof RedBeanModel');
+            assert('is_string($attributeName)');
+            $modelToUse      = SearchDataProviderMetadataAdapter::resolveAsRedBeanModel($model->$attributeName);
+            $moduleClassName = $modelToUse->getModuleClassName();
+            if ($moduleClassName != null)
+            {
+                $formClassName   = $moduleClassName::getGlobalSearchFormClassName();
+                if ($formClassName != null)
+                {
+                    $modelToUse = new $formClassName($modelToUse);
+                }
+            }
+            return $modelToUse;
+        }
+
+        /**
+         * @param string $getArrayName
+         */
+        public static function getDynamicSearchStructureFromGetArray($getArrayName)
+        {
+            assert('is_string($getArrayName)');
+            if (!empty($_GET[$getArrayName]) &&
+                isset($_GET[$getArrayName][DynamicSearchForm::DYNAMIC_STRUCTURE_NAME]))
+            {
+                return $_GET[$getArrayName][DynamicSearchForm::DYNAMIC_STRUCTURE_NAME];
+            }
         }
     }
 ?>

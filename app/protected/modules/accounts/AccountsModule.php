@@ -40,7 +40,7 @@
 
         public function getRootModelNames()
         {
-            return array('Account', 'AccountsFilteredList');
+            return array('Account');
         }
 
         public static function getUntranslatedRightsLabels()

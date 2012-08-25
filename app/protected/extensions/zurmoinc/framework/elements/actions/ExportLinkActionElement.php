@@ -51,16 +51,16 @@
                         }
                         var options =
                         {
-                            url : $.fn.yiiGridView.getUrl('" . $gridId . "')
+                            url     : $.fn.yiiGridView.getUrl('" . $gridId . "'),
+                            baseUrl : '" . Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId) . "'
                         }
                         if (options.url.split( '?' ).length == 2)
                         {
-                            options.url.split( '?' )[0];
-                            options.url = options.url.split( '?' )[0] +'/'+ 'export' + '?' + options.url.split( '?' )[1];
+                            options.url = options.baseUrl +'/'+ 'export' + '?' + options.url.split( '?' )[1];
                         }
                         else
                         {
-                            options.url = options.url +'/'+ 'export';
+                            options.url = options.baseUrl +'/'+ 'export';
                         }
                         addListViewSelectedIdsToUrl('" . $gridId . "', options);
                         var data = '' + 'export=' + '&selectAll=&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
@@ -76,16 +76,16 @@
                     {
                         var options =
                         {
-                            url : $.fn.yiiGridView.getUrl('" . $gridId . "')
+                            url     : $.fn.yiiGridView.getUrl('" . $gridId . "'),
+                            baseUrl : '" . Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId) . "'
                         }
                         if (options.url.split( '?' ).length == 2)
                         {
-                            options.url.split( '?' )[0];
-                            options.url = options.url.split( '?' )[0] +'/'+ 'export' + '?' + options.url.split( '?' )[1];
+                            options.url = options.baseUrl +'/'+ 'export' + '?' + options.url.split( '?' )[1];
                         }
                         else
                         {
-                            options.url = options.url +'/'+ 'export';
+                            options.url = options.baseUrl +'/'+ 'export';
                         }
                         var data = '' + 'export=' + '&selectAll=1&ajax=&" . $this->getPageVarName() . "=1'; " . // Not Coding Standard
                         "url = $.param.querystring(options.url, data);

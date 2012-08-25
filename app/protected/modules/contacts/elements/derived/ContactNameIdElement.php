@@ -35,10 +35,5 @@
         protected $idAttributeId = 'contactId';
 
         protected $nameAttributeName = 'contactName';
-
-        protected static function getModalTitleForSelectingModel()
-        {
-            return Yii::t('Default', 'ContactsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
-        }
     }
 ?>

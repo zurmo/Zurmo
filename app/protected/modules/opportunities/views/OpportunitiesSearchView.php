@@ -24,12 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class OpportunitiesSearchView extends ZurmoSearchView
+    class OpportunitiesSearchView extends SavedDynamicSearchView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'global' => array(
+                    'definedNestedAttributes' => array(
+                        array('account' => array(
+                            'name',
+                        )),
+                    ),
                     'panels' => array(
                         array(
                             'locked' => true,
@@ -48,36 +53,8 @@
                             ),
                         ),
                         array(
-                            'title' => 'Advanced Search',
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'stage', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'source', 'type' => 'DropDownAsMultiSelect', 'addBlank' => true),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
+                            'advancedSearchType' => static::ADVANCED_SEARCH_TYPE_DYNAMIC,
+                            'rows'   => array(),
                         ),
                     ),
                 ),

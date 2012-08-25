@@ -183,7 +183,7 @@
                 $mappingRuleFormClassName = $mappingRuleType .'MappingRuleForm';
                 if (!isset($columnMappingData['mappingRulesData'][$mappingRuleFormClassName]))
                 {
-                    $dataAnalyzer->runAndMakeMessages($this->dataProvider, $columnName);
+                    throw new NotSupportedException();
                 }
                 else
                 {

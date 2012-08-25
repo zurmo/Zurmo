@@ -46,5 +46,32 @@
             $saved                 = $jobLog->save();
             echo 'Job Log Id: ' . $jobLog->id;
         }
+
+            /**
+         * Special method to load up many job logs to view paginiation, modal,  etc. in job log modal view
+         */
+        public function actionLoadManyJobLogs()
+        {
+            if (Yii::app()->user->userModel->username != 'super')
+            {
+                throw new NotSupportedException();
+            }
+            echo 'Creating jobs for CurrencyRatesUpdate' . "\n";
+            for ($i = 0; $i < 10; $i++)
+            {
+                $jobLog                = new JobLog();
+                $jobLog->type          = 'CurrencyRatesUpdate';
+                $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+                $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+                $jobLog->isProcessed   = true;
+                $jobLog->message       = 'A test message.';
+                $saved                 = $jobLog->save();
+                if (!$saved)
+                {
+                    throw new FailedToSaveModelException();
+                }
+            }
+        }
     }
 ?>

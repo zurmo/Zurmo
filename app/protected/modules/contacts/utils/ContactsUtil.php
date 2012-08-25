@@ -173,6 +173,34 @@
             return $contactStatesData;
         }
 
+        /**
+         * Get an array of states from the starting state onwards, id/translated label pairings of the
+         * existing contact states ordered by order.
+         * @return array
+         */
+        public static function getContactStateDataFromStartingStateLabelByLanguage($language)
+        {
+            assert('is_string($language)');
+            $contactStatesData = array();
+            $states            = ContactState::getAll('order');
+            $startingState     = self::getStartingStateId();
+            $includeState      = false;
+
+            foreach ($states as $state)
+            {
+                if ($startingState == $state->id || $includeState)
+                {
+                    if ($startingState == $state->id)
+                    {
+                        $includeState = true;
+                    }
+                    $state->name = static::resolveStateLabelByLanguage($state, $language);
+                    $contactStatesData[] = $state;
+                }
+            }
+            return $contactStatesData;
+        }
+
         public static function setStartingStateById($startingStateId)
         {
             assert('is_int($startingStateId)');

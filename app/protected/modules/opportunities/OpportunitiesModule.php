@@ -40,7 +40,7 @@
 
         public function getRootModelNames()
         {
-            return array('Opportunity', 'OpportunitiesFilteredList');
+            return array('Opportunity');
         }
 
         public static function getUntranslatedRightsLabels()

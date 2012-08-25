@@ -169,7 +169,7 @@
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation(),
                 )),
-                static::resolveAjaxOptionsForSelectingModel($id),
+                $this->resolveAjaxOptionsForSelectingModel($id),
                 array(
                 'id'        => $id,
                 'style'     => $this->getSelectLinkStartingStyle(),
@@ -179,16 +179,19 @@
             return $content;
         }
 
-        protected static function resolveAjaxOptionsForSelectingModel($formId)
+        protected function resolveAjaxOptionsForSelectingModel($formId)
         {
             assert('is_string($formId)');
-            $title = static::getModalTitleForSelectingModel();
+            $title = $this->getModalTitleForSelectingModel();
             return   ModalView::getAjaxOptionsForModalLink($title);
         }
 
-        protected static function getModalTitleForSelectingModel()
+        protected function getModalTitleForSelectingModel()
         {
-            return null;
+            $module              = Yii::app()->getModule(static::$moduleId);
+            $moduleSingularLabel = $module->getModuleLabelByTypeAndLanguage('Singular');
+            return Yii::t('Default', '{moduleSingularLabel} Search',
+                                      array('{moduleSingularLabel}' => $moduleSingularLabel));
         }
 
         protected function getSelectLinkControllerId()

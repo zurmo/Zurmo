@@ -60,19 +60,21 @@
                 Yii::app()->emailHelper->outboundPort     = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundPort'];
                 Yii::app()->emailHelper->outboundUsername = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundUsername'];
                 Yii::app()->emailHelper->outboundPassword = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundPassword'];
+                Yii::app()->emailHelper->outboundSecurity = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundSecurity'];
                 Yii::app()->emailHelper->sendEmailThroughTransport = true;
                 Yii::app()->emailHelper->setOutboundSettings();
                 Yii::app()->emailHelper->init();
 
-                $userSmtpMailer = new EmailHelperForTesting();
-                $userSmtpMailer->outboundHost     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundHost'];
-                $userSmtpMailer->outboundPort     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPort'];
-                $userSmtpMailer->outboundUsername = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundUsername'];
-                $userSmtpMailer->outboundPassword = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPassword'];
-                $userSmtpMailer->setOutboundSettings();
-                $userSmtpMailer->init();
-                $userSmtpMailer->sendEmailThroughTransport = true;
-                self::$userMailer = $userSmtpMailer;
+                //$userSmtpMailer = new EmailHelperForTesting();
+                self::$userMailer['outboundHost']     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundHost'];
+                self::$userMailer['outboundPort']     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPort'];
+                self::$userMailer['outboundUsername'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundUsername'];
+                self::$userMailer['outboundPassword'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPassword'];
+                self::$userMailer['outboundSecurity'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundSecurity'];
+                //$userSmtpMailer->setOutboundSettings();
+                //$userSmtpMailer->init();
+                //$userSmtpMailer->sendEmailThroughTransport = true;
+                //self::$userMailer = $userSmtpMailer;
             }
         }
 
@@ -139,11 +141,10 @@
                                                   '<strong>Email</strong> from Steve',
                                                   array(Yii::app()->imap->imapUsername),
                                                   null,
-                                                  array($filePath_1, $filePath_2, $filePath_3)
+                                                  array($filePath_1, $filePath_2, $filePath_3),
+                                                  self::$userMailer
             );
-
             sleep(30);
-
             $job = new EmailArchivingJob();
             $this->assertTrue($job->run());
 
@@ -220,7 +221,8 @@
                                                   '<strong>Email</strong> from Steve',
                                                   null,
                                                   array(Yii::app()->imap->imapUsername),
-                                                  array($filePath_1, $filePath_2, $filePath_3)
+                                                  array($filePath_1, $filePath_2, $filePath_3),
+                                                  self::$userMailer
             );
 
             sleep(30);
@@ -320,7 +322,8 @@ To: Steve <steve@example.com>
                                                   $htmlBody,
                                                   null,
                                                   null,
-                                                  array($filePath_1, $filePath_2)
+                                                  array($filePath_1, $filePath_2),
+                                                  self::$userMailer
             );
 
             sleep(10);
@@ -387,7 +390,8 @@ To: Steve <steve@example.com>
                                                   '<strong>Some</strong> content here',
                                                   null,
                                                   null,
-                                                  null);
+                                                  null,
+                                                  self::$userMailer);
 
             // Change user email address.
             $originalUserAddress = $user->primaryEmail->emailAddress;
@@ -450,8 +454,10 @@ To: Steve <steve@example.com>
                                                   'Email from Steve',
                                                   '<strong>Email</strong> from Steve',
                                                   null,
-                                                  array(Yii::app()->imap->imapUsername)
-                                                  );
+                                                  array(Yii::app()->imap->imapUsername),
+                                                  null,
+                                                  self::$userMailer
+            );
 
             sleep(30);
 

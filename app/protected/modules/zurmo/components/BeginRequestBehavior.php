@@ -26,6 +26,11 @@
 
     class BeginRequestBehavior extends CBehavior
     {
+        protected $allowedGuestUserRoutes = array(
+                'zurmo/default/unsupportedBrowser',
+                'zurmo/default/login',
+                'min/serve');
+
         public function attach($owner)
         {
             if (Yii::app()->apiRequest->isApiRequest())
@@ -232,11 +237,11 @@
         {
             if (Yii::app()->user->isGuest)
             {
-                $allowedGuestUserUrls = array (
-                    Yii::app()->createUrl('zurmo/default/unsupportedBrowser'),
-                    Yii::app()->createUrl('zurmo/default/login'),
-                    Yii::app()->createUrl('min/serve'),
-                );
+                foreach ($this->allowedGuestUserRoutes as $allowedGuestUserRoute)
+                {
+                    $allowedGuestUserUrls[] = Yii::app()->createUrl($allowedGuestUserRoute);
+                }
+
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToGuests = false;
                 foreach ($allowedGuestUserUrls as $url)

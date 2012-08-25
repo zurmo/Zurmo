@@ -49,22 +49,21 @@
             $this->assertEquals('Email', $modelClassNames[4]);
             $this->assertEquals('ExplicitReadWriteModelPermissions', $modelClassNames[5]);
             $this->assertEquals('FileModel', $modelClassNames[6]);
-            $this->assertEquals('FilteredList', $modelClassNames[7]);
-            $this->assertEquals('Group', $modelClassNames[8]);
-            $this->assertEquals('Item', $modelClassNames[9]);
-            $this->assertEquals('NamedSecurableItem', $modelClassNames[10]);
-            $this->assertEquals('OwnedCustomField', $modelClassNames[11]);
-            $this->assertEquals('OwnedModel', $modelClassNames[12]);
-            $this->assertEquals('OwnedMultipleValuesCustomField', $modelClassNames[13]);
-            $this->assertEquals('OwnedSecurableItem', $modelClassNames[14]);
-            $this->assertEquals('Permission', $modelClassNames[15]);
-            $this->assertEquals('Permitable', $modelClassNames[16]);
-            $this->assertEquals('Person', $modelClassNames[17]);
-            $this->assertEquals('Policy', $modelClassNames[18]);
-            $this->assertEquals('Right', $modelClassNames[19]);
-            $this->assertEquals('Role', $modelClassNames[20]);
+            $this->assertEquals('Group', $modelClassNames[7]);
+            $this->assertEquals('Item', $modelClassNames[8]);
+            $this->assertEquals('NamedSecurableItem', $modelClassNames[9]);
+            $this->assertEquals('OwnedCustomField', $modelClassNames[10]);
+            $this->assertEquals('OwnedModel', $modelClassNames[11]);
+            $this->assertEquals('OwnedMultipleValuesCustomField', $modelClassNames[12]);
+            $this->assertEquals('OwnedSecurableItem', $modelClassNames[13]);
+            $this->assertEquals('Permission', $modelClassNames[14]);
+            $this->assertEquals('Permitable', $modelClassNames[15]);
+            $this->assertEquals('Person', $modelClassNames[16]);
+            $this->assertEquals('Policy', $modelClassNames[17]);
+            $this->assertEquals('Right', $modelClassNames[18]);
+            $this->assertEquals('Role', $modelClassNames[19]);
+            $this->assertEquals('SavedSearch', $modelClassNames[20]);
             $this->assertEquals('SecurableItem', $modelClassNames[21]);
-            $this->assertEquals('ZurmoModelSearch', $modelClassNames[22]);
         }
     }
 ?>

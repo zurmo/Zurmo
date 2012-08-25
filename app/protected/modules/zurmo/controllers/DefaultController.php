@@ -167,5 +167,111 @@
             }
             echo CJSON::encode($autoCompleteResults);
         }
+
+        public function actionDynamicSearchAddExtraRow($viewClassName, $modelClassName, $formModelClassName, $rowNumber, $suffix = null)
+        {
+            echo DynamicSearchUtil::renderDynamicSearchRowContent($viewClassName,
+                                                                  $modelClassName,
+                                                                  $formModelClassName,
+                                                                  (int)$rowNumber,
+                                                                  null,
+                                                                  null,
+                                                                  $suffix,
+                                                                  true);
+        }
+
+        public function actionDynamicSearchAttributeInput($viewClassName, $modelClassName, $formModelClassName, $rowNumber,
+                                                          $attributeIndexOrDerivedType, $suffix = null)
+        {
+            if ($attributeIndexOrDerivedType == null)
+            {
+                Yii::app()->end(0, false);
+            }
+            $content = DynamicSearchUtil::renderDynamicSearchAttributeInput( $viewClassName,
+                                                                             $modelClassName,
+                                                                             $formModelClassName,
+                                                                             (int)$rowNumber,
+                                                                             $attributeIndexOrDerivedType,
+                                                                             array(),
+                                                                             $suffix);
+            Yii::app()->getClientScript()->setToAjaxMode();
+            Yii::app()->getClientScript()->render($content);
+            echo $content;
+        }
+
+        public function actionValidateDynamicSearch($viewClassName, $modelClassName, $formModelClassName)
+        {
+            if (isset($_POST['ajax']) && $_POST['ajax'] === 'search-form' && isset($_POST[$formModelClassName]))
+            {
+                $model                     = new $modelClassName(false);
+                $searchForm                = new $formModelClassName($model);
+                //$rawPostFormData           = $_POST[$formModelClassName];
+                if (isset($_POST[$formModelClassName]['anyMixedAttributesScope']))
+                {
+                    $searchForm->setAnyMixedAttributesScope($_POST[$formModelClassName]['anyMixedAttributesScope']);
+                    unset($_POST[$formModelClassName]['anyMixedAttributesScope']);
+                }
+                $sanitizedSearchData = $this->resolveAndSanitizeDynamicSearchAttributesByPostData(
+                                                                $_POST[$formModelClassName], $searchForm);
+                $searchForm->setAttributes($sanitizedSearchData);
+                if (isset($_POST['save']) && $_POST['save'] == 'saveSearch')
+                {
+                    $searchForm->setScenario('validateSaveSearch');
+                    if ($searchForm->validate())
+                    {
+                        $this->processSaveSearch($searchForm, $viewClassName);
+                        Yii::app()->end(0, false);
+                    }
+                }
+                else
+                {
+                    $searchForm->setScenario('validateDynamic');
+                }
+                if (!$searchForm->validate())
+                {
+                     $errorData = array();
+                    foreach ($searchForm->getErrors() as $attribute => $errors)
+                    {
+                            $errorData[CHtml::activeId($searchForm, $attribute)] = $errors;
+                    }
+                    echo CJSON::encode($errorData);
+                    Yii::app()->end(0, false);
+                }
+            }
+        }
+
+        protected function processSaveSearch($searchForm, $viewClassName)
+        {
+            $savedSearch = SavedSearchUtil::makeSavedSearchBySearchForm($searchForm, $viewClassName);
+            if (!$savedSearch->save())
+            {
+                throw new FailedToSaveModelException();
+            }
+        }
+
+        public function actionDeleteSavedSearch($id)
+        {
+            $savedSearch = SavedSearch::GetById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($savedSearch);
+            $savedSearch->delete();
+        }
+
+        protected function resolveAndSanitizeDynamicSearchAttributesByPostData($postData, DynamicSearchForm $searchForm)
+        {
+            if (isset($postData['dynamicClauses']))
+            {
+                $dynamicSearchAttributes          = SearchUtil::getSearchAttributesFromSearchArray($postData['dynamicClauses']);
+                $sanitizedDynamicSearchAttributes = SearchUtil::
+                                                    sanitizeDynamicSearchAttributesByDesignerTypeForSavingModel(
+                                                        $searchForm, $dynamicSearchAttributes);
+                $postData['dynamicClauses']       = $sanitizedDynamicSearchAttributes;
+            }
+            return $postData;
+        }
+
+        public function actionClearStickySearch($key)
+        {
+            StickySearchUtil::clearDataByKey($key);
+        }
     }
 ?>

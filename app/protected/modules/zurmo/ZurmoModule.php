@@ -56,7 +56,7 @@
             // dependence hierarchy it needed concern itself, other than
             // with the models that are specific to itself.
             return array('AuditEvent', 'NamedSecurableItem', 'GlobalMetadata', 'PerUserMetadata', 'Portlet', 'CustomFieldData',
-                         'CalculatedDerivedAttributeMetadata', 'DropDownDependencyDerivedAttributeMetadata');
+                         'CalculatedDerivedAttributeMetadata', 'DropDownDependencyDerivedAttributeMetadata', 'SavedSearch');
         }
 
         public static function getDefaultMetadata()
@@ -83,6 +83,13 @@
                         'titleLabel'       => 'Languages',
                         'descriptionLabel' => 'Manage Active Languages',
                         'route'            => '/zurmo/language/configurationList',
+                        'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
+                    ),
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Developer Tools',
+                        'descriptionLabel' => 'Access Developer Tools',
+                        'route'            => '/zurmo/development/',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                 ),

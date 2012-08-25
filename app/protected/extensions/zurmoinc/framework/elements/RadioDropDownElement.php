@@ -36,10 +36,20 @@
             $content .= $this->form->radioButtonList(
                 $this->model->{$this->attribute},
                 'value',
-                $this->getDropDownArray(),
+                $this->makeDataAndResolveEmptyValue(),
                 $this->getEditableHtmlOptions()
             );
             return $content;
+        }
+
+        protected function makeDataAndResolveEmptyValue()
+        {
+            $data = array();
+            if ($this->getAddBlank())
+            {
+                $data[''] = Yii::t('Default', '(None)');
+            }
+            return array_merge($data, $this->getDropDownArray());
         }
 
         /**
@@ -57,13 +67,14 @@
             return $htmlOptions;
         }
 
-        /**
-         * Override to remove the label 'for' property since it will not be valid XHTML.
-         * @see DropDownElement::renderLabel()
-         */
         protected function renderLabel()
         {
-            return $this->getFormattedAttributeLabel();
+            if ($this->form === null)
+            {
+                return $this->getFormattedAttributeLabel();
+            }
+            $id = $this->getIdForSelectInput();
+            return $this->form->labelEx($this->model, $this->attribute, array('for' => $id));
         }
     }
 ?>

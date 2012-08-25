@@ -33,7 +33,7 @@
      */
     class RedBeanOneToManyRelatedModels extends RedBeanMutableRelatedModels
     {
-        protected $relatedModelClassname;
+        protected $relatedModelClassName;
         protected $owns;
         protected $polyName;
 
@@ -56,6 +56,11 @@
             $this->owns                  = $owns;
             $this->polyName              = $polyName;
             $this->constructRelatedBeansAndModels($modelClassName, $bean);
+        }
+
+        public function getModelClassName()
+        {
+            return $this->modelClassName;
         }
 
         /**

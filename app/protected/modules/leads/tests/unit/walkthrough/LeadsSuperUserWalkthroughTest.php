@@ -56,8 +56,16 @@
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent('leads/default');
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/index');
-            $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/create');
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
+            $this->assertFalse(strpos($content, 'anyMixedAttributes') === false);
+            //Test the search or paging of the listview.
+            Yii::app()->clientScript->reset(); //to make sure old js doesn't make it to the UI
+            $this->setGetArray(array('ajax' => 'list-view'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/list');
+            $this->assertTrue(strpos($content, 'anyMixedAttributes') === false);
+            $this->resetGetArray();
 
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views

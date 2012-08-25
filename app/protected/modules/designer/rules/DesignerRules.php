@@ -122,6 +122,29 @@
         }
 
         /**
+         * @see formatSavableMetadataFromLayout.  This method is if you just want to format a single element and return it.
+         * @return formatted element
+         */
+        public function formatSavableElement($element, $viewClassName)
+        {
+            assert('is_array($element)');
+            $rules        = $this->getSavableMetadataRules();
+            $finalElement = $element;
+            foreach ($rules as $rule)
+            {
+                if (static::doesRuleApplyToElement($rule, $element, $viewClassName))
+                {
+                    $ruleClassName = $rule . 'ViewMetadataRules';
+                    $ruleClassName::resolveElementMetadata(
+                        $element,
+                        $finalElement
+                    );
+                }
+            }
+            return $finalElement;
+        }
+
+        /**
          * Override if special handling is required to ignore certain rules from applying to the element before
          * the metadata is saved. @see formatSavableMetadataFromLayout()
          * @param string $rule

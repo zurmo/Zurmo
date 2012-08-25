@@ -34,7 +34,7 @@
 
     // Turn this on to see additional performance information. Turn it off in production.
     // Check it in as true!
-    $performanceOn = true;
+    $performanceOn = false;
 
     // Turn this on to see RedBean queries. Turn it off in production.
     // Check it in as false!

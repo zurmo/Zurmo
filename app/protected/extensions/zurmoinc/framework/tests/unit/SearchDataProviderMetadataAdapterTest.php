@@ -34,6 +34,24 @@
             Yii::app()->user->userModel = $super;
         }
 
+        public function testEmptyConcatedValue()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $searchAttributes = array(
+                'concatedName' => null, //should resolve to no clause
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new AAASearchFormTestModel(new AAA(false)),
+                1,
+                $searchAttributes
+            );
+            $metadata         = $metadataAdapter->getAdaptedMetadata();
+            $compareStructure = '';
+            $this->assertEquals(array(), $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testSearchingOnACustomFieldWithMultipleValues()
         {
             $searchAttributes = array(
@@ -193,6 +211,25 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
 
+            $searchAttributes = array(
+                'bool'       => false,
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestBooleanAttributeModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'bool',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                )
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
             //Now test with populated as '0'
             $searchAttributes = array(
                 'bool'       => '0',
@@ -250,6 +287,95 @@
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
 
+        public function testAdaptingBooleanValuesWithSearchForms()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //Test with blank values for boolean on model and on related model.
+            //Will treat as '0'. Normally you would sanitize $searchAttributes so that this
+            //would be removed before passing into the adapter.
+            $searchAttributes = array(
+                'aaaBoolean'       => '',
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new AAASearchFormTestModel(new AAA()),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aaaBoolean',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                ),
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            $searchAttributes = array(
+                'aaaBoolean'       => false,
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new AAASearchFormTestModel(new AAA()),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aaaBoolean',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                )
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+            //Now test with populated as '0'
+            $searchAttributes = array(
+                'aaaBoolean'       => '0',
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new AAASearchFormTestModel(new AAA()),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aaaBoolean',
+                    'operatorType'  => 'doesNotEqual',
+                    'value'         => (bool)1,
+                ),
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+
+            //Now test with populated as '1'
+            $searchAttributes = array(
+                'aaaBoolean'       => '1',
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new AAASearchFormTestModel(new AAA()),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName' => 'aaaBoolean',
+                    'operatorType'  => 'equals',
+                    'value'         => (bool)1,
+                ),
+            );
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
         public function testGetAdaptedMetadata()
         {
             $super = User::getByUsername('super');
@@ -287,7 +413,6 @@
                     'value'                => 'Suite 101',
                 ),
             );
-
             $compareStructure = '1 and 2 and 3';
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
@@ -317,6 +442,51 @@
             $compareStructure = '1';
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testSearchingOnMultipleValuesCustomFieldsWithVariousNullOrEmptyValues()
+        {
+            $searchAttributes = array(
+                'multipleIndustries' => array(
+                    'values'    => array(0 => null),
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $this->assertEquals(array(), $metadata['clauses']);
+            $this->assertEquals(null, $metadata['structure']);
+
+            $searchAttributes = array(
+                'multipleIndustries' => array(
+                    'values'    => null,
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $this->assertEquals(array(), $metadata['clauses']);
+            $this->assertEquals(null, $metadata['structure']);
+
+            $searchAttributes = array(
+                'multipleIndustries' => array(
+                    'values'    => array(0 => ''),
+                )
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new TestCustomFieldsModel(false),
+                1,
+                $searchAttributes
+            );
+            $metadata = $metadataAdapter->getAdaptedMetadata();
+            $this->assertEquals(array(), $metadata['clauses']);
+            $this->assertEquals(null, $metadata['structure']);
         }
 
         public function testGetAdaptedMetadataUsingOrClause()

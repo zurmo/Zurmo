@@ -41,6 +41,8 @@
             => 'Erweiterte Suche',
         'Advanced Search'
             => 'Erweiterte Suche',
+        'Advanced Search Rows'
+            => 'Erweiterte Suche für Reihen',
         'After'
             => 'Nach',
         'All'
@@ -75,6 +77,8 @@
             => 'Löschen',
         'Click Here'
             => 'Hier klicken',
+        'Close'
+            => 'Schließen',
         'Create'
             => 'Erstellen',
         'Created By User'
@@ -217,6 +221,10 @@
             => 'Panel Einstellungen',
         'Panel Title'
             => 'Panel-Titel',
+        'Please fix your parenthesis.'
+            => 'Bitte korrigiere Deine Klammern.',
+        'Please use only integers lesser than {max}.'
+            => 'Bitte verwenden nur ganze Zahlen kleiner als {max}.',
         'Radio Drop Down'
             => 'Radio Drop Down', // Same Word Translated
         'record'
@@ -237,6 +245,8 @@
             => 'Speichern',
         'Search'
             => 'Suchen',
+        'Search Operator'
+            => 'Suchoperatoren',
         'Second'
             => 'Zweite',
         'Select'
@@ -259,6 +269,8 @@
             => 'Tab', // Same Word Translated
         'The file did not exist'
             => 'Diese Datei existierte nicht',
+        'The structure is invalid. {error}'
+            => 'Die Struktur ist nicht gültig. {error}',
         'There was an error uploading the file.'
             => 'Es gab einen Fehler beim Upload der Datei.',
         'There was an error with the web service.'
@@ -303,6 +315,10 @@
             => 'Gestern',
         'You must enter a value'
             => 'Sie müssen einen Wert eingeben',
+        'You must select a field for row {rowNumber}'
+            => 'Du muss ein Feld für Zeile {rowNumber} auswählen',
+        'You must select a value for row {rowNumber}'
+            => 'Du muss ein Wert für Zeile {rowNumber} auswählen',
         'You must select at least one field to modify.'
             => 'Wählen Sie mindestens ein Feld zu ändern.',
         'You must select at least one record'
@@ -313,5 +329,11 @@
             => '{attribute} "{value}" ist bereits im Einsatz.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} ist zu genau (maximum decimal places is {precision})',
+        '{count} result(s)'
+            => '{count} Resultat(e)',
+        '{moduleSingularLabel} Search'
+            => '{moduleSingularLabel} Suchen',
+        '{start}-{end} of {count} result(s).'
+            => '{start}-{end} von {count} Resultat(e).',
     );
 ?>

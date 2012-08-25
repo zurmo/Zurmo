@@ -48,5 +48,10 @@
             assert('$this->model->{$this->attribute} instanceof Group');
             return parent::renderControlEditable();
         }
+
+        protected function getModalTitleForSelectingModel()
+        {
+            return Yii::t('Default', 'Select a Group');
+        }
     }
 ?>

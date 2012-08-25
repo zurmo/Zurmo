@@ -59,6 +59,8 @@
             => 'Zugang Administration Tab',
         'Access Currency Configuration'
             => 'Zugang Währung Konfiguration',
+        'Access Developer Tools'
+            => 'Zugang Entwicklertools',
         'Access Failure'
             => 'Zugangsfehler',
         'Access Global Configuration'
@@ -77,6 +79,8 @@
             => 'Ad-hoc / Besitzer',
         'Add Comment'
             => 'Kommentar hinzufügen',
+        'Add criteria'
+            => 'Kriterien hinzufügen',
         'Add Currency'
             => 'Währung hinzufügen',
         'Add new fields, remove ones you don\'t need and change the layout using Designer.'
@@ -139,6 +143,8 @@
             => 'von <strong> {ownerStringContent}</strong>',
         'by {ownerStringContent}'
             => 'von {ownerStringContent}',
+        'Cache has been successfully cleaned.'
+            => 'Cache wurde erfolgreich gereinigt.',
         'Cancel'
             => 'Abbrechen',
         'Cancel changes'
@@ -151,6 +157,8 @@
             => 'Diagrammtyp',
         'City'
             => 'Stadt',
+        'Clear Cache'
+            => 'Cache löschen',
         'Click on the Map link on records to see the customer location on Google Maps.'
             => 'Klickst du auf den Link, um den Lageplan mit Google Maps zu sehen.',
         'Close'
@@ -175,6 +183,8 @@
             => 'Role erstellen',
         'Create Roles'
             => 'Rollen erstellen',
+        'Criteria Selected <span class="icon-clear">Z</span>'
+            => 'Kriterien ausgewählt <span class="icon-clear">Z</span>',
         'Currencies: Create'
             => 'Währungen: erstellen',
         'Currencies: List'
@@ -189,6 +199,8 @@
             => 'Wechselkurs Aktualisierungen',
         'Currency Value'
             => 'Wert der Währung',
+        'Custom data updated successfully.'
+            => 'Benutzerdefinierte Daten erfolgreich aktualisiert.',
         'Customer'
             => 'Kunde',
         'Dashboard portlet list page size'
@@ -215,12 +227,16 @@
             => 'Abteilung',
         'Description'
             => 'Beschreibung',
+        'Developer Tools'
+            => 'Entwicklertools',
         'Dr.'
             => 'Dr.', // Same Word Translated
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Durch Klicken auf die Config-Icon in der rechten oberen Ecke jedes Portlet ermöglicht es, Diagramme auf dem Dashboard zu bearbeiten.',
         'Email Address'
             => 'E-Mail Adresse',
+        'Enable game notification popup'
+            => 'Aktivieren Spiel Mitteilung popup',
         'Energy'
             => 'Energieindustrie',
         'Event Name'
@@ -275,8 +291,12 @@
             => 'hier',
         'Home'
             => 'Startseite',
+        'If there is new metadata to load using CustomManagement, use this option.'
+            => 'Diese Option verwenden, wenn es neue Metadaten mit CustomManagement zu laden gibt.',
         'In Progress'
-            => 'in Bearbeitung',
+            => 'In Bearbeitung',
+        'In the case where you have reloaded the database, some cached items might still exist. This is a way to clear that cache.'
+            => 'Wenn die Datenbank neu geladen wurde, könnten einige zwischengespeicherten Elemente noch vorhanden sein Dies ist ein Weg, um die Cache zu löschen.',
         'Inbound Call'
             => 'Eingehende Anrufe',
         'Incorrect username or password.'
@@ -335,6 +355,8 @@
             => 'Listenansicht',
         'Load'
             => 'Laden',
+        'Load a saved search'
+            => 'Laden einer gespeicherte Suche',
         'Longitude'
             => 'Länge',
         'Manage Active Languages'
@@ -369,6 +391,8 @@
             => 'Das Modell wurde nicht erstellt.',
         'Model was not updated.'
             => 'Das Modell wurde nicht aktualisiert.',
+        'Modify Structure'
+            => 'Struktur Ändern',
         'Module Name - Plural'
             => 'Modul Name - Plural',
         'Module Name - Plural (lowercase)'
@@ -495,10 +519,14 @@
             => 'Rollen',
         'Roles Home'
             => 'Berechtigungen und Sicherheit Rechte',
+        'Run'
+            => 'Laufen',
         'Salutation'
             => 'Begrüßung',
         'Save Changes'
             => 'Änderungen speichern',
+        'Save search'
+            => 'Suche speichern',
         'Save yourself time and click the pencil icon to jump right in and edit your record.'
             => 'Zeit sparen! Klickst du auf das Bleistift-Symbol, um deinen Eintrag zu bearbeiten.',
         'Search'
@@ -515,6 +543,10 @@
             => 'Sicherheit',
         'See more search results by clicking the down arrow at the bottom of the screen.'
             => 'Klickst du auf den Pfeil am unteren Rand des Bildschirms, um mehr Ergebnisse zu sehen.',
+        'Select a field'
+            => 'Ein Feld wählen',
+        'Select a Group'
+            => 'Wählen Sie eine Gruppe',
         'Select a Parent Group'
             => 'Wählen Sie einen übergeordneten Gruppe',
         'Select a Parent Role'
@@ -609,6 +641,8 @@
             => 'Geben Sie eine Währung oder Name zu suchen.',
         'Update'
             => 'Aktualisierung',
+        'Update Custom Data'
+            => 'Custom Data Aktualisieren',
         'Upload attachments to a record by clicking "More Options" when adding a note.'
             => '"Weitere Optionen" klicken beim Hinzufügen einer Notiz um eine Anhang zu hochladen.',
         'User Membership'

@@ -117,7 +117,7 @@
                 'url' => 'http://www.zurmo.org',
                 'dropDown' => array('value' => 'test value<SCRIPT>alert(\'XSS\')</SCRIPT>'),
                 'radioDropDown' => array('value' => 'my value'),
-                'multiDropDown' => array('values' => 'multi1,multi2'),                      // Not Coding Standard
+                'multiDropDown' => array('values' => array('multi1', 'multi2')),                      // Not Coding Standard
                 'tagCloud' => array('values' => 'tag1,tag2<SCRIPT>alert(\'XSS\')</SCRIPT>') // Not Coding Standard
             );
             $model = new TestDataUtilModel;
@@ -136,7 +136,7 @@
                 'url' => 'http://www.zurmo.org',
                 'dropDown' => array('value' => 'test value'),
                 'radioDropDown' => array('value' => 'my value'),
-                'multiDropDown' => array('values' => 'multi1,multi2'), // Not Coding Standard
+                'multiDropDown' => array('values' => array('multi1', 'multi2')),
                 'tagCloud' => array('values' => array('tag1', 'tag2'))
             );
             $this->assertEquals($compareData, $sanitizedData);

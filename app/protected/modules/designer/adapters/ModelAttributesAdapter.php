@@ -38,6 +38,11 @@
             $this->model = $model;
         }
 
+        public function getModel()
+        {
+            return $this->model;
+        }
+
         /**
          * Returns HAS_ONE relation attributes
          * and non-relation attributes in an array

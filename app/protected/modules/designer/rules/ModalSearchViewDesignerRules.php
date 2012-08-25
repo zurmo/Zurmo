@@ -30,5 +30,21 @@
         {
             return Yii::t('Default', 'Popup Search View');
         }
+
+        /**
+         * Specifically defining CurrencyValueForModalSearch since modal behaves differently than advanced search.
+         * (non-PHPdoc)
+         * @see SearchViewDesignerRules::getSavableMetadataRules()
+         */
+        public function getSavableMetadataRules()
+        {
+            return array(
+                'AddBlankForDropDown',
+                'BooleanAsDropDown',
+                'CurrencyValueForModalSearch',
+                'DropDownAsMultiSelect',
+                'TextAreaAsText'
+            );
+        }
     }
 ?>

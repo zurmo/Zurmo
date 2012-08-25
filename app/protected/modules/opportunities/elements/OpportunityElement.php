@@ -46,10 +46,5 @@
             assert('$this->model->{$this->attribute} instanceof Opportunity');
             return parent::renderControlEditable();
         }
-
-        protected static function getModalTitleForSelectingModel()
-        {
-            return Yii::t('Default', 'OpportunitiesModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
-        }
     }
 ?>

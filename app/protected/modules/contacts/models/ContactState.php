@@ -64,7 +64,7 @@
                     array('order',            'numerical', 'min' => 0),
                     array('serializedLabels', 'type', 'type' => 'string'),
                 ),
-                'defaultSortAttribute' => 'name',
+                'defaultSortAttribute' => 'order',
             );
             return $metadata;
         }

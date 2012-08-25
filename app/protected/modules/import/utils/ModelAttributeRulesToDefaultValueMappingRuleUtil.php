@@ -76,7 +76,12 @@
                                    $applicableRules[] = $rule;
                                }
                                continue;
+                            case 'dateTimeDefault':
+                                 //Ignore dateTimeDefault validator for this as it is not applicable to import
+                                 //It would map to RedBeanModelDateTimeDefaultValueValidator and is unneeded
+                                continue;
                             default:
+
                                $rule[0] = $ruleAttributeName;
                                $applicableRules[] = $rule;
                         }

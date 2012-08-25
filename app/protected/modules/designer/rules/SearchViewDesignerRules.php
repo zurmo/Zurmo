@@ -94,6 +94,7 @@
             return array(
                 'AddBlankForDropDown',
                 'BooleanAsDropDown',
+                'CurrencyValueForSearch',
                 'DropDownAsMultiSelect',
                 'TextAreaAsText'
             );

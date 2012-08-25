@@ -46,5 +46,10 @@
                 return Yii::app()->format->text($this->model->{$this->attribute});
             }
         }
+
+        protected function getModalTitleForSelectingModel()
+        {
+            throw new NotImplementedException($message, $code, $previous);
+        }
     }
 ?>

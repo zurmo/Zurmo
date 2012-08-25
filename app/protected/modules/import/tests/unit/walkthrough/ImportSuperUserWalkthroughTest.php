@@ -41,6 +41,8 @@
             $this->assertTrue($import->save());
 
             //Test all attributeIndex and Derived types to make sure all types of mapping rules load properly.
+            $this->runMappingRulesEditAction($import->id, 'owner');
+            $this->runMappingRulesEditAction($import->id, 'hasOne');
             $this->runMappingRulesEditAction($import->id, 'firstName');
             $this->runMappingRulesEditAction($import->id, 'lastName');
             $this->runMappingRulesEditAction($import->id, 'date');
@@ -59,6 +61,22 @@
             $this->runMappingRulesEditAction($import->id, 'hasOne');
             $this->runMappingRulesEditAction($import->id, 'primaryEmail__emailAddress');
             $this->runMappingRulesEditAction($import->id, 'primaryAddress__street1');
+        }
+
+        public function testSuperUserMappingRulesEditActionOnCustomCreatedTypes()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $this->createDateCustomFieldByModule                ('AccountsModule', 'datetest');
+            $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetimetest');
+
+            //Test All custom created types since their rules could vary
+            $import = new Import();
+            $import->serializedData = serialize(array('importRulesType' => 'Accounts'));
+            $this->assertTrue($import->save());
+            $this->runMappingRulesEditAction($import->id, 'datetest');
+            $this->runMappingRulesEditAction($import->id, 'datetimetest');
+            //todo: add the rest of the custom field types that are importable
         }
     }
 ?>

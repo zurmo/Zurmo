@@ -68,8 +68,7 @@
             $dataProvider    = $this->makeRedBeanDataProviderFromGet(
                 $searchForm,
                 'User',
-                $pageSize,
-                Yii::app()->user->userModel->id
+                $pageSize
             );
             $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
                 $searchForm,
@@ -433,11 +432,6 @@
         protected function getSearchFormClassName()
         {
             return 'UsersSearchForm';
-        }
-
-        protected function getModelFilteredListClassName()
-        {
-            return 'SearchAndListView';
         }
 
         public function actionExport()

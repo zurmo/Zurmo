@@ -67,5 +67,10 @@
         {
             return array();
         }
+
+        protected function getModalTitleForSelectingModel()
+        {
+            throw new NotImplementedException($message, $code, $previous);
+        }
     }
 ?>

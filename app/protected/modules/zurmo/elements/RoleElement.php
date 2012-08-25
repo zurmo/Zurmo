@@ -49,7 +49,7 @@
             return parent::renderControlEditable();
         }
 
-        protected static function getModalTitleForSelectingModel()
+        protected function getModalTitleForSelectingModel()
         {
             return Yii::t('Default', 'Select a Role');
         }

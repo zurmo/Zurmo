@@ -54,6 +54,7 @@
             {
                 if ($maxSpRecursionDepth == null)
                 {
+                    $this->message = Yii::t('Default', 'Could not get value of database max_sp_recursion_depth.');
                 }
                 else
                 {

@@ -61,8 +61,16 @@
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default');
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/index');
-            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/create');
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->assertFalse(strpos($content, 'anyMixedAttributes') === false);
+            //Test the search or paging of the listview.
+            Yii::app()->clientScript->reset(); //to make sure old js doesn't make it to the UI
+            $this->setGetArray(array('ajax' => 'list-view'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/list');
+            $this->assertTrue(strpos($content, 'anyMixedAttributes') === false);
+            $this->resetGetArray();
 
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views

@@ -56,7 +56,7 @@
             return 'variableContactState';
         }
 
-        protected static function getModalTitleForSelectingModel()
+        protected function getModalTitleForSelectingModel()
         {
             return Yii::t('Default', 'LeadsModuleSingularLabel and ContactsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
         }

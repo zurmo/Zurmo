@@ -42,6 +42,8 @@
             $currencyValueModel        = $this->model->{$this->attribute};
             $params                    = array();
             $params['inputPrefix']     = $this->resolveInputPrefix();
+            $this->resolveParamsForCurrencyId($params);
+            //need to somehow override to pass not to default to currency
             $activeCurrenciesElement   = new CurrencyIdForAModelsRelatedCurrencyValueDropDownElement(
                                                                 $this->model, $this->attribute, $this->form, $params);
             $activeCurrenciesElement->editableTemplate = '{content}{error}';
@@ -49,15 +51,18 @@
             $content .= CHtml::tag('div', array('class' => 'quarter'), $activeCurrenciesElement->render());
             $content .= CHtml::tag('div', array('class' => 'threeQuarters'),
                             $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value'));
+            $content .= $this->renderExtraEditableContent();
             $content .= '</div>';
             return $content;
         }
 
         protected function renderEditableValueTextField($model, $form, $inputNameIdPrefix, $attribute)
         {
+            //need to override a resolveValue to NOT default to 0 if not specifically null
             $htmlOptions = array(
-                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
-                'id'   => $this->getEditableInputId($inputNameIdPrefix, $attribute),
+                'name' =>  $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'id'   =>  $this->getEditableInputId($inputNameIdPrefix, $attribute),
+                'value' => $this->resolveAndGetEditableValue($model, $attribute),
             );
             $textField = $form->textField($model, $attribute, $htmlOptions);
             $error     = $form->error    ($model, $attribute);
@@ -89,6 +94,25 @@
             }
             $id = $this->getEditableInputId($this->attribute, 'value');
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $id));
+        }
+
+        /**
+         * Override as needed
+         */
+        protected function renderExtraEditableContent()
+        {
+        }
+
+        /**
+         * Override as needed
+         */
+        protected function resolveParamsForCurrencyId(& $params)
+        {
+        }
+
+        protected function resolveAndGetEditableValue($model, $attribute)
+        {
+            return $model->$attribute;
         }
     }
 ?>

@@ -40,6 +40,7 @@
                 Yii::app()->emailHelper->outboundPort     = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundPort'];
                 Yii::app()->emailHelper->outboundUsername = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundUsername'];
                 Yii::app()->emailHelper->outboundPassword = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundPassword'];
+                Yii::app()->emailHelper->outboundSecurity = Yii::app()->params['emailTestAccounts']['smtpSettings']['outboundSecurity'];
                 Yii::app()->emailHelper->sendEmailThroughTransport = true;
                 Yii::app()->emailHelper->setOutboundSettings();
                 Yii::app()->emailHelper->init();
@@ -261,7 +262,7 @@
 
             $messages = $imap->getMessages();
 
-            $imap->deleteMessage($messages[0]->msgNumber);
+            $imap->deleteMessage($messages[0]->uid);
             $imap->expungeMessages();
             $this->assertTrue($imap->connect());
             $imapStats = $imap->getMessageBoxStatsDetailed();

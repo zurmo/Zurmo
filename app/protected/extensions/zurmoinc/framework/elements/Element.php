@@ -329,7 +329,11 @@
 
         protected function resolveInputNamePrefix()
         {
-            $inputIdPrefix = $this->resolveInputPrefix();
+            return static::resolveInputIdPrefixIntoString($this->resolveInputPrefix());
+        }
+
+        public static function resolveInputIdPrefixIntoString($inputIdPrefix)
+        {
             if (is_array($inputIdPrefix))
             {
                 if (count($inputIdPrefix) > 1)

@@ -7,6 +7,14 @@ function processAjaxSuccessError(id, data)
     }
 }
 
+function processListViewSummaryClone(listViewId, summaryCssClass)
+{
+    replacementContent = $('#' + listViewId).find('.' + summaryCssClass).html();
+    $('#' + listViewId).parent().parent('.GridView')
+    .find('form').first().find('.list-view-items-summary-clone')
+    .html(replacementContent);
+}
+
 function updateListViewSelectedIds(gridViewId, selectedId, selectedValue)
 {
     var array = new Array ();

@@ -45,7 +45,7 @@
                 $searchAttributes
             );
             $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
+                $metadataAdapter->getAdaptedMetadata(),
                 'Notification',
                 'RedBeanModelDataProvider',
                 'createdDateTime',

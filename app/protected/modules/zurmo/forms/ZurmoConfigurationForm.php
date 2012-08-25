@@ -35,37 +35,40 @@
         public $subListPageSize;
         public $modalListPageSize;
         public $dashboardListPageSize;
+        public $gamificationModalNotificationsEnabled;
 
         public function rules()
         {
             return array(
-                array('applicationName',          'type',    'type' => 'string'),
-                array('applicationName',          'length',  'max' => 64),
-                array('timeZone',                 'required'),
-                array('listPageSize',             'required'),
-                array('listPageSize',             'type',      'type' => 'integer'),
-                array('listPageSize',             'numerical', 'min' => 1),
-                array('subListPageSize',          'required'),
-                array('subListPageSize',          'type',      'type' => 'integer'),
-                array('subListPageSize',          'numerical', 'min' => 1),
-                array('modalListPageSize',        'required'),
-                array('modalListPageSize',        'type',      'type' => 'integer'),
-                array('modalListPageSize',        'numerical', 'min' => 1),
-                array('dashboardListPageSize',    'required'),
-                array('dashboardListPageSize',    'type',      'type' => 'integer'),
-                array('dashboardListPageSize',    'numerical', 'min' => 1),
+                array('applicationName',                        'type',    'type' => 'string'),
+                array('applicationName',                        'length',  'max' => 64),
+                array('timeZone',                               'required'),
+                array('listPageSize',                           'required'),
+                array('listPageSize',                           'type',      'type' => 'integer'),
+                array('listPageSize',                           'numerical', 'min' => 1),
+                array('subListPageSize',                        'required'),
+                array('subListPageSize',                        'type',      'type' => 'integer'),
+                array('subListPageSize',                        'numerical', 'min' => 1),
+                array('modalListPageSize',                      'required'),
+                array('modalListPageSize',                      'type',      'type' => 'integer'),
+                array('modalListPageSize',                      'numerical', 'min' => 1),
+                array('dashboardListPageSize',                  'required'),
+                array('dashboardListPageSize',                  'type',      'type' => 'integer'),
+                array('dashboardListPageSize',                  'numerical', 'min' => 1),
+                array('gamificationModalNotificationsEnabled',  'type', 'type' => 'boolean'),
             );
         }
 
         public function attributeLabels()
         {
             return array(
-                'applicationName'           => Yii::t('Default', 'Application Name'),
-                'timeZone'                  => Yii::t('Default', 'Time zone'),
-                'listPageSize'              => Yii::t('Default', 'List page size'),
-                'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
-                'modalListPageSize'         => Yii::t('Default', 'Popup list page size'),
-                'dashboardListPageSize'     => Yii::t('Default', 'Dashboard portlet list page size'),
+                'applicationName'                       => Yii::t('Default', 'Application Name'),
+                'timeZone'                              => Yii::t('Default', 'Time zone'),
+                'listPageSize'                          => Yii::t('Default', 'List page size'),
+                'subListPageSize'                       => Yii::t('Default', 'Sublist page size'),
+                'modalListPageSize'                     => Yii::t('Default', 'Popup list page size'),
+                'dashboardListPageSize'                 => Yii::t('Default', 'Dashboard portlet list page size'),
+                'gamificationModalNotificationsEnabled' => Yii::t('Default', 'Enable game notification popup'),
             );
         }
     }

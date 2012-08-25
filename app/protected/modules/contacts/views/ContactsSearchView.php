@@ -24,12 +24,17 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class ContactsSearchView extends ZurmoSearchView
+    class ContactsSearchView extends SavedDynamicSearchView
     {
         public static function getDefaultMetadata()
         {
             $metadata = array(
                 'global' => array(
+                    'definedNestedAttributes' => array(
+                        array('account' => array(
+                            'name',
+                        )),
+                    ),
                     'derivedAttributeTypes' => array(
                         'ContactStateDropDown',
                     ),
@@ -54,45 +59,8 @@
                             ),
                         ),
                         array(
-                            'title' => 'Advanced Search',
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'fullName', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'officePhone', 'type' => 'Phone'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'department', 'type' => 'Text'), // Not Coding Standard
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'mobilePhone', 'type' => 'Phone'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
+                            'advancedSearchType' => static::ADVANCED_SEARCH_TYPE_DYNAMIC,
+                            'rows'   => array(),
                         ),
                     ),
                 ),

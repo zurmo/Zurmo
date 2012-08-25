@@ -164,6 +164,14 @@
             $searchForm          = new AccountsSearchForm($account);
             $metadataAdapter     = new SearchDataProviderMetadataAdapter($searchForm, $super->id, $modifiedSearchPostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            //Make sure the search params are empty
+            $compareClauses = array(1 => array('attributeName' => 'name',
+                                               'operatorType'  => 'startsWith',
+                                                 'value'       => 'my test account'));
+            $compareStructure = '1';
+            $this->assertEquals($compareClauses, $searchAttributeData['clauses']);
+            $this->assertEquals($compareStructure, $searchAttributeData['structure']);
+
             //Run search and make sure the data returned matches how many total accounts are available.
             $dataProvider        = new RedBeanModelDataProvider('Account', null, false, $searchAttributeData);
             $data                = $dataProvider->getData();

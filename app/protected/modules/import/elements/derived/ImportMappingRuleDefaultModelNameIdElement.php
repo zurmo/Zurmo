@@ -58,6 +58,14 @@
             return $this->model->getModuleIdOfDefaultModel();
         }
 
+        protected function getModalTitleForSelectingModel()
+        {
+            $module              = Yii::app()->getModule($this->resolveModuleId());
+            $moduleSingularLabel = $module->getModuleLabelByTypeAndLanguage('Singular');
+            return Yii::t('Default', '{moduleSingularLabel} Search',
+                                      array('{moduleSingularLabel}' => $moduleSingularLabel));
+        }
+
         public static function getModuleId()
         {
             throw new NotSupportedException();

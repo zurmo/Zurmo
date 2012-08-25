@@ -47,7 +47,7 @@
                     array('size', 'type', 'type' => 'integer'),
                     array('type',        'required'),
                     array('type', 'type', 'type' => 'string'),
-                    array('type', 'length',  'min'  => 3, 'max' => 64),
+                    array('type', 'length',  'min'  => 3, 'max' => 128),
 
                 ),
                 'defaultSortAttribute' => 'name',
@@ -67,7 +67,7 @@
         {
             if (parent::beforeSave())
             {
-                if ($this->fileContent != null)
+                if ($this->fileContent !== null)
                 {
                     return $this->fileContent->save();
                 }

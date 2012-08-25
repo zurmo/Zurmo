@@ -337,9 +337,8 @@
         public function testGetModelClassNames()
         {
             $modelClassNames = OpportunitiesModule::getModelClassNames();
-            $this->assertEquals(2, count($modelClassNames));
-            $this->assertEquals('Opportunity', $modelClassNames[1]);
-            $this->assertEquals('OpportunitiesFilteredList', $modelClassNames[0]);
+            $this->assertEquals(1, count($modelClassNames));
+            $this->assertEquals('Opportunity', $modelClassNames[0]);
         }
     }
 ?>

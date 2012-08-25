@@ -36,12 +36,22 @@
          */
         protected function renderControlEditable()
         {
-            return $this->form->dropDownList(
-                $this->model->{$this->attribute}->currency,
-                'id',
-                $this->getDropDownArray(),
-                $this->getEditableHtmlOptions()
-            );
+            if (ArrayUtil::getArrayValue($this->params, 'defaultToBlank'))
+            {
+                return ZurmoHtml::dropDownList($this->getNameForSelectInput(),
+                                               null,
+                                               $this->getDropDownArray(),
+                                               $this->getEditableHtmlOptions());
+            }
+            else
+            {
+                return $this->form->dropDownList(
+                    $this->model->{$this->attribute}->currency,
+                    'id',
+                    $this->getDropDownArray(),
+                    $this->getEditableHtmlOptions()
+                );
+            }
         }
 
         public function getIdForSelectInput()

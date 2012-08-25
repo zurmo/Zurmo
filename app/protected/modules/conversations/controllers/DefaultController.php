@@ -72,7 +72,7 @@
                 $type
             );
             $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
+                $metadataAdapter->getAdaptedMetadata(),
                 'Conversation',
                 'RedBeanModelDataProvider',
                 'latestDateTime',

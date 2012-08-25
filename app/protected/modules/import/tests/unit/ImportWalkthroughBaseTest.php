@@ -32,6 +32,7 @@
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
+            ImportRules::resetCache();
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;

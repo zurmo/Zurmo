@@ -43,7 +43,7 @@
          * off otherwise it will be difficult to execute functional tests correctly.
          * @var boolean
          */
-        public $modalNotificationsEnabled = true;
+        protected $_modalNotificationsEnabled;
 
         private static $pointTypesAndValuesByUserIdToAdd = array();
 
@@ -53,6 +53,30 @@
          * @var boolean
          */
         protected $scoringModelsOnSaveIsMuted = false;
+
+        public function setModalNotificationsEnabled($value)
+        {
+            $this->_modalNotificationsEnabled = $value;
+        }
+
+        public function getModalNotificationsEnabled()
+        {
+            if (ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'gamificationModalNotificationsEnabled') !== null)
+            {
+                return ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'gamificationModalNotificationsEnabled');
+            }
+            else
+            {
+                if (isset($this->_modalNotificationsEnabled))
+                {
+                    return $this->_modalNotificationsEnabled;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
 
         public function init()
         {

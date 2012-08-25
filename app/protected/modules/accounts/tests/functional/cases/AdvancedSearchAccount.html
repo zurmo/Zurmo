@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>Advanced Search Account</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Advanced Search Account</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
+	<td></td>
+</tr>
+<!--Test empty search-->
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Select a field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Website</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_website</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_website</td>
+	<td>NotExistingWebSiteInTheDataBase</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>1 Criteria Selected</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<!--Test canceling search-->
+<tr>
+	<td>click</td>
+	<td>css=span.icon-clear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>1 Criteria Selected</td>
+	<td></td>
+</tr>
+<!--Teste many clauses-->
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Select a field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
+	<td>Changing The Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'Office Phone')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_officePhone</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_officePhone</td>
+	<td>456777</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#dk_container_AccountsSearchForm_dynamicClauses_2_attributeIndexOrDerivedType &gt; a.dk_toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'Any Email Address')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=AccountsSearchForm_dynamicClauses_2_anyEmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicClauses_2_anyEmail</td>
+	<td>test2@testcompany.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#dk_container_AccountsSearchForm_dynamicClauses_3_attributeIndexOrDerivedType &gt; a.dk_toggle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'Any Street')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=AccountsSearchForm_dynamicClauses_3_anyStreet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicClauses_3_anyStreet</td>
+	<td>456 Main Street</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>4 Criteria Selected</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--Test saving a search with no name-->
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-as-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Name cannot be blank.</td>
+	<td></td>
+</tr>
+<!--Test a saved search-->
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_savedSearchName</td>
+	<td>Saved Search ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#save-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[3]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=clear-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Load a saved search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Load a saved search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Saved Search ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Saved Search ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>4 Criteria Selected</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
+	<td>Changing The Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_officePhone</td>
+	<td>456777</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=AccountsSearchForm_dynamicClauses_2_anyEmail</td>
+	<td>test2@testcompany.com</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=AccountsSearchForm_dynamicClauses_3_anyStreet</td>
+	<td>456 Main Street</td>
+</tr>
+<!--Test invalid structure-->
+<tr>
+	<td>click</td>
+	<td>id=show-dynamic-search-structure-div-link-search-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicStructure</td>
+	<td>1 or or 2 AND 3 AND 4</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>The structure is invalid.</td>
+	<td></td>
+</tr>
+<!--Test deleting a saved search-->
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'_')])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'_')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=AccountsSearchForm_dynamicStructure</td>
+	<td>1 or 2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>2 Criteria Selected</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-as-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#save-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=clear-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.dk_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Saved Search ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=show-dynamic-search-structure-div-link-search-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>id=AccountsSearchForm_dynamicStructure</td>
+	<td>1 or 2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-as-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.icon</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=cancel-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.icon-clear</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Load a saved search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Saved Search ${randomSuffix}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

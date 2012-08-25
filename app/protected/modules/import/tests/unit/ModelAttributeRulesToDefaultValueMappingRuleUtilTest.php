@@ -108,5 +108,27 @@
                                  array('defaultValue',  'length',  'min'  => 2, 'max' => 32));
             $this->assertEquals($compareData, $rules);
         }
+
+        public function testGetApplicableRulesByModelClassNameAndAttributeNameForCustomCreatedTypes()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $import = new Import();
+            $import->serializedData = serialize(array('importRulesType' => 'Accounts'));
+            $this->assertTrue($import->save());
+
+            ModulesSearchWithDataProviderTestHelper::createDateAttribute(new Account(), 'date');
+            ModulesSearchWithDataProviderTestHelper::createDateTimeAttribute(new Account(), 'dateTime');
+
+            //Test All custom created types since their rules could vary
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'date', 'defaultValue');
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'date'));
+            $this->assertEquals($compareData, $rules);
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'dateTime', 'defaultValue');
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
+            $this->assertEquals($compareData, $rules);
+            //todo: add the rest of the custom field types that are importable
+        }
     }
 ?>

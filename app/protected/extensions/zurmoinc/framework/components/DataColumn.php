@@ -25,11 +25,46 @@
      ********************************************************************************/
 
     /**
-     * Override class for CDataColumn in order to allow public access to renderDataCellContent
+     * Override class for CDataColumn in order to allow public access to renderDataCellContent and to allow offset
+     * information to properly pass into each column
      * @see CGridView class
      */
     class DataColumn extends CDataColumn
     {
+        /**
+         * Override to add in offset information
+         * (non-PHPdoc)
+         * @see CDataColumn::renderDataCellContent()
+         */
+        protected function renderDataCellContent($row, $data)
+        {
+            if ($this->value !== null)
+            {
+                $pagination = $this->grid->dataProvider->getPagination();
+                if (isset($pagination))
+                {
+                    $offset = $pagination->getOffset();
+                }
+                else
+                {
+                    $offset = 0;
+                }
+                $value = $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row, 'offset' => ($offset + $row)));
+            }
+            elseif ($this->name !== null)
+            {
+                $value = CHtml::value($data, $this->name);
+            }
+            if ($value === null)
+            {
+                echo $this->grid->nullDisplay;
+            }
+            else
+            {
+                echo $this->grid->getFormatter()->format($value, $this->type);
+            }
+        }
+
         public function renderDataCellContentFromOutsideClass($row, $data)
         {
             $this->renderDataCellContent($row, $data);

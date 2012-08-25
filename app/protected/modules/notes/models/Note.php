@@ -49,7 +49,7 @@
             }
         }
 
-            public static function getModuleClassName()
+        public static function getModuleClassName()
         {
             return 'NotesModule';
         }

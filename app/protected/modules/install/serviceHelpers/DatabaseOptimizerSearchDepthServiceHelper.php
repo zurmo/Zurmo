@@ -50,8 +50,9 @@
                                                                $this->form->databasePort,
                                                                $optimizerSearchDepth))
             {
-                if ($optimizerSearchDepth == 0)
+                if ($optimizerSearchDepth == null)
                 {
+                    $this->message = Yii::t('Default', 'Could not get value of database optimizer_search_depth.');
                 }
                 else
                 {

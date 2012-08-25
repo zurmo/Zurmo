@@ -115,7 +115,7 @@
          */
         public static function resolveIfModuleShouldBeGloballySearched(Module $module)
         {
-            if (get_class($module) == 'UsersModule')
+            if ($module::modelsAreNeverGloballySearched())
             {
                 return false;
             }

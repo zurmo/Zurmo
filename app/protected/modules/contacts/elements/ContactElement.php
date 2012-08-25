@@ -46,10 +46,5 @@
             assert('$this->model->{$this->attribute} instanceof Contact');
             return parent::renderControlEditable();
         }
-
-        protected static function getModalTitleForSelectingModel()
-        {
-            return Yii::t('Default', 'ContactsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
-        }
     }
 ?>

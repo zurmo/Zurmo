@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UsersSearchForm extends SearchForm
+    class UsersSearchForm extends DynamicSearchForm
     {
         public $anyEmail;
         public $fullName;

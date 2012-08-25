@@ -102,6 +102,16 @@
             return !empty($timezone);
         }
 
+        public static function isPdoInstalled()
+        {
+            return extension_loaded("pdo");
+        }
+
+        public static function isPdoMysqlInstalled()
+        {
+            return extension_loaded("pdo_mysql");
+        }
+
         public static function isMbStringInstalled()
         {
             return function_exists('mb_strlen');

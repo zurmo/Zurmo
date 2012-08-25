@@ -46,10 +46,5 @@
             assert('$this->model->{$this->attribute} instanceof Account');
             return parent::renderControlEditable();
         }
-
-        protected static function getModalTitleForSelectingModel()
-        {
-            return Yii::t('Default', 'AccountsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
-        }
     }
 ?>

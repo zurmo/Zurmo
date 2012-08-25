@@ -231,7 +231,7 @@
                 $searchAttributes
             );
             $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
+                $metadataAdapter->getAdaptedMetadata(),
                 'EmailMessage',
                 'RedBeanModelDataProvider',
                 'createdDateTime',

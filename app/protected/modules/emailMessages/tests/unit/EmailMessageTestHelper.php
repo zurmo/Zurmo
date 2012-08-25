@@ -76,12 +76,10 @@
                 $testEmailAddress    = Yii::app()->params['emailTestAccounts']['testEmailAddress'];
 
                 if ( $smtpSettings['outboundHost'] != '' && $smtpSettings['outboundPort'] != '' &&
-                     $smtpSettings['outboundUsername'] != '' && $smtpSettings['outboundPassword'] != '' &&
                      $dropboxImapSettings['imapHost'] != '' && $dropboxImapSettings['imapUsername'] != '' &&
                      $dropboxImapSettings['imapPassword'] != '' && $dropboxImapSettings['imapPort'] != '' &&
                      $dropboxImapSettings['imapFolder'] != '' &&
                      $userSmtpSettings['outboundHost'] != '' && $userSmtpSettings['outboundPort'] != '' &&
-                     $userSmtpSettings['outboundUsername'] != '' && $userSmtpSettings['outboundPassword'] != '' &&
                      $userImapSettings['imapHost'] != '' && $userImapSettings['imapUsername'] != '' &&
                      $userImapSettings['imapPassword'] != '' && $userImapSettings['imapPort'] != '' &&
                      $userImapSettings['imapFolder'] != '' &&

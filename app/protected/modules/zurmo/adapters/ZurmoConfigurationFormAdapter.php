@@ -35,13 +35,14 @@
          */
         public static function makeFormFromGlobalConfiguration()
         {
-            $form                           = new ZurmoConfigurationForm();
-            $form->applicationName          = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
-            $form->timeZone                 = Yii::app()->timeZoneHelper->getGlobalValue();
-            $form->listPageSize             = Yii::app()->pagination->getGlobalValueByType('listPageSize');
-            $form->subListPageSize          = Yii::app()->pagination->getGlobalValueByType('subListPageSize');
-            $form->modalListPageSize        = Yii::app()->pagination->getGlobalValueByType('modalListPageSize');
-            $form->dashboardListPageSize    = Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize');
+            $form                                        = new ZurmoConfigurationForm();
+            $form->applicationName                       = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
+            $form->timeZone                              = Yii::app()->timeZoneHelper->getGlobalValue();
+            $form->listPageSize                          = Yii::app()->pagination->getGlobalValueByType('listPageSize');
+            $form->subListPageSize                       = Yii::app()->pagination->getGlobalValueByType('subListPageSize');
+            $form->modalListPageSize                     = Yii::app()->pagination->getGlobalValueByType('modalListPageSize');
+            $form->dashboardListPageSize                 = Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize');
+            $form->gamificationModalNotificationsEnabled = Yii::app()->gameHelper->modalNotificationsEnabled;
             return $form;
         }
 
@@ -56,6 +57,9 @@
             Yii::app()->pagination->setGlobalValueByType('subListPageSize',       (int)   $form->subListPageSize);
             Yii::app()->pagination->setGlobalValueByType('modalListPageSize',     (int)   $form->modalListPageSize);
             Yii::app()->pagination->setGlobalValueByType('dashboardListPageSize', (int)   $form->dashboardListPageSize);
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule',
+                                                    'gamificationModalNotificationsEnabled',
+                                                    (boolean) $form->gamificationModalNotificationsEnabled);
        }
     }
 ?>

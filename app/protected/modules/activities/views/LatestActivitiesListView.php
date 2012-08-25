@@ -121,6 +121,12 @@
             return $content;
         }
 
+        protected static function getGridTemplate()
+        {
+            $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
+            return "\n{items}\n{pager}" . $preloader;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

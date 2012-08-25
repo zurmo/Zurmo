@@ -51,6 +51,11 @@
             $this->relatedBeansAndModels = array_values(R::related($this->bean, $tableName));
         }
 
+        public function getModelClassName()
+        {
+            return $this->modelClassName;
+        }
+
         public function getErrors($attributeNameOrNames = null)
         {
             if (!$this->inside)

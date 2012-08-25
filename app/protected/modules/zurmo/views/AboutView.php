@@ -171,10 +171,8 @@
         protected static function getZurmoVersionDisplayContent()
         {
             $zurmoVersion = VERSION;
-            if (substr($zurmoVersion, -2) == '()')
-            {
-                $zurmoVersion = substr($zurmoVersion, 0, -2);
-            }
+            // Remove REPO_ID from Zurmo version
+            $zurmoVersion =  substr($zurmoVersion, 0, strpos($zurmoVersion, '(') - 1);
             return $zurmoVersion;
         }
 

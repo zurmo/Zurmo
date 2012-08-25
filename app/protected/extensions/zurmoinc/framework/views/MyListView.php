@@ -53,6 +53,12 @@
             return false;
         }
 
+        protected static function getGridTemplate()
+        {
+            $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
+            return "\n{items}\n{pager}" . $preloader;
+        }
+
         protected function getEmptyText()
         {
             $moduleClassName = static::getModuleClassName();

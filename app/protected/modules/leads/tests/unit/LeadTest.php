@@ -257,8 +257,7 @@
         public function testGetModelClassNames()
         {
             $modelClassNames = LeadsModule::getModelClassNames();
-            $this->assertEquals(1, count($modelClassNames));
-            $this->assertEquals('LeadsFilteredList', $modelClassNames[0]);
+            $this->assertEquals(0, count($modelClassNames));
         }
 
         public function testIsStateALead()

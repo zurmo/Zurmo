@@ -436,6 +436,15 @@
         }
 
         /**
+         * Override when there is a module that can have module scoping or special search fields in the module
+         * list/search view but is not globally searchable.  Activities are an example of this or users.
+         */
+        public static function modelsAreNeverGloballySearched()
+        {
+            return false;
+        }
+
+        /**
          * Override and return a string of the StatemetadataAdataper class if the module's primary model supports
          * states.  An example is leads or contacts where the lead is only contacts in a certain state.
          */

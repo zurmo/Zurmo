@@ -373,9 +373,10 @@
                                                 'owner'              => array('id' => $superUserId),
                                                 'ownedItemsOnly'     => '1',
                                                 'account'            => array('id' => $accountId),
-                                                'amount'             => array('value' => '298000',
-                                                                             'currency' => array(
-                                                                             'id' => $baseCurrency->id)),
+                                                'amount'             => array('value'       => '298000',
+                                                                              'relatedData' => true,
+                                                                              'currency'    => array(
+                                                                              'id' => $baseCurrency->id)),
                                                 'closeDate__Date'    => array('value' => 'Today'),
                                                 'stage'              => array('value' => 'Prospecting'),
                                                 'source'             => array('value' => 'Self-Generated'),
@@ -432,9 +433,9 @@
             $this->setGetArray(array('id' => $opportunityId));
             $this->setPostArray(array('Opportunity' => array(
                             'name'                              => 'myEditOpportunity',
-                            'amount'                            => array('value' => 288000,
-                                                                         'currency' => array(
-                                                                         'id' => $baseCurrency->id)),
+                            'amount'                            => array('value'       => 288000,
+                                                                         'currency'    => array(
+                                                                             'id'      => $baseCurrency->id)),
                             'account'                           => array('id' => $accountId),
                             'probability'                       => '2',
                             'closeDate'                         => $date,
@@ -444,9 +445,9 @@
                             'owner'                             => array('id' => $superUserId),
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                             'checkbox'                          => '0',
-                            'currency'                          => array('value'   => 40,
-                                                                         'currency' => array(
-                                                                         'id' => $baseCurrency->id)),
+                            'currency'                          => array('value'       => 40,
+                                                                         'currency'    => array(
+                                                                             'id' => $baseCurrency->id)),
                             'decimal'                           => '12',
                             'date'                              => $date,
                             'datetime'                          => $datetime,

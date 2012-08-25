@@ -56,8 +56,16 @@
             //This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/index');
-            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/create');
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $this->assertFalse(strpos($content, 'anyMixedAttributes') === false);
+            //Test the search or paging of the listview.
+            Yii::app()->clientScript->reset(); //to make sure old js doesn't make it to the UI
+            $this->setGetArray(array('ajax' => 'list-view'));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/list');
+            $this->assertTrue(strpos($content, 'anyMixedAttributes') === false);
+            $this->resetGetArray();
 
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
@@ -289,6 +297,34 @@
             $this->assertTrue  ($accounts[0]->owner == $super);
             $accounts = Account::getAll();
             $this->assertEquals(4, count($accounts));
+        }
+
+        /**
+         * @depends testSuperUserCreateAction
+         */
+        public function testStickySearchActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            StickySearchUtil::clearDataByKey('AccountsSearchView');
+            $value = StickySearchUtil::getDataByKey('AccountsSearchView');
+            $this->assertNull($value);
+            $this->setGetArray(array('AccountsSearchForm' => array('anyMixedAttributes' => 'xyz')));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default/');
+            $data = StickySearchUtil::getDataByKey('AccountsSearchView');
+            $compareData = array('dynamicClauses'          => array(),
+                                 'dynamicStructure'        => null,
+                                 'anyMixedAttributes'      => 'xyz',
+                                 'anyMixedAttributesScope' => null,
+            );
+            $this->assertEquals($compareData, $data);
+            $this->setGetArray(array('clearingSearch' => true));
+            $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
+            $data = StickySearchUtil::getDataByKey('AccountsSearchView');
+            $compareData = array('dynamicClauses'          => array(),
+                                 'dynamicStructure'        => null,
+                                 'anyMixedAttributesScope' => null,
+            );
+            $this->assertEquals($compareData, $data);
         }
     }
 ?>

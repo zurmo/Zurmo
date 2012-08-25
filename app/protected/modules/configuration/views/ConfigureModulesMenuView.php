@@ -26,6 +26,8 @@
 
     class ConfigureModulesMenuView extends MetadataView
     {
+        private $linkText;
+
         protected function renderContent()
         {
             $content  = $this->renderTitleContent();
@@ -79,7 +81,7 @@
                 $content .= '<li>';
                 $content .= '<h4>' . $item['titleLabel'] . '</h4>';
                 $content .= ' - ' . $item['descriptionLabel'];
-                $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                $content .= CHtml::link(CHtml::tag('span', array(), $this->getLinkText() ),
                                         Yii::app()->createUrl($item['route']));
                 $content .= '</li>';
             }
@@ -92,6 +94,23 @@
             return array(
                 ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL   => Yii::t('Default', 'General'),
             );
+        }
+
+        protected function setLinkText($text)
+        {
+            $this->linkText = $text;
+        }
+
+        protected function getLinkText()
+        {
+            if (isset($this->linkText))
+            {
+                return $this->linkText;
+            }
+            else
+            {
+                return Yii::t('Default', 'Configure');
+            }
         }
     }
 ?>

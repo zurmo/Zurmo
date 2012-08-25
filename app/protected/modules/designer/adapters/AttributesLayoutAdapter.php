@@ -211,6 +211,16 @@
             return $derivedAttributeTypesInPlace;
         }
 
+        public function getAvailableDerivedAttributeTypes()
+        {
+            if (isset($this->metadata['global']['derivedAttributeTypes']))
+            {
+                assert('is_array($this->metadata["global"]["derivedAttributeTypes"])');
+                return $this->metadata['global']['derivedAttributeTypes'];
+            }
+            return array();
+        }
+
         protected function populateDerivedAttributes()
         {
             $derivedAttributeTypesInPlace = $this->getDerivedAttributesInPlace();

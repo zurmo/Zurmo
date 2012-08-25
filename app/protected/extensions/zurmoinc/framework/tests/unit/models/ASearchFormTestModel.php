@@ -27,7 +27,7 @@
     /**
      * Used for testing with @see MixedRelationsModel
      */
-    class ASearchFormTestModel extends SearchForm
+    class ASearchFormTestModel extends DynamicSearchForm
     {
         public $anyA;
         public $ABName;

@@ -33,6 +33,13 @@
     class ConsoleApplication extends CConsoleApplication
     {
         /**
+         * Some console applications can use the theme engine.  An example is sending an email notification using
+         * an html email template.
+         * @var string
+         */
+        private $_theme;
+
+        /**
          * If the application has been installed or not.
          * @var boolean
          */
@@ -50,6 +57,9 @@
                 'session' => array(
                     'class' => 'CHttpSession',
                 ),
+                'themeManager' => array(
+                   'class' => 'CThemeManager',
+                )
             );
 
             $this->setComponents($components);
@@ -69,6 +79,34 @@
         public function findModule($moduleID)
         {
             return WebApplication::findModuleInApplication($moduleID);
+        }
+
+        /**
+         * @return CThemeManager the theme manager.
+         */
+        public function getThemeManager()
+        {
+            return $this->getComponent('themeManager');
+        }
+
+        /**
+         * @return CTheme the theme used currently. Null if no theme is being used.
+         */
+        public function getTheme()
+        {
+            if (is_string($this->_theme))
+            {
+                $this->_theme = $this->getThemeManager()->getTheme($this->_theme);
+            }
+            return $this->_theme;
+        }
+
+        /**
+         * @param string $value the theme name
+         */
+        public function setTheme($value)
+        {
+            $this->_theme = $value;
         }
     }
 ?>

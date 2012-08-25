@@ -31,10 +31,5 @@
     class LeadNameIdElement extends NameIdElement
     {
         protected static $moduleId = 'leads';
-
-        protected static function getModalTitleForSelectingModel()
-        {
-            return Yii::t('Default', 'LeadsModuleSingularLabel Search', LabelUtil::getTranslationParamsForAllModules());
-        }
     }
 ?>

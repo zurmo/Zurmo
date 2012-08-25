@@ -60,6 +60,16 @@
             => 'Continuar',
         'Correctly Installed Services'
             => 'Servicios correctamente instalado',
+        'Could not get value of database default collation.'
+            => 'No se puede obtener el valor de la intercalación predeterminada de la base de datos.',
+        'Could not get value of database max_allowed_packet.'
+            => 'No se puede obtener el valor de max_allowed_packet.',
+        'Could not get value of database max_sp_recursion_depth.'
+            => 'No se puede obtener el valor de max_sp_recursion_depth.',
+        'Could not get value of database optimizer_search_depth.'
+            => 'No se puede obtener el valor de optimizer_search_depth.',
+        'Could not get value of database thread_stack.'
+            => 'No se puede obtener el valor de database thread_stack.',
         'Creating super user.'
             => 'Creando super usuario.',
         'Ctype extension is loaded.'
@@ -208,6 +218,14 @@
             => 'La extensión PCRE está cargado.',
         'PCRE extension is not loaded.'
             => 'La extensión PCRE no está cargada.',
+        'pdo is installed.'
+            => 'pdo está instalado.',
+        'pdo is not installed.'
+            => 'pdo no está instalado.',
+        'pdo_mysql is installed.'
+            => 'pdo_mysql está instalado.',
+        'pdo_mysql is not installed.'
+            => 'pdo_mysql no está instalado.',
         'PHP'
             => 'PHP', // Same Word Translated
         'PHP date.timezone is not set.'
@@ -292,8 +310,8 @@
             => 'Hubo un problema al crear la base de datos de errores',
         'There was a problem creating the user Error code:'
             => 'Hubo un problema al crear el código de error de usuario',
-        'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]'
-            => 'No se puede determinar info ruta URL. Por favor, asegúrese $_SERVER ["PATH_INFO"]',
+        'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.'
+            => 'No se puede determinar info ruta URL. Por favor, asegúrese $_SERVER ["PATH_INFO"] (o $_SERVER["PHP_SELF"] y $_SERVER["SCRIPT_NAME"]) contiene el valor correcto.',
         'User who can connect to the database.'
             => 'El usuario que puede conectarse a la base de datos.',
         'User`s password.'
@@ -333,7 +351,9 @@
         'Zurmo administrative password. The username is `super`.  You can change this later.'
             => 'Zurmo contraseña administrativa. El usuario es `super. Se puede cambiar esto más adelante.',
         'Zurmo Installation'
-            => 'Instalación de zurmo',
+            => 'Instalación de Zurmo',
+        'Zurmo runs only on Apache {apacheMinVersion} and higher or Microsoft-IIS {iisMinVersion} or higher web servers.'
+            => 'Zurmo sólo se ejecuta en Apache {apacheMinVersion} y superior o Microsoft-IIS {iisMinVersion} o superiores servidores web.',
         'Zurmo Version'
             => 'Version de Zurmo',
         '{folderPath} is missing.'

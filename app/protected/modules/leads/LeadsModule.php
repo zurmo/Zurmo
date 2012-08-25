@@ -47,7 +47,7 @@
 
         public function getRootModelNames()
         {
-            return array('LeadsFilteredList');
+            return array();
         }
 
         public static function getUntranslatedRightsLabels()

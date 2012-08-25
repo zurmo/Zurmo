@@ -29,7 +29,7 @@
      */
     class DesignerBreadCrumbView extends BreadCrumbView
     {
-            protected function getHomeLinkLabel()
+        protected function getHomeLinkLabel()
         {
             return Yii::t('Default', 'Designer Home');
         }

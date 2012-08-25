@@ -888,6 +888,7 @@
                             'ownedItemsOnly'     => '1',
                             'account'            => array('id' => $accountId),
                             'amount'             => array('value'    => 288000,
+                                                          'relatedData' => true,
                                                           'currency' => array('id' => $currencyId)),
                             'closeDate__Date'    => array('value' => 'Today'),
                             'stage'              => array('value' => 'Qualification'),

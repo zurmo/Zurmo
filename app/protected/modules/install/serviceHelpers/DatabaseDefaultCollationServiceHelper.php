@@ -62,6 +62,10 @@
                     $this->message .= Yii::t('Default', 'Database default collation should not be in: {listOfCollations}',
                                              array('{listOfCollations}' => $notAllowedCollations));
                 }
+                else
+                {
+                    $this->message = Yii::t('Default', 'Could not get value of database default collation.');
+                }
                 $passed = false;
             }
             else

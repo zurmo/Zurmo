@@ -40,9 +40,41 @@
             ModulesSearchWithDataProviderTestHelper::createCustomAttributesForModel(new Account());
         }
 
+        public function testAllNullValuedCustomAttributesAdaptToMetadataFromPostCorrectly()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //Test Model - Fake post with all custom attribute types that they adapt correct to metadata.
+            $fakePostData = array(
+                'boolean'        => array('value' => ''),
+                'currencyValue'  => null,
+                'date'           => null,
+                'dateTime'       => null,
+                'float'          => null,
+                'integer'        => null,
+                'dropDown'       => array('value' => array('')), //multi-select dropdown with no value present
+                'integer'        => null,
+                'multiDropDown'  => array('values' => array(0 => null)),
+                'phone'          => null,
+                'radioDropDown'  => array('value' => null), //single select dropdown with no value present
+                'string'         => null,
+                'tagCloud'       => array('values' => null), //null vs array with null like multiDropDown condition above.
+                'textArea'       => null,
+                'url'            => null,
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(new ModelToArrayAdapterTestItem(), $super->id, $fakePostData);
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $this->assertEquals(array(), $searchAttributeData['clauses']);
+            $this->assertEquals(null,    $searchAttributeData['structure']);
+        }
+
+        /**
+         * @depends testAllNullValuedCustomAttributesAdaptToMetadataFromPostCorrectly
+         */
         public function testAllCustomAttributesAdaptToMetadataFromPostCorrectly()
         {
             $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
             //Account Model - Fake post with all custom attribute types that they adapt correct to metadata.
             $fakePostData = array(
                 'checkBox'    => array('value' => '1'),
@@ -52,7 +84,7 @@
                 'decimal'      => '45.6',
                 'dropDown'     => array('value' => '3'),
                 'integer'      => '67876',
-                //'multiSelect'  => '',
+                //'multiSelect'  => '', //todo:
                 'phone'        => '123456',
                 'radio'        => array('value' => '2'),
                 'text'         => 'Some Text',

@@ -32,6 +32,17 @@
             $this->rowsAreSelectable = false;
         }
 
+        protected function getCGridViewPagerParams()
+        {
+            return array(
+                    'prevPageLabel'    => '<span>previous</span>',
+                    'nextPageLabel'    => '<span>next</span>',
+                    'paginationParams' => GetUtil::getData(),
+                    'route'            => $this->getGridViewActionRoute('jobLogsModalList', $this->moduleId),
+                    'class'            => 'SimpleListLinkPager',
+                );
+        }
+
         /**
          * Override to remove action buttons.
          */

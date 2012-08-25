@@ -97,7 +97,8 @@
             $cClipWidget->beginClip("headerMenu");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
                 'items'                   => $menuItems,
-                'htmlOptions' => array('id' => $menuId),
+                'htmlOptions' => array('id'     => $menuId,
+                                       'class'  => 'headerNav'),
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['headerMenu'];
@@ -114,29 +115,36 @@
             $content  .= "<span id='notifications-link' class='tooltip'>" . $count ."</span></a>";
             $content  .= CHtml::tag('div',
                                     array('id' => 'notifications-flyout', 'style' => 'display:none;'),
-                                    CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
-            Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
-                $('#notifications-flyout-link').unbind('click');
-                $('#notifications-flyout-link').bind('click', function()
-                {
+                                    CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');            
+            Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "                               
+                $('#notifications-link').unbind('focusout');
+                $('#notifications-link').bind('focusout', function(e)
+                {  
+                    $('#notifications-flyout').stop(true, true).fadeOut(250);  
+                });
+                $('#notifications-link').unbind('click');
+                $('#notifications-link').bind('click', function(e)
+                {                                             
                     if ($('#notifications-flyout').css('display') == 'none')
-                    {
-                        $('#notifications-flyout').show();
+                    {                       
+                        $('#notifications-flyout').show();                       
                         $.ajax({
                             url 	 : '" . $this->notificationsUrl . "',
                             type     : 'GET',
                             dataType : 'html',
                             success  : function(html)
-                            {
+                            {                                
                                 jQuery('#notifications-flyout').html(html);
+                                $('#notifications-link').attr('tabindex',-1).focus();
+
                             }
                         });
-                    }
+                    }      
                     else
                     {
-                        $('#notifications-flyout').hide();
-                    }
-                });
+                        $('#notifications-flyout').hide(); 
+                    }                                            
+                });                
             ", CClientScript::POS_END);
             Yii::app()->clientScript->registerScript('deleteNotificationFromAjaxListViewScript', "
                 function deleteNotificationFromAjaxListView(element, modelId)

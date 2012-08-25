@@ -78,38 +78,6 @@
             return static::RIGHTS_FILTER_PATH;
         }
 
-        protected function makeSearchFilterListView(
-            $searchModel,
-            $filteredListModelClassName,
-            $pageSize,
-            $title,
-            $userId,
-            $dataProvider
-            )
-        {
-            $listModel = $searchModel->getModel();
-            $filteredListData = array();
-            //Add back in once filtered lists is completed.
-            //$filteredListData = $filteredListModelClassName::getRowsByCreatedUserId($userId);
-            $filteredListId = null;
-            if (!empty($_GET['filteredListId']) && empty($_POST['search']))
-            {
-                $filteredListId = (int)$_GET['filteredListId'];
-            }
-            return new SearchFilterListView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $searchModel,
-                $listModel,
-                $this->getModule()->getPluralCamelCasedName(),
-                $dataProvider,
-                GetUtil::resolveSelectedIdsFromGet(),
-                $filteredListData,
-                $filteredListId,
-                $title
-            );
-        }
-
         protected function makeActionBarSearchAndListView(
             $searchModel,
             $pageSize,
@@ -133,92 +101,67 @@
             );
         }
 
-        protected function makeFilteredListDataProviderFromGet(
-            $filteredListId,
-            $listModelClassName,
-            $filteredListModelClassName,
-            $pageSize,
-            $userId,
-            $stateMetadataAdapterClassName = null)
+        protected function makeListView(
+            $searchModel,
+            $dataProvider
+            )
         {
-            assert('is_int($filteredListId)');
-            assert('is_string($listModelClassName)');
-            assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
-            $filteredList   = $filteredListModelClassName::getById($filteredListId);
-            $sortAttribute  = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
-            $sortDescending = SearchUtil::resolveSortDescendingFromGetArray($listModelClassName);
-
-            $metadataAdapter = new FilteredListDataProviderMetadataAdapter(
-                $filteredList,
-                $userId,
-                unserialize($filteredList->serializedData)
-            );
-            return RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
-                $listModelClassName,
-                'FilteredListDataProvider',
-                $sortAttribute,
-                $sortDescending,
-                $pageSize,
-                $stateMetadataAdapterClassName
-            );
+            $listModel           = $searchModel->getModel();
+            $listViewClassName   = $this->getModule()->getPluralCamelCasedName() . 'ListView';
+            $listView            = new $listViewClassName(
+                                       $this->getId(),
+                                       $this->getModule()->getId(),
+                                       get_class($listModel),
+                                       $dataProvider,
+                                       GetUtil::resolveSelectedIdsFromGet());
+            return $listView;
         }
 
-        protected function attemptToSaveFilteredListModelFromPost($id, $modelClassName)
-        {
-            if ($id != null)
-            {
-                $filteredList = $modelClassName::getById(intval($id));
-            }
-            else
-            {
-                $filteredList = new $modelClassName();
-            }
-            if (isset($_POST[$modelClassName]))
-            {
-                $filteredList->setAttributes($_POST[$modelClassName]);
-                $filteredList->serializedData = serialize(FilteredListSaveUtil::makeDataFromPost($_POST[$modelClassName]));
-                if ($filteredList->save()) //todo: some sort of validation?
-                {
-                    $this->redirect(array('default/index', 'filteredListId' => $filteredList->id));
-                    Yii::app()->end(0, false);
-                }
-            }
-            return $filteredList;
-        }
-
-        protected function makeSearchFilterListDataProvider(
+        protected function makeSearchDataProvider(
             $searchModel,
             $listModelClassName,
-            $filteredListModelClassName,
             $pageSize,
-            $userId,
-            $stateMetadataAdapterClassName = null)
+            $stateMetadataAdapterClassName = null,
+            $stickySearchKey = null,
+            $setSticky       = true)
         {
-            assert('$searchModel != null');
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
+            assert('$stickySearchKey == null || is_string($stickySearchKey)');
+            assert('is_bool($setSticky)');
             static::resolveToTriggerOnSearchEvents($listModelClassName);
-            if (!empty($_GET['filteredListId']) && empty($_POST['search']))
+            $dataCollection = new SearchAttributesDataCollection($searchModel);
+            if ($searchModel instanceof SavedDynamicSearchForm)
             {
-                $filteredListId = (int)$_GET['filteredListId'];
-                assert('!empty($filteredListModelClassName)');
-                $dataProvider = $this->makeFilteredListDataProviderFromGet(
-                    $filteredListId,
-                    $listModelClassName,
-                    $filteredListModelClassName,
-                    $pageSize,
-                    $userId,
-                    $stateMetadataAdapterClassName);
+                $getData = GetUtil::getData();
+                if ($stickySearchKey != null && isset($getData['clearingSearch']) && $getData['clearingSearch'])
+                {
+                    StickySearchUtil::clearDataByKey($stickySearchKey);
+                }
+                if ($stickySearchKey != null && null != $stickySearchData = StickySearchUtil::getDataByKey($stickySearchKey))
+                {
+                    SavedSearchUtil::resolveSearchFormByStickyDataAndModel($stickySearchData, $searchModel);
+                    $dataCollection = new SavedSearchAttributesDataCollection($searchModel);
+                }
+                else
+                {
+                    SavedSearchUtil::resolveSearchFormByGetData(GetUtil::getData(), $searchModel);
+                    if ($searchModel->savedSearchId != null)
+                    {
+                        $dataCollection = new SavedSearchAttributesDataCollection($searchModel);
+                    }
+                }
+                if ($stickySearchKey != null && $setSticky)
+                {
+                    SavedSearchUtil::setDataByKeyAndDataCollection($stickySearchKey, $dataCollection);
+                }
+                $searchModel->loadSavedSearchUrl = Yii::app()->createUrl($this->getModule()->getId() . '/' . $this->getId() . '/list/');
             }
-            else
-            {
-                $dataProvider = $this->makeRedBeanDataProviderFromGet(
-                    $searchModel,
-                    $listModelClassName,
-                    $pageSize,
-                    $userId,
-                    $stateMetadataAdapterClassName);
-            }
+            $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                $searchModel,
+                $listModelClassName,
+                $pageSize,
+                $stateMetadataAdapterClassName,
+                $dataCollection);
             return $dataProvider;
         }
 
@@ -236,20 +179,16 @@
             $listModelClassName,
             $pageSize,
             $userId,
-            $filteredListModelClassName = null,
             $stateMetadataAdapterClassName = null
             )
         {
-            assert('$searchModel != null');
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
             if ($_GET['selectAll'])
             {
-                return $this->makeSearchFilterListDataProvider(
+                return $this->makeSearchDataProvider(
                     $searchModel,
                     $listModelClassName,
-                    $filteredListModelClassName,
                     $pageSize,
-                    $userId,
                     $stateMetadataAdapterClassName);
             }
             else

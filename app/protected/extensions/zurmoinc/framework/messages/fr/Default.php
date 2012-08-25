@@ -41,6 +41,8 @@
             => 'Avancée',
         'Advanced Search'
             => 'Recherche avancée',
+        'Advanced Search Rows'
+            => 'Rangées de recherche avancée',
         'After'
             => 'Après',
         'All'
@@ -75,6 +77,8 @@
             => 'Effacer',
         'Click Here'
             => 'Cliquez ici',
+        'Close'
+            => 'Fermer',
         'Create'
             => 'Créer',
         'Created By User'
@@ -217,6 +221,10 @@
             => 'Paramètres du panneau',
         'Panel Title'
             => 'Titre du panneau',
+        'Please fix your parenthesis.'
+            => 'Veuillez corriger votre parenthèse.',
+        'Please use only integers lesser than {max}.'
+            => 'Veuillez utiliser des nombres entiers inférieurs à {max}.',
         'Radio Drop Down'
             => 'Éléments du bouton radio',
         'record'
@@ -237,6 +245,8 @@
             => 'Sauvegarder',
         'Search'
             => 'Rechercher',
+        'Search Operator'
+            => 'Opérateurs de Recherche',
         'Second'
             => 'Seconde',
         'Select'
@@ -259,6 +269,8 @@
             => 'Onglet',
         'The file did not exist'
             => 'Le fichier n\'existe pas.',
+        'The structure is invalid. {error}'
+            => 'La structure n\'est pas valide. {error}',
         'There was an error uploading the file.'
             => 'Erreur de téléchargement de fichier.',
         'There was an error with the web service.'
@@ -303,6 +315,10 @@
             => 'Hier',
         'You must enter a value'
             => 'Ce champ est obligatoire',
+        'You must select a field for row {rowNumber}'
+            => 'Vous devez sélectionner un champ pour critère {rowNumber}',
+        'You must select a value for row {rowNumber}'
+            => 'Vous devez sélectionner une valeur pour critère {rowNumber}',
         'You must select at least one field to modify.'
             => 'Vous devez choisir au moins un champ à modifier.',
         'You must select at least one record'
@@ -313,5 +329,11 @@
             => '{attribute} "{value}" est déjà utilisé.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} est trop précis(e) (la précision maximale est {precision}).',
+        '{count} result(s)'
+            => '{count} résultat(s)',
+        '{moduleSingularLabel} Search'
+            => 'Recherche {moduleSingularLabel}',
+        '{start}-{end} of {count} result(s).'
+            => '{start}-{end} sur {count} résultat(s).',
     );
 ?>

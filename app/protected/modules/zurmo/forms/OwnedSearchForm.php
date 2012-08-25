@@ -27,7 +27,7 @@
     /**
      * Extend this class when a searchForm's model is owned.
      */
-    abstract class OwnedSearchForm extends SearchForm
+    abstract class OwnedSearchForm extends SavedDynamicSearchForm
     {
         public $ownedItemsOnly;
 

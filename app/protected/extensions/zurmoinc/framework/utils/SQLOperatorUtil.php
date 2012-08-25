@@ -104,7 +104,7 @@
                         return '<=';
 
                     default :
-                        throw new NotSupportedException();
+                        throw new NotSupportedException('Unsupported operator type: ' . $operatorType);
                 }
             }
         }

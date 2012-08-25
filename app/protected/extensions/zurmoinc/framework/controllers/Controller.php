@@ -66,25 +66,31 @@
             $searchModel,
             $listModelClassName,
             $pageSize,
-            $userId,
-            $stateMetadataAdapterClassName = null)
+            $stateMetadataAdapterClassName = null,
+            $dataCollection = null)
         {
             assert('is_int($pageSize)');
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
-            $searchAttributes          = SearchUtil::resolveSearchAttributesFromGetArray(get_class($searchModel));
-            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, get_class($searchModel));
+            assert('$dataCollection instanceof SearchAttributesDataCollection || $dataCollection == null');
+            if ($dataCollection == null)
+            {
+                $dataCollection = new SearchAttributesDataCollection($searchModel);
+            }
+            $searchAttributes          = $dataCollection->resolveSearchAttributesFromSourceData();
+            $dataCollection->resolveAnyMixedAttributesScopeForSearchModelFromSourceData();
             $sanitizedSearchAttributes = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel,
                                                                                            $searchAttributes);
             $sortAttribute             = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
             $sortDescending            = SearchUtil::resolveSortDescendingFromGetArray($listModelClassName);
-            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+            $metadataAdapter           = new SearchDataProviderMetadataAdapter(
                 $searchModel,
-                $userId,
+                Yii::app()->user->userModel->id,
                 $sanitizedSearchAttributes
             );
-
+            $metadata                  = static::resolveDynamicSearchMetadata($searchModel, $metadataAdapter->getAdaptedMetadata(),
+                                                                              $dataCollection);
             return RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter,
+                $metadata,
                 $listModelClassName,
                 'RedBeanModelDataProvider',
                 $sortAttribute,
@@ -94,46 +100,55 @@
             );
         }
 
-        protected function makeSearchAndListView(
-            $searchModel,
-            $listModel,
-            $searchAndListViewClassName,
-            $moduleClassName,
-            $pageSize,
-            $userId,
-            $stateMetadataAdapterClassName = null)
+        protected static function resolveDynamicSearchMetadata($searchModel, $metadata, SearchAttributesDataCollection $dataCollection)
         {
-            $dataProvider = $this->makeRedBeanDataProviderFromGet(
-                $searchModel,
-                get_class($listModel),
-                $pageSize,
-                $userId,
-                $stateMetadataAdapterClassName
-            );
-            return new $searchAndListViewClassName(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $searchModel,
-                $listModel,
-                $moduleClassName,
-                $dataProvider,
-                GetUtil::resolveSelectedIdsFromGet()
-            );
+            $sanitizedDynamicSearchAttributes          = $dataCollection->getSanitizedDynamicSearchAttributes();
+            if ($sanitizedDynamicSearchAttributes == null)
+            {
+                return $metadata;
+            }
+            $dynamicStructure                 = $dataCollection->getDynamicStructure();
+            if ($sanitizedDynamicSearchAttributes != null)
+            {
+                $dynamicSearchMetadataAdapter = new DynamicSearchDataProviderMetadataAdapter($metadata,
+                                                                                             $searchModel,
+                                                                                             Yii::app()->user->userModel->id,
+                                                                                             $sanitizedDynamicSearchAttributes,
+                                                                                             $dynamicStructure);
+                $metadata                     = $dynamicSearchMetadataAdapter->getAdaptedDataProviderMetadata();
+            }
+            return $metadata;
         }
 
-        protected function makeDetailsAndRelationsView($model, $moduleClassName, $viewClassName, $redirectUrl)
+        protected function makeDetailsAndRelationsView($model, $moduleClassName, $viewClassName, $redirectUrl, $breadCrumbView = null)
         {
             assert('$model instanceof RedBeanModel || $model instanceof CModel');
+            assert('$breadCrumbView == null || $breadCrumbView instanceof BreadCrumbView');
+            if ($breadCrumbView != null)
+            {
+                $verticalColumns   = 2;
+                $primaryViewColumn = 1;
+            }
+            else
+            {
+                $verticalColumns   = 1;
+                $primaryViewColumn = 0;
+            }
+
             $params = array(
                 'controllerId'     => $this->getId(),
                 'relationModuleId' => $this->getModule()->getId(),
                 'relationModel'    => $model,
                 'redirectUrl'      => $redirectUrl,
             );
-            $gridView = new GridView(1, 1);
+            $gridView = new GridView($verticalColumns, 1);
+            if ($breadCrumbView != null)
+            {
+               $gridView->setView($breadCrumbView, 0, 0);
+            }
             $gridView->setView(new $viewClassName(  $this->getId(),
                                                     $this->getModule()->getId(),
-                                                    $params), 0, 0);
+                                                    $params), $primaryViewColumn, 0);
             return $gridView;
         }
 

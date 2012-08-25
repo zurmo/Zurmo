@@ -63,7 +63,9 @@
                          'MbString',
                          'Memcache',
                          'SetIncludePath',
-                         'IMAP'
+                         'IMAP',
+                         'Pdo',
+                         'PdoMysql'
             );
         }
 

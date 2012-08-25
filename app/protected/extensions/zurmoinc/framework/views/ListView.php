@@ -122,24 +122,42 @@
         {
             $columns = $this->getCGridViewColumns();
             assert('is_array($columns)');
-            $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
+
             return array(
                 'id' => $this->getGridViewId(),
                 'htmlOptions' => array(
                     'class' => 'cgrid-view'
                 ),
-                'loadingCssClass'  => 'loading',
-                'dataProvider'     => $this->getDataProvider(),
-                'selectableRows'   => $this->getCGridViewSelectableRowsCount(),
-                'pager'            => $this->getCGridViewPagerParams(),
-                'beforeAjaxUpdate' => $this->getCGridViewBeforeAjaxUpdate(),
-                'afterAjaxUpdate'  => $this->getCGridViewAfterAjaxUpdate(),
-                'columns'          => $columns,
-                'nullDisplay'      => '&#160;',
-                'showTableOnEmpty' => $this->getShowTableOnEmpty(),
-                'emptyText'        => $this->getEmptyText(),
-                'template'         => "\n{items}\n{pager}" . $preloader,
+                'loadingCssClass'      => 'loading',
+                'dataProvider'         => $this->getDataProvider(),
+                'selectableRows'       => $this->getCGridViewSelectableRowsCount(),
+                'pager'                => $this->getCGridViewPagerParams(),
+                'beforeAjaxUpdate'     => $this->getCGridViewBeforeAjaxUpdate(),
+                'afterAjaxUpdate'      => $this->getCGridViewAfterAjaxUpdate(),
+                'columns'              => $columns,
+                'nullDisplay'          => '&#160;',
+                'showTableOnEmpty'     => $this->getShowTableOnEmpty(),
+                'emptyText'            => $this->getEmptyText(),
+                'template'             => static::getGridTemplate(),
+                'summaryText'          => $this->getSummaryText(),
+                'summaryCssClass'      => $this->getSummaryCssClass(),
             );
+        }
+
+        protected static function getGridTemplate()
+        {
+            $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
+            return "{summary}\n{items}\n{pager}" . $preloader;
+        }
+
+        protected static function getSummaryText()
+        {
+            return Yii::t('Default', '{count} result(s)');
+        }
+
+        protected static function getSummaryCssClass()
+        {
+            return 'summary';
         }
 
         protected function getCGridViewPagerParams()

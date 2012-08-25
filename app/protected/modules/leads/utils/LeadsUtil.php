@@ -140,6 +140,29 @@
             return $leadStatesData;
         }
 
+        /**
+         * Get an array of states from the starting state onwards, id/translated label pairings of the
+         * existing contact states ordered by order.
+         * @return array
+         */
+        public static function getLeadStateDataFromStartingStateLabelByLanguage($language)
+        {
+            assert('is_string($language)');
+            $leadStatesData = array();
+            $states            = ContactState::getAll('order');
+            $startingState     = ContactsUtil::getStartingStateId();
+            foreach ($states as $state)
+            {
+                if ($startingState == $state->id)
+                {
+                    break;
+                }
+                $state->name = ContactsUtil::resolveStateLabelByLanguage($state, $language);
+                $leadStatesData[] = $state;
+            }
+            return $leadStatesData;
+        }
+
         public static function isStateALead(ContactState $state)
         {
             assert('$state->id > 0');

@@ -12,94 +12,94 @@
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/leads/default</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/leads/default/create</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Contact_firstName</td>
-  <td>Jhon</td>
+	<td>type</td>
+	<td>Contact_firstName</td>
+	<td>Jhon</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>Contact_lastName</td>
-  <td>Connor ${randomSuffix}</td>
+	<td>type</td>
+	<td>Contact_lastName</td>
+	<td>Connor ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>Contact_state_id</td>
-  <td>label=In Progress</td>
+	<td>select</td>
+	<td>Contact_state_id</td>
+	<td>label=In Progress</td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>Contact_title_value</td>
-  <td>label=Mr.</td>
+	<td>select</td>
+	<td>Contact_title_value</td>
+	<td>label=Mr.</td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>save</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForText</td>
-  <td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
-  <td>exact:Jhon Connor ${randomSuffix}</td>
+	<td>waitForText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
+	<td>exact:Jhon Connor ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
-  <td>Mr. Jhon Connor ${randomSuffix}</td>
+	<td>assertText</td>
+	<td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
+	<td>Mr. Jhon Connor ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>link=Delete</td>
-  <td></td>
+	<td>click</td>
+	<td>link=Delete</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForConfirmation</td>
-  <td>Are you sure you want to remove this lead?</td>
-  <td></td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to remove this lead?</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Create</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>Create</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Advanced</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>LeadsSearchForm_anyMixedAttributes</td>
-  <td>Jane ${randomSuffix}</td>
+	<td>type</td>
+	<td>LeadsSearchForm_anyMixedAttributes</td>
+	<td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>keyUp</td>
-  <td>LeadsSearchForm_anyMixedAttributes</td>
-  <td>\10</td>
+	<td>keyUp</td>
+	<td>LeadsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>No results found.</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

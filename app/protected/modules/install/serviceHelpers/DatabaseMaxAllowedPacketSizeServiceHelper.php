@@ -54,6 +54,7 @@
             {
                 if ($actualBytes == null)
                 {
+                    $this->message = Yii::t('Default', 'Could not get value of database max_allowed_packet.');
                 }
                 else
                 {

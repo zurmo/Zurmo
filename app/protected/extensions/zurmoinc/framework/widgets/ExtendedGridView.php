@@ -149,5 +149,20 @@
             $this->widget($class, $pager);
             echo '</div>';
         }
+
+        /**
+         * Renders the summary-clone changer. When the summary changes, it should update the summary-clone in the
+         * searchview if it is available.  The ModalListView does not rely on this because it does not run
+         * jquery.globalEval on ajax changes such as pagination.  It instead will call processListViewSummaryClone which
+         * is decleared @see ModalListView->getCGridViewAfterAjaxUpdate()
+         *
+         */
+        public function renderSummary()
+        {
+            parent::renderSummary();
+            Yii::app()->clientScript->registerScript('listViewSummaryChangeScript', "
+            processListViewSummaryClone('" . $this->id . "', '" . $this->summaryCssClass . "');
+            ");
+        }
     }
 ?>

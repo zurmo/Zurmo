@@ -54,6 +54,7 @@
             {
                 if ($threadStackValue == null)
                 {
+                    $this->message = Yii::t('Default', 'Could not get value of database thread_stack.');
                 }
                 else
                 {

@@ -35,7 +35,7 @@
          * @return RedBeanModelDataProvider
          */
         public static function makeDataProvider(
-            DataProviderMetadataAdapter $metadataAdapter,
+            array $metadata,
             $listModelClassName,
             $dataProviderClassName,
             $sortAttribute,
@@ -46,7 +46,6 @@
         {
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
             assert('is_string($dataProviderClassName)');
-            $metadata = $metadataAdapter->getAdaptedMetadata();
             if ($stateMetadataAdapterClassName != null)
             {
                 $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);

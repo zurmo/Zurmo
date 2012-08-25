@@ -45,9 +45,10 @@
             $tasks = array();
             for ($i = 0; $i < $this->resolveQuantityToLoad(); $i++)
             {
-                $task           = new Task();
-                $opportunity    = $demoDataHelper->getRandomByModelName('Opportunity');
-                $task->owner    = $opportunity->owner;
+                $task            = new Task();
+                $opportunity     = $demoDataHelper->getRandomByModelName('Opportunity');
+                $task->owner     = $opportunity->owner;
+                $task->completed = false;
                 $task->activityItems->add($opportunity);
                 $task->activityItems->add($opportunity->contacts[0]);
                 $task->activityItems->add($opportunity->account);

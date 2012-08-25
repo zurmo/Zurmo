@@ -1,6 +1,7 @@
 $(window).ready(function(){
 
     //main menu flyouts or mbmenu releacment
+    /*
     $( '.nav > .parent' ).hover(
         function(){
             if ( $(this).find('ul').length > 0 ){
@@ -13,6 +14,40 @@ $(window).ready(function(){
             }
         }
     );
+    */
+    $('.nav:not(.headerNav) > .parent').live({
+        mouseenter: function() {
+            if ( $(this).find('ul').length > 0 ){
+                $(this).find('ul').stop(true, true).delay(0).fadeIn(100);
+            }
+        },
+        mouseleave: function() {
+            if ( $(this).find('ul').length > 0 ){
+                $(this).find('ul').stop(true, true).fadeOut(250);
+            }
+        }
+    });
+
+        $('.headerNav > .parent').live({
+        click: function() {
+            if ($(this).find('ul:visible').length == 0)
+            {
+                if ( $(this).find('ul').length > 0 ){
+                    $(this).find('ul').stop(true, true).delay(0).fadeIn(100);
+                }
+            }
+            else
+            {
+                 $(this).find('ul').stop(true, true).fadeOut(250);
+            }
+        },
+        focusout: function() {
+            if ( $(this).find('ul').length > 0 ){
+                $(this).find('ul').stop(true, true).fadeOut(250);
+            }
+        }
+    });
+
 
     //Main nav hover
      $('#MenuView a, #RecentlyViewedView a').hover(
@@ -82,7 +117,7 @@ $(window).ready(function(){
     /*Dropdowns - Dropkick - also see dropDownInteractions.js */
     $('html').click(function(e) {
         $.each($('select:not(.ignore-style)'), function(index, value) {
-            if( $(value).dropkick )
+            if( $(this).attr('multiple') != 'multiple' && $(value).dropkick )
             {
                 $(value).dropkick('close');
             }
@@ -94,10 +129,29 @@ $(window).ready(function(){
            setupCheckboxStyling( $('#search-form') );
            setupCheckboxStyling( $('#app-search') );
            if (  $('.items').length > 0 ){
-           	   addClickListenerForCheckbox( $('.items') );
+                  addClickListenerForCheckbox( $('.items') );
            }
        },
    1000 );
+
+
+   $( '.loading', '#stickyListLoadingArea' ).spin({
+        lines : 9, // The number of lines to draw
+        length : 3, // The length of each line
+        width : 2, // The line thickness
+        radius : 4, // The radius of the inner circle
+        rotate : 0, // The rotation offset
+        color : '#999', // #rgb or #rrggbb
+        speed : 2, // Rounds per second
+        trail : 100, // Afterglow percentage
+        shadow : false, // Whether to render a shadow
+        hwaccel : false, // Whether to use hardware acceleration
+        className : 'spinner', // The CSS class to assign to the spinner
+        zIndsex : 2e9, // The z-index (defaults to 2000000000)
+        top : 0, // Top position relative to parent in px
+        left : 0 // Left position relative to parent in px
+    });
+
 });
 
 /*
@@ -106,18 +160,18 @@ $(window).ready(function(){
  *
  */
 function addClickListenerForCheckbox($context) {
-	$('label', $context[0]).live('click', {
-		$inputContext : $(this).content
-	}, function(event) {
-		if ($('input:checkbox', event.data.$inputContext).length) {
-			$('input:checkbox', event.data.$inputContext).each(function() {
-				$(this).parent().removeClass('c_on');
-			});
-			$('label input:checked', event.data.$inputContext).each(function() {
-				$(this).parent('label').addClass('c_on');
-			});
-		}
-	});
+    $('label', $context[0]).live('click', {
+        $inputContext : $(this).content
+    }, function(event) {
+        if ($('input:checkbox', event.data.$inputContext).length) {
+            $('input:checkbox', event.data.$inputContext).each(function() {
+                $(this).parent().removeClass('c_on');
+            });
+            $('label input:checked', event.data.$inputContext).each(function() {
+                $(this).parent('label').addClass('c_on');
+            });
+        }
+    });
 }
 
 
@@ -146,65 +200,65 @@ function setupCheckboxStyling( $context ) {
 
 
 function makeSmallLoadingSpinner(id){
-	$( '.z-spinner', '#' + id ).spin({
-		lines : 11, // The number of lines to draw
-		length : 4, // The length of each line
-		width : 2, // The line thickness
-		radius : 4, // The radius of the inner circle
-		rotate : 0, // The rotation offset
-		color : '#fff', // #rgb or #rrggbb
-		speed : 1.5, // Rounds per second
-		trail : 35, // Afterglow percentage
-		shadow : false, // Whether to render a shadow
-		hwaccel : false, // Whether to use hardware acceleration
-		className : 'spinner', // The CSS class to assign to the spinner
-		zIndsex : 2e9, // The z-index (defaults to 2000000000)
-		top : 0, // Top position relative to parent in px
-		left : 0 // Left position relative to parent in px
-	});	
+    $( '.z-spinner', '#' + id ).spin({
+        lines : 11, // The number of lines to draw
+        length : 4, // The length of each line
+        width : 2, // The line thickness
+        radius : 4, // The radius of the inner circle
+        rotate : 0, // The rotation offset
+        color : '#fff', // #rgb or #rrggbb
+        speed : 1.5, // Rounds per second
+        trail : 35, // Afterglow percentage
+        shadow : false, // Whether to render a shadow
+        hwaccel : false, // Whether to use hardware acceleration
+        className : 'spinner', // The CSS class to assign to the spinner
+        zIndsex : 2e9, // The z-index (defaults to 2000000000)
+        top : 0, // Top position relative to parent in px
+        left : 0 // Left position relative to parent in px
+    });
 }
 
-function makeLargeLoadingSpinner(id){	
-	$('#' + id).append('<span class="big-spinner"></span>');
-	$('.big-spinner', '#' + id).spin({
-		lines : 10, // The number of lines to draw
-		length : 8, // The length of each line
-		width : 5, // The line thickness
-		radius : 8, // The radius of the inner circle
-		rotate : 0, // The rotation offset
-		color : '#CCCCCC', // #rgb or #rrggbb
-		speed : 2, // Rounds per second
-		trail : 37, // Afterglow percentage
-		shadow : false, // Whether to render a shadow
-		hwaccel : false, // Whether to use hardware acceleration
-		className : 'spinner', // The CSS class to assign to the spinner
-		zIndex : 2e9, // The z-index (defaults to 2000000000)
-		top : 0, // Top position relative to parent in px
-		left : 0 // Left position relative to parent in px
-	});
+function makeLargeLoadingSpinner(id){
+    $('#' + id).append('<span class="big-spinner"></span>');
+    $('.big-spinner', '#' + id).spin({
+        lines : 10, // The number of lines to draw
+        length : 8, // The length of each line
+        width : 5, // The line thickness
+        radius : 8, // The radius of the inner circle
+        rotate : 0, // The rotation offset
+        color : '#CCCCCC', // #rgb or #rrggbb
+        speed : 2, // Rounds per second
+        trail : 37, // Afterglow percentage
+        shadow : false, // Whether to render a shadow
+        hwaccel : false, // Whether to use hardware acceleration
+        className : 'spinner', // The CSS class to assign to the spinner
+        zIndex : 2e9, // The z-index (defaults to 2000000000)
+        top : 0, // Top position relative to parent in px
+        left : 0 // Left position relative to parent in px
+    });
 }
 
 function makeGlobalSearchSpinner(id, state){
-	if ( state === true ){
-		$( '.z-spinner', '#' + id ).spin({
-			lines : 9, // The number of lines to draw
-			length : 3, // The length of each line
-			width : 2, // The line thickness
-			radius : 4, // The radius of the inner circle
-			rotate : 0, // The rotation offset
-			color : '#999', // #rgb or #rrggbb
-			speed : 2, // Rounds per second
-			trail : 100, // Afterglow percentage
-			shadow : false, // Whether to render a shadow
-			hwaccel : false, // Whether to use hardware acceleration
-			className : 'spinner', // The CSS class to assign to the spinner
-			zIndsex : 2e9, // The z-index (defaults to 2000000000)
-			top : 0, // Top position relative to parent in px
-			left : 0 // Left position relative to parent in px
-		});	
-	} else {
-		$( '.z-spinner', '#' + id ).spin(false);
-	}
+    if ( state === true ){
+        $( '.z-spinner', '#' + id ).spin({
+            lines : 9, // The number of lines to draw
+            length : 3, // The length of each line
+            width : 2, // The line thickness
+            radius : 4, // The radius of the inner circle
+            rotate : 0, // The rotation offset
+            color : '#999', // #rgb or #rrggbb
+            speed : 2, // Rounds per second
+            trail : 100, // Afterglow percentage
+            shadow : false, // Whether to render a shadow
+            hwaccel : false, // Whether to use hardware acceleration
+            className : 'spinner', // The CSS class to assign to the spinner
+            zIndsex : 2e9, // The z-index (defaults to 2000000000)
+            top : 0, // Top position relative to parent in px
+            left : 0 // Left position relative to parent in px
+        });
+    } else {
+        $( '.z-spinner', '#' + id ).spin(false);
+    }
 }
 
 

@@ -220,16 +220,23 @@
         protected function createEmailAttachment($attachment)
         {
             // Save attachments
-            $fileContent          = new FileContent();
-            $fileContent->content = $attachment['attachment'];
-            $file                 = new EmailFileModel();
-            $file->fileContent    = $fileContent;
-            $file->name           = $attachment['filename'];
-            $file->type           = ZurmoFileHelper::getMimeType($attachment['filename']);
-            $file->size           = strlen($attachment['attachment']);
-            $saved                = $file->save();
-            assert('$saved'); // Not Coding Standard
-            return $file;
+            if ($attachment['filename'] != null)
+            {
+                $fileContent          = new FileContent();
+                $fileContent->content = $attachment['attachment'];
+                $file                 = new EmailFileModel();
+                $file->fileContent    = $fileContent;
+                $file->name           = $attachment['filename'];
+                $file->type           = ZurmoFileHelper::getMimeType($attachment['filename']);
+                $file->size           = strlen($attachment['attachment']);
+                $saved                = $file->save();
+                assert('$saved'); // Not Coding Standard
+                return $file;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected function saveEmailMessage($message)
@@ -339,7 +346,10 @@
                         continue;
                     }
                     $file = $this->createEmailAttachment($attachment);
-                    $emailMessage->files->add($file);
+                    if ($file instanceof EmailFileModel)
+                    {
+                        $emailMessage->files->add($file);
+                    }
                 }
             }
             $validated                 = $emailMessage->validate();
@@ -356,7 +366,7 @@
                 {
                     throw new NotSupportedException();
                 }
-                Yii::app()->imap->deleteMessage($message->msgNumber);
+                Yii::app()->imap->deleteMessage($message->uid);
             }
             catch (NotSupportedException $e)
             {

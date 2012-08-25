@@ -67,7 +67,8 @@
             }
             if ($model->isRelation($attributeName))
             {
-                throw new NotSupportedException();
+                throw new NotSupportedException('Unsupported operator type for Model Class: ' . get_class($model) .
+                                                ' with attribute: ' . $attributeName);
             }
             else
             {

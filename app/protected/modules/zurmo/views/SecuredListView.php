@@ -59,7 +59,7 @@
         {
             $string  = 'ActionSecurityUtil::resolveLinkToModelForCurrentUser("' . $attributeString . '", ';
             $string .= '$data, "' . $this->getActionModuleClassName() . '", ';
-            $string .= '"' . $this->getGridViewActionRoute('details') . '")';
+            $string .= '"' . $this->getGridViewActionRoute('details') . '", (int)$offset)';
             return $string;
         }
 

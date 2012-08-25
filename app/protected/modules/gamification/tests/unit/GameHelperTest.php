@@ -284,5 +284,57 @@
         {
             Yii::app()->gameHelper->resolveNewBadges();
         }
+
+         /**
+         * Tests the global configuration to enable/disable modalNotifications
+         */
+        public function testGamificationModalNotificationsGlobalConfiguration()
+        {
+            $super                       = User::getByUsername('super');
+            Yii::app()->user->userModel  = $super;
+            $scot                        = UserTestHelper::createBasicUser('Scot');
+            Yii::app()->user->userModel  = $scot;
+            $this->assertEquals(0, count(GameNotification::getAllByUser($scot)));
+
+            //test user at general level 0 where they do have enough points to move up   (Game notification created)
+            $gamePoint = new GamePoint();
+            $gamePoint->type = GamePoint::TYPE_USER_ADOPTION;
+            $gamePoint->person = $scot;
+            $gamePoint->value = 300;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(1, count(GameNotification::getAllByUser($scot)));
+            $gamePoint = GamePoint::resolveToGetByTypeAndPerson(GamePoint::TYPE_USER_ADOPTION, $scot);
+            $this->assertEquals(300, $gamePoint->value);
+            $gameLevel = GameLevel::resolveByTypeAndPerson(GameLevel::TYPE_GENERAL, $scot);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(1, $gameLevel->value);
+
+            //test user at general level 1 where they do have enough points to move up   (No game notification created)
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'gamificationModalNotificationsEnabled', false);
+            $gamePoint = new GamePoint();
+            $gamePoint->type = GamePoint::TYPE_USER_ADOPTION;
+            $gamePoint->person = $scot;
+            $gamePoint->value = 300;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(1, count(GameNotification::getAllByUser($scot)));
+            $this->assertEquals(300, $gamePoint->value);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(2, $gameLevel->value);
+
+            //test user at general level 2 where they do have enough points to move up   (Game notification created)
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'gamificationModalNotificationsEnabled', true);
+            $gamePoint = new GamePoint();
+            $gamePoint->type = GamePoint::TYPE_USER_ADOPTION;
+            $gamePoint->person = $scot;
+            $gamePoint->value = 500;
+            $this->assertTrue($gamePoint->save());
+            Yii::app()->gameHelper->resolveLevelChange();
+            $this->assertEquals(2, count(GameNotification::getAllByUser($scot)));
+            $this->assertEquals(500, $gamePoint->value);
+            $this->assertTrue($gameLevel->id > 0);
+            $this->assertEquals(3, $gameLevel->value);
+        }
     }
 ?>

@@ -41,6 +41,8 @@
             => 'Avanzada',
         'Advanced Search'
             => 'Búsqueda Avanzada',
+        'Advanced Search Rows'
+            => 'Búsqueda Avanzada de Filas',
         'After'
             => 'Después',
         'All'
@@ -75,6 +77,8 @@
             => 'Borrar',
         'Click Here'
             => 'Haga clic aquí',
+        'Close'
+            => 'Cerrar',
         'Create'
             => 'Crear',
         'Created By User'
@@ -217,6 +221,10 @@
             => 'Configuración de panel',
         'Panel Title'
             => 'Título de panel',
+        'Please fix your parenthesis.'
+            => 'Por favor, corrija su paréntesis.',
+        'Please use only integers lesser than {max}.'
+            => 'Por favor, use números enteros menores de {max}.',
         'Radio Drop Down'
             => 'Elementos del botón radio',
         'record'
@@ -237,6 +245,8 @@
             => 'Guardar',
         'Search'
             => 'Buscar',
+        'Search Operator'
+            => 'Operador de búsqueda',
         'Second'
             => 'Seconde',
         'Select'
@@ -259,6 +269,8 @@
             => 'Tab', // Same Word Translated
         'The file did not exist'
             => 'El archivo no existe',
+        'The structure is invalid. {error}'
+            => 'La estructura no es válida. {error}',
         'There was an error uploading the file.'
             => 'Error al subir el archivo',
         'There was an error with the web service.'
@@ -303,6 +315,10 @@
             => 'Ayer',
         'You must enter a value'
             => 'Debe introducir un valor',
+        'You must select a field for row {rowNumber}'
+            => 'Debe seleccionar un campo para la fila {rowNumber}',
+        'You must select a value for row {rowNumber}'
+            => 'Debe seleccionar un valor para la fila {rowNumber}',
         'You must select at least one field to modify.'
             => 'Debe seleccionar al menos un campo a modificar.',
         'You must select at least one record'
@@ -313,5 +329,11 @@
             => '{attribute} "{value}" ya está en uso.',
         '{attribute} is too precise (maximum decimal places is {precision}).'
             => '{attribute} es demasiado preciso (máximo de decimales es {precision}).',
+        '{count} result(s)'
+            => '{count} resultado(s)',
+        '{moduleSingularLabel} Search'
+            => '{moduleSingularLabel} búsqueda',
+        '{start}-{end} of {count} result(s).'
+            => '{start}-{end} de {count} resultado(s).',
     );
 ?>

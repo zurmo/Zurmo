@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Checks that apache is installed with the minimum version.  Eventually will add IIS once this is fully supported.
+     * Checks that Apache or IIS is installed with the minimum version.
      */
     class WebServerServiceHelper extends ServiceHelper
     {
@@ -38,9 +38,18 @@
             {
                 return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
             }
-            if (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
+            elseif (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
             {
                 return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Microsoft-IIS'));
+            }
+            else
+            {
+                $this->message  = Yii::t('Default', 'Zurmo runs only on Apache {apacheMinVersion} and higher or Microsoft-IIS {iisMinVersion} or higher web servers.',
+                        array(
+                              '{apacheMinVersion}' => $this->minimumVersion['apache'],
+                              '{iisMinVersion}'    => $this->minimumVersion['microsoft-iis'])
+                        );
+                return false;
             }
         }
 

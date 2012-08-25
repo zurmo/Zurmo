@@ -232,7 +232,7 @@ EOD;
 
         private function makeDownloadRowScriptContent()
         {
-            $deleteLabel = Yii::t('Default', 'Delete');
+            $deleteLabel = '<!--Delete-->';
 $scriptContent = <<<EOD
 <script id="template-download" type="text/x-jquery-tmpl">
     <tr class="template-download{{if error}} ui-state-error{{/if}}">

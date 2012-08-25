@@ -86,20 +86,26 @@
             $attributeString,
             $model,
             $moduleClassName,
-            $linkRoute)
+            $linkRoute,
+            $offset = null)
         {
             assert('is_string($attributeString)');
             assert('$model instanceof Item');
             assert('is_string($moduleClassName)');
             assert('is_string($linkRoute)');
+            assert('$offset === null || is_int($offset)');
             if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $model))
             {
                 return null;
             }
             if (RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
             {
-                return CHtml::link($attributeString,
-                    Yii::app()->createUrl($linkRoute, array("id" => $model->id)));
+                $params = array("id" => $model->id);
+                if ($offset !== null)
+                {
+                    $params['stickyOffset'] = $offset;
+                }
+                return CHtml::link($attributeString, Yii::app()->createUrl($linkRoute, $params));
             }
             return $attributeString;
         }
