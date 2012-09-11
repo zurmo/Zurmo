@@ -75,13 +75,13 @@
                 $model->setAttributes($_POST[$postVariableName]);
                 if ($model->rateToBase == null && $model->code != null)
                 {
+                    $currencyHelper = Yii::app()->currencyHelper;
                     if (!ZurmoCurrencyCodes::isValidCode($model->code))
                     {
                         $model->addError('code', Yii::t('Default', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
                         return $model;
                     }
-                    $currencyHelper = Yii::app()->currencyHelper;
                     $rate           = (float)$currencyHelper->getConversionRateToBase($model->code);
                     if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
                     {

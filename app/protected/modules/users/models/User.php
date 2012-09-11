@@ -573,7 +573,7 @@
                     array('timeZone', 'ValidateTimeZone'),
                     array('username', 'required'),
                     array('username', 'unique'),
-                    array('username', 'UsernameLengthValidator'),
+                    array('username', 'UsernameLengthValidator', 'on' => 'createUser, editUser'),
                     array('username', 'type',  'type' => 'string'),
                     array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
                                                'message' => 'Username must be lowercase.'),

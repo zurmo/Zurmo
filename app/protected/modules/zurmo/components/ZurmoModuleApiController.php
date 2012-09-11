@@ -54,6 +54,10 @@
             }
         }
 
+        /**
+         * Get model and send response
+         * @throws ApiException
+         */
         public function actionRead()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
@@ -66,6 +70,9 @@
             Yii::app()->apiHelper->sendResponse($result);
         }
 
+        /**
+         * Get array or models and send response
+         */
         public function actionList()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
@@ -73,6 +80,10 @@
             Yii::app()->apiHelper->sendResponse($result);
         }
 
+        /**
+         * Create new model, and send response
+         * @throws ApiException
+         */
         public function actionCreate()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
@@ -85,6 +96,10 @@
             Yii::app()->apiHelper->sendResponse($result);
         }
 
+        /**
+         * Update model and send response
+         * @throws ApiException
+         */
         public function actionUpdate()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
@@ -97,6 +112,10 @@
             Yii::app()->apiHelper->sendResponse($result);
         }
 
+        /**
+         * Delete model and send response
+         * @throws ApiException
+         */
         public function actionDelete()
         {
             $params = Yii::app()->apiHelper->getRequestParams();
@@ -109,11 +128,40 @@
             Yii::app()->apiHelper->sendResponse($result);
         }
 
+        /**
+         * Add related model to model's relations
+         */
+        public function actionAddRelation()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            $result    =  $this->processAddRelation($params);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        /**
+         * Remove related model from model's relations
+         */
+        public function actionRemoveRelation()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            $result    =  $this->processRemoveRelation($params);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        /**
+         * Get module primary model name
+         */
         protected function getModelName()
         {
             return $this->getModule()->getPrimaryModelName();
         }
 
+        /**
+         * Get model by id
+         * @param int $id
+         * @throws ApiException
+         * @return ApiResult
+         */
         protected function processRead($id)
         {
             assert('is_int($id)');
@@ -153,11 +201,21 @@
             return $result;
         }
 
+        /**
+         * Should be overriden by children classes
+         * @return NULL
+         */
         protected function getSearchFormClassName()
         {
             return null;
         }
 
+        /**
+         * List all models that satisfy provided criteria
+         * @param array $params
+         * @throws ApiException
+         * @return ApiResult
+         */
         protected function processList($params)
         {
             $modelClassName = $this->getModelName();
@@ -166,10 +224,19 @@
             try
             {
                 $filterParams = array();
-                if (isset($params['filter']) && $params['filter'] != '')
+
+                if (strtolower($_SERVER['REQUEST_METHOD']) != 'post')
                 {
-                    parse_str($params['filter'], $filterParams);
+                    if (isset($params['filter']) && $params['filter'] != '')
+                    {
+                        parse_str($params['filter'], $filterParams);
+                    }
                 }
+                else
+                {
+                    $filterParams = $params['data'];
+                }
+
                 $pageSize    = Yii::app()->pagination->getGlobalValueByType('apiListPageSize');
 
                 if (isset($filterParams['pagination']['pageSize']))
@@ -190,6 +257,14 @@
                 if (isset($filterParams['search']) && isset($searchFormClassName))
                 {
                     $_GET[$searchFormClassName] = $filterParams['search'];
+                }
+                if (isset($filterParams['dynamicSearch']) &&
+                    isset($searchFormClassName) &&
+                    !empty($filterParams['dynamicSearch']['dynamicClauses']) &&
+                    !empty($filterParams['dynamicSearch']['dynamicStructure']))
+                {
+                    $_GET[$searchFormClassName]['dynamicClauses'] = $filterParams['dynamicSearch']['dynamicClauses'];
+                    $_GET[$searchFormClassName]['dynamicStructure'] = $filterParams['dynamicSearch']['dynamicStructure'];
                 }
 
                 $model = new $modelClassName(false);
@@ -214,12 +289,13 @@
                     $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
                 }
 
-                $dataProvider = $this->makeRedBeanDataProviderFromGet(
+                $dataProvider = $this->makeSearchDataProvider(
                     $searchForm,
                     $modelClassName,
                     $pageSize,
                     $stateMetadataAdapterClassName
                 );
+
                 if (isset($filterParams['pagination']['page']) && (int)$filterParams['pagination']['page'] > 0)
                 {
                     $currentPage = (int)$filterParams['pagination']['page'];
@@ -256,16 +332,144 @@
             return $result;
         }
 
+        /**
+         * Add model relation
+         * @param array $params
+         * @throws ApiException
+         * @return ApiResult
+         */
+        protected function processAddRelation($params)
+        {
+            $modelClassName = $this->getModelName();
+            try
+            {
+                $data = array();
+                if (isset($params['data']) && $params['data'] != '')
+                {
+                    parse_str($params['data'], $data);
+                }
+                $relationName = $data['relationName'];
+                $modelId = $data['id'];
+                $relatedId = $data['relatedId'];
+
+                $model = $modelClassName::getById(intval($modelId));
+                $relatedModelClassName = $model->getRelationModelClassName($relationName);
+                $relatedModel = $relatedModelClassName::getById(intval($relatedId));
+
+                if ($model->getRelationType($relationName) == RedBeanModel::HAS_MANY ||
+                    $model->getRelationType($relationName) == RedBeanModel::MANY_MANY)
+                {
+                    $model->{$relationName}->add($relatedModel);
+
+                    if ($model->save())
+                    {
+                        $result = new ApiResult(ApiResponse::STATUS_SUCCESS, null);
+                    }
+                    else
+                    {
+                        $message = Yii::t('Default', 'Could not save relation.');
+                        throw new ApiException($message);
+                    }
+                }
+                else
+                {
+                    $message = Yii::t('Default', 'Could not use this API call for HAS_ONE relationships.');
+                    throw new ApiException($message);
+                }
+            }
+            catch (Exception $e)
+            {
+                $message = $e->getMessage();
+                throw new ApiException($message);
+            }
+            return $result;
+        }
+
+        /**
+         * Remove model relation
+         * @param array $params
+         * @throws ApiException
+         * @return ApiResult
+         */
+        protected function processRemoveRelation($params)
+        {
+            $modelClassName = $this->getModelName();
+            try
+            {
+                $data = array();
+                if (isset($params['data']) && $params['data'] != '')
+                {
+                    parse_str($params['data'], $data);
+                }
+                $relationName = $data['relationName'];
+                $modelId = $data['id'];
+                $relatedId = $data['relatedId'];
+
+                $model = $modelClassName::getById(intval($modelId));
+                $relatedModelClassName = $model->getRelationModelClassName($relationName);
+                $relatedModel = $relatedModelClassName::getById(intval($relatedId));
+                if ($model->getRelationType($relationName) == RedBeanModel::HAS_MANY ||
+                    $model->getRelationType($relationName) == RedBeanModel::MANY_MANY)
+                {
+                    $model->{$relationName}->remove($relatedModel);
+                    if ($model->save())
+                    {
+                        $result = new ApiResult(ApiResponse::STATUS_SUCCESS, null);
+                    }
+                    else
+                    {
+                        $message = Yii::t('Default', 'Could not remove relation.');
+                        throw new ApiException($message);
+                    }
+                }
+                else
+                {
+                    $message = Yii::t('Default', 'Could not use this API call for HAS_ONE relationships.');
+                    throw new ApiException($message);
+                }
+            }
+            catch (Exception $e)
+            {
+                $message = $e->getMessage();
+                throw new ApiException($message);
+            }
+            return $result;
+        }
+
+        /**
+         * Create new model
+         * @param array $data
+         * @throws ApiException
+         */
         protected function processCreate($data)
         {
             $modelClassName = $this->getModelName();
             try
             {
+                if (isset($data['modelRelations']))
+                {
+                    $modelRelations = $data['modelRelations'];
+                    unset($data['modelRelations']);
+                }
                 $model = $this->attemptToSaveModelFromData(new $modelClassName, $data, null, false);
                 $id = $model->id;
                 $model->forget();
                 if (!count($model->getErrors()))
                 {
+                    if (isset($modelRelations) && count($modelRelations))
+                    {
+                        try
+                        {
+                            $this->manageModelRelations($model, $modelRelations);
+                            $model->save();
+                        }
+                        catch (Exception $e)
+                        {
+                            $model->delete();
+                            $message = $e->getMessage();
+                            throw new ApiException($message);
+                        }
+                    }
                     $model = $modelClassName::getById($id);
                     $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
                     $data  = $redBeanModelToApiDataUtil->getData();
@@ -286,10 +490,23 @@
             return $result;
         }
 
+        /**
+         * Update model
+         * @param int $id
+         * @param array $data
+         * @throws ApiException
+         * @return ApiResult
+         */
         protected function processUpdate($id, $data)
         {
             assert('is_int($id)');
             $modelClassName = $this->getModelName();
+
+            if (isset($data['modelRelations']))
+            {
+                $modelRelations = $data['modelRelations'];
+                unset($data['modelRelations']);
+            }
 
             try
             {
@@ -317,6 +534,21 @@
                 $id = $model->id;
                 if (!count($model->getErrors()))
                 {
+                    if (isset($modelRelations) && count($modelRelations))
+                    {
+                        try
+                        {
+                            $this->manageModelRelations($model, $modelRelations);
+                            $model->save();
+                        }
+                        catch (Exception $e)
+                        {
+                            $message = Yii::t('Default', 'Model was updated, but there were issues with relations.');
+                            $message .= ' ' . $e->getMessage();
+                            throw new ApiException($message);
+                        }
+                    }
+
                     $model = $modelClassName::getById($id);
                     $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($model);
                     $data  = $redBeanModelToApiDataUtil->getData();
@@ -339,6 +571,77 @@
             return $result;
         }
 
+        /**
+         *
+         * @param RedBeanModel $model
+         * @param array $modelRelations
+         * @throws NotSupportedException
+         * @throws FailedToSaveModelException
+         * @throws ApiException
+         */
+        protected function manageModelRelations($model, $modelRelations)
+        {
+            try
+            {
+                if (isset($modelRelations) && !empty($modelRelations))
+                {
+                    foreach ($modelRelations as $modelRelation => $relations)
+                    {
+                        if ($model->isAttribute($modelRelation) &&
+                            ($model->getRelationType($modelRelation) == RedBeanModel::HAS_MANY ||
+                            $model->getRelationType($modelRelation) == RedBeanModel::MANY_MANY))
+                        {
+                            $relatedModelClassName = $model->getRelationModelClassName($modelRelation);
+
+                            foreach ($relations as $relation)
+                            {
+                                try
+                                {
+                                    $relatedModel = $relatedModelClassName::getById(intval($relation['modelId']));
+                                }
+                                catch (Exception $e)
+                                {
+                                    $message = Yii::t('Default', 'The related model ID specified was invalid.');
+                                    throw new NotFoundException($message);
+                                }
+
+                                if ($relation['action'] == 'add')
+                                {
+                                    $model->{$modelRelation}->add($relatedModel);
+                                }
+                                elseif ($relation['action'] == 'remove')
+                                {
+                                    $model->{$modelRelation}->remove($relatedModel);
+                                }
+                                else
+                                {
+                                    $message = Yii::t('Default', 'Unsupported action.');
+                                    throw new NotSupportedException($message);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            $message = Yii::t('Default', 'You can add relations only for HAS_MANY and MANY_MANY relations.');
+                            throw new NotSupportedException($message);
+                        }
+                    }
+                }
+            }
+            catch (Exception $e)
+            {
+                $message = $e->getMessage();
+                throw new ApiException($message);
+            }
+            return true;
+        }
+
+        /**
+         * Delete model
+         * @param int $id
+         * @throws ApiException
+         * @return ApiResult
+         */
         protected function processDelete($id)
         {
             assert('is_int($id)');

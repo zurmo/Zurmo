@@ -29,6 +29,12 @@
      */
     class ModelMetadataUtil
     {
+        public static function resolveName($name)
+        {
+            assert('is_string($name)');
+            return $name; // . 'Custom';
+        }
+
         public static function addOrUpdateMember($modelClassName,
                                                  $memberName,
                                                  $attributeLabels,
@@ -57,6 +63,7 @@
             if (!isset   (             $metadata[$modelClassName]['members']) ||
                 !in_array($memberName, $metadata[$modelClassName]['members']))
             {
+                $memberName = self::resolveName($memberName);
                 $metadata[$modelClassName]['members'][] = $memberName;
             }
             static::resolveAddOrRemoveNoAuditInformation($isAudited, $metadata[$modelClassName], $memberName);
@@ -93,6 +100,7 @@
                  !array_key_exists($relationName, $metadata[$modelClassName]['relations']))
             {
                 //assumes HAS_ONE for now and RedBeanModel::OWNED.
+                $relationName = self::resolveName($relationName);
                 $metadata[$modelClassName]['relations'][$relationName] = array(
                                                                             RedBeanModel::HAS_ONE,
                                                                             $relationModelClassName,
@@ -147,6 +155,7 @@
             if (!isset           (               $metadata[$modelClassName]['relations']) ||
                  !array_key_exists($relationName, $metadata[$modelClassName]['relations']))
             {
+                $relationName = self::resolveName($relationName);
                 $metadata[$modelClassName]['relations'][$relationName] = array(RedBeanModel::HAS_ONE,
                                                                                $relationModelClassName);
                 if ($owned)

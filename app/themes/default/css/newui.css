@@ -61,6 +61,9 @@
   display: none;
   float: left;
 }
+.z-spinner.loading {
+  display: block !important;
+}
 .z-icon:before {
   /*empty*/
 
@@ -99,7 +102,6 @@
   width: 100%;
 }
 .juiportlet-widget-column2 {
-  padding: 0;
   padding: 0;
   list-style: none;
 }
@@ -817,6 +819,20 @@ table.configuration-list tr td:last-child a:before {
   position: relative;
   top: 0px;
 }
+#DevelopmentMenuView .configuration-list li a:before {
+  content: "";
+  margin-right: 0px;
+}
+#DevelopmentMenuView .configuration-list li a:after {
+  content: "7";
+  font-weight: normal;
+  font-size: 18px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
+  font-weight: normal !important;
+}
 /*Groups*/
 .ActionBarForSecurityTreeListView .view-toolbar,
 #ActionBarForGroupsEditAndDetailsView .view-toolbar {
@@ -1359,6 +1375,11 @@ table.configuration-list tr td:last-child a:before {
 .multi-select-checkbox-input .hasCheckBox {
   margin: 0 10px 0 0 !important;
 }
+.has-lang-label {
+  position: relative;
+  margin-bottom: 15px;
+  clear: left;
+}
 .has-lang-label input {
   position: relative;
   padding-left: 80px;
@@ -1366,10 +1387,10 @@ table.configuration-list tr td:last-child a:before {
 .has-lang-label input + span {
   background: url(../images/lang-label.png) left top no-repeat;
   display: inline-block;
-  position: relative;
+  position: absolute;
   left: 1px;
   line-height: 24px;
-  top: -25px;
+  top: 1px;
   width: 80px;
   text-align: center;
   border-right: 1px solid #cccccc;
@@ -1378,6 +1399,9 @@ table.configuration-list tr td:last-child a:before {
   -o-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
+}
+.has-lang-label .errorMessage {
+  margin-bottom: 15px;
 }
 .add-custom-field > div {
   padding: 15px 15px 15px 15px;
@@ -1560,12 +1584,12 @@ table.configuration-list tr td:last-child a:before {
 #send-test-email-field > div {
   margin-right: 130px;
 }
-#send-test-email-field  + span {
+#send-test-email-field + span {
   float: left;
   width: 130px;
   margin-left: -130px;
 }
-#send-test-email-field  + span input {
+#send-test-email-field + span input {
   float: right;
 }
 /*Import window*/
@@ -1641,7 +1665,7 @@ table.configuration-list tr td:last-child a:before {
 #ImportWizardUploadFileView .hasCheckBox {
   margin: 0 !important;
 }
-#ImportWizardUploadFileView .hasCheckBox  + label {
+#ImportWizardUploadFileView .hasCheckBox + label {
   margin: 5px 0 0 10px !important;
 }
 /*= Step 3*/
@@ -3001,6 +3025,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   height: auto;
   font-size: 1em;
 }
+.ui-icon {
+  cursor: pointer;
+}
 .ui-icon-trash:after {
   content: "_";
   font-weight: normal;
@@ -3269,6 +3296,8 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   margin: 15px 0 0 0;
+  float: left;
+  clear: both;
 }
 .AttributeEditView form div table #customFieldDataData_AddInputButton:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
@@ -3317,9 +3346,6 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   input[type="submit"],
   input[type="button"] {
     height: 26px;
-  }
-  #JobsCollectionView .tooltip {
-    margin-top: -11px;
   }
 }
 span.tooltip {
@@ -3398,7 +3424,6 @@ span.tooltip {
 .ui-tooltip-content {
   position: relative;
   padding: 5px 9px;
-  overflow: hidden;
   text-align: left;
   word-wrap: break-word;
   overflow: hidden;
@@ -3643,7 +3668,7 @@ span.tooltip {
 .ui-tooltip-youtube .ui-tooltip-content {
   padding: .75em;
   font: 12px arial, sans-serif;
-  filter: progid:dximagetransform.microsoft.gradient(GradientType=0, StartColorStr=#4a4a4a, EndColorStr=#000000);
+  filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#4a4a4a, EndColorStr=#000000);
   -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#4a4a4a,EndColorStr=#000000);";
 }
 .ui-tooltip-youtube .ui-tooltip-icon {
@@ -3670,11 +3695,11 @@ span.tooltip {
 /* IE Specific */
 .ui-tooltip-jtools .ui-tooltip-titlebar {
   background-color: transparent;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr=#717171, endColorstr=#4a4a4a);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171, endColorstr=#4a4a4a);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171,endColorstr=#4A4A4A)";
 }
 .ui-tooltip-jtools .ui-tooltip-content {
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr=#4a4a4a, endColorstr=#232323);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4a4a4a, endColorstr=#232323);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A,endColorstr=#232323)";
 }
 .ui-tooltip-jtools .ui-tooltip-titlebar,
@@ -3753,7 +3778,7 @@ span.tooltip {
   background: #3A79B8;
   background-image: -moz-linear-gradient(top, #3a79b8, #2e629d);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#3a79b8), to(#2e629d));
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr=#3a79b8, endColorstr=#2e629d);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#3a79b8, endColorstr=#2e629d);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8,endColorstr=#2E629D)";
 }
 .ui-tooltip-tipped .ui-tooltip-icon {
@@ -5203,6 +5228,11 @@ span.tooltip {
   -ms-box-shadow: inset 0 0 0 2px #ffffff;
   box-shadow: inset 0 0 0 2px #ffffff;
 }
+@media screen and (min-width: 1600px) {
+  .AppContainer {
+    margin: 0 auto !important;
+  }
+}
 @font-face {
   font-family: 'ZurmoGamificationSymblyReguRg';
   src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');
@@ -5430,17 +5460,9 @@ section {
 }
 /*=MastHead*/
 #HeaderLinksView {
-  background-color: #262877;
-  background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#202264), to(#262877));
-  background-image: -moz-linear-gradient(top, #202264, #262877);
-  background-image: -ms-linear-gradient(top, #202264, #262877);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #202264), color-stop(100%, #262877));
-  background-image: -webkit-linear-gradient(top, #202264, #262877);
-  background-image: -o-linear-gradient(top, #202264, #262877);
-  background-image: linear-gradient(top, #202264, #262877);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#202264', endColorstr='#262877', GradientType=0);
   height: 38px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 #corp-logo {
   float: left;
@@ -5520,6 +5542,14 @@ section {
   color: #fff !important;
   background: #7cb730;
 }
+#HeaderLinksView + div {
+  background: url(../images/header-bar-2.png) left top repeat-x;
+  -webkit-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+  -moz-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+  -o-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+  -ms-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+  box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+}
 .notifications-link {
   margin-top: 12px;
   width: 18px;
@@ -5580,7 +5610,7 @@ section {
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   width: 400px;
   right: 72px;
-  top: 38px;
+  top: 33px;
   position: absolute;
   z-index: 99999;
   padding: 5px 10px;
@@ -5674,14 +5704,10 @@ section {
 #settings-header-menu ul {
   margin-left: -97px;
 }
-#GlobalSearchView {
+#GlobalSearchAndShortcutsCreateMenuView {
   height: 40px;
-  background: url(../images/header-bar-2.png) left top repeat-x;
-  -webkit-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
-  -moz-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
-  -o-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
-  -ms-box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
-  box-shadow: 0 0 10px 2px rgba(102, 102, 102, 0.5);
+  max-width: 1600px;
+  margin: 0 auto;
 }
 #app-search {
   margin-left: 3%;
@@ -5770,6 +5796,13 @@ section {
   margin-right: 8px;
   content: "e";
 }
+.autocomplete-icon-AllResults:before {
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 8px;
+  content: "k";
+}
 .global-search-loopa {
   padding: 0;
   margin: 7px 0 0 0;
@@ -5853,6 +5886,7 @@ section {
 }
 .AppContainer {
   min-width: 900px;
+  max-width: 1600px;
   height: 100%;
   margin: 0 3% 0 3%;
   background: #ffffff url(../images/nav.png) left top repeat-y;
@@ -5871,70 +5905,19 @@ section {
   z-index: 0;
   position: relative;
 }
-/*
-.AppContent{
-     .radius(0 0 5px 5px);
-    .single-column{
-    	background:pink !important;
-		padding-right:0 !important;
-		.GridView{
-			display:block;
-			width:100% !important;
-		}
-		.GridView:first-child{
-			display:block;
-			width:100% !important;
-		}
-		.panel{
-			width:70%;
-			float:left;
-			td, th{
-				padding-bottom:10px !important;
-			}
-		}
-		.details-table{
-			.clearfix();
-		}
-		#right-side-edit-view-panel{
-			top:55px;
-		}
-	}
-}
-*/
-/*
-
-.single-coloumn-details-view,
-#ConversationDetailsView,
-#ConversationDetailsAndRelationsView{
-	&.AppContent{
-		padding-right:0;
-	}
-	.GridView{
-		display:none;
-	}
-	.GridView:first-child{
-		display:block;
-		width:100%;
-	}
-	.panel{
-		width:70%;
-		float:left;
-		td, th{
-			padding-bottom:10px !important;
-		}
-	}
-	.details-table{
-		.clearfix();
-	}
-	#right-side-edit-view-panel{
-		top:55px;
-	}
-	
-}
-*/
 #HeaderView {
   position: relative;
   z-index: 9999;
+  background-color: #262877;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#202264), to(#262877));
+  background-image: -moz-linear-gradient(top, #202264, #262877);
+  background-image: -ms-linear-gradient(top, #202264, #262877);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #202264), color-stop(100%, #262877));
+  background-image: -webkit-linear-gradient(top, #202264, #262877);
+  background-image: -o-linear-gradient(top, #202264, #262877);
+  background-image: linear-gradient(top, #202264, #262877);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#202264', endColorstr='#262877', GradientType=0);
 }
 /*=Shortcuts nav*/
 .GridView {
@@ -5944,7 +5927,7 @@ section {
   position: absolute;
   float: right;
   right: 3%;
-  top: 8px;
+  top: 7px;
 }
 #ShortcutsMenu > li {
   list-style: none !important;
@@ -5953,7 +5936,6 @@ section {
   padding: 0 10px;
   display: block;
   line-height: 23px;
-  background: red;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -6102,7 +6084,6 @@ section {
   clear: both;
 }
 #MenuView a {
-  display: block;
   height: 35px;
   width: 100%;
   display: block;
@@ -6135,20 +6116,6 @@ section {
   top: 0;
   left: 0;
   /*Conversation button*/
-
-  /*> span {
-        	margin-left:10px;
-        	background: @themeColor2;
-        	padding:0;
-        	width:16px;
-        	height:16px;
-        	line-height:16px;
-        	text-align:center;
-        	text-indent:0;
-        	display:inline-block;
-        	color:#fff;
-        	.radius(50%);
-        } */
 
 }
 #MenuView a > span:first-child {
@@ -6389,12 +6356,6 @@ section {
   background-image: linear-gradient(#f6f6f6, #ffffff 100px, #ffffff) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff', GradientType=0);
   zoom: 1;
-  /*> .MetadataView{
-    	padding-right:20px;
-    	.box-sizing();
-    	.clearfix();
-    }*/
-
 }
 .AppContent:before {
   content: "";
@@ -6489,7 +6450,6 @@ section {
   padding: 0 10px;
   line-height: 30px;
   display: inline-block;
-  border-left: 1px solid #bababa;
   position: relative;
   border-left: 1px solid #bababa;
   text-indent: 0 !important;
@@ -6869,17 +6829,6 @@ section {
 #credit-link span {
   margin-left: 70px;
 }
-/*=Forms with clearfix issues
-#ZurmoConfigurationEditAndDetailsView,
-#EmailConfigurationEditAndDetailsView,
-#MapConfigurationView,
-#AccountConvertToView,
-#AccountsMassEditView{
-    #edit-form:after{
-        display:none;
-    }
-}
-*/
 /*General table style, tables still need 'cellspacing="0"' in the markup */
 table {
   border-collapse: separate;
@@ -7010,6 +6959,9 @@ table.items thead tr:hover {
 .empty {
   padding-left: 15px;
   display: block;
+}
+td.empty {
+  display: table-cell;
 }
 /*forms*/
 .form input[type="checkbox"] {
@@ -7177,7 +7129,7 @@ table.items thead tr:hover {
   box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 }
 a.attachLoading {
-  color: #FFF;
+  color: #FFF !important;
   -webkit-text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
   -moz-text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
   -o-text-shadow: rgba(156, 156, 156, 0.8) 0px 1px;
@@ -7388,7 +7340,6 @@ a.simple-select:before {
   -o-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-  width: 100%;
   height: 40px;
   line-height: 40px;
   background-color: #ededed;
@@ -7491,7 +7442,7 @@ label.hasCheckBox.disabled {
   -moz-opacity: 0.5;
   opacity: 0.5;
 }
-label.hasCheckBox  + label {
+label.hasCheckBox + label {
   margin-left: 8px;
   margin-top: 6px;
 }
@@ -7515,29 +7466,6 @@ div.wide.form a {
 }
 /*=LIST VIEW*/
 /*=Search Scope box, and account list*/
-/*
-.summary{
-    padding:5px;
-    text-align: right;
-    font-weight:bold !important;
-    border:1px solid #DFDFDF;
-    border-top:none;
-    border-bottom: none;
-    #gradient > .vertical(#e3e3e3, #f5f5f5);
-    & + .items{
-        //border-top:none !important;
-    }
-}
-.summary + .items{
-    //border-top:1px solid red;
-     border-top:none !important;
-    thead{
-        th{
-            border-top:none !important;
-        }
-    }
-}
-*/
 .summary {
   display: none;
 }
@@ -7722,9 +7650,6 @@ div.wide.form a {
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 90%;
 }
-/*#FilteredListView, .summary{
-    display:none;
-}*/
 .ZurmoSearchView {
   padding: 0;
   -webkit-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
@@ -7839,7 +7764,6 @@ div.wide.form a {
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
-  border-left: none;
   font-style: italic;
   color: #999;
   text-indent: 10px;
@@ -7931,6 +7855,9 @@ div.wide.form a {
   content: "▾";
   margin-left: 5px;
 }
+#mixed-models-form-search {
+  margin-left: 15px;
+}
 #ModalView .list-view-items-summary-clone {
   margin: 10px 10px 0 0;
 }
@@ -7940,9 +7867,9 @@ div.wide.form a {
   float: left;
 }
 #ModalView .search-view-1 {
-  margin-top: 15px;
   z-index: 100;
   min-width: 400px;
+  max-width: 75%;
   height: auto;
   position: absolute;
   left: 250px;
@@ -7964,6 +7891,11 @@ div.wide.form a {
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+}
+#ModalView .search-view-1 input,
+#ModalView .search-view-1 select {
+  position: relative;
+  z-index: 5000;
 }
 #ModalView #clear-search-linkmodal {
   margin-left: 10px;
@@ -8085,6 +8017,10 @@ div.wide.form a {
   display: inline-block;
   margin: 15px 3px 10px 0;
 }
+.add-fields-container .z-spinner {
+  display: block !important;
+  margin-top: -5px;
+}
 #show-dynamic-search-structure-wrapper-search-form {
   display: block;
   width: 100%;
@@ -8093,6 +8029,7 @@ div.wide.form a {
 #show-dynamic-search-structure-div-link-search-form {
   display: block;
   margin-bottom: 15px;
+  margin-left: 23px;
 }
 #save-search-area {
   width: 50%;
@@ -8230,8 +8167,6 @@ div.wide.form a {
   width: 100% !important;
 }
 .attributesContainer {
-  /*min-height: 260px;*/
-
   padding-bottom: 15px;
   zoom: 1;
 }
@@ -9138,7 +9073,7 @@ div.wide.form a {
   list-style: none;
 }
 .BreadCrumbView #StickyListMenu > li > a > span {
-  top: 0;
+  top: 0px;
   position: relative;
   display: block;
   padding: 0 5px;
@@ -9983,7 +9918,7 @@ div.hasHalfs .twoThirds {
   -o-box-shadow: 0 0 1px 1px #262877;
   -ms-box-shadow: 0 0 1px 1px #262877;
   box-shadow: 0 0 1px 1px #262877;
-  z-index: 1000;
+  z-index: 10000;
 }
 /* The outer container of the options */
 .dk_options {
@@ -10080,7 +10015,7 @@ div.hasHalfs .twoThirds {
 .AppContent.MassEditView .hasCheckBox {
   margin-top: 0 !important;
   position: relative;
-  top: -8px;
+  top: 10px;
 }
 .AppContent.MassEditView tr th:first-child {
   padding: 0 !important;
@@ -10359,11 +10294,11 @@ div.hasHalfs .twoThirds {
 .pivotal span {
   background-position: 100% bottom !important;
 }
-/*tasks portlet on dashboard*/
+/*=tasks portlet on dashboard*/
 .TasksMyListView .checkbox-column .hasCheckBox {
   margin-left: 0;
 }
-/*RSS Widget*/
+/*=RSS Widget*/
 .rssBody ul {
   list-style: none;
 }
@@ -10373,4 +10308,50 @@ div.hasHalfs .twoThirds {
 }
 .rssBody li:last-child {
   border-bottom: none;
+}
+/*=Search Results - Mixed Search Results*/
+#MixedModelsSearchView h1 {
+  margin-bottom: 15px;
+}
+#MixedModelsMultipleListsView {
+  margin-top: 15px;
+}
+#MixedModelsMultipleListsView h1 {
+  margin-bottom: 15px;
+}
+.TitleBarView.Account h1:before {
+  content: "P";
+  font-weight: normal;
+  font-size: 36px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 15px;
+  position: relative;
+  top: 0;
+}
+.TitleBarView.Contact h1:before {
+  content: "y";
+  font-weight: normal;
+  font-size: 36px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 15px;
+  position: relative;
+  top: 1px;
+}
+.TitleBarView.Opportunity h1:before {
+  content: "9";
+  font-weight: normal;
+  font-size: 36px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 15px;
+  position: relative;
+  top: 1px;
+}
+.TitleBarView.Lead h1:before {
+  content: ".";
+  font-weight: normal;
+  font-size: 36px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 15px;
+  position: relative;
+  top: 1px;
 }

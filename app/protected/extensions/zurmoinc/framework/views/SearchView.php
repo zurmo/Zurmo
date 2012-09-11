@@ -162,12 +162,7 @@
 
         protected function registerScripts()
         {
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dropDownInteractions.js');
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/jquery.dropkick-1.0.0.js');
+            DropDownUtil::registerScripts();
             // Begin Not Coding Standard
             Yii::app()->clientScript->registerScript('search' . $this->getSearchFormId(), "
                 $('#clear-search-link" . $this->gridIdSuffix . "').removeAttr('clearForm');
@@ -182,16 +177,7 @@
                         $('#" . $this->getClearingSearchInputId() . "').val('1');
                         " . $this->getExtraRenderForClearSearchLinkScript() . "
                         //Reseting DropKick Information
-                        $(this).closest('form').find('select:not(.ignore-style)').each(function(){
-                            $(this).removeData('dropkick');
-                        });
-                        $(this).closest('form').find('div.dk_container').each(function(){
-                            $(this).remove();
-                        });
-                        $(this).closest('form').find('select:not(.ignore-style)').each(function(){
-                            $(this).dropkick();
-                            $(this).dropkick('rebindToggle');
-                        });
+                        resetDropKickDropDowns($(this));
                         $(this).closest('form').submit();
                         $('#" . $this->getClearingSearchInputId() . "').val('');
                         return false;

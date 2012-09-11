@@ -157,7 +157,6 @@
 
             $this->assertEquals(array('name'        => 'my test account',
                                       'officePhone' => null,
-                                      'testHobbies' => array('values' => array()),
                                       'officeFax'   => null), $modifiedSearchPostData);
 
             $account             = new Account(false);

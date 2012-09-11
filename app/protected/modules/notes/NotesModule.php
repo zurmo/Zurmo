@@ -93,11 +93,6 @@
             return true;
         }
 
-        public static function getGamificationRulesType()
-        {
-            return 'NoteGamification';
-        }
-
         /**
          * Even though notes are never globally searched, the search form can still be used by a specific
          * search view for a module.  Either this module or a related module.  This is why a class is returned.

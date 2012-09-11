@@ -723,7 +723,7 @@
         /**
          * See ModelDataProviderUtilTest->testResolveSortAttributeColumnName
          */
-            public function testResolveSortAttributeColumnName()
+        public function testResolveSortAttributeColumnName()
         {
             $quote = DatabaseCompatibilityUtil::getQuote();
 
@@ -770,6 +770,56 @@
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
             $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
             $this->assertEquals('customfield', $leftTables[0]['tableName']);
+        }
+
+        /**
+         * @depends testResolveSortAttributeColumnName
+         * Issue with more than 10 clauses meaning 11 and 12 can get replaced with the value for 1 and 2.
+         * This test demonstrates the problem and also demonstrates the fix by passing.
+         */
+        public function testMoreThanTenClausesProperlyTranslateCorrectlyToQuery()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                12 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'equals',
+                    'value'                => 'somevalue12',
+                ),
+                1 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'equals',
+                    'value'                => 'somevalue1',
+                ),
+                2 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'equals',
+                    'value'                => 'somevalue2',
+                ),
+                11 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'equals',
+                    'value'                => 'somevalue11',
+                ),
+                22 => array(
+                    'attributeName'        => 'iMember',
+                    'operatorType'         => 'equals',
+                    'value'                => 'somevalue22',
+                ),
+            );
+            $searchAttributeData['structure'] = '1 and 11 and 2 and 22 and 12';
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('I');
+
+            $quote         = DatabaseCompatibilityUtil::getQuote();
+            $where         = RedBeanModelDataProvider::makeWhere('I', $searchAttributeData, $joinTablesAdapter);
+            $compareWhere  = "({$quote}i{$quote}.{$quote}imember{$quote} = 'somevalue1') and ";
+            $compareWhere .= "({$quote}i{$quote}.{$quote}imember{$quote} = 'somevalue11') and ";
+            $compareWhere .= "({$quote}i{$quote}.{$quote}imember{$quote} = 'somevalue2') and ";
+            $compareWhere .= "({$quote}i{$quote}.{$quote}imember{$quote} = 'somevalue22') and ";
+            $compareWhere .= "({$quote}i{$quote}.{$quote}imember{$quote} = 'somevalue12')";
+            $this->assertEquals($compareWhere, $where);
         }
     }
 ?>

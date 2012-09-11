@@ -31,6 +31,8 @@
      */
     class AnyMixedAttributesSearchElement extends TextElement
     {
+        private $selectedValue = array('All');
+
         /**
          * Override to ensure the attributeName is anyMixedAttributes
          */
@@ -80,7 +82,7 @@
             $cClipWidget->beginClip("ScopedJuiMultiSelect");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.ScopedSearchJuiMultiSelect', array(
                 'dataAndLabels'  => $this->model->getGlobalSearchAttributeNamesAndLabelsAndAll(),
-                'selectedValue'  => 'All',
+                'selectedValue'  => $this->selectedValue,
                 'inputId'        => $this->getEditableInputId(SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME),
                 'inputName'      => $this->getEditableInputName(SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME),
                 'options'        => array(
@@ -119,6 +121,17 @@
                             $('#" . $inputId . "').bind('input.ajax propertychange.ajax keyup.ajax', basicSearchHandler);
                             ";
             Yii::app()->clientScript->registerScript('basicSearchAjaxSubmit', $script);
+        }
+
+        protected function getSelectedValue()
+        {
+            return $this->selectedValue;
+        }
+
+        public function setSelectedValue(Array $selectedValue)
+        {
+            assert('is_array($selectedValue)');
+            $this->selectedValue = $selectedValue;
         }
     }
 ?>

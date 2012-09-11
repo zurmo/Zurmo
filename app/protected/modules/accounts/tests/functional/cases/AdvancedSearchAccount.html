@@ -34,18 +34,18 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=span.z-label &gt; span</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Select a field</td>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Website</td>
-	<td></td>
+	<td>select</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td>label=Website</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -75,17 +75,17 @@
 <!--Test canceling search-->
 <tr>
 	<td>click</td>
-	<td>css=span.icon-clear</td>
+	<td>id=clear-search-link</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForTextPresent</td>
+	<td>result(s)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
 	<td>Changing The Account ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>1 Criteria Selected</td>
 	<td></td>
 </tr>
 <!--Teste many clauses-->
@@ -100,14 +100,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Select a field</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Name</td>
-	<td></td>
+	<td>select</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td>label=Name</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -195,13 +190,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>4 Criteria Selected</td>
+	<td>waitForTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Changing The Account ${randomSuffix}</td>
+	<td>4 Criteria Selected</td>
 	<td></td>
 </tr>
 <!--Test saving a search with no name-->

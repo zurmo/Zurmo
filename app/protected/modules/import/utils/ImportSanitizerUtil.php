@@ -78,11 +78,11 @@
                 {
                     $mappingRuleData = null;
                 }
-                  try
-                  {
-                      if ($sanitizerUtilClassName::supportsSanitizingWithInstructions())
-                      {
-                        if ($columnMappingData['importInstructionsData'] != null)
+                try
+                {
+                    if ($sanitizerUtilClassName::supportsSanitizingWithInstructions())
+                    {
+                        if (!empty($columnMappingData['importInstructionsData']))
                         {
                             assert('isset($columnMappingData["importInstructionsData"])');
                             $importInstructionsData = $columnMappingData['importInstructionsData'];
@@ -91,37 +91,37 @@
                         {
                             $importInstructionsData = null;
                         }
-                          $value = $sanitizerUtilClassName::
-                                   sanitizeValueWithInstructions($modelClassName, $attributeName,
+                        $value = $sanitizerUtilClassName::
+                                 sanitizeValueWithInstructions($modelClassName, $attributeName,
                                                                  $value, $mappingRuleData, $importInstructionsData);
-                      }
-                      else
-                      {
-                          $value = $sanitizerUtilClassName::
-                                   sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData);
-                      }
-                  }
-                  catch (InvalidValueToSanitizeException $e)
-                  {
-                      if ($e->getMessage() != null)
-                      {
-                          if ($attributeName != null)
-                          {
-                              $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
-                          }
-                          else
-                          {
-                              $label = $modelClassName::getModelLabelByTypeAndLanguage('Singular') . ' -';
-                          }
-                          $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
-                      }
-                      $value = null;
-                      if ($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
-                      {
-                          $importSanitizeResultsUtil->setModelShouldNotBeSaved();
-                      }
-                      break;
-                  }
+                    }
+                    else
+                    {
+                        $value = $sanitizerUtilClassName::
+                                 sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData);
+                    }
+                }
+                catch (InvalidValueToSanitizeException $e)
+                {
+                    if ($e->getMessage() != null)
+                    {
+                        if ($attributeName != null)
+                        {
+                            $label = LabelUtil::makeModelAndAttributeNameCombinationLabel($modelClassName, $attributeName);
+                        }
+                        else
+                        {
+                            $label = $modelClassName::getModelLabelByTypeAndLanguage('Singular') . ' -';
+                        }
+                        $importSanitizeResultsUtil->addMessage($label . ' ' . $e->getMessage());
+                    }
+                    $value = null;
+                    if ($sanitizerUtilClassName::shouldNotSaveModelOnSanitizingValueFailure())
+                    {
+                      $importSanitizeResultsUtil->setModelShouldNotBeSaved();
+                    }
+                    break;
+                }
             }
             return $value;
         }

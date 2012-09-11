@@ -46,8 +46,14 @@
             => 'Posso essere un nome de dominio o un indirizzo IP.',
         'Click below to go to the login page. The username is <b>super</b>'
             => 'Clicca sul link per continuare alla pagina di login.  Il nome d\'utente è <b>super</b>',
+        'Click here to access index page, after you disable maintenance mode.'
+            => 'Clicca qui per accedere alla pagina dell\'indice, dopo aver disattivare la modalità di manutenzione.',
+        'Click Here to continue with next step'
+            => 'Clicca qui per continuare',
         'Click Here to install the demo data'
             => 'Clicca qui per popolare il database con dati di demo',
+        'Click here to start upgrade'
+            => 'Clicca qui per iniziare l\'aggiornamento',
         'Click to start'
             => 'Clicca per cominciare',
         'Congratulations! The demo data has been successfully loaded.'
@@ -58,6 +64,8 @@
             => 'Connessione al database.',
         'Continue'
             => 'Continua',
+        'Copy upgrade file to app/protected/runtime/upgrade folder and start upgrade process.'
+            => 'Copia del file di aggiornamento alla cartella app/protetto/runtime/aggiornamento della e avviare il processo di aggiornamento.',
         'Correctly Installed Services'
             => 'Servizi installati correttamente',
         'Could not get value of database default collation.'
@@ -250,6 +258,8 @@
             => 'PHP upload_max_filesize soddisfa il requisito minimale.',
         'Please delete all files from assets folder on server.'
             => 'Prego di eliminare tutti i file della cartella Assets.',
+        'Please set $maintenanceMode = true in perInstance.php config file.'
+            => 'Si prega di modificare il parametro a $maintenanceMode=true nel file di configurazione perInstance.php.',
         'Rebuilding Permissions.'
             => 'Ricostruzione dei privilegi.',
         'Recheck System'
@@ -284,6 +294,8 @@
             => 'Inizio del processo di update del schema.',
         'Starting to load demo data.'
             => 'Installazione dei dati di demo.',
+        'Starting upgrade process.'
+            => 'Preparazione dell\'aggiornamento.',
         'The database name specified does not exist or the user specified does not have access.'
             => 'Il nome del database specificato non esiste o el utente specificato non ha acceso.',
         'The debug.php config file is not writable.'
@@ -296,6 +308,8 @@
             => 'Il nome del database per Zurmo.',
         'The next step is to install the demo data.'
             => 'Il prossimo passo è d\'installare i dati di demo.',
+        'The next step is to reload the application and upgrade the schema.'
+            => 'Il passo successivo è di ricaricare l\'applicazione e l\'aggiornamentare il schema.',
         'The perInstance.php config file is not writable.'
             => 'Il file di config perInstance.php non è scrivibile',
         'The perInstance.php config file is writable.'
@@ -310,8 +324,16 @@
             => 'C\'era un errore durante la creazione del database dei codice Errore:',
         'There was a problem creating the user Error code:'
             => 'C\'era un error durante la creazione del utente dei codice Errore:',
+        'This is the Zurmo upgrade process. Please backup all files and the database before you continue.'
+            => 'Benvenuti alla procedura aggiornata di Zurmo. Si prega di salvare tutti i file e il database prima di iniziare.',
         'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.'
             => 'Impossibile determinare il percorso Informazioni URL. Assicurare $_SERVER["PATH_INFO"](o $_SERVER["PHP_SELF"] e $_SERVER["SCRIPT_NAME"]) contiene il valore coretto.',
+        'Upgrade in progress. Please wait.'
+            => 'Aggiornamento in corso. Si prega di attendere.',
+        'Upgrade Output:'
+            => 'Risultati del aggiornamento:',
+        'Upgrade process is completed. Please edit perInstance.php file, and disable maintenance mode.'
+            => 'Processo di aggiornamento completato. Si prega di modificare il file perInstance.php, e disattivare la modalità maintenance mode.',
         'User who can connect to the database.'
             => 'Utente che posso connettere al database.',
         'User`s password.'
@@ -322,7 +344,7 @@
             => 'AVVISO',
         'WARNING! - If the database already exists the data will be completely removed. ' .
         'This must be checked if you are specifying an existing database.'
-            => 'AVVISO!  Si esiste già il database, tutti i dati serano eliminati. ' .
+            => 'AVVISO! Si esiste già il database, tutti i dati serano eliminati. ' .
                'Contrassegna questo box si specificate un database esistente.',
         'Welcome to Zurmo. Before getting started, we need some information on the database. ' .
         'You will need to know the following items before proceeding:'
@@ -337,19 +359,23 @@
         'You have specified an existing database. If you would like to use this database, ' .
         'then do not specify the database admin username and password. Otherwise pick a ' .
         'database name that does not exist.'
-            => 'Non avete specificato un database esistente.  Si volete utilizzare questo database, ' .
+            => 'Non avete specificato un database esistente. Si volete utilizzare questo database, ' .
                'non specificato il nome di utente di database o la password di database.  Altrimenti, ' .
                'selezionate un nome di database che non esiste.',
         'You have specified an existing user. If you would like to use this user, then do ' .
         'not specify the database admin username and password. Otherwise pick a database ' .
         'username that does not exist.'
-            => 'Avete specificato un nome di utente che esiste.  Si volete selezionare questo utente ' .
+            => 'Avete specificato un nome di utente che esiste. Si volete selezionare questo utente ' .
                'non specificate il nome di utente di database or la password di database.  Altrimenti, ' .
                'selezionate un nome di database che non esiste.',
         'Your ZurmoCRM software is outdated, new stable release available:'
             => 'La vostra versione di Zurmo è obsoleta, una nuova versione è disponibile:',
-        'Zurmo administrative password. The username is `super`.  You can change this later.'
-            => 'Password amministrativa di Zurmo.  Il utente è `super`.  Si può cambiare questo più tardi.',
+        'Zip extension is loaded.'
+            => 'L\'estensione zip viene caricato.',
+        'Zip extension is not loaded.'
+            => 'L\'estensione zip non è stato caricato.',
+        'Zurmo administrative password. The username is `super`. You can change this later.'
+            => 'Password amministrativa di Zurmo. Il utente è `super`. Si può cambiare questo più tardi.',
         'Zurmo Installation'
             => 'Installazione di Zurmo',
         'Zurmo runs only on Apache {apacheMinVersion} and higher or Microsoft-IIS {iisMinVersion} or higher web servers.'

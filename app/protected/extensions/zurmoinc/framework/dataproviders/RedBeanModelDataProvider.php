@@ -210,8 +210,8 @@
         public function calculateTotalItemCount()
         {
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($this->modelClassName);
-            $where = $this->makeWhere($this->modelClassName, $this->searchAttributeData, $joinTablesAdapter);
-            $modelClassName = $this->modelClassName;
+            $where             = $this->makeWhere($this->modelClassName, $this->searchAttributeData, $joinTablesAdapter);
+            $modelClassName    = $this->modelClassName;
             return $modelClassName::getCount($joinTablesAdapter, $where, $this->modelClassName, $joinTablesAdapter->getSelectDistinct());
         }
 

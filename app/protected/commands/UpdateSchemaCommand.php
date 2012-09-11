@@ -46,43 +46,43 @@
 EOD;
     }
 
-    /**
-     * Execute the action.
-     * @param array command line parameters specific for this command
-     */
-    public function run($args)
-    {
-        set_time_limit('300');
-        if (!isset($args[0]))
+        /**
+         * Execute the action.
+         * @param array command line parameters specific for this command
+         */
+        public function run($args)
         {
-            $this->usageError('A username must be specified.');
-        }
-        try
-        {
-            Yii::app()->user->userModel = User::getByUsername($args[0]);
-        }
-        catch (NotFoundException $e)
-        {
-            $this->usageError('The specified username does not exist.');
-        }
-        $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-        if (!$group->users->contains(Yii::app()->user->userModel))
-        {
-            $this->usageError('The specified user is not a super administrator.');
-        }
+            set_time_limit('300');
+            if (!isset($args[0]))
+            {
+                $this->usageError('A username must be specified.');
+            }
+            try
+            {
+                Yii::app()->user->userModel = User::getByUsername($args[0]);
+            }
+            catch (NotFoundException $e)
+            {
+                $this->usageError('The specified username does not exist.');
+            }
+            $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            if (!$group->users->contains(Yii::app()->user->userModel))
+            {
+                $this->usageError('The specified user is not a super administrator.');
+            }
 
-        $startTime = microtime(true);
-        $template        = "{message}\n";
-        $messageStreamer = new MessageStreamer($template);
-        $messageStreamer->setExtraRenderBytes(0);
-        $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
-        $messageLogger = new MessageLogger($messageStreamer);
-        InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
-        ReadPermissionsOptimizationUtil::rebuild();
-        $endTime = microtime(true);
-        $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
-        $messageStreamer->add(Yii::t('Default', 'Total run time: {formattedTime} seconds.',
-                                     array('{formattedTime}' => number_format(($endTime - $startTime), 3))));
+            $startTime = microtime(true);
+            $template        = "{message}\n";
+            $messageStreamer = new MessageStreamer($template);
+            $messageStreamer->setExtraRenderBytes(0);
+            $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
+            $messageLogger = new MessageLogger($messageStreamer);
+            InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
+            ReadPermissionsOptimizationUtil::rebuild();
+            $endTime = microtime(true);
+            $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
+            $messageStreamer->add(Yii::t('Default', 'Total run time: {formattedTime} seconds.',
+                                         array('{formattedTime}' => number_format(($endTime - $startTime), 3))));
+        }
     }
-}
 ?>

@@ -217,21 +217,21 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'calcnumber',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'dropdowndependency',
+                                            'element' => 'dropdowndep',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'dropdowndependency2',
+                                            'element' => 'dropdowndep2',
                                         ),
                                     )
                                 ),
@@ -350,21 +350,21 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'countrypicklist',
+                                            'element' => 'countrylist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'statepicklist',
+                                            'element' => 'statelist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'citypicklist',
+                                            'element' => 'citylist',
                                         ),
                                     )
                                 ),
@@ -770,28 +770,28 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'calcnumber',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'countrypicklist',
+                                            'element' => 'countrylist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'statepicklist',
+                                            'element' => 'statelist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'citypicklist',
+                                            'element' => 'citylist',
                                         ),
                                     )
                                 ),
@@ -971,21 +971,21 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'countrypicklist',
+                                            'element' => 'countrylist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'statepicklist',
+                                            'element' => 'statelist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'citypicklist',
+                                            'element' => 'citylist',
                                         ),
                                     )
                                 ),
@@ -1058,9 +1058,9 @@
                             'picklist'           => array('value'  => 'b'),
                             'multiselect'        => array('values' => array('gg', 'hh')),
                             'tagcloud'           => array('values' => array('reading', 'surfing')),
-                            'countrypicklist'    => array('value'  => 'aaaa'),
-                            'statepicklist'      => array('value'  => 'aaa1'),
-                            'citypicklist'       => array('value'  => 'ab1'),
+                            'countrylist'        => array('value'  => 'aaaa'),
+                            'statelist'          => array('value'  => 'aaa1'),
+                            'citylist'           => array('value'  => 'ab1'),
                             'radio'              => array('value'  => 'e'),
                             'date__Date'         => array('type'   => 'Today'),
                             'datetime__DateTime' => array('type'   => 'Today'));
@@ -1101,9 +1101,9 @@
                             'picklist'           => array('value'  => 'b'),
                             'multiselect'        => array('values' => array(0 => null)),
                             'tagcloud'           => array('values' => array('reading', 'surfing')),
-                            'countrypicklist'    => array('value'  => 'aaaa'),
-                            'statepicklist'      => array('value'  => 'aaa1'),
-                            'citypicklist'       => array('value'  => 'ab1'),
+                            'countrylist'        => array('value'  => 'aaaa'),
+                            'statelist'          => array('value'  => 'aaa1'),
+                            'citylist'           => array('value'  => 'ab1'),
                             'radio'              => array('value'  => 'e'),
                             'date__Date'         => array('type'   => 'Today'),
                             'datetime__DateTime' => array('type'   => 'Today'));

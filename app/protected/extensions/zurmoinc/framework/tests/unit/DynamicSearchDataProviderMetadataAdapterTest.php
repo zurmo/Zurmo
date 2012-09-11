@@ -339,5 +339,248 @@
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }
+
+        /**
+         * @depends testDynamicSearchWithNullValues
+         * Issue with more than 10 clauses meaning 11 and 12 can get replaced with the value for 1 and 2.
+         * This test demonstrates the problem and also demonstrates the fix by passing.
+         */
+        public function testMixedClauseCountsOverTenAndDoTheClausesProperlyTranslateCorrectlyToQuery()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $sanitizedDynamicSearchAttributes = array(
+                0 => array(
+                    'iiiMember'                   => 'someThing12',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '12',
+                ),
+                1 => array(
+                    'iiiMember'                   => 'someThing1',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '1',
+                ),
+                2 => array(
+                    'iiiMember'                   => 'someThing2',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '2',
+                ),
+                3 => array(
+                    'iiiMember'                   => 'someThing11',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '11',
+                ),
+                4 => array(
+                    'iiiMember'                   => 'someThing22',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '22',
+                )
+            );
+            $dynamicStructure = '(1 or 11) and 2 and 22 and 12';
+            $metadata         = array('clauses' => array(), 'structure' => '');
+            $metadataAdapter = new DynamicSearchDataProviderMetadataAdapter(
+                $metadata,
+                new IIISearchFormTestModel(new III(false)),
+                (int)Yii::app()->user->userModel->id,
+                $sanitizedDynamicSearchAttributes,
+                $dynamicStructure);
+            $metadata = $metadataAdapter->getAdaptedDataProviderMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing12',
+                ),
+                2 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing1',
+                ),
+                3 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing2',
+                ),
+                4 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing11',
+                ),
+                5 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing22',
+                ),
+            );
+            $compareStructure = '((2 or 4) and 3 and 5 and 1)';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+            /**
+         * @depends testMixedClauseCountsOverTenAndDoTheClausesProperlyTranslateCorrectlyToQuery
+         */
+        public function testMoreThanTenClausesProperlyTranslateCorrectlyToQuery()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $sanitizedDynamicSearchAttributes = array(
+                0 => array(
+                    'iiiMember'                   => 'someThing1',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '1',
+                ),
+                1 => array(
+                    'iiiMember'                   => 'someThing2',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '2',
+                ),
+                2 => array(
+                    'iiiMember'                   => 'someThing3',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '3',
+                ),
+                3 => array(
+                    'iiiMember'                   => 'someThing4',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '4',
+                ),
+                4 => array(
+                    'iiiMember'                   => 'someThing5',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '5',
+                ),
+                5 => array(
+                    'iiiMember'                   => 'someThing6',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '6',
+                ),
+                6 => array(
+                    'iiiMember'                   => 'someThing7',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '7',
+                ),
+                7 => array(
+                    'iiiMember'                   => 'someThing8',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '8',
+                ),
+                8 => array(
+                    'iiiMember'                   => 'someThing9',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '9',
+                ),
+                9 => array(
+                    'iiiMember'                   => 'someThing10',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '10',
+                ),
+                10 => array(
+                    'iiiMember'                   => 'someThing11',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '11',
+                ),
+                11 => array(
+                    'iiiMember'                   => 'someThing12',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '12',
+                ),
+                12 => array(
+                    'iiiMember'                   => 'someThing13',
+                    'attributeIndexOrDerivedType' => 'iiiMember',
+                    'structurePosition'           => '13',
+                ),
+            );
+            $dynamicStructure = '(1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13)';
+            $metadata         = array('clauses' => array(), 'structure' => '');
+            $metadataAdapter = new DynamicSearchDataProviderMetadataAdapter(
+                $metadata,
+                new IIISearchFormTestModel(new III(false)),
+                (int)Yii::app()->user->userModel->id,
+                $sanitizedDynamicSearchAttributes,
+                $dynamicStructure);
+            $metadata = $metadataAdapter->getAdaptedDataProviderMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing1',
+                ),
+                2 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing2',
+                ),
+                3 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing3',
+                ),
+                4 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing4',
+                ),
+                5 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing5',
+                ),
+                6 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing6',
+                ),
+                7 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing7',
+                ),
+                8 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing8',
+                ),
+                9 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing9',
+                ),
+                10 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing10',
+                ),
+                11 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing11',
+                ),
+                12 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing12',
+                ),
+                13 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'someThing13',
+                ),
+            );
+            $compareStructure = '((1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13))';
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
+
+        public function testNumberToLetter()
+        {
+            $this->assertEquals('a', DynamicSearchDataProviderMetadataAdapter::numberToLetter(1));
+            $this->assertEquals('b', DynamicSearchDataProviderMetadataAdapter::numberToLetter(2));
+            $this->assertEquals('c', DynamicSearchDataProviderMetadataAdapter::numberToLetter(3));
+            $this->assertEquals('d', DynamicSearchDataProviderMetadataAdapter::numberToLetter(4));
+            $this->assertEquals('e', DynamicSearchDataProviderMetadataAdapter::numberToLetter(5));
+            $this->assertEquals('o', DynamicSearchDataProviderMetadataAdapter::numberToLetter(15));
+            $this->assertEquals('ss', DynamicSearchDataProviderMetadataAdapter::numberToLetter(45));
+        }
     }
 ?>

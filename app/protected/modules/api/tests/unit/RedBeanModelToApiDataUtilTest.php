@@ -138,8 +138,7 @@
                 'radioDropDown'     => null,
                 'multiDropDown'     => array('values' => array('Multi 1', 'Multi 3')),
                 'tagCloud'          => array('values' => array('Cloud 2', 'Cloud 3')),
-                'hasOne'            => null,
-                'hasOneAlso'        => null,
+                'modelItem2'        => null,
                 'primaryEmail'      => null,
                 'primaryAddress'    => null,
                 'secondaryEmail'    => null,
@@ -241,8 +240,7 @@
                 'radioDropDown'     => null,
                 'multiDropDown'     => array('values' => null),
                 'tagCloud'          => array('values' => null),
-                'hasOne'            => null,
-                'hasOneAlso'        => null,
+                'modelItem2'        => null,
                 'primaryEmail'      => null,
                 'primaryAddress'    => null,
                 'secondaryEmail'    => null,
@@ -311,10 +309,10 @@
             $testItem->url           = 'http://www.asite.com';
             $testItem->owner         = $super;
             $testItem->currencyValue = $currencyValue;
-            $testItem->hasOne        = $testItem2;
-            $testItem->hasMany->add($testItem3_1);
-            $testItem->hasMany->add($testItem3_2);
-            $testItem->hasOneAlso    = $testItem4;
+            $testItem->modelItem2    = $testItem2;
+            $testItem->modelItems3->add($testItem3_1);
+            $testItem->modelItems3->add($testItem3_2);
+            $testItem->modelItems4->add($testItem4);
             $createStamp             = strtotime(DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
             $this->assertTrue($testItem->save());
             $id = $testItem->id;
@@ -347,10 +345,9 @@
                 ),
                 'dropDown'          => null,
                 'radioDropDown'     => null,
-                'multiDropDown'    => array('values' => null),
-                'tagCloud'         => array('values' => null),
-                'hasOne'            => array('id' => $testItem2->id),
-                'hasOneAlso'        => array('id' => $testItem4->id),
+                'multiDropDown'     => array('values' => null),
+                'tagCloud'          => array('values' => null),
+                'modelItem2'        => array('id' => $testItem2->id),
                 'primaryEmail'      => null,
                 'primaryAddress'    => null,
                 'secondaryEmail'    => null,

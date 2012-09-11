@@ -115,6 +115,10 @@
             => 'Staat',
         'Any Street'
             => 'Straße',
+        'Application is in maintenance mode, and only Super Administrators can access it.'
+            => '??',
+        'Application is in maintenance mode. Please try again later.'
+            => '??',
         'Application Name'
             => 'Systemname',
         'are required.'
@@ -173,6 +177,12 @@
             => 'Konvertieren',
         'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
             => 'Copyright © Zurmo Inc., 2012. Alle Rechte vorbehalten.',
+        'Could not remove relation.'
+            => '??',
+        'Could not save relation.'
+            => '??',
+        'Could not use this API call for HAS_ONE relationships.'
+            => '??',
         'Country'
             => 'Land',
         'Create Group'
@@ -271,6 +281,8 @@
             => 'Globale Konfiguration',
         'Global configuration saved successfully.'
             => 'Globale Konfiguration wurde erfolgreich gespeichert.',
+        'Global search'
+            => '??',
         'Go to Search'
             => 'Zugang Suche',
         'Got questions{spaceAndFirstName}? Find answers in the Zurmo Wiki.'
@@ -391,6 +403,8 @@
             => 'Das Modell wurde nicht erstellt.',
         'Model was not updated.'
             => 'Das Modell wurde nicht aktualisiert.',
+        'Model was updated, but there were issues with relations.'
+            => '??',
         'Modify Structure'
             => 'Struktur Ändern',
         'Module Name - Plural'
@@ -615,6 +629,8 @@
             => 'Die Benachrichtigungen Sprechblase hält dich auf dem neuesten über wichtige Ereignisse.',
         'The record you are trying to access does not exist.'
             => 'Der Datensatz existiert nicht.',
+        'The related model ID specified was invalid.'
+            => '??',
         'The status specified is invalid.'
             => 'Der Status ist ungültig.',
         'There are no recently viewed items.'
@@ -639,6 +655,8 @@
             => 'Messe',
         'Type a currency code or name to search.'
             => 'Geben Sie eine Währung oder Name zu suchen.',
+        'Unsupported action.'
+            => '??',
         'Update'
             => 'Aktualisierung',
         'Update Custom Data'
@@ -673,6 +691,8 @@
             => 'Mund zu Mund Propaganda',
         'Write'
             => 'schreiben',
+        'You can add relations only for HAS_MANY and MANY_MANY relations.'
+            => '??',
         'You have tried to access a page you do not have access to.'
             => 'Sie haben keinen Zugriff auf die Seite.',
         'You must have at least one active currency.'

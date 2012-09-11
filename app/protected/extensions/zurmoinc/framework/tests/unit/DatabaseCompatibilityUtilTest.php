@@ -33,6 +33,7 @@
         protected $existingDatabaseName;
         protected $temporaryDatabaseName;
         protected $superUserPassword;
+        protected $databaseBackupTestFile;
 
         public function __construct()
         {
@@ -62,6 +63,7 @@
                 $this->temporaryDatabaseName = 'zurmo_wacky';
             }
             $this->superUserPassword = 'super';
+            $this->databaseBackupTestFile = INSTANCE_ROOT . '/protected/runtime/databaseBackupTest.sql';
         }
 
         public function setup()
@@ -80,6 +82,10 @@
                                    Yii::app()->db->username,
                                    Yii::app()->db->password,
                                    true);
+            if (is_file($this->databaseBackupTestFile))
+            {
+                unlink($this->databaseBackupTestFile);
+            }
         }
 
         public function testCharLength()
@@ -516,15 +522,6 @@
             }
         }
 
-        public function testGetDatabaseNameFromConnectionString()
-        {
-            $originalConnectionString = Yii::app()->db->connectionString;
-            Yii::app()->db->connectionString = 'mysql:host=localhost;port=3306;dbname=zurmo'; // Not Coding Standard
-            $databaseName = DatabaseCompatibilityUtil::getDatabaseNameFromConnectionString();
-            Yii::app()->db->connectionString = $originalConnectionString;
-            $this->assertEquals('zurmo', $databaseName);
-        }
-
         public function testGetTableRowsCountTotal()
         {
             R::exec("create table temptesttable (temptable_id int(11) unsigned not null)");
@@ -541,6 +538,50 @@
             $this->assertEquals(3306, $mysqlDatabaseDefaultPort);
 
             $mysqlDatabaseDefaultPort = DatabaseCompatibilityUtil::getDatabaseDefaultPort('pgsql');
+        }
+
+        public function testDatabaseBackupAndRestore()
+        {
+            // Create new database (zurmo_wacky).
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName));
+                $connection = @mysql_connect($this->hostname . ':' . $this->databasePort, $this->rootUsername, $this->rootPassword);
+                $this->assertTrue(is_resource($connection));
+
+                @mysql_select_db($this->temporaryDatabaseName);
+                @mysql_query("create table temptable (temptable_id int(11) unsigned not null)", $connection);
+                @mysql_query("insert into temptable values ('5')", $connection);
+                @mysql_query("insert into temptable values ('10')", $connection);
+                $result = @mysql_query("SELECT count(*) from temptable");
+                $totalRows = mysql_fetch_row($result);
+                @mysql_close($connection);
+
+                $this->assertEquals(2, $totalRows[0]);
+
+                $this->assertTrue(DatabaseCompatibilityUtil::backupDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
+
+                //Drop database, and restore it from backup.
+                $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName));
+                $this->assertTrue(DatabaseCompatibilityUtil::restoreDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
+                $connection = @mysql_connect($this->hostname . ':' . $this->databasePort, $this->rootUsername, $this->rootPassword);
+
+                $this->assertTrue(is_resource($connection));
+
+                @mysql_select_db($this->temporaryDatabaseName);
+                $result = @mysql_query("SELECT count(*) from temptable");
+                $totalRows = mysql_fetch_row($result);
+
+                $result = @mysql_query("SELECT * from temptable");
+                $rows1 = mysql_fetch_row($result);
+                $rows2 = mysql_fetch_row($result);
+
+                @mysql_close($connection);
+
+                $this->assertEquals(2, $totalRows[0]);
+                $this->assertEquals(5,  $rows1[0]);
+                $this->assertEquals(10, $rows2[0]);
+            }
         }
     }
 ?>

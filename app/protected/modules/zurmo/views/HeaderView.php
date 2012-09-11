@@ -51,9 +51,11 @@
             $this->verticalGridView->setView(
                                         new HeaderLinksView($settingsMenuItems, $userMenuItems, $notificationsUrl,
                                                             $applicationName), 0, 0);
-            $horizontalGridView = new GridView(1, 2);
-            $horizontalGridView->setView(new GlobalSearchView($moduleNamesAndLabels, $sourceUrl), 0, 0);
-            $horizontalGridView->setView($shortcutsCreateMenuView, 0, 1);
+            $globalSearchAndShortcutsCreateMenuView = new GlobalSearchAndShortcutsCreateMenuView($moduleNamesAndLabels,
+                                                          $sourceUrl,
+                                                          $shortcutsCreateMenuView);
+            $horizontalGridView = new GridView(1, 1);
+            $horizontalGridView->setView($globalSearchAndShortcutsCreateMenuView, 0, 0);
             $this->verticalGridView->setView($horizontalGridView, 1, 0);
         }
 

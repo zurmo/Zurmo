@@ -47,9 +47,9 @@
                                              $this->form,
                                              $params);
                 $element->editableTemplate = $editableTemplate;
-                $content .= $element->render();
+                $content .= ZurmoHtml::tag('div', array('class' => 'has-lang-label'), $element->render());
             }
-             return CHtml::tag('div', array('class' => 'has-lang-label'), $content);
+             return $content;
         }
 
         /**
@@ -63,6 +63,16 @@
                 return $label;
             }
             return CHtml::label($label, false);
+        }
+
+        /**
+         * Error is prodced by each language derived label
+         * @see LabelElement::renderControlEditable()
+         * (non-PHPdoc)
+         * @see Element::renderError()
+         */
+        protected function renderError()
+        {
         }
 
         protected function getElementViewMetadata()

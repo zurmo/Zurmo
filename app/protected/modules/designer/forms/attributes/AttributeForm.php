@@ -89,6 +89,8 @@
                 array('attributeName', 'match', 'pattern' => '/^[a-z]/', // Not Coding Standard
                                                 'message' =>  Yii::t('Default', 'First character must be a lower case letter'),
                 ),
+                array('attributeName', 'length', 'max' => DatabaseCompatibilityUtil::getDatabaseMaxColumnNameLength()),
+                array('attributeName', 'validateIsAttributeNameDatabaseReservedWord'),
                 array('attributeLabels',   'validateAttributeLabels'),
                 array('defaultValue',  'safe'),
                 array('isAudited',     'boolean'),
@@ -158,6 +160,18 @@
             if ($model->isAttribute($this->attributeName))
             {
                 $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+            }
+        }
+
+        /**
+         * Validates that attribute name is not database reserved word.
+         */
+        public function validateIsAttributeNameDatabaseReservedWord()
+        {
+            if (in_array($this->attributeName, DatabaseCompatibilityUtil::getDatabaseReserverWords()))
+            {
+                $this->addError('attributeName', Yii::t('Default', '"{$attributeName}" field name is database reserved word. Please enter different one.',
+                                                 array('{$attributeName}' => $this->attributeName)));
             }
         }
 

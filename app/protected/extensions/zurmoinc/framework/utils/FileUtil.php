@@ -81,5 +81,118 @@
             }
             return ArrayUtil::flatten($files);
         }
+
+        /**
+         * Get array of files or folders in directory that are not writeable by user.
+         * @param string $directory
+         */
+        public static function getNonWriteableFilesOrFolders($directory, &$nonWritableItems = array())
+        {
+            $isWritable = true;
+            $handle = opendir($directory);
+            while (($item = readdir($handle)) !== false)
+            {
+                if ($item != '.' && $item != '..')
+                {
+                    $path = $directory . '/' . $item;
+                    if (is_dir($path))
+                    {
+                        // Check if folder itself is writeable, and if all subfolders and files are writeable.
+                        $nonWritableItems = self::getNonWriteableFilesOrFolders($path, $nonWritableItems);
+                        $isWritable = is_writeable($path) && empty($nonWritableItems);
+                    }
+                    else
+                    {
+                        $isWritable = is_writeable($path);
+                    }
+                    if (!$isWritable)
+                    {
+                        $nonWritableItems[] = $path;
+                    }
+                }
+            }
+            closedir($handle);
+            return $nonWritableItems;
+        }
+
+        /**
+         * Copy folders and files recoursive
+         * @param string $source
+         * @param string $target
+         */
+        public static function copyRecoursive($source, $target)
+        {
+            if (is_dir($source))
+            {
+                @mkdir($target);
+                $currentWorkingDirectory = dir($source);
+                while (false !== ($filename = $currentWorkingDirectory->read()))
+                {
+                    if ($filename == '.' || $filename == '..')
+                    {
+                        continue;
+                    }
+                    $fullPath = $source . '/' . $filename;
+                    if (is_dir($fullPath))
+                    {
+                        self::copyRecoursive($fullPath, $target . '/' . $filename);
+                        continue;
+                    }
+                    copy($fullPath, $target . '/' . $filename);
+                }
+                $currentWorkingDirectory->close();
+            }
+            elseif (is_file($source))
+            {
+                copy($source, $target );
+            }
+        }
+
+        /**
+         * Delete folder and all its contents
+         * @param string $directory
+         * @param boolean $removeDirectoryItself - Should directory be removed also, or just its content
+         * @param array $filesOrFoldersToSkip - List of files/folders not to be deleted
+         */
+        public static function deleteDirectoryRecoursive($directory, $removeDirectoryItself = true, $filesOrFoldersToSkip = array())
+        {
+            assert(is_dir($directory)); // Not Coding Standard
+            assert(($removeDirectoryItself && empty($skip)) || !$removeDirectoryItself); // Not Coding Standard
+            $entries = scandir($directory);
+            foreach ($entries as $entry)
+            {
+                if ($entry != "." && $entry != "..")
+                {
+                    if (!empty($filesOrFoldersToSkip))
+                    {
+                        $skipFileOrFolder = false;
+                        foreach ($filesOrFoldersToSkip as $fileOrFoldersToSkip)
+                        {
+                            if (trim($fileOrFoldersToSkip, DIRECTORY_SEPARATOR) == trim($entry, DIRECTORY_SEPARATOR))
+                            {
+                                $skipFileOrFolder = true;
+                            }
+                        }
+                        if ($skipFileOrFolder)
+                        {
+                            continue;
+                        }
+                    }
+                    $entry = "$directory/$entry";
+                    if (is_file($entry) || is_link($entry))
+                    {
+                        unlink($entry);
+                    }
+                    else
+                    {
+                        self::deleteDirectoryRecoursive($entry, true);
+                    }
+                }
+            }
+            if ($removeDirectoryItself)
+            {
+                rmdir($directory);
+            }
+        }
     }
 ?>

@@ -168,14 +168,14 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'calcnumber',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'dropdowndependency',
+                                            'element' => 'dropdowndep',
                                         ),
                                     )
                                 ),
@@ -365,28 +365,28 @@
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'calculatednumber',
+                                            'element' => 'calcnumber',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'countrypicklist',
+                                            'element' => 'countrylist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'statepicklist',
+                                            'element' => 'statelist',
                                         ),
                                     )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
-                                            'element' => 'citypicklist',
+                                            'element' => 'citylist',
                                         ),
                                     )
                                 ),

@@ -41,6 +41,14 @@
             $this->sourceUrl            = $sourceUrl;
         }
 
+        /**
+         * Just renderContent. Do not wrap with any divs.
+         */
+        public function render()
+        {
+            return $this->renderContent();
+        }
+
         protected function renderContent()
         {
             $content  = '<div id="app-search" class="clearfix">' . $this->renderGlobalSearchContent() . '<span class="z-spinner"></span></div>';

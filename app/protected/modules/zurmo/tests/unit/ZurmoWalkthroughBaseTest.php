@@ -346,17 +346,17 @@
 
         protected function createDependentDropDownCustomFieldByModule($moduleClassName, $name)
         {
-            $customFieldDataData     = array('countrypicklist' => array('aaaa', 'bbbb'),
-                                             'statepicklist'   => array('aaa1', 'aaa2', 'bbb1', 'bbb2'),
-                                             'citypicklist'    => array('aa1', 'ab1', 'aa2', 'ab2', 'ba1', 'bb1', 'ba2', 'bb2')
+            $customFieldDataData     = array('countrylist'     => array('aaaa', 'bbbb'),
+                                             'statelist'       => array('aaa1', 'aaa2', 'bbb1', 'bbb2'),
+                                             'citylist'        => array('aa1', 'ab1', 'aa2', 'ab2', 'ba1', 'bb1', 'ba2', 'bb2')
                                        );
-            $customFieldDataLabelsFr = array('countrypicklist' => array('aaaa Fr', 'bbbb Fr'),
-                                             'statepicklist'   => array('aaa1 Fr', 'aaa2 Fr', 'bbb1 Fr', 'bbb2 Fr'),
-                                             'citypicklist'    => array('aa1 Fr', 'ab1 Fr', 'aa2 Fr', 'ab2 Fr', 'ba1 Fr', 'bb1 Fr', 'ba2 Fr', 'bb2 Fr')
+            $customFieldDataLabelsFr = array('countrylist'     => array('aaaa Fr', 'bbbb Fr'),
+                                             'statelist'       => array('aaa1 Fr', 'aaa2 Fr', 'bbb1 Fr', 'bbb2 Fr'),
+                                             'citylist'        => array('aa1 Fr', 'ab1 Fr', 'aa2 Fr', 'ab2 Fr', 'ba1 Fr', 'bb1 Fr', 'ba2 Fr', 'bb2 Fr')
                                        );
-            $customFieldDataLabelsDe = array('countrypicklist'  => array('aaaa De', 'bbbb De'),
-                                             'statepicklist'    => array('aaa1 De', 'aaa2 De', 'bbb1 De', 'bbb2 De'),
-                                             'citypicklist'     => array('aa1 De', 'ab1 De', 'aa2 De', 'ab2 De', 'ba1 De', 'bb1 De', 'ba2 De', 'bb2 De')
+            $customFieldDataLabelsDe = array('countrylist'      => array('aaaa De', 'bbbb De'),
+                                             'statelist'        => array('aaa1 De', 'aaa2 De', 'bbb1 De', 'bbb2 De'),
+                                             'citylist'         => array('aa1 De', 'ab1 De', 'aa2 De', 'ab2 De', 'ba1 De', 'bb1 De', 'ba2 De', 'bb2 De')
                                        );
             $extraPostData           = array(
                                         'defaultValueOrder'     => '1',
@@ -422,15 +422,15 @@
         protected function createDropDownDependencyCustomFieldByModule($moduleClassName, $name)
         {
             $mappingData = array(
-                                array('attributeName' => 'countrypicklist'),
-                                array('attributeName' => 'statepicklist',
+                                array('attributeName' => 'countrylist'),
+                                array('attributeName' => 'statelist',
                                       'valuesToParentValues' => array('aaa1' => 'aaaa',
                                                                       'aaa2' => 'aaaa',
                                                                       'bbb1' => 'bbbb',
                                                                       'bbb2' => 'bbbb'
                                                               )
                                 ),
-                                array('attributeName'        => 'citypicklist',
+                                array('attributeName'        => 'citylist',
                                       'valuesToParentValues' => array('aa1'  => 'aaa1',
                                                                       'ab1'  => 'aaa1',
                                                                       'aa2'  => 'aaa2',

@@ -82,6 +82,7 @@
                 'id' => $super->id,
                 'username' => 'super'
             );
+            $data['modelItem'] = null;
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['id']);

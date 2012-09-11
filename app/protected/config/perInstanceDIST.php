@@ -40,6 +40,7 @@
                         );
     $adminEmail       = 'info@zurmo.com';
     $installed        = false; // Set to true by the installation process.
+    $maintenanceMode  = false; // Set to true during upgrade process or other maintenance tasks.
     $instanceConfig   = array(); //Set any parameters you want to have merged into configuration array.
                                  //@see CustomManagement
     //$instanceConfig['components']['request']['hostInfo'] = '';

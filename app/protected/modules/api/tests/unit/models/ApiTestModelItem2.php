@@ -42,10 +42,16 @@
                 'members' => array(
                     'name',
                 ),
+                'relations' => array(
+                    'modelItem'        => array(RedBeanModel::HAS_ONE,   'ApiTestModelItem'),
+                ),
                 'rules' => array(
                     array('name',  'type',   'type' => 'string'),
                     array('name',  'length', 'max' => 32),
                 ),
+                'elements' => array(
+                    'modelItem' => 'ApiModelTestItem',
+                )
             );
             return $metadata;
         }

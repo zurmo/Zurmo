@@ -24,31 +24,6 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /*********************************************************************************
-    * Zurmo is a customer relationship management program developed by
-    * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
-    *
-    * Zurmo is free software; you can redistribute it and/or modify it under
-    * the terms of the GNU General Public License version 3 as published by the
-    * Free Software Foundation with the addition of the following permission added
-    * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
-    * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
-    * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
-    *
-    * Zurmo is distributed in the hope that it will be useful, but WITHOUT
-    * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-    * details.
-    *
-    * You should have received a copy of the GNU General Public License along with
-    * this program; if not, see http://www.gnu.org/licenses or write to the Free
-    * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    * 02110-1301 USA.
-    *
-    * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-    * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
-    ********************************************************************************/
-
     /**
     * Designer Module Walkthrough of meetings.
     * Walkthrough for the super user of all possible controller actions.
@@ -147,14 +122,14 @@
             $this->createDateTimeCustomFieldByModule            ('MeetingsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('MeetingsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('MeetingsModule', 'picklist');
-            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'countrypicklist');
-            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'statepicklist');
-            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'citypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'countrylist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'statelist');
+            $this->createDependentDropDownCustomFieldByModule   ('MeetingsModule', 'citylist');
             $this->createIntegerCustomFieldByModule             ('MeetingsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('MeetingsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('MeetingsModule', 'tagcloud');
-            $this->createCalculatedNumberCustomFieldByModule    ('MeetingsModule', 'calculatednumber');
-            $this->createDropDownDependencyCustomFieldByModule  ('MeetingsModule', 'dropdowndependency');
+            $this->createCalculatedNumberCustomFieldByModule    ('MeetingsModule', 'calcnumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('MeetingsModule', 'dropdowndep');
             $this->createPhoneCustomFieldByModule               ('MeetingsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('MeetingsModule', 'radio');
             $this->createTextCustomFieldByModule                ('MeetingsModule', 'text');
@@ -246,9 +221,9 @@
                                             'picklist'                          => array('value'  => 'a'),
                                             'multiselect'                       => array('values' => array('ff', 'rr')),
                                             'tagcloud'                          => array('values' => array('writing', 'gardening')),
-                                            'countrypicklist'                   => array('value'  => 'bbbb'),
-                                            'statepicklist'                     => array('value'  => 'bbb1'),
-                                            'citypicklist'                      => array('value'  => 'bb1'),
+                                            'countrylist'                       => array('value'  => 'bbbb'),
+                                            'statelist'                         => array('value'  => 'bbb1'),
+                                            'citylist'                          => array('value'  => 'bb1'),
                                             'integer'                           => '12',
                                             'phone'                             => '259-784-2169',
                                             'radio'                             => array('value' => 'd'),
@@ -292,16 +267,16 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc.com');
-            $this->assertEquals($meeting[0]->countrypicklist->value           , 'bbbb');
-            $this->assertEquals($meeting[0]->statepicklist->value             , 'bbb1');
-            $this->assertEquals($meeting[0]->citypicklist->value              , 'bb1');
+            $this->assertEquals($meeting[0]->countrylist->value               , 'bbbb');
+            $this->assertEquals($meeting[0]->statelist->value                 , 'bbb1');
+            $this->assertEquals($meeting[0]->citylist->value                  , 'bb1');
             $this->assertContains('ff'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('rr'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('writing'                                   , $meeting[0]->tagcloud->values);
             $this->assertContains('gardening'                                 , $meeting[0]->tagcloud->values);
 
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+                                   getByNameAndModelClassName('calcnumber', 'Meeting');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
             $this->assertEquals(111                                           , $testCalculatedValue);
         }
@@ -355,9 +330,9 @@
                                 'picklist'                          => array('value'  => 'b'),
                                 'multiselect'                       => array('values' =>  array('gg', 'hh')),
                                 'tagcloud'                          => array('values' =>  array()),
-                                'countrypicklist'                   => array('value'  => 'aaaa'),
-                                'statepicklist'                     => array('value'  => 'aaa1'),
-                                'citypicklist'                      => array('value'  => 'ab1'),
+                                'countrylist'                       => array('value'  => 'aaaa'),
+                                'statelist'                         => array('value'  => 'aaa1'),
+                                'citylist'                          => array('value'  => 'ab1'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -402,14 +377,14 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
-            $this->assertEquals($meeting[0]->countrypicklist->value           , 'aaaa');
-            $this->assertEquals($meeting[0]->statepicklist->value             , 'aaa1');
-            $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
+            $this->assertEquals($meeting[0]->countrylist->value               , 'aaaa');
+            $this->assertEquals($meeting[0]->statelist->value                 , 'aaa1');
+            $this->assertEquals($meeting[0]->citylist->value                  , 'ab1');
             $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
             $this->assertEquals(0                                             , $meeting[0]->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+                                   getByNameAndModelClassName('calcnumber', 'Meeting');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
             $this->assertEquals(1                                             , $testCalculatedValue);
         }
@@ -462,9 +437,9 @@
                                 'picklist'                          => array('value'  => 'b'),
                                 'multiselect'                       => array('values' =>  array('gg', 'hh')),
                                 'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
-                                'countrypicklist'                   => array('value'  => 'aaaa'),
-                                'statepicklist'                     => array('value'  => 'aaa1'),
-                                'citypicklist'                      => array('value'  => 'ab1'),
+                                'countrylist'                       => array('value'  => 'aaaa'),
+                                'statelist'                         => array('value'  => 'aaa1'),
+                                'citylist'                          => array('value'  => 'ab1'),
                                 'integer'                           => '11',
                                 'phone'                             => '259-784-2069',
                                 'radio'                             => array('value' => 'e'),
@@ -509,15 +484,15 @@
             $this->assertEquals($meeting[0]->text                             , 'This is a test Edit Text');
             $this->assertEquals($meeting[0]->textarea                         , 'This is a test Edit TextArea');
             $this->assertEquals($meeting[0]->url                              , 'http://wwww.abc-edit.com');
-            $this->assertEquals($meeting[0]->countrypicklist->value           , 'aaaa');
-            $this->assertEquals($meeting[0]->statepicklist->value             , 'aaa1');
-            $this->assertEquals($meeting[0]->citypicklist->value              , 'ab1');
+            $this->assertEquals($meeting[0]->countrylist->value               , 'aaaa');
+            $this->assertEquals($meeting[0]->statelist->value                 , 'aaa1');
+            $this->assertEquals($meeting[0]->citylist->value                  , 'ab1');
             $this->assertContains('gg'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('hh'                                        , $meeting[0]->multiselect->values);
             $this->assertContains('reading'                                   , $meeting[0]->tagcloud->values);
             $this->assertContains('surfing'                                   , $meeting[0]->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Meeting');
+                                   getByNameAndModelClassName('calcnumber', 'Meeting');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $meeting[0]);
             $this->assertEquals(1                                             , $testCalculatedValue);
         }

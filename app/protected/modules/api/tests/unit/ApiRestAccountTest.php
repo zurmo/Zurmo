@@ -58,7 +58,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($account);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $account->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $account->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals($compareData, $response['data']);
@@ -80,11 +80,11 @@
             $accounts = Account::getByName('First Account');
             $this->assertEquals(1, count($accounts));
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('The ID specified was invalid.', $response['message']);
@@ -161,7 +161,7 @@
             $data['billingAddress']      = $billingAddress;
             $data['shippingAddress']     = $shippingAddress;
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/create/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
@@ -227,7 +227,7 @@
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
             $data['name']                = "My Company 2";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
 
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
@@ -240,7 +240,7 @@
             ksort($response['data']);
             $this->assertEquals($compareData, $response['data']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $compareData['id'], 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $compareData['id'], 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             unset($response['data']['modifiedDateTime']);
@@ -270,7 +270,7 @@
             $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($accounts[0]);
             $compareData  = $redBeanModelToApiDataUtil->getData();
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/' , 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/' , 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['items']));
@@ -305,17 +305,17 @@
             $data['name']                = "My Company 3";
 
             // Check first if user doesn't have rights.
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights to perform this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have rights to perform this action.', $response['message']);
@@ -327,17 +327,17 @@
             $saved = $notAllowedUser->save();
             $this->assertTrue($saved);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
@@ -355,7 +355,7 @@
             $data['explicitReadWriteModelPermissions'] = array(
                 'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
@@ -366,18 +366,18 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
             unset($data);
             $data['name']                = "My Company 3";
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $accounts[0]->id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals('My Company 3', $response['data']['name']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('You do not have permissions for this action.', $response['message']);
@@ -392,11 +392,11 @@
             );
 
             //Test Delete
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/delete/' . $accounts[0]->id, 'DELETE', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/' . $accounts[0]->id, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/' . $accounts[0]->id, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
         }
@@ -432,7 +432,7 @@
                 'sort' => 'name',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['items']));
@@ -445,7 +445,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['items']));
@@ -458,7 +458,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['name'] = 'First Account';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(1, count($response['data']['items']));
@@ -470,7 +470,7 @@
             $searchParams['pagination']['page'] = 1;
             $searchParams['search']['name'] = 'First Account 2';
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(0, $response['data']['totalCount']);
@@ -488,7 +488,7 @@
                 'sort' => 'name.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(3, count($response['data']['items']));
@@ -501,7 +501,7 @@
             // Second page
             $searchParams['pagination']['page'] = 2;
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, count($response['data']['items']));
@@ -524,7 +524,7 @@
                 'sort' => 'name.desc',
             );
             $searchParamsQuery = http_build_query($searchParams);
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
             $this->assertEquals(2, $response['data']['totalCount']);
@@ -532,6 +532,231 @@
             $this->assertEquals(1, $response['data']['currentPage']);
             $this->assertEquals('Forth Account', $response['data']['items'][0]['name']);
             $this->assertEquals('Fifth Account', $response['data']['items'][1]['name']);
+        }
+
+        /**
+        * @depends testSearchAccounts
+        */
+        public function testAdvancedSearchAccounts()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel        = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $data = array(
+                'dynamicSearch' => array(
+                    'dynamicClauses' => array(
+                        array(
+                            'attributeIndexOrDerivedType' => 'owner',
+                            'structurePosition' => 1,
+                            'owner' => array(
+                                'id' => Yii::app()->user->userModel->id,
+                            ),
+                        ),
+                        array(
+                            'attributeIndexOrDerivedType' => 'name',
+                            'structurePosition' => 2,
+                            'name' => 'Fi',
+                        ),
+                        array(
+                            'attributeIndexOrDerivedType' => 'name',
+                            'structurePosition' => 3,
+                            'name' => 'Se',
+                        ),
+                    ),
+                    'dynamicStructure' => '1 AND (2 OR 3)',
+                ),
+                'pagination' => array(
+                    'page'     => 1,
+                    'pageSize' => 2,
+                ),
+                'sort' => 'name.asc',
+           );
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/', 'POST', $headers, array('data' => $data));
+
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(2, count($response['data']['items']));
+            $this->assertEquals(3, $response['data']['totalCount']);
+            $this->assertEquals(1, $response['data']['currentPage']);
+            $this->assertEquals('Fifth Account', $response['data']['items'][0]['name']);
+            $this->assertEquals('First Account', $response['data']['items'][1]['name']);
+
+            // Get second page
+            $data['pagination']['page'] = 2;
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/list/filter/', 'POST', $headers, array('data' => $data));
+
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(1, count($response['data']['items']));
+            $this->assertEquals(3, $response['data']['totalCount']);
+            $this->assertEquals(2, $response['data']['currentPage']);
+            $this->assertEquals('Second Account', $response['data']['items'][0]['name']);
+        }
+
+        /**
+        * @depends testApiServerUrl
+        */
+        public function testCreateWithRelations()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $account2 = AccountTestHelper::createAccountByNameForOwner('Faber', $super);
+            $contact = ContactTestHelper::createContactByNameForOwner('Simon', $super);
+
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $data['name'] = 'Zurmo';
+            $data['modelRelations'] = array(
+                'accounts' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $account2->id
+                    ),
+                ),
+                'contacts' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $contact->id
+                    ),
+                ),
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/create/', 'POST', $headers, array('data' => $data));
+
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+
+            RedBeanModel::forgetAll();
+            $account = Account::getById($response['data']['id']);
+            $this->assertEquals(1, count($account->accounts));
+            $this->assertEquals($account2->id, $account->accounts[0]->id);
+            $this->assertEquals(1, count($account->contacts));
+            $this->assertEquals($contact->id, $account->contacts[0]->id);
+
+            $account2 = Account::getById($account2->id);
+            $this->assertEquals($account->id, $account2->account->id);
+
+            $contact = Contact::getById($contact->id);
+            $this->assertEquals($account->id, $contact->account->id);
+        }
+
+        /**
+        * @depends testCreateWithRelations
+        */
+        public function testUpdateWithRelations()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $account  = AccountTestHelper::createAccountByNameForOwner('Factor X', $super);
+            $account1 = AccountTestHelper::createAccountByNameForOwner('Miko', $super);
+            $account2 = AccountTestHelper::createAccountByNameForOwner('Troter', $super);
+            $contact  = ContactTestHelper::createContactByNameForOwner('Simon', $super);
+
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($account);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+            $account->forget();
+
+            $data['modelRelations'] = array(
+                'accounts' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $account1->id
+                    ),
+                    array(
+                        'action' => 'add',
+                        'modelId' => $account2->id
+                    ),
+                ),
+                'contacts' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $contact->id
+                    ),
+                ),
+            );
+            $data['name'] = 'Zurmo Inc.';
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            unset($response['data']['modifiedDateTime']);
+            unset($compareData['modifiedDateTime']);
+            $compareData['name'] = 'Zurmo Inc.';
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+
+            RedBeanModel::forgetAll();
+            $account = Account::getById($compareData['id']);
+            $this->assertEquals(2, count($account->accounts));
+            $this->assertEquals($account1->id, $account->accounts[0]->id);
+            $this->assertEquals($account2->id, $account->accounts[1]->id);
+            $this->assertEquals(1, count($account->contacts));
+            $this->assertEquals($contact->id, $account->contacts[0]->id);
+
+            $account1 = Account::getById($account1->id);
+            $this->assertEquals($account->id, $account1->account->id);
+            $account2 = Account::getById($account2->id);
+            $this->assertEquals($account->id, $account2->account->id);
+            $contact = Contact::getById($contact->id);
+            $this->assertEquals($account->id, $contact->account->id);
+
+            // Now test remove relations
+            $data['modelRelations'] = array(
+                'accounts' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $account1->id
+                    ),
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $account2->id
+                    ),
+                ),
+                'contacts' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $contact->id
+                    ),
+                ),
+            );
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            RedBeanModel::forgetAll();
+            $updatedModel = Account::getById($compareData['id']);
+            $this->assertEquals(0, count($updatedModel->accounts));
+            $this->assertEquals(0, count($updatedModel->contacts));
+
+            $account1 = Account::getById($account1->id);
+            $this->assertLessThanOrEqual(0, $account1->account->id);
+            $account2 = Account::getById($account2->id);
+            $this->assertLessThanOrEqual(0, $account2->account->id);
+            $contact = Contact::getById($contact->id);
+            $this->assertLessThanOrEqual(0, $contact->account->id);
         }
 
         /**
@@ -555,7 +780,7 @@
             $data['officePhone']         = "6438238";
             $data['officeFax']           = "6565465436";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/create/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
 
@@ -564,7 +789,7 @@
             $id = $accounts[0]->id;
             $data = array();
             $data['name']                = '';
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -591,7 +816,7 @@
             $data['name']         = "AAA";
             $data['employees']           = "SS";
 
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/create/', 'POST', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -601,7 +826,7 @@
             $id = $accounts[0]->id;
             $data = array();
             $data['employees']                = 'DD';
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/update/' . $id, 'PUT', $headers, array('data' => $data));
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals(1, count($response['errors']));
@@ -619,7 +844,7 @@
                 'ZURMO_TOKEN: ' . $authenticationData['token'],
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
-            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/api/read/1', 'GET', $headers);
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/accounts/account/api/read/1', 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
             $this->assertEquals('Sign in required.', $response['message']);

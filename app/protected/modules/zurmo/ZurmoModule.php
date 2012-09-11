@@ -128,6 +128,7 @@
                     'opportunities',
                     'conversations'
                 ),
+                'test' => 'aaa',
             );
             return $metadata;
         }

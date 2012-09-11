@@ -180,6 +180,7 @@
          */
         private static function changeEmptyArrayValuesToNull(& $searchArray)
         {
+            $keysToUnset = array();
             foreach ($searchArray as $key => $value)
             {
                 if (is_array($value) && isset($value['values']) && is_array($value['values']))
@@ -192,6 +193,10 @@
                             $searchArray[$key]['values'] = array_values($searchArray[$key]['values']);
                         }
                     }
+                    if (count($searchArray[$key]) == 1 && count($searchArray[$key]['values']) == 0)
+                    {
+                        $keysToUnset[] = $key;
+                    }
                 }
                 if (is_array($value) && isset($value['value']) && is_array($value['value']))
                 {
@@ -203,11 +208,19 @@
                             $searchArray[$key]['value'] = array_values($searchArray[$key]['value']);
                         }
                     }
+                    if (count($searchArray[$key]) == 1 && count($searchArray[$key]['value']) == 0)
+                    {
+                        $keysToUnset[] = $key;
+                    }
                 }
                 elseif (is_array($value))
                 {
                     self::changeEmptyArrayValuesToNull($searchArray[$key]);
                 }
+            }
+            foreach ($keysToUnset as $key)
+            {
+                unset($searchArray[$key]);
             }
         }
 

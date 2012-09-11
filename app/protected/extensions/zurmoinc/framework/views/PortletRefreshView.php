@@ -54,6 +54,7 @@
             'content'   => $this->portlet->renderContent(),
             'editable'  => $this->portlet->isEditable(),
             'collapsed' => $this->portlet->collapsed,
+            'removable' => $this->arePortletsRemovable(),
             );
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("JuiPortlet");
@@ -65,6 +66,11 @@
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['JuiPortlet'];
+        }
+
+        protected function arePortletsRemovable()
+        {
+            return true;
         }
     }
 ?>

@@ -115,6 +115,10 @@
             => 'Estado',
         'Any Street'
             => 'Calle',
+        'Application is in maintenance mode, and only Super Administrators can access it.'
+            => '??',
+        'Application is in maintenance mode. Please try again later.'
+            => '??',
         'Application Name'
             => 'Nombre de systema',
         'are required.'
@@ -173,6 +177,12 @@
             => 'Convertir',
         'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
             => 'Copyright &#169; Zurmo Inc. de 2012. Todos los derechos reservados.',
+        'Could not remove relation.'
+            => '??',
+        'Could not save relation.'
+            => '??',
+        'Could not use this API call for HAS_ONE relationships.'
+            => '??',
         'Country'
             => 'Pais',
         'Create Group'
@@ -271,6 +281,8 @@
             => 'Configuración global',
         'Global configuration saved successfully.'
             => 'Configuración global guardado con éxito.',
+        'Global search'
+            => '??',
         'Go to Search'
             => 'Ir a la búsqueda',
         'Got questions{spaceAndFirstName}? Find answers in the Zurmo Wiki.'
@@ -391,6 +403,8 @@
             => ' El modelo no fue creado.',
         'Model was not updated.'
             => 'El modelo no ha sido actualizado.',
+        'Model was updated, but there were issues with relations.'
+            => '??',
         'Modify Structure'
             => 'Cambiar la estructura',
         'Module Name - Plural'
@@ -615,6 +629,8 @@
             => 'La burbuja de diálogo Notificaciones le mantiene actualizado sobre los eventos importantes.',
         'The record you are trying to access does not exist.'
             => 'El registro que está intentando acceder no existe.',
+        'The related model ID specified was invalid.'
+            => '??',
         'The status specified is invalid.'
             => 'El estatus especificado no es válido.',
         'There are no recently viewed items.'
@@ -639,6 +655,8 @@
             => 'Feria comercial',
         'Type a currency code or name to search.'
             => 'Escriba un código de divisa o nombre para buscar',
+        'Unsupported action.'
+            => '??',
         'Update'
             => 'Actualizar',
         'Update Custom Data'
@@ -673,6 +691,8 @@
             => 'Boca en boca',
         'Write'
             => 'Escribir',
+        'You can add relations only for HAS_MANY and MANY_MANY relations.'
+            => '??',
         'You have tried to access a page you do not have access to.'
             => 'Ha intentado acceder a una página que no tiene acceso.',
         'You must have at least one active currency.'

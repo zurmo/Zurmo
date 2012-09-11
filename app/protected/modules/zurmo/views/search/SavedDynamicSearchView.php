@@ -49,17 +49,19 @@
         protected function renderSavedSearchList()
         {
             $savedSearches = SavedSearch::getByOwnerAndViewClassName(Yii::app()->user->userModel, get_class($this));
-            if (count($savedSearches) > 0)
+            $idOrName      = static::getSavedSearchListDropDown();
+            $htmlOptions   = array('id' => $idOrName, 'empty' => Yii::t('Default', 'Load a saved search'));
+            if (count($savedSearches) == 0)
             {
-                $idOrName      = static::getSavedSearchListDropDown();
-                $htmlOptions   = array('id' => $idOrName, 'empty' => Yii::t('Default', 'Load a saved search'));
-                $content       = CHtml::dropDownList($idOrName,
-                                                     $this->model->savedSearchId,
-                                                     self::resolveSavedSearchesToIdAndLabels($savedSearches),
-                                                     $htmlOptions);
-                $this->renderSavedSearchDropDownOnChangeScript($idOrName, $this->model->loadSavedSearchUrl);
-                return $content;
+                $htmlOptions['style'] = "display:none;";
+                $htmlOptions['class'] = 'ignore-style';
             }
+            $content       = CHtml::dropDownList($idOrName,
+                                                 $this->model->savedSearchId,
+                                                 self::resolveSavedSearchesToIdAndLabels($savedSearches),
+                                                 $htmlOptions);
+            $this->renderSavedSearchDropDownOnChangeScript($idOrName, $this->model->loadSavedSearchUrl);
+            return $content;
         }
 
         protected static function getSavedSearchListDropDown()
@@ -125,7 +127,34 @@
 
         protected function renderConfigSaveAjax($formName)
         {
-            return     "$('#" . $formName . "').find('.attachLoadingTarget').removeClass('loading');
+            return     "var inputId = '" . static::getSavedSearchListDropDown() . "';
+                        if (data.id != undefined)
+                        {
+                            var existingSearchFound = false;
+                            $('#' + inputId + ' > option').each(function()
+                            {
+                               if (this.value == data.id)
+                               {
+                                   $('#' + inputId + ' option[value=\'' + this.value + '\']').text(data.name);
+                                   existingSearchFound = true;
+                                    //Reseting DropKick Information
+                                    resetDropKickDropDowns($('#' + inputId));
+                               }
+                            });
+                            if (!existingSearchFound)
+                            {
+                                $('#' + inputId).removeClass('ignore-style');
+                                $('#' + inputId)
+                                    .append($('<option></option>')
+                                    .attr('value', data.id)
+                                    .text(data.name))
+                                //$('#' + inputId).val(data.id); Do not select new saved search since it is not sticky at this point.
+                                $('#" . get_class($this->model) . "_savedSearchId').val(data.id);
+                                //Reseting DropKick Information
+                                resetDropKickDropDowns($('#' + inputId));
+                            }
+                        }
+                        $('#" . $formName . "').find('.attachLoadingTarget').removeClass('loading');
                         $('#" . $formName . "').find('.attachLoadingTarget').removeClass('loading-ajax-submit');
                         $('#" . $formName . "').find('.attachLoadingTarget').removeClass('attachLoadingTarget');" .
                        parent::renderConfigSaveAjax($formName);

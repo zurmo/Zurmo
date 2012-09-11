@@ -82,6 +82,11 @@
     // Check it in as true!
     $minifyScripts = false;
 
+    // Turn this off if you are not fixing validation error.
+    // W3C online validator is used, so pages render slow when validator is turned on.
+    // Works only in debug mode (when $debugOn = true).
+    $xhtmlValidation = false;
+
     // Set information related to function tests
     // 1. $seleniumServerPath is path to selenium server(selenium jar file)
     // 2. $testBaseUrl is url of website to be tested via selenium server. It can be local or remote
@@ -116,6 +121,7 @@
     define('MEMCACHE_ON',            $memcacheLevelCaching);
     define('DB_CACHING_ON',          $dbLevelCaching);
     define('MINIFY_SCRIPTS',         $minifyScripts);
+    define('XHTML_VALIDATION',       $xhtmlValidation);
 
     assert_options(ASSERT_ACTIVE,   $debugOn); // Don't even think about disabling asserts!
     assert_options(ASSERT_WARNING,  $debugOn);

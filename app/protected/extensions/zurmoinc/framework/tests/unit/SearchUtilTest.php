@@ -166,13 +166,12 @@
         public function testGetSearchAttributesFromSearchArrayChangeEmptyArrayValuesToNull()
         {
             $searchArray = array('testMultiSelectDropDown' => array('values' => array(0 => '')));
-            $resultArray = array('testMultiSelectDropDown' => array('values' => array()));
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
-            $this->assertEquals($resultArray, $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array('testMultiSelectDropDown' => array('values' => array(0 => null)));
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
-            $this->assertEquals($resultArray, $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array('testMultiSelectDropDown' => array('values' => array(0 => null, 1 => 'xyz')));
             $resultArray = array('testMultiSelectDropDown' => array('values' => array(0 => 'xyz')));
@@ -180,13 +179,12 @@
             $this->assertEquals($resultArray, $newArray);
 
             $searchArray = array('testDropDownAsMultiSelectDropDown' => array('value' => array(0 => '')));
-            $resultArray = array('testDropDownAsMultiSelectDropDown' => array('value' => array()));
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
-            $this->assertEquals($resultArray, $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array('testDropDownAsMultiSelectDropDown' => array('value' => array(0 => null)));
             $newArray = SearchUtil::getSearchAttributesFromSearchArray($searchArray);
-            $this->assertEquals($resultArray, $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array('testDropDownAsMultiSelectDropDown' => array('value' => array(0 => null, 1 => 'xyz')));
             $resultArray = array('testDropDownAsMultiSelectDropDown' => array('value' => array(0 => 'xyz')));
@@ -258,25 +256,25 @@
                 'a' => array('values' => array(0 => '')),
             );
             $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
-            $this->assertEquals(array('a' => array('values' => array())), $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array(
                 'a' => array('value' => array(0 => '')),
             );
             $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
-            $this->assertEquals(array('a' => array('value' => array())), $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array(
                 'a' => array('values' => array(0 => null)),
             );
             $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
-            $this->assertEquals(array('a' => array('values' => array())), $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array(
                 'a' => array('value' => array(0 => null)),
             );
             $newArray = SearchUtil::getSearchAttributesFromSearchArrayForSavingExistingSearchCriteria($searchArray);
-            $this->assertEquals(array('a' => array('value' => array())), $newArray);
+            $this->assertEquals(array(), $newArray);
 
             $searchArray = array(
                 'a' => array('value' => array(0 => null, 1 => 'xyz')),

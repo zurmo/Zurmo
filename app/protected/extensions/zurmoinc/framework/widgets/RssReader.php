@@ -43,12 +43,14 @@
          */
         public $limit = 5;
 
+        public $linkTarget = '_blank';
+
         public function run()
         {
             $id = $this->getId();
             $javaScript  = "$(document).ready(function () { ";
             $javaScript .= "$('#rssReader$id').rssfeed('{$this->url}', { ";
-            $javaScript .= "limit: {$this->limit}";
+            $javaScript .= "limit: {$this->limit}, linktarget: '{$this->linkTarget}'";
             $javaScript .= "});";
             $javaScript .= "});";
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $javaScript);

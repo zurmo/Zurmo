@@ -199,6 +199,59 @@
         }
 
         /**
+         * Get max length for column name
+         * @return int
+         */
+        public static function getDatabaseMaxColumnNameLength()
+        {
+            $maxColumnNameLength = 12;
+            return $maxColumnNameLength;
+        }
+
+        /**
+         * Get array of database reserved words
+         * @throws NotSupportedException
+         * @return multitype:string
+         */
+        public static function getDatabaseReserverWords()
+        {
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                $reservedWords = array(
+                    'ACCESSIBLE', 'ALTER', 'AS', 'BEFORE', 'BINARY', 'BY', 'CASE', 'CHARACTER', 'COLUMN', 'CONTINUE', 'CROSS',
+                    'CURRENT_TIMESTAMP', 'DATABASE', 'DAY_MICROSECOND', 'DEC', 'DEFAULT', 'DESC', 'DISTINCT', 'DOUBLE', 'EACH',
+                    'ENCLOSED', 'EXIT', 'FETCH', 'FLOAT8', 'FOREIGN', 'GRANT', 'HIGH_PRIORITY', 'HOUR_SECOND', 'IN', 'INNER',
+                    'INSERT', 'INT2', 'INT8', 'INTO', 'JOIN', 'KILL', 'LEFT', 'LINEAR', 'LOCALTIME', 'LONG', 'LOOP', 'MATCH',
+                    'MEDIUMTEXT', 'MINUTE_SECOND', 'NATURAL', 'NULL', 'OPTIMIZE', 'OR', 'OUTER', 'PRIMARY', 'RANGE', 'READ_WRITE', // Not Coding Standard
+                    'REGEXP', 'REPEAT', 'RESTRICT', 'RIGHT', 'SCHEMAS', 'SENSITIVE', 'SHOW', 'SPECIFIC', 'SQLSTATE',
+                    'SQL_CALC_FOUND_ROWS', 'STARTING', 'TERMINATED', 'TINYINT', 'TRAILING', 'UNDO', 'UNLOCK', 'USAGE',
+                    'UTC_DATE', 'VALUES', 'VARCHARACTER', 'WHERE', 'WRITE', 'ZEROFILL', 'ALL', 'AND', 'ASENSITIVE', 'BIGINT',
+                    'BOTH', 'CASCADE', 'CHAR', 'COLLATE', 'CONSTRAINT', 'CREATE', 'CURRENT_TIME', 'CURSOR', 'DAY_HOUR',
+                    'DAY_SECOND', 'DECLARE', 'DELETE', 'DETERMINISTIC', 'DIV', 'DUAL', 'ELSEIF', 'EXISTS', 'FALSE', 'FLOAT4', // Not Coding Standard
+                    'FORCE', 'FULLTEXT', 'HAVING', 'HOUR_MINUTE', 'IGNORE', 'INFILE', 'INSENSITIVE', 'INT1', 'INT4', 'INTERVAL',
+                    'ITERATE', 'KEYS', 'LEAVE', 'LIMIT', 'LOAD', 'LOCK', 'LONGTEXT', 'MASTER_SSL_VERIFY_SERVER_CERT', 'MEDIUMINT',
+                    'MINUTE_MICROSECOND', 'MODIFIES', 'NO_WRITE_TO_BINLOG', 'ON', 'OPTIONALLY', 'OUT', 'PRECISION', 'PURGE',
+                    'READS', 'REFERENCES', 'RENAME', 'REQUIRE', 'REVOKE', 'SCHEMA', 'SELECT', 'SET', 'SPATIAL', 'SQLEXCEPTION',
+                    'SQL_BIG_RESULT', 'SSL', 'TABLE', 'TINYBLOB', 'TO', 'TRUE', 'UNIQUE', 'UPDATE', 'USING', 'UTC_TIMESTAMP', // Not Coding Standard
+                    'VARCHAR', 'WHEN', 'WITH', 'YEAR_MONTH', 'ADD', 'ANALYZE', 'ASC', 'BETWEEN', 'BLOB', 'CALL', 'CHANGE', 'CHECK',
+                    'CONDITION', 'CONVERT', 'CURRENT_DATE', 'CURRENT_USER', 'DATABASES', 'DAY_MINUTE', 'DECIMAL', 'DELAYED',
+                    'DESCRIBE', 'DISTINCTROW', 'DROP', 'ELSE', 'ESCAPED', 'EXPLAIN', 'FLOAT', 'FOR', 'FROM', 'GROUP',
+                    'HOUR_MICROSECOND', 'IF', 'INDEX', 'INOUT', 'INT', 'INT3', 'INTEGER', 'IS', 'KEY', 'LEADING', 'LIKE', 'LINES',
+                    'LOCALTIMESTAMP', 'LONGBLOB', 'LOW_PRIORITY', 'MEDIUMBLOB', 'MIDDLEINT', 'MOD', 'NOT', 'NUMERIC', 'OPTION',
+                    'ORDER', 'OUTFILE', 'PROCEDURE', 'READ', 'REAL', 'RELEASE', 'REPLACE', 'RETURN', 'RLIKE', 'SECOND_MICROSECOND',
+                    'SEPARATOR', 'SMALLINT', 'SQL', 'SQLWARNING', 'SQL_SMALL_RESULT', 'STRAIGHT_JOIN', 'THEN', 'TINYTEXT',
+                    'TRIGGER', 'UNION', 'UNSIGNED', 'USE', 'UTC_TIME', 'VARBINARY', 'VARYING', 'WHILE', 'XOR',
+                    'GENERAL', 'IGNORE_SERVER_ID', 'MASTER_HEARTBEAT_PERIOD', 'MAXVALUE', 'RESIGNAL', 'SIGNAL', 'SLOW'
+                );
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            return $reservedWords;
+        }
+
+        /**
          * Given an operator type and value, SQL is constructed. Example
          * return would be '>= 5'.
          * @return string
@@ -904,25 +957,13 @@
             }
         }
 
-        /**
-         * Get database name from connection string
-         * Function allow two connection formats because backward compatibility
-         * 1. "host=localhost;port=3306;dbname=zurmo"
-         * 2. "host=localhost;dbname=zurmo"
-         */
-        public static function getDatabaseNameFromConnectionString()
-        {
-            assert(preg_match("/host=([^;]+);(?:port=([^;]+);)?dbname=([^;]+)/", Yii::app()->db->connectionString, $matches) == 1); // Not Coding Standard
-            return $matches[3];
-        }
-
         public static function getTableRowsCountTotal()
         {
             if (RedBeanDatabase::getDatabaseType() != 'mysql')
             {
                 throw new NotSupportedException();
             }
-            $databaseName = self::getDatabaseNameFromConnectionString();
+            $databaseName = RedBeanDatabase::getDatabaseNameFromDsnString(Yii::app()->db->connectionString);
             $sql       = "show tables";
             $totalCount = 0;
             $rows       = R::getAll($sql);
@@ -946,6 +987,81 @@
             if ($databaseType == 'mysql')
             {
                 return 3306;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        /**
+         * Baackup database schema and stored procedures.
+         * @param string $databaseType
+         * @param string $host
+         * @param string $username
+         * @param string $password
+         * @param string $databaseName
+         * @param string $backupFilePath
+         * @throws NotSupportedException
+         * @return boolean
+         */
+        public static function backupDatabase($databaseType = 'mysql',
+                                            $host,
+                                            $username,
+                                            $password,
+                                            $databaseName,
+                                            $backupFilePath)
+        {
+            assert('is_string($host)         && $host         != ""');
+            assert('is_string($username)     && $username     != ""');
+            assert('is_string($password)');
+            assert('is_string($databaseName) && $databaseName != ""');
+            assert('is_string($backupFilePath) && $backupFilePath != ""');
+
+            if ($databaseType == 'mysql')
+            {
+                $result = exec("mysqldump --host=$host --user=$username --password=$password --routines --add-drop-database $databaseName > $backupFilePath", $output, $returnVal);  // Not Coding Standard
+
+                if ($returnVal !== 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        public static function restoreDatabase($databaseType = 'mysql',
+                                               $host,
+                                               $username,
+                                               $password,
+                                               $databaseName,
+                                               $restoreFilePath)
+        {
+            assert('is_string($host)         && $host         != ""');
+            assert('is_string($username)     && $username     != ""');
+            assert('is_string($password)');
+            assert('is_string($databaseName) && $databaseName != ""');
+            assert('is_string($restoreFilePath) && $restoreFilePath != ""');
+
+            if ($databaseType == 'mysql')
+            {
+                $result = exec("mysql --host=$host --user=$username --password=$password $databaseName < $restoreFilePath", $output, $returnVal); // Not Coding Standard
+                if ($returnVal !== 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+                return $result;
             }
             else
             {

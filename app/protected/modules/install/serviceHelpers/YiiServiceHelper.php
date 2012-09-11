@@ -29,10 +29,11 @@
      */
     class YiiServiceHelper extends ServiceHelper
     {
-        protected $minimumVersion = '1.1.10';
+        protected $minimumVersion;
 
         protected function checkService()
         {
+            $this->minimumVersion = Yii::app()->params['yiiVersion'];
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkYii', Yii::t('Default', 'Yii'));
         }
     }

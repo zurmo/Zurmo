@@ -36,6 +36,9 @@
                 'members' => array(
                     'name',
                 ),
+                'relations' => array(
+                    'modelItems'      => array(RedBeanModel::MANY_MANY, 'ApiTestModelItem'),
+                ),
                 'rules' => array(
                     array('name',  'type',   'type' => 'string'),
                     array('name',  'length', 'max' => 32),

@@ -88,7 +88,11 @@
             {
                 try
                 {
-                    return User::getById($value);
+                    if ((int)$value <= 0)
+                    {
+                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
+                    }
+                    return User::getById((int)$value);
                 }
                 catch (NotFoundException $e)
                 {

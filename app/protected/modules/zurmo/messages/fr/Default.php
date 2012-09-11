@@ -115,6 +115,10 @@
             => 'État/Dépt',
         'Any Street'
             => 'Rue',
+        'Application is in maintenance mode, and only Super Administrators can access it.'
+            => 'L\'application est en mode maintenance, seuls les Super Administrateurs puissent y accéder.',
+        'Application is in maintenance mode. Please try again later.'
+            => 'L\'application n\'est pas en mode maintenance. Veuillez réessayer plus tard.',
         'Application Name'
             => 'Nom du système',
         'are required.'
@@ -173,6 +177,12 @@
             => 'Convertir',
         'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
             => 'Copyright &#169; Zurmo Inc., 2012. Tous droits réservés.',
+        'Could not remove relation.'
+            => 'Impossible de supprimer la relation.',
+        'Could not save relation.'
+            => 'Impossible de sauvegarder la relation.',
+        'Could not use this API call for HAS_ONE relationships.'
+            => 'Impossible d\'utiliser cet appel API pour les relations HAS_ONE.',
         'Country'
             => 'Pays',
         'Create Group'
@@ -260,7 +270,7 @@
         'Financial Services'
             => 'Finance',
         'Find what you need quickly using the global search at the top of the screen.'
-            => 'Cliquez sur l\'icône de configuration dans le coin supérieur droit du portlet pour modifier les graphiques dans le tableau de bord.',
+            => 'Trouvez des informations rapidement en utilisant la recherche globale au coin supérieur gauche de l\'écran.',
         'First Name'
             => 'Prénom',
         'Forums'
@@ -271,6 +281,8 @@
             => 'Configuration globale',
         'Global configuration saved successfully.'
             => 'Configuration globale sauvegardée.',
+        'Global search'
+            => 'Recherche Globale',
         'Go to Search'
             => 'à la Recherche',
         'Got questions{spaceAndFirstName}? Find answers in the Zurmo Wiki.'
@@ -391,6 +403,8 @@
             => 'Le modèle n\'a pas été créé.',
         'Model was not updated.'
             => 'Le modèle n\'a pas été mis à jour.',
+        'Model was updated, but there were issues with relations.'
+            => 'Le modèle a été mis à jour, mais il y avait des problèmes avec les relations.',
         'Modify Structure'
             => 'Modifier la structure',
         'Module Name - Plural'
@@ -615,6 +629,8 @@
             => 'La bulle de notification vous tient au courant d\'événements importants.',
         'The record you are trying to access does not exist.'
             => 'Cette donnée n\'existe pas.',
+        'The related model ID specified was invalid.'
+            => 'L\'ID du modèle associé n\'est pas valide.',
         'The status specified is invalid.'
             => 'La valeur du statut spécifié n\'est pas valide.',
         'There are no recently viewed items.'
@@ -639,6 +655,8 @@
             => 'Salon professionnel',
         'Type a currency code or name to search.'
             => 'Entrez le code ou nom de devise.',
+        'Unsupported action.'
+            => 'Action non supportée.',
         'Update'
             => 'Actualiser',
         'Update Custom Data'
@@ -673,6 +691,8 @@
             => 'Bouche à oreille',
         'Write'
             => 'Écrire',
+        'You can add relations only for HAS_MANY and MANY_MANY relations.'
+            => 'Vous pouvez ajouter seuls les relations de type HAS_MANY et MANY_MANY.',
         'You have tried to access a page you do not have access to.'
             => 'Vous avez tenté d\'accéder à une page dont vous n\'avez pas accès.',
         'You must have at least one active currency.'

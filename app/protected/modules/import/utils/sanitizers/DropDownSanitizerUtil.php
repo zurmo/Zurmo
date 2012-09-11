@@ -81,7 +81,10 @@
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('$mappingRuleData == null');
-            assert('is_array($importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE])');
+            if (!isset($importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE]))
+            {
+                $importInstructionsData["DropDown"][DropDownSanitizerUtil::ADD_MISSING_VALUE] = array();
+            }
             if ($value == null)
             {
                 return $value;

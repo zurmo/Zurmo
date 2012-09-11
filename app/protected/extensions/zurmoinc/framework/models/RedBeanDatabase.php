@@ -147,5 +147,51 @@
                 throw new NotSupportedException();
             }
         }
+
+        /**
+         *
+         * @param string $dsn
+         * @throws NotSupportedException
+         * @return multitype:array
+         */
+        public static function getDatabaseInfoFromDsnString($dsn)
+        {
+            assert(preg_match("/^([^;]+):host=([^;]+);(?:port=([^;]+);)?dbname=([^;]+)/", $dsn, $matches) == 1); // Not Coding Standard
+            if (count($matches) == 5)
+            {
+                if (empty($matches['3']))
+                {
+                    $databaseType = $matches['1'];
+                    $databasePort = DatabaseCompatibilityUtil::getDatabaseDefaultPort($databaseType);
+                }
+                else
+                {
+                    $databasePort = $matches['3'];
+                }
+                $databaseConnactionInfo = array(
+                    'databaseType' => $matches['1'],
+                    'databaseHost' => $matches['2'],
+                    'databasePort' => $databasePort,
+                    'databaseName' => $matches['4']
+                );
+                return $databaseConnactionInfo;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        /**
+         * Get database name from connection string
+         * Function allow two connection formats because backward compatibility
+         * 1. "host=localhost;port=3306;dbname=zurmo"
+         * 2. "host=localhost;dbname=zurmo"
+         */
+        public static function getDatabaseNameFromDsnString($dsn)
+        {
+            assert(preg_match("/host=([^;]+);(?:port=([^;]+);)?dbname=([^;]+)/", $dsn, $matches) == 1); // Not Coding Standard
+            return $matches[3];
+        }
     }
 ?>

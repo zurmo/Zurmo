@@ -65,7 +65,7 @@
 
         public static function getModuleClassName()
         {
-            return 'ZurmoModule';
+            return 'CommentsModule';
         }
 
         public static function canSaveMetadata()

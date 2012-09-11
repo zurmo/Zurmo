@@ -165,7 +165,7 @@
         protected function renderSelectLink()
         {
             $id = $this->getIdForSelectLink();
-            $content = ZurmoHtml::ajaxLink('<span><!--Select--></span>',
+            $content = ZurmoHtml::ajaxLink('<span></span>',
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation(),
                 )),

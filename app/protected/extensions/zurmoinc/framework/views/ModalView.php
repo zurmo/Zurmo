@@ -82,10 +82,10 @@
             {
                 $heightContent = $height;
             }
-            // Begin Not Coding Standard
+            // Begin Not Coding Standard          
             return "js:function(){jQuery('#" . $containerId . "').html('');" .
                                     "makeLargeLoadingSpinner('" . $containerId . "');" .
-                                    "jQuery('#" . $containerId . "').dialog({'title':'" . $title . "','autoOpen':true," .
+                                    "jQuery('#" . $containerId . "').dialog({'title':\"" . $title . "\",'autoOpen':true," .
                                     "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':'" . $position . "'}); return true;}";
             // End Not Coding Standard
         }

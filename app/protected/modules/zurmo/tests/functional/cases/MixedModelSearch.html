@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>MixedModelSearch</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MixedModelSearch</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<!--Test searching for a non existing contact-->
+<tr>
+	<td>focus</td>
+	<td>id=globalSearchInput</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=globalSearchInput</td>
+	<td>My Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>id=globalSearchInput</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>All results</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//a[@class='ui-corner-all']/span[. = &quot;All results&quot;]</td>
+	<td><br /></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='ui-active-menuitem']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>My Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--Test scope filter-->
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=AccountsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=ContactsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=LeadsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=OpportunitiesListView</td>
+	<td></td>
+</tr>
+<!--Insert new lead-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[3]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a.icon-create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Contact_firstName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_firstName</td>
+	<td>My Contact</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=Contact_lastName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_lastName</td>
+	<td>${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_primaryEmail_emailAddress</td>
+	<td>new${randomSuffix}@zurmo.org</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<!--Test searching the lead-->
+<tr>
+	<td>focus</td>
+	<td>id=globalSearchInput</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=globalSearchInput</td>
+	<td>My Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>id=globalSearchInput</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>All results</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//a[@class='ui-corner-all']/span[. = &quot;All results&quot;]</td>
+	<td><br /></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='ui-active-menuitem']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>My Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--Convert lead to contact and search for it in leads-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[contains(text(),'My Contact ${randomSuffix}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='LeadEditAndDetailsView']/div/div/div/ul/li/ul/li[4]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#account-create-title &gt; a.account-skip-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#AccountSkip &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@type='button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-globalSearchScope-option-3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>id=globalSearchInput</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=globalSearchInput</td>
+	<td>My Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>id=globalSearchInput</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>All results</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//a[@class='ui-corner-all']/span[. = &quot;All results&quot;]</td>
+	<td><br /></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='ui-active-menuitem']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=AccountsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=ContactsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=LeadsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=OpportunitiesListView</td>
+	<td></td>
+</tr>
+<!--Change scope to show contacts-->
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>My Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=label.ui-corner-all.ui-state-hover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=MixedModelsSearchForm_term</td>
+	<td>new${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>My Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=AccountsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=ContactsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>id=LeadsListView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>id=OpportunitiesListView</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

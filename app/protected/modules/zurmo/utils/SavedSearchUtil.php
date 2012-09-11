@@ -104,9 +104,15 @@
             assert('$stickyData != null && is_array($stickyData)');
             if (isset($stickyData['savedSearchId']) && $stickyData['savedSearchId'] != '')
             {
-                $savedSearch            = SavedSearch::getById((int)$stickyData['savedSearchId']);
-                $model->savedSearchName = $savedSearch->name;
-                $model->savedSearchId   = $savedSearch->id;
+                try
+                {
+                    $savedSearch            = SavedSearch::getById((int)$stickyData['savedSearchId']);
+                    $model->savedSearchName = $savedSearch->name;
+                    $model->savedSearchId   = $savedSearch->id;
+                }
+                catch (NotFoundException $e)
+                {
+                }
             }
             if (isset($stickyData['anyMixedAttributes']))
             {

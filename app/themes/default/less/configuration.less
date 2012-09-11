@@ -152,6 +152,25 @@ table.configuration-list{
     }
 }
 
+#DevelopmentMenuView{
+    .configuration-list{
+        li a{
+            &:before{
+                content: "";
+                margin-right:0px;
+            }
+            &:after{
+                content: "7";
+                .symbly(18px);
+                margin-left:5px;
+                position:relative;
+                top:2px;
+                font-weight: normal !important;
+            }
+        }
+    }
+}
+
 /*Groups*/
 .ActionBarForSecurityTreeListView,
 #ActionBarForGroupsEditAndDetailsView{
@@ -530,6 +549,9 @@ table.configuration-list{
 }
 
 .has-lang-label{
+    position: relative;
+    margin-bottom: 15px;
+    clear: left;
     input{
         position: relative;
         padding-left:80px;
@@ -537,14 +559,17 @@ table.configuration-list{
     input + span{
         background:url(../images/lang-label.png) left top no-repeat;
         display:inline-block;
-        position: relative;
+        position: absolute;
         left:1px;
         line-height:24px;
-        top:-25px;
+        top:1px;
         width:80px;
         text-align:center;
         border-right:1px solid #cccccc;
         .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+    }
+    .errorMessage{
+        margin-bottom: 15px;
     }
 }
 

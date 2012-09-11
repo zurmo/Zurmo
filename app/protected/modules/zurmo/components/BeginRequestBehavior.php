@@ -235,31 +235,61 @@
 
         public function handleBeginRequest($event)
         {
+            // Create list of allowed urls.
+            // Those urls should be accessed during upgrade process too.
+            foreach ($this->allowedGuestUserRoutes as $allowedGuestUserRoute)
+            {
+                $allowedGuestUserUrls[] = Yii::app()->createUrl($allowedGuestUserRoute);
+            }
+            $reqestedUrl = Yii::app()->getRequest()->getUrl();
+            $isUrlAllowedToGuests = false;
+            foreach ($allowedGuestUserUrls as $url)
+            {
+                if (strpos($reqestedUrl, $url) === 0)
+                {
+                    $isUrlAllowedToGuests = true;
+                }
+            }
+
             if (Yii::app()->user->isGuest)
             {
-                foreach ($this->allowedGuestUserRoutes as $allowedGuestUserRoute)
-                {
-                    $allowedGuestUserUrls[] = Yii::app()->createUrl($allowedGuestUserRoute);
-                }
-
-                $reqestedUrl = Yii::app()->getRequest()->getUrl();
-                $isUrlAllowedToGuests = false;
-                foreach ($allowedGuestUserUrls as $url)
-                {
-                    if (strpos($reqestedUrl, $url) === 0)
-                    {
-                        $isUrlAllowedToGuests = true;
-                    }
-                }
                 if (!$isUrlAllowedToGuests)
                 {
                     Yii::app()->user->loginRequired();
+                }
+            }
+            else
+            {
+                if (Yii::app()->isApplicationInMaintenanceMode())
+                {
+                    if (!$isUrlAllowedToGuests)
+                    {
+                        // Allow access only to users that belongs to Super Administrators.
+                        $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+                        if (!$group->users->contains(Yii::app()->user->userModel))
+                        {
+                            echo Yii::t('Default', 'Application is in maintenance mode. Please try again later.');
+                            exit;
+                        }
+                        else
+                        {
+                            // Super Administrators can access all pages, but inform them that application is in maintenance mode.
+                            Yii::app()->user->setFlash('notification', Yii::t('Default', 'Application is in maintenance mode, and only Super Administrators can access it.'));
+                        }
+                    }
                 }
             }
         }
 
         public function handleBeginApiRequest($event)
         {
+            if (Yii::app()->isApplicationInMaintenanceMode())
+            {
+                $message = Yii::t('Default', 'Application is in maintenance mode. Please try again later.');
+                $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, null);
+                Yii::app()->apiHelper->sendResponse($result);
+                exit;
+            }
             if (Yii::app()->user->isGuest)
             {
                 $allowedGuestUserUrls = array (

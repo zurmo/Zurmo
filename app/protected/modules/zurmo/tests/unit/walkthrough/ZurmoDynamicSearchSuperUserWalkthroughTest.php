@@ -223,11 +223,11 @@
             $this->assertNotNull($content);
         }
 
-        public function testDynamicSearchAttributeInputCountrypicklist()
+        public function testDynamicSearchAttributeInputCountrylist()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $this->createDependentDropDownCustomFieldByModule('AccountsModule', 'countrypicklist');
-            $content = $this->insertSearchAttributeAndGetContent('countrypicklist');
+            $this->createDependentDropDownCustomFieldByModule('AccountsModule', 'countrylist');
+            $content = $this->insertSearchAttributeAndGetContent('countrylist');
             $this->assertNotNull($content);
         }
 
@@ -250,12 +250,12 @@
         public function testDynamicSearchAttributeInputCalculatednumber()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $this->createCalculatedNumberCustomFieldByModule('AccountsModule', 'calculatednumber');
+            $this->createCalculatedNumberCustomFieldByModule('AccountsModule', 'calcnumber');
             $this->setGetArray(array(   'viewClassName'               => 'AccountsSearchView',
                                         'modelClassName'              => 'Account',
                                         'formModelClassName'          => 'AccountsSearchForm',
                                         'rowNumber'                   => 5,
-                                        'attributeIndexOrDerivedType' => 'calculatednumber'));
+                                        'attributeIndexOrDerivedType' => 'calcnumber'));
             $this->resetPostArray();
             $content = $this->runControllerWithNotSupportedExceptionAndGetContent('zurmo/default/dynamicSearchAttributeInput');
             $this->assertNotNull($content);
@@ -267,12 +267,12 @@
         public function testDynamicSearchAttributeInputDropdowndependency()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $this->createDropDownDependencyCustomFieldByModule('AccountsModule', 'dropdowndependency');
+            $this->createDropDownDependencyCustomFieldByModule('AccountsModule', 'dropdowndep');
             $this->setGetArray(array(   'viewClassName'               => 'AccountsSearchView',
                                         'modelClassName'              => 'Account',
                                         'formModelClassName'          => 'AccountsSearchForm',
                                         'rowNumber'                   => 5,
-                                        'attributeIndexOrDerivedType' => 'dropdowndependency'));
+                                        'attributeIndexOrDerivedType' => 'dropdowndep'));
             $this->resetPostArray();
             $content = $this->runControllerWithNotSupportedExceptionAndGetContent('zurmo/default/dynamicSearchAttributeInput');
             $this->assertNotNull($content);

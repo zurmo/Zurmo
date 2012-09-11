@@ -31,8 +31,7 @@
     class SQLOperatorUtil
     {
         /**
-         * Confirms usage of operator type is valid.  For example
-         * strings, cannot use greater than or less than.
+         * Confirms usage of operator type is valid.
          * @return boolean;
          */
         public static function isValidOperatorTypeByValue($operatorType, $value)

@@ -672,9 +672,6 @@
                 'newPassword' => array(
                     'The password is too short. Minimum length is 5.',
                 ),
-                'username' => array(
-                    'The username is too short. Minimum length is 3.',
-                ),
             );
             $this->assertEquals($errors, $billPasswordForm->getErrors());
             $_FAKEPOST = array(
@@ -769,6 +766,46 @@
             $identity = new UserIdentity('abcdefg', 'abcdefgN4');
             $this->assertFalse($identity->authenticate());
             $this->assertEquals(UserIdentity::ERROR_NO_RIGHT_WEB_LOGIN, $identity->errorCode);
+        }
+
+        /**
+         * @depends testPasswordUserNamePolicyChangesValidationAndLogin
+         */
+        public function testUserNamePolicyValidatesCorrectlyOnDifferentScenarios()
+        {
+            $bill  = User::getByUsername('abcdefg');
+            $bill->setScenario('editUser');
+            $this->assertEquals(3,    $bill->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH));
+            $_FAKEPOST = array(
+                'User' => array(
+                    'username'           => 'ab',
+                )
+            );
+            $bill->setAttributes($_FAKEPOST['User']);
+            $this->assertFalse($bill->save());
+            $errors = array(
+                'username' => array(
+                    'The username is too short. Minimum length is 3.',
+                ),
+            );
+            $this->assertEquals($errors, $bill->getErrors());
+
+            $bill  = User::getByUsername('abcdefg');
+            $bill->setScenario('createUser');
+            $this->assertEquals(3,    $bill->getEffectivePolicy('UsersModule', UsersModule::POLICY_MINIMUM_USERNAME_LENGTH));
+            $_FAKEPOST = array(
+                'User' => array(
+                    'username'           => 'ab',
+                )
+            );
+            $bill->setAttributes($_FAKEPOST['User']);
+            $this->assertFalse($bill->save());
+            $errors = array(
+                'username' => array(
+                    'The username is too short. Minimum length is 3.',
+                ),
+            );
+            $this->assertEquals($errors, $bill->getErrors());
         }
 
         public function testValidatingUserAfterGettingAttributeValuesFromRelatedUsers()

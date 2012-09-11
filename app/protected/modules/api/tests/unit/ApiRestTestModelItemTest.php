@@ -119,6 +119,11 @@
             $testItem3_2->name     = 'Jim';
             $this->assertTrue($testItem3_2->save());
 
+            $testItemRelated = new ApiTestModelItem();
+            $testItemRelated->lastName     = 'AAAA';
+            $testItemRelated->string        = 'some string';
+            $this->assertTrue($testItemRelated->save());
+
             $testItem = new ApiTestModelItem();
 
             $testItem->firstName     = 'Bob5';
@@ -133,10 +138,11 @@
             $testItem->textArea      = 'Some Text Area';
             $testItem->url           = 'http://www.asite.com';
             $testItem->currencyValue = $currencyValue;
-            $testItem->hasOne        = $testItem2;
-            $testItem->hasMany->add($testItem3_1);
-            $testItem->hasMany->add($testItem3_2);
-            $testItem->hasOneAlso    = $testItem4;
+            $testItem->modelItem2    = $testItem2;
+            $testItem->modelItems3->add($testItem3_1);
+            $testItem->modelItems3->add($testItem3_2);
+            $testItem->modelItems4->add($testItem4);
+            $testItem->modelItems->add($testItemRelated);
 
             $customFieldValue = new CustomFieldValue();
             $customFieldValue->value = 'Multi 1';
@@ -154,7 +160,7 @@
             $customFieldValue->value = 'Cloud 3';
             $testItem->tagCloud->values->add($customFieldValue);
 
-            $testItem->save();
+            $this->assertTrue($testItem->save());
             $util  = new RedBeanModelToApiDataUtil($testItem);
             $data  = $util->getData();
             unset($data['createdDateTime']);
@@ -169,6 +175,7 @@
             unset($data['createdByUser']);
             unset($data['modifiedByUser']);
 
+            $this->assertTrue($testItemRelated->delete());
             $testItem->delete();
             $testItem->forget();
             unset($testItem);
@@ -253,7 +260,7 @@
             $response = json_decode($response, true);
             unset($response['data']['modifiedDateTime']);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals($compareData, $response['data']);;
+            $this->assertEquals($compareData, $response['data']);
         }
 
         /**
@@ -287,6 +294,250 @@
         }
 
         /**
+        * @depends testApiServerUrl
+        */
+        public function testCreateWithRelations()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $testItem4 = new ApiTestModelItem4();
+            $testItem4->name     = 'John6';
+            $this->assertTrue($testItem4->save());
+
+            $testItem3_1 = new ApiTestModelItem3();
+            $testItem3_1->name     = 'Kevin6';
+            $this->assertTrue($testItem3_1->save());
+
+            $testItem3_2 = new ApiTestModelItem3();
+            $testItem3_2->name     = 'Jim6';
+            $this->assertTrue($testItem3_2->save());
+
+            $testItemRelated = new ApiTestModelItem();
+            $testItemRelated->lastName     = 'Cohens';
+            $testItemRelated->string        = 'aString';
+            $this->assertTrue($testItemRelated->save());
+
+            $data['firstName'] = "Larry";
+            $data['lastName']  = "Larouse";
+            $data['string']    = "aString";
+            $data['modelRelations'] = array(
+                'modelItems3' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem3_1->id
+                    ),
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem3_2->id
+                    ),
+                ),
+                'modelItems4' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem4->id
+                    ),
+                ),
+                'modelItems' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItemRelated->id
+                    ),
+                ),
+            );
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/create/', 'POST', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+//echo "OK";
+//            exit;
+            RedBeanModel::forgetAll();
+            $updatedModel = ApiTestModelItem::getById($response['data']['id']);
+            $this->assertEquals(2, count($updatedModel->modelItems3));
+            $this->assertEquals($testItem3_1->id, $updatedModel->modelItems3[0]->id);
+            $this->assertEquals($testItem3_2->id, $updatedModel->modelItems3[1]->id);
+
+            $this->assertEquals(1, count($updatedModel->modelItems4));
+            $this->assertEquals($testItem4->id, $updatedModel->modelItems4[0]->id);
+
+            $this->assertEquals(1, count($updatedModel->modelItems));
+            $this->assertEquals($testItemRelated->id, $updatedModel->modelItems[0]->id);
+        }
+
+        /**
+        * @depends testUpdate
+        */
+        public function testUpdateWithRelations()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel        = $super;
+
+            $authenticationData = $this->login();
+            $headers = array(
+                'Accept: application/json',
+                'ZURMO_SESSION_ID: ' . $authenticationData['sessionId'],
+                'ZURMO_TOKEN: ' . $authenticationData['token'],
+                'ZURMO_API_REQUEST_TYPE: REST',
+            );
+
+            $testModel = new ApiTestModelItem();
+            $testModel->firstName = "Ruth";
+            $testModel->lastName  = "Tester";
+            $testModel->string    = "aString";
+            $this->assertTrue($testModel->save());
+
+            $redBeanModelToApiDataUtil  = new RedBeanModelToApiDataUtil($testModel);
+            $compareData  = $redBeanModelToApiDataUtil->getData();
+            $testModel->forget();
+
+            $testItem4 = new ApiTestModelItem4();
+            $testItem4->name     = 'John7';
+            $this->assertTrue($testItem4->save());
+
+            $testItem3_1 = new ApiTestModelItem3();
+            $testItem3_1->name     = 'Kevin7';
+            $this->assertTrue($testItem3_1->save());
+
+            $testItem3_2 = new ApiTestModelItem3();
+            $testItem3_2->name     = 'Jim7';
+            $this->assertTrue($testItem3_2->save());
+
+            $testItemRelated = new ApiTestModelItem();
+            $testItemRelated->lastName     = 'Cohens7';
+            $testItemRelated->string        = 'aString';
+            $this->assertTrue($testItemRelated->save());
+
+            $data['modelRelations'] = array(
+                'modelItems3' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem3_1->id
+                    ),
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem3_2->id
+                    ),
+                ),
+                'modelItems4' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItem4->id
+                    ),
+                ),
+                'modelItems' => array(
+                    array(
+                        'action' => 'add',
+                        'modelId' => $testItemRelated->id
+                    ),
+                ),
+            );
+
+            $data['firstName'] = 'Michael6';
+
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            unset($response['data']['modifiedDateTime']);
+            unset($compareData['modifiedDateTime']);
+            $compareData['firstName'] = 'Michael6';
+
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals($compareData, $response['data']);
+
+            RedBeanModel::forgetAll();
+            $updatedModel = ApiTestModelItem::getById($compareData['id']);
+            $this->assertEquals(2, count($updatedModel->modelItems3));
+            $this->assertEquals($testItem3_1->id, $updatedModel->modelItems3[0]->id);
+            $this->assertEquals($testItem3_2->id, $updatedModel->modelItems3[1]->id);
+
+            $this->assertEquals(1, count($updatedModel->modelItems4));
+            $this->assertEquals($testItem4->id, $updatedModel->modelItems4[0]->id);
+
+            $this->assertEquals(1, count($updatedModel->modelItems));
+            $this->assertEquals($testItemRelated->id, $updatedModel->modelItems[0]->id);
+
+            // Now test remove relations
+            $data['modelRelations'] = array(
+                'modelItems3' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $testItem3_1->id
+                    ),
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $testItem3_2->id
+                    ),
+                ),
+                'modelItems4' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $testItem4->id
+                    ),
+                ),
+                'modelItems' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $testItemRelated->id
+                    ),
+                ),
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            RedBeanModel::forgetAll();
+            $updatedModel = ApiTestModelItem::getById($compareData['id']);
+            $this->assertEquals(0, count($updatedModel->modelItems3));
+            $this->assertEquals(0, count($updatedModel->modelItems4));
+            $this->assertEquals(0, count($updatedModel->modelItems));
+
+            // Test with invalid action
+            $data['modelRelations'] = array(
+                'modelItems' => array(
+                    array(
+                        'action' => 'invalidAction',
+                        'modelId' => $testItemRelated->id
+                    ),
+                ),
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+
+            // Test with invalid relation
+            $data['modelRelations'] = array(
+                'aaad' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => $testItemRelated->id
+                    ),
+                ),
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+
+            // Test with invalid related model id
+            $data['modelRelations'] = array(
+                'modelItems3' => array(
+                    array(
+                        'action' => 'remove',
+                        'modelId' => 345
+                    ),
+                ),
+            );
+            $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/update/' . $compareData['id'], 'PUT', $headers, array('data' => $data));
+            $response = json_decode($response, true);
+            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
+        }
+
+        /**
          * @depends testList
          */
         public function testDelete()
@@ -302,7 +553,7 @@
                 'ZURMO_API_REQUEST_TYPE: REST',
             );
 
-            $testModels = ApiTestModelItem::getByName('Bob6');
+            $testModels = ApiTestModelItem::getByName('Michael6');
             $this->assertEquals(1, count($testModels));
 
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/delete/' . $testModels[0]->id, 'DELETE', $headers);

@@ -74,19 +74,29 @@
             }
             if (YII_DEBUG)
             {
-                $this->validate($content);
-                if (!empty(self::$xhtmlValidationErrors))
+                if (defined('XHTML_VALIDATION') && XHTML_VALIDATION)
                 {
-                    foreach (self::$xhtmlValidationErrors as $error)
+                    $this->validate($content);
+                    if (!empty(self::$xhtmlValidationErrors))
                     {
-                        $content = $this->appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $error);
+                        foreach (self::$xhtmlValidationErrors as $error)
+                        {
+                            $content = $this->appendContentBeforeXHtmlBodyEndAndXHtmlEnd($content, $error);
+                        }
                     }
                 }
                 if (SHOW_PERFORMANCE && Yii::app()->isApplicationInstalled())
                 {
                     $endTime      = microtime(true);
                     $endTotalTime = Yii::app()->performance->endClockAndGet();
-                    $performanceMessage .= '<span>Total page view time including validation: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    if (defined('XHTML_VALIDATION') && XHTML_VALIDATION)
+                    {
+                        $performanceMessage .= '<span>Total page view time including validation: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    }
+                    else
+                    {
+                        $performanceMessage .= '<span>Total page view time: ' . number_format(($endTime - $startTime), 3) . ' seconds.</span><br />';
+                    }
                     $performanceMessage .= '<span>Total page time: ' . number_format(($endTotalTime), 3) . ' seconds.</span><br />';
                 }
             }
@@ -127,33 +137,33 @@
          */
         public static function validate($content)
         {
+            $wrapper = '<span style="background-color: yellow; color: #c00000;"><b>{text}</b></span><br />';
             $valid = false;
-
-            set_error_handler(array('PageView', 'schemeValidationErrorHandler'));
-            $domDocument = new DomDocument();
-            $xHtmlDtd = str_replace('\\', '/', dirname(__FILE__)) . '/../resources/xhtml1-transitional.dtd';
-
-            $document = new DOMDocument();
-            $document->loadXML($content);
-            $rootNode = $document->getElementsByTagName('html')->item(0);
-
-            if ($rootNode !== null && !self::$foundErrors)
+            try
             {
-                $implementation = new DOMImplementation();
-                $documentType         = $implementation->createDocumentType('html', null, $xHtmlDtd);
-                $documentWithLocalDtd = $implementation->createDocument(null, null, $documentType);
-                $documentWithLocalDtd->encoding = "utf-8";
-                $rootNodeWithLocalDtd = $documentWithLocalDtd->importNode($rootNode, true);
-                $documentWithLocalDtd->appendChild($rootNodeWithLocalDtd);
-                $valid = $documentWithLocalDtd->validate() && !self::$foundErrors;
+                $xhtmlValidationErrors = W3CValidatorServiceUtil::validate($content);
+                if (count($xhtmlValidationErrors))
+                {
+                    foreach ($xhtmlValidationErrors as $xhtmlValidationError)
+                    {
+                        self::$xhtmlValidationErrors[] = str_replace('{text}', $xhtmlValidationError, $wrapper);
+                    }
+                }
+                else
+                {
+                    $valid = true;
+                }
+
+                if (!count(self::$xhtmlValidationErrors))
+                {
+                    $valid = true;
+                }
             }
-            else
+            catch (Exception $e)
             {
-                self::$xhtmlValidationErrors[] = '<span style="background-color: yellow; color: #c00000">Loading found errors, skipping validation.</span><br />';
+                self::$xhtmlValidationErrors[] = str_replace('{text}', 'Error accessising W3C validation service.', $wrapper);
+                self::$xhtmlValidationErrors[] = str_replace('{text}', $e->getMessage(), $wrapper);
             }
-
-            restore_error_handler();
-
             return $valid;
         }
 

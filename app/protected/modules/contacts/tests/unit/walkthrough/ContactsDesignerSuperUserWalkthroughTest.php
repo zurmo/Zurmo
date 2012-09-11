@@ -24,31 +24,6 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    /*********************************************************************************
-    * Zurmo is a customer relationship management program developed by
-    * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
-    *
-    * Zurmo is free software; you can redistribute it and/or modify it under
-    * the terms of the GNU General Public License version 3 as published by the
-    * Free Software Foundation with the addition of the following permission added
-    * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
-    * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
-    * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
-    *
-    * Zurmo is distributed in the hope that it will be useful, but WITHOUT
-    * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-    * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-    * details.
-    *
-    * You should have received a copy of the GNU General Public License along with
-    * this program; if not, see http://www.gnu.org/licenses or write to the Free
-    * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    * 02110-1301 USA.
-    *
-    * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-    * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
-    ********************************************************************************/
-
     /**
     * Designer Module Walkthrough of contacts.
     * Walkthrough for the super user of all possible controller actions.
@@ -162,14 +137,14 @@
             $this->createDateTimeCustomFieldByModule            ('ContactsModule', 'datetime');
             $this->createDecimalCustomFieldByModule             ('ContactsModule', 'decimal');
             $this->createDropDownCustomFieldByModule            ('ContactsModule', 'picklist');
-            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'countrypicklist');
-            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'statepicklist');
-            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'citypicklist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'countrylist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'statelist');
+            $this->createDependentDropDownCustomFieldByModule   ('ContactsModule', 'citylist');
             $this->createIntegerCustomFieldByModule             ('ContactsModule', 'integer');
             $this->createMultiSelectDropDownCustomFieldByModule ('ContactsModule', 'multiselect');
             $this->createTagCloudCustomFieldByModule            ('ContactsModule', 'tagcloud');
-            $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calculatednumber');
-            $this->createDropDownDependencyCustomFieldByModule  ('ContactsModule', 'dropdowndependency');
+            $this->createCalculatedNumberCustomFieldByModule    ('ContactsModule', 'calcnumber');
+            $this->createDropDownDependencyCustomFieldByModule  ('ContactsModule', 'dropdowndep');
             $this->createPhoneCustomFieldByModule               ('ContactsModule', 'phone');
             $this->createRadioDropDownCustomFieldByModule       ('ContactsModule', 'radio');
             $this->createTextCustomFieldByModule                ('ContactsModule', 'text');
@@ -449,9 +424,9 @@
                                 'picklist'                          => array('value' => 'a'),
                                 'multiselect'                       => array('values' => array('ff', 'rr')),
                                 'tagcloud'                          => array('values' => array('writing', 'gardening')),
-                                'countrypicklist'                   => array('value'  => 'bbbb'),
-                                'statepicklist'                     => array('value'  => 'bbb1'),
-                                'citypicklist'                      => array('value'  => 'bb1'),
+                                'countrylist'                       => array('value'  => 'bbbb'),
+                                'statelist'                         => array('value'  => 'bbb1'),
+                                'citylist'                          => array('value'  => 'bb1'),
                                 'integer'                           => '12',
                                 'phone'                             => '259-784-2169',
                                 'radio'                             => array('value' => 'd'),
@@ -515,15 +490,15 @@
             $this->assertEquals($contact->text                           , 'This is a test Text');
             $this->assertEquals($contact->textarea                       , 'This is a test TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc.com');
-            $this->assertEquals($contact->countrypicklist->value         , 'bbbb');
-            $this->assertEquals($contact->statepicklist->value           , 'bbb1');
-            $this->assertEquals($contact->citypicklist->value            , 'bb1');
+            $this->assertEquals($contact->countrylist->value             , 'bbbb');
+            $this->assertEquals($contact->statelist->value               , 'bbb1');
+            $this->assertEquals($contact->citylist->value                , 'bb1');
             $this->assertContains('ff'                                   , $contact->multiselect->values);
             $this->assertContains('rr'                                   , $contact->multiselect->values);
             $this->assertContains('writing'                              , $contact->tagcloud->values);
             $this->assertContains('gardening'                            , $contact->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+                                   getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
             $this->assertEquals(135                                      , $testCalculatedValue);
         }
@@ -577,9 +552,9 @@
                                         'picklist'           => array('value'  => 'a'),
                                         'multiselect'        => array('values' => array('ff', 'rr')),
                                         'tagcloud'           => array('values' => array('writing', 'gardening')),
-                                        'countrypicklist'    => array('value'  => 'bbbb'),
-                                        'statepicklist'      => array('value'  => 'bbb1'),
-                                        'citypicklist'       => array('value'  => 'bb1'),
+                                        'countrylist'        => array('value'  => 'bbbb'),
+                                        'statelist'          => array('value'  => 'bbb1'),
+                                        'citylist'           => array('value'  => 'bb1'),
                                         'radio'              => array('value'  => 'd'),
                                         'date__Date'         => array('type'   => 'Today'),
                                         'datetime__DateTime' => array('type'   => 'Today')),
@@ -665,9 +640,9 @@
                             'picklist'                          => array('value'  => 'b'),
                             'multiselect'                       => array('values' =>  array('gg', 'hh')),
                             'tagcloud'                          => array('values' =>  array()),
-                            'countrypicklist'                   => array('value'  => 'aaaa'),
-                            'statepicklist'                     => array('value'  => 'aaa1'),
-                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'countrylist'                       => array('value'  => 'aaaa'),
+                            'statelist'                         => array('value'  => 'aaa1'),
+                            'citylist'                          => array('value'  => 'ab1'),
                             'integer'                           => '11',
                             'phone'                             => '259-784-2069',
                             'radio'                             => array('value' => 'e'),
@@ -729,14 +704,14 @@
             $this->assertEquals($contact->text                           , 'This is a test Edit Text');
             $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
-            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
-            $this->assertEquals($contact->citypicklist->value            , 'ab1');
+            $this->assertEquals($contact->countrylist->value             , 'aaaa');
+            $this->assertEquals($contact->statelist->value               , 'aaa1');
+            $this->assertEquals($contact->citylist->value                , 'ab1');
             $this->assertContains('gg'                                   , $contact->multiselect->values);
             $this->assertContains('hh'                                   , $contact->multiselect->values);
             $this->assertEquals(0                                        , $contact->tagcloud->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+                                   getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
             $this->assertEquals(23                                       , $testCalculatedValue);
         }
@@ -813,9 +788,9 @@
                             'picklist'                          => array('value'  => 'b'),
                             'multiselect'                       => array('values' =>  array('gg', 'hh')),
                             'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
-                            'countrypicklist'                   => array('value'  => 'aaaa'),
-                            'statepicklist'                     => array('value'  => 'aaa1'),
-                            'citypicklist'                      => array('value'  => 'ab1'),
+                            'countrylist'                       => array('value'  => 'aaaa'),
+                            'statelist'                         => array('value'  => 'aaa1'),
+                            'citylist'                          => array('value'  => 'ab1'),
                             'integer'                           => '11',
                             'phone'                             => '259-784-2069',
                             'radio'                             => array('value' => 'e'),
@@ -877,15 +852,15 @@
             $this->assertEquals($contact->text                           , 'This is a test Edit Text');
             $this->assertEquals($contact->textarea                       , 'This is a test Edit TextArea');
             $this->assertEquals($contact->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($contact->countrypicklist->value         , 'aaaa');
-            $this->assertEquals($contact->statepicklist->value           , 'aaa1');
-            $this->assertEquals($contact->citypicklist->value            , 'ab1');
+            $this->assertEquals($contact->countrylist->value             , 'aaaa');
+            $this->assertEquals($contact->statelist->value               , 'aaa1');
+            $this->assertEquals($contact->citylist->value                , 'ab1');
             $this->assertContains('gg'                                   , $contact->multiselect->values);
             $this->assertContains('hh'                                   , $contact->multiselect->values);
             $this->assertContains('reading'                              , $contact->tagcloud->values);
             $this->assertContains('surfing'                              , $contact->tagcloud->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
-                                   getByNameAndModelClassName('calculatednumber', 'Contact');
+                                   getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $contact);
             $this->assertEquals(23                                       , $testCalculatedValue);
         }

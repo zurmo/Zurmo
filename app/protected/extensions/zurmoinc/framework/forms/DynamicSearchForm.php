@@ -52,9 +52,9 @@
         {
             return array_merge(parent::rules(), array(
                                array('dynamicStructure', 'safe'),
-                               array('dynamicStructure',   'validateDynamicStructure', 'on' => 'validateDynamic'),
+                               array('dynamicStructure',   'validateDynamicStructure', 'on' => 'validateDynamic, validateSaveSearch'),
                                array('dynamicClauses',   'safe'),
-                               array('dynamicClauses',   'validateDynamicClauses', 'on' => 'validateDynamic'),
+                               array('dynamicClauses',   'validateDynamicClauses', 'on' => 'validateDynamic, validateSaveSearch'),
             ));
         }
 

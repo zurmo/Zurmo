@@ -28,22 +28,26 @@ $(window).ready(function(){
         }
     });
 
-        $('.headerNav > .parent').live({
+    $('.headerNav').live({
         click: function() {
-            if ($(this).find('ul:visible').length == 0)
+            var attrId = $(this).attr('id');
+            if ($(this).find('ul').css('display') == 'none')
             {
-                if ( $(this).find('ul').length > 0 ){
-                    $(this).find('ul').stop(true, true).delay(0).fadeIn(100);
+                if ($(this).find('ul').length > 0){
+                    $(this).find('ul').show();
+                    $(document).one('click',function (e)
+                    {
+                        var container = $(this).find('ul').find('ul');
+                        if (container.has(e.target).length === 0 && $(e.target).closest('ul.headerNav').attr('id') != attrId)
+                        {
+                            container.hide();
+                        }
+                     });
                 }
             }
             else
             {
-                 $(this).find('ul').stop(true, true).fadeOut(250);
-            }
-        },
-        focusout: function() {
-            if ( $(this).find('ul').length > 0 ){
-                $(this).find('ul').stop(true, true).fadeOut(250);
+                 $(this).find('ul').hide();
             }
         }
     });

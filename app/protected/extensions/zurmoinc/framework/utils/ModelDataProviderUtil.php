@@ -230,11 +230,24 @@
                 //Supporting the use of relatedAttributeName. Alternatively you can use relatedModelData to produce the same results.
                 else
                 {
-                    //Because a relatedAttributeName is in use, one of the joins gets skipped unless we manually process
-                    //it here.
-                    static::processJoinForRelatedModelDataWhenRelatedAttributeNameIsUsed($modelClassName,
-                                                                                         $clauseInformation,
-                                                                                         $joinTablesAdapter);
+                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
+                                                               $modelClassName,
+                                                               $clauseInformation['attributeName'],
+                                                               $clauseInformation['relatedModelData']['attributeName']);
+                    if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
+                    {
+                        static::buildJoinForManyToManyRelatedAttributeAndGetWhereClauseData($modelAttributeToDataProviderAdapter,
+                                                                                            $joinTablesAdapter);
+                    }
+                    else
+                    {
+                        //Because a relatedAttributeName is in use, one of the joins gets skipped unless we manually process
+                        //it here.
+                        static::processJoinForRelatedModelDataWhenRelatedAttributeNameIsUsed($modelClassName,
+                                                                                             $clauseInformation,
+                                                                                             $joinTablesAdapter);
+                    }
+
                     //Two adapters are created, because the first adapter gives us the proper modelClassName
                     //to use when using relatedAttributeName
                     $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(

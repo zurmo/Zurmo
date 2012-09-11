@@ -140,10 +140,63 @@
             $scopeData = GlobalSearchUtil::resolveGlobalSearchScopeFromGetData($_GET);
             $pageSize  = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'autoCompleteListPageSize', get_class($this->getModule()));
-            $autoCompleteResults = ModelAutoCompleteUtil::
-                                   getGlobalSearchResultsByPartialTerm($term, $pageSize, Yii::app()->user->userModel,
-                                                                       $scopeData);
+            $autoCompleteResults = ModelAutoCompleteUtil::getGlobalSearchResultsByPartialTerm(
+                                           $term,
+                                           $pageSize,
+                                           Yii::app()->user->userModel,
+                                           $scopeData
+                                        );
+            $autoCompleteResults = array_merge(
+                    $autoCompleteResults,
+                    array(
+                        array('href'      => Yii::app()->createUrl(
+                                                '/zurmo/default/globallist',
+                                                array('MixedModelsSearchForm' =>
+                                                    array('term'                    => $_GET['term'],
+                                                          'anyMixedAttributesScope' => ArrayUtil::getArrayValue(
+                                                              GetUtil::getData(), 'globalSearchScope')))
+                                                ),
+                              'label'     => 'All results', 'iconClass' => 'autocomplete-icon-AllResults'))
+              );
             echo CJSON::encode($autoCompleteResults);
+        }
+
+        /*
+         * Given a string return all result from the global search in a view
+         */
+        public function actionGlobalList()
+        {
+            if (!isset($_GET['MixedModelsSearchForm']['anyMixedAttributesScope']) ||
+                    in_array('All', $_GET['MixedModelsSearchForm']['anyMixedAttributesScope']))
+            {
+                $scopeData = null;
+            }
+            else
+            {
+                $scopeData = $_GET['MixedModelsSearchForm']['anyMixedAttributesScope'];
+            }
+            $term = $_GET['MixedModelsSearchForm']['term'];
+            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                            'listPageSize', get_class($this->getModule()));
+            $dataCollection = new MixedModelsSearchResultsDataCollection($term, $pageSize,
+                    Yii::app()->user->userModel);
+            if (Yii::app()->request->getIsAjaxRequest() && isset($_GET["ajax"]))
+            {
+                $selectedModule = $_GET["ajax"];
+                $selectedModule = str_replace('list-view-', '', $selectedModule);
+                $view = $dataCollection->getListView($selectedModule);
+            }
+            else
+            {
+                $listView = new MixedModelsSearchAndListView(
+                                $dataCollection->getViews(),
+                                $term,
+                                $scopeData
+                            );
+                $view = new MixedModelsSearchPageView(ZurmoDefaultViewUtil::
+                           makeStandardViewForCurrentUser($this, $listView));
+            }
+            echo $view->render();
         }
 
         /**
@@ -219,7 +272,8 @@
                     $searchForm->setScenario('validateSaveSearch');
                     if ($searchForm->validate())
                     {
-                        $this->processSaveSearch($searchForm, $viewClassName);
+                        $savedSearch = $this->processSaveSearch($searchForm, $viewClassName);
+                        echo CJSON::encode(array('id' => $savedSearch->id, 'name' => $savedSearch->name));
                         Yii::app()->end(0, false);
                     }
                 }
@@ -247,6 +301,7 @@
             {
                 throw new FailedToSaveModelException();
             }
+            return $savedSearch;
         }
 
         public function actionDeleteSavedSearch($id)

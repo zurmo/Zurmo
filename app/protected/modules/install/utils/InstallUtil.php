@@ -260,6 +260,14 @@
         }
 
         /**
+        * @returns true if zip extension is loaded, or false if not loaded.
+        */
+        public static function checkZip()
+        {
+            return extension_loaded("zip");
+        }
+
+        /**
         * @returns true if all $_SERVER variable are loaded correctly, otherwise return false.
         * Required by Yii framework.
         */

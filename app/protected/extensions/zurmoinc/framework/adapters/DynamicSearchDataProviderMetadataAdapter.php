@@ -77,10 +77,22 @@
                     unset($correctlyPositionedClauses[$position]);
                 }
             }
+            //add mapping to alpha code and back again.  This avoids mismatches with over 10 clauses for example.
+            $alphaToNumberMap = array();
+            foreach ($correctlyPositionedClauses as $position => $correctlyPositionedClauseData)
+            {
+                $alphaCode = static::getAlphaCodeByInteger((int)$correctlyPositionedClauseData[$position]);
+                $correctlyPositionedClauses[$position][$position] = $alphaCode;
+                $alphaToNumberMap[] = array($alphaCode => $correctlyPositionedClauseData[$position]);
+            }
             //Replace clauses still used.
             foreach ($correctlyPositionedClauses as $position => $correctlyPositionedClauseData)
             {
                 $structure = strtr(strtolower($structure), $correctlyPositionedClauseData);
+            }
+            foreach ($alphaToNumberMap as $alphaCodeToNumber)
+            {
+                $structure = strtr(strtolower($structure), $alphaCodeToNumber);
             }
             //Now resolve and remove any unused clauses and nearby operators.
             $structure = str_ireplace(' or '  . self::NOT_USED_STRUCTURE_POSITION,           '', $structure);
@@ -96,6 +108,17 @@
                 $metadata['structure'] = '(' . $metadata['structure'] . ') and (' . $structure . ')';
             }
             return $metadata;
+        }
+
+        /**
+         * @returns 6 digit alpha code that can be swapped later for the proper structure.
+         * @param Integer $integer
+         */
+        protected static function getAlphaCodeByInteger($integer)
+        {
+            assert('is_int($integer)');
+            $alphaCode = DynamicSearchDataProviderMetadataAdapter::numberToLetter($integer);
+            return str_pad($alphaCode, 6, "z");
         }
 
         protected function processData($searchAttributes, & $clauseCount, & $correctlyPositionedClauses, & $metadata)
@@ -141,6 +164,21 @@
             {
                 unset($searchAttribute['attributeIndexOrDerivedType']);
             }
+        }
+
+        /**
+         * Public for testing purposes
+         * Takes a number and converts it to a-z,aa-zz,aaa-zzz, etc with uppercase option
+         * @param	int	number to convert
+         * @param	bool	upper case the letter on return?
+         * @return	string	letters from number input
+         */
+        public static function numberToLetter($num, $uppercase = false)
+        {
+            $num -= 1;
+            $letter  =  chr(($num % 26) + 97);
+            $letter .=  (floor($num / 26) > 0) ? str_repeat($letter, floor($num / 26)) : '';
+            return      ($uppercase ? strtoupper($letter) : $letter);
         }
     }
 ?>

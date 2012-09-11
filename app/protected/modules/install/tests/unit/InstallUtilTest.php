@@ -255,6 +255,22 @@
             $this->assertNotNull(InstallUtil::checkPCRE());
         }
 
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckImap()
+        {
+            $this->assertNotNull(InstallUtil::checkImap());
+        }
+
+        /**
+        * Simple test to confirm the check doesnt break.
+        */
+        public function testCheckZip()
+        {
+            $this->assertNotNull(InstallUtil::checkZip());
+        }
+
         public function testCheckServerVariable()
         {
             $error = null;
