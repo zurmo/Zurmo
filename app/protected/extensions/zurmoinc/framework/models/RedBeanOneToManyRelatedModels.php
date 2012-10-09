@@ -74,7 +74,7 @@
             $tableName = RedBeanModel::getTableName($modelClassName);
             if (is_string($sqlOrBean))
             {
-                $this->relatedBeansAndModels = array_values(RedBean_Plugin_Finder::where($tableName, $sqlOrBean));
+                $this->relatedBeansAndModels = array_values($beans = R::find($tableName, $sqlOrBean));
             }
             else
             {
@@ -97,7 +97,7 @@
                         }
                         else
                         {
-                            $relatedIds                  = R::$linkManager->getKeys($this->bean, $tableName);
+                            $relatedIds                  = ZurmoRedBeanLinkManager::getKeys($this->bean, $tableName);
                             $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
                         }
                     }
@@ -140,17 +140,17 @@
                     if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = RedBeanModel::getTableName($this->modelClassName);
-                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $polyIdFieldName);
+                        RedBeanColumnTypeOptimizer::optimize($tableName, $polyIdFieldName, 'id');
                     }
                 }
                 else
                 {
-                    R::$linkManager->link($bean, $this->bean);
+                    ZurmoRedBeanLinkManager::link($bean, $this->bean);
                     if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = RedBeanModel::getTableName($this->modelClassName);
                         $columnName = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';
-                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                        RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
                     }
                 }
                 R::store($bean);
@@ -161,7 +161,7 @@
             {
                 if (!$this->owns)
                 {
-                    R::$linkManager->breakLink($bean, $tableName);
+                    ZurmoRedBeanLinkManager::breakLink($bean, $tableName);
                     R::store($bean);
                 }
                 else

@@ -90,7 +90,7 @@
 
         protected function renderFormLinks()
         {
-            $listButton = CHtml::link(Yii::t('Default', 'Return to List'), Yii::app()->createUrl($this->moduleId));
+            $listButton = ZurmoHtml::link(Yii::t('Default', 'Return to List'), Yii::app()->createUrl($this->moduleId));
             $content = '<div id="' . $this->progressBarId . '-links" style="display:none;">';
             $content .= $listButton;
             $content .= '</div>';

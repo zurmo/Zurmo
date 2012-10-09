@@ -74,6 +74,7 @@
                     $('#" . $this->getRowCounterInputId() . "').val(0);
                     $('#" . $this->getStructureInputId() . "').val('');
                     $('.search-view-1').hide();
+                    $('.select-list-attributes-view').hide();
                     resolveClearLinkPrefixLabelAndVisibility('" . $this->getSearchFormId() . "');
                     rebuildDynamicSearchRowNumbersAndStructureInput('" . $this->getSearchFormId() . "')
             ";
@@ -105,6 +106,7 @@
         protected function renderConfigSaveAjax($formName)
         {
             return     "$('.search-view-1').hide();
+                        $('.select-list-attributes-view').hide();
                         $('#" . $formName . "').find('.attachLoading:first').removeClass('loading');
                         $('#" . $formName . "').find('.attachLoading:first').removeClass('loading-ajax-submit');
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
@@ -221,9 +223,9 @@
             $content              = ZurmoHtml::hiddenField($hiddenInputName, $rowCount, $idInputHtmlOptions);
             // Begin Not Coding Standard
             $addFieldLabelContent = $this->getAddFieldLabelContent();
-            $aContent             = CHtml::tag('span', array('class' => 'z-spinner'), null);
-            $aContent            .= CHtml::tag('span', array('class' => 'z-icon'), null);
-            $aContent            .= CHtml::tag('span', array('class' => 'z-label'), $addFieldLabelContent);
+            $aContent             = ZurmoHtml::tag('span', array('class' => 'z-spinner'), null);
+            $aContent            .= ZurmoHtml::tag('span', array('class' => 'z-icon'), null);
+            $aContent            .= ZurmoHtml::tag('span', array('class' => 'z-label'), $addFieldLabelContent);
             $content             .= ZurmoHtml::ajaxLink($aContent, $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'rowNumber=\' + $(\'#rowCounter-' . $this->getSearchFormId(). '\').val()',
@@ -239,7 +241,7 @@
                                           }'),
                                     array('id' => 'addExtraAdvancedSearchRowButton-' . $this->getSearchFormId(), 'namespace' => 'add'));
             // End Not Coding Standard
-            return CHtml::tag('div', array('class' => 'add-fields-container'), $content);
+            return ZurmoHtml::tag('div', array('class' => 'add-fields-container'), $content);
         }
 
         protected function renderAfterAddExtraRowContent($form)
@@ -302,10 +304,10 @@
             {
                 $style3 = 'display:none;';
             }
-            $content  = CHtml::link(Yii::t('Default', 'Modify Structure'), '#',
+            $content  = ZurmoHtml::link(Yii::t('Default', 'Modify Structure'), '#',
                             array('id'    => 'show-dynamic-search-structure-div-link-' . $this->getSearchFormId() . '',
                                   'style' => $style1));
-            $content .= CHtml::tag('div',
+            $content .= ZurmoHtml::tag('div',
                             array('id'    => 'show-dynamic-search-structure-div-' . $this->getSearchFormId(),
                                   'class' => 'has-lang-label',
                                   'style' => $style2), $this->renderStructureInputContent($form));

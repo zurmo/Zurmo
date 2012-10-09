@@ -64,7 +64,7 @@
                                            'If you do not have this information, then you will need to contact ' .
                                            'them before you can continue. If you\'re all ready...');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Click to start'), $nextPageUrl);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Click to start'), $nextPageUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             return $content;

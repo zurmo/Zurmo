@@ -125,7 +125,7 @@
          * @param mixed $element
          * @param integer $key
          */
-        protected function resolveEvaluateSubString(& $element, $key)
+        public function resolveEvaluateSubString(& $element, $key)
         {
             if (is_array($element))
             {

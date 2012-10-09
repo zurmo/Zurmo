@@ -53,11 +53,12 @@
         {
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'listPageSize', get_class($this->getModule()));
-            $contact  = new Contact(false);
-            $searchForm = new LeadsSearchForm($contact);
-            $dataProvider = $this->makeSearchDataProvider(
+            $contact                        = new Contact(false);
+            $searchForm                     = new LeadsSearchForm($contact);
+            $listAttributesSelector         = new ListAttributesSelector('LeadsListView', get_class($this->getModule()));
+            $searchForm->setListAttributesSelector($listAttributesSelector);
+            $dataProvider = $this->resolveSearchDataProvider(
                 $searchForm,
-                'Contact',
                 $pageSize,
                 'LeadsStateMetadataAdapter',
                 'LeadsSearchView'
@@ -68,6 +69,7 @@
                     $searchForm,
                     $dataProvider
                 );
+                $view = new LeadsPageView($mixedView);
             }
             else
             {
@@ -75,12 +77,11 @@
                     $searchForm,
                     $pageSize,
                     LeadsModule::getModuleLabelByTypeAndLanguage('Plural'),
-                    Yii::app()->user->userModel->id,
                     $dataProvider
                 );
-            }
-            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                $view = new LeadsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $mixedView));
+            }
             echo $view->render();
         }
 
@@ -160,7 +161,6 @@
             $contact = new Contact(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new LeadsSearchForm($contact),
-                'Contact',
                 $pageSize,
                 Yii::app()->user->userModel->id,
                 'LeadsStateMetadataAdapter');
@@ -199,7 +199,6 @@
             $contact = new Contact(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new LeadsSearchForm($contact),
-                'Contact',
                 $pageSize,
                 Yii::app()->user->userModel->id,
                 'LeadsStateMetadataAdapter'
@@ -340,7 +339,7 @@
             return new $editViewClassName($renderType, $this->getId(), $this->getModule()->getId(), $model);
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'LeadsSearchForm';
         }

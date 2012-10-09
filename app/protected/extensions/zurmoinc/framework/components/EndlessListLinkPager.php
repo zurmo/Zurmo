@@ -93,7 +93,7 @@
                                 var settings = $.fn.yiiGridView.settings[id];
                                 $.each(settings.ajaxUpdate, function(i,v) {
                                     var id='#'+v;
-                                    $(id).find('tbody').append($(id, data).find('tbody').html());
+                                    $(id).find('tbody:first').append($(id, data).find('tbody:first').html());
                                     $(id).find('.endless-list-pager').replaceWith($(id, data).find('.endless-list-pager'));
                                 });
                                 var \$data = $(data);
@@ -110,7 +110,7 @@
             // End Not Coding Standard
             $nextPage = $page + 1;
             $htmlOptions = array('id' => $pagerId, 'class' => 'vertical-forward-pager');
-            return '<li class="' . $class . '">' . CHtml::link($label, '#', $htmlOptions) . '</li>';
+            return '<li class="' . $class . '">' . ZurmoHtml::link($label, '#', $htmlOptions) . '</li>';
         }
     }
 ?>

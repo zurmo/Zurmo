@@ -38,6 +38,44 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        /**
+         * Test if we don't receive error related to database rowsize limit
+         */
+        public function testSetManyTextAreaFileds()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            AccountTestHelper::createAccountByNameForOwner('First Account', $super);
+            for ($i = 0; $i<30; $i++)
+            {
+                $attributeForm = new TextAreaAttributeForm();
+                $attributeForm->attributeName = 'testTextArea' . $i;
+                $attributeForm->attributeLabels   = array(
+                    'de' => 'Test Text2 de',
+                    'en' => 'Test Text2 en',
+                    'es' => 'Test Text2 es',
+                    'fr' => 'Test Text2 fr',
+                    'it' => 'Test Text2 it',
+                );
+                $attributeForm->isAudited     = true;
+                $attributeForm->isRequired    = false;
+
+                $modelAttributesAdapterClassName = $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+                $adapter = new $modelAttributesAdapterClassName(new Account());
+                try
+                {
+                    $adapter->setAttributeMetadataFromForm($attributeForm);
+                }
+                catch (FailedDatabaseSchemaChangeException $e)
+                {
+                    echo $e->getMessage();
+                    $this->fail();
+                }
+                $account = new Account();
+                $this->assertTrue ($account->isAttribute('testTextArea'. $i));
+            }
+        }
+
         public function testSetAndGetCheckBoxAttribute()
         {
             $this->setAndGetCheckBoxAttribute('testCheckBox2', true);

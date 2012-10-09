@@ -38,6 +38,9 @@
             $this->assertTrue(strlen($this->serverUrl) > 0);
         }
 
+        /**
+        * @depends testApiServerUrl
+        */
         public function testGetContactState()
         {
             $super = User::getByUsername('super');

@@ -104,13 +104,13 @@
             return $content;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
             if ($this->model->id > 0)
             {
-                return '<h1>' . strval($this->model) . '</h1>';
+                return strval($this->model);
             }
-            return '<h1>' . $this->getNewModelTitleLabel() . '</h1>';
+            return $this->getNewModelTitleLabel();
         }
 
         protected function renderRightSideContent($form = null)

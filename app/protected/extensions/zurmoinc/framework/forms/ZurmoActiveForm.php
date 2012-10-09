@@ -57,7 +57,7 @@
                 }
                 if (!isset($htmlOptions['class']))
                 {
-                    $htmlOptions['class'] = CHtml::$errorSummaryCss;
+                    $htmlOptions['class'] = ZurmoHtml::$errorSummaryCss;
                 }
                 if (isset($htmlOptions['style']))
                 {
@@ -67,7 +67,7 @@
                 {
                     $htmlOptions['style'] = 'display:none';
                 }
-                $html = CHtml::tag('div', $htmlOptions, $header . "\n<ul><li>dummy</li></ul>" . $footer);
+                $html = ZurmoHtml::tag('div', $htmlOptions, $header . "\n<ul><li>dummy</li></ul>" . $footer);
             }
 
             $this->summaryID = $htmlOptions['id'];
@@ -81,9 +81,9 @@
         {
             if (is_array($this->focus))
             {
-                $this->focus="#" . CHtml::activeId($this->focus[0], $this->focus[1]);
+                $this->focus="#" . ZurmoHtml::activeId($this->focus[0], $this->focus[1]);
             }
-            echo CHtml::endForm();
+            echo ZurmoHtml::endForm();
             $cs = Yii::app()->clientScript;
             $cs->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
@@ -106,7 +106,7 @@
             $options = $this->clientOptions;
             if (isset($this->clientOptions['validationUrl']) && is_array($this->clientOptions['validationUrl']))
             {
-                $options['validationUrl'] = CHtml::normalizeUrl($this->clientOptions['validationUrl']);
+                $options['validationUrl'] = ZurmoHtml::normalizeUrl($this->clientOptions['validationUrl']);
             }
 
             $options['attributes'] = array_values($this->attributes);

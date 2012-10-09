@@ -42,7 +42,7 @@
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
 
             $this->assertEquals(3, count($menu));
-            $this->assertEquals(5, count($menu['items']));
+            $this->assertEquals(6, count($menu['items']));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getAccessibleShortcutsCreateMenuByCurrentUser();
             $this->assertEquals(0, count($menu));
@@ -118,7 +118,7 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $menu = MenuUtil::getAccessibleOrderedUserHeaderMenuForCurrentUser();
-            $this->assertEquals(3, count($menu));
+            $this->assertEquals(4, count($menu));
             Yii::app()->user->userModel = User::getByUsername('billy');
             $menu = MenuUtil::getAccessibleOrderedUserHeaderMenuForCurrentUser();
             $this->assertEquals(3, count($menu));
@@ -161,6 +161,11 @@
                             'label' => 'Lead',
                             'url'   => array('/leads/default/create'),
                             'right' => LeadsModule::RIGHT_CREATE_LEADS,
+                        ),
+                        array(
+                            'label' => 'Mission',
+                            'url'   => array('/missions/default/create'),
+                            'right' => MissionsModule::RIGHT_CREATE_MISSIONS,
                         ),
                         array(
                             'label' => 'Opportunity',

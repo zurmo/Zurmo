@@ -32,6 +32,52 @@
             SecurityTestHelper::createSuperAdmin();
         }
 
+        public function testResolveMetadataFromSelectedListAttributes()
+        {
+            $model = new Account();
+            $modelAttributesAdapter = new ModelAttributesAdapter($model);
+            $editableMetadata = AccountsListView::getMetadata();
+            $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
+                $modelAttributesAdapter->getAttributes(),
+                new ListViewDesignerRules(),
+                $editableMetadata
+            );
+            $adapter = new LayoutMetadataAdapter('AccountsListView',
+                'AccountsModule',
+                $editableMetadata,
+                new ListViewDesignerRules(),
+                $attributesLayoutAdapter->getPlaceableLayoutAttributes(),
+                $attributesLayoutAdapter->getRequiredDerivedLayoutAttributeTypes()
+            );
+            $selectedListAttributes = array('name', 'officePhone');
+            $data = $adapter->resolveMetadataFromSelectedListAttributes('AccountsListView', $selectedListAttributes);
+            $compareMetadata = array('panels' =>
+                array(
+                    array(
+                        'rows' => array(
+                            array(
+                                'cells' => array(
+                                    array('elements' => array(
+                                        array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true)
+                                        )
+                                    ),
+                                ),
+                            ),
+                            array(
+                                'cells' => array(
+                                    array('elements' => array(
+                                        array('attributeName' => 'officePhone', 'type' => 'Phone')
+                                        )
+                                    ),
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+            $this->assertEquals($compareMetadata, $data['global']);
+        }
+
         public function testSetMetadataFromLayout()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

@@ -41,7 +41,7 @@
         {
             $checkboxId = 'closeTask' . $modelId;
             // Begin Not Coding Standard
-            $content    = 'CHtml::link("Delete<span class=\'icon\'></span>", "#",
+            $content    = 'ZurmoHtml::link("Delete<span class=\'icon\'></span>", "#",
                                        array("class" => "remove",
                                              "onclick" => "deleteNotificationFromListView(this, \'' . $modelId . '\')"))';
             Yii::app()->clientScript->registerScript('deleteNotificationFromListViewScript', "

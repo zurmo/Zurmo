@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '"{$attributeName}" field name is a database reserved word. Please enter a different one.'
+            => 'Le nom du champ "{$attributeName}" est réservé pour la base de données. Veuillez choisir un autre nom.',
         'A calculated number based on other field values'
             => 'Un chiffre calculé',
         'A check box'
@@ -238,6 +240,5 @@
         'You must have at least one panel in order to save a layout.'
             => 'Vous devez avoir au moins un panneau pour publier la présentation de page.',
         'You must select at least 2 pick-lists.'
-            => 'Vous devez choisir au minimum 2 listes déroulantes.',
-    );
+            => 'Vous devez choisir au minimum 2 listes déroulantes.',    );
 ?>

@@ -48,13 +48,13 @@
         'Click below to go to the login page. The username is <b>super</b>'
             => 'Klicken Sie unten, um zur Login-Seite zu gelangen. Der Benutzername ist <b>super</b>',
         'Click here to access index page, after you disable maintenance mode.'
-            => '??',
+            => 'Hier klicken hier, um die Index-Seite nach deaktivieren Wartungsmodus gehen.',
         'Click Here to continue with next step'
-            => '??',
+            => 'Hier klicken, um fortzufahren',
         'Click Here to install the demo data'
             => 'Klicken Sie hier, um die Demo zu installieren',
         'Click here to start upgrade'
-            => '??',
+            => 'Hier klicken, um das Update zu starten',
         'Click to start'
             => 'Klicken Sie zu starten',
         'Congratulations! The demo data has been successfully loaded.'
@@ -66,7 +66,7 @@
         'Continue'
             => 'Weiter',
         'Copy upgrade file to app/protected/runtime/upgrade folder and start upgrade process.'
-            => '??',
+            => 'Kopiere den Update app/protected/runtime/Upgrade Ordner und das Update starten.',
         'Correctly Installed Services'
             => 'Dienstleistungen installiert mit Erfolg',
         'Could not get value of database default collation.'
@@ -259,7 +259,7 @@
         'Please delete all files from assets folder on server.'
             => 'Bitte löschen Sie alle Dateien im Ordner Assets.',
         'Please set $maintenanceMode = true in perInstance.php config file.'
-            => '??',
+            => 'Bitte definieren $maintenanceMode = true in perInstance.php Konfigurationsdatei.',
         'Rebuilding Permissions.'
             => 'Rekonstruktion von Berechtigungen.',
         'Recheck System'
@@ -295,7 +295,7 @@
         'Starting to load demo data.'
             => 'Erstellen der Demo-Datenbank',
         'Starting upgrade process.'
-            => '??',
+            => 'Upgrade-Prozess beginnen.',
         'The database name specified does not exist or the user specified does not have access.'
             => 'Der Name der Datenbank ist nicht vorhanden, oder der Benutzer angegeben hat keinen Zugriff.',
         'The debug.php config file is not writable.'
@@ -309,7 +309,7 @@
         'The next step is to install the demo data.'
             => 'Der nächste Schritt ist die Demo Daten zu installieren.',
         'The next step is to reload the application and upgrade the schema.'
-            => '??',
+            => 'Der nächste Schritt ist die Anwendung zu laden und das Schema zu Aktualisieren.',
         'The perInstance.php config file is not writable.'
             => 'Die perInstance.php config-Datei ist nicht beschreibbar.',
         'The perInstance.php config file is writable.'
@@ -325,15 +325,15 @@
         'There was a problem creating the user Error code:'
             => 'Es gab ein Problem beim Erstellen des Benutzers Fehlercode:',
         'This is the Zurmo upgrade process. Please backup all files and the database before you continue.'
-            => '??',
+            => 'Dies ist die Zurmo Upgrade-Prozess. Backup aller Dateien und die Datenbank zuerst.',
         'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.'
             => 'Kann URL-Pfad Daten nicht bestimmen. Bitte stellen Sie sicher, $ _SERVER ["PATH_INFO"] (oder $_SERVER["PHP_SELF"] under $_SERVER["SCRIPT_NAME"]) enthält richtigen Wert.',
         'Upgrade in progress. Please wait.'
-            => '??',
+            => 'Upgrade im Gange. Bitte warten.',
         'Upgrade Output:'
-            => '??',
+            => 'Upgrade Ausgang:',
         'Upgrade process is completed. Please edit perInstance.php file, and disable maintenance mode.'
-            => '??',
+            => 'Upgrade-Prozess ist abgeschlossen. Bitte perInstance.php Datei editieren, und den Wartungsmodus deaktivieren.',
         'User who can connect to the database.'
             => 'Benutzer, die mit der Datenbank verbinden kann.',
         'User`s password.'
@@ -371,10 +371,10 @@
         'Your ZurmoCRM software is outdated, new stable release available:'
             => 'Ihre Zumo Version ist veraltet, eine neue stabile Version ist Verfügbar:',
         'Zip extension is loaded.'
-            => '??',
+            => 'Die Zip Erweiterung wird geladen.',
         'Zip extension is not loaded.'
-            => '??',
-        'Zurmo administrative password. The username is `super`.  You can change this later.'
+            => 'Die Zip Erweiterung wird nicht geladen.',
+        'Zurmo administrative password. The username is `super`. You can change this later.'
             => 'Zurmo administrative Passwort. Der Benutzername ist `super`. Sie können dieses später ändern.',
         'Zurmo Installation'
             => 'Zurmo Installation', // Same Word Translated

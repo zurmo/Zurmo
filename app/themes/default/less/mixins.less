@@ -7,19 +7,20 @@
     font-weight:bold;
     text-indent:0;
     display:inline-block;
-    border-top:1px solid #e7e7e7;
-    border-left: 1px solid #d7d7d7;
-    border-right:1px solid #d7d7d7;
-    border-bottom:1px solid #bababa;
+    border-top:1px solid rgba(230, 230, 230, 0.75);
+    border-left: 1px solid rgba(215, 215, 215, 0.75);
+    border-right:1px solid rgba(215, 215, 215, 0.75);
+    border-bottom:1px solid rgba(200, 200, 200, 0.75);
     color:#656565;
     .radius( 4px );
     .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.15));
-    .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+    .t-shadow( 0px 1px 0 rgba(0,0, 0, 0.1) ) !important;
     &:not(.attachLoading){
     	 background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
     }
     &:hover{
         color:@themeColor2 !important;
+        .t-shadow( rgba(255, 255, 255, 0.5) 0px 1px) !important;
     }
     &:active{
         color:#656565;

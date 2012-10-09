@@ -346,7 +346,7 @@
             $sql = static::makeSubsetOrCountSqlQuery($tableName, $joinTablesAdapter, null, null, $where, null, true,
                                                      $selectDistinct);
             $count = R::getCell($sql);
-            if ($count === null)
+            if ($count === null || empty($count))
             {
                 $count = 0;
             }
@@ -373,7 +373,7 @@
                 $modelClassName = get_called_class();
             }
             $tableName = self::getTableName($modelClassName);
-            $beans = RedBean_Plugin_Finder::where($tableName, "id = '$id'");
+            $beans = R::find($tableName, "id = '$id'");
             assert('count($beans) <= 1');
             if (count($beans) == 0)
             {
@@ -444,7 +444,7 @@
                     else
                     {
                         $tableName = self::getTableName($modelClassName);
-                        $lastBean = R::getBean($lastBean, $tableName);
+                        $lastBean = ZurmoRedBeanLinkManager::getBean($lastBean, $tableName);
                         if ($lastBean === null)
                         {
                             throw new MissingBeanException();
@@ -456,6 +456,7 @@
                 }
                 $this->modelClassNameToBean = array_reverse($this->modelClassNameToBean);
             }
+
             $this->constructDerived($bean, $setDefaults);
             if ($forceTreatAsCreation)
             {
@@ -718,6 +719,7 @@
                         }
                     }
                 }
+                // Add model validators. Parent validators are already applied.
                 if (isset($metadata[$modelClassName]['rules']))
                 {
                     foreach ($metadata[$modelClassName]['rules'] as $validatorMetadata)
@@ -739,6 +741,7 @@
                             $validatorName = self::$yiiValidatorsToRedBeanValidators[$validatorName];
                         }
                         $validator = CValidator::createValidator($validatorName, $this, $attributeName, $validatorParameters);
+
                         switch ($validatorName)
                         {
                             case 'RedBeanModelTypeValidator':
@@ -748,7 +751,7 @@
                                 {
                                     unset($hints[$columnName]);
                                 }
-                                if (in_array($validator->type, array('date', 'datetime', 'blob', 'longblob')))
+                                if (in_array($validator->type, array('date', 'datetime', 'blob', 'longblob', 'string')))
                                 {
                                     $hints[$columnName] = $validator->type;
                                 }
@@ -778,6 +781,56 @@
                         }
                         $this->validators[] = $validator;
                     }
+
+                    // Check if we need to update string type to long string type, based on validators.
+                        if (isset($metadata[$modelClassName]['members']))
+                        {
+                            foreach ($metadata[$modelClassName]['members'] as $memberName)
+                            {
+                                $allValidators = $this->getValidators($memberName);
+                                foreach ($allValidators as $validator)
+                                {
+                                    if ((get_class($validator) == 'RedBeanModelTypeValidator' ||
+                                        get_class($validator) == 'TypeValidator') &&
+                                        $validator->type == 'string')
+                                    {
+                                        $columnName = strtolower($validator->attributes[0]);
+                                        if (count($allValidators) > 1)
+                                        {
+                                            $haveCStringValidator = false;
+                                            foreach ($allValidators as $innerValidator)
+                                            {
+                                                if (get_class($innerValidator) == 'CStringValidator' &&
+                                                    isset($innerValidator->max) &&
+                                                    $innerValidator->max > 255)
+                                                {
+                                                    if ($innerValidator->max > 65535)
+                                                    {
+                                                        $hints[$columnName] = 'longtext';
+                                                    }
+                                                    else
+                                                    {
+                                                        $hints[$columnName] = 'text';
+                                                    }
+                                                }
+                                                if (get_class($innerValidator) == 'CStringValidator')
+                                                {
+                                                    $haveCStringValidator = true;
+                                                }
+                                            }
+                                            if (!$haveCStringValidator)
+                                            {
+                                                $hints[$columnName] = 'text';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $hints[$columnName] = 'text';
+                                        }
+                                    }
+                                }
+                            }
+                        }
                 }
                 $bean->setMeta('hint', $hints);
             }
@@ -1151,7 +1204,7 @@
                             case self::HAS_ONE_BELONGS_TO:
                                 $linkName          = strtolower(get_class($this));
                                 $columnName        = $linkName . '_id';
-                                $relatedBeans      = RedBean_Plugin_Finder::where($relatedTableName, $columnName . " = " . $bean->id);
+                                $relatedBeans      = R::find($relatedTableName, $columnName . " = " . $bean->id);
                                 if (count($relatedBeans) > 1)
                                 {
                                     throw new NotFoundException();
@@ -1182,7 +1235,7 @@
                                 }
                                 if ($bean->id > 0 && !in_array($attributeName, $this->unlinkedRelationNames))
                                 {
-                                    $linkFieldName = R::$linkManager->getLinkField($relatedTableName, $linkName);
+                                    $linkFieldName = ZurmoRedBeanLinkManager::getLinkField($relatedTableName, $linkName);
                                     if ((int)$bean->$linkFieldName > 0)
                                     {
                                         $beanIdentifier = $relatedTableName .(int)$bean->$linkFieldName;
@@ -1192,7 +1245,7 @@
                                         }
                                         catch (NotFoundException $e)
                                         {
-                                            $relatedBean = R::getBean($bean, $relatedTableName, $linkName);
+                                            $relatedBean = ZurmoRedBeanLinkManager::getBean($bean, $relatedTableName, $linkName);
                                             RedBeansCache::cacheBean($relatedBean, $beanIdentifier);
                                         }
                                         if ($relatedBean !== null && $relatedBean->id > 0)
@@ -1577,6 +1630,37 @@
         }
 
         /**
+         * See the yii documentation.
+         * RedBeanModels utilize untranslatedAbbreviatedAttributeLabels to store any abbreviated attribute information, which
+         * can then be translated in this method.
+         */
+        public function abbreviatedAttributeLabels()
+        {
+            $abbreviatedAttributeLabels = array();
+            foreach ($this->untranslatedAbbreviatedAttributeLabels() as $attributeName => $label)
+            {
+                $abbreviatedAttributeLabels[$attributeName] = Yii::t('Default', $label);
+            }
+            return $abbreviatedAttributeLabels;
+        }
+
+        /**
+         * Array of untranslated abbreviated attribute labels.
+         */
+        protected function untranslatedAbbreviatedAttributeLabels()
+        {
+            return array();
+        }
+
+        /**
+         * Public for message checker only.
+         */
+        public function getUntranslatedAbbreviatedAttributeLabels()
+        {
+            return $this->untranslatedAbbreviatedAttributeLabels();
+        }
+
+        /**
          * Performs validation using the validators specified in the 'rules'
          * meta data by the extending class's getMetadata() method.
          * Validation occurs on a new model or a modified model, but only
@@ -1802,7 +1886,7 @@
                             {
                                 $linkName = null;
                             }
-                            R::$linkManager->breakLink($bean, $relatedTableName, $linkName);
+                            ZurmoRedBeanLinkManager::breakLink($bean, $relatedTableName, $linkName);
                             unset($this->unlinkedRelationNames[$key]);
                         }
                         assert('count($this->unlinkedRelationNames) == 0');
@@ -1861,12 +1945,13 @@
                                 {
                                     $relatedModel = $this->relationNameToRelatedModel[$relationName];
                                     $relatedBean  = $relatedModel->getClassBean($relatedModelClassName);
-                                    R::$linkManager->link($bean, $relatedBean, $linkName);
+                                    ZurmoRedBeanLinkManager::link($bean, $relatedBean, $linkName);
+
                                     if (!RedBeanDatabase::isFrozen())
                                     {
                                         $tableName  = self::getTableName($this->getAttributeModelClassName($relationName));
                                         $columnName = self::getForeignKeyName(get_class($this), $relationName);
-                                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                                        RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
                                     }
                                 }
                             }
@@ -1913,7 +1998,7 @@
             {
                 $tableName  = self::getTableName($modelClassName);
                 $columnName = self::getTableName($baseModelClassName) . '_id';
-                RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
             }
         }
 
@@ -1996,12 +2081,12 @@
             {
                 if ($baseBean !== null)
                 {
-                    R::$linkManager->link($bean, $baseBean);
+                    ZurmoRedBeanLinkManager::link($bean, $baseBean);
                     if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = self::getTableName($modelClassName);
                         $columnName = self::getTableName($baseModelClassName) . '_id';
-                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                        RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
                     }
                 }
                 $baseModelClassName = $modelClassName;
@@ -2210,7 +2295,7 @@
             }
             $tableName = self::getTableName($relatedModelClassName);
             $foreignKeyName = strtolower($modelClassName) . '_id';
-            $beans = RedBean_Plugin_Finder::where($tableName, "$foreignKeyName = $id");
+            $beans = R::find($tableName, "$foreignKeyName = $id");
             return self::makeModels($beans, $relatedModelClassName);
         }
 
@@ -2334,6 +2419,36 @@
         protected static function getPluralLabel()
         {
             return static::getLabel() . 's';
+        }
+
+        /**
+         * See the yii documentation.
+         */
+        public function getAbbreviatedAttributeLabel($attributeName)
+        {
+            return $this->getAbbreviatedAttributeLabelByLanguage($attributeName, Yii::app()->language);
+        }
+
+        /**
+         * Given an attributeName and a language, retrieve the translated attribute label. Attempts to find a customized
+         * label in the metadata first, before falling back on the standard attribute label for the specified attribute.
+         * @return string - translated attribute label
+         */
+        protected function getAbbreviatedAttributeLabelByLanguage($attributeName, $language)
+        {
+            assert('is_string($attributeName)');
+            assert('is_string($language)');
+            $labels = $this->untranslatedAbbreviatedAttributeLabels();
+            if (isset($labels[$attributeName]))
+            {
+                return CHtml::tag('span', array('title' => $this->generateAttributeLabel($attributeName)),
+                                  Yii::t('Default', $labels[$attributeName],
+                                  LabelUtil::getTranslationParamsForAllModules(), null, $language));
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /**

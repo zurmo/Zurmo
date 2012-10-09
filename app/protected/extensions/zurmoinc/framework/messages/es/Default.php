@@ -50,11 +50,11 @@
         'All Results'
             => 'Lista completa',
         'Altering configuration files.'
-            => '??',
+            => 'Alteración de los archivos de configuración.',
         'and'
             => 'y',
         'Application is not in maintenance mode. Please edit perInstance.php file, and set "$maintenanceMode = true;"'
-            => '??',
+            => 'La aplicación no está en modo de mantenimiento. Por favor, modifique el archivo  perInstance.php y ajuste "$maintenanceMode = true;"',
         'Basic Search'
             => 'Búsqueda básica',
         'Basic Search Fields'
@@ -78,25 +78,25 @@
         'Changed'
             => 'Cambiado',
         'Check completed.'
-            => '??',
+            => 'Auditoría se ha completado.',
         'Checking permissions, files, upgrade version....'
-            => '??',
+            => 'Verificación de permisos, archivos, versión actualizada...',
         'Clear'
             => 'Borrar',
         'Clearing assets and runtime folders.'
-            => '??',
+            => 'Eliminación de archivos y activos en tiempo de ejecución.',
         'Clearing cache.'
-            => '??',
+            => 'Vaciado de la memoria caché.',
         'Click Here'
             => 'Haga clic aquí',
         'Close'
             => 'Cerrar',
         'Copying files.'
-            => '??',
+            => 'Copia de archivos.',
         'Could not extract upgrade "from version" in the manifest file.'
-            => '??',
+            => 'Actualizar "from version" no se encontró en el archivo de manifiesto.',
         'Could not extract upgrade "to version" in the manifest file.'
-            => '??',
+            => 'Actualizar "to version" no se encontró en el archivo de manifiesto.',
         'Create'
             => 'Crear',
         'Created By User'
@@ -132,7 +132,7 @@
         'Error'
             => 'Error', // Same Word Translated
         'Error during upgrade!'
-            => '??',
+            => 'Error durante la actualización!',
         'Export'
             => 'Exportar',
         'Fahrenheit'
@@ -166,7 +166,7 @@
         'Inline Edit View'
             => 'Formulario de inscripción inline',
         'Installed Zurmo version is: {currentZurmoVersion}'
-            => '??',
+            => 'Versión de Zurmo instalada es: {currentZurmoVersion}',
         'Integer'
             => 'Número entero',
         'Invalid'
@@ -184,7 +184,7 @@
         'Loading'
             => 'Cargando',
         'Loading UpgraderComponent.'
-            => '??',
+            => 'Cargando UpgraderComponent.',
         'Mass Update'
             => 'Actualización Global',
         'Max upload size: {maxSize}'
@@ -208,7 +208,7 @@
         'More Options'
             => 'Más opciones',
         'More then one zip file exists in runtime/upgrade folder. Please delete them all except the one that you want to use for the upgrade.'
-            => '??',
+            => 'Hay más de un archivo zip en la carpeta. Por favor, elimine todos ellos excepto el que desea utilizar para la actualización.',
         'My List View'
             => 'Mi vista de lista',
         'Name'
@@ -226,7 +226,7 @@
         'None'
             => 'Ninguno',
         'Not all files and folders are writeable by upgrade user. Please make these files or folders writeable:'
-            => '??',
+            => 'No se puede escribir todos los archivos y carpetas por el Update usuario. Por favor, hacer que estos archivos o carpetas son grabables:',
         'Now'
             => 'Ahora',
         'of'
@@ -250,19 +250,19 @@
         'Panel Title'
             => 'Título de panel',
         'Part 1 complete.'
-            => '??',
+            => 'Parte 1 es completa.',
         'Please check if the file is a valid zip archive.'
-            => '??',
+            => 'Por favor, compruebe si el archivo es un archivo zip válido.',
         'Please fix error(s) and try again, or restore your database/files.'
-            => '??',
+            => 'Por favor, corrija error(es) e inténtelo de nuevo, o restaurar su base de datos/archivos.',
         'Please fix your parenthesis.'
             => 'Por favor, corrija su paréntesis.',
         'Please upload upgrade zip file to runtime/upgrade folder.'
-            => '??',
+            => 'Por favor, sube el archivo zip a la carpeta de actualización runtime/upgrade.',
         'Please use only integers lesser than {max}.'
             => 'Por favor, use números enteros menores de {max}.',
         'Processing final touches.'
-            => '??',
+            => 'Piezas finales se está procesando.',
         'Radio Drop Down'
             => 'Elementos del botón radio',
         'record'
@@ -276,19 +276,19 @@
         'Remove'
             => 'Eliminar',
         'Removing upgrade files.'
-            => '??',
+            => 'Archivos de actualización está quitando.',
         'Return to List'
             => 'Volver al la lista',
         'Row'
             => 'Fila',
         'Running tasks after schema is updated.'
-            => '??',
+            => 'Ejecución de tareas después de que el esquema se ha actualizado.',
         'Running tasks before updating schema.'
-            => '??',
+            => 'Ejecución de tareas antes de actualizar el esquema.',
         'Save'
             => 'Guardar',
         'Save and Close'
-            => '??',
+            => 'Guardar y cerrar',
         'Search'
             => 'Buscar',
         'Search Operator'
@@ -318,7 +318,7 @@
         'The structure is invalid. {error}'
             => 'La estructura no es válida. {error}',
         'There was an error during the extraction process of {zipFilePath}'
-            => '??',
+            => 'Se produjo un error durante el proceso de extracción de {zipFilePath}',
         'There was an error uploading the file.'
             => 'Error al subir el archivo',
         'There was an error with the web service.'
@@ -330,7 +330,7 @@
         'This portlet will be removed, ok?'
             => 'Se eliminará el portlet, ok?',
         'This upgrade is for Zurmo ({fromVersion} - {toVersion})'
-            => '??',
+            => 'Esta actualización es para Zurmo ({fromVersion} - {toVersion})',
         'Time'
             => 'Tiempo',
         'Title/First/LastName'
@@ -356,13 +356,13 @@
         'Updating'
             => 'Actualizando',
         'Updating schema.'
-            => '??',
+            => 'Actualización de esquema.',
         'Upgrade file is missing.'
-            => '??',
+            => 'Archivo de actualización no se encuentra.',
         'Upgrade process completed.'
-            => '??',
+            => 'Actualiza proceso completado.',
         'UpgraderComponent loaded.'
-            => '??',
+            => 'UpgraderComponent cargado.',
         'User'
             => 'Usuario',
         'Users'
@@ -384,7 +384,7 @@
         'You must specify a value.'
             => 'Debe especificar un valor',
         'Zip PHP extension is required by upgrade process, please install it.'
-            => '??',
+            => 'Zip extensión PHP es requerida por el proceso de actualización, por favor, instálelo.',
         '{attribute} "{value}" is already in use.'
             => '{attribute} "{value}" ya está en uso.',
         '{attribute} is too precise (maximum decimal places is {precision}).'

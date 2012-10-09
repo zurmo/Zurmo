@@ -170,7 +170,7 @@
         {
             if (in_array($this->attributeName, DatabaseCompatibilityUtil::getDatabaseReserverWords()))
             {
-                $this->addError('attributeName', Yii::t('Default', '"{$attributeName}" field name is database reserved word. Please enter different one.',
+                $this->addError('attributeName', Yii::t('Default', '"{$attributeName}" field name is a database reserved word. Please enter a different one.',
                                                  array('{$attributeName}' => $this->attributeName)));
             }
         }

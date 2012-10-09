@@ -104,7 +104,7 @@
             {
                 $inputContent  = $this->renderTextField($this->getIdForHiddenField());
                 $inputContent .= $this->renderSelectLink();
-                $content       = $content . CHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
+                $content       = $content . ZurmoHtml::tag('div', array('class' => 'has-model-select'), $inputContent);
             }
             return $content;
         }
@@ -209,7 +209,7 @@
             {
                 if ($this->showLinkOnNonEditable())
                 {
-                    return CHtml::link(
+                    return ZurmoHtml::link(
                         Yii::app()->format->text($this->model->{$this->attribute}),
                         Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->controllerId .
                         '/details/', array('id' => $this->model->{$this->attribute}->id))
@@ -288,7 +288,7 @@
 
         /**
          * @return id if a real model, otherwise an empty string to ensure
-         * the @see CHtml::activeInputField works properly when resolving the id.
+         * the @see ZurmoHtml::activeInputField works properly when resolving the id.
          */
         protected function getId()
         {

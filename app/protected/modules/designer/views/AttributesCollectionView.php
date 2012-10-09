@@ -73,7 +73,7 @@
                     }
                     else
                     {
-                        $linkContent = CHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
+                        $linkContent = ZurmoHtml::link(Yii::t('Default', 'Configure'), Yii::app()->createUrl($route,
                                                             array('moduleClassName' => $this->moduleClassName,
                                                                   'attributeTypeName' => $information['elementType'],
                                                                   'attributeName' => $attributeName)
@@ -91,11 +91,6 @@
                 $content .= '</div>';
             }
             return $content;
-        }
-
-        protected function renderTitleContent()
-        {
-            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

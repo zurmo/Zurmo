@@ -79,7 +79,7 @@
         */
         public function setAllowDuplicates($allowDuplicates)
         {
-            assert('is_bool($$allowDuplicates)');
+            assert('is_bool($allowDuplicates)');
             $this->allowDuplicates = $allowDuplicates;
         }
 

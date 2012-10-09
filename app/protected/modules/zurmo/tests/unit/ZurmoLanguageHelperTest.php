@@ -199,11 +199,11 @@
          */
         public function testAccentsAreEncodingProperly()
         {
-            $this->assertEquals('Opportunité', CHtml::encode('Opportunité'));
+            $this->assertEquals('Opportunité', ZurmoHtml::encode('Opportunité'));
 
             $label = OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase', 'fr');
             $this->assertEquals('opportunité', $label);
-            $this->assertEquals('opportunité', CHtml::encode($label));
+            $this->assertEquals('opportunité', ZurmoHtml::encode($label));
         }
     }
 ?>

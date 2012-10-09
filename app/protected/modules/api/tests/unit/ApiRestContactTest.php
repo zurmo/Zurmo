@@ -735,7 +735,8 @@
                 'opportunities' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $opportunity->id
+                        'modelId' => $opportunity->id,
+                        'modelClassName' => 'Opportunity'
                     ),
                 ),
             );
@@ -783,7 +784,8 @@
                 'opportunities' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $opportunity->id
+                        'modelId' => $opportunity->id,
+                        'modelClassName' => 'Opportunity'
                     ),
                 ),
             );
@@ -811,7 +813,8 @@
                 'opportunities' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $opportunity->id
+                        'modelId' => $opportunity->id,
+                        'modelClassName' => 'Opportunity'
                     ),
                 ),
             );

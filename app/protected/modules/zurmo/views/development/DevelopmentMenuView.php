@@ -26,7 +26,7 @@
 
     class DevelopmentMenuView extends ConfigureModulesMenuView
     {
-        protected function renderTitleContent()
+        public function getTitle()
         {
             return '<h1>' . Yii::t('Default', 'Developer Tools') . '</h1>';
         }

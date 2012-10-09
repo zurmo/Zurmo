@@ -69,6 +69,7 @@
                 $content .= $actionElementContent;
                 $content .= '</div></div>';
             }
+            $content .= $this->renderBeforeFormLayoutForDetailsContent();
             $content .= $this->renderFormLayout();
             $content .= $this->renderRightSideContent();
             $content .= $this->renderAfterFormLayoutForDetailsContent();
@@ -76,15 +77,11 @@
             return $content;
         }
 
-        protected function renderTitleContent()
+        protected function renderRightSideContent($form = null)
         {
-            if ($this->title != null)
-            {
-                return '<h1>' . $this->title . "</h1>";
-            }
         }
 
-        protected function renderRightSideContent($form = null)
+        protected function renderBeforeFormLayoutForDetailsContent()
         {
         }
 
@@ -360,6 +357,11 @@
         protected function getLessPanelsLinkLabel()
         {
             return Yii::t('Default', 'Fewer Details');
+        }
+
+        public function getTitle()
+        {
+            return $this->title;
         }
     }
 ?>

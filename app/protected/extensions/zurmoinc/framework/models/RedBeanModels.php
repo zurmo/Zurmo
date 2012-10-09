@@ -69,7 +69,7 @@
             $tableName = RedBeanModel::getTableName($modelClassName);
             if (is_string($sqlOrBean))
             {
-                $this->relatedBeansAndModels = array_values(RedBean_Plugin_Finder::where($tableName, $sqlOrBean));
+                $this->relatedBeansAndModels = array_values(R::find($tableName, $sqlOrBean));
             }
             else
             {
@@ -86,7 +86,7 @@
                     // are no linked beans.
                     if ($this->bean->id > 0)
                     {
-                        $relatedIds                  = R::$linkManager->getKeys($this->bean, $tableName);
+                        $relatedIds                  = ZurmoRedBeanLinkManager::getKeys($this->bean, $tableName);
                         $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
                     }
                     else

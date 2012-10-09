@@ -94,5 +94,10 @@
         {
             return 'LatestActivitiesForUserListView';
         }
+
+        protected static function includeHavingRelatedItemsWhenRenderingMashableModels()
+        {
+            return true;
+        }
     }
 ?>

@@ -216,7 +216,7 @@
             {
                 return Yii::app()->format->text($content);
             }
-            return Chtml::tag('label', array(), $content);
+            return ZurmoHtml::tag('label', array(), $content);
         }
 
         /**

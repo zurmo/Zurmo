@@ -20,7 +20,7 @@
 @import 'gamification.less';
 @import 'welcome.less';
 @import 'tablet.less';
-@import 'conversations.less';
+@import 'thread-view.less';
 @import 'email.less';
 @import 'media-queries.less';
 
@@ -160,7 +160,7 @@ body{
 
 h1, h2, h3, h4, h5, h6{
     color:@themeColor;
-    .t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+    .t-shadow(  0 1px 0 rgba( 255, 255, 255, 0.8 ) );
 }
 
 a:link, a:hover, a:active, a:visited{
@@ -168,6 +168,9 @@ a:link, a:hover, a:active, a:visited{
     color:#545454;
     img{
         border:none;
+    }
+    &:focus{
+        outline: none;
     }
 }
 
@@ -829,6 +832,8 @@ footer, header, hgroup, menu, nav, section {
         }
         /*Conversation button*/
         > span{
+            position: relative;
+            top:-2px;
             margin-left:10px;
             width:18px;
             height:16px;
@@ -839,6 +844,7 @@ footer, header, hgroup, menu, nav, section {
             font-size: 10px;
             display:inline-block;
             background-color:none !important;
+            padding-top:1px;
             &.unread{
                 #notifications-link.tooltip{
                     color:#ff0000 !important;
@@ -1024,6 +1030,12 @@ footer, header, hgroup, menu, nav, section {
             content: "g";
         }
     }
+    li.type-MissionsModule{
+        em:before{
+            content: "Q";
+        }
+    }
+        
 }
 
 /*=Content*/
@@ -1379,7 +1391,7 @@ table.items th{
 }
 
 .checkbox-column{
-    width:35px;
+    width:45px;
     text-align:center;
     .hasCheckBox{
         margin-top:-4px;
@@ -1387,7 +1399,7 @@ table.items th{
 }
 
 .button-column{
-    width:25px;
+    width:35px;
     text-align:center;
     vertical-align:middle !important;
 }
@@ -1454,11 +1466,18 @@ td.empty{
     input[type="password"],
     select.multiple,
     textarea{
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        /* @doubtful_existance: I don’t think these even exist? Can’t hurt much, I guess. */
+        -moz-font-smoothing: antialiased;
+        -o-font-smoothing: antialiased;
+        /* end @doubtful_existance */
+        font-smoothing: antialiased;
         display:inline-block;
         border:1px solid #ccc;
         .radius(3px);
         font-size:12px;
-        color:#999;
+        color:#666 !important;
         text-indent:6px;
         line-height: 24px;
         .b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
@@ -1530,7 +1549,7 @@ td.empty{
         color:#656565 !important;
         display:inline-block;
         .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
-        &.attachLoading{
+        &.attachLoading.z-button{
             color: #fff !important;
         }
         &:not(.attachLoading){
@@ -1546,7 +1565,8 @@ td.empty{
     }
 }
 
-a.attachLoading{
+.green-button,
+.attachLoading{
     color:#FFF !important;
     .t-shadow( rgba(156, 156, 156, 0.8) 0px 1px);
     .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.15));
@@ -1559,6 +1579,22 @@ a.attachLoading{
         color:#FFF !important;
         .b-shadow(~"inset 0 1px 5px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
     }
+}
+
+.action-take{
+    #gradient > .vertical(#ffa660, #ffad43 ); //yellow
+}
+
+.action-complete{
+    #gradient > .vertical(#97c43d, #6fa82d ); //green
+}
+
+.action-accept{
+    #gradient > .vertical(#97c43d, #6fa82d ); //green
+}
+
+.action-reject{
+    #gradient > .vertical(#c43d53, #a82d31 ); //red
 }
 
 .portlet-toolbar{
@@ -1770,7 +1806,7 @@ label.hasCheckBox{
 
 div.wide.form{
     label.hasCheckBox{
-        margin-top:0 !important;
+        margin-top:0; //was !important
     }
     a{
         color:@themeColor;
@@ -1922,6 +1958,11 @@ div.wide.form{
         .symbly(230px);
         line-height: 90%;
     }
+    .Mission .large-icon:after{
+        content:"Q";
+        .symbly(230px);
+        line-height: 80%;
+    }
 }
 
 .ZurmoSearchView{
@@ -2025,6 +2066,18 @@ div.wide.form{
     }
 }
 
+#select-list-attributes-link{
+    margin-left:25px;
+    color:@themeColor;
+    &:after{
+        content: "▾";
+        margin-left:5px;
+    }
+}
+
+
+
+
 #mixed-models-form-search{
     margin-left:15px;
 }
@@ -2061,7 +2114,7 @@ div.wide.form{
         margin-top:15px;
     }
 }
-
+.select-list-attributes-view,
 .search-view-1{
     margin-top:15px;
     z-index:100;
@@ -2091,6 +2144,33 @@ div.wide.form{
         display: inline-block;
     }
 }
+.select-list-attributes-view{
+    table{
+        border-bottom: none;
+    }
+    .attributesContainer:after{
+        display: none !important;
+    }
+    .multiselect-holder{
+        width:750px;
+        padding-left:60px;
+    }
+    /*.multiselect-nav-updown{
+        height:auto;
+        margin-top:10px;
+        margin-right:75px;
+        float: right;
+        width:142px;
+        input{
+            float: left;
+            margin-right:10px;
+            margin-bottom: 0 !important;
+        }
+    }*/
+}
+
+
+
 
 #clear-search-link{
     .z-link();
@@ -2329,7 +2409,6 @@ div.wide.form{
     .view-toolbar-container{
         border-top:1px solid #CCCCCC;
     }
-    
     .hasCheckBox{
         margin:8px 0 0 0;
         display:block;
@@ -2338,6 +2417,20 @@ div.wide.form{
         }
     }
 }
+
+.radio-input{
+    clear: left;
+    float: left;
+    margin-bottom: 5px;
+    input{
+        float: left;
+        margin-top: 1px !important;
+    }
+    label{
+       margin-left: 10px;
+    }
+}
+
 
 #right-side-edit-view-panel{
     position:absolute;
@@ -2560,10 +2653,10 @@ div.wide.form{
         padding:0 5px 0 10px !important;
     }
     p{
-        color:#545454 !important;
-        width:100%;
+        /*color:#545454 !important
         float:none;
-        clear:left;
+        clear:left;*/
+        width:100%;
         a{
             color:@themeColor !important;
         }
@@ -2573,7 +2666,7 @@ div.wide.form{
         padding-left:10px;
     }
     a{
-        color:@themeColor !important;
+        color:@themeColor;
     }
     .map-link{
         display: inline-block;
@@ -2589,6 +2682,20 @@ div.wide.form{
     .hasCheckBox{
         margin-top:0;
         margin-left:0;
+    }
+}
+
+.after-form-details-content{
+    color:#545454 !important;
+    float:none;
+    clear:left;
+    width:100%;
+    font-size:10px;
+    font-style:italic;
+    text-align:center;
+    margin-bottom:10px;
+    a{
+        color:@themeColor !important;
     }
 }
 
@@ -2650,14 +2757,15 @@ div.wide.form{
         #gradient > .vertical(#f6f6f6, #ededed);
         .b-shadow(inset 0 1px 0 0 #ffffff);
         border-bottom:1px solid #ccc;
+        overflow: hidden;
     }
-    p{
+    /*p{
         font-size:10px;
         font-style:italic;
         color:#999999;
         text-align:center;
         margin-bottom:10px;
-    }
+    }*/
     th{
         color:#999;
         text-align:right;
@@ -2751,6 +2859,53 @@ div.wide.form{
     }
 }
 
+/*
+.edit-row-menu{
+    .flyout();
+    list-style: none !important;
+    //margin-top:-8px;
+    padding-top:3px;
+    padding-bottom:3px;
+    //display:none;
+    font-weight:normal !important;
+    display: inline-block;
+    width:auto;
+    ul{
+        display: none;
+        list-style: none;
+        position: absolute;
+    }
+    > .parent > a{
+        text-align:center;
+        font-size:11px;
+        color: #666 !important;
+        padding:5px;
+        span{
+            content: "n";
+            .symbly(26px);
+        }
+    }
+    a{
+        text-indent:0;
+        color: #666;
+        font-size: 11px;
+        font-weight: normal;
+        display: block;
+        padding: 5px 10px 5px 10px;
+        margin: 0 2px;
+        line-height: normal;
+        .t-shadow(none);
+        &:hover{
+            background:@themeColor2 !important;
+            color:#fff !important;
+        }
+    }
+}
+*/
+
+
+
+
 .DetailsAndRelationsView,
 #AccountDetailsAndRelationsView{
     .clearfix();
@@ -2807,6 +2962,9 @@ div.wide.form{
     }
     td div{
         margin-left:0;
+    }
+    .files{
+        float: left;
     }
     form{
         background:none;
@@ -2975,6 +3133,23 @@ div.wide.form{
         margin-top:6px;
     }
 }
+
+.post-to-profile{
+    float: right;
+    margin-right:25px;
+    margin-top:6px;
+    span{
+        margin-left:10px;
+        margin-top: -3px;
+        position: relative;
+        right: 0;
+    }
+    label.hasCheckBox{
+        margin-top:-6px !important;
+    }
+}
+
+
 /*=Sticky search*/
 .BreadCrumbView{
     position: relative;
@@ -3104,7 +3279,7 @@ div.hasHalfs{
 
 .juiportlet-widget{
     td{
-        padding-left:0 !important;
+        padding-left:0;// !important;
         &:first-child{
             border-top:none;
         }
@@ -3143,6 +3318,64 @@ div.hasHalfs{
 .juiportlet-widget.ContactsForAccountRelatedListView{
     div.button-column{
         padding-top:4px;
+    }
+}
+
+/*Related lists portlet with gear menu*/
+.RelatedListView{
+    .items{
+        td{
+            border-top:none !important;
+            &:first-child{
+                padding-left: 15px;
+            }
+        }
+        tr{
+            &:hover{
+                .edit-row-menu > li > a{
+                    .opacity(100);
+                }
+            }
+        }
+    }
+}
+.edit-row-menu{
+    float:right;
+    margin:0 15px 0 0;
+    list-style: none;
+    > li{
+        position: relative;
+        .t-shadow(none) !important;
+        > a{
+            padding:0;
+            display:block;
+            overflow: visible;
+            .opacity(25);
+            span{
+                display:inline-block;
+                text-indent:-9999px;
+                .t-shadow(none) !important;
+            }
+            &:hover{
+                .opacity(100);
+            }
+            &:after{
+                content: "n";
+                color:@themeColor;
+                .symbly(26px);
+            }
+        }
+        a{
+            .t-shadow(none) !important;
+        }
+    }
+    ul{
+        display:block;
+        width:110px;
+        margin-left:-97px;
+        list-style: none;
+        .headerDropDown();
+        top:16px;
     }
 }
 
@@ -3323,7 +3556,7 @@ div.hasHalfs{
         }
     }
     .latest-activity-toolbar,
-    .filter-latest-activities-bar{
+    .filter-portlet-model-bar{
         padding-left:8px;
         label{
             cursor:pointer;
@@ -3355,7 +3588,7 @@ div.hasHalfs{
             margin:0;
         }
     }
-    .filter-latest-activities-bar{
+    .filter-portlet-model-bar{
         border-bottom:1px solid #DFDFDF;
         overflow: hidden;
         height: 40px;
@@ -3422,6 +3655,10 @@ div.hasHalfs{
 	        .latest-activity-icon();
 	    }
     }
+    .Mission:after{
+        content: "Q";
+        .latest-activity-icon();
+    }
 }
 
 #activities-rollup-tooltip{
@@ -3445,7 +3682,7 @@ div.hasHalfs{
     }
     &:after{
         .symbly(20px);
-        content:"6";
+        content:"6" !important;
     }
     span{
         display:none;
@@ -3579,7 +3816,7 @@ div.hasHalfs{
     background: #fff;
     border: 1px solid #ccc;.radius(3px);
     font-size: 12px;
-    color: #999;
+    color: #666;
     text-indent: 0;
     line-height: 24px;.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
     width: 100%;
@@ -3599,13 +3836,14 @@ div.hasHalfs{
 }
 
 .dk_toggle {
-    background: url(../images/dropdown-arrow.png) right top no-repeat;
+    background: url(../images/dropdown-arrow.png) 100% 0 no-repeat;
     padding-left: 6px;
     display: block !important;
     font-weight: normal !important;
-    color: #999 !important;
+    color: #666 !important;
+    z-index: 999;
     &:hover {
-        background: url(../images/dropdown-arrow.png) right bottom no-repeat;
+        background-position: 100% 100%; //top right
     }
 }
 
@@ -3628,7 +3866,7 @@ div.hasHalfs{
         padding: 0 6px;
         line-height: 24px;
         font-weight: normal !important;
-        color: #999 !important;
+        color: #666 !important;
     }
     li:last-child a {
         border-bottom: none;
@@ -3647,7 +3885,7 @@ div.hasHalfs{
     border: 1px solid #ccc;
     border-bottom-width: 2px;
     border-bottom-color: #ccc;
-    color: #999;
+    color: #666;
     max-height: 250px;
     .radius(0 0 3px 3px);
 }
@@ -3679,10 +3917,11 @@ div.hasHalfs{
 
 .dk_options {
     display: none;
-    margin-top: -1px;
+    margin-top: 3px;
     position: absolute;
     right: 0;
     width: 100%;
+    z-index: 0;
     a, a:link, a:visited{
         display: block;
     }
@@ -3698,8 +3937,8 @@ div.hasHalfs{
 }
 
 .dk_touch .dk_options_inner {
-    max-height: none;
-    overflow: visible;
+    //max-height: none;
+    //overflow: visible;
 }
 
 
@@ -3922,6 +4161,7 @@ div.hasHalfs{
 
 /*=RSS Widget*/
 .rssBody{
+    line-height: 140%;
 	ul{
 		list-style: none;
 	}

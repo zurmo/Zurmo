@@ -171,6 +171,11 @@
                         $this->addError('customFieldDataData', Yii::t('Default', 'Each value must not contain a comma.'));
                         return;
                     }
+                    elseif ($value == '')
+                    {
+                        $this->addError('customFieldDataData', Yii::t('Default', 'Value cannot be blank.'));
+                        return;
+                    }
                 }
             }
         }

@@ -71,7 +71,7 @@
         protected function renderOnAddOrDeleteAjaxScript()
         {
             // Begin Not Coding Standard
-            return CHtml::ajax(array(
+            return ZurmoHtml::ajax(array(
                     'type' => 'POST',
                     'data' => 'js:$("#' . $this->params['formName'] . '").serialize()',
                     'url'  =>  $this->getUpdateParticipantsUrl(),

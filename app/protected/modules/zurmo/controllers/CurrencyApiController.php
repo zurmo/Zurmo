@@ -49,7 +49,7 @@
             return 'Currency';
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'CurrenciesSearchForm';
         }

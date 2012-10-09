@@ -113,20 +113,20 @@
             assert('$jobLog instanceof JobLog || $jobLog == null');
             if ($jobLog == null)
             {
-                return CHtml::tag('span', array('class' => 'jobHasNeverRun'), Yii::t('Default', 'Never'));
+                return ZurmoHtml::tag('span', array('class' => 'jobHasNeverRun'), Yii::t('Default', 'Never'));
             }
             if ($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
                 $content  = DateTimeUtil::
                            convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
                 $content .= ' ' . Yii::t('Default', '[with errors]');
-                $content  = CHtml::tag('span', array('class' => 'jobHasErrors'), $content);
+                $content  = ZurmoHtml::tag('span', array('class' => 'jobHasErrors'), $content);
             }
             else
             {
                 $content = DateTimeUtil::
                            convertDbFormattedDateTimeToLocaleFormattedDisplay($jobLog->createdDateTime);
-                $content  = CHtml::tag('span', array('class' => 'jobRanSuccessfully'), $content);
+                $content  = ZurmoHtml::tag('span', array('class' => 'jobRanSuccessfully'), $content);
             }
             return $content;
         }

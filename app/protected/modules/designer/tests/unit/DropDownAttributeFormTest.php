@@ -50,6 +50,15 @@
             $this->assertEquals(1, count($errors));
             $compareData = array(0 => 'Each item must be uniquely named and the following are not: C, b');
             $this->assertEquals($compareData, $errors['customFieldDataData']);
+
+           //Test the blank values for the blank value
+            $form = new DropDownAttributeForm();
+            $form->customFieldDataData = array('a', '', 'c');
+            $form->validateCustomFieldDataData('customFieldDataData', null);
+            $errors = $form->getErrors();
+            $this->assertEquals(1, count($errors));
+            $compareData = array(0 => 'Value cannot be blank.');
+            $this->assertEquals($compareData, $errors['customFieldDataData']);
         }
     }
 ?>

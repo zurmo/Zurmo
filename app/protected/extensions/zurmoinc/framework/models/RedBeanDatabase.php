@@ -57,7 +57,6 @@
             {
                 R::setup($dsn, $username, $password);
                 R::$redbean->addEventListener("update",       new RedBeanBeforeUpdateHintManager(R::$toolbox));
-                R::$redbean->addEventListener("after_update", new RedBeanAfterUpdateHintManager (R::$toolbox));
                 if (SHOW_QUERY_DATA)
                 {
                     Yii::app()->performance->setRedBeanQueryLogger(ZurmoRedBeanPluginQueryLogger::
@@ -86,14 +85,17 @@
         public static function close()
         {
             // TODO - find out if there is a proper way.
+            R::$toolboxes          = array();
             R::$toolbox            = null;
             R::$redbean            = null;
             R::$writer             = null;
             R::$adapter            = null;
-            R::$treeManager        = null;
             R::$associationManager = null;
             R::$extAssocManager    = null;
-            R::$linkManager        = null;
+            R::$exporter           = null;
+            R::$tagManager         = null;
+            R::$currentDB          = '';
+            R::$f                  = null;
             self::$isSetup = false;
         }
 

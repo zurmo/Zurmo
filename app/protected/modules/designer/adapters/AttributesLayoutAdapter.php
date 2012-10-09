@@ -129,8 +129,25 @@
         {
             $attributesInPlace = $this->getAttributesInPlace();
             $layoutAttributes = array();
+
+            foreach ($attributesInPlace as $attributeName)
+            {
+                $availableToSelect    = false;
+                $attributeInformation = $this->attributes[$attributeName];
+                $this->designerLayoutAttributes->setItem(
+                    $attributeName,
+                    $attributeName,
+                    $availableToSelect,
+                    $attributeInformation['attributeLabel'],
+                    $attributeInformation['isRequired']
+                );
+            }
             foreach ($this->attributes as $attributeName => $attributeInformation)
             {
+                if (in_array($attributeName, $attributesInPlace))
+                {
+                    continue;
+                }
                 if (in_array($attributeName, $this->nonPlaceableAttributeNames))
                 {
                     continue;
@@ -139,14 +156,7 @@
                 {
                     continue;
                 }
-                if (in_array($attributeName, $attributesInPlace))
-                {
-                    $availableToSelect = false;
-                }
-                else
-                {
-                    $availableToSelect = true;
-                }
+                $availableToSelect = true;
                 $this->designerLayoutAttributes->setItem(
                     $attributeName,
                     $attributeName,

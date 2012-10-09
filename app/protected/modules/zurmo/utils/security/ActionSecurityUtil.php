@@ -105,7 +105,7 @@
                 {
                     $params['stickyOffset'] = $offset;
                 }
-                return CHtml::link($attributeString, Yii::app()->createUrl($linkRoute, $params));
+                return ZurmoHtml::link($attributeString, Yii::app()->createUrl($linkRoute, $params));
             }
             return $attributeString;
         }
@@ -141,7 +141,7 @@
             }
             if (RightsUtil::canUserAccessModule($moduleClassName, Yii::app()->user->userModel))
             {
-                return CHtml::link($attributeString,
+                return ZurmoHtml::link($attributeString,
                     Yii::app()->createUrl($linkRoute, array("id" => $model->id, 'redirectUrl' => $redirectUrl)));
             }
             return $attributeString;

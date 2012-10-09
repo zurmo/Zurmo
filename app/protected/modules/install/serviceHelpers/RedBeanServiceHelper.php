@@ -29,35 +29,14 @@
      */
     class RedBeanServiceHelper extends ServiceHelper
     {
-        protected $minimumVersion = '1.3';
+        protected $minimumVersion;
 
         protected function checkService()
         {
+            $this->minimumVersion = Yii::app()->params['redBeanVersion'];
             $passed = $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkRedBean',
                                                                                 Yii::t('Default', 'RedBean'));
-            if ($passed)
-            {
-                if (InstallUtil::checkRedBeanIsNotLegacy())
-                {
-                    $patched        = InstallUtil::checkRedBeanPatched();
-                    $this->message .= "\n";
-                    if ($patched)
-                    {
-                        $this->message .= Yii::t('Default', 'RedBean file is patched correctly');
-                    }
-                    else
-                    {
-                        $this->message .= Yii::t('Default', 'RedBean file is missing patch.');
-                    }
-                    return $patched;
-                }
-                else
-                {
-                    $this->message .= "\n";
-                    $this->message .= Yii::t('Default', 'Do not use the RedBean Legacy version');
-                    return false;
-                }
-            }
+
             return $passed;
         }
     }

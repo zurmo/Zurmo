@@ -72,12 +72,12 @@
             return $content;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Currencies: List') . '</h1>';
+            return Yii::t('Default', 'Currencies: List');
         }
 
-            /**
+        /**
          * Render a form layout.
          * @param $form If the layout is editable, then pass a $form otherwise it can
          * be null.
@@ -110,7 +110,7 @@
                 }
                 else
                 {
-                    $content .= CHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
+                    $content .= ZurmoHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
                                             array('id' => $currency->id)));
                 }
                 $content .= '</td>';

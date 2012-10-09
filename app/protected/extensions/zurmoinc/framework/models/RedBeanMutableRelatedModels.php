@@ -54,9 +54,6 @@
         {
             // Just adds self consistency checking.
             $contains = parent::contains($model);
-            assert('$contains == '                                                                       .
-                   '(array_search($model->getClassBean($this->modelClassName), $this->relatedBeansAndModels) !== false || ' .
-                   ' array_search($model,                                      $this->relatedBeansAndModels) !== false)');
             return $contains;
         }
 

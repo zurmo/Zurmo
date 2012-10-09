@@ -101,7 +101,7 @@
                                         '<span class="pass">' . Yii::t('Default', 'PASS') . '</span>');
             }
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Recheck System'), '#', array('onclick' => 'window.location.reload()'));
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Recheck System'), '#', array('onclick' => 'window.location.reload()'));
             $content .= '</td></tr></table>';
             $content .= '</div>';
             return $content;

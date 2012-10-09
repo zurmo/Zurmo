@@ -162,9 +162,9 @@
             $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
             $content .= '<th><label>' . Yii::t('Default', 'Panel Title') . '</label></th>';
-            $content .= '<td>' . CHtml::textField( 'title_' . $panelIdName,
+            $content .= '<td>' . ZurmoHtml::textField( 'title_' . $panelIdName,
                                  $title, array('class' => 'panel-title settings-form-field')) .
-                                 CHtml::hiddenField( 'locked_' . $panelIdName,
+                                 ZurmoHtml::hiddenField( 'locked_' . $panelIdName,
                                  $locked, array('class' => 'panel-title settings-form-field')) . '</td>';
             $content .= '</tr>';
             $content .= '<tr>';
@@ -185,8 +185,7 @@
 
         protected function renderSaveModalSettingsButton()
         {
-            return ZurmoHtml::link(Yii::t('Default', 'Save and Close'), '#',
-                                         array('onclick' => '$(this).closest(".modal-settings").dialog("close");'));
+            return ZurmoHtml::button(Yii::t('Default', 'Save and Close'), array('class' => 'z-button green-button attachLoading', 'onclick' => '$(this).closest(".modal-settings").dialog("close");'));
         }
 
         /**

@@ -58,17 +58,21 @@
             $messageLogger              = new MessageLogger();
             $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
             InstallUtil::autoBuildDatabase($messageLogger);
-            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            //There are only 1 extra rows that are not being removed during the autobuild process.
-            //These need to eventually be fixed so they are properly removed, except currency which is ok.
-            //currency (1)
-            $this->assertEquals($beforeRowCount, ($afterRowCount - 1));
             if ($unfreezeWhenDone)
             {
                 RedBeanDatabase::freeze();
             }
+
+            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
+            //There are only 1 extra rows that are not being removed during the autobuild process.
+            //These need to eventually be fixed so they are properly removed, except currency which is ok.
+            //currency (1)
+            $this->assertEquals($beforeRowCount, ($afterRowCount - 2));
         }
 
+        /**
+         * @depends testAutoBuildDatabase
+         */
         public function testColumnType()
         {
             if (RedBeanDatabase::isFrozen())
@@ -87,6 +91,8 @@
                     $meta = $model::getDefaultMetadata();
                     if (isset($meta[$model]['rules']))
                     {
+                        $tableName      = RedBeanModel::getTableName($model);
+                        $columns = R::$writer->getColumns($tableName);
                         foreach ($meta[$model]['rules'] as $rule)
                         {
                             if (is_array($rule) && count($rule) >= 3)
@@ -100,15 +106,28 @@
                                         if (isset($validatorParameters['type']))
                                         {
                                             $type           = $validatorParameters['type'];
-                                            $tableName      = RedBeanModel::getTableName($model);
                                             $field          = strtolower($attributeName);
-                                            $row            = R::getRow("SHOW COLUMNS FROM $tableName where field='$field'");
-                                            $compareType    = null;
-                                            if ($row !== false)
+                                            $columnType = false;
+                                            if (isset($columns[$field]))
                                             {
-                                                $compareType = $this->getDbTypeValue($row['Type']);
+                                                $columnType         = $columns[$field];
                                             }
-                                            $this->assertEquals($compareType, $type);
+                                            $compareType    = null;
+                                            $compareTypes = $this->getDatabaseTypesByType($type);
+                                            // Remove brackets from database type
+                                            $bracketPosition = stripos($columnType, '(');
+                                            if ($bracketPosition !== false)
+                                            {
+                                                $columnType = substr($columnType, 0, $bracketPosition);
+                                            }
+
+                                            $databaseColumnType = strtoupper(trim($columnType));
+                                            $compareTypeString  = implode(',', $compareTypes); // Not Coding Standard
+                                            if (!in_array($databaseColumnType, $compareTypes))
+                                            {
+                                                $compareTypeString  = implode(',', $compareTypes); // Not Coding Standard
+                                                $this->fail("Actual database type {$databaseColumnType} not in expected types: {$compareTypeString}.");
+                                            }
                                         }
                                         break;
                                 }
@@ -119,34 +138,70 @@
             }
         }
 
-        protected function getDbTypeValue($value)
+        /**
+         * @depends testAutoBuildDatabase
+         */
+        public function testAutoBuildUpgrade()
+        {
+            $unfreezeWhenDone     = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $unfreezeWhenDone = true;
+            }
+            $metadata = Account::getMetadata();
+            $metadata['Account']['members'][] = 'newField';
+            $rules = array('newField', 'type', 'type' => 'string');
+            $metadata['Account']['rules'][] = $rules;
+
+            //print_r($accountMetadata);
+            Account::setMetadata($metadata);
+
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $messageLogger              = new MessageLogger();
+            $beforeRowCount             = DatabaseCompatibilityUtil::getTableRowsCountTotal();
+            InstallUtil::autoBuildDatabase($messageLogger);
+            if ($unfreezeWhenDone)
+            {
+                RedBeanDatabase::freeze();
+            }
+            $afterRowCount              = DatabaseCompatibilityUtil::getTableRowsCountTotal();
+            $this->assertEquals($beforeRowCount, $afterRowCount);
+
+            //Check Account fields
+            $tableName = RedBeanModel::getTableName('Account');
+            $columns   = R::$writer->getColumns($tableName);
+            $this->assertEquals('text', $columns['newfield']);
+        }
+
+        /**
+         * Based on type validator from models, get database column type
+         * @param string $type
+         * @return array
+         */
+        protected function getDatabaseTypesByType($type)
         {
             $typeArray = array(
-                'string'    => array('CHAR', 'VARCHAR', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT', 'ENUM', 'SET'),
-                'integer'   => array('TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'INTEGER', 'BIGINT'),
-                'float'     => array('FLOAT', 'DOUBLE', 'DECIMAL', 'NUMERIC'),
-                'timestamp' => array('TIMESTAMP'),
+                'string'    => array('VARCHAR', 'TEXT', 'LONGTEXT'),
+                'text'      => array('TEXT'),
+                'longtext'  => array('LONG_TEXT'),
+                'integer'   => array('TINYINT', 'INT', 'INTEGER', 'BIGINT'),
+                'float'     => array('FLOAT', 'DOUBLE'),
                 'year'      => array('YEAR'),
                 'date'      => array('DATE'),
-                'time'      => array('TIME'),
                 'datetime'  => array('DATETIME'),
-                'blob'      => array('TINY_BLOB', 'MEDIUM_BLOB', 'LONG_BLOB', 'BLOB')
+                'blob'      => array('BLOB'),
+                'longblob'  => array('LONG_BLOB'),
+                'boolean'   => array('TINY_INT'),
             );
-            $value              = strtoupper($value);
-            $startCuttingPos    = stripos($value, '(');
-            $searchValue        = $value;
-            if ($startCuttingPos !== false)
+
+            $databaseTypes = array();
+            if (isset($typeArray[$type]))
             {
-                $searchValue = substr($value, 0, $startCuttingPos);
+                $databaseTypes = $typeArray[$type];
             }
-            foreach ($typeArray as $type => $array)
-            {
-                if (in_array($searchValue, $array))
-                {
-                    return $type;
-                }
-            }
-            return null;
+            return $databaseTypes;
         }
     }
 ?>

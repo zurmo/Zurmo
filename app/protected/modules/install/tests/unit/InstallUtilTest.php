@@ -72,6 +72,7 @@
 
         public static function tearDownAfterClass()
         {
+            RedBeanColumnTypeOptimizer::$optimizedTableColumns = array();
             Yii::app()->gameHelper->unmuteScoringModelsOnSave();
             parent::tearDownAfterClass();
         }
@@ -79,6 +80,7 @@
         public function setup()
         {
             RedBeanDatabase::close();
+            RedBeanColumnTypeOptimizer::$optimizedTableColumns = array();
         }
 
         public function tearDown()
@@ -291,22 +293,12 @@
         public function testCheckRedBean()
         {
             InstallUtil::checkRedBean('10.1.3', $expectedVersion);
-            $this->assertFalse(InstallUtil::checkRedBean('2.1.3',          $actualVersion));
+            $this->assertFalse(InstallUtil::checkRedBean('5.1.3',          $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
             $this->assertTrue (InstallUtil::checkRedBean($expectedVersion, $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
             $this->assertTrue (InstallUtil::checkRedBean('1.2.9',          $actualVersion));
             $this->assertEquals($expectedVersion, $actualVersion);
-        }
-
-        public function testCheckRedBeanIsNotLegacy()
-        {
-            $this->assertTrue(InstallUtil::checkRedBeanIsNotLegacy());
-        }
-
-        public function testCheckRedBeanPatched()
-        {
-            $this->assertTrue(InstallUtil::checkRedBeanPatched());
         }
 
         public function testIsMbStringInstalled()

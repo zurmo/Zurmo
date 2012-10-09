@@ -109,5 +109,10 @@
         {
             return 'AllLatestActivitiesList';
         }
+
+        protected static function includeHavingRelatedItemsWhenRenderingMashableModels()
+        {
+            return true;
+        }
     }
 ?>

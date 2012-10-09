@@ -38,6 +38,8 @@
          */
         protected $cssClasses = array();
 
+        protected $title;
+
         /**
          * Tells View that it can render the extending class' divs with
          * and id matching their name. Must be overridden to return
@@ -91,7 +93,11 @@
             }
             else
             {
-                $id = '';
+                $id = $this->getId();
+                if ($id != null)
+                {
+                    $id = " id=\"$id\"";
+                }
             }
             $classes = join(' ', array_merge($this->getCssClasses(), $classes));
             if ($classes != '')
@@ -112,6 +118,13 @@
         }
 
         /**
+         * @returns id of view if UniqueToAPage is false.  Override if you want to pass an id in.
+         */
+        protected function getId()
+        {
+        }
+
+        /**
          * Renders the view content.
          */
         protected abstract function renderContent();
@@ -129,6 +142,16 @@
         protected function getViewStyle()
         {
             return null;
+        }
+
+        protected function renderTitleContent()
+        {
+            return StringUtil::renderFluidTitleContent($this->getTitle());
+        }
+
+        public function getTitle()
+        {
+            return $this->title;
         }
     }
 ?>

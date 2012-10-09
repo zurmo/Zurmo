@@ -92,11 +92,6 @@
             return $content;
         }
 
-        protected function renderTitleContent()
-        {
-            return '<h1>' . $this->title . '</h1>';
-        }
-
         protected function renderHighlightBox()
         {
             $message = '<strong>' . $this->selectedRecordCount . '</strong>&#160;' .

@@ -74,7 +74,7 @@
                                     $title    = $metadata['perUser']['title'];
                                     MetadataUtil::resolveEvaluateSubString($title);
                                     $label    = '<span>Y</span>' . $title;
-                                    $content .= CHtml::link(Yii::t('Default', $label ), null, array('onclick' => $onClick));
+                                    $content .= ZurmoHtml::link(Yii::t('Default', $label ), null, array('onclick' => $onClick));
                                     $content .= '</li>';
                                 }
                             }

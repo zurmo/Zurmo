@@ -68,7 +68,7 @@
         protected function renderTestButton()
         {
             $content  = '<span>';
-            $content .= CHtml::ajaxButton(Yii::t('Default', 'Send Test Email'),
+            $content .= ZurmoHtml::ajaxButton(Yii::t('Default', 'Send Test Email'),
                 Yii::app()->createUrl('emailMessages/default/sendTestMessage/', array()),
                     static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
                     array('id' => 'SendATestEmailToButton', 'class' => 'EmailTestingButton')

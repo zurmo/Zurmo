@@ -103,7 +103,7 @@
                                                      $this->renderAttributeDropDownOnChangeScript($id,
                                                      $this->getInputsDivId(),
                                                      $this->ajaxOnChangeUrl));
-            $content  = CHtml::dropDownList($name,
+            $content  = ZurmoHtml::dropDownList($name,
                                            $this->selectedAttribute,
                                            $this->searchableAttributeIndicesAndDerivedTypes,
                                            $htmlOptions);
@@ -123,7 +123,7 @@
         protected function renderAttributeDropDownOnChangeScript($id, $inputDivId, $ajaxOnChangeUrl)
         {
             // Begin Not Coding Standard
-            $ajaxSubmitScript  = CHtml::ajax(array(
+            $ajaxSubmitScript  = ZurmoHtml::ajax(array(
                     'type'    => 'GET',
                     'data'    => 'js:\'suffix=' . $this->suffix .
                                  '&attributeIndexOrDerivedType=\' + $(this).val()',

@@ -45,7 +45,7 @@
                 $params['inputPrefix']     = $this->resolveInputPrefix();
                 $element                   = new DropDownElement($this->model, 'title', $this->form, $params);
                 $element->editableTemplate = '{content}{error}';
-                return CHtml::tag('div', array('class' => 'overlay-label-field fifth'), $element->render());
+                return ZurmoHtml::tag('div', array('class' => 'overlay-label-field fifth'), $element->render());
         }
 
         protected function renderEditableNameTextField($model, $form, $attribute)
@@ -62,7 +62,7 @@
             {
                  $label = null;
             }
-            return CHtml::tag('div', array('class' => 'overlay-label-field twoFifths'), $label . $textField . $error);
+            return ZurmoHtml::tag('div', array('class' => 'overlay-label-field twoFifths'), $label . $textField . $error);
         }
 
         protected function renderError()

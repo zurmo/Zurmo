@@ -167,7 +167,7 @@
                         array(
                             'label' => 'Sign out',
                             'url' => array('/zurmo/default/logout'),
-                            'order' => 3,
+                            'order' => 4,
                         ),
                 ),
                 'designerMenuItems' => array(

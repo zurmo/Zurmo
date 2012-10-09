@@ -579,7 +579,7 @@ table.configuration-list{
         position:relative;
     }
     .dk_container{
-        width:75%;
+        width:85%;
         margin-right:10px;
     }
     .configure-custom-field-button{
@@ -712,6 +712,7 @@ table.configuration-list{
         }
     }
     h3{
+        margin-top:10px;
         margin-bottom:15px;
     }
     #right-side-edit-view-panel {
@@ -778,9 +779,13 @@ table.configuration-list{
 	td{
 		text-align:left;
 		padding-top:15px;
+        padding-bottom: 15px;
 		padding-left:15px !important;
 		border-bottom:1px solid #DFDFDF;
 	}
+    .column-import-data{
+        margin-top: 5px;
+    }
 	tr td:last-child{
 		padding-right:15px;
 	}
@@ -833,14 +838,16 @@ table.configuration-list{
 }
 
 #ImportWizardImportRulesView{
+    span{
+        text-align: left;
+        display: block;
+        margin-bottom: 20px;
+    }
     .radio-input{
-        margin-top:20px;
-        .clearfix;
-        input{
-            float:left;
-            margin-right:10px;
-            margin-top:1px;
-        }
+        margin-bottom:10px !important;
+    }
+    table{
+        margin-bottom: 0 !important;
     }
 }
 
@@ -849,7 +856,7 @@ table.configuration-list{
 }
 
 #ImportSequentialProcessContainerView{
-    padding-right:0;
+    //padding-right:0;
     #edit-form{
         padding:0 0 15px 0 !important;
         border:0 !important;
@@ -865,6 +872,12 @@ table.configuration-list{
     h3, h3 + span{
         margin-bottom:15px;
         display:block;
+    }
+    .process-container-view{
+        .clearfix();
+        &:after{
+            clear: none !important;
+        }
     }
 }
 

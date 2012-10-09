@@ -39,11 +39,11 @@
             $dropDownArray = $this->getDropDownArray();
             $value         = $this->model->{$this->attribute};
             $htmlOptions   = array('id'   => $this->getEditableInputId($this->attribute));
-            $content       = CHtml::dropDownList($this->getEditableInputName($this->attribute),
+            $content       = ZurmoHtml::dropDownList($this->getEditableInputName($this->attribute),
                                                  $value,
                                                  $dropDownArray,
                                                  $htmlOptions);
-            $content       = CHtml::tag('div', array('class' => 'beforeToolTip'), $content);
+            $content       = ZurmoHtml::tag('div', array('class' => 'beforeToolTip'), $content);
             $content      .= self::renderTooltipContent();
             return $content;
         }

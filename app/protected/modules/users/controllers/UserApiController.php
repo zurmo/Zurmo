@@ -29,9 +29,53 @@
     */
     class UsersUserApiController extends ZurmoModuleApiController
     {
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'UsersSearchForm';
+        }
+
+        /**
+         * Create new model, and send response
+         * @throws ApiException
+         */
+        public function actionCreate()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if (!isset($params['data']))
+            {
+                $message = Yii::t('Default', 'Please provide data.');
+                throw new ApiException($message);
+            }
+            $this->resolvePasswordParameter($params);
+            $result    =  $this->processCreate($params['data']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        /**
+         * Update model and send response
+         * @throws ApiException
+         */
+        public function actionUpdate()
+        {
+            $params = Yii::app()->apiHelper->getRequestParams();
+            if (!isset($params['id']))
+            {
+                $message = Yii::t('Default', 'The ID specified was invalid.');
+                throw new ApiException($message);
+            }
+            $this->resolvePasswordParameter($params);
+            $result    =  $this->processUpdate((int)$params['id'], $params['data']);
+            Yii::app()->apiHelper->sendResponse($result);
+        }
+
+        protected function resolvePasswordParameter(& $params)
+        {
+            // We have to encrypt password
+            if (isset($params['data']['password']) && $params['data']['password'] != '')
+            {
+                $params['data']['hash'] = User::encryptPassword($params['data']['password']);
+            }
+            unset($params['data']['password']);
         }
     }
 ?>

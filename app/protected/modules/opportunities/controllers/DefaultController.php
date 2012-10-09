@@ -49,11 +49,12 @@
         {
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'listPageSize', get_class($this->getModule()));
-            $opportunity = new Opportunity(false);
-            $searchForm = new OpportunitiesSearchForm($opportunity);
-            $dataProvider = $this->makeSearchDataProvider(
+            $opportunity                    = new Opportunity(false);
+            $searchForm                     = new OpportunitiesSearchForm($opportunity);
+            $listAttributesSelector         = new ListAttributesSelector('OpportunitiesListView', get_class($this->getModule()));
+            $searchForm->setListAttributesSelector($listAttributesSelector);
+            $dataProvider = $this->resolveSearchDataProvider(
                 $searchForm,
-                'Opportunity',
                 $pageSize,
                 null,
                 'OpportunitiesSearchView'
@@ -64,6 +65,7 @@
                     $searchForm,
                     $dataProvider
                 );
+                $view = new OpportunitiesPageView($mixedView);
             }
             else
             {
@@ -71,12 +73,11 @@
                     $searchForm,
                     $pageSize,
                     OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
-                    Yii::app()->user->userModel->id,
                     $dataProvider
                 );
-            }
-            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $mixedView));
+            }
             echo $view->render();
         }
 
@@ -159,7 +160,6 @@
             $activeAttributes = $this->resolveActiveAttributesFromMassEditPost();
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
-                'Opportunity',
                 $pageSize,
                 Yii::app()->user->userModel->id);
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
@@ -197,7 +197,6 @@
             $opportunity = new Opportunity(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
-                'Opportunity',
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
@@ -243,7 +242,7 @@
                                                     $relationModuleId);
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'OpportunitiesSearchForm';
         }

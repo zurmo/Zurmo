@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Makes sure the upload file size is large enough.
+     * Check if database is not in strict mode.
      */
     class DatabaseCheckSafeModeServiceHelper extends ServiceHelper
     {

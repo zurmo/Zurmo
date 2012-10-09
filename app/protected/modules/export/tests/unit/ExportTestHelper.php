@@ -27,7 +27,7 @@
     class ExportTestHelper
     {
          /**
-         * Method to help us simulate Controller::makeRedBeanDataProviderFromGet method.
+         * Method to help us simulate Controller::makeRedBeanDataProviderByDataCollection method.
          */
         public static function makeRedBeanDataProvider(
             $searchModel,

@@ -77,7 +77,7 @@
                     $message->htmlContent         = Yii::t('Default', 'Job completed with errors.');
                     $url                          = Yii::app()->createAbsoluteUrl('jobsManager/default/jobLogDetails/',
                                                                         array('id' => $jobLog->id));
-                    $message->htmlContent        .= "<br/>" . CHtml::link(Yii::t('Default', 'Click Here'), $url);
+                    $message->htmlContent        .= "<br/>" . ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
                     $rules                        = new JobCompletedWithErrorsNotificationRules();
                     NotificationsUtil::submit($message, $rules);
                 }

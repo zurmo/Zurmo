@@ -80,7 +80,7 @@
             ));
             $cClipWidget->endClip();
             $content .= $cClipWidget->getController()->clips['Calendar'];
-            $content .= CHtml::textField('calendarSelectedDate' . $this->uniqueLayoutId,
+            $content .= ZurmoHtml::textField('calendarSelectedDate' . $this->uniqueLayoutId,
                                          null,
                                          array('id'    => 'calendarSelectedDate' . $this->uniqueLayoutId,
                                                'style' => 'display:none;'));

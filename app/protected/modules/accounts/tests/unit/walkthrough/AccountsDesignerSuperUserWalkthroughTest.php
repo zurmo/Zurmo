@@ -49,7 +49,6 @@
         public function testSuperUserAccountDefaultControllerActions()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Account Modules Menu.
             $this->resetPostArray();

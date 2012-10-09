@@ -41,6 +41,9 @@
             $everyone->setRight('ContactsModule',      ContactsModule::RIGHT_ACCESS_CONTACTS, Right::ALLOW);
             $everyone->setRight('ContactsModule',      ContactsModule::RIGHT_CREATE_CONTACTS, Right::ALLOW);
             $everyone->setRight('ContactsModule',      ContactsModule::RIGHT_DELETE_CONTACTS, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_ACCESS_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_ACCESS_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_CREATE_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_DELETE_LEADS, Right::ALLOW);
@@ -51,6 +54,9 @@
             $everyone->setRight('MeetingsModule',      MeetingsModule::RIGHT_ACCESS_MEETINGS, Right::ALLOW);
             $everyone->setRight('MeetingsModule',      MeetingsModule::RIGHT_CREATE_MEETINGS, Right::ALLOW);
             $everyone->setRight('MeetingsModule',      MeetingsModule::RIGHT_DELETE_MEETINGS, Right::ALLOW);
+            $everyone->setRight('MissionsModule',      MissionsModule::RIGHT_ACCESS_MISSIONS, Right::ALLOW);
+            $everyone->setRight('MissionsModule',      MissionsModule::RIGHT_CREATE_MISSIONS, Right::ALLOW);
+            $everyone->setRight('MissionsModule',      MissionsModule::RIGHT_DELETE_MISSIONS, Right::ALLOW);
             $everyone->setRight('NotesModule',         NotesModule::RIGHT_ACCESS_NOTES, Right::ALLOW);
             $everyone->setRight('NotesModule',         NotesModule::RIGHT_CREATE_NOTES, Right::ALLOW);
             $everyone->setRight('NotesModule',         NotesModule::RIGHT_DELETE_NOTES, Right::ALLOW);
@@ -61,9 +67,7 @@
             $everyone->setRight('HomeModule',          HomeModule::RIGHT_CREATE_DASHBOARDS, Right::ALLOW);
             $everyone->setRight('HomeModule',          HomeModule::RIGHT_DELETE_DASHBOARDS, Right::ALLOW);
             $everyone->setRight('ExportModule',        ExportModule::RIGHT_ACCESS_EXPORT, Right::ALLOW);
-            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_ACCESS_CONVERSATIONS, Right::ALLOW);
-            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS, Right::ALLOW);
-            $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('SocialItemsModule',   SocialItemsModule::RIGHT_ACCESS_SOCIAL_ITEMS, Right::ALLOW);
             $saved = $everyone->save();
             assert('$saved');
         }

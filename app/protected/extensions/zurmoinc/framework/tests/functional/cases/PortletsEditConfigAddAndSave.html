@@ -33,7 +33,7 @@
 </tr>
 <tr>
   <td>click</td>
-  <td>HomeDashboard1_4_EditLink</td>
+  <td>//li[@class='juiportlet-widget TasksMyListView']/div/a[3]/span</td>
   <td></td>
 </tr>
 <tr>
@@ -51,14 +51,14 @@
   <td>MyListForm_title</td>
   <td>TestTitle ${randomSuffix}</td>
 </tr>
-<tr>
+<<tr>
   <td>click</td>
-  <td>save</td>
+  <td>css=div.modal-view-toolbar &gt; #save &gt; span.z-label</td>
   <td></td>
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//li[@id='HomeDashboard1_4']/div[1]/h3</td>
+  <td>//li[@class='juiportlet-widget TasksMyListView']/div[1]/h3</td>
   <td>TestTitle ${randomSuffix}</td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("Breadcrumbs");
             $cClipWidget->widget('zii.widgets.CBreadcrumbs', array(
-                'homeLink'  => CHtml::link($this->getHomeLinkLabel(), $homeUrl),
+                'homeLink'  => ZurmoHtml::link($this->getHomeLinkLabel(), $homeUrl),
                 'links'     => $this->breadcrumbLinks,
                 'separator' => ' &#47; ',
             ));

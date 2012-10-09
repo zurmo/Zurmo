@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>Notes Attach Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>index.php/users/default</td>
+	<td></td>
+</tr>
+<!-- Test single option mass update-->
+<tr>
+	<td>click</td>
+	<td>id=list-view-rowSelector_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=list-view-rowSelector_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>2 records selected for updating</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=MassEdit_department</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_department</td>
+	<td>sales</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Successfully updated 2 records</td>
+    <td></td>
+</tr>
+<!-- Test both option mass update-->
+<tr>
+	<td>click</td>
+	<td>id=list-view-rowSelector_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=list-view-rowSelector_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>2 records selected for updating</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=MassEdit_department</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=User_department</td>
+	<td>mail</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=MassEdit_manager</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#User_manager_SelectLink &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Jason Blue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Successfully updated 2 records</td>
+    <td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

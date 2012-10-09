@@ -62,7 +62,7 @@
         {
             if ($this->stickyLoadUrl != null)
             {
-                $ajaxLoadScript  = CHtml::ajax(array(
+                $ajaxLoadScript  = ZurmoHtml::ajax(array(
                         'type'    => 'GET',
                         'url'     =>  $this->stickyLoadUrl,
                         'update'  => '#stickyListLoadingArea',

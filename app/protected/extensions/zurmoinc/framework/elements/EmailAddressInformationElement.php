@@ -46,7 +46,7 @@
 
             if (ArrayUtil::getArrayValue($this->params, 'hideOptOut') != true)
             {
-                $content      = CHtml::tag('div', array('class' => 'beforeOptOutCheckBox'), '<div>' . $content . '</div>');
+                $content      = ZurmoHtml::tag('div', array('class' => 'beforeOptOutCheckBox'), '<div>' . $content . '</div>');
                 $content     .= $this->renderEditableEmailAddressCheckBoxField($addressModel, $this->form, $this->attribute, 'optOut') . "\n";
             }
             return $content;

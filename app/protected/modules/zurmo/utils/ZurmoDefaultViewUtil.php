@@ -32,6 +32,29 @@
         protected static $showRecentlyViewed = true;
 
         /**
+         * Given a controller, contained view, construct the gridview
+         * used by the designer page view.
+         * @param CController $controller
+         * @param View $containedView
+         * @param mixed $activeNodeModuleClassName (null or string)
+         */
+        public static function makeViewWithBreadcrumbsForCurrentUser(CController $controller,
+                                                                     View $containedView,
+                                                                     $breadcrumbLinks,
+                                                                     $breadcrumbViewClassName,
+                                                                     $cssClasses = array())
+        {
+            assert('is_array($breadcrumbLinks)');
+            $gridView    = new GridView(2, 1);
+            $gridView->setCssClasses($cssClasses);
+            $gridView->setView(new $breadcrumbViewClassName($controller->getId(),
+                                                            $controller->getModule()->getId(),
+                                                            $breadcrumbLinks), 0, 0);
+            $gridView->setView($containedView, 1, 0);
+            return static::makeStandardViewForCurrentUser($controller, $gridView);
+        }
+
+        /**
          * Given a controller and contained view, construct the gridview
          * used by the zurmo page view.
          * @param CController $controller

@@ -196,7 +196,7 @@
                                      'relatedModelClassName'      => 'Conversation',
                                      'relatedModelRelationName'   => 'comments',
                                      'redirectUrl'                => 'someRedirect'));
-            $this->setPostArray(array('ajax' => 'inline-edit-form',
+            $this->setPostArray(array('ajax' => 'comment-inline-edit-form',
                                       'Comment' => array('description' => 'a ValidComment Name')));
 
             $content = $this->runControllerWithExitExceptionAndGetContent('comments/default/inlineCreateSave');

@@ -97,7 +97,7 @@
         protected function renderEditableValueTypeContent()
         {
             $value     = $this->model->{$this->attribute};
-            return       CHtml::dropDownList($this->getEditableInputName($this->attribute, 'type'),
+            return       ZurmoHtml::dropDownList($this->getEditableInputName($this->attribute, 'type'),
                                              ArrayUtil::getArrayValue($value, 'type'),
                                              $this->getValueTypeDropDownArray(),
                                              $this->getEditableValueTypeHtmlOptions());
@@ -120,7 +120,7 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
-                    'buttonText'      => '<span><!--Date--></span>',
+                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
                     'showButtonPanel' => true,
                     'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
@@ -129,7 +129,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['EditableDateElement'];
-            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         protected function renderEditableSecondDateContent()
@@ -149,7 +149,7 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
-                    'buttonText'      => '<span><!--Date--></span>',
+                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
                     'showButtonPanel' => true,
                     'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
@@ -158,7 +158,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['EditableDateElement'];
-            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         protected function getEditableValueTypeHtmlOptions()
@@ -192,7 +192,7 @@
             {
                 return $label;
             }
-            return CHtml::label($label, false);
+            return ZurmoHtml::label($label, false);
         }
     }
 ?>

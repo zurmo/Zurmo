@@ -49,7 +49,7 @@
             return 'Group';
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'GroupsSearchForm';
         }

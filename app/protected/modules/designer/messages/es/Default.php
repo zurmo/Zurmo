@@ -29,6 +29,8 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '"{$attributeName}" field name is a database reserved word. Please enter a different one.'
+            => 'El Nombre de campo "{$attributeName}"  es una palabra reservada de la base de datos. Por favor, introduzca una otra palabra.',
         'A calculated number based on other field values'
             => 'Una cifra calculada',
         'A check box'

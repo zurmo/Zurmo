@@ -102,7 +102,7 @@
             {
                 throw new NotImplementedException();
             }
-            return CHtml::label(Yii::t('Default', 'Who can read and write'), false);
+            return ZurmoHtml::label(Yii::t('Default', 'Who can read and write'), false);
         }
 
         /**
@@ -217,7 +217,7 @@
             {
                 return null;
             }
-            return CHtml::dropDownList($name, $this->resolveSelectedGroup(), $dropDownArray, $htmlOptions);
+            return ZurmoHtml::dropDownList($name, $this->resolveSelectedGroup(), $dropDownArray, $htmlOptions);
         }
 
         protected function getSelectableGroupsData()

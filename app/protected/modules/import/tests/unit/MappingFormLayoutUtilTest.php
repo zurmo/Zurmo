@@ -127,7 +127,7 @@
             $this->assertEquals($content, $text);
             $text                       = str_repeat('a', 24);
             $content                    = MappingFormLayoutUtil::renderChoppedStringContent($text);
-            $this->assertEquals($content, CHtml::tag('div', array('title' => $text), str_repeat('a', 22) . '...'));
+            $this->assertEquals($content, ZurmoHtml::tag('div', array('title' => $text), str_repeat('a', 22) . '...'));
         }
 
         public function testRenderHeaderColumnContent()
@@ -143,7 +143,7 @@
 
             $text                       = str_repeat('a', 24);
             $content                    = $mappingFormLayoutUtil->renderHeaderColumnContent('SampleColumn', $text);
-            $this->assertEquals($content, CHtml::tag('div', array('title' => $text), str_repeat('a', 22) . '...'));
+            $this->assertEquals($content, ZurmoHtml::tag('div', array('title' => $text), str_repeat('a', 22) . '...'));
         }
 
         public function testRenderImportColumnContent()
@@ -156,11 +156,14 @@
             $sampleValue                = 'a';
             $columnName                 = 'SampleColumnName';
             $content                    = $mappingFormLayoutUtil->renderImportColumnContent($columnName, $sampleValue);
-            $this->assertEquals($content, '<div id="' . $columnName . '-import-data">' . $sampleValue . '</div>');
-
+            $this->assertEquals($content, '<div id="' . $columnName . '-import-data" class="column-import-data">' .
+                                          $sampleValue . '</div>');
             $sampleValue                = str_repeat('a', 24);
             $content                    = $mappingFormLayoutUtil->renderImportColumnContent($columnName, $sampleValue);
-            $this->assertEquals($content, '<div id="' . $columnName . '-import-data">' . CHtml::tag('div', array('title' => $sampleValue), str_repeat('a', 22) . '...') . '</div>');
+            $this->assertEquals($content, '<div id="' . $columnName . '-import-data" class="column-import-data">' .
+                                          ZurmoHtml::tag('div',
+                                                          array('title' => $sampleValue), str_repeat('a', 22) . '...') .
+                                                                             '</div>');
         }
 
         public function testGetSampleColumnHeaderId()

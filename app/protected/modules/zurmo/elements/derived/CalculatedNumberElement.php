@@ -76,7 +76,7 @@
          */
         protected function renderLabel()
         {
-            return CHtml::tag('label', array(),
+            return ZurmoHtml::tag('label', array(),
                    $this->calculatedDerivedAttributeMetadata->getLabelByLanguage(Yii::app()->language));
         }
 

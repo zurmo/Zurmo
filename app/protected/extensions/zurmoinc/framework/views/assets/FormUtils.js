@@ -10,7 +10,7 @@
             form: 'form',
             bind: 'click',
             clear: "input[type!='submit'][type!='button'][type!='hidden'][type!='reset'][type!=checkbox], textarea, select",
-            clearCheckbox: "input[type=checkbox]",
+            clearCheckbox: "input[type=checkbox][class!='ignoreclearform']",
             css: {},
             complete: function () {}
         };
@@ -22,8 +22,8 @@
             i += b + '.clearform '
         });
         $(this).bind(i, function (e) {
-            $(g.clear, g.form).val('').find('option:first-child').attr('selected', 'selected');
-            $(g.clearCheckbox, g.form).attr('checked', false);
+            $(g.clear, g.form).not('.ignore-clearform').val('').find('option:first-child').attr('selected', 'selected');
+            $(g.clearCheckbox, g.form).not('.multiselect-checkbox').attr('checked', false);
             g.complete()
         }).css(g.css)
     }

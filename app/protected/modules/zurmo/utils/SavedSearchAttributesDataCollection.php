@@ -91,11 +91,6 @@
             return array();
         }
 
-        public function resolveAnyMixedAttributesScopeForSearchModelFromSourceData()
-        {
-            SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($this->model, get_class($this->model));
-        }
-
         public function getSavedSearchId()
         {
             return $this->model->savedSearchId;

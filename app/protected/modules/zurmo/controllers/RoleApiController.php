@@ -49,7 +49,7 @@
             return 'Role';
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'RolesSearchForm';
         }

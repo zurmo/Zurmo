@@ -30,16 +30,16 @@
          * Action for saving a new comment inline edit form.
          * @param string or array $redirectUrl
          */
-        public function actionInlineCreateSave($redirectUrl = null)
+        public function actionInlineCreateSave($redirectUrl = null, $uniquePageId = null)
         {
-            if (isset($_POST['ajax']) && $_POST['ajax'] === 'inline-edit-form')
+            if (isset($_POST['ajax']) && $_POST['ajax'] === 'comment-inline-edit-form' . $uniquePageId)
             {
                 $this->actionInlineEditValidate(new Comment(), 'Comment');
             }
             $this->attemptToSaveModelFromPost(new Comment(), $redirectUrl);
         }
 
-        public function actionAjaxListForRelatedModel()
+        public function actionAjaxListForRelatedModel($uniquePageId = null)
         {
             $getData                  = GetUtil::getData();
             $relatedModelId           = ArrayUtil::getArrayValue($getData, 'relatedModelId');
@@ -58,12 +58,13 @@
             $commentsData             = Comment::getCommentsByRelatedModelTypeIdAndPageSize($relatedModelClassName,
                                                                                             (int)$relatedModelId,
                                                                                             $retrievalPageSize);
-            $getParams                = array('relatedModelId'           => $relatedModelId,
+            $getParams                = array('uniquePageId'             => $uniquePageId,
+                                              'relatedModelId'           => $relatedModelId,
                                               'relatedModelClassName'    => $relatedModelClassName,
                                               'relatedModelRelationName' => $relatedModelRelationName);
             $relatedModel             = $relatedModelClassName::getById((int)$relatedModelId);
             $view                     = new CommentsForRelatedModelView('default', 'comments', $commentsData, $relatedModel,
-                                                                        $pageSize, $getParams);
+                                                                        $pageSize, $getParams, $uniquePageId);
             $content                  = $view->render();
             Yii::app()->getClientScript()->setToAjaxMode();
             Yii::app()->getClientScript()->render($content);
@@ -104,7 +105,7 @@
             $errorData = array();
             foreach ($model->getErrors() as $attribute => $errors)
             {
-                    $errorData[CHtml::activeId($model, $attribute)] = $errors;
+                    $errorData[ZurmoHtml::activeId($model, $attribute)] = $errors;
             }
             echo CJSON::encode($errorData);
             Yii::app()->end(0, false);

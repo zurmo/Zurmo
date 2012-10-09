@@ -51,7 +51,26 @@
 
         public function get()
         {
-            return $this->layoutAttributes;
+            return self::resolveSorting($this->layoutAttributes);
+        }
+
+        protected function resolveSorting($layoutAttributes)
+        {
+            $inPlaceAttributes   = array();
+            $availableAttributes = array();
+            foreach ($layoutAttributes as $attributeName => $data)
+            {
+                if ($data['availableToSelect'])
+                {
+                    $availableAttributes[$attributeName] = $data;
+                }
+                else
+                {
+                    $inPlaceAttributes[$attributeName] = $data;
+                }
+            }
+            ksort($availableAttributes);
+            return $inPlaceAttributes + $availableAttributes;
         }
 
         public function getByAttributeNameAndType($attributeName, $type)

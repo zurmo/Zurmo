@@ -54,7 +54,7 @@
                     $route = $this->moduleId . '/' . $this->controllerId . '/modulesMenu/';
                     $content .= '<li>';
                     $content .= '<h4>'. Yii::t('Default', $module::getModuleLabelByTypeAndLanguage('Plural')) . '</h4>';
-                    $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                    $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
                                         Yii::app()->createUrl($route,
                             array(
                                 'moduleClassName' => get_class($module),
@@ -65,11 +65,6 @@
             }
             $content .= '</ul>';
             return $content;
-        }
-
-        protected function renderTitleContent()
-        {
-            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

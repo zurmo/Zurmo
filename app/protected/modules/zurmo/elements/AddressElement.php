@@ -128,7 +128,7 @@
             {
                 $halfClassString = ' half';
             }
-            return CHtml::tag('div', array('class' => 'overlay-label-field' . $halfClassString), $label . $textField . $error);
+            return ZurmoHtml::tag('div', array('class' => 'overlay-label-field' . $halfClassString), $label . $textField . $error);
         }
 
          /**
@@ -150,16 +150,17 @@
                                                                          'latitude'      => $addressModel->latitude,
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
-            $content      = CHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl,
-                                $this->resolveAjaxOptionsForMapLink(),
+            $content      = ZurmoHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl,
+                                static::resolveAjaxOptionsForMapLink(),
                                 array('id' => $id, 'class' => 'map-link')
             );
             return $content;
         }
 
-        protected function resolveAjaxOptionsForMapLink()
+        protected static function resolveAjaxOptionsForMapLink()
         {
-            return ModalView::getAjaxOptionsForModalLink(strval($this->model));
+            $title = Yii::t('Default', 'Address Location on Map');
+            return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function renderError()

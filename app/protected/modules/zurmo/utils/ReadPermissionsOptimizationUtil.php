@@ -928,12 +928,12 @@
         // than is necessary.
         protected static function garbageCollect($mungeTableName)
         {
-            assert("R::getCell('select count(*)
+            assert("(int)R::getCell('select count(*)
                                 from   $mungeTableName
                                 where  count < 0') == 0");
             R::exec("delete from $mungeTableName
                      where       count = 0");
-            assert("R::getCell('select count(*)
+            assert("(int)R::getCell('select count(*)
                                 from   $mungeTableName
                                 where  count < 1') == 0");
         }

@@ -29,7 +29,7 @@
     */
     class LeadsContactApiController extends ZurmoModuleApiController
     {
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'LeadsSearchForm';
         }

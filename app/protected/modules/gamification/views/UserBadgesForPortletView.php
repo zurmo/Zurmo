@@ -92,7 +92,7 @@
                 {
                     $badgeRulesClassName = $badge->type . 'GameBadgeRules';
                     $tooltipSpanId       = 'user-badge-tooltip-' . $badge->type;
-                    $value               = $badgeRulesClassName::getItemCountByGrade($badge->grade);
+                    $value               = $badgeRulesClassName::getItemCountByGrade((int)$badge->grade);
                     //$content .= '<span id="' . $tooltipSpanId . '" class="tooltip"  title="' . $badgeRulesClassName::getPassiveDisplayLabel($value) . '">';
                     $content .= '<div class="badge ' . $badge->type . '"><div class="gloss"></div>' .
                                 '<strong class="badge-icon" title="' . $badgeRulesClassName::getPassiveDisplayLabel($value) . '"></strong><span class="badge-grade">' . $badge->grade . '</span></div>';

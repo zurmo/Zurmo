@@ -28,9 +28,9 @@
     {
         protected function renderBeforeTableContent()
         {
-            $dropDownContent = CHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
+            $dropDownContent = ZurmoHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
 
-            $linkContent     = CHtml::button(Yii::t('Default', 'Configure'),
+            $linkContent     = ZurmoHtml::button(Yii::t('Default', 'Configure'),
                                                         array('id' => 'attributeTypeNameButton', 'class' => 'configure-custom-field-button'));
             $url             = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeEdit/',
                                                      array('moduleClassName' => $this->moduleClassName));

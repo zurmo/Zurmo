@@ -112,7 +112,7 @@
                 $content .= '<td>';
                 if (isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
                 {
-                    $content .= CHtml::link(CHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
+                    $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array(), Yii::t('Default', 'Configure') ),
                                             $node['route']);
                 }
                 $content .= '</td>';
@@ -181,7 +181,7 @@
 
         protected function makeTreeMenuNodeLink($label, $action, $id)
         {
-            return CHtml::Link($label, $this->makeTreeMenuNodeRoute($action, $id));
+            return ZurmoHtml::Link($label, $this->makeTreeMenuNodeRoute($action, $id));
         }
 
         protected function makeTreeMenuNodeRoute($action, $id)

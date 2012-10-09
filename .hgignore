@@ -31,3 +31,16 @@ app/report
 .settings
 README.md
 
+.idea/.name
+.idea/ZurmoUI.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/workspace.xml
+ZurmoUI.komodoproject
+app/protected/modules/zurmo/views/search/DynamicSearchRowView.php.orig
+yii/framework/gii/assets/js/tools.tooltip-1.2.5.min.js
+yii/framework/vendors/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer
+yii/framework/vendors/htmlpurifier/standalone/HTMLPurifier/Lexer/PEARSax3.php

@@ -40,6 +40,17 @@
                                     'routeParameters' => 'eval:$this->getCreateLinkRouteParameters()'),
                         ),
                     ),
+                    'rowMenu' => array(
+                        'elements' => array(
+                            array('type'                      => 'EditLink'),
+                            array('type'                      => 'RelatedDeleteLink'),
+                            array('type'                      => 'RelatedUnlink',
+                                  'relationModelClassName'    => 'eval:get_class($this->params["relationModel"])',
+                                  'relationModelId'           => 'eval:$this->params["relationModel"]->id',
+                                  'relationModelRelationName' => 'contacts',
+                                  'userHasRelatedModelAccess' => 'eval:ActionSecurityUtil::canCurrentUserPerformAction( "Edit", $this->params["relationModel"])'),
+                        ),
+                    ),
                     'derivedAttributeTypes' => array(
                         'FullName',
                     ),

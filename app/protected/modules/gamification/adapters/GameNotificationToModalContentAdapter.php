@@ -27,36 +27,8 @@
     /**
      * Adapter to take a GameNotification object and render content for the modal notification dialog box.
      */
-    class GameNotificationToModalContentAdapter
+    class GameNotificationToModalContentAdapter extends GameNotificationToContentAdapter
     {
-        protected $gameNotification;
-
-        public function __construct(GameNotification $gameNotification)
-        {
-            $this->gameNotification = $gameNotification;
-        }
-
-        /**
-         * @return string name of the css class to use for the appropriate icon.
-         */
-        public function getIconCssName()
-        {
-            $data = $this->getAndValidateUnserializedData();
-            if ($data['type'] == GameNotification::TYPE_LEVEL_CHANGE)
-            {
-                return 'game-level-change';
-            }
-            elseif ($data['type'] == GameNotification::TYPE_NEW_BADGE ||
-                    $data['type'] == GameNotification::TYPE_BADGE_GRADE_CHANGE)
-            {
-                return 'game-badge-' . $data['badgeType'];
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
-        }
-
         /**
          * @return string content of the notification message content to display.
          */
@@ -81,7 +53,7 @@
             elseif ($data['type'] == GameNotification::TYPE_BADGE_GRADE_CHANGE)
             {
                 $gameBadgeRulesClassName = $data['badgeType'] . 'GameBadgeRules';
-                $value                   = $gameBadgeRulesClassName::getItemCountByGrade($data['grade']);
+                $value                   = $gameBadgeRulesClassName::getItemCountByGrade((int)$data['grade']);
                 $content   = '<h2>' . Yii::t('Default', 'New Badge') . '</h2>';
                 $content  .= '<h3>' . $gameBadgeRulesClassName::getPassiveDisplayLabel($value) . '</h3>';
                 return $content;
@@ -90,16 +62,6 @@
             {
                 throw new NotSupportedException();
             }
-        }
-
-        protected function getAndValidateUnserializedData()
-        {
-            $data = $this->gameNotification->getUnserializedData();
-            if (!isset($data['type']))
-            {
-                throw new NotSupportedException();
-            }
-            return $data;
         }
     }
 ?>

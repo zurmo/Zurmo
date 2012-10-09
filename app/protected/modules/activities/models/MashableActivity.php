@@ -34,5 +34,10 @@
         {
             return 'Activity';
         }
+
+        public static function hasRelatedItems()
+        {
+            return true;
+        }
     }
 ?>

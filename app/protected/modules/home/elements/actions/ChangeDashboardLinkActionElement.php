@@ -44,10 +44,7 @@
             $cClipWidget->beginClip("DetailsOptionMenu");
             $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
                 'htmlOptions' => array('id' => 'ChangeDashboardsMenu', 'class'   => 'icon-change-dashboard'),
-                'items'                   => array($menuItems),
-                'navContainerClass'       => 'nav-single-container',
-                'navBarClass'             => 'nav-single-bar',
-            ));
+                'items'                   => array($menuItems)));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['DetailsOptionMenu'];
         }

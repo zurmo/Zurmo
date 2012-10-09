@@ -40,10 +40,10 @@
             $content  = '<div class="help-section">';
             $content .= '<h3>' . Yii::t('Default', 'Helpful Links') . '</h3>';
             $content .= '<ul>';
-            $content .= '<li>' . CHtml::link(Yii::t('Default', 'Join the forum'), 'http://www.zurmo.org/forums') . '</li>';
-            $content .= '<li>' . CHtml::link(Yii::t('Default', 'Read the wiki'),  'http://zurmo.org/wiki') . '</li>';
-            $content .= '<li>' . CHtml::link(Yii::t('Default', 'View a tutorial'), 'http://www.zurmo.org/tutorials') . '</li>';
-            $content .= '<li>' . CHtml::link(Yii::t('Default', 'Watch a video'), 'http://zurmo.org/screencasts') . '</li>';
+            $content .= '<li>' . ZurmoHtml::link(Yii::t('Default', 'Join the forum'), 'http://www.zurmo.org/forums') . '</li>';
+            $content .= '<li>' . ZurmoHtml::link(Yii::t('Default', 'Read the wiki'),  'http://zurmo.org/wiki') . '</li>';
+            $content .= '<li>' . ZurmoHtml::link(Yii::t('Default', 'View a tutorial'), 'http://www.zurmo.org/tutorials') . '</li>';
+            $content .= '<li>' . ZurmoHtml::link(Yii::t('Default', 'Watch a video'), 'http://zurmo.org/screencasts') . '</li>';
             $content .= '</ul>';
             $content .= '</div>';
             return $content;
@@ -104,7 +104,7 @@
             assert('is_string($label)');
             $url       = Yii::app()->createUrl('home/default/getTip');
             // Begin Not Coding Standard
-            return       CHtml::ajaxLink($label, $url,
+            return       ZurmoHtml::ajaxLink($label, $url,
                          array('type' => 'GET',
                                'dataType' => 'json',
                                'success' => "js:function(data){
@@ -119,7 +119,7 @@
             if ($this->hasDashboardAccess)
             {
                 $label    = Yii::t('Default', 'Go to the dashboard');
-                $content  = CHtml::link($label, Yii::app()->createUrl('home/default'), array('class' => 'dashboard-link'));
+                $content  = ZurmoHtml::link($label, Yii::app()->createUrl('home/default'), array('class' => 'dashboard-link'));
                 return $content;
             }
         }
@@ -129,7 +129,7 @@
             if ($this->hasDashboardAccess)
             {
                 $label    = '<span></span>' . Yii::t('Default', 'Don\'t show me this screen again');
-                $content  = '<div class="hide-welcome">'.CHtml::link($label, Yii::app()->createUrl('home/default/hideWelcome'));
+                $content  = '<div class="hide-welcome">'.ZurmoHtml::link($label, Yii::app()->createUrl('home/default/hideWelcome'));
                 $content .= ' <i>(' . Yii::t('Default', 'Don\'t worry you can turn it on again') . ')</i></div>';
                 return $content;
             }

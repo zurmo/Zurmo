@@ -93,5 +93,32 @@
             }
             return $flatternArray;
         }
+
+        /**
+         * Pass an array in to sort by an element's value.
+         * @param Array $array
+         * @param Mixed $subKey (integer or string)
+         * @param string $sortFunctionName
+         * @return sorted array
+         */
+        public static function subValueSort($array, $subKey, $sortFunctionName)
+        {
+            assert('$sortFunctionName == "sort" || $sortFunctionName == "asort"');
+            $newArray = array();
+            foreach ($array as $key => $value)
+            {
+                $newArray[$key] = strtolower($value[$subKey]);
+            }
+            if (!empty($newArray))
+            {
+                $sortFunctionName($newArray);
+                $finalArray = array();
+                foreach ($newArray as $newKey => $unused)
+                {
+                    $finalArray[] = $array[$newKey];
+                }
+                return $finalArray;
+            }
+        }
     }
 ?>

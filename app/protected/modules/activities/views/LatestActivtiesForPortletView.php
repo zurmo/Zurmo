@@ -89,7 +89,9 @@
 
         protected function renderLatestActivitiesContent()
         {
-            $mashableModelClassNamesAndDisplayLabels = LatestActivitiesUtil::getMashableModelDataForCurrentUser();
+            $mashableModelClassNamesAndDisplayLabels = LatestActivitiesUtil::
+                                                            getMashableModelDataForCurrentUser(
+                                                            static::includeHavingRelatedItemsWhenRenderingMashableModels());
             if (count($mashableModelClassNamesAndDisplayLabels) > 0)
             {
                 $uniquePageId  = get_called_class();
@@ -104,7 +106,7 @@
                 $dataProvider = $this->getDataProvider($uniquePageId, $latestActivitiesConfigurationForm);
                 $latestView = new $latestActivitiesViewClassName($dataProvider,
                                                                  $latestActivitiesConfigurationForm,
-                                                                 'latestActivities', 'activities',
+                                                                 'default', 'activities',
                                                                  $this->getPortletDetailsUrl(),
                                                                  $this->getNonAjaxRedirectUrl(),
                                                                  $uniquePageId,
@@ -112,6 +114,11 @@
                                                                  get_class(Yii::app()->findModule($this->moduleId)));
                 return $latestView->render();
             }
+        }
+
+        protected static function includeHavingRelatedItemsWhenRenderingMashableModels()
+        {
+            return false;
         }
 
         protected function makeLatestActivitiesConfigurationForm()

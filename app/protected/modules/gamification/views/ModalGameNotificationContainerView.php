@@ -76,15 +76,57 @@
                 ),
                 'htmlOptions' => array('class' => 'ModalGameNotification')
             ));
-            $adapter = new GameNotificationToModalContentAdapter($notification);
+            $adapter      = new GameNotificationToModalContentAdapter($notification);
+
             echo '<div class="game-badge ' . $adapter->getIconCssName() . '"><div class="gloss"></div>' .
                                 '<strong class="badge-icon"></strong><span class="badge-message">' . $adapter->getMessageContent() . '</span></div>';
             echo '<br />';
-            echo CHtml::link(Yii::t('Default', 'Continue'), '#',
-                             array('class' => 'close-ModalGameNotification', 'onclick' => '$("#ModalGameNotification' . $index . '").dialog("close");'));
+            echo static::resolveAndRenderPostingAndContinueLinksContent($notification, $index);
             $cClipWidget->endWidget('zii.widgets.jui.CJuiDialog');
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['ModalGameNotificationView'];
+        }
+
+        protected static function resolveAndRenderPostingAndContinueLinksContent(GameNotification $notification, $index)
+        {
+            if (!RightsUtil::canUserAccessModule('SocialItemsModule', Yii::app()->user->userModel))
+            {
+                return ZurmoHtml::link(Yii::t('Default', 'Continue'), '#',
+                             array('class'   => 'close-ModalGameNotification',
+                                    'onclick' => '$("#ModalGameNotification' . $index . '").dialog("close");'));
+            }
+            else
+            {
+                $content = ZurmoHtml::link(Yii::t('Default', 'Skip posting, just continue'), '#',
+                                 array('class'   => 'close-ModalGameNotification simple-select',
+                                       'onclick' => '$("#ModalGameNotification' . $index . '").dialog("close");'));
+                $content .= static::renderPostToProfileLinkContent($notification, $index);
+                return $content;
+            }
+        }
+
+        protected static function renderPostToProfileLinkContent(GameNotification $notification, $index)
+        {
+            assert('is_int($index)');
+            $socialItemAdapter = new GameNotificationToSocialItemContentAdapter($notification);
+            $url       =   Yii::app()->createUrl('socialItems/default/postGameNotificationToProfile',
+                                               array('content' => $socialItemAdapter->getMessageContent()));
+
+            $aContent                = ZurmoHtml::tag('span', array('class' => 'z-spinner'), null);
+            $aContent               .= ZurmoHtml::tag('span', array('class' => 'z-icon'),    null);
+            $aContent               .= ZurmoHtml::tag('span',  array('class' => 'z-label'),
+                                                     Yii::t('Default', 'Post to Profile'));
+            // Begin Not Coding Standard
+            $content   = ZurmoHtml::ajaxLink($aContent, $url,
+                         array('type'     => 'GET',
+                               'complete' => "function(XMLHttpRequest, textStatus){
+                                              $('#ModalGameNotification" . $index . "').dialog('close');}"),
+                         array('class'     => 'close-ModalGameNotification',
+                               'onclick'   => 'js:$(this).addClass("loading").addClass("loading-ajax-submit");
+                                              attachLoadingSpinner($(this).attr("id"), true, "dark");',
+                         ));
+            // End Not Coding Standard
+            return $content;
         }
 
         public function isUniqueToAPage()

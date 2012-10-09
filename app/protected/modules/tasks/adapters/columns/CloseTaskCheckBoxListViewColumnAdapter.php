@@ -45,9 +45,9 @@
             }
             $checkboxId = 'closeTask' . $modelId;
             // Begin Not Coding Standard
-            $content    = '"<label class=\'hasCheckBox\'>" . CHtml::checkBox("' . $checkboxId . '", false,
+            $content    = 'ZurmoHtml::checkBox("' . $checkboxId . '", false,
                                        array("class" => "close-task-checkbox",
-                                             "onclick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')")) . "</label>"';
+                                             "onclick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')"))';
 
             Yii::app()->clientScript->registerScript('closeTaskCheckBoxScript', "
                 function closeOpenTaskByCheckBoxClick(checkboxId, modelId)

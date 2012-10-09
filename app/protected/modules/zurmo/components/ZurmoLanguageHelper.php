@@ -236,7 +236,7 @@
         {
             assert('is_string($language)');
             $tableName = User::getTableName('User');
-            $beans = RedBean_Plugin_Finder::where($tableName, "language = '$language'");
+            $beans = R::find($tableName, "language = '$language'");
             if (count($beans) > 0)
             {
                 return true;

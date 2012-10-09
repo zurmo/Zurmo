@@ -47,9 +47,16 @@
                     $options['class'] = $class;
                 }
             }
-            echo CHtml::openTag('div', $options);
+            ob_start();
             $this->owner->renderDataCellContentFromOutsideClass($row, $data);
-            echo '</div>';
+            $content = ob_get_contents();
+            ob_end_clean();
+            if ($content != null && $content != $this->owner->grid->nullDisplay)
+            {
+                echo ZurmoHtml::openTag('div', $options);
+                echo $content;
+                echo '</div>';
+            }
         }
     }
 ?>

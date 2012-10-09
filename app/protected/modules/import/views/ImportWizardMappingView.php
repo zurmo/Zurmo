@@ -205,9 +205,9 @@
             $hiddenInputName     = 'columnCounter';
             $ajaxOnChangeUrl     = Yii::app()->createUrl("import/default/mappingAddExtraMappingRow",
                                    array('id' => $this->model->id));
-            $content             = CHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
+            $content             = ZurmoHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
             // Begin Not Coding Standard
-            $content            .= CHtml::ajaxButton(Yii::t('Default', 'Add Field'), $ajaxOnChangeUrl,
+            $content            .= ZurmoHtml::ajaxButton(Yii::t('Default', 'Add Field'), $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
                                           'success' => 'js:function(data){

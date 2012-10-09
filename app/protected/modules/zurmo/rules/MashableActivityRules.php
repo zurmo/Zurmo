@@ -104,5 +104,45 @@
             }
             return $content;
         }
+
+        public static function resolveSearchAttributesDataByOwnedByFilter(& $searchAttributesData, $ownedByFilter)
+        {
+            assert('is_array($searchAttributesData)');
+            assert('$ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL ||
+                    $ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER ||
+                    is_int($ownedByFilter)');
+            if ($ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER || is_int($ownedByFilter))
+            {
+                if (is_int($ownedByFilter))
+                {
+                    $userId = $ownedByFilter;
+                }
+                else
+                {
+                    $userId = Yii::app()->user->userModel->id;
+                }
+                static::resolveSearchAttributesDataByOwnedByFilterClauses($searchAttributesData, $userId);
+            }
+        }
+
+        protected static function resolveSearchAttributesDataByOwnedByFilterClauses(& $searchAttributesData, $userId)
+        {
+            assert('is_array($searchAttributesData)');
+            assert('is_int($userId)');
+            $clauseCount = count($searchAttributesData['clauses']);
+            $searchAttributesData['clauses'][] = array(
+                    'attributeName'        => 'owner',
+                    'operatorType'         => 'equals',
+                    'value'                => $userId,
+            );
+            if ($clauseCount == 0)
+            {
+                $searchAttributesData['structure'] = '0';
+            }
+            else
+            {
+                $searchAttributesData['structure'] = $searchAttributesData['structure'] . ' and ' . ($clauseCount + 1);
+            }
+        }
     }
 ?>

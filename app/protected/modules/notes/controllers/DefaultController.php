@@ -54,6 +54,30 @@
             $this->attemptToSaveModelFromPost($note, $redirectUrl);
         }
 
+        /**
+         * Override to process the note as a social item when needed.
+         * (non-PHPdoc)
+         * @see ZurmoBaseController::actionAfterSuccessfulModelSave()
+         */
+        protected function actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams = null)
+        {
+            assert('$model instanceof Note');
+            if (ArrayUtil::getArrayValue(PostUtil::getData(), 'postToProfile'))
+            {
+                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+                $socialItem                        = new SocialItem();
+                $socialItem->note                  = $model;
+                $saved                             = $socialItem->save();
+                if (!$saved)
+                {
+                    throw new FailedToSaveModelException();
+                }
+                ExplicitReadWriteModelPermissionsUtil::resolveExplicitReadWriteModelPermissions($socialItem,
+                                                       $explicitReadWriteModelPermissions);
+            }
+            parent::actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
+        }
+
         protected function actionInlineEditValidate($model)
         {
             $readyToUsePostData            = ExplicitReadWriteModelPermissionsUtil::
@@ -79,7 +103,7 @@
             $errorData = array();
             foreach ($model->getErrors() as $attribute => $errors)
             {
-                    $errorData[CHtml::activeId($model, $attribute)] = $errors;
+                    $errorData[ZurmoHtml::activeId($model, $attribute)] = $errors;
             }
             echo CJSON::encode($errorData);
             Yii::app()->end(0, false);

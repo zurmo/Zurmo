@@ -29,7 +29,7 @@
     */
     class NotesNoteApiController extends ZurmoModuleApiController
     {
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'NotesSearchForm';
         }

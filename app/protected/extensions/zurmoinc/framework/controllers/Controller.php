@@ -54,17 +54,16 @@
         }
 
         /**
-         * Utilizes information from the $_GET variable to
-         * make a RedBeanDataProvider.  Looks for the following $_GET
+         * Utilizes information from the dataCollection object to
+         * make a RedBeanDataProvider.  Either looks at saved search information or params in the $_GET array.
          * variables:
          *  modelName_sort
          *  modelName
          *  where modelName is Account for example.
          * Typically utilized by a listView action.
          */
-        public function makeRedBeanDataProviderFromGet(
+        public function makeRedBeanDataProviderByDataCollection(
             $searchModel,
-            $listModelClassName,
             $pageSize,
             $stateMetadataAdapterClassName = null,
             $dataCollection = null)
@@ -72,12 +71,14 @@
             assert('is_int($pageSize)');
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
             assert('$dataCollection instanceof SearchAttributesDataCollection || $dataCollection == null');
+            $listModelClassName = get_class($searchModel->getModel());
             if ($dataCollection == null)
             {
                 $dataCollection = new SearchAttributesDataCollection($searchModel);
             }
             $searchAttributes          = $dataCollection->resolveSearchAttributesFromSourceData();
             $dataCollection->resolveAnyMixedAttributesScopeForSearchModelFromSourceData();
+            $dataCollection->resolveSelectedListAttributesForSearchModelFromSourceData();
             $sanitizedSearchAttributes = GetUtil::sanitizePostByDesignerTypeForSavingModel($searchModel,
                                                                                            $searchAttributes);
             $sortAttribute             = SearchUtil::resolveSortAttributeFromGetArray($listModelClassName);
@@ -271,7 +272,7 @@
                 $errorData = array();
                 foreach ($model->getErrors() as $attribute => $errors)
                 {
-                        $errorData[CHtml::activeId($model, $attribute)] = $errors;
+                        $errorData[ZurmoHtml::activeId($model, $attribute)] = $errors;
                 }
                 echo CJSON::encode($errorData);
                 Yii::app()->end(0, false);

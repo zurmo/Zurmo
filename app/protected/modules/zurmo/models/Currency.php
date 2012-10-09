@@ -81,7 +81,7 @@
         {
             assert('is_string($code)');
             $tableName = self::getTableName('Currency');
-            $beans = RedBean_Plugin_Finder::where($tableName, "code = '$code'");
+            $beans = R::find($tableName, "code = '$code'");
             assert('count($beans) <= 1');
             if (count($beans) == 0)
             {

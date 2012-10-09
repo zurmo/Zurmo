@@ -29,9 +29,9 @@
      */
     class EmailArchivingConfigurationEditAndDetailsView extends EditAndDetailsView
     {
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Email Configuration') . '</h1>';
+            return Yii::t('Default', 'Email Configuration');
         }
 
         public static function getDefaultMetadata()

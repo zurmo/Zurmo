@@ -49,7 +49,7 @@
                 $element->editableTemplate = $editableTemplate;
                 $content .= ZurmoHtml::tag('div', array('class' => 'has-lang-label'), $element->render());
             }
-             return $content;
+             return ZurmoHtml::tag('div', array('class' => 'has-lang-label'), $content);
         }
 
         /**
@@ -62,7 +62,7 @@
             {
                 return $label;
             }
-            return CHtml::label($label, false);
+            return ZurmoHtml::label($label, false);
         }
 
         /**

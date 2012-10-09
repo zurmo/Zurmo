@@ -407,6 +407,34 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                'MissionsModule'  => array(
+                    'RIGHT_CREATE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_CREATE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_DELETE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_ACCESS_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'SocialItemsModule'  => array(
+                    'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
+                        'displayName' => 'Access Social Feed',
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
             );
             $this->assertEquals($compareData, $data);
             $group->forget();
@@ -777,6 +805,34 @@
                     ),
                     'RIGHT_ACCESS_USERS'   => array(
                         'displayName' => UsersModule::RIGHT_ACCESS_USERS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MissionsModule'  => array(
+                    'RIGHT_CREATE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_CREATE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_DELETE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_ACCESS_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'SocialItemsModule'  => array(
+                    'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
+                        'displayName' => 'Access Social Feed',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -1153,6 +1209,34 @@
                         'effective'   => Right::DENY,
                     ),
                 ),
+                 'MissionsModule'  => array(
+                    'RIGHT_CREATE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_CREATE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_DELETE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_ACCESS_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'SocialItemsModule'  => array(
+                    'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
+                        'displayName' => 'Access Social Feed',
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
             );
             $this->assertEquals($compareData, $form->data);
             $fakePost = array(
@@ -1518,6 +1602,34 @@
                     ),
                     'RIGHT_ACCESS_USERS'   => array(
                         'displayName' => UsersModule::RIGHT_ACCESS_USERS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'MissionsModule'  => array(
+                    'RIGHT_CREATE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_CREATE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_DELETE_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_DELETE_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_ACCESS_MISSIONS'   => array(
+                        'displayName' => MissionsModule::RIGHT_ACCESS_MISSIONS,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                ),
+                'SocialItemsModule'  => array(
+                    'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
+                        'displayName' => 'Access Social Feed',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

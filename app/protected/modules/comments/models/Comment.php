@@ -29,10 +29,10 @@
      */
     class Comment extends Item
     {
-        public static function getByName($name)
+        public static function getByDescription($description)
         {
-            assert('is_string($name) && $name != ""');
-            return self::getSubset(null, null, null, "name = '$name'");
+            assert('is_string($description) && $description != ""');
+            return self::getSubset(null, null, null, "description = '$description'");
         }
 
         public function __toString()

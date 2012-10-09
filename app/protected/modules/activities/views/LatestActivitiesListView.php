@@ -231,7 +231,7 @@
             {
                 $content .= '<div class="horizontal-line latest-activity-toolbar">';
                 $content .= $innerContent;
-                $content .= CHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
+                $content .= ZurmoHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
                 $content .= '</div>' . "\n";
             }
             if ($innerContent != null &&
@@ -243,7 +243,7 @@
             {
                 $startingStyle = null;
             }
-            $content .= '<div class="filter-latest-activities-bar" style="' . $startingStyle . '">';
+            $content .= '<div id="filter-portlet-model-bar-' . $this->uniquePageId . '" class="filter-portlet-model-bar" style="' . $startingStyle . '">';
             $element                       = new LatestActivitiesMashableFilterRadioElement($this->configurationForm,
                                                                                       'filteredByModelName',
                                                                                       $form);
@@ -258,7 +258,7 @@
             assert('$form instanceof ZurmoActiveForm');
             $urlScript = 'js:$.param.querystring("' . $this->portletDetailsUrl . '", "' .
                          $this->dataProvider->getPagination()->pageVar . '=1")'; // Not Coding Standard
-            $ajaxSubmitScript = CHtml::ajax(array(
+            $ajaxSubmitScript = ZurmoHtml::ajax(array(
                     'type'       => 'GET',
                     'data'       => 'js:$("#' . $form->getId() . '").serialize()',
                     'url'        =>  $urlScript,
@@ -287,7 +287,7 @@
             );
             $('#filter-latest-activities-link').click( function()
                 {
-                    $('.filter-latest-activities-bar').toggle();
+                    $('#filter-portlet-model-bar-" . $this->uniquePageId . "').toggle();
                     return false;
                 }
             );

@@ -31,5 +31,7 @@
     interface MashableActivityInterface
     {
         public static function getMashableActivityRulesType();
+
+        public static function hasRelatedItems();
     }
 ?>

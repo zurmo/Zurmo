@@ -37,13 +37,13 @@
         public static function getSinceDate($date)
         {
             assert('DateTimeUtil::isValidDbFormattedDate($date)');
-            return self::makeModels(RedBean_Plugin_Finder::where('auditevent', "datetime >= '$date 00-00-00'"));
+            return self::makeModels($beans = R::find('auditevent', "datetime >= '$date 00-00-00'"));
         }
 
         public static function getSinceDateTime($dateTime)
         {
             assert('DateTimeUtil::isValidDbFormattedDateTime($dateTime)');
-            return self::makeModels(RedBean_Plugin_Finder::where('auditevent', "datetime >= '$dateTime'"));
+            return self::makeModels($beans = R::find('auditevent', "datetime >= '$dateTime'"));
         }
 
         public static function getTailEvents($count)
@@ -89,7 +89,7 @@
             if (!AuditEvent::$isTableOptimized && (!AUDITING_OPTIMIZED || !RedBeanDatabase::isFrozen()))
             {
                 $tableName  = self::getTableName('AuditEvent');
-                RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, strtolower('modelId'));
+                RedBeanColumnTypeOptimizer::optimize($tableName, strtolower('modelId'), 'id');
                 $auditEvent = new AuditEvent();
                 $auditEvent->dateTime       = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
                 $auditEvent->moduleName     = $moduleName;

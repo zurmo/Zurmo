@@ -154,7 +154,8 @@
 
         protected function renderRemoveLink()
         {
-            return CHtml::link( '<span>' . Yii::t('Default', 'Remove') . '</span>', '#', array('class' => 'remove-sortable-item-link'));
+            return ZurmoHtml::link( ZurmoHtml::tag('span', array(), Yii::t('Default', 'Remove')), '#',
+                                    array('class' => 'remove-sortable-item-link'));
         }
 
         protected function renderAddInputAndAddButton()
@@ -167,11 +168,11 @@
             $content .= '<tbody>';
             $content .= '<tr>';
             $content .= '<td>';
-            $content .= '<div class="has-lang-label">' . CHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
+            $content .= '<div class="has-lang-label">' . ZurmoHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
             $content .= static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]);
-            $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
             $content .= '</div>';
-            $content .= CHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
+            $content .= ZurmoHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
+            $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
             $content .= '</td>';
             $content .= '</tr>';
             $content .= '</tbody>';
@@ -214,6 +215,7 @@
                         }
                         var currenInputCollectionLength = $('input[name=\"" . $this->getNameForInputField() . "\"]').length;
                         $('<li class=\"ui-state-default\" id=\"{id}\">' +
+                        '" . $this->renderRemoveLink() . "' +
                         '<span class=\"ui-icon ui-icon-arrowthick-2-n-s\">&#160;</span>' +
                         '<div class=\"has-lang-label\">' +
                         '<input name=\"" . $this->getNameForInputField() . "\" id=\"" . $inputIdPrefix .
@@ -221,7 +223,7 @@
                         $('#" . $this->attribute . "_AddInput').val()
                          + '\" size=\"50\"/>" . static::renderLanguageLabelHtmlContent($supportedLanguagesData[$baseLanguage]) . "</div>' +
                         '<input name=\"" . $this->getNameForExistingValueHiddenField() . "\" type=\"hidden\" value=\"' +
-                        $('#" . $this->attribute . "_AddInput').val() + '\" />&#160;&#160;&#160;" . $this->renderRemoveLink() . "' +
+                        $('#" . $this->attribute . "_AddInput').val() + '\" />" . "' +
                         '" . $this->renderSortableLanguageLabelInputsForAddingNewValuesJavaScriptContent(). "' +
                         '</li>').appendTo($('#" . $this->attribute . "_ul'));
                         $('#" . $this->attribute . "_AddInput').val('');
@@ -421,7 +423,7 @@
 
         protected static function renderLanguageLabelHtmlContent($label)
         {
-            return '<span>' . $label . '</span>';
+            return ZurmoHtml::tag('span', array(), $label);
         }
     }
 ?>

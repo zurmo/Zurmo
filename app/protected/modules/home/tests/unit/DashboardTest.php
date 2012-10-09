@@ -28,8 +28,8 @@
     {
         public function testGetNextLayoutId()
         {
-            $this->assertEquals(2, Dashboard::getNextLayoutId());
             $user = UserTestHelper::createBasicUser('Billy');
+            $this->assertEquals(2, Dashboard::getNextLayoutId());
 
             Yii::app()->user->userModel = User::getByUsername('billy');
 

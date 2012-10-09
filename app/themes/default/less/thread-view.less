@@ -1,0 +1,410 @@
+.gravatar{
+    float:left;
+}
+
+.icon-missions-created:before,
+.icon-conversations-created:before{
+    content:"w";
+    .view-toolbar-icons();
+    top:-2px;
+}
+
+.icon-conversations-participant:before{
+    content:"b";
+    .view-toolbar-icons();
+    top:0;
+}
+
+.icon-missions-available:before{
+    content:"Q";
+    .view-toolbar-icons();
+    top:-2px;
+}
+
+.icon-missions-taken-but-not-accepted:before{
+    content:"e";
+    .view-toolbar-icons();
+    top:-2px;
+}
+
+#ConversationsListView{
+    .items{
+        
+    }
+}
+
+.list-row-model-date{
+    float: right;
+    margin-right:10px;
+}
+
+#ConversationEditView{
+    td{
+        padding-left:0;
+    }
+    textarea{
+        line-height: 130%;
+    }
+    #right-side-edit-view-panel{
+        //top:30px;
+    }
+}
+
+#ConversationsPageView{
+    .items{
+        td{
+            padding-left: 10px;
+        }
+    }
+}
+
+.single-coloumn-details-view,
+#ConversationDetailsView,
+#ConversationDetailsAndRelationsView{
+    &.AppContent{
+        padding-right:0;
+    }
+    .GridView{
+        display:none;
+    }
+    .GridView:first-child{
+        display:block;
+        width:100%;
+    }
+    .panel{
+        width:70%;
+        float:left;
+        td, th{
+            padding-bottom:10px !important;
+        }
+        > table{
+            border-bottom: none;
+        }
+    }
+    .details-table{
+        .clearfix();
+    }
+    #right-side-edit-view-panel{
+        top:55px;
+    }
+}
+
+#ModelDetailsSummaryView,
+#CommentList,
+.CommentList{
+    h2{
+        margin-bottom:15px;
+    }
+    
+}
+
+.comment-details{
+    margin:2px 0;
+    display:inline-block;
+    strong{
+        color: #999;
+        font-weight: normal !important;
+    }
+}
+
+#CommentList,
+.CommentList{
+    margin-left: 130px;
+    .comment{
+        margin-top:15px;
+    }
+    &:last-child{
+        margin-bottom: 8px;
+    }
+}
+
+.comment{
+    //margin-bottom:15px;
+    line-height: 140%;
+    .gravatar{
+        margin-top:1px;
+    }
+    .comment-content{
+        font-size: 12px;
+        padding-left:50px;
+        //margin:5px 0;
+        line-height: 140%;
+    }
+    &:hover{
+        .delete-comment{
+            visibility:visible !important;
+            a{
+                color:@themeColor !important;
+            }
+        }
+        .delete-social-item{
+            visibility:visible !important;
+            a{
+                color:@themeColor !important;
+            }
+        }
+    }
+    &.unread{
+        font-weight:bold;
+    }
+    .delete-comment{
+        visibility:hidden;
+        margin-left: 5px;
+        a{
+            margin-left:4px;
+        }
+        &:before{
+            .symbly(18px);
+            content:"_";
+        }
+    }
+}
+
+.model-details-summary{
+    font-size: 12px !important;
+    padding-left: 130px;
+    padding-top:15px;
+    .gravatar{
+        margin-left: -115px;
+    }
+    .comment-content{
+        font-size: 12px;
+        padding-left:0;
+        //margin:5px 0;
+    }
+}
+
+.conversation-subject{
+    margin-bottom: 30px;   
+    .comment-content{
+        font-size: 15px;
+        line-height: 150%;
+        font-style: italic;
+    }
+}
+
+.showAllCommentsLink{
+    margin-left: 130px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+#ModelDetailsSummaryView,
+#CommentInlineEditForModelView,
+#CommentsForRelatedModelView{
+    width:70%;
+    float:left;
+    max-width: 600px;
+    .box-sizing();
+    
+    .fileinput-button{
+        //margin-bottom: 15px;
+    }
+}
+
+#CommentInlineEditForModelView{
+    margin-top: 15px;
+    padding-left: 120px;
+    td{
+        padding-right: 0 !important;
+    }
+    h2{
+        margin-left:10px;
+    }
+    .wide.form{
+        padding:0;
+        border:none;
+        background:none;
+        .b-shadow(none);
+    }
+    form{
+        padding:0;
+    }
+    .panel{
+        width:100%;
+        float:none;
+    }
+    table{
+        margin-bottom: 0;
+    }
+    .form-toolbar{
+        border-top: none;
+        padding-top: 0;
+        text-align: right;
+        margin-top:15px;
+        a{
+            color:#fff !important;
+            margin-right:0;
+        }
+    }
+    .files{
+        float:left;
+    }
+}
+
+.attachments{
+    margin-top:5px;
+    list-style: none;
+    li:first-child strong{
+
+    }
+    li{
+        margin-bottom:2px;
+    }
+}
+.icon-attachment{
+    .symbly(18px);
+    margin-right:4px;
+    &:before{
+        content:"H";
+    }
+}
+
+#ConversationsPageView ~ .token-input-dropdown{
+    min-width: 0 !important;
+    .box-sizing();
+}
+
+.unread{
+	td, td a{
+		color:@themeColor;
+		font-weight:bold;
+	}
+	
+}
+
+#MissionDetailsView{
+    .details-table{
+        .clearfix();
+        margin-right:0 !important;
+    }
+    .panel > table{
+        border-bottom: none;
+    }
+}
+
+#MissionEditView{
+    .panel{
+        width:100% !important;
+    }
+}
+
+.mission-change-status-link{
+    margin-right:10px;
+}
+
+.missionStatusChangeArea{
+    display: inline-block;
+    a{
+        float: none;
+        color:#fff !important;
+        &:first-child{
+            //margin-left: 15px;
+        }
+    }
+}
+.comment-content{
+    .missionStatusChangeArea{
+        a:first-child{
+            margin-left: 15px;
+        }
+    }
+}
+
+.mission-status{
+    margin:0 5px;
+}
+
+#MissionsListView{
+    .actions-column{
+        width: 250px;
+    }
+}
+
+
+/*=Social Items*/
+.SocialItemsListView,
+#AllSocialItemsForPortletView{
+    tr:hover{
+        background: none !important;
+        color: inherit !important;
+    }
+    .CommentList{
+        margin-left: 80px;
+    }
+    .model-details-summary{
+        padding-left: 80px;
+        padding-top:0;
+        .gravatar{
+            margin-left: -65px;
+        }
+    }
+    .show-create-comment{
+        margin-left: 80px;
+    }
+    .wide.form{
+        border:none;
+        background: none !important;
+        .b-shadow(none);
+        form{
+            border:none;
+            background: none !important;
+            .b-shadow(none);
+            padding-bottom: 0;
+        }
+        table.files{
+            border-bottom: none;
+            float: left;
+        }
+        .panel > table{
+            padding-bottom: 10px;
+        }
+    }
+    .form-toolbar{
+        text-align: right;
+        a{
+            color:#fff !important;
+            margin-right:0;
+        }
+    }
+    .comment-content{
+        padding-right:15px;
+    }
+}
+
+.delete-social-item{
+    margin-left:5px;
+    visibility: hidden;
+    a{
+        margin-left:4px;
+    }
+    &:before{
+        .symbly(18px);
+        content: "_";
+    }
+}
+
+
+#SocialItemInlineEditView{
+    .form-toolbar{
+        text-align: right;
+        a{
+            color:#fff !important;
+            margin-right:0;
+        }
+    }
+    #social-item-inline-edit-form{
+        td:first-child{
+            padding-left: 0;
+        }
+    }
+}
+
+.social-item{
+    form{
+        td{
+           padding-left: 65px !important;
+           padding-top: 0 !important;
+        }
+    }
+}

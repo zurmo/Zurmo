@@ -59,8 +59,8 @@
         public static function getUserExternalSystemIds()
         {
             $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(User::getTableName('User'), $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn(User::getTableName('User'), $columnName);
             $sql = 'select ' . $columnName . ' from ' . User::getTableName('User');
             return R::getCol($sql);
         }

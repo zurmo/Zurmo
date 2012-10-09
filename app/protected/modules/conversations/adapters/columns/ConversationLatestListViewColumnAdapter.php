@@ -33,7 +33,7 @@
                 'header'      => false,
                 'type'        => 'raw',
                 'value'       => 'ConversationsUtil::renderSubjectAndLatestForDisplayView($data)',
-                'htmlOptions' => array('style' => 'width:90%;'),
+                'htmlOptions' => array('style' => 'width:80%;'),
             );
         }
     }

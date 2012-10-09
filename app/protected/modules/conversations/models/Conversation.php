@@ -214,5 +214,10 @@
                 return false;
             }
         }
+
+        public static function hasRelatedItems()
+        {
+            return true;
+        }
     }
 ?>

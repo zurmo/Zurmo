@@ -583,5 +583,48 @@
                 $this->assertEquals(10, $rows2[0]);
             }
         }
+
+        public function testMapHintTypeIntoDatabaseColumnType()
+        {
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('blob');
+                $this->assertEquals('BLOB', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('longblob');
+                $this->assertEquals('LONGBLOB', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('boolean');
+                $this->assertEquals('TINYINT(1)', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('date');
+                $this->assertEquals('DATE', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('datetime');
+                $this->assertEquals('DATETIME', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('string');
+                $this->assertEquals('VARCHAR(255)', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('text');
+                $this->assertEquals('TEXT', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('longtext');
+                $this->assertEquals('LONGTEXT', $databaseColumnType);
+
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('id');
+                $this->assertEquals('INT(11) UNSIGNED', $databaseColumnType);
+
+                try
+                {
+                    $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType('invalidType');
+                    $this->fail();
+                }
+                catch (NotSupportedException $e)
+                {
+                    // Do nothing
+                }
+            }
+        }
     }
 ?>

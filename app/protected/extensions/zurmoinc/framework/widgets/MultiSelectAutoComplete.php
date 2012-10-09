@@ -84,7 +84,7 @@
             {
                 $tokenListClassSuffix = '';
             }
-            echo CHtml::textField($this->name, null, $this->htmlOptions);
+            echo ZurmoHtml::textField($this->name, null, $this->htmlOptions);
             $javaScript  = "$(document).ready(function () { ";
             $javaScript .= "$('#$id').tokenInput('{$this->sourceUrl}', { ";
             $javaScript .= "queryParam: 'term',"; // Not Coding Standard

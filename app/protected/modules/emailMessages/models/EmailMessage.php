@@ -130,5 +130,10 @@
         {
             return !($this->error == null || $this->error->id < 0);
         }
+
+        public static function hasRelatedItems()
+        {
+            return true;
+        }
     }
 ?>

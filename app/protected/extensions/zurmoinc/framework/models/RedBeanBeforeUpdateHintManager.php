@@ -24,22 +24,12 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    // http://groups.google.com/group/redbeanorm/browse_thread/thread/7eb59797e8478a89/61eae7941cae1970
-    // This was supplied in the RedBean forum by Gabor.
     class RedBeanBeforeUpdateHintManager implements RedBean_Observer
     {
-        protected $blobOptimizer;
-        protected $booleanOptimizer;
-
-        public function __construct($toolbox)
-        {
-            $this->blobOptimizer     = new RedBean_Plugin_Optimizer_Blob($toolbox);
-            $this->booleanOptimizer  = new RedBean_Plugin_Optimizer_Boolean($toolbox);
-        }
-
         public function onEvent($type, $info)
         {
             assert('$type == "update"');
+
             if (RedBeanDatabase::isFrozen())
             {
                 return;
@@ -50,26 +40,10 @@
                 assert('is_array($hints)');
                 foreach ($hints as $key => $value)
                 {
-                    switch ($value)
+                    if (in_array($value, array('blob', 'longblob', 'boolean', 'date', 'datetime', 'string',
+                                               'text', 'longtext', 'id')))
                     {
-                    case 'blob':
-                        $this->blobOptimizer->setTable($info->getMeta("type"));
-                        $this->blobOptimizer->setColumn($key);
-                        $this->blobOptimizer->setValue($info->$key);
-                        $this->blobOptimizer->optimize();
-                        break;
-                    case 'longblob':
-                        $this->blobOptimizer->setTable($info->getMeta("type"));
-                        $this->blobOptimizer->setColumn($key);
-                        $this->blobOptimizer->setValue($info->$key);
-                        $this->blobOptimizer->optimize('longblob');
-                        break;
-                   case 'boolean':
-                        $this->booleanOptimizer ->setTable($info->getMeta("type"));
-                        $this->booleanOptimizer ->setColumn($key);
-                        $this->booleanOptimizer ->setValue($info->$key);
-                        $this->booleanOptimizer ->optimize();
-                        break;
+                        RedBeanColumnTypeOptimizer::optimize($info->getMeta("type"), $key, $value);
                     }
                 }
             }

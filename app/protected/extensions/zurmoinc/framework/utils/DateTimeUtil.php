@@ -264,5 +264,15 @@
             return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                         $dateTime->getTimestamp());
         }
+
+        public static function isDateTimeValueNull(RedBeanModel $model, $attributeName)
+        {
+            assert('is_string($attributeName) || $attributeName == null');
+            if ($model->$attributeName != null && $model->$attributeName != '0000-00-00 00:00:00')
+            {
+                return false;
+            }
+            return true;
+        }
     }
 ?>

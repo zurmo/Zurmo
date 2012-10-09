@@ -114,6 +114,7 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/interactions.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/dropDownInteractions.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/jquery.dropkick-1.0.0.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/views/assets/jquery.truncateText.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/rssReader/jquery.zrssfeed.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/juiportlets/JuiPortlets.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/zurmoinc/framework/widgets/assets/jnotify/jquery.jnotify.js',
@@ -142,6 +143,7 @@
                     array('application.extensions.zurmoinc.framework.views.assets',     '/dynamicSearchViewUtils.js'),
                     array('application.extensions.zurmoinc.framework.views.assets',     '/ListViewUtils.js'),
                     array('application.extensions.zurmoinc.framework.views.assets',     '/interactions.js'),
+                    array('application.extensions.zurmoinc.framework.views.assets',     '/jquery.truncateText.js'),
                     array('application.extensions.zurmoinc.framework.widgets.assets',   '/rssReader/jquery.zrssfeed.min.js'),
                     array('application.extensions.zurmoinc.framework.widgets.assets',   '/juiportlets/JuiPortlets.js'),
                     array('application.extensions.zurmoinc.framework.widgets.assets',   '/jnotify/jquery.jnotify.js'),
@@ -296,10 +298,12 @@
             'jobsManager',
             'leads',
             'meetings',
+            'missions',
             'notes',
             'notifications',
             'opportunities',
             'rssReader',
+            'socialItems',
             'tasks',
             'zurmo' => array(
                 'modules' => array(
@@ -312,7 +316,7 @@
         ),
 
         'params' => array(
-            'redBeanVersion'    => '1.3',
+            'redBeanVersion'    => '3.2',
             'yiiVersion'        => '1.1.12',
             'memcacheServers'   => $memcacheServers,
             'supportedLanguages' => array(

@@ -34,7 +34,7 @@
             if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
                 $content     = '<span id="active-nonmonitor-job-tooltip-' .
-                               $jobLog->id . '" class="tooltip" title="' . CHtml::encode($jobLog->message) . '">';
+                               $jobLog->id . '" class="tooltip" title="' . ZurmoHtml::encode($jobLog->message) . '">';
                 $content    .= '?</span><span class="job-label">' . Yii::t('Default', 'Completed with Errors') . '</span>';
                 $options     = array('content' =>
                                         array('title' =>

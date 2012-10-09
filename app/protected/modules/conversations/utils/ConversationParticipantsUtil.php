@@ -200,7 +200,7 @@
                                      '{ownerName}'           => $conversation->owner,
                                      '{conversationSubject}' => $conversation->subject));
             $content .= "\n\n";
-            $content .= CHtml::link($url, $url);
+            $content .= ZurmoHtml::link($url, $url);
             return $content;
         }
 
@@ -217,7 +217,7 @@
                                      '{ownerName}'           => $conversation->owner,
                                      '{conversationSubject}' => $conversation->subject));
             $content .= "<br/>";
-            $content .= CHtml::link(Yii::t('Default', 'Click Here'), $url);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
             return $content;
         }
 

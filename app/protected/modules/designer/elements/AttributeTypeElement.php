@@ -49,7 +49,7 @@
          */
         protected function renderLabel()
         {
-            return CHtml::label(Yii::t('Default', 'Field Type'), false);
+            return ZurmoHtml::label(Yii::t('Default', 'Field Type'), false);
         }
 
         public static function isReadOnly()

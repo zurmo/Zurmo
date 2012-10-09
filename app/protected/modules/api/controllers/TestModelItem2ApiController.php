@@ -89,7 +89,7 @@
             return 'ApiTestModelItem2';
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'ApiTestModelItem2SearchForm';
         }

@@ -82,7 +82,7 @@
 
         public static function getNextLayoutId()
         {
-            return max(2, R::getCell('select max(layoutId) + 1 from dashboard'));
+            return max(2, (int)R::getCell('select max(layoutId) + 1 from dashboard'));
         }
 
         public function __toString()

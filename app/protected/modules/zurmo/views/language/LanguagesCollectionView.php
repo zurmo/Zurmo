@@ -78,9 +78,9 @@
             return $content;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Languages') . '</h1>';
+            return Yii::t('Default', 'Languages');
         }
 
         /**

@@ -77,9 +77,9 @@
             return $content;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Job Manager: Home') . '</h1>';
+            return Yii::t('Default', 'Job Manager: Home');
         }
 
         /**
@@ -127,9 +127,9 @@
             {
                 $content .= '<tr>';
                 $content .= '<td>' . $this->renderViewJobLogLinkContent($type);
-                $content .=          '&#160;' . CHtml::encode($jobData['label']) . '</td>';
+                $content .=          '&#160;' . ZurmoHtml::encode($jobData['label']) . '</td>';
                 $content .= '<td>' . $jobData['lastCompletedRunEncodedContent'] . '</td>';
-                $content .= '<td>' . CHtml::encode($jobData['statusContent']) . '</td>';
+                $content .= '<td>' . ZurmoHtml::encode($jobData['statusContent']) . '</td>';
                 $content .= '<td>' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
                 $content .= '</tr>';
             }
@@ -170,7 +170,7 @@
             {
                 $params = array('type' => $type);
                 $route   = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/resetJob/', $params);
-                $content = CHtml::link(Yii::t('Default', 'Reset'), $route);
+                $content = ZurmoHtml::link(Yii::t('Default', 'Reset'), $route);
                 return $content;
             }
             return null;
@@ -182,7 +182,7 @@
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
                                            array('type' => $type));
             $label = Yii::t('Default', 'Job Log');
-            return CHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type));
+            return ZurmoHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type));
         }
 
         protected static function resolveAjaxOptionsForJobLogLink($type)
@@ -207,8 +207,8 @@
             $content .= '</tr>';
 
             $content .= '<tr>';
-            $content .= '<td>' . CHtml::encode($this->monitorJobData['label']) . '</td>';
-            $content .= '<td>' . CHtml::encode($this->monitorJobData['recommendedFrequencyContent']) . '</td>';
+            $content .= '<td>' . ZurmoHtml::encode($this->monitorJobData['label']) . '</td>';
+            $content .= '<td>' . ZurmoHtml::encode($this->monitorJobData['recommendedFrequencyContent']) . '</td>';
             $content .= '</tr>';
 
             foreach ($this->jobsData as $type => $jobData)
@@ -217,9 +217,9 @@
                 $content .= '<tr>';
                 $content .= '<td>';
                 $content .= '<span id="suggested-frequency-job-tooltip-' . $type . '" class="tooltip" title="' . $title . '">';
-                $content .= '?</span><span class="job-label">' . CHtml::encode($jobData['label']) . '</span>';
+                $content .= '?</span><span class="job-label">' . ZurmoHtml::encode($jobData['label']) . '</span>';
                 $content .= '</td>';
-                $content .= '<td>' . CHtml::encode($jobData['recommendedFrequencyContent']) . '</td>';
+                $content .= '<td>' . ZurmoHtml::encode($jobData['recommendedFrequencyContent']) . '</td>';
                 $content .= '</tr>';
                 $qtip     = new ZurmoTip();
                 $qtip->addQTip("#suggested-frequency-job-tooltip-$type");
@@ -231,7 +231,7 @@
 
         protected static function renderHelpContent()
         {
-            $clickHereLink = CHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager');
+            $clickHereLink = ZurmoHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager');
             $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
             $content .= '<span class="jobs-help">';
             $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',

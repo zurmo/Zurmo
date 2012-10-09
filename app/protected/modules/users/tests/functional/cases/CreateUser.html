@@ -137,14 +137,14 @@
     <td>Janny${randomSuffix} Jingo${randomSuffix}</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div[1]/table/tbody/tr[6]/td[1]</td>
+    <td>verifyTextPresent</td>
     <td>janny${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div[1]/table/tbody/tr[2]/td[1]</td>
+    <td>verifyTextPresent</td>
     <td>Mail</td>
+    <td></td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -153,26 +153,57 @@
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='UserDetailsView']/div/div[2]/table/tbody/tr[3]/td</td>
+    <td>//div[@id='UserDetailsView']/div/div[3]/table/tbody/tr[3]/td</td>
     <td>123 Jingo Street<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div[1]/table/tbody/tr[3]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div[2]/table/tbody/tr[3]/td[1]</td>
     <td>123456789</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div[1]/table/tbody/tr[4]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div[2]/table/tbody/tr[4]/td[1]</td>
     <td>123455555</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div[1]/table/tbody/tr[1]/td[1]</td>
+    <td>//div[@id='UserDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
     <td>Jingo Factory</td>
 </tr>
+<!-- Assiginig this user to super admin group -->
 <tr>
-    <td>click</td>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li[4]/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Super Administrators</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=User Membership</td>
+	<td></td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>id=edit-form_userNonMembershipData</td>
+	<td>label=Janny${randomSuffix} Jingo${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=yw1moveRight</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
     <td>link=Sign out</td>
     <td></td>
 </tr>
@@ -204,6 +235,11 @@
 <tr>
     <td>waitForTextPresent</td>
     <td>janny${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>link=Save</td>
     <td></td>
 </tr>
 </tbody></table>

@@ -85,9 +85,9 @@
                 }
                 if (!isset($htmlOptions['class']))
                 {
-                    $htmlOptions['class'] = CHtml::$errorSummaryCss;
+                    $htmlOptions['class'] = parent::$errorSummaryCss;
                 }
-                return CHtml::tag('div', $htmlOptions, $header."\n<ul>\n$content</ul>" . $footer);
+                return parent::tag('div', $htmlOptions, $header."\n<ul>\n$content</ul>" . $footer);
             }
             else
             {
@@ -196,7 +196,7 @@
             }
             $hiddenOptions = isset($htmlOptions['id']) ? array('id' => self::ID_PREFIX . $htmlOptions['id']) : array('id' => false);
             $hidden = $uncheck !== null ? self::hiddenField($htmlOptions['name'], $uncheck, $hiddenOptions) : '';
-            return $hidden . CHtml::tag("label", array("class" => "hasCheckBox" . $labelClass . $disabledClass),
+            return $hidden . parent::tag("label", array("class" => "hasCheckBox" . $labelClass . $disabledClass),
                    self::activeInputField('checkbox', $model, $attribute, $htmlOptions));
         }
 
@@ -254,7 +254,11 @@
             {
                 $labelClass = null;
             }
-            return $hidden . CHtml::tag("label", array("class" => "hasCheckBox" . $labelClass), self::inputField('checkbox', $name, $value, $htmlOptions));
+            if (isset($htmlOptions['labelClass']))
+            {
+                $labelClass .= ' ' . $htmlOptions['labelClass'];
+            }
+            return $hidden . parent::tag("label", array("class" => "hasCheckBox" . $labelClass), self::inputField('checkbox', $name, $value, $htmlOptions));
         }
 
         /**

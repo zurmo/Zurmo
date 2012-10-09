@@ -77,7 +77,6 @@
 
         public function testResolveAnyMixedAttributesScopeForSearchModelFromSourceData()
         {
-            //resolveAnyMixedAttributesScopeForSearchModelFromSourceData()
             $model = new AAASearchFormTestModel(new AAA());
             $dataCollection          = new SavedSearchAttributesDataCollection($model);
             $getArrayName = 'someArray';
@@ -96,6 +95,30 @@
             $_GET['AAASearchFormTestModel'][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME] = array('A', 'B', 'C');
             $dataCollection->resolveAnyMixedAttributesScopeForSearchModelFromSourceData();
             $this->assertEquals(array('A', 'B', 'C'), $model->getAnyMixedAttributesScope());
+        }
+
+        public function testResolveSelectedListAttributesForSearchModelFromSourceData()
+        {
+            $model = new AAASearchFormTestModel(new A());
+            $listAttributesSelector         = new ListAttributesSelector('AListView', 'TestModule');
+            $model->setListAttributesSelector($listAttributesSelector);
+            $dataCollection          = new SavedSearchAttributesDataCollection($model);
+            $getArrayName = 'someArray';
+            $dataCollection->resolveSelectedListAttributesForSearchModelFromSourceData();
+            $this->assertEquals(array('name'), $model->getListAttributesSelector()->getSelected());
+
+            //Test passing a value in the GET
+            $_GET['AAASearchFormTestModel'][SearchForm::SELECTED_LIST_ATTRIBUTES] = 'notAnArray';
+            $dataCollection->resolveSelectedListAttributesForSearchModelFromSourceData();
+            $this->assertEquals(array('name'), $model->getListAttributesSelector()->getSelected());
+
+            $_GET['AAASearchFormTestModel'][SearchForm::SELECTED_LIST_ATTRIBUTES] = array('All');
+            $dataCollection->resolveSelectedListAttributesForSearchModelFromSourceData();
+            $this->assertEquals(array('All'), $model->getListAttributesSelector()->getSelected());
+
+            $_GET['AAASearchFormTestModel'][SearchForm::SELECTED_LIST_ATTRIBUTES] = array('name', 'a');
+            $dataCollection->resolveSelectedListAttributesForSearchModelFromSourceData();
+            $this->assertEquals(array('name', 'a'), $model->getListAttributesSelector()->getSelected());
         }
     }
 ?>

@@ -308,13 +308,16 @@
             StickySearchUtil::clearDataByKey('AccountsSearchView');
             $value = StickySearchUtil::getDataByKey('AccountsSearchView');
             $this->assertNull($value);
-            $this->setGetArray(array('AccountsSearchForm' => array('anyMixedAttributes' => 'xyz')));
+            $this->setGetArray(array('AccountsSearchForm'                 =>
+                                        array('anyMixedAttributes'                 => 'xyz',
+                                              SearchForm::SELECTED_LIST_ATTRIBUTES => array('officePhone', 'name'))));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/');
             $data = StickySearchUtil::getDataByKey('AccountsSearchView');
             $compareData = array('dynamicClauses'          => array(),
                                  'dynamicStructure'        => null,
                                  'anyMixedAttributes'      => 'xyz',
                                  'anyMixedAttributesScope' => null,
+                                 SearchForm::SELECTED_LIST_ATTRIBUTES => array('officePhone', 'name')
             );
             $this->assertEquals($compareData, $data);
             $this->setGetArray(array('clearingSearch' => true));
@@ -323,6 +326,7 @@
             $compareData = array('dynamicClauses'          => array(),
                                  'dynamicStructure'        => null,
                                  'anyMixedAttributesScope' => null,
+                                 SearchForm::SELECTED_LIST_ATTRIBUTES => array('name', 'type', 'owner')
             );
             $this->assertEquals($compareData, $data);
         }

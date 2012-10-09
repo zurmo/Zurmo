@@ -82,7 +82,7 @@
          */
         protected function renderNextPageLinkContent()
         {
-            return CHtml::linkButton(Yii::t('Default', 'Next'));
+            return ZurmoHtml::linkButton(Yii::t('Default', 'Next'));
         }
 
         protected function getPreviousPageLinkContentByControllerAction($action)
@@ -90,7 +90,7 @@
             assert('is_string($action)');
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $action . '/',
                                            array('id' => $this->model->id));
-            return CHtml::link(Yii::t('Default', 'Previous'), $route);
+            return ZurmoHtml::link(Yii::t('Default', 'Previous'), $route);
         }
 
         /**

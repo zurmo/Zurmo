@@ -77,7 +77,7 @@
          */
         public function setMetadataFromLayout($layout, $savableMetadata)
         {
-            array('is_array($savableMetadata)');
+            assert('is_array($savableMetadata)');
             if (isset($layout['panels']) &&
                 is_array($layout['panels']) &&
                 count($layout['panels']) > 0)
@@ -136,6 +136,35 @@
             }
             $this->message = Yii::t('Default', 'Layout saved successfully.');
             return true;
+        }
+
+        /**
+         * Given an array of selected attributes, returns a well-formed metadata array with those as the placed
+         * attributes.
+         * @param string $viewClassName
+         * @param array $selectedListAttributes
+         * @return resolved metadata array
+         */
+        public function resolveMetadataFromSelectedListAttributes($viewClassName, $selectedListAttributes)
+        {
+            assert('is_string($viewClassName)');
+            assert('is_array($selectedListAttributes)');
+            $metadata              = array();
+            $metadata['panels'][0] = array('rows' => array());
+            $rowKey                = 0;
+            foreach ($selectedListAttributes as $attributeName)
+            {
+                $cell = array('element' => $attributeName);
+                $cellMetadata = array();
+                $cellMetadata = $this->adaptCellElementToMetadata($cell['element'], $cellMetadata);
+                $cellMetadata = $this->adaptCellSettingsToMetadata($cell, $cellMetadata);
+                if (isset($cellMetadata['elements']) && count($cellMetadata['elements']) > 0)
+                {
+                    $metadata['panels'][0]['rows'][$rowKey]['cells'][0] = $cellMetadata;
+                }
+                $rowKey++;
+            }
+            return $this->makeMergedSaveableMetadata($viewClassName, $metadata);
         }
 
         protected function makeMergedSaveableMetadata($viewClassName, $savableMetadata)

@@ -98,7 +98,11 @@
             echo '<td>';
             foreach ($this->columns as $column)
             {
-                if ($column instanceof CGridColumn)
+                if ($column instanceof RowMenuColumn)
+                {
+                    continue;
+                }
+                elseif ($column instanceof CGridColumn)
                 {
                     $column->attachBehavior('stackedDataCell', new StackedGridColumnBehavior());
                     $column->renderStackedDataCell($row);
@@ -108,7 +112,18 @@
                     $column->renderDataCell($row);
                 }
             }
-            echo "</td></tr>\n";
+            echo "</td>\n";
+            foreach ($this->columns as $column)
+            {
+                if ($column instanceof RowMenuColumn)
+                {
+                    $column->attachBehavior('stackedDataCell', new StackedGridColumnBehavior());
+                    echo "<td>\n";
+                    $column->renderStackedDataCell($row);
+                    echo "</td>\n";
+                }
+            }
+            echo "</tr>\n";
         }
     }
 ?>

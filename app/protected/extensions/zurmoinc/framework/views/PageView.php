@@ -282,14 +282,6 @@
         }
 
         /**
-         * Returns the application title. Can be overridden in the extending class.
-         */
-        protected function getTitle()
-        {
-            return '';
-        }
-
-        /**
          * Returns the application subtitle. Can be overridden in the extending class.
          */
         protected function getSubtitle()

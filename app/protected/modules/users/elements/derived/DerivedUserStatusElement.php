@@ -46,11 +46,11 @@
             $dropDownArray = UserStatusUtil::getStatusArray();
             $value         = UserStatusUtil::getSelectedValueByUser($this->getUserModel());
             $htmlOptions   = array('id'   => $this->getEditableInputId('userStatus'));
-            $content       = CHtml::dropDownList($this->getEditableInputName('userStatus'),
+            $content       = ZurmoHtml::dropDownList($this->getEditableInputName('userStatus'),
                                                  $value,
                                                  $dropDownArray,
                                                  $htmlOptions);
-            $content       = CHtml::tag('div', array('class' => 'beforeToolTip'), $content);
+            $content       = ZurmoHtml::tag('div', array('class' => 'beforeToolTip'), $content);
             $content      .= self::renderTooltipContent();
             return $content;
         }

@@ -171,12 +171,12 @@
             }
             $selectLink            = $this->renderSelectLinkContent();
             $selectContent         = $this->renderSelectContent();
-            $createContactLink     = CHtml::link(Yii::t('Default', 'Create ContactsModuleSingularLabel',
+            $createContactLink     = ZurmoHtml::link(Yii::t('Default', 'Create ContactsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules()), '#',
                                      array('class' => 'contact-create-link'));
             $createContactContent  = Yii::t('Default', 'Create ContactsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
-            $createLeadLink        = CHtml::link(Yii::t('Default', 'Create LeadsModuleSingularLabel',
+            $createLeadLink        = ZurmoHtml::link(Yii::t('Default', 'Create LeadsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules()), '#',
                                      array('class' => 'lead-create-link'));
             $createLeadContent     = Yii::t('Default', 'Create LeadsModuleSingularLabel',
@@ -197,7 +197,7 @@
 
             $content  = '<div class="email-matching-summary-content">';
             $content .= $rules->renderRelatedModelsByImportanceContent($this->emailMessage);
-            $content .= CHtml::tag('span', array(), strval($this->emailMessage));
+            $content .= ZurmoHtml::tag('span', array(), strval($this->emailMessage));
             $content .= '</div>';
             $content .= '<div class="email-matching-show-more">';
             $content .= '<span class="icon-down-arrow"></span>Expand';
@@ -274,19 +274,19 @@
         {
             if ($this->userCanAccessContacts && $this->userCanAccessLeads)
             {
-                return CHtml::link(Yii::t('Default', 'Select ContactsModuleSingularLabel / LeadsModuleSingularLabel',
+                return ZurmoHtml::link(Yii::t('Default', 'Select ContactsModuleSingularLabel / LeadsModuleSingularLabel',
                                 LabelUtil::getTranslationParamsForAllModules()), '#',
                                     array('class' => 'contact-select-link'));
             }
             if ($this->userCanAccessContacts)
             {
-                return CHtml::link(Yii::t('Default', 'Select ContactsModuleSingularLabel',
+                return ZurmoHtml::link(Yii::t('Default', 'Select ContactsModuleSingularLabel',
                                 LabelUtil::getTranslationParamsForAllModules()), '#',
                                     array('class' => 'contact-select-link'));
             }
             else
             {
-                return CHtml::link(Yii::t('Default', 'Select LeadsModuleSingularLabel',
+                return ZurmoHtml::link(Yii::t('Default', 'Select LeadsModuleSingularLabel',
                                 LabelUtil::getTranslationParamsForAllModules()), '#',
                                     array('class' => 'contact-select-link'));
             }

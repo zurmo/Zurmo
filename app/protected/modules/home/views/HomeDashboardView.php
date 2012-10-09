@@ -64,18 +64,21 @@
                                 array(
                                     'type' => 'TasksMyList',
                                 ),
+                                array(
+                                    'type' => 'OpportunitiesBySourceChart',
+                                ),
                             )
                         ),
                         array(
                             'rows' => array(
                                 array(
+                                    'type' => 'AllSocialItemsForPortlet',
+                                ),
+                                array(
+                                    'type' => 'MyMissionsForPortlet',
+                                ),
+                                array(
                                     'type' => 'OpportunitiesByStageChart',
-                                ),
-                                array(
-                                    'type' => 'OpportunitiesBySourceChart',
-                                ),
-                                array(
-                                    'type' => 'RssReader',
                                 ),
                             )
                         )

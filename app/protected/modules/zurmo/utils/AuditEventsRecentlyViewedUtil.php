@@ -51,7 +51,7 @@
                     {
                         $moduleClassName = $unserializedData[1];
                         $linkHtmlOptions = array('style' => 'text-decoration:underline;');
-                        $content .= CHtml::link($unserializedData[0],
+                        $content .= ZurmoHtml::link($unserializedData[0],
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName), $linkHtmlOptions);
                         $content .= '&#160;-&#160;<span style="font-size:75%">';
                         $content .= $moduleClassName::getModuleLabelByTypeAndLanguage('Singular') . '</span><br/>';
@@ -87,7 +87,7 @@
                     {
                         $recentlyViewedItem                    = array();
                         $moduleClassName                       = $unserializedData[1];
-                        $recentlyViewedItem['link']            = CHtml::link('<span></span><em></em><span>' . $unserializedData[0] . '</span>',
+                        $recentlyViewedItem['link']            = ZurmoHtml::link('<span></span><em></em><span>' . $unserializedData[0] . '</span>',
                                     self::getRouteByAuditEvent($auditEvent, $moduleClassName));
                         $recentlyViewedItem['moduleClassName'] = $moduleClassName;
                         $recentlyViewedItems[]                 = $recentlyViewedItem;

@@ -38,7 +38,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'SaveButton'),
+                            array('type' => 'SaveAndPostNoteToProfileButton'),
                         ),
                     ),
                     'derivedAttributeTypes' => array(
@@ -70,7 +70,8 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'null', 'type' => 'Files'),
+                                                array('attributeName' => 'null', 'type' => 'Files',
+                                                      'showMaxSize'   => false),
                                             ),
                                         ),
                                     )
@@ -145,7 +146,7 @@
         protected function renderConfigSaveAjax($formName)
         {
             // Begin Not Coding Standard
-            return CHtml::ajax(array(
+            return ZurmoHtml::ajax(array(
                     'type' => 'POST',
                     'data' => 'js:$("#' . $formName . '").serialize()',
                     'url'  =>  $this->getValidateAndSaveUrl(),

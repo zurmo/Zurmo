@@ -45,7 +45,7 @@
             {
                 return Yii::t('Default', 'Completed with Errors');
             }
-            elseif ($jobLog->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
+            elseif ($this->model->status == JobLog::STATUS_COMPLETE_WITHOUT_ERROR)
             {
                 return Yii::t('Default', 'Completed');
             }

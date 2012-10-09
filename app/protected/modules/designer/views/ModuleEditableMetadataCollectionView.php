@@ -58,7 +58,7 @@
             foreach ($this->editableMetadataCollection as $item)
             {
                 //todo: make sure the route has attributeTypeName as well as attributeName
-                $link    = CHtml::link(Yii::t('Default', 'Configure'),
+                $link    = ZurmoHtml::link(Yii::t('Default', 'Configure'),
                                        Yii::app()->createUrl('/' . $this->moduleId . '/' . $this->controllerId . '/layoutEdit',
                                        array('viewClassName'   => $item['viewClassName'],
                                              'moduleClassName' => $this->moduleClassName,
@@ -79,11 +79,6 @@
             }
             $content .= '</div>';
             return $content;
-        }
-
-        protected function renderTitleContent()
-        {
-            return '<h1>' . $this->title . '</h1>';
         }
 
         public function isUniqueToAPage()

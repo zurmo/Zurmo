@@ -46,9 +46,9 @@
             //override since the details are done @see renderConversationContent
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . strval($this->model) . "</h1>";
+            return strval($this->model);
         }
 
         protected function renderRightSideContent($form = null)
@@ -90,24 +90,37 @@
 
         protected function renderConversationContent()
         {
-            $content  = '<div class="comment conversation-subject">';
-            $content .= '<span class="comment-details"><strong>'.
-                            DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $this->model->createdDateTime, 'long', null) . '</strong> ';
-            $content .= Yii::t('Default', 'by <strong>{ownerStringContent}</strong>',
-                                    array('{ownerStringContent}' => strval($this->model->createdByUser)));
+            $content  = '<div class="comment model-details-summary clearfix">';
+            $content .= $this->model->createdByUser->getAvatarImage(100);
+            $content .= '<span class="user-details">';
+            $content .= strval($this->model->createdByUser);
             $content .= '</span>';
-            $element  = new TextAreaElement($this->model, 'description');
-            $element->nonEditableTemplate = '<div class="comment-content">{content}</div>';
-            $content .= $element->render();
-            $element  = new FilesElement($this->model, 'null');
-            $element->nonEditableTemplate = '<div>{content}</div>';
-            $content .= $element->render();
+            if ($this->model->description == null)
+            {
+                $element  = new TextElement($this->model, 'subject');
+                $element->nonEditableTemplate = '<div class="comment-content">{content}</div>';
+                $content .= $element->render();
+            }
+            else
+            {
+                $element  = new TextAreaElement($this->model, 'description');
+                $element->nonEditableTemplate = '<div class="comment-content">{content}</div>';
+                $content .= $element->render();
+            }
+            $date = '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                              $this->model->createdDateTime, 'long', null) . '</strong></span>';
+            $content .= $date;
+            if ($this->model->files->count() > 0)
+            {
+                $element  = new FilesElement($this->model, 'null');
+                $element->nonEditableTemplate = '<div>{content}</div>';
+                $content .= $element->render();
+            }
             $element  = new ConversationItemsElement($this->model, 'null');
             $element->nonEditableTemplate = '<div>{content}</div>';
             $content .= $element->render();
             $content .= '</div>';
-            return Chtml::tag('div', array('id' => 'ConversationSummaryView'), $content);
+            return ZurmoHtml::tag('div', array('id' => 'ModelDetailsSummaryView'), $content);
         }
 
         protected function renderConversationCommentsContent()
@@ -125,9 +138,9 @@
 
         protected function renderConversationCreateCommentContent()
         {
-            $content       = Chtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
+            $content       = ZurmoHtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
             $comment       = new Comment();
-            $uniquePageId  = 'CommentInlineEditForConversationView';
+            $uniquePageId  = 'CommentInlineEditForModelView';
             $redirectUrl   = Yii::app()->createUrl('/conversations/default/inlineCreateCommentFromAjax',
                                                     array('id' => $this->model->id,
                                                           'uniquePageId' => $uniquePageId));
@@ -139,7 +152,7 @@
             $inlineView    = new CommentInlineEditView($comment, 'default', 'comments', 'inlineCreateSave',
                                                       $urlParameters, $uniquePageId);
             $content      .= $inlineView->render();
-            return Chtml::tag('div', array('id' => 'CommentInlineEditForConversationView'), $content);
+            return ZurmoHtml::tag('div', array('id' => 'CommentInlineEditForModelView'), $content);
         }
 
         protected function getPortletDetailsUrl()

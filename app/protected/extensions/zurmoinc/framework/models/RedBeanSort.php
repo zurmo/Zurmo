@@ -101,9 +101,16 @@
             }
             if ($this->modelClass !== null)
             {
-                $modelClass = $this->modelClass;
-                $model = new $modelClass();
-                return $model->getAttributeLabel($attribute);
+                $modelClass                = $this->modelClass;
+                $model                     = new $modelClass();
+                if ($model->getAbbreviatedAttributeLabel($attribute) != null)
+                {
+                    return $model->getAbbreviatedAttributeLabel($attribute);
+                }
+                else
+                {
+                    return $model->getAttributeLabel($attribute);
+                }
             }
             else
             {

@@ -162,6 +162,14 @@
     float: left;
 }
 
+.panel-settings,
+.cell-settings{
+    div.wide.form label.hasCheckBox{
+        margin-top:-5px !important;
+        margin-bottom: 0;
+    }
+}
+
 //check
 .sortable-row-list-container ul {
     list-style-type: none;
@@ -397,11 +405,12 @@
         }
         .remove-sortable-item-link{
             position: absolute;
-            left: 4px;
-            top: -7px;
+            left: 6px;
+            top: 5px;
+            z-index: 100;
             span{
                 text-indent:-9999px;
-                display:block;
+                display:inline-block;
             }
             &:after{
                 content:"_";

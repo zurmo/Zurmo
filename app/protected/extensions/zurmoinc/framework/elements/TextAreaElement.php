@@ -29,6 +29,10 @@
      */
     class TextAreaElement extends Element
     {
+        protected $rows    = 6;
+
+        protected $cols    = 50;
+
         /**
          * Override from parent class in order to
          * accomodate the 'wide' param option.
@@ -53,8 +57,8 @@
             $htmlOptions             = array();
             $htmlOptions['id']       = $this->getEditableInputId();
             $htmlOptions['name']     = $this->getEditableInputName();
-            $htmlOptions['rows']     = 6;
-            $htmlOptions['cols']     = 50;
+            $htmlOptions['rows']     = $this->getRows();
+            $htmlOptions['cols']     = $this->getCols();
             return $this->form->textArea($this->model, $this->attribute, $htmlOptions);
         }
 
@@ -65,6 +69,24 @@
         protected function renderControlNonEditable()
         {
             return Yii::app()->format->ntext($this->model->{$this->attribute});
+        }
+
+        protected function getRows()
+        {
+            if (isset($this->params['rows']))
+            {
+                return $this->params['rows'];
+            }
+            return $this->rows;
+        }
+
+        protected function getCols()
+        {
+            if (isset($this->params['cols']))
+            {
+                return $this->params['cols'];
+            }
+            return $this->cols;
         }
     }
 ?>

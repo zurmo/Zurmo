@@ -33,12 +33,12 @@
             Yii::app()->user->userModel = $super;
 
             $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem::getTableName('Account'),   $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem2::getTableName('Contact'), $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar(ImportModelTestItem3::getTableName('Opportunity'), $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn(ImportModelTestItem::getTableName('Account'),   $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn(ImportModelTestItem2::getTableName('Contact'), $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn(ImportModelTestItem3::getTableName('Opportunity'), $columnName);
 
             $account = AccountTestHelper::createAccountByNameForOwner('testAccount', $super);
             ImportTestHelper::updateModelsExternalId($account, 'ACC');

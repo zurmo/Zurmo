@@ -74,6 +74,14 @@
             return $this->model->getAnyMixedAttributesScope();
         }
 
+        public function getSelectedListAttributesFromModel()
+        {
+            if ($this->model->getListAttributesSelector() != null)
+            {
+                return $this->model->getListAttributesSelector()->getSelected();
+            }
+        }
+
         public function resolveSearchAttributesFromSourceData()
         {
             return SearchUtil::resolveSearchAttributesFromGetArray(get_class($this->model), get_class($this->model));
@@ -82,6 +90,11 @@
         public function resolveAnyMixedAttributesScopeForSearchModelFromSourceData()
         {
             return SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($this->model, get_class($this->model));
+        }
+
+        public function resolveSelectedListAttributesForSearchModelFromSourceData()
+        {
+            return SearchUtil::resolveSelectedListAttributesForSearchModelFromGetArray($this->model, get_class($this->model));
         }
 
         public static function resolveSortAttributeFromSourceData($name)

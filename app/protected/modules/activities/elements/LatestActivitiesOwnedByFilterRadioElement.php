@@ -61,7 +61,7 @@
             {
                 throw new NotImplementedException();
             }
-            $for = CHtml::ID_PREFIX . $this->getEditableInputId();
+            $for = ZurmoHtml::ID_PREFIX . $this->getEditableInputId();
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $for));
         }
 

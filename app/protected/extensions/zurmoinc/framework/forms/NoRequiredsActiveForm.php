@@ -38,7 +38,7 @@
         public function labelEx($model, $attribute, $htmlOptions = array())
         {
             $htmlOptions['required'] = false;
-            return CHtml::activeLabel($model, $attribute, $htmlOptions);
+            return ZurmoHtml::activeLabel($model, $attribute, $htmlOptions);
         }
     }
 ?>

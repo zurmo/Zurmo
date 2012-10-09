@@ -253,10 +253,8 @@
             if (RedBeanDatabase::isFrozen())
             {
                 Yii::app()->gameHelper->muteScoringModelsOnSave();
-                RedBeanDatabase::unfreeze();
                 $messageLogger = new MessageLogger();
-                RedBeanDatabaseBuilderUtil::autoBuildModels(array('User', $modelClassName), $messageLogger);
-                RedBeanDatabase::freeze();
+                RedBeanDatabaseBuilderUtil::manageFrozenStateAndAutoBuildModels(array('User', $modelClassName), $messageLogger);
                 Yii::app()->gameHelper->unmuteScoringModelsOnSave();
                 if ($messageLogger->isErrorMessagePresent())
                 {

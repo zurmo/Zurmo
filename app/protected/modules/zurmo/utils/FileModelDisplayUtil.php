@@ -61,7 +61,7 @@
             assert('$fileModel instanceof FileModel');
             $content = null;
             $content .= '<span class="ui-icon ui-icon-document" style="display:inline-block;"></span>';
-            $content .= CHtml::link(
+            $content .= ZurmoHtml::link(
                     Yii::app()->format->text($fileModel->name),
                     Yii::app()->createUrl('zurmo/fileModel/download/',
                         array('modelId' => $model->id,

@@ -99,7 +99,7 @@
                 array('id'       => $this->inputId,
                       'multiple' => true,
                       'style'    => 'display:none;'));
-            echo CHtml::listBox($this->inputName, $this->selectedValue, $this->dataAndLabels, $htmlOptions);
+            echo ZurmoHtml::listBox($this->inputName, $this->selectedValue, $this->dataAndLabels, $htmlOptions);
             if (empty($this->options))
             {
                 $options = null;

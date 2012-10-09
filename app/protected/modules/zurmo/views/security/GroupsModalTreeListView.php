@@ -76,7 +76,7 @@
 
         protected function makeTreeMenuNodeLink($label, $action, $groupId)
         {
-            return CHtml::Link($label,
+            return ZurmoHtml::Link($label,
                     'javascript:transferModalValues("#modalContainer", ' . CJavaScript::encode(array($this->sourceIdFieldId  => $groupId,
                         $this->sourceNameFieldId  => $label)) . '
                     );'

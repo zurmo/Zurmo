@@ -79,10 +79,10 @@
          */
         public function getLinkString($attributeString)
         {
-            $string   = 'CHtml::link(';
+            $string   = 'ZurmoHtml::link(';
             $string  .= $attributeString . ', ';
             $string  .= '"#", ';
-            $string  .= 'array("onclick" => CHtml::ajax(array(';
+            $string  .= 'array("onclick" => ZurmoHtml::ajax(array(';
             $string  .= '"url"      => Yii::app()->createUrl("' . $this->moduleId . '/defaultPortlet/selectFromRelatedListSave", $_GET),'; // Not Coding Standard
             $string  .= '"beforeSend" => "function ( xhr ) {jQuery(\'#modalContainer\').html(\'\');makeLargeLoadingSpinner(\'modalContainer\');}",'; // Not Coding Standard
             $string  .= '"complete" => "function(XMLHttpRequest, textStatus){\$(\"#modalContainer\").dialog(\"close\"); juiPortlets.refresh();}",'; // Not Coding Standard

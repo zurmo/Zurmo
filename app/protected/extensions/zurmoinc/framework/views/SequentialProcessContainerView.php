@@ -70,14 +70,6 @@
             return $content;
         }
 
-        protected function renderTitleContent()
-        {
-            if ($this->title != null)
-            {
-                return '<h1>' . $this->title . "</h1>";
-            }
-        }
-
         protected function renderProgressBarContent()
         {
             $cClipWidget = new CClipWidget();

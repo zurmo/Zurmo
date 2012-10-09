@@ -28,7 +28,7 @@
     {
         public function render()
         {
-            return CHtml::ajaxlink($this->getLabel(), $this->route, $this->getAjaxOptions(), $this->getHtmlOptions());
+            return ZurmoHtml::ajaxlink($this->getLabel(), $this->route, $this->getAjaxOptions(), $this->getHtmlOptions());
         }
     }
 ?>

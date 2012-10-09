@@ -35,7 +35,7 @@
         {
             $content    = parent::renderContent();
             $footerView = new FooterView();
-            return CHtml::tag('div', array('class' => 'AppContainer'), $content) . $footerView->render();
+            return ZurmoHtml::tag('div', array('class' => 'AppContainer'), $content) . $footerView->render();
         }
 
         protected function getSubtitle()

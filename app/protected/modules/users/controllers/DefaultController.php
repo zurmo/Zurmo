@@ -39,7 +39,8 @@
             $filters = array();
             $filters[] = array(
                     ZurmoBaseController::RIGHTS_FILTER_PATH .
-                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails, autoCompleteForMultiSelectAutoComplete, confirmTimeZone',
+                    ' - modalList, autoComplete, details, profile, edit, auditEventsModalList, changePassword, configurationEdit, securityDetails, ' .
+                        'autoCompleteForMultiSelectAutoComplete, confirmTimeZone, changeAvatar',
                     'moduleClassName' => 'UsersModule',
                     'rightName' => UsersModule::getAccessRight(),
             );
@@ -58,27 +59,60 @@
 
         public function actionList()
         {
+            $pageSize                       = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                              'listPageSize', get_class($this->getModule()));
+            $user                           = new User(false);
+            $searchForm                     = new UsersSearchForm($user);
+            $dataProvider = $this->resolveSearchDataProvider(
+                $searchForm,
+                $pageSize,
+                null,
+                'UsersSearchView'
+            );
             $title           = Yii::t('Default', 'Users');
             $breadcrumbLinks = array(
                  $title,
             );
-            $pageSize        = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                               'listPageSize', get_class($this->getModule()));
-            $searchForm      = new UsersSearchForm(new User(false));
-            $dataProvider    = $this->makeRedBeanDataProviderFromGet(
-                $searchForm,
-                'User',
-                $pageSize
-            );
-            $actionBarSearchAndListView = $this->makeActionBarSearchAndListView(
-                $searchForm,
-                $pageSize,
-                UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                Yii::app()->user->userModel->id,
-                $dataProvider
-            );
-            $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
-                                         makeViewWithBreadcrumbsForCurrentUser($this, $actionBarSearchAndListView, $breadcrumbLinks, 'UserBreadCrumbView'));
+            if (isset($_GET['ajax']) && $_GET['ajax'] == 'list-view')
+            {
+                $mixedView = $this->makeListView(
+                    $searchForm,
+                    $dataProvider
+                );
+                $view = new UsersPageView($mixedView);
+            }
+            else
+            {
+                $mixedView = $this->makeActionBarSearchAndListView(
+                    $searchForm,
+                    $pageSize,
+                    UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
+                    $dataProvider
+                );
+                $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
+                                         makeViewWithBreadcrumbsForCurrentUser($this, $mixedView, $breadcrumbLinks, 'UserBreadCrumbView'));
+            }
+            echo $view->render();
+        }
+
+        public function actionChangeAvatar($id)
+        {
+            if (Yii::app()->user->userModel->id == intval($id) ||
+                RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))
+            {
+                $user                 = User::getById(intval($id));
+                $userAvatarForm       = new UserAvatarForm($user);
+                $this->attemptToValidateAjaxFromPost($userAvatarForm, 'UserAvatarForm');
+                $viewForModal = new UserChangeAvatarView($this->getId(), $this->getModule()->getId(), $userAvatarForm);
+                $this->attemptToSaveModelFromPost($userAvatarForm);
+            }
+            else
+            {
+                $viewForModal = new AccessFailureView();
+            }
+
+            $view = new ModalView($this, $viewForModal);
+            Yii::app()->getClientScript()->setToAjaxMode();
             echo $view->render();
         }
 
@@ -215,7 +249,7 @@
          */
         protected function attemptToSaveModelFromPost($model, $redirectUrlParams = null, $redirect = true)
         {
-            assert('$model instanceof User || $model instanceof UserPasswordForm');
+            assert('$model instanceof User || $model instanceof UserPasswordForm || $model instanceof UserAvatarForm');
             assert('$redirectUrlParams == null || is_array($redirectUrlParams) || is_string($redirectUrlParams)');
             $postVariableName   = get_class($model);
             if (isset($_POST[$postVariableName]))
@@ -241,7 +275,7 @@
                 {
                     if ($userStatus != null)
                     {
-                        if ($model instanceof UserPasswordForm)
+                        if ($model instanceof UserPasswordForm || $model instanceof UserAvatarForm)
                         {
                             UserStatusUtil::resolveUserStatus($model->getModel(), $userStatus);
                         }
@@ -286,7 +320,6 @@
             $activeAttributes = $this->resolveActiveAttributesFromMassEditPost();
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new UsersSearchForm($user),
-                'User',
                 $pageSize,
                 Yii::app()->user->userModel->id);
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
@@ -324,7 +357,6 @@
             $user = new User(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new UsersSearchForm($user),
-                'User',
                 $pageSize,
                 Yii::app()->user->userModel->id
             );
@@ -430,7 +462,7 @@
             echo $view->render();
         }
 
-        protected function getSearchFormClassName()
+        protected static function getSearchFormClassName()
         {
             return 'UsersSearchForm';
         }

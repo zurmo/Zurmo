@@ -47,6 +47,7 @@
 
         public static function tearDownAfterClass()
         {
+            RedBeanColumnTypeOptimizer::$optimizedTableColumns = array();
             ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
             parent::tearDownAfterClass();
         }
@@ -54,6 +55,7 @@
         public function setUp()
         {
             parent::setUp();
+            RedBeanColumnTypeOptimizer::$optimizedTableColumns = array();
             Yii::app()->gameHelper->resetDeferredPointTypesAndValuesByUserIdToAdd();
         }
 

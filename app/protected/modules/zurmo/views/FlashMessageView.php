@@ -41,7 +41,7 @@
                 $script = "
                 $('#FlashMessageBar').jnotifyAddMessage(
                 {
-                    text: '". CHtml::encode(Yii::app()->user->getFlash('notification')) ."',
+                    text: '". ZurmoHtml::encode(Yii::app()->user->getFlash('notification')) ."',
                     permanent: true,
                     showIcon: true,
                 }

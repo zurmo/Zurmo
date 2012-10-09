@@ -66,7 +66,6 @@
         {
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
             assert('is_string($getArrayName)');
-            $searchAttributes  = array();
             if (!empty($_GET[$getArrayName]) && isset($_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
             {
                 assert('$searchModel instanceof SearchForm');
@@ -84,6 +83,33 @@
                     $sanitizedAnyMixedAttributesScope = $_GET[$getArrayName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME];
                 }
                 $searchModel->setAnyMixedAttributesScope($sanitizedAnyMixedAttributesScope);
+            }
+        }
+
+        /**
+         * From the get array, if the selectedListAttributes variable is present, retrieve and set into the
+         * $searchModel.
+         * @param object $searchModel
+         * @param string $getArrayName
+         */
+        public static function resolveSelectedListAttributesForSearchModelFromGetArray($searchModel, $getArrayName)
+        {
+            assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
+            assert('is_string($getArrayName)');
+            if ($searchModel->getListAttributesSelector() != null &&
+                !empty($_GET[$getArrayName]) &&
+                isset($_GET[$getArrayName][SearchForm::SELECTED_LIST_ATTRIBUTES]))
+            {
+                assert('$searchModel instanceof SearchForm');
+                if (!is_array($_GET[$getArrayName][SearchForm::SELECTED_LIST_ATTRIBUTES]))
+                {
+                    $sanitizedListAttributes = null;
+                }
+                else
+                {
+                    $sanitizedListAttributes = $_GET[$getArrayName][SearchForm::SELECTED_LIST_ATTRIBUTES];
+                }
+                $searchModel->getListAttributesSelector()->setSelected($sanitizedListAttributes);
             }
         }
 

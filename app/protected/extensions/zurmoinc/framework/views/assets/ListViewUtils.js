@@ -43,10 +43,26 @@ function updateListViewSelectedIds(gridViewId, selectedId, selectedValue)
         array.push(selectedId);
     }
     $('#' + gridViewId + "-selectedIds").val(array.toString());
-    //alert( $('#' + gridViewId + "-selectedIds").val() );
 }
 
 function addListViewSelectedIdsToUrl(id, options)
 {
     options.url = $.param.querystring(options.url, 'selectedIds=' + $('#' + id + "-selectedIds").val());
+}
+
+function resetSelectedListAttributes(selectedListAttributesId, hiddenListAttributesId, defaultSelectedAttributes)
+{
+    $('#' + selectedListAttributesId + ' option').remove().appendTo('#' + hiddenListAttributesId);
+    defaults = eval(defaultSelectedAttributes);
+    for (i = 0; i < defaults.length; ++i)
+    {
+        $('#' + hiddenListAttributesId).find('option[value="' + defaults[i] + '"]').remove().appendTo('#' + selectedListAttributesId);
+    };
+    $('#' + hiddenListAttributesId).find("option").each(function(){
+        if(jQuery.inArray($(this).val(), defaults) != -1)
+        {
+            $(this).remove().appendTo('#' + selectedListAttributesId);
+        }
+    });
+    return false;
 }

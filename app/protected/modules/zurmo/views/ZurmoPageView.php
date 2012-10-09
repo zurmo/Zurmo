@@ -26,7 +26,7 @@
 
     class ZurmoPageView extends PageView
     {
-        protected function getTitle()
+        public function getTitle()
         {
             return Yii::t('Default', 'ZurmoCRM');
         }

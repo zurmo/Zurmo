@@ -54,12 +54,9 @@
             $this->title          = $title;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            if ($this->title != null)
-            {
-                return '<h1>' . $this->title . "</h1>";
-            }
+            return $this->title;
         }
 
         public static function getDefaultMetadata()

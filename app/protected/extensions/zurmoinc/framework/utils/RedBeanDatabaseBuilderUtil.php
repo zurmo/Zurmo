@@ -31,8 +31,13 @@
      */
     class RedBeanDatabaseBuilderUtil
     {
+        const AUTO_BUILD_STATE_KEY = 'autoBuildState';
+        const AUTO_BUILD_SAMPLE_MODELS_KEY = 'autoBuildModels';
+
+        const AUTO_BUILD_STATE_INVALID = 'invalid';
+        const AUTO_BUILD_STATE_VALID = 'valid';
+
         protected static $modelClassNamesToSampleModels;
-        protected static $uniqueStrings = array();
 
         /**
          * Auto building of models (and therefore the database) involves...
@@ -66,11 +71,17 @@
 
         public static function autoBuildModels(array $modelClassNames, & $messageLogger)
         {
-            AuditEvent::$isTableOptimized = false;
             assert('AssertUtil::all($modelClassNames, "is_string")');
             assert('$messageLogger instanceof MessageLogger');
+
+            if (!self::isAutoBuildStateValid())
+            {
+                self::deleteAllSampleModelsFromStatePersisterAndDatabase($messageLogger);
+            }
+            self::setAutoBuildStateInStatePersister(self::AUTO_BUILD_STATE_INVALID);
+
+            AuditEvent::$isTableOptimized = false;
             self::$modelClassNamesToSampleModels = array();
-            self::$uniqueStrings                 = array();
             foreach ($modelClassNames as $modelClassName)
             {
                 $messages[] = array('info' => "Auto building $modelClassName.");
@@ -88,6 +99,7 @@
 
                         if ($saved)
                         {
+                            self::setSampleModelInStatePersister(get_class($model), $model->id);
                             $metadata = $model->getMetadata();
                             foreach ($metadata as $unused => $classMetadata)
                             {
@@ -181,6 +193,198 @@
                 $messageLogger->addErrorMessage('*** Deleting of the sample(s) ' . join(', ', array_keys(self::$modelClassNamesToSampleModels)) . " didn't happen.");
             }
             AuditEvent::$isTableOptimized = false;
+            self::deleteAllSampleModelsFromStatePersister();
+            self::setAutoBuildStateInStatePersister(self::AUTO_BUILD_STATE_VALID);
+        }
+
+        /**
+         * @param array $modelClassNames
+         * @param MessageLogger $messageLogger
+         */
+        public static function manageFrozenStateAndAutoBuildModels(array $modelClassNames, & $messageLogger)
+        {
+            RedBeanDatabase::unfreeze();
+            self::autoBuildModels($modelClassNames, $messageLogger);
+            RedBeanDatabase::freeze();
+        }
+
+        /**
+         * Deletes all sample models from state persister and from database
+         * @param MessageLogger $messageLogger
+         */
+        protected static function deleteAllSampleModelsFromStatePersisterAndDatabase($messageLogger)
+        {
+            $allSampleModels = self::getSampleModelsFromStatePersister();
+            $allSampleModelsDeleted = true;
+            if (!empty($allSampleModels))
+            {
+                foreach ($allSampleModels as $key => $sampleModel)
+                {
+                    $allSampleModelsDeleted = $allSampleModelsDeleted && self::deleteSampleModelFromStatePersisterAndDatabase(
+                                        $sampleModel['modelClassName'],
+                                        $sampleModel['modelId'],
+                                        $messageLogger);
+                }
+            }
+            if ($allSampleModelsDeleted)
+            {
+                echo "All sample models from previous autobuild are deleted.";
+                $messageLogger->addInfoMessage("All sample models from previous autobuild are deleted, but schema is not updated yet.");
+                $messageLogger->addInfoMessage("If you want to update schema, run auto build process again.");
+                self::setAutoBuildStateInStatePersister(self::AUTO_BUILD_STATE_VALID);
+            }
+            else
+            {
+                $messageLogger->addErrorMessage("All sample models couldn't be deleted.");
+            }
+            Yii::app()->end();
+        }
+
+        /**
+         * Store sample model in state persister(database)
+         * @param string $modelClassName
+         * @param int $modelId
+         */
+        protected static function setSampleModelInStatePersister($modelClassName, $modelId)
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            $sampleModel = array(
+                'modelClassName' => $modelClassName,
+                'modelId'        => $modelId
+            );
+            $state[self::AUTO_BUILD_SAMPLE_MODELS_KEY][] = $sampleModel;
+            $statePersister->save($state);
+        }
+
+        /**
+         * Get all sample models from state persister
+         * @return array | null
+         */
+        protected static function getSampleModelsFromStatePersister()
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            if (isset($state[self::AUTO_BUILD_SAMPLE_MODELS_KEY]))
+            {
+                return $state[self::AUTO_BUILD_SAMPLE_MODELS_KEY];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /**
+         * Delete all sample models from state persister. If this function is used,
+         * sample models should alreaady be deleted from database.
+         */
+        protected static function deleteAllSampleModelsFromStatePersister()
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            unset($state[self::AUTO_BUILD_SAMPLE_MODELS_KEY]);
+            $statePersister->save($state);
+            return true;
+        }
+
+        /**
+         * Delete sample model from application state persister and from database
+         * @param string $modelClassName
+         * @param inf $modelId
+         * @param MessageLogger $messageLogger
+         * @return boolean
+         */
+        protected static function deleteSampleModelFromStatePersisterAndDatabase($modelClassName, $modelId, $messageLogger)
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            $result = true;
+            if (isset($state[self::AUTO_BUILD_SAMPLE_MODELS_KEY]))
+            {
+                $sampleModels = $state[self::AUTO_BUILD_SAMPLE_MODELS_KEY];
+                if (!empty($sampleModels))
+                {
+                    foreach ($sampleModels as $key => $sampleModel)
+                    {
+                        if ($sampleModel['modelClassName'] == $modelClassName && $sampleModel['modelId'] == $modelId)
+                        {
+                            try
+                            {
+                                $model = $sampleModel['modelClassName']::getById($modelId);
+                                if ($model)
+                                {
+                                    if ($model->delete())
+                                    {
+                                        unset($state[self::AUTO_BUILD_SAMPLE_MODELS_KEY][$key]);
+                                        $messageLogger->addInfoMessage("Sample model {$sampleModel['modelClassName']}-> $modelId deleted.");
+                                    }
+                                    else
+                                    {
+                                        $messageLogger->addErrorMessage("Couldn't delete sample model {$sampleModel['modelClassName']}-> $modelId deleted.");
+                                        $result = false;
+                                    }
+                                }
+                            }
+                            catch (NotFoundException $e)
+                            {
+                                // Do nothing, model is already deleted
+                            }
+                        }
+                    }
+                }
+            }
+            $statePersister->save($state);
+            return $result;
+        }
+
+        /**
+         * Set current state of auto build process in state persister.
+         * This state is also used in BeginRequestBehavious, so if state is invalid,
+         * we will exit application, and inform user about this case.
+         * @param string $value
+         */
+        protected static function setAutoBuildStateInStatePersister($value)
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            $state[self::AUTO_BUILD_STATE_KEY] = $value;
+            $statePersister->save($state);
+        }
+
+        /**
+         * Get auto build state from state persister
+         * @return string | null
+         */
+        protected static function getAutoBuildStateFromStatePersister()
+        {
+            $statePersister = Yii::app()->getStatePersister();
+            $state = $statePersister->load();
+            if (isset($state[self::AUTO_BUILD_STATE_KEY]))
+            {
+                return $state[self::AUTO_BUILD_STATE_KEY];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /**
+         * Check if auto build process completed sucessfully
+         * @return boolean
+         */
+        public static function isAutoBuildStateValid()
+        {
+            $autoBuildState = self::getAutoBuildStateFromStatePersister();
+            if (!isset($autoBuildState) || $autoBuildState == 'valid')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static function autoBuildSampleModel($modelClassName, array $modelClassNames, & $messageLogger)
@@ -457,7 +661,13 @@
                                 // that it should be all lowercase or all
                                 // uppercase. If it still doesn't validate,
                                 // well, we'll see...
-                                $s = self::getUniqueString($minLength, $maxLength, $unique);
+                                $modelClassName = get_class($model);
+                                do
+                                {
+                                    $s = self::getRandomString($minLength, $maxLength);
+                                }
+                                while ($unique && $modelClassName::getSubset(null, null, null, "$memberName = '$s'"));
+
                                 $model->$memberName = $s;
                                 if (!$model->validate(array($memberName)))
                                 {
@@ -477,26 +687,19 @@
             }
         }
 
-        protected static function getUniqueString($minLength, $maxLength, $unique)
+        protected static function getRandomString($minLength, $maxLength)
         {
-            if ($maxLength == null)
+            if ($minLength == null)
             {
-                $maxLength = 1024;
+                $minLength = 1;
             }
-            do
+
+            $s = chr(rand(ord('A'), ord('Z')));
+            $length = min($minLength, $maxLength);
+            while (strlen($s) < $length)
             {
-                $s = chr(rand(ord('A'), ord('Z')));
-                $length = max($minLength, $maxLength);
-                if ($maxLength !== null)
-                {
-                    $length = min($length, $maxLength);
-                }
-                while (strlen($s) < $length)
-                {
-                    $s .= chr(rand(ord('a'), ord('z')));
-                }
-            } while ($unique && in_array($s, self::$uniqueStrings));
-            $uniqueStrings[] = $s;
+                $s .= chr(rand(ord('a'), ord('z')));
+            }
             return $s;
         }
     }

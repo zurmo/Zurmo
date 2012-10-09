@@ -1068,5 +1068,58 @@
                 throw new NotSupportedException();
             }
         }
+
+        /**
+         * Map hint type into database valid type
+         * @param string $hintType
+         * @throws NotSupportedException
+         * @return string
+         */
+        public static function mapHintTypeIntoDatabaseColumnType($hintType)
+        {
+            $databaseColumnType = '';
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                switch ($hintType)
+                {
+                    case 'blob':
+                        $databaseColumnType = "BLOB";
+                        break;
+                    case 'longblob':
+                        $databaseColumnType = "LONGBLOB";
+                        break;
+                    case 'boolean':
+                        $databaseColumnType = "TINYINT(1)";
+                        break;
+                    case 'date':
+                        $databaseColumnType = "DATE";
+                        break;
+                    case 'datetime':
+                        $databaseColumnType = "DATETIME";
+                        break;
+                    case 'string':
+                        $databaseColumnType = "VARCHAR(255)";
+                        break;
+                    case 'text':
+                        $databaseColumnType = "TEXT";
+                        break;
+                    case 'longtext':
+                        $databaseColumnType = "LONGTEXT";
+                        break;
+                    case 'id':
+                        $databaseColumnType = "INT(11) UNSIGNED";
+                        break;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+            if ($databaseColumnType == '')
+            {
+                throw new NotSupportedException();
+            }
+            return $databaseColumnType;
+        }
     }
 ?>

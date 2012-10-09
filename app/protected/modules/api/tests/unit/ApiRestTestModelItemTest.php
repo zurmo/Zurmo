@@ -333,23 +333,27 @@
                 'modelItems3' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem3_1->id
+                        'modelId' => $testItem3_1->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem3_2->id
+                        'modelId' => $testItem3_2->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                 ),
                 'modelItems4' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem4->id
+                        'modelId' => $testItem4->id,
+                        'modelClassName' => 'ApiTestModelItem4'
                     ),
                 ),
                 'modelItems' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItemRelated->id
+                        'modelId' => $testItemRelated->id,
+                        'modelClassName' => 'ApiTestModelItem'
                     ),
                 ),
             );
@@ -357,13 +361,14 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/api/testModelItem/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-//echo "OK";
-//            exit;
+
             RedBeanModel::forgetAll();
             $updatedModel = ApiTestModelItem::getById($response['data']['id']);
             $this->assertEquals(2, count($updatedModel->modelItems3));
-            $this->assertEquals($testItem3_1->id, $updatedModel->modelItems3[0]->id);
-            $this->assertEquals($testItem3_2->id, $updatedModel->modelItems3[1]->id);
+            // We don't know order how data are pulled from database, so we compare if all expected data are in array.
+            $this->assertTrue(in_array($updatedModel->modelItems3[0]->id, array($testItem3_1->id, $testItem3_2->id)));
+            $this->assertTrue(in_array($updatedModel->modelItems3[1]->id, array($testItem3_1->id, $testItem3_2->id)));
+            $this->assertTrue($updatedModel->modelItems3[0]->id != $updatedModel->modelItems3[1]->id);
 
             $this->assertEquals(1, count($updatedModel->modelItems4));
             $this->assertEquals($testItem4->id, $updatedModel->modelItems4[0]->id);
@@ -419,23 +424,27 @@
                 'modelItems3' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem3_1->id
+                        'modelId' => $testItem3_1->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem3_2->id
+                        'modelId' => $testItem3_2->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                 ),
                 'modelItems4' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItem4->id
+                        'modelId' => $testItem4->id,
+                        'modelClassName' => 'ApiTestModelItem4'
                     ),
                 ),
                 'modelItems' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $testItemRelated->id
+                        'modelId' => $testItemRelated->id,
+                        'modelClassName' => 'ApiTestModelItem'
                     ),
                 ),
             );
@@ -468,23 +477,27 @@
                 'modelItems3' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $testItem3_1->id
+                        'modelId' => $testItem3_1->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                     array(
                         'action' => 'remove',
-                        'modelId' => $testItem3_2->id
+                        'modelId' => $testItem3_2->id,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                 ),
                 'modelItems4' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $testItem4->id
+                        'modelId' => $testItem4->id,
+                        'modelClassName' => 'ApiTestModelItem4'
                     ),
                 ),
                 'modelItems' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $testItemRelated->id
+                        'modelId' => $testItemRelated->id,
+                        'modelClassName' => 'ApiTestModelItem'
                     ),
                 ),
             );
@@ -502,7 +515,8 @@
                 'modelItems' => array(
                     array(
                         'action' => 'invalidAction',
-                        'modelId' => $testItemRelated->id
+                        'modelId' => $testItemRelated->id,
+                        'modelClassName' => 'ApiTestModelItem'
                     ),
                 ),
             );
@@ -515,7 +529,8 @@
                 'aaad' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $testItemRelated->id
+                        'modelId' => $testItemRelated->id,
+                        'modelClassName' => 'ApiTestModelItem'
                     ),
                 ),
             );
@@ -528,7 +543,8 @@
                 'modelItems3' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => 345
+                        'modelId' => 345,
+                        'modelClassName' => 'ApiTestModelItem3'
                     ),
                 ),
             );

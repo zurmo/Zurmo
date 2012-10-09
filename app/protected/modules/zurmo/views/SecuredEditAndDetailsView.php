@@ -85,7 +85,7 @@
             $content  = parent::renderAfterFormLayoutForDetailsContent();
             if ($this->getModel() instanceof OwnedSecurableItem)
             {
-                $content .= '<p>';
+                $content .= '<p class="after-form-details-content">';
                 if ($content != null)
                 {
                     $content .= '<br/>';

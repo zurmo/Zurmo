@@ -229,9 +229,9 @@
             return 'UserCreateView';
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . $this->getNewModelTitleLabel() . '</h1>';
+            return $this->getNewModelTitleLabel();
         }
 
         protected function getNewModelTitleLabel()

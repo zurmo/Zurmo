@@ -42,7 +42,9 @@
 
         protected $getParams;
 
-        public function __construct($controllerId, $moduleId, $commentsData, Item $relatedModel, $pageSize, $getParams)
+        protected $uniquePageId;
+
+        public function __construct($controllerId, $moduleId, $commentsData, Item $relatedModel, $pageSize, $getParams, $uniquePageId = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -50,12 +52,19 @@
             assert('$relatedModel->id > 0');
             assert('is_int($pageSize) || $pageSize == null');
             assert('is_array($getParams)');
+            assert('is_string($uniquePageId) || $uniquePageId == null');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->commentsData           = $commentsData;
             $this->relatedModel           = $relatedModel;
             $this->pageSize               = $pageSize;
             $this->getParams              = $getParams;
+            $this->uniquePageId           = $uniquePageId;
+        }
+
+        protected function getId()
+        {
+            return 'CommentsForRelatedModelView' . $this->uniquePageId;
         }
 
         protected function renderContent()
@@ -68,7 +77,7 @@
                 {
                     $content .= '<div>' . $this->renderShowAllLinkContent() . '</div>';
                 }
-                $content .= '<div id="CommentList">' . $this->renderCommentsContent() . '</div>';
+                $content .= '<div id="CommentList' . $this->uniquePageId . '" class="CommentList">' . $this->renderCommentsContent() . '</div>';
             }
             $content .= '</div>';
             return $content;
@@ -80,8 +89,8 @@
                             $this->getParams);
             return       ZurmoHtml::ajaxLink('Refresh', $url,
                          array('type' => 'GET',
-                               'success' => 'function(data){$("#CommentsForRelatedModelView").replaceWith(data)}'),
-                         array('id'         => 'hiddenCommentRefresh',
+                               'success' => 'function(data){$("#CommentsForRelatedModelView' . $this->uniquePageId . '").replaceWith(data)}'),
+                         array('id'         => 'hiddenCommentRefresh'. $this->uniquePageId,
                                 'class'     => 'hiddenCommentRefresh',
                                 'namespace' => 'refresh',
                                 'style'     => 'display:none;'));
@@ -93,8 +102,8 @@
                             array_merge($this->getParams, array('noPaging' => true)));
             return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Show older comments'), $url,
                          array('type' => 'GET',
-                               'success' => 'function(data){$("#CommentsForRelatedModelView").replaceWith(data)}'),
-                         array('id'         => 'showAllCommentsLink',
+                               'success' => 'function(data){$("#CommentsForRelatedModelView' . $this->uniquePageId . '").replaceWith(data)}'),
+                         array('id'         => 'showAllCommentsLink' . $this->uniquePageId,
                                 'class'     => 'showAllCommentsLink',
                                 'namespace' => 'refresh'));
         }
@@ -111,12 +120,11 @@
                     $rows++;
                     continue;
                 }
-                $stringContent  = '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                              $comment->createdDateTime, 'long', null) . '</strong> ';
-                $stringContent .= Yii::t('Default', 'by <strong>{ownerStringContent}</strong>',
-                                        array('{ownerStringContent}' => strval($comment->createdByUser)));
-                $stringContent .= '</span>';
-                $stringContent .= '<div class="comment-content">' . $comment->description . '</div>';
+
+                $stringContent  = $comment->createdByUser->getAvatarImage(36);
+                $userName       = strval($comment->createdByUser);
+                $stringContent .= '<div class="comment-content"><p>' . $userName . ': ' . $comment->description . '</p>';
+
                 //attachments
                 if ($comment->files->count() > 0)
                 {
@@ -126,8 +134,17 @@
                    $this->relatedModel->createdByUser == Yii::app()->user->userModel ||
                    ($this->relatedModel instanceof OwnedSecurableItem && $this->relatedModel->owner == Yii::app()->user->userModel))
                 {
-                    $stringContent .= '<span class="delete-comment">' . $this->renderDeleteLinkContent($comment) . '</span>';
+                    $deleteCommentLink = '<span class="delete-comment">' . $this->renderDeleteLinkContent($comment) . '</span>';
                 }
+                else
+                {
+                    $deleteCommentLink = null;
+                }
+                $stringContent .= '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                                              $comment->createdDateTime, 'long', null) . '</strong></span>' . $deleteCommentLink;
+
+                $stringContent .= '</div>';
+
                 $content .= '<div class="comment">' . $stringContent . '</div>';
                 $rows++;
             }
@@ -142,7 +159,7 @@
             return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete Comment'), $url,
                          array('type'     => 'GET',
                                'complete' => "function(XMLHttpRequest, textStatus){
-                                              $('#deleteCommentLink" . $comment->id . "').parent().parent().remove();}"),
+                                              $('#deleteCommentLink" . $comment->id . "').parent().parent().parent().remove();}"),
                          array('id'         => 'deleteCommentLink' . $comment->id,
                                 'class'     => 'deleteCommentLink' . $comment->id,
                                 'namespace' => 'delete'));
@@ -151,7 +168,7 @@
 
         public function isUniqueToAPage()
         {
-            return true;
+            return false;
         }
     }
 ?>

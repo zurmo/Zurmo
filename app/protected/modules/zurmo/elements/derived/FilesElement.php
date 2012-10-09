@@ -71,7 +71,8 @@
                 'formName'             => $this->form->id,
                 'allowMultipleUpload'  => true,
                 'existingFiles'        => $existingFilesInformation,
-                'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize()
+                'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize(),
+                'showMaxSize'          => $this->getShowMaxSize(),
             ));
 
             $cClipWidget->endClip();
@@ -120,6 +121,15 @@
         public static function getNonEditableActionType()
         {
             return null;
+        }
+
+        protected function getShowMaxSize()
+        {
+            if (!isset($this->params['showMaxSize']))
+            {
+                return true;
+            }
+            return $this->params['showMaxSize'];
         }
     }
 ?>

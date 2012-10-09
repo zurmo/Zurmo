@@ -26,6 +26,12 @@
 
     class User extends Permitable
     {
+        const AVATAR_TYPE_DEFAULT       = 1;
+        const AVATAR_TYPE_PRIMARY_EMAIL = 2;
+        const AVATAR_TYPE_CUSTOM_EMAIL  = 3;
+
+        private $avatarImageUrl;
+
         public static function getByUsername($username)
         {
             assert('is_string($username)');
@@ -46,7 +52,7 @@
             assert('$username != ""');
             assert('is_string($password)');
             $user = User::getByUsername($username);
-            if ($user->hash != md5($password))
+            if ($user->hash != self::encryptPassword($password))
             {
                 throw new BadPasswordException();
             }
@@ -80,7 +86,7 @@
             else
             {
                 $userBean = $this->getClassBean('User');
-                $personBean = R::getBean($userBean, $tableName);
+                $personBean = ZurmoRedBeanLinkManager::getBean($userBean, $tableName);
                 assert('$personBean !== null');
             }
             $this->setClassBean                  ($modelClassName, $personBean);
@@ -126,23 +132,23 @@
                 }
                 if ($baseBean !== null)
                 {
-                    R::$linkManager->link($bean, $baseBean);
+                    ZurmoRedBeanLinkManager::link($bean, $baseBean);
                     if (!RedBeanDatabase::isFrozen())
                     {
                         $tableName  = self::getTableName(get_class($this));
                         $columnName = 'person_id';
-                        RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, $columnName);
+                        RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
                     }
                 }
                 $baseBean = $bean;
             }
             $userBean   = $this->modelClassNameToBean['User'];
             $personBean = $this->modelClassNameToBean['Person'];
-            R::$linkManager->link($userBean, $personBean);
+            ZurmoRedBeanLinkManager::link($userBean, $personBean);
             if (!RedBeanDatabase::isFrozen())
             {
                 $tableName  = self::getTableName(get_class($this));
-                RedBean_Plugin_Optimizer_Id::ensureIdColumnIsINT11($tableName, 'person_id');
+                RedBeanColumnTypeOptimizer::optimize($tableName, 'person_id', 'id');
             }
         }
 
@@ -331,7 +337,70 @@
         public function setPassword($password)
         {
             assert('is_string($password)');
-            $this->hash = md5($password);
+            $this->hash = self::encryptPassword($password);
+        }
+
+        public static function encryptPassword($password)
+        {
+            return md5($password);
+        }
+
+        public function serializeAndSetAvatarData(Array $avatar)
+        {
+            $this->serializedAvatarData = serialize($avatar);
+        }
+
+        public function getAvatarImage($size = 250)
+        {
+            $avatarUrl = $this->getAvatarImageUrl($size);
+            return ZurmoHtml::image($avatarUrl, null, array('class'  => 'gravatar',
+                                                            'width'  => $size,
+                                                            'height' => $size));
+        }
+
+        private function getAvatarImageUrl($size)
+        {
+            assert('is_int($size)');
+            if (isset($this->avatarImageUrl))
+            {
+                return $this->avatarImageUrl;
+            }
+            else
+            {
+                if (isset($this->serializedAvatarData))
+                {
+                    $avatar = unserialize($this->serializedAvatarData);
+                }
+                if (isset($avatar['avatarType']) && $avatar['avatarType'] == User::AVATAR_TYPE_DEFAULT)
+                {
+                    $avatarUrl = "http://www.gravatar.com/avatar/?s={$size}&r=g&d=mm"; // Not Coding Standard
+                }
+                elseif (isset($avatar['avatarType']) && $avatar['avatarType'] == User::AVATAR_TYPE_PRIMARY_EMAIL)
+                {
+                    $email      = $this->primaryEmail->emailAddress;
+                    $avatarUrl   = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?s={$size}&d=identicon&r=g"; // Not Coding Standard
+                }
+                elseif (isset($avatar['avatarType']) && $avatar['avatarType'] == User::AVATAR_TYPE_CUSTOM_EMAIL)
+                {
+                    $email      = $avatar['customAvatarEmailAddress'];
+                    $avatarUrl   = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?s={$size}&d=identicon&r=g"; // Not Coding Standard
+                }
+                else
+                {
+                    $avatarUrl = "http://www.gravatar.com/avatar/?s={$size}&r=g&d=mm"; // Not Coding Standard
+                }
+                //Check connection to gravatar and return offline picture
+                $htmlHeaders = @get_headers($avatarUrl);
+                if (preg_match("|200|", $htmlHeaders[0]))
+                {
+                    $this->avatarImageUrl = $avatarUrl;
+                }
+                else
+                {
+                    $this->avatarImageUrl = Yii::app()->theme->baseUrl . '/images/offline_user.png';
+                }
+                return $this->avatarImageUrl;
+            }
         }
 
         public static function mangleTableName()
@@ -550,6 +619,7 @@
                     'language',
                     'timeZone',
                     'username',
+                    'serializedAvatarData'
                 ),
                 'relations' => array(
                     'currency'   => array(RedBeanModel::HAS_ONE,             'Currency'),
@@ -578,6 +648,7 @@
                     array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
                                                'message' => 'Username must be lowercase.'),
                     array('username', 'length',  'max'   => 64),
+                    array('serializedAvatarData',   'type',  'type' => 'string')
                 ),
                 'elements' => array(
                 ),
@@ -587,6 +658,9 @@
                 ),
                 'noApiExport' => array(
                     'hash'
+                ),
+                'noAudit' => array(
+                    'serializedAvatarData',
                 ),
             );
             return $metadata;

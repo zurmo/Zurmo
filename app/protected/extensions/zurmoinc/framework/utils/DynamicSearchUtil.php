@@ -295,7 +295,50 @@
             {
                 $view = new AjaxPageView($rowView);
             }
-            return CHtml::tag('div', array('class' => 'dynamic-search-row'), $view->render());
+            return ZurmoHtml::tag('div', array('class' => 'dynamic-search-row'), $view->render());
+        }
+
+        /**
+         * This function is used only for API calls. Because for some relations, we are using
+         * Item model, which is hidden in API call, so we let API clients to provide us
+         * modelClassName and modelId, and this util will convert them into Item id.
+         * Recoursevly go over all clauses, and check if there are MANY-MANY relations
+         * with Item model. If yes, then convert modelVlassName and modelId, into itemId.
+         * @param string $modelClassName
+         * @param array $dynamicClauses
+         */
+        public static function resolveDynamicSearchClausesForModelIdsNeedingToBeItemIds($modelClassName, & $dynamicClauses)
+        {
+            assert(is_array($dynamicClauses) && !empty($dynamicClauses));
+            $processRecursively = false;
+
+            foreach ($dynamicClauses as $key => $clause)
+            {
+                // To-do: Should we check only on attributeIndexOrDerivedType key?
+                if (isset($clause['attributeIndexOrDerivedType']))
+                {
+                    $searchModel = new $modelClassName(false);
+                    $attributeIndexOrDerivedType = $clause['attributeIndexOrDerivedType'];
+
+                    if (isset($clause[$attributeIndexOrDerivedType]) && is_array($clause[$attributeIndexOrDerivedType]))
+                    {
+                        $relation = $clause[$attributeIndexOrDerivedType];
+
+                        if (isset($relation['modelClassName']) &&
+                            $relation['modelClassName'] != $searchModel->getRelationModelClassName($attributeIndexOrDerivedType) &&
+                            $searchModel->getRelationType($attributeIndexOrDerivedType) == RedBeanModel::MANY_MANY &&
+                            $searchModel->getRelationModelClassName($attributeIndexOrDerivedType) == 'Item')
+                        {
+                            $relClassName = $relation['modelClassName'];
+                            $relModel = $relClassName::getById((int)$relation['modelId']);
+                            $itemId = $relModel->getClassId('Item');
+                            unset($dynamicClauses[$key][$attributeIndexOrDerivedType]['modelClassName']);
+                            unset($dynamicClauses[$key][$attributeIndexOrDerivedType]['modelId']);
+                            $dynamicClauses[$key][$attributeIndexOrDerivedType]['id'] = $itemId;
+                        }
+                    }
+                }
+            }
         }
     }
 ?>

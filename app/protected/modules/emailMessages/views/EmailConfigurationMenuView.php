@@ -26,9 +26,9 @@
 
     class EmailConfigurationMenuView extends ConfigureModulesMenuView
     {
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Email Configuration') . '</h1>';
+            return Yii::t('Default', 'Email Configuration');
         }
 
         protected function getCategoryData()

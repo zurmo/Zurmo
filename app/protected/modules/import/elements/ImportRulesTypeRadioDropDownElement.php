@@ -61,7 +61,7 @@
             {
                 throw new NotImplementedException();
             }
-            return Yii::t('Default', 'Please select the module you would like to import to:');
+            return CHtml::tag('span', array(), Yii::t('Default', 'Please select the module you would like to import to:'));
         }
 
         public function getEditableHtmlOptions()

@@ -133,6 +133,7 @@
             $_GET['testing'] = array(
                 'a' => '0',
                 SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => 'something',
+                SearchForm::SELECTED_LIST_ATTRIBUTES        => array('something'),
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing', 'AAASearchFormTestModel');
             $this->assertEquals(array('a' => '0'), $newArray);
@@ -140,6 +141,7 @@
             $_GET['testing'] = array(
                 'a' => '0',
                 SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => null,
+                SearchForm::SELECTED_LIST_ATTRIBUTES        => null,
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing', 'AAASearchFormTestModel');
             $this->assertEquals(array('a' => '0'), $newArray);
@@ -147,6 +149,7 @@
             $_GET['testing'] = array(
                 'a' => '0',
                 SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => array(),
+                SearchForm::SELECTED_LIST_ATTRIBUTES        => array(),
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing', 'AAASearchFormTestModel');
             $this->assertEquals(array('a' => '0'), $newArray);
@@ -154,6 +157,7 @@
             $_GET['testing'] = array(
                 'a' => '0',
                 SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME => array('a' => 'b'),
+                SearchForm::SELECTED_LIST_ATTRIBUTES        => array('a' => 'b'),
             );
             $newArray = SearchUtil::resolveSearchAttributesFromGetArray('testing', 'AAASearchFormTestModel');
             $this->assertEquals(array('a' => '0'), $newArray);
@@ -321,6 +325,25 @@
             $_GET['someArray'][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME] = array('A', 'B', 'C');
             SearchUtil::resolveAnyMixedAttributesScopeForSearchModelFromGetArray($searchModel, $getArrayName);
             $this->assertEquals(array('A', 'B', 'C'), $searchModel->getAnyMixedAttributesScope());
+        }
+
+        public function testResolveSelectedListAttributesForSearchModelFromGetArray()
+        {
+            $searchModel  = new ASearchFormTestModel(new A());
+            $listAttributesSelector         = new ListAttributesSelector('AListView', 'TestModule');
+            $searchModel->setListAttributesSelector($listAttributesSelector);
+            $getArrayName = 'someArray';
+            SearchUtil::resolveSelectedListAttributesForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertEquals(array('name'), $searchModel->getListAttributesSelector()->getSelected());
+
+            //Test passing a value in the GET
+            $_GET['someArray'][SearchForm::SELECTED_LIST_ATTRIBUTES] = array();
+            SearchUtil::resolveSelectedListAttributesForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertEquals(array('name'), $searchModel->getListAttributesSelector()->getSelected());
+
+            $_GET['someArray'][SearchForm::SELECTED_LIST_ATTRIBUTES] = array('name', 'a');
+            SearchUtil::resolveSelectedListAttributesForSearchModelFromGetArray($searchModel, $getArrayName);
+            $this->assertEquals(array('name', 'a'), $searchModel->getListAttributesSelector()->getSelected());
         }
 
         public function testGetDynamicSearchAttributesFromGetArray()

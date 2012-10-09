@@ -112,6 +112,12 @@
         public $afterDeleteAction;
 
         /**
+         * Whether to show the max size for an upload.
+         * @var boolean
+         */
+        public $showMaxSize = true;
+
+        /**
          * Initializes the widget.
          * This method will publish JUI assets if necessary.
          * It will also register jquery and JUI JavaScript files and the theme CSS file.
@@ -219,8 +225,8 @@ EOD;
             echo '<div class="fileupload-buttonbar">'                       . "\n";
             echo '<label class="fileinput-button">'                         . "\n";
             echo '<span>' . $addLabel . '</span>'                           . "\n";
-            echo CHtml::fileField($this->inputName, null, $htmlOptions);
-            echo '</label>' . $this->renderMaxSizeContent($this->maxSize)   . "\n";
+            echo ZurmoHtml::fileField($this->inputName, null, $htmlOptions);
+            echo '</label>' . self::renderMaxSizeContent($this->maxSize, $this->showMaxSize) . "\n";
             echo '</div><div class="clear"></div>'                          . "\n";
             echo '<div class="fileupload-content">'                         . "\n";
             echo '<table class="files"><tbody></tbody></table>'             . "\n";
@@ -278,10 +284,11 @@ EOD;
             return $scriptContent;
         }
 
-        protected static function renderMaxSizeContent($maxSize)
+        protected static function renderMaxSizeContent($maxSize, $showMaxSize)
         {
             assert('is_int($maxSize) || $maxSize == null');
-            if ($maxSize == null)
+            assert('is_bool($showMaxSize)');
+            if ($maxSize == null || !$showMaxSize)
             {
                 return;
             }

@@ -33,9 +33,12 @@
          * Based on the current user, return model class names and thier display labels.  Only include models
          * that the user has a right to access its corresponding module, as well as only models that implement the
          * MashableActivityInterface.
+         * @param $includeHavingRelatedItems - if the returning data should include models that are
+         * mashable but are connected via activityItems.  An example is accounts, a mission is not conneted to an account
+         * so if this setting is false, accounts would not be returned. Home/User are always returned.
          * @return array of model class names and display labels.
          */
-        public static function getMashableModelDataForCurrentUser()
+        public static function getMashableModelDataForCurrentUser($includeHavingRelatedItems = true)
         {
             //todo: cache results to improve performance if needed.
             $mashableModelClassNames = array();
@@ -51,8 +54,12 @@
                     {
                         if (RightsUtil::canUserAccessModule(get_class($module), Yii::app()->user->userModel))
                         {
+                            if (!$includeHavingRelatedItems && !$modelClassName::hasRelatedItems())
+                            {
+                                continue;
+                            }
                             $mashableModelClassNames[$modelClassName] =
-                                $modelClassName::getModelLabelByTypeAndLanguage('Plural');
+                            $modelClassName::getModelLabelByTypeAndLanguage('Plural');
                         }
                     }
                 }
@@ -99,44 +106,11 @@
                     $searchAttributesData =    // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributeDataForLatestActivities($searchAttributesData);
                 }
-                static::resolveSearchAttributesDataByOwnedByFilter($searchAttributesData, $ownedByFilter);
+                $mashableActivityRules->resolveSearchAttributesDataByOwnedByFilter($searchAttributesData, $ownedByFilter);
 
                 $modelClassNamesAndSearchAttributeData[] = array($modelClassName => $searchAttributesData);
             }
             return $modelClassNamesAndSearchAttributeData;
-        }
-
-        protected static function resolveSearchAttributesDataByOwnedByFilter(& $searchAttributesData, $ownedByFilter)
-        {
-            assert('is_array($searchAttributesData)');
-            assert('$ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL ||
-                    $ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER ||
-                    is_int($ownedByFilter)');
-            if ($ownedByFilter == LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER || is_int($ownedByFilter))
-            {
-                if (is_int($ownedByFilter))
-                {
-                    $userId = $ownedByFilter;
-                }
-                else
-                {
-                    $userId = Yii::app()->user->userModel->id;
-                }
-                $clauseCount = count($searchAttributesData['clauses']);
-                $searchAttributesData['clauses'][] = array(
-                        'attributeName'        => 'owner',
-                        'operatorType'         => 'equals',
-                        'value'                => $userId,
-                );
-                if ($clauseCount == 0)
-                {
-                    $searchAttributesData['structure'] = '0';
-                }
-                else
-                {
-                    $searchAttributesData['structure'] = $searchAttributesData['structure'] . ' and ' . ($clauseCount + 1);
-                }
-            }
         }
 
         /**

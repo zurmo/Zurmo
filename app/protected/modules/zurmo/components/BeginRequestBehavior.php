@@ -40,6 +40,7 @@
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
 
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+                $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAutoBuildCompleted'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleDisableGamification'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginApiRequest'));
                 $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
@@ -72,6 +73,7 @@
                 else
                 {
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+                    $owner->attachEventHandler('onBeginRequest', array($this, 'handleCheckAutoBuildCompleted'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleBeginRequest'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleClearCache'));
                     $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
@@ -144,6 +146,15 @@
             if (!$instanceFoldersServiceHelper->runCheckAndGetIfSuccessful())
             {
                 echo $instanceFoldersServiceHelper->getMessage();
+                Yii::app()->end(0, false);
+            }
+        }
+
+        public function handleCheckAutoBuildCompleted($event)
+        {
+            if (!RedBeanDatabaseBuilderUtil::isAutoBuildStateValid())
+            {
+                echo Yii::t('Default', 'Database upgrade not completed. Please try latter.');
                 Yii::app()->end(0, false);
             }
         }

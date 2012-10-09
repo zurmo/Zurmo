@@ -211,7 +211,7 @@
                                             'elements' => array(
                                                 array('attributeName' => 'superUserPassword', 'type' => 'Text',
                                                       'description' => Yii::t('Default', 'Zurmo administrative password. ' .
-                                                      'The username is `super`.  You can change this later.')),
+                                                      'The username is `super`. You can change this later.')),
                                             ),
                                         ),
                                     )

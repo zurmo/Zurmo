@@ -68,7 +68,7 @@
             $urlScript = 'js:$.param.querystring("' . $url . '", "' .
                          $pageVar . '=" + $(this).attr("href"))';
             // Begin Not Coding Standard
-            return       CHtml::ajaxLink($label, $urlScript,
+            return       ZurmoHtml::ajaxLink($label, $urlScript,
                          array('type' => 'GET',
                                'dataType' => 'json',
                                'success' => 'js:function(data){

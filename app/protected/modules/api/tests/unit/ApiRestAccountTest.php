@@ -626,13 +626,15 @@
                 'accounts' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $account2->id
+                        'modelId' => $account2->id,
+                        'modelClassName' => 'Account'
                     ),
                 ),
                 'contacts' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $contact->id
+                        'modelId' => $contact->id,
+                        'modelClassName' => 'Contact'
                     ),
                 ),
             );
@@ -684,17 +686,20 @@
                 'accounts' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $account1->id
+                        'modelId' => $account1->id,
+                        'modelClassName' => 'Account'
                     ),
                     array(
                         'action' => 'add',
-                        'modelId' => $account2->id
+                        'modelId' => $account2->id,
+                        'modelClassName' => 'Account'
                     ),
                 ),
                 'contacts' => array(
                     array(
                         'action' => 'add',
-                        'modelId' => $contact->id
+                        'modelId' => $contact->id,
+                        'modelClassName' => 'Contact'
                     ),
                 ),
             );
@@ -728,17 +733,20 @@
                 'accounts' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $account1->id
+                        'modelId' => $account1->id,
+                        'modelClassName' => 'Account'
                     ),
                     array(
                         'action' => 'remove',
-                        'modelId' => $account2->id
+                        'modelId' => $account2->id,
+                        'modelClassName' => 'Account'
                     ),
                 ),
                 'contacts' => array(
                     array(
                         'action' => 'remove',
-                        'modelId' => $contact->id
+                        'modelId' => $contact->id,
+                        'modelClassName' => 'Contact'
                     ),
                 ),
             );

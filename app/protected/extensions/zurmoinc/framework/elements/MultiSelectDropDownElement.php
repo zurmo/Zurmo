@@ -31,7 +31,7 @@
             $multipleValuesCustomField = $this->model->{$this->attribute};
             assert('$multipleValuesCustomField instanceof MultipleValuesCustomField');
             $content  = null;
-            $content .= CHtml::listBox($this->getNameForSelectInput(),
+            $content .= ZurmoHtml::listBox($this->getNameForSelectInput(),
                                        static::getSelectedValuesByModel($multipleValuesCustomField),
                                        $this->getDropDownArray(),
                                        $this->getEditableHtmlOptions());

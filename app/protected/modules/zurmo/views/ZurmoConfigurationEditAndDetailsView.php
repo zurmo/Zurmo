@@ -29,9 +29,9 @@
      */
     class ZurmoConfigurationEditAndDetailsView extends EditAndDetailsView
     {
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Global Configuration') . '</h1>';
+            return Yii::t('Default', 'Global Configuration');
         }
 
         public static function getDefaultMetadata()

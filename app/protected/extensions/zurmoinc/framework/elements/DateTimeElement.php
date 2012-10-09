@@ -60,7 +60,7 @@
                     'closeText'       => Yii::t('Default', 'Done'),
                     'showOn'          => 'both',
                     'buttonImageOnly' => false,
-                    'buttonText'      => '<span><!--Date--></span>',
+                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
                                             DateTimeUtil::getLocaleDateFormat()),
                     'timeFormat'      => YiiToJqueryUIDatePickerLocalization::resolveTimeFormat(
@@ -71,7 +71,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['EditableDateTimeElement'];
-            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         /**
@@ -85,7 +85,7 @@
                 $content = DateTimeUtil::
                            convertDbFormattedDateTimeToLocaleFormattedDisplay(
                                $this->model->{$this->attribute});
-                return CHtml::encode($content);
+                return ZurmoHtml::encode($content);
             }
         }
     }

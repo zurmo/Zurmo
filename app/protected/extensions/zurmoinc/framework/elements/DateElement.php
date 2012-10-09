@@ -51,7 +51,7 @@
                 ),
                 'options'             => array(
                     'showOn'          => 'both',
-                    'buttonText'      => '<span><!--Date--></span>',
+                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
                     'showButtonPanel' => true,
                     'buttonImageOnly' => false,
                     'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
@@ -60,7 +60,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['EditableDateElement'];
-            return CHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
         }
 
         /**

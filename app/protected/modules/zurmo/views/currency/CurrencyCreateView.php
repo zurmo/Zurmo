@@ -62,9 +62,9 @@
             return $metadata;
         }
 
-        protected function renderTitleContent()
+        public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Currencies: Create') . '</h1>';
+            return Yii::t('Default', 'Currencies: Create');
         }
     }
 ?>

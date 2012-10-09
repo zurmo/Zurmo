@@ -156,7 +156,7 @@
                         $searchForm                    = new $globalSearchFormClassName($model);
                         assert('$searchForm instanceof SearchForm');
                         $metadataAdapter               = new SearchDataProviderMetadataAdapter(
-                                                         $searchForm, 1, $searchAttributes);
+                                                         $searchForm, $user->id, $searchAttributes);
                         $metadata                      = $metadataAdapter->getAdaptedMetadata(false);
                         $stateMetadataAdapterClassName = $module::getStateMetadataAdapterClassName();
                         if ($stateMetadataAdapterClassName != null)

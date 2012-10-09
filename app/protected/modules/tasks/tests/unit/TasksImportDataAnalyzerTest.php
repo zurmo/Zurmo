@@ -36,12 +36,12 @@
             $contactTableName     = Contact::getTableName('Contact');
             $opportunityTableName = Opportunity::getTableName('Opportunity');
             $columnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar($accountTableName,     $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar($contactTableName,     $columnName);
-            RedBean_Plugin_Optimizer_ExternalSystemId::
-            ensureColumnIsVarchar($opportunityTableName, $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn($accountTableName,     $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn($contactTableName,     $columnName);
+            RedBeanColumnTypeOptimizer::
+            externalIdColumn($opportunityTableName, $columnName);
         }
 
         public function testImportDataAnalysisResults()

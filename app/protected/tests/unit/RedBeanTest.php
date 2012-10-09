@@ -23,30 +23,6 @@
      * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
-
-    // HintManager copied from...
-    // http://groups.google.com/group/redbeanorm/browse_thread/thread/7eb59797e8478a89/61eae7941cae1970
-    // Used in testDateTimeHinting, and maybe other things, below. null test added.
-    class HintManager implements RedBean_Observer {                                                 // Not Coding Standard
-            public function __construct( $toolbox ) {                                               // Not Coding Standard
-                    $this->dateOpt = new RedBean_Plugin_Optimizer_Datetime( $toolbox );             // Not Coding Standard
-            }                                                                                       // Not Coding Standard
-                                                                                                    // Not Coding Standard
-            public function onEvent( $type, $info ) {                                               // Not Coding Standard
-                    $hints = $info->getMeta("hint");                                                // Not Coding Standard
-                    if ($hints !== null) {                                                          // Not Coding Standard
-                            foreach ($hints as $k=>$v) {                                            // Not Coding Standard
-                                    if ($v=="date"){ //or select an optimizer based on value in $v  // Not Coding Standard
-                                            $this->dateOpt->setTable($info->getMeta("type"));       // Not Coding Standard
-                                            $this->dateOpt->setColumn($k);                          // Not Coding Standard
-                                            $this->dateOpt->setValue($info->$k);                    // Not Coding Standard
-                                            $this->dateOpt->optimize();                             // Not Coding Standard
-                                    }                                                               // Not Coding Standard
-                            }                                                                       // Not Coding Standard
-                    }
-            }
-    }
-
     // This is for testing details of how RedBean works.
     class RedBeanTest extends BaseTest
     {
@@ -177,33 +153,15 @@
         public function testGetBeanWhenThereIsNoneToGet()
         {
             $bean = R::dispense('a');
-            $bean2 = R::getBean($bean, 'b');
-            if (!method_exists('R', 'getVersion') ||
-                substr(R::getVersion(), 0, 3) == '1.2')
-            {
-                $this->assertTrue($bean2 !== null);
-            }
-            else
-            {
-                $this->assertEquals('1.3', substr(R::getVersion(), 0, 3));
-                $this->assertTrue($bean2 === null);
-            }
+            $bean2 = R::relatedOne($bean, 'b');
+
+            $this->assertTrue($bean2 === null);
         }
 
         public function testUniqueMeta()
         {
             $bean = R::dispense('hombre');
-
-            if (!method_exists('R', 'getVersion') ||
-                substr(R::getVersion(), 0, 3) == '1.2')
-            {
-                $bean->setMeta("buildcommand.unique.0", array( "nombre") );
-            }
-            else
-            {
-                $this->assertEquals('1.3', substr(R::getVersion(), 0, 3));
-                $bean->setMeta("buildcommand.unique", array(array("nombre")));
-            }
+            $bean->setMeta("buildcommand.unique", array(array("nombre")));
 
             $bean->nombre = 'Pablo';
             R::store($bean);
@@ -286,12 +244,8 @@
             $phone->number = '555-1234';
             R::store($phone);
 
-            R::$linkManager->link($phone, $person);
+            ZurmoRedBeanLinkManager::link($phone, $person);
             R::store($phone);
-
-            // Either way this doesn't work.
-//            RedBean_Plugin_Constraint::addConstraint($person, $phone);
-            RedBean_Plugin_Constraint::addConstraint($phone, $person);
 
             $id = $phone->id;
             unset($phone);
@@ -305,13 +259,14 @@
 
         public function testDateTimeFields()
         {
-            $toolbox = RedBean_Setup::kickstartDev(Yii::app()->db->connectionString,
-                                                   Yii::app()->db->username,
-                                                   Yii::app()->db->password);
-            $optimizer = new RedBean_Plugin_Optimizer($toolbox);
-            $optimizer->addOptimizer(new RedBean_Plugin_Optimizer_DateTime($toolbox));
+            $toolbox = RedBean_Setup::kickstart(Yii::app()->db->connectionString,
+                                                Yii::app()->db->username,
+                                                Yii::app()->db->password);
+
             $redbean = $toolbox->getRedBean();
-            $redbean->addEventListener('update', $optimizer);
+
+            $helper = new RedBean_ModelHelper();
+            $redbean->addEventListener('update', $helper);
 
             for ($i = 1; $i < 10; $i++)
             {
@@ -326,17 +281,13 @@
 
         public function testDateTimeHinting()
         {
-            $toolbox = RedBean_Setup::kickstartDev(Yii::app()->db->connectionString,
-                                                   Yii::app()->db->username,
-                                                   Yii::app()->db->password);
+            $toolbox = RedBean_Setup::kickstart(Yii::app()->db->connectionString,
+                                                Yii::app()->db->username,
+                                                Yii::app()->db->password);
 
-            // Copied directly from...
-            // http://groups.google.com/group/redbeanorm/browse_thread/thread/7eb59797e8478a89/61eae7941cae1970
-            $hint = new HintManager( R::$toolbox );                 // Not Coding Standard
-            R::$redbean->addEventListener( "after_update", $hint ); // Not Coding Standard
             R::exec("drop table if exists bean");                   // Not Coding Standard
             $bean = R::dispense("bean");                            // Not Coding Standard
-            $bean->setMeta("hint",array("prop"=>"date"));           // Not Coding Standard
+            $bean->setMeta("hint",array("prop"=>"datetime"));           // Not Coding Standard
             $bean->prop = "2010-01-01 10:00:00";                    // Not Coding Standard
             R::store($bean);                                        // Not Coding Standard
 

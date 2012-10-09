@@ -44,7 +44,7 @@
         protected function renderContent()
         {
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/ajax-loader.gif';
-            $progressBarImageContent = CHtml::image($imagePath, 'Progress Bar');
+            $progressBarImageContent = ZurmoHtml::image($imagePath, 'Progress Bar');
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);
             $loginUrl = Yii::app()->createUrl('zurmo/default');
@@ -58,7 +58,7 @@
             $content .= '<br/>';
             $content .= Yii::t('Default', 'Click below to go to the login page. The username is <b>super</b>');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Sign in'), $loginUrl);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Sign in'), $loginUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '<div id="progress-table">';

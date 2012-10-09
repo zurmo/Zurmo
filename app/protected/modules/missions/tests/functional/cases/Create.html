@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/missions/default</td>
+	<td></td>
+</tr>
+<!--Create mission-->
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a.icon-create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Mission_reward</td>
+	<td>A litle candy</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.ui-datepicker-trigger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.ui-state-default.ui-state-hover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Description cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Mission_description</td>
+	<td>New mission ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button.ui-datepicker-trigger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=27</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Available</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>New mission ${randomSuffix}</td>
+	<td></td>
+</tr>
+
+<!--Add comments-->
+<tr>
+	<td>type</td>
+	<td>id=Comment_description</td>
+	<td>Start this one really quick or the candy goes away...</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Start this one really quick or the candy goes away...</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete Comment</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

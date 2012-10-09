@@ -93,11 +93,11 @@ class EJuiDateTimePicker extends CJuiInputWidget
             $this->htmlOptions['name']=$name;
         if($this->hasModel())
         {
-            echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
+            echo ZurmoHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
         }
         else
         {
-            echo CHtml::textField($name,$this->value,$this->htmlOptions);
+            echo ZurmoHtml::textField($name,$this->value,$this->htmlOptions);
         }
         $options=CJavaScript::encode($this->options);
 

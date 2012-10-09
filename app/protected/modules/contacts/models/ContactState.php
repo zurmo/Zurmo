@@ -32,7 +32,7 @@
         public static function getByName($name)
         {
             assert('is_string($name) && $name != ""');
-            return self::makeModels(RedBean_Plugin_Finder::where('contactstate', "name = '$name'"));
+            return self::makeModels(R::find('contactstate', "name = '$name'"));
         }
 
         public function __toString()

@@ -84,7 +84,7 @@
             }
             if (!$hidden)
             {
-                return '<li class="' . $class . '">' . CHtml::link($label, $this->createPageUrl($page)) . '</li>';
+                return '<li class="' . $class . '">' . ZurmoHtml::link($label, $this->createPageUrl($page)) . '</li>';
             }
             else
             {

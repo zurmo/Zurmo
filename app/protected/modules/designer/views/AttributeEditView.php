@@ -67,10 +67,5 @@
                 $elementInformation['disabled'] = true;
             }
         }
-
-        protected function renderTitleContent()
-        {
-            return '<h1>' . $this->title . '</h1>';
-        }
     }
 ?>

@@ -112,7 +112,7 @@
             $errorData = array();
             foreach ($model->getErrors() as $attribute => $errors)
             {
-                    $errorData[CHtml::activeId($model, $attribute)] = $errors;
+                    $errorData[ZurmoHtml::activeId($model, $attribute)] = $errors;
             }
             echo CJSON::encode($errorData);
             Yii::app()->end(0, false);
@@ -125,19 +125,19 @@
                 $view = new InstallPageView($nextView);
             echo $view->render();
 
-            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
+            $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             InstallUtil::runInstallation($form, $messageStreamer);
             if ($form->installDemoData)
             {
-                echo CHtml::script('$("#progress-table").hide(); $("#demo-data-table").show();');
+                echo ZurmoHtml::script('$("#progress-table").hide(); $("#demo-data-table").show();');
             }
             else
             {
                 $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
                 InstallUtil::writeInstallComplete(INSTANCE_ROOT);
                 ForgetAllCacheUtil::forgetAllCaches();
-                echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
+                echo ZurmoHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
             }
         }
 
@@ -155,7 +155,7 @@
             $nextView = new InstallCompleteView($this->getId(), $this->getModule()->getId());
             $view = new InstallPageView($nextView);
             echo $view->render();
-            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
+            $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
@@ -164,7 +164,7 @@
             $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
             ForgetAllCacheUtil::forgetAllCaches();
-            echo CHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
+            echo ZurmoHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
         }
     }
 ?>

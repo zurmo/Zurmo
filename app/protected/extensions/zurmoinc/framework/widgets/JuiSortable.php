@@ -68,12 +68,12 @@
             }
             if ($this->baseInputNameForSortableCollection != null)
             {
-                echo CHtml::hiddenField($this->baseInputNameForSortableCollection);
+                echo ZurmoHtml::hiddenField($this->baseInputNameForSortableCollection);
             }
             Yii::app()->getClientScript()->registerScript(
                 __CLASS__ . '#' . $id,
                 "jQuery('#{$id}').sortable({$options});");
-            echo CHtml::openTag($this->tagName, $this->htmlOptions) . "\n";
+            echo ZurmoHtml::openTag($this->tagName, $this->htmlOptions) . "\n";
             if (empty($this->items))
             {
                 echo '<li></li>' . "\n";
@@ -85,7 +85,7 @@
                     array_merge(array('{id}' => $id), $data)
                 ) . "\n";
             }
-            echo CHtml::closeTag($this->tagName);
+            echo ZurmoHtml::closeTag($this->tagName);
         }
     }
 ?>
