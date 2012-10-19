@@ -266,66 +266,66 @@
         protected function createCheckBoxCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => '1', 'isAudited' => '1');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CheckBox', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CheckBox', $extraPostData, null, true);
         }
 
         protected function createCurrencyValueCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'isAudited' => '1', 'isRequired' => '1');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CurrencyValue', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CurrencyValue', $extraPostData, null, true);
         }
 
         protected function createDateCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValueCalculationType' => '', 'isAudited' => '1', 'isRequired' => '1');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Date', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Date', $extraPostData, null, true);
         }
 
         protected function createDateTimeCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValueCalculationType' => '', 'isAudited' => '1', 'isRequired' => '1');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DateTime', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DateTime', $extraPostData, null, true);
         }
 
         protected function createDecimalCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => '123', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '18', 'precisionLength' => '2');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Decimal', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Decimal', $extraPostData, null, true);
         }
 
         protected function createIntegerCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => '123', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '11', 'minValue' => '2', 'maxValue' => '400');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Integer', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Integer', $extraPostData, null, true);
         }
 
         protected function createPhoneCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => '5423', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '20');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Phone', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Phone', $extraPostData, null, true);
         }
 
         protected function createTextCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => 'aText', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '255');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Text', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Text', $extraPostData, null, true);
         }
 
         protected function createTextAreaCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => 'aTextDesc', 'isAudited' => '1', 'isRequired' => '1');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TextArea', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TextArea', $extraPostData, null, true);
         }
 
         protected function createUrlCustomFieldByModule($moduleClassName, $name)
         {
             $extraPostData = array( 'defaultValue' => 'http://www.zurmo.com', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '200');
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Url', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'Url', $extraPostData, null, true);
         }
 
         protected function createDropDownCustomFieldByModule($moduleClassName, $name)
@@ -341,7 +341,7 @@
                                         'de' => array('aDe', 'bDe', 'cDe'),
                                     )
                                     );
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData, null, true);
         }
 
         protected function createDependentDropDownCustomFieldByModule($moduleClassName, $name)
@@ -368,7 +368,7 @@
                                                            'de' => $customFieldDataLabelsDe[$name],
                                                             )
                                        );
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDown', $extraPostData, null, true);
         }
 
         protected function createRadioDropDownCustomFieldByModule($moduleClassName, $name)
@@ -379,7 +379,7 @@
                                     'customFieldDataData' => array(
                                                 'd', 'e', 'f'
                                     ));
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'RadioDropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'RadioDropDown', $extraPostData, null, true);
         }
 
         protected function createMultiSelectDropDownCustomFieldByModule($moduleClassName, $name)
@@ -390,7 +390,7 @@
                                     'customFieldDataData' => array(
                                                 'ff', 'gg', 'hh', 'rr'
                                     ));
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'MultiSelectDropDown', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'MultiSelectDropDown', $extraPostData, null, true);
         }
 
         protected function createTagCloudCustomFieldByModule($moduleClassName, $name)
@@ -403,34 +403,34 @@
                                                            'fr' => array('reading fr', 'writing fr', 'surfing fr', 'gardening fr'),
                                                            'de' => array('reading de', 'writing de', 'surfing de', 'gardening de'),
                                                             ));
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'TagCloud', $extraPostData, null, true);
         }
 
         protected function createCalculatedNumberCustomFieldByModule($moduleClassName, $name)
         {
             $formulaForModule = array('AccountsModule'      => 'employees + annualRevenue',
-                                      'ContactsModule'      => 'decimal + integer',
-                                      'MeetingsModule'      => 'decimal - integer',
-                                      'NotesModule'         => 'decimal + integer',
-                                      'OpportunitiesModule' => 'decimal * integer',
-                                      'TasksModule'         => 'decimal * integer');
+                                      'ContactsModule'      => 'decimalCstm + integerCstm',
+                                      'MeetingsModule'      => 'decimalCstm - integerCstm',
+                                      'NotesModule'         => 'decimalCstm + integerCstm',
+                                      'OpportunitiesModule' => 'decimalCstm * integerCstm',
+                                      'TasksModule'         => 'decimalCstm * integerCstm');
 
             $extraPostData = array('formula' => $formulaForModule[$moduleClassName]);
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CalculatedNumber', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'CalculatedNumber', $extraPostData, null, true);
         }
 
         protected function createDropDownDependencyCustomFieldByModule($moduleClassName, $name)
         {
             $mappingData = array(
-                                array('attributeName' => 'countrylist'),
-                                array('attributeName' => 'statelist',
+                                array('attributeName' => 'countrylistCstm'),
+                                array('attributeName' => 'statelistCstm',
                                       'valuesToParentValues' => array('aaa1' => 'aaaa',
                                                                       'aaa2' => 'aaaa',
                                                                       'bbb1' => 'bbbb',
                                                                       'bbb2' => 'bbbb'
                                                               )
                                 ),
-                                array('attributeName'        => 'citylist',
+                                array('attributeName'        => 'citylistCstm',
                                       'valuesToParentValues' => array('aa1'  => 'aaa1',
                                                                       'ab1'  => 'aaa1',
                                                                       'aa2'  => 'aaa2',
@@ -445,7 +445,7 @@
                            );
 
             $extraPostData = array('mappingData' => $mappingData);
-            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDownDependency', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence($moduleClassName, $name, 'DropDownDependency', $extraPostData, null, true);
         }
 
         protected function createModuleEditBadValidationPostData()
@@ -488,7 +488,8 @@
                                                                     $name,
                                                                     $attributeTypeName,
                                                                     $extraPostData,
-                                                                    $attributeName = null)
+                                                                    $attributeName = null,
+                                                                    $isCustomField = false)
         {
             assert('$name[0] == strtolower($name[0])'); // Not Coding Standard
             assert('is_array($extraPostData)'); // Not Coding Standard
@@ -536,6 +537,10 @@
                 'fr' => $name . ' fr',
             );
 
+            if ($isCustomField)
+            {
+                $name = $name . 'Cstm';
+            }
             if ($attributeTypeName != "CalculatedNumber" && $attributeTypeName != "DropDownDependency")
             {
                 $this->assertEquals(

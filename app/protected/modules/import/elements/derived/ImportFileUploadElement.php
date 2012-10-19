@@ -60,7 +60,7 @@
 
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("filesElement");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.FileUpload', array(
+            $cClipWidget->widget('application.core.widgets.FileUpload', array(
                 'uploadUrl'            => Yii::app()->createUrl("import/default/uploadFile",
                                                         array('filesVariableName' => $inputNameAndId,
                                                               'id' => $this->model->id)),

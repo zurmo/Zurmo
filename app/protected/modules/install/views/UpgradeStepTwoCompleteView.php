@@ -44,7 +44,7 @@
         protected function renderContent()
         {
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/ajax-loader.gif';
-            $progressBarImageContent = CHtml::image($imagePath, 'Progress Bar');
+            $progressBarImageContent = ZurmoHtml::image($imagePath, 'Progress Bar');
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);
             $loginUrl = Yii::app()->createUrl('zurmo/default');
@@ -55,7 +55,7 @@
             $content .= '<table><tr><td>';
             $content .= Yii::t('Default', 'Upgrade process is completed. Please edit perInstance.php file, and disable maintenance mode.');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Click here to access index page, after you disable maintenance mode.'), $loginUrl);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Click here to access index page, after you disable maintenance mode.'), $loginUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '<div id="progress-table">';

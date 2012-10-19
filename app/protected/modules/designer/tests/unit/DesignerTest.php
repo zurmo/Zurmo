@@ -638,13 +638,13 @@
             }
 
             $account = new Account();
-            $this->assertTrue($account->isAttribute('testText'));
+            $this->assertTrue($account->isAttribute('testTextCstm'));
 
             $adapter = new ModelAttributesAdapter($account);
             $attributes = $adapter->getCustomAttributes();
             $this->assertEquals(1,     count($attributes));
-            $this->assertEquals('Test Text en', $attributes['testText']['attributeLabel']);
-            $this->assertEquals('DropDown',  $attributes['testText']['elementType']);
+            $this->assertEquals('Test Text en', $attributes['testTextCstm']['attributeLabel']);
+            $this->assertEquals('DropDown',  $attributes['testTextCstm']['elementType']);
         }
 
         /**
@@ -687,13 +687,13 @@
             }
 
             $account = new Account();
-            $this->assertTrue ($account->isAttribute('testText2'));
+            $this->assertTrue ($account->isAttribute('testText2Cstm'));
             unset($account);
 
-            $adapter->removeAttributeMetadata('testText2');
+            $adapter->removeAttributeMetadata('testText2Cstm');
 
             $account = new Account();
-            $this->assertFalse($account->isAttribute('testText2'));
+            $this->assertFalse($account->isAttribute('testText2Cstm'));
             unset($account);
         }
 
@@ -789,13 +789,13 @@
             $this->assertNotEquals($originalMetadata, $metadata);
 
             $this->assertEquals($originalMetadata['Account']['rules'], $metadata['Account']['rules']);
-            $newRelation = $metadata['Account']['relations']['newRelation'];
+            $newRelation = $metadata['Account']['relations']['newRelationCstm'];
             $this->assertEquals(array(RedBeanModel::HAS_ONE,  'OwnedCustomField', RedBeanModel::OWNED), $newRelation);
-            $this->assertEquals('Things', $metadata['Account']['customFields']['newRelation']);
+            $this->assertEquals('Things', $metadata['Account']['customFields']['newRelationCstm']);
 
             //on a new account, does the serialized data show correctly.
             $account = new Account();
-            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelationCstm->data->serializedData));
 
             ForgetAllCacheUtil::forgetAllCaches();
 
@@ -803,7 +803,7 @@
             //This will not be cached.
             $account = Account::getById($accountId);
             $this->assertNotNull($account->industry->data->serializedData);
-            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelationCstm->data->serializedData));
 
             //This will pull from cached.  Clear the php cache first, which simulates a new page request without destroying
             //the persistent cache.
@@ -811,7 +811,7 @@
             $account = Account::getById($accountId);
 
             //Test pulling a different CustomField first. This simulates caching the customField
-            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelation->data->serializedData));
+            $this->assertEquals(array('thing 1', 'thing 2'), unserialize($account->newRelationCstm->data->serializedData));
         }
 
         public function testStandardAttributeThatBecomesRequiredCanStillBeChangedToBeUnrequired()
@@ -1046,10 +1046,10 @@
                             array('cells' =>
                                 array(
                                     array(
-                                        'element' => 'testEducation',
+                                        'element' => 'testEducationCstm',
                                     ),
                                     array(
-                                        'element' => 'testStream',
+                                        'element' => 'testStreamCstm',
                                     ),
                                 )
                             ),

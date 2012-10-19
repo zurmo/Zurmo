@@ -37,7 +37,7 @@
     require_once(COMMON_ROOT   . "/version.php");
     require_once($debug);
     require_once($yiit);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
+    require_once(COMMON_ROOT . '/protected/core/components/WebApplication.php');
     require_once(COMMON_ROOT . '/protected/tests/WebTestApplication.php');
     Yii::createApplication('WebTestApplication', $config);
 ?>

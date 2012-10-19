@@ -75,6 +75,7 @@
                         //todo: handle if success is false, means adding/removing permissions save failed.
                     }
                     $savedSucessfully = true;
+                    $this->afterSuccessfulSave($model);
                 }
             }
             else
@@ -96,6 +97,10 @@
         }
 
         protected function afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions)
+        {
+        }
+
+        protected function afterSuccessfulSave($model)
         {
         }
     }

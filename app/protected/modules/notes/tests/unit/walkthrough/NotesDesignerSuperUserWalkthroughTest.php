@@ -214,25 +214,25 @@
                                             'occurredOnDateTime'                => $datetime,
                                             'description'                       => 'Note Description',
                                             'explicitReadWriteModelPermissions' => array('type' => null),
-                                            'checkbox'                          => '1',
-                                            'currency'                          => array('value'   => 45,
+                                            'checkboxCstm'                      => '1',
+                                            'currencyCstm'                      => array('value'   => 45,
                                                                                          'currency' => array(
                                                                                          'id' => $baseCurrency->id)),
-                                            'date'                              => $date,
-                                            'datetime'                          => $datetime,
-                                            'decimal'                           => '123',
-                                            'picklist'                          => array('value'  => 'a'),
-                                            'multiselect'                       => array('values' => array('ff', 'rr')),
-                                            'tagcloud'                          => array('values' => array('writing', 'gardening')),
-                                            'countrylist'                       => array('value'  => 'bbbb'),
-                                            'statelist'                         => array('value'  => 'bbb1'),
-                                            'citylist'                          => array('value'  => 'bb1'),
-                                            'integer'                           => '12',
-                                            'phone'                             => '259-784-2169',
-                                            'radio'                             => array('value' => 'd'),
-                                            'text'                              => 'This is a test Text',
-                                            'textarea'                          => 'This is a test TextArea',
-                                            'url'                               => 'http://wwww.abc.com'),
+                                            'dateCstm'                          => $date,
+                                            'datetimeCstm'                      => $datetime,
+                                            'decimalCstm'                       => '123',
+                                            'picklistCstm'                      => array('value'  => 'a'),
+                                            'multiselectCstm'                   => array('values' => array('ff', 'rr')),
+                                            'tagcloudCstm'                      => array('values' => array('writing', 'gardening')),
+                                            'countrylistCstm'                   => array('value'  => 'bbbb'),
+                                            'statelistCstm'                     => array('value'  => 'bbb1'),
+                                            'citylistCstm'                      => array('value'  => 'bb1'),
+                                            'integerCstm'                       => '12',
+                                            'phoneCstm'                         => '259-784-2169',
+                                            'radioCstm'                         => array('value' => 'd'),
+                                            'textCstm'                          => 'This is a test Text',
+                                            'textareaCstm'                      => 'This is a test TextArea',
+                                            'urlCstm'                           => 'http://wwww.abc.com'),
                                       'ActivityItemForm' => array(
                                             'Account'    => array('id'  => $superAccount[0]->id),
                                             'Contact'    => array('id'  => $superContactId),
@@ -254,26 +254,26 @@
             $this->assertEquals($note[0]->activityItems->count()           , 3);
             $this->assertEquals(0                                          , count($readWritePermitables));
             $this->assertEquals(0                                          , count($readOnlyPermitables));
-            $this->assertEquals($note[0]->checkbox                         , '1');
-            $this->assertEquals($note[0]->currency->value                  , 45);
-            $this->assertEquals($note[0]->currency->currency->id           , $baseCurrency->id);
-            $this->assertEquals($note[0]->date                             , $dateAssert);
-            $this->assertEquals($note[0]->datetime                         , $datetimeAssert);
-            $this->assertEquals($note[0]->decimal                          , '123');
-            $this->assertEquals($note[0]->picklist->value                  , 'a');
-            $this->assertEquals($note[0]->integer                          , 12);
-            $this->assertEquals($note[0]->phone                            , '259-784-2169');
-            $this->assertEquals($note[0]->radio->value                     , 'd');
-            $this->assertEquals($note[0]->text                             , 'This is a test Text');
-            $this->assertEquals($note[0]->textarea                         , 'This is a test TextArea');
-            $this->assertEquals($note[0]->url                              , 'http://wwww.abc.com');
-            $this->assertEquals($note[0]->countrylist->value               , 'bbbb');
-            $this->assertEquals($note[0]->statelist->value                 , 'bbb1');
-            $this->assertEquals($note[0]->citylist->value                  , 'bb1');
-            $this->assertContains('ff'                                     , $note[0]->multiselect->values);
-            $this->assertContains('rr'                                     , $note[0]->multiselect->values);
-            $this->assertContains('writing'                                , $note[0]->tagcloud->values);
-            $this->assertContains('gardening'                              , $note[0]->tagcloud->values);
+            $this->assertEquals($note[0]->checkboxCstm                     , '1');
+            $this->assertEquals($note[0]->currencyCstm->value              , 45);
+            $this->assertEquals($note[0]->currencyCstm->currency->id       , $baseCurrency->id);
+            $this->assertEquals($note[0]->dateCstm                         , $dateAssert);
+            $this->assertEquals($note[0]->datetimeCstm                     , $datetimeAssert);
+            $this->assertEquals($note[0]->decimalCstm                      , '123');
+            $this->assertEquals($note[0]->picklistCstm->value              , 'a');
+            $this->assertEquals($note[0]->integerCstm                      , 12);
+            $this->assertEquals($note[0]->phoneCstm                        , '259-784-2169');
+            $this->assertEquals($note[0]->radioCstm->value                 , 'd');
+            $this->assertEquals($note[0]->textCstm                         , 'This is a test Text');
+            $this->assertEquals($note[0]->textareaCstm                     , 'This is a test TextArea');
+            $this->assertEquals($note[0]->urlCstm                          , 'http://wwww.abc.com');
+            $this->assertEquals($note[0]->countrylistCstm->value           , 'bbbb');
+            $this->assertEquals($note[0]->statelistCstm->value             , 'bbb1');
+            $this->assertEquals($note[0]->citylistCstm->value              , 'bb1');
+            $this->assertContains('ff'                                     , $note[0]->multiselectCstm->values);
+            $this->assertContains('rr'                                     , $note[0]->multiselectCstm->values);
+            $this->assertContains('writing'                                , $note[0]->tagcloudCstm->values);
+            $this->assertContains('gardening'                              , $note[0]->tagcloudCstm->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Note');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
@@ -303,7 +303,7 @@
 
             //Retrieve the note Id based on the created note.
             $note = Note::getByName('Note Description');
-            $this->assertEquals(2, $note[0]->tagcloud->values->count());
+            $this->assertEquals(2, $note[0]->tagcloudCstm->values->count());
 
             //Edit a note based on the custom fields.
             $this->setGetArray(array('id' => $note[0]->id));
@@ -312,25 +312,25 @@
                                 'description'                       => 'Note Edit Description',
                                 'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                                 'owner'                             => array('id' => $superUserId),
-                                'checkbox'                          => '0',
-                                'currency'                          => array('value'   => 40,
+                                'checkboxCstm'                      => '0',
+                                'currencyCstm'                      => array('value'   => 40,
                                                                              'currency' => array(
                                                                              'id' => $baseCurrency->id)),
-                                'date'                              => $date,
-                                'datetime'                          => $datetime,
-                                'decimal'                           => '12',
-                                'picklist'                          => array('value'  => 'b'),
-                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                                'tagcloud'                          => array('values' =>  array()),
-                                'countrylist'                       => array('value'  => 'aaaa'),
-                                'statelist'                         => array('value'  => 'aaa1'),
-                                'citylist'                          => array('value'  => 'ab1'),
-                                'integer'                           => '11',
-                                'phone'                             => '259-784-2069',
-                                'radio'                             => array('value' => 'e'),
-                                'text'                              => 'This is a test Edit Text',
-                                'textarea'                          => 'This is a test Edit TextArea',
-                                'url'                               => 'http://wwww.abc-edit.com'),
+                                'dateCstm'                          => $date,
+                                'datetimeCstm'                      => $datetime,
+                                'decimalCstm'                       => '12',
+                                'picklistCstm'                      => array('value'  => 'b'),
+                                'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                                'tagcloudCstm'                      => array('values' =>  array()),
+                                'countrylistCstm'                   => array('value'  => 'aaaa'),
+                                'statelistCstm'                     => array('value'  => 'aaa1'),
+                                'citylistCstm'                      => array('value'  => 'ab1'),
+                                'integerCstm'                       => '11',
+                                'phoneCstm'                         => '259-784-2069',
+                                'radioCstm'                         => array('value' => 'e'),
+                                'textCstm'                          => 'This is a test Edit Text',
+                                'textareaCstm'                      => 'This is a test Edit TextArea',
+                                'urlCstm'                           => 'http://wwww.abc-edit.com'),
                           'ActivityItemForm'  => array(
                                 'Account'     => array('id'  => $superAccount[0]->id),
                                 'Contact'     => array('id'  => $superContactId),
@@ -352,25 +352,25 @@
             $this->assertEquals($note[0]->activityItems->count()           , 3);
             $this->assertEquals(1                                          , count($readWritePermitables));
             $this->assertEquals(0                                          , count($readOnlyPermitables));
-            $this->assertEquals($note[0]->checkbox                         , '0');
-            $this->assertEquals($note[0]->currency->value                  , 40);
-            $this->assertEquals($note[0]->currency->currency->id           , $baseCurrency->id);
-            $this->assertEquals($note[0]->date                             , $dateAssert);
-            $this->assertEquals($note[0]->datetime                         , $datetimeAssert);
-            $this->assertEquals($note[0]->decimal                          , '12');
-            $this->assertEquals($note[0]->picklist->value                  , 'b');
-            $this->assertEquals($note[0]->integer                          , 11);
-            $this->assertEquals($note[0]->phone                            , '259-784-2069');
-            $this->assertEquals($note[0]->radio->value                     , 'e');
-            $this->assertEquals($note[0]->text                             , 'This is a test Edit Text');
-            $this->assertEquals($note[0]->textarea                         , 'This is a test Edit TextArea');
-            $this->assertEquals($note[0]->url                              , 'http://wwww.abc-edit.com');
-            $this->assertEquals($note[0]->countrylist->value               , 'aaaa');
-            $this->assertEquals($note[0]->statelist->value                 , 'aaa1');
-            $this->assertEquals($note[0]->citylist->value                  , 'ab1');
-            $this->assertContains('gg'                                     , $note[0]->multiselect->values);
-            $this->assertContains('hh'                                     , $note[0]->multiselect->values);
-            $this->assertEquals(0                                          , $note[0]->tagcloud->values->count());
+            $this->assertEquals($note[0]->checkboxCstm                     , '0');
+            $this->assertEquals($note[0]->currencyCstm->value              , 40);
+            $this->assertEquals($note[0]->currencyCstm->currency->id       , $baseCurrency->id);
+            $this->assertEquals($note[0]->dateCstm                         , $dateAssert);
+            $this->assertEquals($note[0]->datetimeCstm                     , $datetimeAssert);
+            $this->assertEquals($note[0]->decimalCstm                      , '12');
+            $this->assertEquals($note[0]->picklistCstm->value              , 'b');
+            $this->assertEquals($note[0]->integerCstm                      , 11);
+            $this->assertEquals($note[0]->phoneCstm                        , '259-784-2069');
+            $this->assertEquals($note[0]->radioCstm->value                 , 'e');
+            $this->assertEquals($note[0]->textCstm                         , 'This is a test Edit Text');
+            $this->assertEquals($note[0]->textareaCstm                     , 'This is a test Edit TextArea');
+            $this->assertEquals($note[0]->urlCstm                          , 'http://wwww.abc-edit.com');
+            $this->assertEquals($note[0]->countrylistCstm->value           , 'aaaa');
+            $this->assertEquals($note[0]->statelistCstm->value             , 'aaa1');
+            $this->assertEquals($note[0]->citylistCstm->value              , 'ab1');
+            $this->assertContains('gg'                                     , $note[0]->multiselectCstm->values);
+            $this->assertContains('hh'                                     , $note[0]->multiselectCstm->values);
+            $this->assertEquals(0                                          , $note[0]->tagcloudCstm->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Note');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);
@@ -408,25 +408,25 @@
                                 'description'                       => 'Note Edit Description',
                                 'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                                 'owner'                             => array('id' => $superUserId),
-                                'checkbox'                          => '0',
-                                'currency'                          => array('value'   => 40,
+                                'checkboxCstm'                      => '0',
+                                'currencyCstm'                      => array('value'   => 40,
                                                                              'currency' => array(
                                                                              'id' => $baseCurrency->id)),
-                                'date'                              => $date,
-                                'datetime'                          => $datetime,
-                                'decimal'                           => '12',
-                                'picklist'                          => array('value'  => 'b'),
-                                'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                                'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
-                                'countrylist'                       => array('value'  => 'aaaa'),
-                                'statelist'                         => array('value'  => 'aaa1'),
-                                'citylist'                          => array('value'  => 'ab1'),
-                                'integer'                           => '11',
-                                'phone'                             => '259-784-2069',
-                                'radio'                             => array('value' => 'e'),
-                                'text'                              => 'This is a test Edit Text',
-                                'textarea'                          => 'This is a test Edit TextArea',
-                                'url'                               => 'http://wwww.abc-edit.com'),
+                                'dateCstm'                          => $date,
+                                'datetimeCstm'                      => $datetime,
+                                'decimalCstm'                       => '12',
+                                'picklistCstm'                      => array('value'  => 'b'),
+                                'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                                'tagcloudCstm'                      => array('values' =>  array('reading', 'surfing')),
+                                'countrylistCstm'                   => array('value'  => 'aaaa'),
+                                'statelistCstm'                     => array('value'  => 'aaa1'),
+                                'citylistCstm'                      => array('value'  => 'ab1'),
+                                'integerCstm'                       => '11',
+                                'phoneCstm'                         => '259-784-2069',
+                                'radioCstm'                         => array('value' => 'e'),
+                                'textCstm'                          => 'This is a test Edit Text',
+                                'textareaCstm'                      => 'This is a test Edit TextArea',
+                                'urlCstm'                           => 'http://wwww.abc-edit.com'),
                           'ActivityItemForm'  => array(
                                 'Account'     => array('id'  => $superAccount[0]->id),
                                 'Contact'     => array('id'  => $superContactId),
@@ -448,26 +448,26 @@
             $this->assertEquals($note[0]->activityItems->count()           , 3);
             $this->assertEquals(1                                          , count($readWritePermitables));
             $this->assertEquals(0                                          , count($readOnlyPermitables));
-            $this->assertEquals($note[0]->checkbox                         , '0');
-            $this->assertEquals($note[0]->currency->value                  , 40);
-            $this->assertEquals($note[0]->currency->currency->id           , $baseCurrency->id);
-            $this->assertEquals($note[0]->date                             , $dateAssert);
-            $this->assertEquals($note[0]->datetime                         , $datetimeAssert);
-            $this->assertEquals($note[0]->decimal                          , '12');
-            $this->assertEquals($note[0]->picklist->value                  , 'b');
-            $this->assertEquals($note[0]->integer                          , 11);
-            $this->assertEquals($note[0]->phone                            , '259-784-2069');
-            $this->assertEquals($note[0]->radio->value                     , 'e');
-            $this->assertEquals($note[0]->text                             , 'This is a test Edit Text');
-            $this->assertEquals($note[0]->textarea                         , 'This is a test Edit TextArea');
-            $this->assertEquals($note[0]->url                              , 'http://wwww.abc-edit.com');
-            $this->assertEquals($note[0]->countrylist->value               , 'aaaa');
-            $this->assertEquals($note[0]->statelist->value                 , 'aaa1');
-            $this->assertEquals($note[0]->citylist->value                  , 'ab1');
-            $this->assertContains('gg'                                     , $note[0]->multiselect->values);
-            $this->assertContains('hh'                                     , $note[0]->multiselect->values);
-            $this->assertContains('reading'                                , $note[0]->tagcloud->values);
-            $this->assertContains('surfing'                                , $note[0]->tagcloud->values);
+            $this->assertEquals($note[0]->checkboxCstm                     , '0');
+            $this->assertEquals($note[0]->currencyCstm->value              , 40);
+            $this->assertEquals($note[0]->currencyCstm->currency->id       , $baseCurrency->id);
+            $this->assertEquals($note[0]->dateCstm                         , $dateAssert);
+            $this->assertEquals($note[0]->datetimeCstm                     , $datetimeAssert);
+            $this->assertEquals($note[0]->decimalCstm                      , '12');
+            $this->assertEquals($note[0]->picklistCstm->value              , 'b');
+            $this->assertEquals($note[0]->integerCstm                      , 11);
+            $this->assertEquals($note[0]->phoneCstm                        , '259-784-2069');
+            $this->assertEquals($note[0]->radioCstm->value                 , 'e');
+            $this->assertEquals($note[0]->textCstm                         , 'This is a test Edit Text');
+            $this->assertEquals($note[0]->textareaCstm                     , 'This is a test Edit TextArea');
+            $this->assertEquals($note[0]->urlCstm                          , 'http://wwww.abc-edit.com');
+            $this->assertEquals($note[0]->countrylistCstm->value           , 'aaaa');
+            $this->assertEquals($note[0]->statelistCstm->value             , 'aaa1');
+            $this->assertEquals($note[0]->citylistCstm->value              , 'ab1');
+            $this->assertContains('gg'                                     , $note[0]->multiselectCstm->values);
+            $this->assertContains('hh'                                     , $note[0]->multiselectCstm->values);
+            $this->assertContains('reading'                                , $note[0]->tagcloudCstm->values);
+            $this->assertContains('surfing'                                , $note[0]->tagcloudCstm->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Note');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $note[0]);

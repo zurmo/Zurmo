@@ -132,7 +132,7 @@
             $suite->setName("$whatToTest Tests");
             if (!$freeze)
             {
-                self::buildAndAddSuiteFromDirectory($suite, 'Framework', COMMON_ROOT . '/protected/extensions/zurmoinc/framework/tests/unit', $whatToTest, true, false, $includeBenchmarks);
+                self::buildAndAddSuiteFromDirectory($suite, 'Framework', COMMON_ROOT . '/protected/core/tests/unit', $whatToTest, true, false, $includeBenchmarks);
             }
             $moduleDirectoryName = COMMON_ROOT . '/protected/modules';
             if (is_dir($moduleDirectoryName))

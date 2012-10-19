@@ -55,7 +55,7 @@
             $content .= '<br/>';
             $content .= Yii::t('Default', 'Copy upgrade file to app/protected/runtime/upgrade folder and start upgrade process.');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Click here to start upgrade'), $zurmoUpgradeStepOneUrl);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Click here to start upgrade'), $zurmoUpgradeStepOneUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '</td></tr></table>';

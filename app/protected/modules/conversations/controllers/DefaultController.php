@@ -143,10 +143,11 @@
                 $conversation                      = Conversation::getById((int)$id);
                 $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($conversation);
                 $currentUserWasParticipant         = ConversationParticipantsUtil::isUserAParticipant($conversation, Yii::app()->user->userModel);
-                ConversationParticipantsUtil::
-                    resolveConversationHasManyParticipantsFromPost($conversation,
+                $peopleAdded                       = ConversationParticipantsUtil::
+                                                     resolveConversationHasManyParticipantsFromPost($conversation,
                                                                    $postData['ConversationParticipantsForm'],
                                                                    $explicitReadWriteModelPermissions);
+                ConversationParticipantsUtil::resolveEmailInvitesByPeople($conversation, $peopleAdded);
                 $saved = $conversation->save();
                 if ($saved)
                 {

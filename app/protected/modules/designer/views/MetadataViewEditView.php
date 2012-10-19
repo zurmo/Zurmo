@@ -110,7 +110,7 @@
         {
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')
+                    Yii::getPathOfAlias('application.core.views.assets')
                     ) . '/FormUtils.js',
                 CClientScript::POS_END
             );
@@ -164,7 +164,7 @@
         {
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("designerLayoutEditor");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.DesignerLayoutEditor', array(
+            $cClipWidget->widget('application.core.widgets.DesignerLayoutEditor', array(
                 'designerLayoutAttributes'      => $this->designerLayoutAttributes,
                 'canAddRows'                    => $this->designerRules->canAddRows(),
                 'canMoveRows'                   => $this->designerRules->canMoveRows(),
@@ -189,7 +189,7 @@
                 $content = '<div id = "' . $barId . '"></div>';
                 $cClipWidget = new CClipWidget();
                 $cClipWidget->beginClip("metadataViewEditViewNotificationMessage");
-                $cClipWidget->widget('ext.zurmoinc.framework.widgets.JNotify', array(
+                $cClipWidget->widget('application.core.widgets.JNotify', array(
                     'statusBarId' => $barId,
                 ));
                 $cClipWidget->endClip();
@@ -201,7 +201,7 @@
         {
             Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets') . '/StickyUtils.jquery.js'
+                    Yii::getPathOfAlias('application.core.views.assets') . '/StickyUtils.jquery.js'
                 ),
                 CClientScript::POS_END
             );

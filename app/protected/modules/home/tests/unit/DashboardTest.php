@@ -49,33 +49,6 @@
         /**
          * @depends testGetNextLayoutId
          */
-        public function testGetByLayoutId()
-        {
-            $user = User::getByUserName('billy');
-            Yii::app()->user->userModel = $user;
-            for ($i = 1; $i <= 3; $i++)
-            {
-                $dashboard = Dashboard::getByLayoutId($i);
-                $this->assertEquals($i,             $dashboard->layoutId);
-                $this->assertEquals("Dashboard $i", $dashboard->name);
-                $this->assertEquals($user->id,      $dashboard->owner->id);
-                $this->assertEquals('100',          $dashboard->layoutType);
-                $this->assertEquals(0,      $dashboard->isDefault);
-            }
-        }
-
-        /**
-         * @depends testGetByLayoutId
-         * @expectedException NotFoundException
-         */
-        public function testGetByLayoutIdForNonexistentId()
-        {
-            $dashboard = Dashboard::getByLayoutId(123123);
-        }
-
-        /**
-         * @depends testGetNextLayoutId
-         */
         public function testGetByLayoutIdAndUserId()
         {
             $user = User::getByUserName('billy');

@@ -88,7 +88,8 @@
 
         protected function getPlacedViewTypes()
         {
-            $portlets        = Portlet::getByLayoutId($this->uniqueLayoutId);
+            $portlets        = Portlet::getByLayoutIdAndUserSortedById($this->uniqueLayoutId,
+                                                                       Yii::app()->user->userModel->id);
             $placedViewTypes = array();
             foreach ($portlets as $portlet)
             {

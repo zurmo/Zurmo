@@ -121,11 +121,11 @@
 
             //Test All custom created types since their rules could vary
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'date', 'defaultValue');
+                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'dateCstm', 'defaultValue');
             $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'date'));
             $this->assertEquals($compareData, $rules);
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
-                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'dateTime', 'defaultValue');
+                     getApplicableRulesByModelClassNameAndAttributeName('Account', 'dateTimeCstm', 'defaultValue');
             $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
             $this->assertEquals($compareData, $rules);
             //todo: add the rest of the custom field types that are importable

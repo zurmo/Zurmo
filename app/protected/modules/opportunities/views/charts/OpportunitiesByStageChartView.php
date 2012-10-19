@@ -40,7 +40,7 @@
             }
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("Chart");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.FusionChart', array(
+            $cClipWidget->widget('application.core.widgets.FusionChart', array(
                     'id'      => $this->uniqueLayoutId,
                     'dataUrl' => Yii::app()->createUrl('/home/defaultPortlet/makeChartXML',
                                     array('portletId' => $this->params['portletId'], 'chartLibraryName' => 'Fusion')),

@@ -258,7 +258,7 @@
            parent::renderAfterFormLayout($form);
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.views.assets')) . '/dynamicSearchViewUtils.js');
+                    Yii::getPathOfAlias('application.core.views.assets')) . '/dynamicSearchViewUtils.js');
             Yii::app()->clientScript->registerScript('showStructurePanels' . $this->getSearchFormId(), "
                 $('#show-dynamic-search-structure-div-link-" . $this->getSearchFormId() . "').click( function()
                     {

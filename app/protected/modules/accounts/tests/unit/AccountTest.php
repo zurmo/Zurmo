@@ -605,11 +605,11 @@
             );
             //A new account will show the values fine.
             $accountNew = new Account();
-            $this->assertEquals($compareData, unserialize($accountNew->testAirPlane->data->serializedData));
+            $this->assertEquals($compareData, unserialize($accountNew->testAirPlaneCstm->data->serializedData));
 
             //Now retrieve account again and make sure you can access the values in the dropdown.
             $account     = Account::getById($accountId);
-            $this->assertEquals($compareData, unserialize($account->testAirPlane->data->serializedData));
+            $this->assertEquals($compareData, unserialize($account->testAirPlaneCstm->data->serializedData));
         }
     }
 ?>

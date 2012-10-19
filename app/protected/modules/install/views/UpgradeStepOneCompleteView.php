@@ -44,7 +44,7 @@
         protected function renderContent()
         {
             $imagePath = Yii::app()->baseUrl . '/themes/default/images/ajax-loader.gif';
-            $progressBarImageContent = CHtml::image($imagePath, 'Progress Bar');
+            $progressBarImageContent = ZurmoHtml::image($imagePath, 'Progress Bar');
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);
             $zurmoUpgradeStepTwoUrl = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/stepTwo/');
@@ -56,7 +56,7 @@
             $content .= '<table><tr><td>';
             $content .= Yii::t('Default', 'The next step is to reload the application and upgrade the schema.');
             $content .= '<br/><br/>';
-            $content .= CHtml::link(Yii::t('Default', 'Click Here to continue with next step'), $zurmoUpgradeStepTwoUrl);
+            $content .= ZurmoHtml::link(Yii::t('Default', 'Click Here to continue with next step'), $zurmoUpgradeStepTwoUrl);
             $content .= '</td></tr></table>';
             $content .= '</div>';
             $content .= '<div id="progress-table">';

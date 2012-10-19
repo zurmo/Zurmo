@@ -83,9 +83,9 @@
             }
 
             $account       = new Account();
-            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, $attributeName);
-            $this->assertEquals('MultiSelectDropDown', $attributeForm->getAttributeTypeName());
-            $this->assertEquals($attributeName,        $attributeForm->attributeName);
+            $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($account, $attributeName . 'Cstm');
+            $this->assertEquals('MultiSelectDropDown',   $attributeForm->getAttributeTypeName());
+            $this->assertEquals($attributeName . 'Cstm', $attributeForm->attributeName);
             $compareAttributeLabels = array(
                 'de' => 'Test Hobbies 2 de',
                 'en' => 'Test Hobbies 2 en',
@@ -114,38 +114,38 @@
 
             //Create an account to test searching multiple fields on for search.
             $account                  = new Account();
-            $this->assertEquals(1, $account->testHobbies->values->count());
+            $this->assertEquals(1, $account->testHobbiesCstm->values->count());
             $account->name            = 'my test account';
             $account->owner           = Yii::app()->user->userModel;
             $customFieldValue2        = new CustomFieldValue();
             $customFieldValue2->value = 'Reading';
-            $account->testHobbies->values->add($customFieldValue2);
+            $account->testHobbiesCstm->values->add($customFieldValue2);
             $this->assertTrue($account->save());
             $accountId                = $account->id;
             $account                  = Account::getById($accountId);
-            $this->assertEquals(2, $account->testHobbies->values->count());
-            $this->assertContains('Writing',                  $account->testHobbies->values);
-            $this->assertContains('Reading',                  $account->testHobbies->values);
+            $this->assertEquals(2, $account->testHobbiesCstm->values->count());
+            $this->assertContains('Writing',                  $account->testHobbiesCstm->values);
+            $this->assertContains('Reading',                  $account->testHobbiesCstm->values);
 
             //Create a second account with different hobbies
             $account                  = new Account();
             //Remove the default value of 'Writing';
-            $account->testHobbies->values->removeByIndex(0);
+            $account->testHobbiesCstm->values->removeByIndex(0);
             $account->name            = 'my test account2';
             $account->owner           = Yii::app()->user->userModel;
             $customFieldValue1        = new CustomFieldValue();
             $customFieldValue1->value = 'Singing';
-            $account->testHobbies->values->add($customFieldValue1);
+            $account->testHobbiesCstm->values->add($customFieldValue1);
             $customFieldValue2        = new CustomFieldValue();
             $customFieldValue2->value = 'Surfing';
-            $account->testHobbies->values->add($customFieldValue2);
+            $account->testHobbiesCstm->values->add($customFieldValue2);
             $this->assertTrue($account->save());
 
             $accountId                = $account->id;
             $account                  = Account::getById($accountId);
-            $this->assertEquals(2, $account->testHobbies->values->count());
-            $this->assertContains('Singing',                  $account->testHobbies->values);
-            $this->assertContains('Surfing',                  $account->testHobbies->values);
+            $this->assertEquals(2, $account->testHobbiesCstm->values->count());
+            $this->assertContains('Singing',                  $account->testHobbiesCstm->values);
+            $this->assertContains('Surfing',                  $account->testHobbiesCstm->values);
 
             //Searching with a custom field that is not blank should not produce an errors.
             $searchPostData      = array('name'        => 'my test account',
@@ -188,38 +188,38 @@
 
             //Create an account to test searching multiple fields on for search.
             $account                  = new Account();
-            $this->assertEquals(1, $account->testHobbies->values->count());
-            $account->testHobbies->values->removeAll();
-            $this->assertEquals(0, $account->testHobbies->values->count());
+            $this->assertEquals(1, $account->testHobbiesCstm->values->count());
+            $account->testHobbiesCstm->values->removeAll();
+            $this->assertEquals(0, $account->testHobbiesCstm->values->count());
             $account->name            = 'MyTestAccount';
             $account->owner           = Yii::app()->user->userModel;
             $customFieldValue1        = new CustomFieldValue();
             $customFieldValue1->value = 'Reading';
-            $account->testHobbies->values->add($customFieldValue1);
+            $account->testHobbiesCstm->values->add($customFieldValue1);
             $customFieldValue2        = new CustomFieldValue();
             $customFieldValue2->value = 'Writing';
-            $account->testHobbies->values->add($customFieldValue2);
+            $account->testHobbiesCstm->values->add($customFieldValue2);
             $this->assertTrue($account->save());
             $accountId                = $account->id;
             $account->forget();
             unset($account);
 
             $account                  = Account::getById($accountId);
-            $this->assertEquals(2, $account->testHobbies->values->count());
-            $this->assertContains('Reading',                  $account->testHobbies->values);
-            $this->assertContains('Writing',                  $account->testHobbies->values);
+            $this->assertEquals(2, $account->testHobbiesCstm->values->count());
+            $this->assertContains('Reading',                  $account->testHobbiesCstm->values);
+            $this->assertContains('Writing',                  $account->testHobbiesCstm->values);
             $account->forget();
             unset($account);
 
             $account = Account::getById($accountId);
             $customFieldValue3        = new CustomFieldValue();
             $customFieldValue3->value = 'Writing';
-            $account->testHobbies->values->add($customFieldValue3);
-            $this->assertEquals(3, $account->testHobbies->values->count());
-            $this->assertContains('Reading',                  $account->testHobbies->values);
-            $this->assertContains('Writing',                  $account->testHobbies->values);
-            $this->assertNotContains('Surfing',               $account->testHobbies->values);
-            $this->assertNotContains('Gardening',             $account->testHobbies->values);
+            $account->testHobbiesCstm->values->add($customFieldValue3);
+            $this->assertEquals(3, $account->testHobbiesCstm->values->count());
+            $this->assertContains('Reading',                  $account->testHobbiesCstm->values);
+            $this->assertContains('Writing',                  $account->testHobbiesCstm->values);
+            $this->assertNotContains('Surfing',               $account->testHobbiesCstm->values);
+            $this->assertNotContains('Gardening',             $account->testHobbiesCstm->values);
         }
     }
 ?>

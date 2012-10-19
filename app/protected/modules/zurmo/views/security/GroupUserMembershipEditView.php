@@ -61,7 +61,7 @@
             assert('$form != null');
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("SortableCompareLists");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.SortableCompareLists', array(
+            $cClipWidget->widget('application.core.widgets.SortableCompareLists', array(
                 'model'                  => $this->model,
                 'form'                   => $form,
                 'leftSideAttributeName'  => 'userNonMembershipData',

@@ -55,16 +55,16 @@
          * @param object $model - Conversation Model
          * @param array $postData
          * @param object $explicitReadWriteModelPermissions - ExplicitReadWriteModelPermissions model
+         * @returns Array of persons who have been added as participants
          */
         public static function resolveConversationHasManyParticipantsFromPost(
-                                    Conversation $conversation, $postData, $explicitReadWriteModelPermissions,
-                                    $sendNotifications = true)
+                                    Conversation $conversation, $postData, $explicitReadWriteModelPermissions)
         {
             assert('$explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions');
+            $newPeopleIndexedByItemId = array();
             if (isset($postData['itemIds']) && strlen($postData['itemIds']) > 0)
             {
                 $itemIds = explode(",", $postData['itemIds']);  // Not Coding Standard
-                $newPeopleIndexedByItemId = array();
                 foreach ($itemIds as $itemId)
                 {
                     if ($itemId != $conversation->owner->getClassId('Item'))
@@ -104,10 +104,6 @@
                     {
                         $explicitReadWriteModelPermissions->addReadWritePermitable($personOrUserModel);
                     }
-                    if ($sendNotifications)
-                    {
-                        static::sendEmailInviteToParticipant($conversation, $personOrUserModel);
-                    }
                 }
             }
             else
@@ -115,6 +111,20 @@
                 //remove all participants
                 $conversation->conversationParticipants->removeAll();
                 $explicitReadWriteModelPermissions->removeAllReadWritePermitables();
+            }
+            return $newPeopleIndexedByItemId;
+        }
+
+        public static function resolveEmailInvitesByPeople($conversation, $people)
+        {
+            assert('$conversation instanceof Conversation && $conversation->id > 0');
+            if(count($people) == 0)
+            {
+                return;
+            }
+            foreach ($people as $personOrUserModel)
+            {
+                static::sendEmailInviteToParticipant($conversation, $personOrUserModel);
             }
         }
 
@@ -145,6 +155,7 @@
 
         public static function sendEmailInviteToParticipant(Conversation $conversation, $person)
         {
+            assert('$conversation->id > 0');
             assert('$person instanceof User || $person instanceof Contact');
             if ($person->primaryEmail->emailAddress !== null &&
                 (($person instanceof User &&

@@ -88,15 +88,15 @@
             $account = new Account();
 
             //First create a dependency
-            $mappingData = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $mappingData = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => 'a1',
                                                'b2' => 'a2',
                                                'b3' => 'a3',
                                                'b4' => 'a4'
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1' => 'b1',
                                                'c2' => 'b2',
@@ -113,7 +113,7 @@
 
             //Change b3 to b3New
             $attributeForm                                    = AttributesFormFactory::
-                                                                createAttributeFormByAttributeName($account, 'bbb');
+                                                                createAttributeFormByAttributeName($account, 'bbbCstm');
             $attributeForm->customFieldDataDataExistingValues = array('b1', 'b2', 'b3', 'b4');
             $attributeForm->customFieldDataData               = array('b1', 'b2', 'b3New', 'b4');
             $modelAttributesAdapterClassName                  = $attributeForm::
@@ -133,15 +133,15 @@
             $metadata         = DropDownDependencyDerivedAttributeMetadata::getById($metadata->id);
             $unserializedData = unserialize($metadata->serializedMetadata);
 
-            $compareData      = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $compareData      = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => 'a1',
                                                'b2' => 'a2',
                                                'b3New' => 'a3',
                                                'b4' => 'a4'
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1' => 'b1',
                                                'c2' => 'b2',
@@ -154,7 +154,7 @@
             //Now change a value for a dropdown that is the first level of the dependency. This will only change the
             //value when it is a parent value.
             $attributeForm                                    = AttributesFormFactory::
-                                                                createAttributeFormByAttributeName($account, 'aaa');
+                                                                createAttributeFormByAttributeName($account, 'aaaCstm');
             $attributeForm->customFieldDataDataExistingValues = array('a1', 'a2', 'a3', 'a4');
             $attributeForm->customFieldDataData               = array('a1', 'a2New', 'a3', 'a4');
             $modelAttributesAdapterClassName                  = $attributeForm::
@@ -174,15 +174,15 @@
             $metadata         = DropDownDependencyDerivedAttributeMetadata::getById($metadata->id);
             $unserializedData = unserialize($metadata->serializedMetadata);
 
-            $compareData      = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $compareData      = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => 'a1',
                                                'b2' => 'a2New',
                                                'b3New' => 'a3',
                                                'b4' => 'a4'
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1' => 'b1',
                                                'c2' => 'b2',
@@ -194,7 +194,7 @@
 
             //Now change 2 values at once.
             $attributeForm                                    = AttributesFormFactory::
-                                                                createAttributeFormByAttributeName($account, 'ccc');
+                                                                createAttributeFormByAttributeName($account, 'cccCstm');
             $attributeForm->customFieldDataDataExistingValues = array('c1', 'c2', 'c3', 'c4');
             $attributeForm->customFieldDataData               = array('c1New', 'c2New', 'c3', 'c4');
             $modelAttributesAdapterClassName                  = $attributeForm::
@@ -214,15 +214,15 @@
             $metadata         = DropDownDependencyDerivedAttributeMetadata::getById($metadata->id);
             $unserializedData = unserialize($metadata->serializedMetadata);
 
-            $compareData      = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $compareData      = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => 'a1',
                                                'b2' => 'a2New',
                                                'b3New' => 'a3',
                                                'b4' => 'a4'
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1New' => 'b1',
                                                'c2New' => 'b2',
@@ -243,7 +243,7 @@
 
             //Remove a1
             $attributeForm                                    = AttributesFormFactory::
-                                                                createAttributeFormByAttributeName($account, 'aaa');
+                                                                createAttributeFormByAttributeName($account, 'aaaCstm');
             $attributeForm->customFieldDataData               = array('a2New', 'a3', 'a4');
             $modelAttributesAdapterClassName                  = $attributeForm::
                                                                 getModelAttributeAdapterNameForSavingAttributeFormData();
@@ -263,15 +263,15 @@
                                 getByNameAndModelClassName('aName', 'Account');
             $unserializedData = unserialize($metadata->serializedMetadata);
 
-            $compareData      = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $compareData      = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => null,
                                                'b2' => 'a2New',
                                                'b3New' => 'a3',
                                                'b4' => 'a4'
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1New' => 'b1',
                                                'c2New' => 'b2',
@@ -283,7 +283,7 @@
 
             //Remove b4
             $attributeForm                                    = AttributesFormFactory::
-                                                                createAttributeFormByAttributeName($account, 'bbb');
+                                                                createAttributeFormByAttributeName($account, 'bbbCstm');
             $attributeForm->customFieldDataData               = array('b1', 'b2', 'b3New');
             $modelAttributesAdapterClassName                  = $attributeForm::
                                                                 getModelAttributeAdapterNameForSavingAttributeFormData();
@@ -303,14 +303,14 @@
                                 getByNameAndModelClassName('aName', 'Account');
             $unserializedData = unserialize($metadata->serializedMetadata);
 
-            $compareData      = array(array('attributeName' => 'aaa'),
-                                 array('attributeName' => 'bbb',
+            $compareData      = array(array('attributeName' => 'aaaCstm'),
+                                 array('attributeName' => 'bbbCstm',
                                         'valuesToParentValues' =>
                                          array('b1' => null,
                                                'b2' => 'a2New',
                                                'b3New' => 'a3',
                                          )),
-                                 array('attributeName' => 'ccc',
+                                 array('attributeName' => 'cccCstm',
                                         'valuesToParentValues' =>
                                          array('c1New' => 'b1',
                                                'c2New' => 'b2',

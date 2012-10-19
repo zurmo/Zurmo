@@ -51,9 +51,9 @@
             //Confirm the attribute is created ok and does not cause an exception.
             $extraPostData = array( 'defaultValue' => '', 'isAudited' => '1', 'isRequired' => '1',
                                     'maxLength' => '255');
-            $this->createCustomAttributeWalkthroughSequence('AccountsModule', 'atestattrib', 'Text', $extraPostData);
+            $this->createCustomAttributeWalkthroughSequence('AccountsModule', 'atestattrib', 'Text', $extraPostData, null, true);
             $account = new Account();
-            $this->assertEquals('', $account->atestattrib);
+            $this->assertEquals('', $account->atestattribCstm);
         }
     }
 ?>

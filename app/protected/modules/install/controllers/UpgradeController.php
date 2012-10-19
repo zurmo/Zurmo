@@ -90,13 +90,13 @@
             $view = new InstallPageView($nextView);
             echo $view->render();
 
-            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
+            $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(4096);
             $messageStreamer->add(Yii::t('Default', 'Starting upgrade process.'));
             UpgradeUtil::runPart1($messageStreamer);
             ForgetAllCacheUtil::forgetAllCaches();
-            echo CHtml::script('$("#progress-table").hide(); $("#upgrade-step-two").show();');
+            echo ZurmoHtml::script('$("#progress-table").hide(); $("#upgrade-step-two").show();');
             Yii::app()->gameHelper->unmuteScoringModelsOnSave();
         }
 
@@ -113,14 +113,14 @@
             $view = new InstallPageView($nextView);
             echo $view->render();
 
-            $template = CHtml::script("$('#logging-table').prepend('{message}<br/>');");
+            $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(4096);
             $messageStreamer->add(Yii::t('Default', 'Starting upgrade process.'));
 
             UpgradeUtil::runPart2($messageStreamer);
             ForgetAllCacheUtil::forgetAllCaches();
-            echo CHtml::script('$("#progress-table").hide(); $("#upgrade-step-two").show();');
+            echo ZurmoHtml::script('$("#progress-table").hide(); $("#upgrade-step-two").show();');
             Yii::app()->gameHelper->unmuteScoringModelsOnSave();
         }
     }

@@ -30,7 +30,7 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
-            Yii::import('application.extensions.zurmoinc.framework.data.*');
+            Yii::import('application.core.data.*');
             Yii::import('application.modules.accounts.data.*');
             $defaultDataMaker = new AccountsDefaultDataMaker();
             $defaultDataMaker->make();

@@ -54,9 +54,9 @@
             {
                 $nextParams = null;
             }
-            Yii::import('ext.zurmoinc.framework.tests.unit.models.*');
-            Yii::import('ext.zurmoinc.framework.tests.unit.components.*');
-            Yii::import('ext.zurmoinc.framework.tests.unit.views.*');
+            Yii::import('application.core.tests.unit.models.*');
+            Yii::import('application.core.tests.unit.components.*');
+            Yii::import('application.core.tests.unit.views.*');
             assert('$step == null || is_string($step)');
             assert('$nextParams == null || is_array($nextParams)');
 

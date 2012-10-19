@@ -69,7 +69,7 @@
             $element  = new TextAreaElement($this->model, 'description');
             $element->nonEditableTemplate = '<div class="comment-content">{content}</div>';
             $content .= $element->render();
-            if ($this->model->reward != 0)
+            if ($this->model->reward != null)
             {
                 $element                      = new TextElement($this->model, 'reward');
                 $element->nonEditableTemplate = '<div class="comment-content">' .

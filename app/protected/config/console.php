@@ -33,7 +33,7 @@
             'name' => 'Zurmo Console Application',
         )
     );
-    $common_config['import'][] = 'application.extensions.zurmoinc.framework.utils.UpgradeUtil.php';
+    $common_config['import'][] = 'application.core.utils.UpgradeUtil.php';
     //Utilize a custom begin request behavior class.
     $common_config['behaviors']['onBeginRequest'] = array(
         'class' => 'application.modules.zurmo.components.CommandBeginRequestBehavior'

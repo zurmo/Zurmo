@@ -51,7 +51,7 @@
             assert('$this->model instanceof Activity');
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ModelElement");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MultiSelectAutoComplete', array(
+            $cClipWidget->widget('application.core.widgets.MultiSelectAutoComplete', array(
                 'name'        => $this->getNameForIdField(),
                 'id'          => $this->getIdForIdField(),
                 'jsonEncodedIdsAndLabels'   => CJSON::encode($this->getExistingContactRelationsIdsAndLabels()),

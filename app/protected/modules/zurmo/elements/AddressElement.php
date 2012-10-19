@@ -113,8 +113,9 @@
         {
             $id          = $this->getEditableInputId($inputNameIdPrefix, $attribute);
             $htmlOptions = array(
-                'name' => $this->getEditableInputName($inputNameIdPrefix, $attribute),
-                'id'   => $id,
+                'name'   => $this->getEditableInputName($inputNameIdPrefix, $attribute),
+                'id'     => $id,
+                'encode' => false,
             );
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
             $textField   = $form->textField($model, $attribute, $htmlOptions);
@@ -141,7 +142,7 @@
             assert('$addressModel instanceof Address');
             Yii::app()->getClientScript()->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('ext.zurmoinc.framework.elements.assets')
+                    Yii::getPathOfAlias('application.core.elements.assets')
                     ) . '/Modal.js',
                 CClientScript::POS_END
             );
@@ -151,16 +152,15 @@
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
             $content      = ZurmoHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl,
-                                static::resolveAjaxOptionsForMapLink(),
+                                $this->resolveAjaxOptionsForMapLink(),
                                 array('id' => $id, 'class' => 'map-link')
             );
             return $content;
         }
 
-        protected static function resolveAjaxOptionsForMapLink()
+        protected function resolveAjaxOptionsForMapLink()
         {
-            $title = Yii::t('Default', 'Address Location on Map');
-            return ModalView::getAjaxOptionsForModalLink($title);
+            return ModalView::getAjaxOptionsForModalLink(strval($this->model));
         }
 
         protected function renderError()

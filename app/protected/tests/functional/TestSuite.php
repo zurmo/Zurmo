@@ -108,7 +108,7 @@
                 {
                     $compareToTest = null;
                 }
-                $frameworkTestSuiteDirectory = '../../extensions/zurmoinc/framework/tests/functional';
+                $frameworkTestSuiteDirectory = '../../core/tests/functional';
                 $htmlTestSuiteFiles = self::buildSuiteFromSeleneseDirectory(
                     $htmlTestSuiteFiles, $frameworkTestSuiteDirectory, $compareToTest);
             }

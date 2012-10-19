@@ -26,7 +26,7 @@
 
     // These tests were split out of RedBeanModelTest because they
     // depend on modules in the application. RedBeanModelTest was
-    // put back in extensions/zurmoinc/framework/test/unit.
+    // put back in core/test/unit.
     // These tests need to be put in the right places given
     // what they depend on.
     class RedBeanModel2Test extends BaseTest

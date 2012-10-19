@@ -49,7 +49,7 @@
                 ";
                 Yii::app()->clientScript->registerScript('FlashMessage', $script);
                 $this->controller->beginClip("FlashMessage");
-                $this->controller->widget('ext.zurmoinc.framework.widgets.JNotify', array(
+                $this->controller->widget('application.core.widgets.JNotify', array(
                     'statusBarId' => 'FlashMessageBar',
                 ));
                 $this->controller->endClip();

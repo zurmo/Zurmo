@@ -51,14 +51,7 @@
         public static function getDefaultMetadata()
         {
             $metadata = array();
-            $metadata['global'] = array(
-                'designerMenuItems'   => array(
-                    'showFieldsLink'  => false,
-                    'showGeneralLink' => false,
-                    'showLayoutsLink' => false,
-                    'showMenusLink'   => false,
-                ),
-            );
+            $metadata['global'] = array();
             return $metadata;
         }
 

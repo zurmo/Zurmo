@@ -46,7 +46,7 @@
             }
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("Tabs");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+            $cClipWidget->widget('application.core.widgets.MbMenu', array(
                 'items' => $this->items
             ));
             $cClipWidget->endClip();

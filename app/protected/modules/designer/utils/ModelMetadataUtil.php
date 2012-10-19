@@ -32,7 +32,7 @@
         public static function resolveName($name)
         {
             assert('is_string($name)');
-            return $name; // . 'Custom';
+            return $name . 'Cstm'; // . 'Custom';
         }
 
         public static function addOrUpdateMember($modelClassName,

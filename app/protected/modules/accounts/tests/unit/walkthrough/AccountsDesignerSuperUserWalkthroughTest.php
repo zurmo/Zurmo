@@ -260,53 +260,53 @@
             //Create a new account based on the custom fields.
             $this->resetGetArray();
             $this->setPostArray(array('Account' => array(
-                                    'name'                              => 'myNewAccount',
-                                    'officePhone'                       => '259-784-2169',
-                                    'industry'                          => array('value' => 'Automotive'),
-                                    'officeFax'                         => '299-845-7863',
-                                    'employees'                         => '930',
-                                    'annualRevenue'                     => '474000000',
-                                    'type'                              => array('value' => 'Prospect'),
-                                    'website'                           => 'http://www.Unnamed.com',
-                                    'primaryEmail'                      => array('emailAddress' => 'info@myNewAccount.com',
+                                    'name'                                  => 'myNewAccount',
+                                    'officePhone'                           => '259-784-2169',
+                                    'industry'                              => array('value' => 'Automotive'),
+                                    'officeFax'                             => '299-845-7863',
+                                    'employees'                             => '930',
+                                    'annualRevenue'                         => '474000000',
+                                    'type'                                  => array('value' => 'Prospect'),
+                                    'website'                               => 'http://www.Unnamed.com',
+                                    'primaryEmail'                          => array('emailAddress' => 'info@myNewAccount.com',
                                                                                   'optOut' => '1',
                                                                                   'isInvalid' => '0'),
-                                    'secondaryEmail'                    => array('emailAddress' => '',
+                                    'secondaryEmail'                        => array('emailAddress' => '',
                                                                                   'optOut' => '0',
                                                                                   'isInvalid' => '0'),
-                                    'billingAddress'                    => array('street1' => '6466 South Madison Creek',
+                                    'billingAddress'                        => array('street1' => '6466 South Madison Creek',
                                                                                   'street2' => '',
                                                                                   'city' => 'Chicago',
                                                                                   'state' => 'IL',
                                                                                   'postalCode' => '60652',
                                                                                   'country' => 'USA'),
-                                    'shippingAddress'                   => array('street1' => '27054 West Michigan Lane',
+                                    'shippingAddress'                       => array('street1' => '27054 West Michigan Lane',
                                                                                   'street2' => '',
                                                                                   'city' => 'Austin',
                                                                                   'state' => 'TX',
                                                                                   'postalCode' => '78759',
                                                                                   'country' => 'USA'),
-                                    'description'                       => 'This is a Description',
-                                    'explicitReadWriteModelPermissions' => array('type' => null),
-                                    'checkbox'                          => '1',
-                                    'currency'                          => array('value'    => 45,
+                                    'description'                           => 'This is a Description',
+                                    'explicitReadWriteModelPermissions'     => array('type' => null),
+                                    'checkboxCstm'                          => '1',
+                                    'currencyCstm'                          => array('value'    => 45,
                                                                                  'currency' => array('id' =>
                                                                                  $baseCurrency->id)),
-                                    'date'                              => $date,
-                                    'datetime'                          => $datetime,
-                                    'decimal'                           => '123',
-                                    'picklist'                          => array('value'  => 'a'),
-                                    'multiselect'                       => array('values' => array('ff', 'rr')),
-                                    'tagcloud'                          => array('values' => array('writing', 'gardening')),
-                                    'countrylist'                       => array('value'  => 'bbbb'),
-                                    'statelist'                         => array('value'  => 'bbb1'),
-                                    'citylist'                          => array('value'  => 'bb1'),
-                                    'integer'                           => '12',
-                                    'phone'                             => '259-784-2169',
-                                    'radio'                             => array('value' => 'd'),
-                                    'text'                              => 'This is a test Text',
-                                    'textarea'                          => 'This is a test TextArea',
-                                    'url'                               => 'http://wwww.abc.com')));
+                                    'dateCstm'                              => $date,
+                                    'datetimeCstm'                          => $datetime,
+                                    'decimalCstm'                           => '123',
+                                    'picklistCstm'                          => array('value'  => 'a'),
+                                    'multiselectCstm'                       => array('values' => array('ff', 'rr')),
+                                    'tagcloudCstm'                          => array('values' => array('writing', 'gardening')),
+                                    'countrylistCstm'                       => array('value'  => 'bbbb'),
+                                    'statelistCstm'                         => array('value'  => 'bbb1'),
+                                    'citylistCstm'                          => array('value'  => 'bb1'),
+                                    'integerCstm'                           => '12',
+                                    'phoneCstm'                             => '259-784-2169',
+                                    'radioCstm'                             => array('value' => 'd'),
+                                    'textCstm'                              => 'This is a test Text',
+                                    'textareaCstm'                          => 'This is a test TextArea',
+                                    'urlCstm'                               => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -346,26 +346,26 @@
             $this->assertEquals($account[0]->description                    , 'This is a Description');
             $this->assertEquals(0                                           , count($readWritePermitables));
             $this->assertEquals(0                                           , count($readOnlyPermitables));
-            $this->assertEquals($account[0]->checkbox                       , '1');
-            $this->assertEquals($account[0]->currency->value                , 45);
-            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($account[0]->date                           , $dateAssert);
-            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
-            $this->assertEquals($account[0]->decimal                        , '123');
-            $this->assertEquals($account[0]->picklist->value                , 'a');
-            $this->assertEquals($account[0]->integer                        , 12);
-            $this->assertEquals($account[0]->phone                          , '259-784-2169');
-            $this->assertEquals($account[0]->radio->value                   , 'd');
-            $this->assertEquals($account[0]->text                           , 'This is a test Text');
-            $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
-            $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
-            $this->assertEquals($account[0]->countrylist->value             , 'bbbb');
-            $this->assertEquals($account[0]->statelist->value               , 'bbb1');
-            $this->assertEquals($account[0]->citylist->value                , 'bb1');
-            $this->assertContains('ff'                                      , $account[0]->multiselect->values);
-            $this->assertContains('rr'                                      , $account[0]->multiselect->values);
-            $this->assertContains('writing'                                 , $account[0]->tagcloud->values);
-            $this->assertContains('gardening'                               , $account[0]->tagcloud->values);
+            $this->assertEquals($account[0]->checkboxCstm                   , '1');
+            $this->assertEquals($account[0]->currencyCstm->value            , 45);
+            $this->assertEquals($account[0]->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($account[0]->dateCstm                       , $dateAssert);
+            $this->assertEquals($account[0]->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($account[0]->decimalCstm                    , '123');
+            $this->assertEquals($account[0]->picklistCstm->value            , 'a');
+            $this->assertEquals($account[0]->integerCstm                    , 12);
+            $this->assertEquals($account[0]->phoneCstm                      , '259-784-2169');
+            $this->assertEquals($account[0]->radioCstm->value               , 'd');
+            $this->assertEquals($account[0]->textCstm                       , 'This is a test Text');
+            $this->assertEquals($account[0]->textareaCstm                   , 'This is a test TextArea');
+            $this->assertEquals($account[0]->urlCstm                        , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->countrylistCstm->value         , 'bbbb');
+            $this->assertEquals($account[0]->statelistCstm->value           , 'bbb1');
+            $this->assertEquals($account[0]->citylistCstm->value            , 'bb1');
+            $this->assertContains('ff'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('rr'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('writing'                                 , $account[0]->tagcloudCstm->values);
+            $this->assertContains('gardening'                               , $account[0]->tagcloudCstm->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Account');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $account[0]);
@@ -399,23 +399,23 @@
                                         'anyInvalidEmail'       => array('value' => ''),
                                         'ownedItemsOnly'        => '1',
                                         'industry'              => array('value' => 'Automotive'),
-                                        'decimal'               => '123',
-                                        'integer'               => '12',
-                                        'phone'                 => '259-784-2169',
-                                        'text'                  => 'This is a test Text',
-                                        'textarea'              => 'This is a test TextArea',
-                                        'url'                   => 'http://wwww.abc.com',
-                                        'checkbox'              => array('value'  => '1'),
-                                        'currency'              => array('value'  => 45),
-                                        'picklist'              => array('value'  => 'a'),
-                                        'multiselect'           => array('values' => array('ff', 'rr')),
-                                        'tagcloud'              => array('values' => array('writing', 'gardening')),
-                                        'countrylist'           => array('value'  => 'bbbb'),
-                                        'statelist'             => array('value'  => 'bbb1'),
-                                        'citylist'              => array('value'  => 'bb1'),
-                                        'radio'                 => array('value'  => 'd'),
-                                        'date__Date'            => array('type'   => 'Today'),
-                                        'datetime__DateTime'    => array('type'   => 'Today')),
+                                        'decimalCstm'           => '123',
+                                        'integerCstm'           => '12',
+                                        'phoneCstm'             => '259-784-2169',
+                                        'textCstm'              => 'This is a test Text',
+                                        'textareaCstm'          => 'This is a test TextArea',
+                                        'urlCstm'               => 'http://wwww.abc.com',
+                                        'checkboxCstm'          => array('value'  => '1'),
+                                        'currencyCstm'          => array('value'  => 45),
+                                        'picklistCstm'          => array('value'  => 'a'),
+                                        'multiselectCstm'       => array('values' => array('ff', 'rr')),
+                                        'tagcloudCstm'          => array('values' => array('writing', 'gardening')),
+                                        'countrylistCstm'       => array('value'  => 'bbbb'),
+                                        'statelistCstm'         => array('value'  => 'bbb1'),
+                                        'citylistCstm'          => array('value'  => 'bb1'),
+                                        'radioCstm'             => array('value'  => 'd'),
+                                        'dateCstm__Date'        => array('type'   => 'Today'),
+                                        'datetimeCstm__DateTime' => array('type'   => 'Today')),
                                      'ajax' =>  'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default');
 
@@ -443,7 +443,7 @@
             //Get the account id from the recently created account.
             $account        = Account::getByName('myNewAccount');
             $accountId      = $account[0]->id;
-            $this->assertEquals(2, $account[0]->tagcloud->values->count());
+            $this->assertEquals(2, $account[0]->tagcloudCstm->values->count());
 
             //Edit and save the account.
             $this->setGetArray(array('id' => $accountId));
@@ -476,25 +476,25 @@
                                                                          'country' => 'USA'),
                             'description'                       => 'This is a Edit Description',
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
-                            'date'                              => $date,
-                            'datetime'                          => $datetime,
-                            'checkbox'                          => '0',
-                            'currency'                          => array('value'   => 40,
+                            'dateCstm'                          => $date,
+                            'datetimeCstm'                      => $datetime,
+                            'checkboxCstm'                      => '0',
+                            'currencyCstm'                      => array('value'   => 40,
                                                                           'currency' => array(
                                                                           'id' => $baseCurrency->id)),
-                            'decimal'                           => '12',
-                            'picklist'                          => array('value'  => 'b'),
-                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array()),
-                            'countrylist'                       => array('value'  => 'aaaa'),
-                            'statelist'                         => array('value'  => 'aaa1'),
-                            'citylist'                          => array('value'  => 'ab1'),
-                            'integer'                           => '11',
-                            'phone'                             => '259-784-2069',
-                            'radio'                             => array('value' => 'e'),
-                            'text'                              => 'This is a test Edit Text',
-                            'textarea'                          => 'This is a test Edit TextArea',
-                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'decimalCstm'                       => '12',
+                            'picklistCstm'                      => array('value'  => 'b'),
+                            'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                            'tagcloudCstm'                      => array('values' =>  array()),
+                            'countrylistCstm'                   => array('value'  => 'aaaa'),
+                            'statelistCstm'                     => array('value'  => 'aaa1'),
+                            'citylistCstm'                      => array('value'  => 'ab1'),
+                            'integerCstm'                       => '11',
+                            'phoneCstm'                         => '259-784-2069',
+                            'radioCstm'                         => array('value' => 'e'),
+                            'textCstm'                          => 'This is a test Edit Text',
+                            'textareaCstm'                      => 'This is a test Edit TextArea',
+                            'urlCstm'                           => 'http://wwww.abc-edit.com'),
                             'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
 
@@ -536,25 +536,25 @@
             $this->assertEquals($account[0]->description                    , 'This is a Edit Description');
             $this->assertEquals(1                                           , count($readWritePermitables));
             $this->assertEquals(0                                           , count($readOnlyPermitables));
-            $this->assertEquals($account[0]->checkbox                       , '0');
-            $this->assertEquals($account[0]->currency->value                ,  40);
-            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($account[0]->date                           , $dateAssert);
-            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
-            $this->assertEquals($account[0]->decimal                        , '12');
-            $this->assertEquals($account[0]->picklist->value                , 'b');
-            $this->assertEquals($account[0]->integer                        ,  11);
-            $this->assertEquals($account[0]->phone                          , '259-784-2069');
-            $this->assertEquals($account[0]->radio->value                   , 'e');
-            $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
-            $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
-            $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($account[0]->countrylist->value             , 'aaaa');
-            $this->assertEquals($account[0]->statelist->value               , 'aaa1');
-            $this->assertEquals($account[0]->citylist->value                , 'ab1');
-            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
-            $this->assertContains('hh'                                      , $account[0]->multiselect->values);
-            $this->assertEquals(0                                           , $account[0]->tagcloud->values->count());
+            $this->assertEquals($account[0]->checkboxCstm                   , '0');
+            $this->assertEquals($account[0]->currencyCstm->value            ,  40);
+            $this->assertEquals($account[0]->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($account[0]->dateCstm                       , $dateAssert);
+            $this->assertEquals($account[0]->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($account[0]->decimalCstm                    , '12');
+            $this->assertEquals($account[0]->picklistCstm->value            , 'b');
+            $this->assertEquals($account[0]->integerCstm                    ,  11);
+            $this->assertEquals($account[0]->phoneCstm                      , '259-784-2069');
+            $this->assertEquals($account[0]->radioCstm->value               , 'e');
+            $this->assertEquals($account[0]->textCstm                       , 'This is a test Edit Text');
+            $this->assertEquals($account[0]->textareaCstm                   , 'This is a test Edit TextArea');
+            $this->assertEquals($account[0]->urlCstm                        , 'http://wwww.abc-edit.com');
+            $this->assertEquals($account[0]->countrylistCstm->value         , 'aaaa');
+            $this->assertEquals($account[0]->statelistCstm->value           , 'aaa1');
+            $this->assertEquals($account[0]->citylistCstm->value            , 'ab1');
+            $this->assertContains('gg'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('hh'                                      , $account[0]->multiselectCstm->values);
+            $this->assertEquals(0                                           , $account[0]->tagcloudCstm->values->count());
 
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Account');
@@ -612,25 +612,25 @@
                                                                          'country' => 'USA'),
                             'description'                       => 'This is a Edit Description',
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
-                            'date'                              => $date,
-                            'datetime'                          => $datetime,
-                            'checkbox'                          => '0',
-                            'currency'                          => array('value'   => 40,
+                            'dateCstm'                          => $date,
+                            'datetimeCstm'                      => $datetime,
+                            'checkboxCstm'                      => '0',
+                            'currencyCstm'                      => array('value'   => 40,
                                                                           'currency' => array(
                                                                           'id' => $baseCurrency->id)),
-                            'decimal'                           => '12',
-                            'picklist'                          => array('value'  => 'b'),
-                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
-                            'countrylist'                       => array('value'  => 'aaaa'),
-                            'statelist'                         => array('value'  => 'aaa1'),
-                            'citylist'                          => array('value'  => 'ab1'),
-                            'integer'                           => '11',
-                            'phone'                             => '259-784-2069',
-                            'radio'                             => array('value' => 'e'),
-                            'text'                              => 'This is a test Edit Text',
-                            'textarea'                          => 'This is a test Edit TextArea',
-                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'decimalCstm'                       => '12',
+                            'picklistCstm'                      => array('value'  => 'b'),
+                            'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                            'tagcloudCstm'                      => array('values' =>  array('reading', 'surfing')),
+                            'countrylistCstm'                   => array('value'  => 'aaaa'),
+                            'statelistCstm'                     => array('value'  => 'aaa1'),
+                            'citylistCstm'                      => array('value'  => 'ab1'),
+                            'integerCstm'                       => '11',
+                            'phoneCstm'                         => '259-784-2069',
+                            'radioCstm'                         => array('value' => 'e'),
+                            'textCstm'                          => 'This is a test Edit Text',
+                            'textareaCstm'                      => 'This is a test Edit TextArea',
+                            'urlCstm'                           => 'http://wwww.abc-edit.com'),
                             'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
 
@@ -672,26 +672,26 @@
             $this->assertEquals($account[0]->description                    , 'This is a Edit Description');
             $this->assertEquals(1                                           , count($readWritePermitables));
             $this->assertEquals(0                                           , count($readOnlyPermitables));
-            $this->assertEquals($account[0]->checkbox                       , '0');
-            $this->assertEquals($account[0]->currency->value                ,  40);
-            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($account[0]->date                           , $dateAssert);
-            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
-            $this->assertEquals($account[0]->decimal                        , '12');
-            $this->assertEquals($account[0]->picklist->value                , 'b');
-            $this->assertEquals($account[0]->integer                        ,  11);
-            $this->assertEquals($account[0]->phone                          , '259-784-2069');
-            $this->assertEquals($account[0]->radio->value                   , 'e');
-            $this->assertEquals($account[0]->text                           , 'This is a test Edit Text');
-            $this->assertEquals($account[0]->textarea                       , 'This is a test Edit TextArea');
-            $this->assertEquals($account[0]->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($account[0]->countrylist->value             , 'aaaa');
-            $this->assertEquals($account[0]->statelist->value               , 'aaa1');
-            $this->assertEquals($account[0]->citylist->value                , 'ab1');
-            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
-            $this->assertContains('hh'                                      , $account[0]->multiselect->values);
-            $this->assertContains('reading'                                 , $account[0]->tagcloud->values);
-            $this->assertContains('surfing'                                 , $account[0]->tagcloud->values);
+            $this->assertEquals($account[0]->checkboxCstm                   , '0');
+            $this->assertEquals($account[0]->currencyCstm->value            ,  40);
+            $this->assertEquals($account[0]->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($account[0]->dateCstm                       , $dateAssert);
+            $this->assertEquals($account[0]->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($account[0]->decimalCstm                    , '12');
+            $this->assertEquals($account[0]->picklistCstm->value            , 'b');
+            $this->assertEquals($account[0]->integerCstm                    ,  11);
+            $this->assertEquals($account[0]->phoneCstm                      , '259-784-2069');
+            $this->assertEquals($account[0]->radioCstm->value               , 'e');
+            $this->assertEquals($account[0]->textCstm                       , 'This is a test Edit Text');
+            $this->assertEquals($account[0]->textareaCstm                   , 'This is a test Edit TextArea');
+            $this->assertEquals($account[0]->urlCstm                        , 'http://wwww.abc-edit.com');
+            $this->assertEquals($account[0]->countrylistCstm->value         , 'aaaa');
+            $this->assertEquals($account[0]->statelistCstm->value           , 'aaa1');
+            $this->assertEquals($account[0]->citylistCstm->value            , 'ab1');
+            $this->assertContains('gg'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('hh'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('reading'                                 , $account[0]->tagcloudCstm->values);
+            $this->assertContains('surfing'                                 , $account[0]->tagcloudCstm->values);
 
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Account');
@@ -784,25 +784,25 @@
                                                                                   'country' => 'USA'),
                                     'description'                       => 'This is a Description',
                                     'explicitReadWriteModelPermissions' => array('type' => null),
-                                    'checkbox'                          => '1',
-                                    'currency'                          => array('value'    => 45,
+                                    'checkboxCstm'                      => '1',
+                                    'currencyCstm'                      => array('value'    => 45,
                                                                                  'currency' => array('id' =>
                                                                                  $baseCurrency->id)),
-                                    'date'                              => $date,
-                                    'datetime'                          => $datetime,
-                                    'decimal'                           => '123',
-                                    'picklist'                          => array('value'  => 'a'),
-                                    'multiselect'                       => array('values' => array('gg', 'ff')),
-                                    'tagcloud'                          => array('values' => array('reading', 'writing')),
-                                    'countrylist'                       => array('value'  => 'bbbb'),
-                                    'statelist'                         => array('value'  => 'bbb1'),
-                                    'citylist'                          => array('value'  => 'bb1'),
-                                    'integer'                           => '12',
-                                    'phone'                             => '259-784-2169',
-                                    'radio'                             => array('value' => 'd'),
-                                    'text'                              => 'This is a test Text',
-                                    'textarea'                          => 'This is a test TextArea',
-                                    'url'                               => 'http://wwww.abc.com')));
+                                    'dateCstm'                          => $date,
+                                    'datetimeCstm'                      => $datetime,
+                                    'decimalCstm'                       => '123',
+                                    'picklistCstm'                      => array('value'  => 'a'),
+                                    'multiselectCstm'                   => array('values' => array('gg', 'ff')),
+                                    'tagcloudCstm'                      => array('values' => array('reading', 'writing')),
+                                    'countrylistCstm'                   => array('value'  => 'bbbb'),
+                                    'statelistCstm'                     => array('value'  => 'bbb1'),
+                                    'citylistCstm'                      => array('value'  => 'bb1'),
+                                    'integerCstm'                       => '12',
+                                    'phoneCstm'                         => '259-784-2169',
+                                    'radioCstm'                         => array('value' => 'd'),
+                                    'textCstm'                          => 'This is a test Text',
+                                    'textareaCstm'                      => 'This is a test TextArea',
+                                    'urlCstm'                           => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -842,26 +842,26 @@
             $this->assertEquals($account[0]->description                    , 'This is a Description');
             $this->assertEquals(0                                           , count($readWritePermitables));
             $this->assertEquals(0                                           , count($readOnlyPermitables));
-            $this->assertEquals($account[0]->checkbox                       , '1');
-            $this->assertEquals($account[0]->currency->value                , 45);
-            $this->assertEquals($account[0]->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($account[0]->date                           , $dateAssert);
-            $this->assertEquals($account[0]->datetime                       , $datetimeAssert);
-            $this->assertEquals($account[0]->decimal                        , '123');
-            $this->assertEquals($account[0]->picklist->value                , 'a');
-            $this->assertEquals($account[0]->integer                        , 12);
-            $this->assertEquals($account[0]->phone                          , '259-784-2169');
-            $this->assertEquals($account[0]->radio->value                   , 'd');
-            $this->assertEquals($account[0]->text                           , 'This is a test Text');
-            $this->assertEquals($account[0]->textarea                       , 'This is a test TextArea');
-            $this->assertEquals($account[0]->url                            , 'http://wwww.abc.com');
-            $this->assertEquals($account[0]->countrylist->value             , 'bbbb');
-            $this->assertEquals($account[0]->statelist->value               , 'bbb1');
-            $this->assertEquals($account[0]->citylist->value                , 'bb1');
-            $this->assertContains('gg'                                      , $account[0]->multiselect->values);
-            $this->assertContains('ff'                                      , $account[0]->multiselect->values);
-            $this->assertContains('reading'                                 , $account[0]->tagcloud->values);
-            $this->assertContains('writing'                                 , $account[0]->tagcloud->values);
+            $this->assertEquals($account[0]->checkboxCstm                   , '1');
+            $this->assertEquals($account[0]->currencyCstm->value            , 45);
+            $this->assertEquals($account[0]->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($account[0]->dateCstm                       , $dateAssert);
+            $this->assertEquals($account[0]->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($account[0]->decimalCstm                    , '123');
+            $this->assertEquals($account[0]->picklistCstm->value            , 'a');
+            $this->assertEquals($account[0]->integerCstm                    , 12);
+            $this->assertEquals($account[0]->phoneCstm                      , '259-784-2169');
+            $this->assertEquals($account[0]->radioCstm->value               , 'd');
+            $this->assertEquals($account[0]->textCstm                       , 'This is a test Text');
+            $this->assertEquals($account[0]->textareaCstm                   , 'This is a test TextArea');
+            $this->assertEquals($account[0]->urlCstm                        , 'http://wwww.abc.com');
+            $this->assertEquals($account[0]->countrylistCstm->value         , 'bbbb');
+            $this->assertEquals($account[0]->statelistCstm->value           , 'bbb1');
+            $this->assertEquals($account[0]->citylistCstm->value            , 'bb1');
+            $this->assertContains('gg'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('ff'                                      , $account[0]->multiselectCstm->values);
+            $this->assertContains('reading'                                 , $account[0]->tagcloudCstm->values);
+            $this->assertContains('writing'                                 , $account[0]->tagcloudCstm->values);
         }
 
         /**
@@ -909,25 +909,25 @@
                                                                           'country' => 'USA'),
                             'description'                       => 'This is a Description',
                             'explicitReadWriteModelPermissions' => array('type' => null),
-                            'checkbox'                          => '1',
-                            'currency'                          => array('value'    => 45,
+                            'checkboxCstm'                      => '1',
+                            'currencyCstm'                      => array('value'    => 45,
                                                                          'currency' => array('id' =>
                                                                          $baseCurrency->id)),
-                            'date'                              => $date,
-                            'datetime'                          => $datetime,
-                            'decimal'                           => '123',
-                            'picklist'                          => array('value'  => 'a'),
-                            'multiselect'                       => array('values' => array('gg', 'ff')),
-                            'tagcloud'                          => array('values' => array('reading', 'writing')),
-                            'countrylist'                       => array('value'  => 'bbbb'),
-                            'statelist'                         => array('value'  => 'bbb1'),
-                            'citylist'                          => array('value'  => 'bb1'),
-                            'integer'                           => '12',
-                            'phone'                             => '259-784-2169',
-                            'radio'                             => array('value' => 'd'),
-                            'text'                              => 'This is a test Text',
-                            'textarea'                          => 'This is a test TextArea',
-                            'url'                               => 'http://wwww.abc.com')));
+                            'dateCstm'                          => $date,
+                            'datetimeCstm'                      => $datetime,
+                            'decimalCstm'                       => '123',
+                            'picklistCstm'                      => array('value'  => 'a'),
+                            'multiselectCstm'                   => array('values' => array('gg', 'ff')),
+                            'tagcloudCstm'                      => array('values' => array('reading', 'writing')),
+                            'countrylistCstm'                   => array('value'  => 'bbbb'),
+                            'statelistCstm'                     => array('value'  => 'bbb1'),
+                            'citylistCstm'                      => array('value'  => 'bb1'),
+                            'integerCstm'                       => '12',
+                            'phoneCstm'                         => '259-784-2169',
+                            'radioCstm'                         => array('value' => 'd'),
+                            'textCstm'                          => 'This is a test Text',
+                            'textareaCstm'                      => 'This is a test TextArea',
+                            'urlCstm'                           => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -939,12 +939,12 @@
             $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
             $this->assertEquals(1, count($account));
             $this->assertEquals($account[0]->name               , 'myThirdAccount');
-            $this->assertEquals(2                               , $account[0]->multiselect->values->count());
-            $this->assertEquals(2                               , $account[0]->tagcloud->values->count());
-            $this->assertContains('gg'                          , $account[0]->multiselect->values);
-            $this->assertContains('ff'                          , $account[0]->multiselect->values);
-            $this->assertContains('reading'                     , $account[0]->tagcloud->values);
-            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+            $this->assertEquals(2                               , $account[0]->multiselectCstm->values->count());
+            $this->assertEquals(2                               , $account[0]->tagcloudCstm->values->count());
+            $this->assertContains('gg'                          , $account[0]->multiselectCstm->values);
+            $this->assertContains('ff'                          , $account[0]->multiselectCstm->values);
+            $this->assertContains('reading'                     , $account[0]->tagcloudCstm->values);
+            $this->assertContains('writing'                     , $account[0]->tagcloudCstm->values);
             unset($account);
 
             $account        = Account::getByName('myThirdAccount');
@@ -953,8 +953,8 @@
             $this->setGetArray(array('id' => $accountId));
             $this->setPostArray(array('Account' => array(
                             'name'                              => 'myThirdAccount',
-                            'multiselect'                       => array('values' =>  array('ff')),
-                            'tagcloud'                          => array('values' =>  array('writing')),
+                            'multiselectCstm'                       => array('values' =>  array('ff')),
+                            'tagcloudCstm'                          => array('values' =>  array('writing')),
                             ),
                             'save' => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/edit');
@@ -967,14 +967,14 @@
             $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
             $readOnlyPermitables  = $explicitReadWriteModelPermissions->getReadOnlyPermitables();
             $this->assertEquals(1, count($account));
-            $this->assertEquals(1                               , $account[0]->multiselect->values->count());
-            $this->assertContains('ff'                          , $account[0]->multiselect->values);
-            $this->assertNotContains('gg'                       , $account[0]->multiselect->values);
-            $this->assertNotContains('hh'                       , $account[0]->multiselect->values);
-            $this->assertNotContains('rr'                       , $account[0]->multiselect->values);
+            $this->assertEquals(1                               , $account[0]->multiselectCstm->values->count());
+            $this->assertContains('ff'                          , $account[0]->multiselectCstm->values);
+            $this->assertNotContains('gg'                       , $account[0]->multiselectCstm->values);
+            $this->assertNotContains('hh'                       , $account[0]->multiselectCstm->values);
+            $this->assertNotContains('rr'                       , $account[0]->multiselectCstm->values);
 
-            $this->assertEquals(1                               , $account[0]->tagcloud->values->count());
-            $this->assertContains('writing'                     , $account[0]->tagcloud->values);
+            $this->assertEquals(1                               , $account[0]->tagcloudCstm->values->count());
+            $this->assertContains('writing'                     , $account[0]->tagcloudCstm->values);
         }
 
         /**
@@ -987,15 +987,15 @@
             $account = Account::getByName('myEditAccount');
             $this->assertEquals(1, count($account));
             $this->assertEquals($account[0]->name, 'myEditAccount');
-            $this->assertContains('gg'           , $account[0]->multiselect->values);
-            $this->assertContains('hh'           , $account[0]->multiselect->values);
+            $this->assertContains('gg'           , $account[0]->multiselectCstm->values);
+            $this->assertContains('hh'           , $account[0]->multiselectCstm->values);
             unset($account);
 
             $secondAccount = Account::getByName('mySecondAccount');
             $this->assertEquals(1, count($secondAccount));
             $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
-            $this->assertContains('gg'           , $secondAccount[0]->multiselect->values);
-            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('gg'           , $secondAccount[0]->multiselectCstm->values);
+            $this->assertContains('ff'           , $secondAccount[0]->multiselectCstm->values);
             unset($secondAccount);
 
             $this->resetPostArray();
@@ -1003,8 +1003,8 @@
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
 
             $this->setPostArray(array('save'     => 'Save',
-                                      'MassEdit' => array('multiselect' => '1'),
-                                      'Account'  => array('multiselect' => array('values' => array('ff', 'rr')))
+                                      'MassEdit' => array('multiselectCstm' => '1'),
+                                      'Account'  => array('multiselectCstm' => array('values' => array('ff', 'rr')))
                                      )
                                );
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
@@ -1012,14 +1012,14 @@
             $account = Account::getByName('myEditAccount');
             $this->assertEquals(1, count($account));
             $this->assertEquals($account[0]->name, 'myEditAccount');
-            $this->assertContains('ff'           , $account[0]->multiselect->values);
-            $this->assertContains('rr'           , $account[0]->multiselect->values);
+            $this->assertContains('ff'           , $account[0]->multiselectCstm->values);
+            $this->assertContains('rr'           , $account[0]->multiselectCstm->values);
 
             $secondAccount = Account::getByName('mySecondAccount');
             $this->assertEquals(1, count($secondAccount));
             $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
-            $this->assertContains('ff'           , $secondAccount[0]->multiselect->values);
-            $this->assertContains('rr'           , $secondAccount[0]->multiselect->values);
+            $this->assertContains('ff'           , $secondAccount[0]->multiselectCstm->values);
+            $this->assertContains('rr'           , $secondAccount[0]->multiselectCstm->values);
         }
 
         /**
@@ -1032,15 +1032,15 @@
             $account = Account::getByName('myEditAccount');
             $this->assertEquals(1, count($account));
             $this->assertEquals($account[0]->name, 'myEditAccount');
-            $this->assertContains('reading'      , $account[0]->tagcloud->values);
-            $this->assertContains('surfing'      , $account[0]->tagcloud->values);
+            $this->assertContains('reading'      , $account[0]->tagcloudCstm->values);
+            $this->assertContains('surfing'      , $account[0]->tagcloudCstm->values);
             unset($account);
 
             $secondAccount = Account::getByName('mySecondAccount');
             $this->assertEquals(1, count($secondAccount));
             $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
-            $this->assertContains('reading'      , $secondAccount[0]->tagcloud->values);
-            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('reading'      , $secondAccount[0]->tagcloudCstm->values);
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloudCstm->values);
             unset($secondAccount);
 
             $this->resetPostArray();
@@ -1048,8 +1048,8 @@
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
 
             $this->setPostArray(array('save'     => 'Save',
-                                      'MassEdit' => array('tagcloud' => '1'),
-                                      'Account'  => array('tagcloud' => array('values' => array('writing', 'gardening')))
+                                      'MassEdit' => array('tagcloudCstm' => '1'),
+                                      'Account'  => array('tagcloudCstm' => array('values' => array('writing', 'gardening')))
                                      )
                                );
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
@@ -1057,14 +1057,14 @@
             $account = Account::getByName('myEditAccount');
             $this->assertEquals(1, count($account));
             $this->assertEquals($account[0]->name, 'myEditAccount');
-            $this->assertContains('writing'      , $account[0]->tagcloud->values);
-            $this->assertContains('gardening'    , $account[0]->tagcloud->values);
+            $this->assertContains('writing'      , $account[0]->tagcloudCstm->values);
+            $this->assertContains('gardening'    , $account[0]->tagcloudCstm->values);
 
             $secondAccount = Account::getByName('mySecondAccount');
             $this->assertEquals(1, count($secondAccount));
             $this->assertEquals($secondAccount[0]->name, 'mySecondAccount');
-            $this->assertContains('writing'      , $secondAccount[0]->tagcloud->values);
-            $this->assertContains('gardening'    , $secondAccount[0]->tagcloud->values);
+            $this->assertContains('writing'      , $secondAccount[0]->tagcloudCstm->values);
+            $this->assertContains('gardening'    , $secondAccount[0]->tagcloudCstm->values);
         }
 
         /**

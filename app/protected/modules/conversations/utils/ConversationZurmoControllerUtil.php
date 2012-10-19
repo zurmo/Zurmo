@@ -31,6 +31,12 @@
     {
         protected $conversationParticipantFormName;
 
+        /**
+         * Array of Person models of people added as participants
+         * @var array
+         */
+        protected $peopleAddedAsConversationParticipants;
+
         public function __construct($relatedItemsRelationName, $relatedItemsFormName, $conversationParticipantFormName)
         {
             assert('is_string($relatedItemsRelationName)');
@@ -51,17 +57,28 @@
          */
         protected function afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions)
         {
-            assert('$model instanceof Item');
+            assert('$model instanceof Conversation');
             assert('$explicitReadWriteModelPermissions instanceof ExplicitReadWriteModelPermissions');
             parent::afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions);
             $postData = PostUtil::getData();
             if (isset($postData[$this->conversationParticipantFormName]))
             {
-                ConversationParticipantsUtil::
-                    resolveConversationHasManyParticipantsFromPost($model,
-                                                                   $postData[$this->conversationParticipantFormName],
-                                                                   $explicitReadWriteModelPermissions);
+                $this->peopleAddedAsConversationParticipants = ConversationParticipantsUtil::
+                                                               resolveConversationHasManyParticipantsFromPost($model,
+                                                               $postData[$this->conversationParticipantFormName],
+                                                               $explicitReadWriteModelPermissions);
             }
+        }
+
+        /**
+         * Process email invites for participants
+         * (non-PHPdoc)
+         * @see ZurmoControllerUtil::afterSuccessfulSave()
+         */
+        protected function afterSuccessfulSave($model)
+        {
+            assert('$model instanceof Conversation');
+            ConversationParticipantsUtil::resolveEmailInvitesByPeople($model, $this->peopleAddedAsConversationParticipants);
         }
     }
 ?>

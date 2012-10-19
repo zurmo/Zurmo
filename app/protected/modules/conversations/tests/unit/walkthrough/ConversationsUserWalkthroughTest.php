@@ -98,6 +98,10 @@
             $accounts       = Account::getByName('superAccount');
             $superAccountId = $accounts[0]->id;
 
+            //Confirm no email notifications are sitting in the queue
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
+
             //Test creating conversation via POST, invite Mary
             $conversations = Conversation::getAll();
             $this->assertEquals(0, count($conversations));
@@ -120,7 +124,15 @@
             $this->assertEquals($mary, $conversations[0]->conversationParticipants->offsetGet(0)->person);
             $this->assertEquals(0,     $conversations[0]->conversationParticipants->offsetGet(0)->hasReadLatest);
 
+            //Confirm Mary got the email invite and it was correctly setup with a valid conversation id
+            $emailMessages = EmailMessage::getAllByFolderType(EmailFolder::TYPE_OUTBOX);
+            $this->assertEquals(1, count($emailMessages));
+            $this->assertfalse(strpos($emailMessages[0]->content->textContent,
+                                       'conversations/default/details?id=' . $conversations[0]->id . '">') === true);
+
             //Confirm Mary is the only one with explicit permissions on the conversation
+            $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                  makeBySecurableItem($conversations[0]);
             $readWritePermitables              = $explicitReadWriteModelPermissions->getReadWritePermitables();

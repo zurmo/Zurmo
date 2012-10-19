@@ -74,7 +74,7 @@
             $this->assertEquals(count($originalMetadata['A']['members']) + 1, count($metadata['A']['members']));
             $membersCount = count($metadata['A']['members']);
             $newMember = $metadata['A']['members'][$membersCount - 1];
-            $this->assertEquals('newMember2', $newMember);
+            $this->assertEquals('newMember2Cstm', $newMember);
             $this->assertEquals($originalMetadata['A']['rules'], $metadata['A']['rules']);
         }
 
@@ -92,9 +92,9 @@
             $this->assertEquals(count($originalMetadata['A']['rules']) + 2, count($metadata['A']['rules']));
             $rulesCount = count($metadata['A']['rules']);
             $newRule = $metadata['A']['rules'][$rulesCount - 2];
-            $this->assertEquals(array('newMember3', 'default', 'value' => 3), $newRule);
+            $this->assertEquals(array('newMember3Cstm', 'default', 'value' => 3), $newRule);
             $newRule = $metadata['A']['rules'][$rulesCount - 1];
-            $this->assertEquals(array('newMember3', 'required'), $newRule);
+            $this->assertEquals(array('newMember3Cstm', 'required'), $newRule);
         }
 
         /**
@@ -111,7 +111,7 @@
             $this->assertEquals(count($originalMetadata['A']['rules']) + 1, count($metadata['A']['rules']));
             $rulesCount = count($metadata['A']['rules']);
             $newRule = $metadata['A']['rules'][$rulesCount - 1];
-            $this->assertEquals(array('newMember4', 'length', 'max' => 10), $newRule);
+            $this->assertEquals(array('newMember4Cstm', 'length', 'max' => 10), $newRule);
         }
 
         /**
@@ -129,7 +129,7 @@
             $this->assertEquals(count($originalMetadata['A']['rules']) + 2, count($metadata['A']['rules']));
             $rulesCount = count($metadata['A']['rules']);
             $newRule = $metadata['A']['rules'][$rulesCount - 1];
-            $this->assertEquals(array('newMember5', 'someRule', 'value' => 'someValue'), $newRule);
+            $this->assertEquals(array('newMember5Cstm', 'someRule', 'value' => 'someValue'), $newRule);
             //Update mixed rule for attribute.
             $mixedRule        = array('someRule' , 'value' => 'someValue2');
             ModelMetadataUtil::addOrUpdateMember('A', 'newMember5', $attributeLabels,
@@ -138,7 +138,7 @@
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($metadata['A']['rules']), count($metadataUpdated['A']['rules']));
             $newRule = $metadataUpdated['A']['rules'][$rulesCount - 1];
-            $this->assertEquals(array('newMember5', 'someRule', 'value' => 'someValue2'), $newRule);
+            $this->assertEquals(array('newMember5Cstm', 'someRule', 'value' => 'someValue2'), $newRule);
         }
 
         /**
@@ -157,10 +157,10 @@
             $this->assertEquals($originalMetadata['A']['rules'], $metadata['A']['rules']);
 
             $this->assertEquals(1, count($metadata['A']['relations']));
-            $newRelation = $metadata['A']['relations']['newRelation'];
+            $newRelation = $metadata['A']['relations']['newRelationCstm'];
             $this->assertEquals(array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED), $newRelation);
             $this->assertEquals(1, count($metadata['A']['customFields']));
-            $this->assertEquals('Things', $metadata['A']['customFields']['newRelation']);
+            $this->assertEquals('Things', $metadata['A']['customFields']['newRelationCstm']);
         }
 
         /**
@@ -181,17 +181,17 @@
             $this->assertEquals(count($originalMetadata['A']['rules']) + 2, count($metadata['A']['rules']));
             $rulesCount = count($metadata['A']['rules']);
             $newRule = $metadata['A']['rules'][$rulesCount - 2];
-            $this->assertEquals('newRelation2',           $newRule[0]);
+            $this->assertEquals('newRelation2Cstm',           $newRule[0]);
             $this->assertEquals('default',                $newRule[1]);
             $this->assertEquals($thingCustomField->value, $newRule['value']->value);
             $newRule = $metadata['A']['rules'][$rulesCount - 1];
-            $this->assertEquals(array('newRelation2', 'required'), $newRule);
+            $this->assertEquals(array('newRelation2Cstm', 'required'), $newRule);
 
             $this->assertEquals(count($originalMetadata['A']['relations']) + 1, count($metadata['A']['relations']));
-            $newRelation = $metadata['A']['relations']['newRelation2'];
+            $newRelation = $metadata['A']['relations']['newRelation2Cstm'];
             $this->assertEquals(array(RedBeanModel::HAS_ONE, 'OwnedCustomField', RedBeanModel::OWNED), $newRelation);
             $this->assertEquals(count($originalMetadata['A']['customFields']) + 1, count($metadata['A']['customFields']));
-            $this->assertEquals('Things', $metadata['A']['customFields']['newRelation2']);
+            $this->assertEquals('Things', $metadata['A']['customFields']['newRelation2Cstm']);
         }
 
         /**
@@ -206,37 +206,37 @@
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals($originalMetadata['A']['rules'], $metadata['A']['rules']);
 
-            ModelMetadataUtil::removeAttribute('A', 'newMember2');
+            ModelMetadataUtil::removeAttribute('A', 'newMember2Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals($originalMetadata['A']['rules'], $metadata['A']['rules']);
 
-            ModelMetadataUtil::removeAttribute('A', 'newMember3');
+            ModelMetadataUtil::removeAttribute('A', 'newMember3Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 2, count($metadata['A']['rules']));
 
-            ModelMetadataUtil::removeAttribute('A', 'newMember4');
+            ModelMetadataUtil::removeAttribute('A', 'newMember4Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 3, count($metadata['A']['rules']));
 
-            ModelMetadataUtil::removeAttribute('A', 'newMember5');
+            ModelMetadataUtil::removeAttribute('A', 'newMember5Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 5, count($metadata['A']['rules']));
 
-            ModelMetadataUtil::removeAttribute('A', 'newRelation');
+            ModelMetadataUtil::removeAttribute('A', 'newRelationCstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 5, count($metadata['A']['rules']));
 
-            ModelMetadataUtil::removeAttribute('A', 'newRelation2');
+            ModelMetadataUtil::removeAttribute('A', 'newRelation2Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 7, count($metadata['A']['rules']));
 
-            ModelMetadataUtil::removeAttribute('A', 'newRelation3');
+            ModelMetadataUtil::removeAttribute('A', 'newRelation3Cstm');
             $metadata = A::getMetadata();
             $this->assertNotEquals($originalMetadata, $metadata);
             $this->assertEquals(count($originalMetadata['A']['rules']) - 7, count($metadata['A']['rules']));
@@ -256,12 +256,12 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('isSilly'));
+            $this->assertTrue($a->isAttribute('isSillyCstm'));
             $this->assertTrue($a->validate());
-            $this->assertNull($a->isSilly);
+            $this->assertNull($a->isSillyCstm);
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'isSilly');
+            ModelMetadataUtil::removeAttribute('A', 'isSillyCstm');
         }
 
         /**
@@ -278,14 +278,14 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('isSilly'));
+            $this->assertTrue($a->isAttribute('isSillyCstm'));
             $this->assertTrue($a->validate());
             // Remember, yii default values are applied
             // on validation if there is no value set.
-            $this->assertEquals('no', $a->isSilly);
+            $this->assertEquals('no', $a->isSillyCstm);
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'isSilly');
+            ModelMetadataUtil::removeAttribute('A', 'isSillyCstm');
         }
 
         /**
@@ -302,13 +302,13 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('isSilly'));
+            $this->assertTrue($a->isAttribute('isSillyCstm'));
             $this->assertFalse($a->validate());
-            $a->isSilly = 'yes';
+            $a->isSillyCstm = 'yes';
             $this->assertTrue ($a->validate());
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'isSilly');
+            ModelMetadataUtil::removeAttribute('A', 'isSillyCstm');
         }
 
         /**
@@ -325,14 +325,14 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('isSilly'));
+            $this->assertTrue($a->isAttribute('isSillyCstm'));
             $this->assertTrue($a->validate());
             // Remember, yii default values are applied
             // on validation if there is no value set.
-            $this->assertEquals('no', $a->isSilly);
+            $this->assertEquals('no', $a->isSillyCstm);
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'isSilly');
+            ModelMetadataUtil::removeAttribute('A', 'isSillyCstm');
         }
 
         /**
@@ -349,18 +349,18 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('isSilly'));
+            $this->assertTrue($a->isAttribute('isSillyCstm'));
             $this->assertTrue($a->validate());
-            $a->isSilly = 'abcdefghij';
+            $a->isSillyCstm = 'abcdefghij';
             $this->assertTrue($a->validate());
-            $a->isSilly = 'abcdefghijk';
+            $a->isSillyCstm = 'abcdefghijk';
             $this->assertFalse($a->validate());
             $errors = $a->getErrors();
             $this->assertEquals(1, count($errors));
-            $this->assertEquals('Is Silly is too long (maximum is 10 characters).', $errors['isSilly'][0]);
+            $this->assertEquals('Is Silly is too long (maximum is 10 characters).', $errors['isSillyCstm'][0]);
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'isSilly');
+            ModelMetadataUtil::removeAttribute('A', 'isSillyCstm');
         }
 
         /**
@@ -384,11 +384,11 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             $this->assertTrue($a->validate());
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'fruit');
+            ModelMetadataUtil::removeAttribute('A', 'fruitCstm');
         }
 
         /**
@@ -410,14 +410,14 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             $this->assertTrue($a->validate());
-            $this->assertEquals('apple', $a->fruit->value);
-            $a->fruit->value = '';
+            $this->assertEquals('apple', $a->fruitCstm->value);
+            $a->fruitCstm->value = '';
             $this->assertTrue($a->validate());
             unset($a);
 
-            ModelMetadataUtil::removeAttribute('A', 'fruit');
+            ModelMetadataUtil::removeAttribute('A', 'fruitCstm');
         }
 
         /**
@@ -439,27 +439,27 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             $this->assertFalse($a->validate());
             $errors = $a->getErrors();
             $this->assertEquals(1, count($errors));
-            $this->assertEquals('Fruit cannot be blank.', $errors['fruit'][0]);
-            $a->fruit->value = 'apple';
+            $this->assertEquals('Fruit cannot be blank.', $errors['fruitCstm'][0]);
+            $a->fruitCstm->value = 'apple';
             $this->assertTrue($a->validate());
-            $this->assertEquals('apple', $a->fruit->value);
+            $this->assertEquals('apple', $a->fruitCstm->value);
             unset($a);
 
             //Now test setting from post
-            $fakePost = array('a' => '1', 'fruit' => array('value' => '')); //using empty string, not null for value since
+            $fakePost = array('a' => '1', 'fruitCstm' => array('value' => '')); //using empty string, not null for value since
                                                                             //this properly mimics the post value for empty.
             $a = new A();
             $a->setAttributes($fakePost);
             $this->assertFalse($a->validate());
             $errors = $a->getErrors();
             $this->assertEquals(1, count($errors));
-            $this->assertEquals('Fruit cannot be blank.', $errors['fruit'][0]);
+            $this->assertEquals('Fruit cannot be blank.', $errors['fruitCstm'][0]);
 
-            ModelMetadataUtil::removeAttribute('A', 'fruit');
+            ModelMetadataUtil::removeAttribute('A', 'fruitCstm');
         }
 
         /**
@@ -481,11 +481,11 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             $this->assertTrue($a->validate());
             // Remember, yii default values are applied
             // on validation if there is no value set.
-            $this->assertEquals('apple', $a->fruit->value);
+            $this->assertEquals('apple', $a->fruitCstm->value);
             unset($a);
 
             ModelMetadataUtil::removeAttribute('A', 'fruit');
@@ -498,12 +498,12 @@
         {
             //Testing addOrUpdateMember merges correctly.
             $originalMetadata = A::getMetadata();
-            $this->assertEquals($originalMetadata['A']['labels']['newMember2'], array('en' => 'newMember2'));
+            $this->assertEquals($originalMetadata['A']['labels']['newMember2Cstm'], array('en' => 'newMember2'));
             $attributeLabels  = array('fr' => 'somethingDifferent');
             ModelMetadataUtil::addOrUpdateMember('A', 'newMember2', $attributeLabels,
                 null, null, null, null, null, false, false, 'Text', array());
             $metadata = A::getMetadata();
-            $this->assertEquals($metadata['A']['labels']['newMember2'],
+            $this->assertEquals($metadata['A']['labels']['newMember2Cstm'],
                                 array('en' => 'newMember2', 'fr' => 'somethingDifferent'));
 
              //Testing addOrUpdateRelation merges correctly.
@@ -512,7 +512,7 @@
 
              //Testing addOrUpdateCustomFieldRelation merges correctly.
             $originalMetadata = A::getMetadata();
-            $this->assertEquals($originalMetadata['A']['labels']['fruit'], array('en' => 'fruit'));
+            $this->assertEquals($originalMetadata['A']['labels']['fruitCstm'], array('en' => 'fruit'));
             $attributeLabels  = array('fr' => 'somethingDifferent2');
             $appleCustomField = new CustomField();
             $appleCustomField->value = 'apple';
@@ -521,7 +521,7 @@
             ModelMetadataUtil::addOrUpdateCustomFieldRelation('A', 'fruit', $attributeLabels,
                 $appleCustomField, true, false, 'DropDown', 'Fruit', null, null, 'CustomField', false);
             $metadata = A::getMetadata();
-            $this->assertEquals($metadata['A']['labels']['fruit'],
+            $this->assertEquals($metadata['A']['labels']['fruitCstm'],
                                 array('en' => 'fruit', 'fr' => 'somethingDifferent2'));
         }
 
@@ -531,7 +531,7 @@
         public function testSavingCustomFieldDataLabels()
         {
             $a = new A();
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             unset($a);
 
             $appleCustomField = new CustomField();
@@ -545,13 +545,13 @@
 
             $a = new A();
             $a->a = 1;
-            $this->assertTrue($a->isAttribute('fruit'));
+            $this->assertTrue($a->isAttribute('fruitCstm'));
             $this->assertTrue($a->validate());
-            $this->assertEquals('apple', $a->fruit->value);
+            $this->assertEquals('apple', $a->fruitCstm->value);
             $compareData = array('fr' => array('appleFr', 'grapeFr', 'orangeFr'), 'de' => array('', 'grape', ''));
-            $this->assertEquals($compareData, unserialize($a->fruit->data->serializedLabels));
+            $this->assertEquals($compareData, unserialize($a->fruitCstm->data->serializedLabels));
             unset($a);
-            ModelMetadataUtil::removeAttribute('A', 'fruit');
+            ModelMetadataUtil::removeAttribute('A', 'fruitCstm');
         }
     }
 ?>

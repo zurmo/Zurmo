@@ -319,7 +319,7 @@
                 }
                 $cClipWidget     = new CClipWidget();
                 $cClipWidget->beginClip("StickyList");
-                $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+                $cClipWidget->widget('application.core.widgets.MbMenu', array(
                     'htmlOptions' => array('id' => 'StickyListMenu'),
                     'items'                   => array($menuItems),
                 ));

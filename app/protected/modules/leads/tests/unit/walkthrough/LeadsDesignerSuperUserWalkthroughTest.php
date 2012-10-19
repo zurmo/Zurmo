@@ -281,25 +281,25 @@
                                     'owner'                             => array('id' => $superUserId),
                                     'explicitReadWriteModelPermissions' => array('type' => null),
                                     'description'                       => 'This is a Description',
-                                    'checkbox'                          => '1',
-                                    'currency'                          => array('value'   => 45,
+                                    'checkboxCstm'                      => '1',
+                                    'currencyCstm'                      => array('value'   => 45,
                                                                                  'currency' => array(
                                                                                  'id' => $baseCurrency->id)),
-                                    'date'                              => $date,
-                                    'datetime'                          => $datetime,
-                                    'decimal'                           => '123',
-                                    'picklist'                          => array('value'  => 'a'),
-                                    'multiselect'                       => array('values' => array('ff', 'rr')),
-                                    'tagcloud'                          => array('values' => array('writing', 'gardening')),
-                                    'countrylist'                       => array('value'  => 'bbbb'),
-                                    'statelist'                         => array('value'  => 'bbb1'),
-                                    'citylist'                          => array('value'  => 'bb1'),
-                                    'integer'                           => '12',
-                                    'phone'                             => '259-784-2169',
-                                    'radio'                             => array('value' => 'd'),
-                                    'text'                              => 'This is a test Text',
-                                    'textarea'                          => 'This is a test TextArea',
-                                    'url'                               => 'http://wwww.abc.com')));
+                                    'dateCstm'                          => $date,
+                                    'datetimeCstm'                      => $datetime,
+                                    'decimalCstm'                       => '123',
+                                    'picklistCstm'                      => array('value'  => 'a'),
+                                    'multiselectCstm'                   => array('values' => array('ff', 'rr')),
+                                    'tagcloudCstm'                      => array('values' => array('writing', 'gardening')),
+                                    'countrylistCstm'                   => array('value'  => 'bbbb'),
+                                    'statelistCstm'                     => array('value'  => 'bbb1'),
+                                    'citylistCstm'                      => array('value'  => 'bb1'),
+                                    'integerCstm'                       => '12',
+                                    'phoneCstm'                         => '259-784-2169',
+                                    'radioCstm'                         => array('value' => 'd'),
+                                    'textCstm'                          => 'This is a test Text',
+                                    'textareaCstm'                      => 'This is a test TextArea',
+                                    'urlCstm'                           => 'http://wwww.abc.com')));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/create');
 
             //Check the details if they are saved properly for the custom fields.
@@ -347,26 +347,26 @@
             $this->assertEquals(0                                     , count($readWritePermitables));
             $this->assertEquals(0                                     , count($readOnlyPermitables));
             $this->assertEquals($lead->description                    , 'This is a Description');
-            $this->assertEquals($lead->checkbox                       , '1');
-            $this->assertEquals($lead->currency->value                , 45);
-            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($lead->date                           , $dateAssert);
-            $this->assertEquals($lead->datetime                       , $datetimeAssert);
-            $this->assertEquals($lead->decimal                        , '123');
-            $this->assertEquals($lead->picklist->value                , 'a');
-            $this->assertEquals($lead->integer                        , 12);
-            $this->assertEquals($lead->phone                          , '259-784-2169');
-            $this->assertEquals($lead->radio->value                   , 'd');
-            $this->assertEquals($lead->text                           , 'This is a test Text');
-            $this->assertEquals($lead->textarea                       , 'This is a test TextArea');
-            $this->assertEquals($lead->url                            , 'http://wwww.abc.com');
-            $this->assertEquals($lead->countrylist->value             , 'bbbb');
-            $this->assertEquals($lead->statelist->value               , 'bbb1');
-            $this->assertEquals($lead->citylist->value                , 'bb1');
-            $this->assertContains('ff'                                , $lead->multiselect->values);
-            $this->assertContains('rr'                                , $lead->multiselect->values);
-            $this->assertContains('writing'                           , $lead->tagcloud->values);
-            $this->assertContains('gardening'                         , $lead->tagcloud->values);
+            $this->assertEquals($lead->checkboxCstm                   , '1');
+            $this->assertEquals($lead->currencyCstm->value            , 45);
+            $this->assertEquals($lead->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($lead->dateCstm                       , $dateAssert);
+            $this->assertEquals($lead->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($lead->decimalCstm                    , '123');
+            $this->assertEquals($lead->picklistCstm->value            , 'a');
+            $this->assertEquals($lead->integerCstm                    , 12);
+            $this->assertEquals($lead->phoneCstm                      , '259-784-2169');
+            $this->assertEquals($lead->radioCstm->value               , 'd');
+            $this->assertEquals($lead->textCstm                       , 'This is a test Text');
+            $this->assertEquals($lead->textareaCstm                   , 'This is a test TextArea');
+            $this->assertEquals($lead->urlCstm                        , 'http://wwww.abc.com');
+            $this->assertEquals($lead->countrylistCstm->value         , 'bbbb');
+            $this->assertEquals($lead->statelistCstm->value           , 'bbb1');
+            $this->assertEquals($lead->citylistCstm->value            , 'bb1');
+            $this->assertContains('ff'                                , $lead->multiselectCstm->values);
+            $this->assertContains('rr'                                , $lead->multiselectCstm->values);
+            $this->assertContains('writing'                           , $lead->tagcloudCstm->values);
+            $this->assertContains('gardening'                         , $lead->tagcloudCstm->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
@@ -413,23 +413,23 @@
                                                             'officeFax'          => '255-455-1914',
                                                             'title'              => array('value' => 'Mr.'),
                                                             'source'             => array('value' => 'Self-Generated'),
-                                                            'decimal'            => '123',
-                                                            'integer'            => '12',
-                                                            'phone'              => '259-784-2169',
-                                                            'text'               => 'This is a test Text',
-                                                            'textarea'           => 'This is a test TextArea',
-                                                            'url'                => 'http://wwww.abc.com',
-                                                            'checkbox'           => array('value'  =>  '1'),
-                                                            'currency'           => array('value'  =>  45),
-                                                            'picklist'           => array('value'  =>  'a'),
-                                                            'multiselect'        => array('values' => array('ff', 'rr')),
-                                                            'tagcloud'           => array('values' => array('writing', 'gardening')),
-                                                            'countrylist'        => array('value'  => 'bbbb'),
-                                                            'statelist'          => array('value'  => 'bbb1'),
-                                                            'citylist'           => array('value'  => 'bb1'),
-                                                            'radio'              => array('value'  =>  'd'),
-                                                            'date__Date'         => array('type'   =>  'Today'),
-                                                            'datetime__DateTime' => array('type'   =>  'Today')),
+                                                            'decimalCstm'        => '123',
+                                                            'integerCstm'        => '12',
+                                                            'phoneCstm'          => '259-784-2169',
+                                                            'textCstm'           => 'This is a test Text',
+                                                            'textareaCstm'       => 'This is a test TextArea',
+                                                            'urlCstm'            => 'http://wwww.abc.com',
+                                                            'checkboxCstm'       => array('value'  =>  '1'),
+                                                            'currencyCstm'       => array('value'  =>  45),
+                                                            'picklistCstm'       => array('value'  =>  'a'),
+                                                            'multiselectCstm'    => array('values' => array('ff', 'rr')),
+                                                            'tagcloudCstm'       => array('values' => array('writing', 'gardening')),
+                                                            'countrylistCstm'    => array('value'  => 'bbbb'),
+                                                            'statelistCstm'      => array('value'  => 'bbb1'),
+                                                            'citylistCstm'       => array('value'  => 'bb1'),
+                                                            'radioCstm'          => array('value'  =>  'd'),
+                                                            'dateCstm__Date'     => array('type'   =>  'Today'),
+                                                            'datetimeCstm__DateTime' => array('type'   =>  'Today')),
                                                             'ajax'               => 'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default');
 
@@ -452,7 +452,7 @@
             //Retrieve the lead id.
             $lead   = Contact::getByName('Sarah Williams');
             $leadId = $lead[0]->id;
-            $this->assertEquals(2, $lead[0]->tagcloud->values->count());
+            $this->assertEquals(2, $lead[0]->tagcloudCstm->values->count());
 
             //Set the date and datetime variable values here.
             $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
@@ -503,25 +503,25 @@
                                                                          'country' => 'USA'),
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                             'description'                       => 'This is a Edit Description',
-                            'checkbox'                          => '0',
-                            'currency'                          => array('value'   => 40,
+                            'checkboxCstm'                      => '0',
+                            'currencyCstm'                      => array('value'   => 40,
                                                                          'currency' => array(
                                                                          'id' => $baseCurrency->id)),
-                            'date'                              => $date,
-                            'datetime'                          => $datetime,
-                            'decimal'                           => '12',
-                            'picklist'                          => array('value'  => 'b'),
-                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array()),
-                            'countrylist'                       => array('value'  => 'aaaa'),
-                            'statelist'                         => array('value'  => 'aaa1'),
-                            'citylist'                          => array('value'  => 'ab1'),
-                            'integer'                           => '11',
-                            'phone'                             => '259-784-2069',
-                            'radio'                             => array('value' => 'e'),
-                            'text'                              => 'This is a test Edit Text',
-                            'textarea'                          => 'This is a test Edit TextArea',
-                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'dateCstm'                          => $date,
+                            'datetimeCstm'                      => $datetime,
+                            'decimalCstm'                       => '12',
+                            'picklistCstm'                      => array('value'  => 'b'),
+                            'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                            'tagcloudCstm'                      => array('values' =>  array()),
+                            'countrylistCstm'                   => array('value'  => 'aaaa'),
+                            'statelistCstm'                     => array('value'  => 'aaa1'),
+                            'citylistCstm'                      => array('value'  => 'ab1'),
+                            'integerCstm'                       => '11',
+                            'phoneCstm'                         => '259-784-2069',
+                            'radioCstm'                         => array('value' => 'e'),
+                            'textCstm'                          => 'This is a test Edit Text',
+                            'textareaCstm'                      => 'This is a test Edit TextArea',
+                            'urlCstm'                           => 'http://wwww.abc-edit.com'),
                             'save'                              => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/edit');
 
@@ -567,25 +567,25 @@
             $this->assertEquals(1                                     , count($readWritePermitables));
             $this->assertEquals(0                                     , count($readOnlyPermitables));
             $this->assertEquals($lead->description                    , 'This is a Edit Description');
-            $this->assertEquals($lead->checkbox                       , '0');
-            $this->assertEquals($lead->currency->value                ,  40);
-            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($lead->date                           , $dateAssert);
-            $this->assertEquals($lead->datetime                       , $datetimeAssert);
-            $this->assertEquals($lead->decimal                        , '12');
-            $this->assertEquals($lead->picklist->value                , 'b');
-            $this->assertEquals($lead->integer                        ,  11);
-            $this->assertEquals($lead->phone                          , '259-784-2069');
-            $this->assertEquals($lead->radio->value                   , 'e');
-            $this->assertEquals($lead->text                           , 'This is a test Edit Text');
-            $this->assertEquals($lead->textarea                       , 'This is a test Edit TextArea');
-            $this->assertEquals($lead->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($lead->countrylist->value             , 'aaaa');
-            $this->assertEquals($lead->statelist->value               , 'aaa1');
-            $this->assertEquals($lead->citylist->value                , 'ab1');
-            $this->assertContains('gg'                                , $lead->multiselect->values);
-            $this->assertContains('hh'                                , $lead->multiselect->values);
-            $this->assertEquals(0                                     , $lead->tagcloud->values->count());
+            $this->assertEquals($lead->checkboxCstm                   , '0');
+            $this->assertEquals($lead->currencyCstm->value            ,  40);
+            $this->assertEquals($lead->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($lead->dateCstm                       , $dateAssert);
+            $this->assertEquals($lead->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($lead->decimalCstm                    , '12');
+            $this->assertEquals($lead->picklistCstm->value            , 'b');
+            $this->assertEquals($lead->integerCstm                    ,  11);
+            $this->assertEquals($lead->phoneCstm                      , '259-784-2069');
+            $this->assertEquals($lead->radioCstm->value               , 'e');
+            $this->assertEquals($lead->textCstm                       , 'This is a test Edit Text');
+            $this->assertEquals($lead->textareaCstm                   , 'This is a test Edit TextArea');
+            $this->assertEquals($lead->urlCstm                        , 'http://wwww.abc-edit.com');
+            $this->assertEquals($lead->countrylistCstm->value         , 'aaaa');
+            $this->assertEquals($lead->statelistCstm->value           , 'aaa1');
+            $this->assertEquals($lead->citylistCstm->value            , 'ab1');
+            $this->assertContains('gg'                                , $lead->multiselectCstm->values);
+            $this->assertContains('hh'                                , $lead->multiselectCstm->values);
+            $this->assertEquals(0                                     , $lead->tagcloudCstm->values->count());
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);
@@ -654,25 +654,25 @@
                                                                          'country' => 'USA'),
                             'explicitReadWriteModelPermissions' => array('type' => $explicitReadWriteModelPermission),
                             'description'                       => 'This is a Edit Description',
-                            'checkbox'                          => '0',
-                            'currency'                          => array('value'   => 40,
+                            'checkboxCstm'                      => '0',
+                            'currencyCstm'                      => array('value'   => 40,
                                                                          'currency' => array(
                                                                          'id' => $baseCurrency->id)),
-                            'date'                              => $date,
-                            'datetime'                          => $datetime,
-                            'decimal'                           => '12',
-                            'picklist'                          => array('value'  => 'b'),
-                            'multiselect'                       => array('values' =>  array('gg', 'hh')),
-                            'tagcloud'                          => array('values' =>  array('reading', 'surfing')),
-                            'countrylist'                       => array('value'  => 'aaaa'),
-                            'statelist'                         => array('value'  => 'aaa1'),
-                            'citylist'                          => array('value'  => 'ab1'),
-                            'integer'                           => '11',
-                            'phone'                             => '259-784-2069',
-                            'radio'                             => array('value' => 'e'),
-                            'text'                              => 'This is a test Edit Text',
-                            'textarea'                          => 'This is a test Edit TextArea',
-                            'url'                               => 'http://wwww.abc-edit.com'),
+                            'dateCstm'                          => $date,
+                            'datetimeCstm'                      => $datetime,
+                            'decimalCstm'                       => '12',
+                            'picklistCstm'                      => array('value'  => 'b'),
+                            'multiselectCstm'                   => array('values' =>  array('gg', 'hh')),
+                            'tagcloudCstm'                      => array('values' =>  array('reading', 'surfing')),
+                            'countrylistCstm'                   => array('value'  => 'aaaa'),
+                            'statelistCstm'                     => array('value'  => 'aaa1'),
+                            'citylistCstm'                      => array('value'  => 'ab1'),
+                            'integerCstm'                       => '11',
+                            'phoneCstm'                         => '259-784-2069',
+                            'radioCstm'                         => array('value' => 'e'),
+                            'textCstm'                          => 'This is a test Edit Text',
+                            'textareaCstm'                      => 'This is a test Edit TextArea',
+                            'urlCstm'                           => 'http://wwww.abc-edit.com'),
                             'save'                              => 'Save'));
             $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/edit');
 
@@ -718,26 +718,26 @@
             $this->assertEquals(1                                     , count($readWritePermitables));
             $this->assertEquals(0                                     , count($readOnlyPermitables));
             $this->assertEquals($lead->description                    , 'This is a Edit Description');
-            $this->assertEquals($lead->checkbox                       , '0');
-            $this->assertEquals($lead->currency->value                ,  40);
-            $this->assertEquals($lead->currency->currency->id         , $baseCurrency->id);
-            $this->assertEquals($lead->date                           , $dateAssert);
-            $this->assertEquals($lead->datetime                       , $datetimeAssert);
-            $this->assertEquals($lead->decimal                        , '12');
-            $this->assertEquals($lead->picklist->value                , 'b');
-            $this->assertEquals($lead->integer                        ,  11);
-            $this->assertEquals($lead->phone                          , '259-784-2069');
-            $this->assertEquals($lead->radio->value                   , 'e');
-            $this->assertEquals($lead->text                           , 'This is a test Edit Text');
-            $this->assertEquals($lead->textarea                       , 'This is a test Edit TextArea');
-            $this->assertEquals($lead->url                            , 'http://wwww.abc-edit.com');
-            $this->assertEquals($lead->countrylist->value             , 'aaaa');
-            $this->assertEquals($lead->statelist->value               , 'aaa1');
-            $this->assertEquals($lead->citylist->value                , 'ab1');
-            $this->assertContains('gg'                                , $lead->multiselect->values);
-            $this->assertContains('hh'                                , $lead->multiselect->values);
-            $this->assertContains('reading'                           , $lead->tagcloud->values);
-            $this->assertContains('surfing'                           , $lead->tagcloud->values);
+            $this->assertEquals($lead->checkboxCstm                   , '0');
+            $this->assertEquals($lead->currencyCstm->value            ,  40);
+            $this->assertEquals($lead->currencyCstm->currency->id     , $baseCurrency->id);
+            $this->assertEquals($lead->dateCstm                       , $dateAssert);
+            $this->assertEquals($lead->datetimeCstm                   , $datetimeAssert);
+            $this->assertEquals($lead->decimalCstm                    , '12');
+            $this->assertEquals($lead->picklistCstm->value            , 'b');
+            $this->assertEquals($lead->integerCstm                    ,  11);
+            $this->assertEquals($lead->phoneCstm                      , '259-784-2069');
+            $this->assertEquals($lead->radioCstm->value               , 'e');
+            $this->assertEquals($lead->textCstm                       , 'This is a test Edit Text');
+            $this->assertEquals($lead->textareaCstm                   , 'This is a test Edit TextArea');
+            $this->assertEquals($lead->urlCstm                        , 'http://wwww.abc-edit.com');
+            $this->assertEquals($lead->countrylistCstm->value         , 'aaaa');
+            $this->assertEquals($lead->statelistCstm->value           , 'aaa1');
+            $this->assertEquals($lead->citylistCstm->value            , 'ab1');
+            $this->assertContains('gg'                                , $lead->multiselectCstm->values);
+            $this->assertContains('hh'                                , $lead->multiselectCstm->values);
+            $this->assertContains('reading'                           , $lead->tagcloudCstm->values);
+            $this->assertContains('surfing'                           , $lead->tagcloudCstm->values);
             $metadata            = CalculatedDerivedAttributeMetadata::
                                    getByNameAndModelClassName('calcnumber', 'Contact');
             $testCalculatedValue = CalculatedNumberUtil::calculateByFormulaAndModel($metadata->getFormula(), $lead);

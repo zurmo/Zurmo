@@ -97,7 +97,7 @@
         {
             $cClipWidget   = new CClipWidget();
             $cClipWidget->beginClip("ScopedJuiMultiSelect");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.ScopedSearchJuiMultiSelect', array(
+            $cClipWidget->widget('application.core.widgets.ScopedSearchJuiMultiSelect', array(
                 'dataAndLabels'  => $this->moduleNamesAndLabelsAndAll,
                 'selectedValue'  => 'All',
                 'inputId'        => 'globalSearchScope',

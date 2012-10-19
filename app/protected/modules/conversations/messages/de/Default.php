@@ -35,7 +35,7 @@
                                      'in the CRM or perhaps something unrelated.  When you are conversing within the ' .
                                      'CRM, it is better than "ten" replies in email.' .
                                      'customer we interact with."</p>'
-            => '<h2>"A single conversation with a wise man is better than ten years of study."</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>Start a conversation with someone "wise" in your organization about a record in the CRM or perhaps something unrelated.  When you are conversing within the CRM, it is better than "ten" replies in email.customer we interact with."</p>', // Same Word Translated
+            => '<h2>"A single conversation with a wise man is better than ten years of study."</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>Start a conversation with someone "wise" in your organization about a record in the CRM or perhaps something unrelated.  When you are conversing within the CRM, it is better than "ten" replies in email."</p>', // Same Word Translated
         'Access Conversations Tab'
             => 'Zugang zu den Gesprächen',
         'Conversation'

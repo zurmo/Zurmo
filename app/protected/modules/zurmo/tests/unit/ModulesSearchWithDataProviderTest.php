@@ -46,21 +46,21 @@
             Yii::app()->user->userModel = $super;
             //Test Model - Fake post with all custom attribute types that they adapt correct to metadata.
             $fakePostData = array(
-                'boolean'        => array('value' => ''),
-                'currencyValue'  => null,
-                'date'           => null,
-                'dateTime'       => null,
-                'float'          => null,
-                'integer'        => null,
+                'boolean'            => array('value' => ''),
+                'currencyValue'      => null,
+                'dateCstm'           => null,
+                'dateTimeCstm'       => null,
+                'floatCstm'          => null,
+                'integerCstm'        => null,
                 'dropDown'       => array('value' => array('')), //multi-select dropdown with no value present
-                'integer'        => null,
+                'integerCstm'        => null,
                 'multiDropDown'  => array('values' => array(0 => null)),
-                'phone'          => null,
+                'phoneCstm'          => null,
                 'radioDropDown'  => array('value' => null), //single select dropdown with no value present
-                'string'         => null,
+                'stringCstm'         => null,
                 'tagCloud'       => array('values' => null), //null vs array with null like multiDropDown condition above.
-                'textArea'       => null,
-                'url'            => null,
+                'textAreaCstm'       => null,
+                'urlCstm'            => null,
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(new ModelToArrayAdapterTestItem(), $super->id, $fakePostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
@@ -77,82 +77,82 @@
             Yii::app()->user->userModel = $super;
             //Account Model - Fake post with all custom attribute types that they adapt correct to metadata.
             $fakePostData = array(
-                'checkBox'    => array('value' => '1'),
-                'currency'    => '108.45',
-                'date'        => '2007-07-01',
-                'dateTime'     => '2007-07-01 06:12:45',
-                'decimal'      => '45.6',
-                'dropDown'     => array('value' => '3'),
-                'integer'      => '67876',
+                'checkBoxCstm'    => array('value' => '1'),
+                'currencyCstm'    => '108.45',
+                'dateCstm'        => '2007-07-01',
+                'dateTimeCstm'    => '2007-07-01 06:12:45',
+                'decimalCstm'     => '45.6',
+                'dropDownCstm'    => array('value' => '3'),
+                'integerCstm'     => '67876',
                 //'multiSelect'  => '', //todo:
-                'phone'        => '123456',
-                'radio'        => array('value' => '2'),
-                'text'         => 'Some Text',
-                'textArea'     => 'Some description',
-                'url'          => 'somesite.com',
+                'phoneCstm'       => '123456',
+                'radioCstm'       => array('value' => '2'),
+                'textCstm'        => 'Some Text',
+                'textAreaCstm'    => 'Some description',
+                'urlCstm'         => 'somesite.com',
             );
             $metadataAdapter = new SearchDataProviderMetadataAdapter(new Account(), $super->id, $fakePostData);
             $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
             $compareClauses = array(
                 1 => array(
-                    'attributeName' => 'checkBox',
+                    'attributeName' => 'checkBoxCstm',
                     'operatorType'  => 'equals',
                     'value'         => (bool)1,
                 ),
                 2 => array(
-                    'attributeName' => 'currency',
+                    'attributeName' => 'currencyCstm',
                     'operatorType'  => 'equals',
                     'value'         => (float)108.45,
                 ),
                 3 => array(
-                    'attributeName' => 'date',
+                    'attributeName' => 'dateCstm',
                     'operatorType'  => 'equals',
                     'value'         => '2007-07-01',
                 ),
                 4 => array(
-                    'attributeName' => 'dateTime',
+                    'attributeName' => 'dateTimeCstm',
                     'operatorType' => 'equals',
                     'value'        => '2007-07-01 06:12:45',
                 ),
                 5 => array(
-                    'attributeName' => 'decimal',
+                    'attributeName' => 'decimalCstm',
                     'operatorType' => 'equals',
                     'value'        => (float)45.6,
                 ),
                 6 => array(
-                    'attributeName'        => 'dropDown',
+                    'attributeName'        => 'dropDownCstm',
                     'relatedAttributeName' => 'value',
                     'operatorType'         => 'equals',
                     'value'                => '3',
                 ),
                 7 => array(
-                    'attributeName' => 'integer',
+                    'attributeName' => 'integerCstm',
                     'operatorType' => 'equals',
                     'value'        => (int)67876,
                 ),
                 8 => array(
-                    'attributeName' => 'phone',
+                    'attributeName' => 'phoneCstm',
                     'operatorType' => 'startsWith',
                     'value'        => '123456',
                 ),
                 9 => array(
-                    'attributeName'        => 'radio',
+                    'attributeName'        => 'radioCstm',
                     'relatedAttributeName' => 'value',
                     'operatorType'         => 'equals',
                     'value'                => '2',
                 ),
                 10 => array(
-                    'attributeName' => 'text',
+                    'attributeName' => 'textCstm',
                     'operatorType' => 'startsWith',
                     'value'        => 'Some Text',
                 ),
                 11 => array(
-                    'attributeName' => 'textArea',
+                    'attributeName' => 'textAreaCstm',
                     'operatorType' => 'contains',
                     'value'        => 'Some description',
                 ),
                 12 => array(
-                    'attributeName' => 'url',
+                    'attributeName' => 'urlCstm',
                     'operatorType' => 'contains',
                     'value'        => 'somesite.com',
                 ),
@@ -165,18 +165,18 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Account');
             $where = RedBeanModelDataProvider::makeWhere('Account', $searchAttributeData, $joinTablesAdapter);
-            $compareWhere     = "({$quote}account{$quote}.{$quote}checkbox{$quote} = 1)"                               .
-                                " and ({$quote}account{$quote}.{$quote}currency_currencyvalue_id{$quote} = 108.45)"                       .
-                                " and ({$quote}account{$quote}.{$quote}date{$quote} = '2007-07-01')"              .
-                                " and ({$quote}account{$quote}.{$quote}datetime{$quote} = '2007-07-01 06:12:45')" .
-                                " and ({$quote}account{$quote}.{$quote}decimal{$quote} = 45.6)" .
+            $compareWhere     = "({$quote}account{$quote}.{$quote}checkboxcstm{$quote} = 1)"                               .
+                                " and ({$quote}account{$quote}.{$quote}currencycstm_currencyvalue_id{$quote} = 108.45)"                       .
+                                " and ({$quote}account{$quote}.{$quote}datecstm{$quote} = '2007-07-01')"              .
+                                " and ({$quote}account{$quote}.{$quote}datetimecstm{$quote} = '2007-07-01 06:12:45')" .
+                                " and ({$quote}account{$quote}.{$quote}decimalcstm{$quote} = 45.6)" .
                                 " and ({$quote}customfield{$quote}.{$quote}value{$quote} = '3')" .
-                                " and ({$quote}account{$quote}.{$quote}integer{$quote} = 67876)" .
-                                " and ({$quote}account{$quote}.{$quote}phone{$quote} like '123456%')" .
+                                " and ({$quote}account{$quote}.{$quote}integercstm{$quote} = 67876)" .
+                                " and ({$quote}account{$quote}.{$quote}phonecstm{$quote} like '123456%')" .
                                 " and ({$quote}customfield1{$quote}.{$quote}value{$quote} = '2')" .
-                                " and ({$quote}account{$quote}.{$quote}text{$quote} like 'Some Text%')" .
-                                " and ({$quote}account{$quote}.{$quote}textarea{$quote} like '%Some description%')" .
-                                " and ({$quote}account{$quote}.{$quote}url{$quote} like '%somesite.com%')" .
+                                " and ({$quote}account{$quote}.{$quote}textcstm{$quote} like 'Some Text%')" .
+                                " and ({$quote}account{$quote}.{$quote}textareacstm{$quote} like '%Some description%')" .
+                                " and ({$quote}account{$quote}.{$quote}urlcstm{$quote} like '%somesite.com%')" .
                                 "";
             $this->assertEquals($compareWhere, $where);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
@@ -192,11 +192,11 @@
             $compareSubsetSql  = "select {$quote}account{$quote}.{$quote}id{$quote} id ";
             $compareSubsetSql .= "from {$quote}account{$quote} ";
             $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} on ";
-            $compareSubsetSql .= "{$quote}ownedcustomfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdown_ownedcustomfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}dropdowncstm_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
             $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield{$quote}.{$quote}customfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} ownedcustomfield1 on ";
-            $compareSubsetSql .= "{$quote}ownedcustomfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radio_ownedcustomfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}ownedcustomfield1{$quote}.{$quote}id{$quote} = {$quote}account{$quote}.{$quote}radiocstm_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} customfield1 on ";
             $compareSubsetSql .= "{$quote}customfield1{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield1{$quote}.{$quote}customfield_id{$quote} ";
             $compareSubsetSql .= "where " . $compareWhere . ' ';

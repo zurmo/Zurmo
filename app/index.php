@@ -42,7 +42,7 @@
     // Yii is used from the common source.
     $yii            = COMMON_ROOT   . '/../yii/framework/yii.php';
     // WebApplication is used from the common source.
-    $webApplication = COMMON_ROOT   . '/protected/extensions/zurmoinc/framework/components/WebApplication.php';
+    $webApplication = COMMON_ROOT   . '/protected/core/components/WebApplication.php';
 
     require_once($debug);
     require_once($yii);

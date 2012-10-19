@@ -52,7 +52,7 @@
                 $content = '<div id = "' . $barId . '"></div>';
                 $cClipWidget = new CClipWidget();
                 $cClipWidget->beginClip("conversationParticipantsNotificationMessage");
-                $cClipWidget->widget('ext.zurmoinc.framework.widgets.JNotify', array(
+                $cClipWidget->widget('application.core.widgets.JNotify', array(
                     'statusBarId' => $barId,
                 ));
                 $cClipWidget->endClip();

@@ -179,7 +179,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createCheckBoxCustomFieldByModule('AccountsModule', 'checkbox');
-            $content = $this->insertSearchAttributeAndGetContent('checkbox');
+            $content = $this->insertSearchAttributeAndGetContent('checkboxCstm');
             $this->assertNotNull($content);
         }
 
@@ -187,7 +187,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createCurrencyValueCustomFieldByModule('AccountsModule', 'currency');
-            $content = $this->insertSearchAttributeAndGetContent('currency');
+            $content = $this->insertSearchAttributeAndGetContent('currencyCstm');
             $this->assertNotNull($content);
         }
 
@@ -195,7 +195,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createDateCustomFieldByModule('AccountsModule', 'date');
-            $content = $this->insertSearchAttributeAndGetContent('date__Date');
+            $content = $this->insertSearchAttributeAndGetContent('dateCstm__Date');
             $this->assertNotNull($content);
         }
 
@@ -203,7 +203,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createDateTimeCustomFieldByModule('AccountsModule', 'datetime');
-            $content = $this->insertSearchAttributeAndGetContent('datetime__DateTime');
+            $content = $this->insertSearchAttributeAndGetContent('datetimeCstm__DateTime');
             $this->assertNotNull($content);
         }
 
@@ -211,7 +211,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createDecimalCustomFieldByModule('AccountsModule', 'decimal');
-            $content = $this->insertSearchAttributeAndGetContent('decimal');
+            $content = $this->insertSearchAttributeAndGetContent('decimalCstm');
             $this->assertNotNull($content);
         }
 
@@ -219,7 +219,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createDropDownCustomFieldByModule('AccountsModule', 'picklist');
-            $content = $this->insertSearchAttributeAndGetContent('picklist');
+            $content = $this->insertSearchAttributeAndGetContent('picklistCstm');
             $this->assertNotNull($content);
         }
 
@@ -227,7 +227,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createDependentDropDownCustomFieldByModule('AccountsModule', 'countrylist');
-            $content = $this->insertSearchAttributeAndGetContent('countrylist');
+            $content = $this->insertSearchAttributeAndGetContent('countrylistCstm');
             $this->assertNotNull($content);
         }
 
@@ -235,7 +235,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createMultiSelectDropDownCustomFieldByModule('AccountsModule', 'multiselect');
-            $content = $this->insertSearchAttributeAndGetContent('multiselect');
+            $content = $this->insertSearchAttributeAndGetContent('multiselectCstm');
             $this->assertNotNull($content);
         }
 
@@ -243,7 +243,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createTagCloudCustomFieldByModule('AccountsModule', 'tagcloud');
-            $content = $this->insertSearchAttributeAndGetContent('tagcloud');
+            $content = $this->insertSearchAttributeAndGetContent('tagcloudCstm');
             $this->assertNotNull($content);
         }
 
@@ -282,7 +282,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createIntegerCustomFieldByModule('AccountsModule', 'integer');
-            $content = $this->insertSearchAttributeAndGetContent('integer');
+            $content = $this->insertSearchAttributeAndGetContent('integerCstm');
             $this->assertNotNull($content);
         }
 
@@ -290,7 +290,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createPhoneCustomFieldByModule('AccountsModule', 'phone');
-            $content = $this->insertSearchAttributeAndGetContent('phone');
+            $content = $this->insertSearchAttributeAndGetContent('phoneCstm');
             $this->assertNotNull($content);
         }
 
@@ -298,7 +298,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createRadioDropDownCustomFieldByModule('AccountsModule', 'radio');
-            $content = $this->insertSearchAttributeAndGetContent('radio');
+            $content = $this->insertSearchAttributeAndGetContent('radioCstm');
             $this->assertNotNull($content);
         }
 
@@ -306,7 +306,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createTextCustomFieldByModule('AccountsModule', 'text');
-            $content = $this->insertSearchAttributeAndGetContent('text');
+            $content = $this->insertSearchAttributeAndGetContent('textCstm');
             $this->assertNotNull($content);
         }
 
@@ -328,7 +328,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->createUrlCustomFieldByModule('AccountsModule', 'url');
-            $content = $this->insertSearchAttributeAndGetContent('url');
+            $content = $this->insertSearchAttributeAndGetContent('urlCstm');
             $this->assertNotNull($content);
         }
 

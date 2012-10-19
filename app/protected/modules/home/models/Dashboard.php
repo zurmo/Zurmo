@@ -28,18 +28,6 @@
     {
         const DEFAULT_USER_LAYOUT_ID = 1;
 
-        public static function getByLayoutId($layoutId)
-        {
-            assert('is_integer($layoutId) && $layoutId >= 1');
-            $bean = R::findOne('dashboard', "layoutid = $layoutId");
-            assert('$bean === false || $bean instanceof RedBean_OODBBean');
-            if ($bean === false)
-            {
-                throw new NotFoundException();
-            }
-            return self::makeModel($bean);
-        }
-
         public static function getByLayoutIdAndUser($layoutId, $user)
         {
             assert('is_integer($layoutId) && $layoutId >= 1');

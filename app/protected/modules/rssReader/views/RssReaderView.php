@@ -49,7 +49,7 @@
         {
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("RssReader");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.RssReader', array(
+            $cClipWidget->widget('application.core.widgets.RssReader', array(
                 'id'  => $this->uniqueLayoutId,
                 'url' => $this->resolveViewAndMetadataValueByName('url'),
                 'limit' => 3,

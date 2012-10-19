@@ -64,7 +64,7 @@
                 $this->renderSavedSearchDropDownOnChangeScript($idOrName, $this->model->loadSavedSearchUrl);
                 return $content;
             }
-            $content       = CHtml::dropDownList($idOrName,
+            $content       = ZurmoHtml::dropDownList($idOrName,
                                                  $this->model->savedSearchId,
                                                  self::resolveSavedSearchesToIdAndLabels($savedSearches),
                                                  $htmlOptions);

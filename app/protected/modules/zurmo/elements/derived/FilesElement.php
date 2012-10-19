@@ -61,7 +61,7 @@
             $inputNameAndId = $this->getEditableInputId('files');
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("filesElement");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.FileUpload', array(
+            $cClipWidget->widget('application.core.widgets.FileUpload', array(
                 'uploadUrl'            => Yii::app()->createUrl("zurmo/fileModel/upload",
                                                         array('filesVariableName' => $inputNameAndId)),
                 'deleteUrl'            => Yii::app()->createUrl("zurmo/fileModel/delete"),

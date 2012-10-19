@@ -77,7 +77,7 @@
                 $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
                                                      makeBySecurableItem($conversation);
                 ConversationParticipantsUtil::resolveConversationHasManyParticipantsFromPost(
-                                                $conversation, $postData, $explicitReadWriteModelPermissions, false);
+                                                $conversation, $postData, $explicitReadWriteModelPermissions);
                 $saved = $conversation->save();
                 assert('$saved');
                 $success = ExplicitReadWriteModelPermissionsUtil::

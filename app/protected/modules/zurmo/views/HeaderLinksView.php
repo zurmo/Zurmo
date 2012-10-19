@@ -95,7 +95,7 @@
             }
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("headerMenu");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+            $cClipWidget->widget('application.core.widgets.MbMenu', array(
                 'items'                   => $menuItems,
                 'htmlOptions' => array('id'     => $menuId,
                                        'class'  => 'headerNav'),
@@ -115,7 +115,7 @@
             $content  .= "<span id='notifications-link' class='tooltip'>" . $count ."</span></a>";
             $content  .= ZurmoHtml::tag('div',
                                     array('id' => 'notifications-flyout', 'style' => 'display:none;'),
-                                    CHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
+                                    ZurmoHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
             Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
                 $('#notifications-link').live('click', function()
                 {

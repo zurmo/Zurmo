@@ -74,8 +74,8 @@
             $import = new Import();
             $import->serializedData = serialize(array('importRulesType' => 'Accounts'));
             $this->assertTrue($import->save());
-            $this->runMappingRulesEditAction($import->id, 'datetest');
-            $this->runMappingRulesEditAction($import->id, 'datetimetest');
+            $this->runMappingRulesEditAction($import->id, 'datetestCstm');
+            $this->runMappingRulesEditAction($import->id, 'datetimetestCstm');
             //todo: add the rest of the custom field types that are importable
         }
     }

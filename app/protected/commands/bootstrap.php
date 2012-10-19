@@ -38,9 +38,9 @@
     require_once(COMMON_ROOT   . "/version.php");
     require_once($debug);
     require_once($yii);
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/ConsoleApplication.php');
+    require_once(COMMON_ROOT . '/protected/core/components/ConsoleApplication.php');
     //Including web application, because in console application, there is a reference to a method here.
-    require_once(COMMON_ROOT . '/protected/extensions/zurmoinc/framework/components/WebApplication.php');
+    require_once(COMMON_ROOT . '/protected/core/components/WebApplication.php');
     $app = Yii::createApplication('ConsoleApplication', $config);
     $app->run();
 ?>
