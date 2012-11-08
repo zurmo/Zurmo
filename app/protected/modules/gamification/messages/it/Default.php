@@ -28,5 +28,60 @@
     // KEEP them indented correctly.
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
-    return array();
+    return array(
+        'Account Management'
+            => 'Gestione degli account',
+        'Achievements'
+            => 'Riuscite',
+        'Communication'
+            => 'Comunicazione',
+        'Congratulations!'
+            => 'Congratulazioni!',
+        'Continue'
+            => 'Continuare',
+        'Game on!'
+             => 'Game on!', // Same Word Translated
+        'I reached level {nextLevel}'
+            => 'Ho raggiunto il livello {nextLevel}',
+        'I received a new badge: {badgeContent}'
+            => 'Ho ricevuto un nuovo badge: {badgeContent}',
+        'Leaderboard'
+            => 'Leaderboard', // Same Word Translated
+        'Leaderboard Ranking'
+            => 'Classifica Leaderboard',
+        'Level'
+            => 'Livello',
+        'Monthly'
+            => 'Mensile',
+        'New Badge'
+            => 'Nuovo Badge',
+        'New Business'
+            => 'Nuovo Business',
+        'No achievements earned.'
+            => 'No Riuscite ottenuti.',
+        'Overall'
+            => 'Globale',
+        'Overall Statistics'
+            => 'Statistiche Globali',
+        'Points'
+            => 'Punti',
+        'Rank'
+            => 'Classifica',
+        'Sales'
+            => 'Vendite',
+        'Skip'
+            => 'Ignora',
+        'Time Management'
+            => 'Gestione del tempo',
+        'Weekly'
+            => 'Settimanale',
+        'You have reached level {nextLevel}'
+            => 'Avete raggiunto il livello {nextLevel}',
+        '{n} Zurmo early morning login|{n} Zurmo early morning logins'
+            => '{n} login Zurmo mattiniero|{n} logins Zurmo mattinieri',
+        '{n} Zurmo login|{n} Zurmo logins'
+            => '{n} login Zurmo|{n} logins Zurmo',
+        '{n} Zurmo nighttime login|{n} Zurmo nighttime logins'
+            => '{n} login Zurmo nottambulo|{n} logins nottambuli',
+    );
 ?>

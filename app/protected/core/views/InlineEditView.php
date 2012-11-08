@@ -130,7 +130,7 @@
 
         public function isUniqueToAPage()
         {
-            return true;
+            return false;
         }
 
         public function getPostArrayName()

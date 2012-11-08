@@ -102,8 +102,11 @@
                                       array(strval($conversation), 'ConversationsModule'), $conversation);
             ConversationsUtil::markUserHasReadLatest($conversation, Yii::app()->user->userModel);
             $detailsView              = new ConversationDetailsView($this->getId(), $this->getModule()->getId(), $conversation);
-            $view                     = new ConversationsPageView(ZurmoDefaultViewUtil::
-                                                makeStandardViewForCurrentUser($this, $detailsView));
+            $breadcrumbLinks          = array(StringUtil::getChoppedStringContent(strval($conversation), 25));
+            $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
+                                                  makeViewWithBreadcrumbsForCurrentUser($this, $detailsView, $breadcrumbLinks,
+                                                                                        'ConversationBreadCrumbView'));
+
             echo $view->render();
         }
 

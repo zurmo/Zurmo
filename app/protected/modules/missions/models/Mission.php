@@ -129,6 +129,15 @@
             return $metadata;
         }
 
+        protected function untranslatedAttributeLabels()
+        {
+            return array_merge(parent::untranslatedAttributeLabels(),
+                array(
+                    'dueDateTime'       => 'Due On',
+                )
+            );
+        }
+
         public static function isTypeDeletable()
         {
             return true;

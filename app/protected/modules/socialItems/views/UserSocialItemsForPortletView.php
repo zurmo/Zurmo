@@ -84,11 +84,17 @@
                 2 => array(
                     'attributeName'        => 'toUser',
                     'relatedAttributeName' => 'id',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
+                ),
+                3 => array(
+                    'attributeName'        => 'toUser',
+                    'relatedAttributeName' => 'id',
                     'operatorType'         => 'equals',
                     'value'                => intval($this->params['relationModel']->id),
                 ),
             );
-            $searchAttributeData['structure'] = '(1 or 2)';
+            $searchAttributeData['structure'] = '((1 and 2) or 3)';
             return new RedBeanModelDataProvider('SocialItem', 'latestDateTime', true, $searchAttributeData,
                                                    array(
                                                         'pagination' => array(

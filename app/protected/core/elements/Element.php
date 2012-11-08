@@ -304,9 +304,30 @@
             return get_class($this->model);
         }
 
+        /**
+         * In some scenarios just the input Id needs a prefix and not the name.  Can be used to avoid invalid xhtml
+         * because then each id for an input is unique.  If you don't use this for prefix, you can use inputPrefix
+         * which is for both id and name.
+         * @see self::resolveInputPrefix();
+         * @return string representing the content of the input id prefix.
+         */
+        private function getInputForIdPrefix()
+        {
+            if (isset($this->params['inputIdPrefix']) && $this->params['inputIdPrefix'])
+            {
+                assert('(is_array($this->params["inputIdPrefix"]) && count($this->params["inputIdPrefix"]) > 0) ||
+                        (is_string($this->params["inputIdPrefix"]) && $this->params["inputIdPrefix"] != "")');
+                return $this->params['inputIdPrefix'];
+            }
+        }
+
         protected function resolveInputIdPrefix()
         {
-            $inputIdPrefix = $this->resolveInputPrefix();
+            $inputIdPrefix = $this->getInputForIdPrefix();
+            if ($inputIdPrefix == null)
+            {
+                $inputIdPrefix = $this->resolveInputPrefix();
+            }
             if (is_array($inputIdPrefix))
             {
                 if (count($inputIdPrefix) > 1)

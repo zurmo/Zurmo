@@ -3,6 +3,8 @@ UI Design/*
 .hgignore
 app/themes/default/fonts/Originals
 app/.settings
+ZurmoUI.sublime-project
+ZurmoUI.sublime-workspace
 
 app/assets
 developer/api/html

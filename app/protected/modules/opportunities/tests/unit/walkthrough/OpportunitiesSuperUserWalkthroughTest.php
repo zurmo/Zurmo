@@ -49,6 +49,14 @@
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp2',     $super, $account);
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp3',     $super, $account);
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp4',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp5',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp6',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp7',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp8',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp9',     $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp10',    $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp11',    $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp12',    $super, $account);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser                                  (Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
         }
@@ -75,11 +83,19 @@
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
             $opportunities = Opportunity::getAll();
-            $this->assertEquals(4, count($opportunities));
-            $superOpportunityId = self::getModelIdByModelNameAndName ('Opportunity', 'superOpp');
-            $superOpportunityId2 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp2');
-            $superOpportunityId3 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp3');
-            $superOpportunityId4 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp4');
+            $this->assertEquals(12, count($opportunities));
+            $superOpportunityId   = self::getModelIdByModelNameAndName('Opportunity', 'superOpp');
+            $superOpportunityId2  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp2');
+            $superOpportunityId3  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp3');
+            $superOpportunityId4  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp4');
+            $superOpportunityId5  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp5');
+            $superOpportunityId6  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp6');
+            $superOpportunityId7  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp7');
+            $superOpportunityId8  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp8');
+            $superOpportunityId9  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp9');
+            $superOpportunityId10 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp10');
+            $superOpportunityId11 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp11');
+            $superOpportunityId12 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp12');
             $this->setGetArray(array('id' => $superOpportunityId));
             $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/edit');
             //Save opportunity.
@@ -111,7 +127,7 @@
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massEdit');
-            $this->assertFalse(strpos($content, '<strong>4</strong>&#160;records selected for updating') === false);
+            $this->assertFalse(strpos($content, '<strong>12</strong>&#160;records selected for updating') === false);
 
             //save Model MassEdit for selected Ids
             //Test that the 2 contacts do not have the office phone number we are populating them with.
@@ -131,16 +147,36 @@
                 'Opportunity'  => array('description' => '7788'),
                 'MassEdit' => array('description' => 1)
             ));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', 20);
             $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massEdit');
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
             //Test that the 2 opportunities have the new office phone number and the other contacts do not.
-            $opportunity1 = Opportunity::getById($superOpportunityId);
-            $opportunity2 = Opportunity::getById($superOpportunityId2);
-            $opportunity3 = Opportunity::getById($superOpportunityId3);
-            $opportunity4 = Opportunity::getById($superOpportunityId4);
+            $opportunity1  = Opportunity::getById($superOpportunityId);
+            $opportunity2  = Opportunity::getById($superOpportunityId2);
+            $opportunity3  = Opportunity::getById($superOpportunityId3);
+            $opportunity4  = Opportunity::getById($superOpportunityId4);
+            $opportunity5  = Opportunity::getById($superOpportunityId5);
+            $opportunity6  = Opportunity::getById($superOpportunityId6);
+            $opportunity7  = Opportunity::getById($superOpportunityId7);
+            $opportunity8  = Opportunity::getById($superOpportunityId8);
+            $opportunity9  = Opportunity::getById($superOpportunityId9);
+            $opportunity10 = Opportunity::getById($superOpportunityId10);
+            $opportunity11 = Opportunity::getById($superOpportunityId11);
+            $opportunity12 = Opportunity::getById($superOpportunityId12);
             $this->assertEquals('7788', $opportunity1->description);
             $this->assertEquals('7788', $opportunity2->description);
             $this->assertNotEquals('7788', $opportunity3->description);
             $this->assertNotEquals('7788', $opportunity4->description);
+            $this->assertNotEquals('7788', $opportunity5->description);
+            $this->assertNotEquals('7788', $opportunity6->description);
+            $this->assertNotEquals('7788', $opportunity7->description);
+            $this->assertNotEquals('7788', $opportunity8->description);
+            $this->assertNotEquals('7788', $opportunity9->description);
+            $this->assertNotEquals('7788', $opportunity10->description);
+            $this->assertNotEquals('7788', $opportunity11->description);
+            $this->assertNotEquals('7788', $opportunity12->description);
 
             //save Model MassEdit for entire search result
             $this->setGetArray(array(
@@ -150,16 +186,36 @@
                 'Opportunity'  => array('description' => '6654'),
                 'MassEdit' => array('description' => 1)
             ));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', 20);
             $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massEdit');
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
             //Test that all opportunities have the new description.
             $opportunity1 = Opportunity::getById($superOpportunityId);
             $opportunity2 = Opportunity::getById($superOpportunityId2);
             $opportunity3 = Opportunity::getById($superOpportunityId3);
             $opportunity4 = Opportunity::getById($superOpportunityId4);
+            $opportunity5 = Opportunity::getById($superOpportunityId5);
+            $opportunity6 = Opportunity::getById($superOpportunityId6);
+            $opportunity7 = Opportunity::getById($superOpportunityId7);
+            $opportunity8 = Opportunity::getById($superOpportunityId8);
+            $opportunity9 = Opportunity::getById($superOpportunityId9);
+            $opportunity10 = Opportunity::getById($superOpportunityId10);
+            $opportunity11 = Opportunity::getById($superOpportunityId11);
+            $opportunity12 = Opportunity::getById($superOpportunityId12);
             $this->assertEquals('6654', $opportunity1->description);
             $this->assertEquals('6654', $opportunity2->description);
             $this->assertEquals('6654', $opportunity3->description);
             $this->assertEquals('6654', $opportunity4->description);
+            $this->assertEquals('6654', $opportunity5->description);
+            $this->assertEquals('6654', $opportunity6->description);
+            $this->assertEquals('6654', $opportunity7->description);
+            $this->assertEquals('6654', $opportunity8->description);
+            $this->assertEquals('6654', $opportunity9->description);
+            $this->assertEquals('6654', $opportunity10->description);
+            $this->assertEquals('6654', $opportunity11->description);
+            $this->assertEquals('6654', $opportunity12->description);
 
             //Run Mass Update using progress save.
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
@@ -170,13 +226,13 @@
             //save Modal MassEdit using progress load for page 2, 3 and 4.
             $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 2));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":50') === false);
+            $this->assertFalse(strpos($content, '"value":16') === false);
             $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 3));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":75') === false);
+            $this->assertFalse(strpos($content, '"value":25') === false);
             $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 4));
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":100') === false);
+            $this->assertFalse(strpos($content, '"value":33') === false);
             //Set page size back to old value.
             Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
 
@@ -308,7 +364,7 @@
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/delete');
             $opportunities = Opportunity::getAll();
-            $this->assertEquals(3, count($opportunities));
+            $this->assertEquals(11, count($opportunities));
             try
             {
                 Contact::getById($superOpportunityId4);
@@ -346,7 +402,7 @@
             $this->assertEquals('2011-11-01',  $opportunities[0]->closeDate);
             $this->assertEquals('Negotiating', $opportunities[0]->stage->value);
             $opportunities = Opportunity::getAll();
-            $this->assertEquals(4, count($opportunities));
+            $this->assertEquals(12, count($opportunities));
 
             //todo: test save with account.
         }
@@ -359,7 +415,7 @@
             $super         = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $currencies    = Currency::getAll();
             $opportunities      = Opportunity::getAll();
-            $this->assertEquals(4, count($opportunities));
+            $this->assertEquals(12, count($opportunities));
             $account       = Account::getByName('superAccount2');
             $contact       = Contact::getByName('superContact2 superContact2son');
             $this->assertEquals(1, count($contact));
@@ -387,7 +443,7 @@
             $this->assertEquals('2011-11-01',  $opportunities[0]->closeDate);
             $this->assertEquals('Negotiating', $opportunities[0]->stage->value);
             $opportunities      = Opportunity::getAll();
-            $this->assertEquals(5, count($opportunities));
+            $this->assertEquals(13, count($opportunities));
 
             //Create a new contact from a related opportunity
             $this->setGetArray(array(   'relationAttributeName' => 'contacts',
@@ -413,9 +469,67 @@
             $this->assertEquals('2011-11-01',  $opportunities[0]->closeDate);
             $this->assertEquals('Negotiating', $opportunities[0]->stage->value);
             $opportunities      = Opportunity::getAll();
-            $this->assertEquals(6, count($opportunities));
+            $this->assertEquals(14, count($opportunities));
 
             //todo: test save with account.
+        }
+
+        public function testMassDeleteActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $opportunities = Opportunity::getAll();
+            $superOpportunityId2  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp2');
+            $superOpportunityId3  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp3');
+            $superOpportunityId5  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp5');
+            $superOpportunityId6  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp6');
+            $superOpportunityId7  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp7');
+            $superOpportunityId8  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp8');
+            $superOpportunityId9  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp9');
+            $superOpportunityId10 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp10');
+            $superOpportunityId11 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp11');
+            $superOpportunityId12 = self::getModelIdByModelNameAndName('Opportunity', 'superOpp12');
+            //Load Model MassDelete Views.
+            //MassDelete view for single selected ids
+            $this->setGetArray(array('selectedIds' => '5,6,7,8,9', 'selectAll' => '', ));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>5</strong>&#160;Opportunities selected for removal') === false);
+
+            //MassDelete view for all result selected ids
+            $this->setGetArray(array('selectAll' => '1'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>14</strong>&#160;Opportunities selected for removal') === false);
+            //MassDelete for selected ids
+            $opportunity2 = Opportunity::getById($superOpportunityId2);
+            $opportunity3 = Opportunity::getById($superOpportunityId3);
+            $this->setGetArray(array(
+                'selectedIds' => $superOpportunityId2 . ',' . $superOpportunityId3, // Not Coding Standard
+                'selectAll' => '',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
+
+            //Run Mass Delete using progress save.
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            //save Modal MassDelete using progress load for page 2.
+            $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 2));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDeleteProgress');
+            $this->assertFalse(strpos($content, '"value":83') === false);
+
+            //Set page size back to old value.
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            //save Model MassDelete for entire search result
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
         }
     }
 ?>

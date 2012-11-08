@@ -29,6 +29,57 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-
+        'A mission status has changed'
+            => 'Un estado de la misión ha cambiado',
+        'A mission you completed has been accepted'
+            => 'Una misión que completó ha sido aceptada',
+        'A mission you completed has been rejected'
+            => 'Una misión que completó ha sido rechazada',
+        'A mission you created has been completed'
+            => 'Una misión que ha creado se ha completado',
+        'A mission you created has been taken on by {takenByUserName}'
+            => 'Una misión que ha creado ha sido asumida por {takenByUserName}',
+        'Accept'
+            => 'Aceptar',
+        'Accepted'
+            => 'Aceptado',
+        'Access Missions Tab'
+            => 'Acceso Misiones',
+        'At least one mission has unread content'
+            => 'Por lo menos una misión tiene mensajes no leídos',
+        'Available'
+            => 'Disponible',
+        'Awaiting Acceptance'
+            => 'En espera de aceptación',
+        'Complete'
+            => 'Completar',
+        'Create Mission'
+            => 'Crear Misión',
+        'Create Missions'
+            => 'Crear Misiones',
+        'Delete Missions'
+            => 'Eliminar Misiones',
+        'Due'
+            => 'Fecha límite',
+        'Mission'
+            => 'Misión',
+        'Mission Latest'
+            => 'Mission Latest', // Same Word Translated
+        'Missions'
+            => 'Misiones',
+        'My Missions'
+            => 'Mi Misiónes',
+        'Reject'
+            => 'Rechazar',
+        'Rejected'
+            => 'Rechazado',
+        'Reward'
+            => 'Recompensa',
+        'Taken By'
+            => 'Tomado Por',
+        'This mission is already taken'
+            => 'Esta misión ya está en uso',
+        '{n} Mission created|{n} Missions created'
+            => '{n} Misión creada|{n} Misiones creadas',
     );
 ?>

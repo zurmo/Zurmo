@@ -51,7 +51,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['CurrencyCodeElement'];
-            $content.= '&#160;' . Yii::t('Default', 'Type a currency code or name to search.');
+            $content.= '<span class="field-description">' . Yii::t('Default', 'Type a currency code or name to search.') . '</span>';
             return $content;
         }
 

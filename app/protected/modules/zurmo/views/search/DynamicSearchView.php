@@ -274,12 +274,13 @@
          */
         protected function renderDynamicClausesValidationHelperContent($form)
         {
-            $htmlOptions = array('id'   => get_class($this->model) . '_dynamicClauses',
-                                 'name' => 'dynamicClausesValidationHelper',
-                                 'value' => 'notUsed');
+            $htmlOptionsForInput = array('id'   => get_class($this->model) . '_dynamicClausesNotUsed',
+                                         'name' => 'dynamicClausesValidationHelper',
+                                         'value' => 'notUsed');
+            $htmlOptionsForError = array('id'   => get_class($this->model) . '_dynamicClauses');
             $content  = '<div style="display:none;">';
-            $content .= $form->hiddenField($this->model, 'dynamicClauses', $htmlOptions);
-            $content .= $form->error($this->model, 'dynamicClauses', $htmlOptions);
+            $content .= $form->hiddenField($this->model, 'dynamicClauses', $htmlOptionsForInput);
+            $content .= $form->error($this->model, 'dynamicClauses', $htmlOptionsForError);
             $content .= '</div>';
             return $content;
         }
@@ -311,7 +312,7 @@
                             array('id'    => 'show-dynamic-search-structure-div-' . $this->getSearchFormId(),
                                   'class' => 'has-lang-label',
                                   'style' => $style2), $this->renderStructureInputContent($form));
-            $content  = ZurmoHtml::tag('span', array('id'    => 'show-dynamic-search-structure-wrapper-' . $this->getSearchFormId(),
+            $content  = ZurmoHtml::tag('div', array('id'    => 'show-dynamic-search-structure-wrapper-' . $this->getSearchFormId(),
                                                      'style' => $style3), $content);
             return $content;
         }

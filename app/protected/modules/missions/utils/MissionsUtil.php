@@ -37,14 +37,13 @@
          */
         public static function renderDescriptionAndLatestForDisplayView(Mission $mission)
         {
-            $url            = Yii::app()->createUrl('/missions/default/details', array('id' => $mission->id));
-            $content        = $mission->description;
-            $content        .= '<div>';
-            $content        .= '<span>' . Yii::t('Default', 'Latest Update') . ': ' .
-                                DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($mission->latestDateTime) .
-                                '</span>';
-            $content        .= '</div>';
-            return $content = ZurmoHtml::link($content, $url);
+            $url      = Yii::app()->createUrl('/missions/default/details', array('id' => $mission->id));
+            $content  = $mission->description;
+            $details  = '<span class="list-item-details">' . Yii::t('Default', 'Updated') . ': ' .
+                        DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($mission->latestDateTime) .
+                        '</span>';
+            $link     = ZurmoHtml::link($content, $url);
+            return $link . $details;
         }
 
         /**

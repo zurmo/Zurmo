@@ -54,6 +54,12 @@
         const SCORE_CATEGORY_MASS_EDIT             = 'MassEdit';
 
         /**
+         * Score category used for when a user performs a mass delete in a module
+         * @var string
+         */
+        const SCORE_CATEGORY_MASS_DELETE             = 'MassDelete';
+
+        /**
          * Score category used for when a user searches in a module
          * @var string
          */
@@ -239,6 +245,25 @@
             assert('is_string($modelClassName)');
             $scoreType           = 'MassEdit' . $modelClassName;
             $category            = static::SCORE_CATEGORY_MASS_EDIT;
+            $gameScore           = GameScore::resolveToGetByTypeAndPerson($scoreType, Yii::app()->user->userModel);
+            $gameScore->addValue();
+            $saved               = $gameScore->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
+            GamePointUtil::addPointsByPointData(Yii::app()->user->userModel,
+                           static::getPointTypeAndValueDataByCategory($category));
+        }
+
+        /**
+         * @param string $modelClassName(mass delete)
+         */
+        public static function scoreOnMassDeleteModels($modelClassName)
+        {
+            assert('is_string($modelClassName)');
+            $scoreType           = 'MassDelete' . $modelClassName;
+            $category            = static::SCORE_CATEGORY_MASS_DELETE;
             $gameScore           = GameScore::resolveToGetByTypeAndPerson($scoreType, Yii::app()->user->userModel);
             $gameScore->addValue();
             $saved               = $gameScore->save();

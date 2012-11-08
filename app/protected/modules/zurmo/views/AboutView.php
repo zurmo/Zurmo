@@ -45,11 +45,9 @@
             $content .= '<div id="aboutText" class="clearfix">
                             <div id="leftCol">
                                 <div id="ZurmoLogo" class="zurmo-logo"></div>
-                                <div>
-                                    <p><strong>Zurmo</strong> is a <strong>Customer Relationship Management</strong> system by <strong>Zurmo Inc.</strong>
-                                </p>';
-
-            $content .= '<p>';
+                                <div><p>';
+            $content .= Yii::t('Default', '<strong>Zurmo</strong> is a <strong>Customer Relationship Management</strong> system by <strong>Zurmo Inc.</strong>');
+            $content .= '</p><p>';
             $content .= Yii::t('Default', 'Visit the <strong>Zurmo Open Source Project</strong> at {url}.',
                            array('{url}' => '<a href="http://www.zurmo.org">http://www.zurmo.org</a>'));
             $content .= '<br/>';

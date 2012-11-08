@@ -38,7 +38,7 @@
 
         protected function getHtmlOptions()
         {
-            $confirmTitle           = Yii::t('Default', 'Are you sure you want to remove this {modelLabel}?',
+            $confirmTitle           = Yii::t('Default', 'Are you sure you want to delete this {modelLabel}?',
                                                         array('{modelLabel}' => $this->getModelSingularLabel()));
             $confirmTitle           = Yii::app()->format->text($confirmTitle);
             $htmlOptions            = parent::getHtmlOptions();

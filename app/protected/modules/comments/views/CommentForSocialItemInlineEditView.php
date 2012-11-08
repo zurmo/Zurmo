@@ -32,6 +32,16 @@
     {
         protected $viewContainsFileUploadElement = false;
 
+        protected $uniqueId;
+
+        public function __construct($model, $controllerId, $moduleId, $saveActionId, $urlParameters, $uniquePageId, $uniqueId)
+        {
+            assert('is_int($uniqueId)');
+            assert('$model instanceof Comment');
+            parent::__construct($model, $controllerId, $moduleId, $saveActionId, $urlParameters, $uniquePageId);
+            $this->uniqueId = $uniqueId;
+        }
+
         public function getFormName()
         {
             return "comment-inline-edit-form" . $this->uniquePageId;
@@ -43,7 +53,9 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Add Comment")'),
+                            array('type'        => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Add Comment")',
+                                  'htmlOptions' => array('id'   => 'eval:"saveComment" . $this->model->id',
+                                                         'name' => 'eval:"saveComment" . $this->model->id')),
                         ),
                     ),
                     'derivedAttributeTypes' => array(
@@ -92,6 +104,17 @@
                     }"
                 ));
             // End Not Coding Standard
+        }
+
+        /**
+         * Override to set the inputIdPrefix so when there are multiple instances of this form on a single page
+         * it will be valid xhtml
+         * (non-PHPdoc)
+         * @see ContactInlineCreateForArchivedEmailCreateView::resolveElementInformationDuringFormLayoutRender()
+         */
+        protected function resolveElementInformationDuringFormLayoutRender(& $elementInformation)
+        {
+            $elementInformation['inputIdPrefix']  = array(get_class($this->model), $this->uniqueId);
         }
     }
 ?>

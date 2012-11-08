@@ -39,5 +39,14 @@
             }
             UserInterfaceDevelopmentUtil::makePaginationData();
         }
+
+        public function actionLoadMassDeleteDemoData()
+        {
+            if (Yii::app()->user->userModel->username != 'super')
+            {
+                throw new NotSupportedException();
+            }
+            UserInterfaceDevelopmentUtil::makeMassDeleteData();
+        }
     }
 ?>

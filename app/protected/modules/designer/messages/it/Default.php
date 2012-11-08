@@ -225,12 +225,12 @@
             => 'Il modulo {moduleClassName} non esiste.',
         'There are no fields in this module to be used in a formula.'
             => 'Non esiste campi per utilizzare nella formula.',
-        'There was an error processing your request.'
-            => 'C\'era un errore durante l\'elaborazione della vostra richiesta.',
         'Track Audit Log'
             => 'Audit questo campo',
         'URL'
             => 'URL', // Same Word Translated
+        'Value cannot be blank.'
+            => 'Il valore non può essere vuoto.',
         'You can only have at most 4 pick-lists selected.'
             => 'Potete avere al massimo 4 picklists.',
         'You must first select a field type'

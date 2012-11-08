@@ -41,6 +41,7 @@
 </body>
 </html>
 END;
+
             $this->assertEmpty(W3CValidatorServiceUtil::validate($xHtml));
 
             $xHtml = <<<END

@@ -42,6 +42,13 @@
             $saved = $everyone->save();
             assert('$saved'); // Not Coding Standard
 
+            //Add contacts to help test that the rebuild is working correctly
+            $contact = ContactTestHelper::createContactByNameForOwner('jason', Yii::app()->user->userModel);
+            $contact->addPermissions(User::getByUsername('betty'),         Permission::READ);
+            $contact->addPermissions(Group::getByName   ('Support Staff'), Permission::READ);
+            $saved = $contact->save();
+            assert('$saved'); // Not Coding Standard
+
             ReadPermissionsOptimizationUtil::rebuild();
             assert('self::getAccountMungeRowCount() == 0'); // Not Coding Standard
         }
@@ -278,6 +285,9 @@
             $this->rebuildAndTestThatTheMungeDoesntChange();
         }
 
+        /**
+         * @depends testOwnedSecurableItemCreated
+         */
         public function testMemoryUsageCreatingModels()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -300,6 +310,9 @@
             $this->assertWithinPercentage($memoryBefore, $memoryAfter, 10);
         }
 
+        /**
+         * @depends testMemoryUsageCreatingModels
+         */
         public function testMemoryUsageGettingModels()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -321,6 +334,9 @@
             $this->assertWithinPercentage($memoryBefore, $memoryAfter, 10);
         }
 
+        /**
+         * @depends testMemoryUsageGettingModels
+         */
         public function testMemoryUsageNukingModels()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

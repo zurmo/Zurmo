@@ -28,9 +28,8 @@
     {
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)
         {
-            $htmlOptions['confirm'] = Yii::t('Default',
-                                             'Are you sure you want to remove this AccountsModuleSingularLowerCaseLabel?',
-                                             LabelUtil::getTranslationParamsForAllModules());
+            $htmlOptions['confirm'] = Yii::t('Default', 'Are you sure you want to delete this {modelLabel}?',
+                                      array('{modelLabel}' => AccountsModule::getModuleLabelByTypeAndLanguage('SingularLowerCase')));
             return $htmlOptions;
         }
     }

@@ -253,17 +253,18 @@
             $this->assertEquals(null, $bean->serializedmessages);
         }
 
-        /**
+       /**
         *
         * Test if import from file with Windows line-endings works file
         */
-        public function testMakeDatabaseTableByFilePathAndTableNameUsingWindowsCsvFile()
+        public function testMakeDatabaseTableByFilePathAndTableNameUsingUnixCsvFile()
         {
             $testTableName = 'testimporttable';
-            //We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
-            //convert windows line endings into linux lineendings.
-            $fileName = 'importTestWindows.csv';
-            $copyFileName = 'importTestWindowsCopy.csv';
+            // We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
+            // convert line endings into unix line endings.
+            // We just want to ensure that conversion doesn't broke anything with unix files.
+            $fileName = 'importTestUnixLineEndings.csv';
+            $copyFileName = 'importTestUnixLineEndingsCopy.csv';
             $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
             $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
             $copyFilePath    = $pathToFiles . DIRECTORY_SEPARATOR . $copyFileName;
@@ -328,7 +329,157 @@
             $this->assertEquals($compareData, $tempTableData);
         }
 
-            /**
+        /**
+        *
+        * Test if import from file with Windows line-endings works file
+        */
+        public function testMakeDatabaseTableByFilePathAndTableNameUsingWindowsCsvFile()
+        {
+            $testTableName = 'testimporttable';
+            // We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
+            // convert non-unix/linux line endings into unit lineendings.
+            $fileName = 'importTestWindowsLineEndings.csv';
+            $copyFileName = 'importTestWindowsLineEndingsCopy.csv';
+            $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
+            $copyFilePath    = $pathToFiles . DIRECTORY_SEPARATOR . $copyFileName;
+            if (is_file($copyFilePath))
+            {
+                unlink($copyFilePath);
+            }
+            $this->assertFalse(is_file($copyFilePath));
+            copy($filePath, $copyFilePath);
+            $this->assertTrue(is_file($copyFilePath));
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName($copyFileName, $testTableName));
+            unlink($copyFilePath);
+            $sql = 'select * from ' . $testTableName;
+            $tempTableData = R::getAll($sql);
+            $compareData   = array(
+            array
+            (
+                                    'id' => 1,
+                                    'column_0'           => 'name',
+                                    'column_1'           => 'phone',
+                                    'column_2'           => 'industry',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 2,
+                                    'column_0'           => 'abc',
+                                    'column_1'           => '123',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 3,
+                                    'column_0'           => 'def',
+                                    'column_1'           => '563',
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 4,
+                                    'column_0'           => 'efg',
+                                    'column_1'           => '456',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 5,
+                                    'column_0'           => 'we1s',
+                                    'column_1'           => null,
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            );
+            $this->assertEquals($compareData, $tempTableData);
+        }
+
+        /**
+        *
+        * Test if import from file with Windows line-endings works file
+        */
+        public function testMakeDatabaseTableByFilePathAndTableNameUsingMacCsvFile()
+        {
+            $testTableName = 'testimporttable';
+            //We make copy of filename, because ImportDatabaseUtil::makeDatabaseTableByFilePathAndTableName
+            //convert mac line endings into linux lineendings.
+            $fileName = 'importTestMacOsLineEndings.csv';
+            $copyFileName = 'importTestMacOsLineEndingsCopy.csv';
+            $pathToFiles = Yii::getPathOfAlias('application.modules.import.tests.unit.files');
+            $filePath    = $pathToFiles . DIRECTORY_SEPARATOR . $fileName;
+            $copyFilePath    = $pathToFiles . DIRECTORY_SEPARATOR . $copyFileName;
+            if (is_file($copyFilePath))
+            {
+                unlink($copyFilePath);
+            }
+            $this->assertFalse(is_file($copyFilePath));
+            copy($filePath, $copyFilePath);
+            $this->assertTrue(is_file($copyFilePath));
+            $this->assertTrue(ImportTestHelper::createTempTableByFileNameAndTableName($copyFileName, $testTableName));
+            unlink($copyFilePath);
+            $sql = 'select * from ' . $testTableName;
+            $tempTableData = R::getAll($sql);
+            $compareData   = array(
+            array
+            (
+                                    'id' => 1,
+                                    'column_0'           => 'name',
+                                    'column_1'           => 'phone',
+                                    'column_2'           => 'industry',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 2,
+                                    'column_0'           => 'abc',
+                                    'column_1'           => '123',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 3,
+                                    'column_0'           => 'def',
+                                    'column_1'           => '563',
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 4,
+                                    'column_0'           => 'efg',
+                                    'column_1'           => '456',
+                                    'column_2'           => 'a',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            array
+            (
+                                    'id' => 5,
+                                    'column_0'           => 'we1s',
+                                    'column_1'           => null,
+                                    'column_2'           => 'b',
+                                    'status'             => null,
+                                    'serializedmessages' => null,
+            ),
+            );
+            $this->assertEquals($compareData, $tempTableData);
+        }
+
+        /**
         *
         * Test that various accents work correctly going into the database.
         */

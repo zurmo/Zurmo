@@ -32,6 +32,7 @@
                 'name'  => $this->attribute,
                 'value' => 'Yii::app()->format->email($data->' . $this->attribute . '->emailAddress)',
                 'type'  => 'raw',
+                'htmlOptions' => array( 'class' => 'email')
             );
         }
     }

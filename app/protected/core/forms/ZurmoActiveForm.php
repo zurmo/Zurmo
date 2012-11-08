@@ -180,5 +180,14 @@
         {
             return ZurmoHtml::activeCheckBoxList($model, $attribute, $data, $htmlOptions);
         }
+
+        /**
+         * (non-PHPdoc)
+         * @see CActiveForm::dropDownList()
+         */
+        public function dropDownList($model, $attribute, $data, $htmlOptions = array())
+        {
+            return ZurmoHtml::activeDropDownList($model, $attribute, $data, $htmlOptions);
+        }
     }
 ?>

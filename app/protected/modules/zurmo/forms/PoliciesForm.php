@@ -49,7 +49,7 @@
                         $policyInformation['explicit'],
                         $policyInformation['inherited']
                     );
-                   $rules = array_merge($rules, $policyRules->getFormRules());
+                    $rules = array_merge($rules, $policyRules->getFormRules());
                 }
             }
             return $rules;

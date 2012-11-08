@@ -337,6 +337,128 @@
     <td>Changing The Account ${randomSuffix}</td>
     <td></td>
 </tr>
+<!-- Creating contact for testing edit and unlink-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div/div/a[@class='icon-create']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_firstName</td>
+	<td>Test </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_lastName</td>
+	<td>Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Contact_state_id</td>
+	<td>label=Customer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div[2]/table/tbody/tr/td[2]/div/ul/li/ul/li/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_firstName</td>
+	<td>Changing Test </td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Changing Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Unlink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to unlink this contact?</td>
+	<td></td>
+</tr>
+<tr>
+  <td>chooseOkOnNextConfirmation</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForTextNotPresent</td>
+    <td>Changing Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
+<!-- Creating contact for testing delete-->
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div/div/a[@class='icon-create']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_firstName</td>
+	<td>Test </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_lastName</td>
+	<td>Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Contact_state_id</td>
+	<td>label=Customer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div[2]/table/tbody/tr/td[2]/div/ul/li/ul/li[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this contact?</td>
+	<td></td>
+</tr>
+<tr>
+  <td>chooseOkOnNextConfirmation</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForTextNotPresent</td>
+    <td>Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

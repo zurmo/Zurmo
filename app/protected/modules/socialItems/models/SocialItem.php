@@ -72,7 +72,8 @@
                     'toUser'    => array(RedBeanModel::HAS_ONE,  'User'),
                 ),
                 'rules' => array(
-                    array('description',    'type',    'type' => 'string'),
+                    array('description',    'type',     'type' => 'string'),
+                    array('description',    'required', 'on'   => 'createPost'),
                     array('latestDateTime', 'required'),
                     array('latestDateTime', 'readOnly'),
                     array('latestDateTime', 'type', 'type' => 'datetime'),

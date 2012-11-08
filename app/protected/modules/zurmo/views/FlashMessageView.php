@@ -35,9 +35,9 @@
 
         protected function renderContent()
         {
+            $content = '<div id="FlashMessageBar"></div>';
             if (Yii::app()->user->hasFlash('notification'))
             {
-                $content = '<div id = "FlashMessageBar"></div>';
                 $script = "
                 $('#FlashMessageBar').jnotifyAddMessage(
                 {
@@ -48,14 +48,14 @@
                 );
                 ";
                 Yii::app()->clientScript->registerScript('FlashMessage', $script);
-                $this->controller->beginClip("FlashMessage");
-                $this->controller->widget('application.core.widgets.JNotify', array(
-                    'statusBarId' => 'FlashMessageBar',
-                ));
-                $this->controller->endClip();
-                $content .= $this->controller->clips['FlashMessage'];
-                return $content;
             }
+            $this->controller->beginClip("FlashMessage");
+            $this->controller->widget('application.core.widgets.JNotify', array(
+                'statusBarId' => 'FlashMessageBar',
+            ));
+            $this->controller->endClip();
+            $content .= $this->controller->clips['FlashMessage'];
+            return $content;
         }
 
         public function isUniqueToAPage()

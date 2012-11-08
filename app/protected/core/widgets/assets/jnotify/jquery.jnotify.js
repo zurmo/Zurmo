@@ -103,7 +103,7 @@
             notifyItem.wrap(notifyItemWrapper);
 
             if (options.showIcon)
-                jQuery('<span class="ui-icon" style="float:left; margin-right: .3em;" />')
+                jQuery('<span class="ui-icon" />')
                                     .addClass(iconClass)
                                     .appendTo(notifyItem);
 

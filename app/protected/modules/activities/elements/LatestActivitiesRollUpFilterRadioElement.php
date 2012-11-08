@@ -42,7 +42,7 @@
                 $this->getArray(),
                 $this->getEditableHtmlOptions()
             );
-            return Yii::t('Default', 'Roll Up') . ':' . $content . ' ' . self::renderHelpContent();
+            return Yii::t('Default', 'Roll Up') . ':' . self::renderHelpContent() . $content;
         }
 
         protected function renderControlNonEditable()
@@ -88,8 +88,7 @@
         protected static function renderHelpContent()
         {
             $title       = Yii::t('Default', 'Turn roll up on to see activities from related records.');
-            $content     = '<span id="activities-rollup-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= '?</span>';
+            $content     = '<span id="activities-rollup-tooltip" class="tooltip" title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#activities-rollup-tooltip");
             return $content;

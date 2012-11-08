@@ -59,8 +59,10 @@
         protected function getCGridViewPagerParams()
         {
             return array(
+                    'firstPageLabel'   => '<span>first</span>',
                     'prevPageLabel'    => '<span>previous</span>',
                     'nextPageLabel'    => '<span>next</span>',
+                    'lastPageLabel'    => '<span>last</span>',
                     'paginationParams' => GetUtil::getData(),
                     'route'            => $this->getGridViewActionRoute($this->actionId, $this->moduleId),
                     'class'            => 'SimpleListLinkPager',

@@ -29,8 +29,9 @@
         public function renderGridViewData()
         {
             return array(
-                'name'        => 'description',
                 'header'      => false,
+                'name'        => 'description',
+                'sortable'    => false,
                 'type'        => 'raw',
                 'value'       => 'MissionsUtil::renderDescriptionAndLatestForDisplayView($data)'
             );

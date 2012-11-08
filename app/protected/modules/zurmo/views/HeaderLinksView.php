@@ -98,7 +98,7 @@
             $cClipWidget->widget('application.core.widgets.MbMenu', array(
                 'items'                   => $menuItems,
                 'htmlOptions' => array('id'     => $menuId,
-                                       'class'  => 'headerNav'),
+                                       'class'  => 'user-menu-item'),
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['headerMenu'];
@@ -109,46 +109,33 @@
             $label    = Yii::t('Default', 'Notifications');
             $content  = null;
             $count    = Notification::getCountByUser(Yii::app()->user->userModel);
-            $imageSourceUrl = Yii::app()->baseUrl . '/themes/default/images/loading.gif';
             // Begin Not Coding Standard
+            $content  .= '<div id="notifications" class="user-menu-item">';
             $content  .= "<a id=\"notifications-flyout-link\" href=\"#\" class=\"notifications-link unread\">";
-            $content  .= "<span id='notifications-link' class='tooltip'>" . $count ."</span></a>";
-            $content  .= ZurmoHtml::tag('div',
-                                    array('id' => 'notifications-flyout', 'style' => 'display:none;'),
-                                    ZurmoHtml::image($imageSourceUrl, Yii::t('Default', 'Loading')), 'div');
+            $content  .= "<span id='notifications-link'><strong>" . $count ."</strong></span></a>";
+            $content  .= ZurmoHtml::tag('div', array('id' => 'notifications-flyout'), '<span class="z-spinner"></span>', 'div');
             Yii::app()->clientScript->registerScript('notificationPopupLinkScript', "
                 $('#notifications-link').live('click', function()
                 {
-                    if ($('#notifications-flyout').css('display') == 'none')
-                    {
-                        $('#notifications-flyout').show();
-                        $.ajax({
-                            url 	 : '" . $this->notificationsUrl . "',
-                            type     : 'GET',
-                            dataType : 'html',
-                            success  : function(html)
-                            {
-                                jQuery('#notifications-flyout').html(html);
-                                $(document).bind('click',function (e)
+                        if ( $('#notifications').hasClass('nav-open') === true ){
+                            attachLoadingSpinner('notifications-flyout', true);
+                            $.ajax({
+                                url 	 : '" . $this->notificationsUrl . "',
+                                type     : 'GET',
+                                dataType : 'html',
+                                success  : function(html)
                                 {
-                                    var container = $('#notifications-flyout');
-                                    if (container.has(e.target).length === 0 && e.target.id != 'notifications-link')
-                                    {
-                                        container.hide();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    else
-                    {
-                        $('#notifications-flyout').hide();
-                    }
+                                    jQuery('#notifications-flyout').empty().html(html);
+                                }
+                            });
+                        }
+                        return false;
                 });
             ", CClientScript::POS_HEAD);
             Yii::app()->clientScript->registerScript('deleteNotificationFromAjaxListViewScript', "
-                function deleteNotificationFromAjaxListView(element, modelId)
+                function deleteNotificationFromAjaxListView(element, modelId, event)
                 {
+                    event.stopPropagation();
                     $.ajax({
                         url : '" . Yii::app()->createUrl('notifications/default/deleteFromAjax') . "?id=' + modelId,
                         type : 'GET',
@@ -165,6 +152,7 @@
                     });
                 }
             ", CClientScript::POS_END);
+            $content  .= '</div>';
             // End Not Coding Standard
             return $content;
         }

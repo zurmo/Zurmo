@@ -67,7 +67,7 @@
                 'options' => array(
                     'autoOpen' => true,
                     'modal'    => $modal,
-                    'height'   => 350,
+                    'height'   => 375,
                     'width'    => 350,
                     'dialogClass' => 'ModalGameNotificationParent',
                     'position' => 'center',
@@ -78,8 +78,9 @@
             ));
             $adapter      = new GameNotificationToModalContentAdapter($notification);
 
-            echo '<div class="game-badge ' . $adapter->getIconCssName() . '"><div class="gloss"></div>' .
-                                '<strong class="badge-icon"></strong><span class="badge-message">' . $adapter->getMessageContent() . '</span></div>';
+            echo '<span class="badge-message">' . $adapter->getMessageContent() . '</span>' .
+                 '<div class="game-badge ' . $adapter->getIconCssName() . '"><div class="gloss"></div>' .
+                 '<strong class="badge-icon"></strong></div>';
             echo '<br />';
             echo static::resolveAndRenderPostingAndContinueLinksContent($notification, $index);
             $cClipWidget->endWidget('zii.widgets.jui.CJuiDialog');
@@ -97,7 +98,7 @@
             }
             else
             {
-                $content = ZurmoHtml::link(Yii::t('Default', 'Skip posting, just continue'), '#',
+                $content = ZurmoHtml::link(Yii::t('Default', 'Skip'), '#',
                                  array('class'   => 'close-ModalGameNotification simple-select',
                                        'onclick' => '$("#ModalGameNotification' . $index . '").dialog("close");'));
                 $content .= static::renderPostToProfileLinkContent($notification, $index);

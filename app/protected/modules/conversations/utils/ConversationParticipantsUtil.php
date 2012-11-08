@@ -118,7 +118,7 @@
         public static function resolveEmailInvitesByPeople($conversation, $people)
         {
             assert('$conversation instanceof Conversation && $conversation->id > 0');
-            if(count($people) == 0)
+            if (count($people) == 0)
             {
                 return;
             }

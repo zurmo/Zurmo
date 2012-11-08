@@ -46,6 +46,14 @@
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact2', $super, $account);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact3', $super, $account);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact4', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact5', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact6', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact7', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact8', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact9', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact10', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact11', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact12', $super, $account);
             OpportunityTestHelper::createOpportunityStagesIfDoesNotExist     ();
             OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpp', $super, $account);
             //Setup default dashboard.
@@ -75,11 +83,19 @@
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
             $contacts = Contact::getAll();
-            $this->assertEquals(4, count($contacts));
+            $this->assertEquals(12, count($contacts));
             $superContactId     = self::getModelIdByModelNameAndName ('Contact', 'superContact superContactson');
             $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
             $superContactId3    = self::getModelIdByModelNameAndName('Contact', 'superContact3 superContact3son');
             $superContactId4    = self::getModelIdByModelNameAndName('Contact', 'superContact4 superContact4son');
+            $superContactId5    = self::getModelIdByModelNameAndName ('Contact', 'superContact5 superContact5son');
+            $superContactId6    = self::getModelIdByModelNameAndName('Contact', 'superContact6 superContact6son');
+            $superContactId7    = self::getModelIdByModelNameAndName('Contact', 'superContact7 superContact7son');
+            $superContactId8    = self::getModelIdByModelNameAndName('Contact', 'superContact8 superContact8son');
+            $superContactId9    = self::getModelIdByModelNameAndName ('Contact', 'superContact9 superContact9son');
+            $superContactId10   = self::getModelIdByModelNameAndName('Contact', 'superContact10 superContact10son');
+            $superContactId11   = self::getModelIdByModelNameAndName('Contact', 'superContact11 superContact11son');
+            $superContactId12   = self::getModelIdByModelNameAndName('Contact', 'superContact12 superContact12son');
             $superOpportunityId = self::getModelIdByModelNameAndName ('Opportunity', 'superOpp');
             $this->setGetArray(array('id' => $superContactId));
             $this->runControllerWithNoExceptionsAndGetContent('contacts/default/edit');
@@ -112,7 +128,7 @@
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massEdit');
-            $this->assertFalse(strpos($content, '<strong>4</strong>&#160;records selected for updating') === false);
+            $this->assertFalse(strpos($content, '<strong>12</strong>&#160;records selected for updating') === false);
 
             //save Model MassEdit for selected Ids
             //Test that the 4 contacts do not have the office phone number we are populating them with.
@@ -134,15 +150,30 @@
             ));
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massEdit');
             //Test that the 2 contacts have the new office phone number and the other contacts do not.
-            $contact1 = Contact::getById($superContactId);
-            $contact2 = Contact::getById($superContactId2);
-            $contact3 = Contact::getById($superContactId3);
-            $contact4 = Contact::getById($superContactId4);
+            $contact1  = Contact::getById($superContactId);
+            $contact2  = Contact::getById($superContactId2);
+            $contact3  = Contact::getById($superContactId3);
+            $contact4  = Contact::getById($superContactId4);
+            $contact5  = Contact::getById($superContactId5);
+            $contact6  = Contact::getById($superContactId6);
+            $contact7  = Contact::getById($superContactId7);
+            $contact8  = Contact::getById($superContactId8);
+            $contact9  = Contact::getById($superContactId9);
+            $contact10 = Contact::getById($superContactId10);
+            $contact11 = Contact::getById($superContactId11);
+            $contact12 = Contact::getById($superContactId12);
             $this->assertEquals   ('7788', $contact1->officePhone);
             $this->assertEquals   ('7788', $contact2->officePhone);
             $this->assertNotEquals('7788', $contact3->officePhone);
             $this->assertNotEquals('7788', $contact4->officePhone);
-
+            $this->assertNotEquals('7788', $contact5->officePhone);
+            $this->assertNotEquals('7788', $contact6->officePhone);
+            $this->assertNotEquals('7788', $contact7->officePhone);
+            $this->assertNotEquals('7788', $contact8->officePhone);
+            $this->assertNotEquals('7788', $contact9->officePhone);
+            $this->assertNotEquals('7788', $contact10->officePhone);
+            $this->assertNotEquals('7788', $contact11->officePhone);
+            $this->assertNotEquals('7788', $contact12->officePhone);
             //save Model MassEdit for entire search result
             $this->setGetArray(array(
                 'selectAll'    => '1',
@@ -151,16 +182,36 @@
                 'Contact'      => array('officePhone' => '1234'),
                 'MassEdit'     => array('officePhone' => 1)
             ));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', 20);
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massEdit');
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
             //Test that all accounts have the new phone number.
             $contact1 = Contact::getById($superContactId);
             $contact2 = Contact::getById($superContactId2);
             $contact3 = Contact::getById($superContactId3);
             $contact4 = Contact::getById($superContactId4);
+            $contact5 = Contact::getById($superContactId5);
+            $contact6 = Contact::getById($superContactId6);
+            $contact7 = Contact::getById($superContactId7);
+            $contact8 = Contact::getById($superContactId8);
+            $contact9 = Contact::getById($superContactId9);
+            $contact10 = Contact::getById($superContactId10);
+            $contact11 = Contact::getById($superContactId11);
+            $contact12 = Contact::getById($superContactId12);
             $this->assertEquals   ('1234', $contact1->officePhone);
             $this->assertEquals   ('1234', $contact2->officePhone);
             $this->assertEquals   ('1234', $contact3->officePhone);
             $this->assertEquals   ('1234', $contact4->officePhone);
+            $this->assertEquals   ('1234', $contact5->officePhone);
+            $this->assertEquals   ('1234', $contact6->officePhone);
+            $this->assertEquals   ('1234', $contact7->officePhone);
+            $this->assertEquals   ('1234', $contact8->officePhone);
+            $this->assertEquals   ('1234', $contact9->officePhone);
+            $this->assertEquals   ('1234', $contact10->officePhone);
+            $this->assertEquals   ('1234', $contact11->officePhone);
+            $this->assertEquals   ('1234', $contact12->officePhone);
 
             //Run Mass Update using progress save.
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
@@ -171,13 +222,13 @@
             //save Modal MassEdit using progress load for page 2, 3 and 4.
             $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 2));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":50') === false);
+            $this->assertFalse(strpos($content, '"value":16') === false);
             $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 3));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":75') === false);
+            $this->assertFalse(strpos($content, '"value":25') === false);
             $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 4));
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":100') === false);
+            $this->assertFalse(strpos($content, '"value":33') === false);
             //Set page size back to old value.
             Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
 
@@ -318,7 +369,7 @@
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/delete');
             $contacts = Contact::getAll();
-            $this->assertEquals(3, count($contacts));
+            $this->assertEquals(11, count($contacts));
             try
             {
                 Contact::getById($superContactId4);
@@ -358,7 +409,7 @@
             $this->assertTrue($contacts[0]->state == $startingState);
             $this->assertEquals('456765421', $contacts[0]->officePhone);
             $contacts = Contact::getAll();
-            $this->assertEquals(4, count($contacts));
+            $this->assertEquals(12, count($contacts));
 
             //todo: test save with account.
         }
@@ -371,7 +422,7 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $startingState = ContactsUtil::getStartingState();
             $contacts      = Contact::getAll();
-            $this->assertEquals(4, count($contacts));
+            $this->assertEquals(12, count($contacts));
             $account       = Account::getByName('superAccount2');
             $opportunity   = OpportunityTestHelper::createOpportunityWithAccountByNameForOwner(
                                 'superOpp', $super, $account[0]);
@@ -395,7 +446,7 @@
             $this->assertTrue($contacts[0]->state   == $startingState);
             $this->assertEquals('456765421', $contacts[0]->officePhone);
             $contacts = Contact::getAll();
-            $this->assertEquals(5, count($contacts));
+            $this->assertEquals(13, count($contacts));
 
             //Create a new contact from a related opportunity
             $this->setGetArray(array(   'relationAttributeName' => 'opportunities',
@@ -417,9 +468,68 @@
             $this->assertTrue($contacts[0]->state   == $startingState);
             $this->assertEquals('456765421', $contacts[0]->officePhone);
             $contacts = Contact::getAll();
-            $this->assertEquals(6, count($contacts));
+            $this->assertEquals(14, count($contacts));
 
             //todo: test save with account.
+        }
+
+        public function testMassDeleteActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $contacts      = Contact::getAll();
+            $superContactId     = self::getModelIdByModelNameAndName('Contact', 'superContact');
+            $superContactId2    = self::getModelIdByModelNameAndName('Contact', 'superContact2 superContact2son');
+            $superContactId3    = self::getModelIdByModelNameAndName('Contact', 'superContact3 superContact3son');
+            $superContactId5    = self::getModelIdByModelNameAndName('Contact', 'superContact5 superContact5son');
+            $superContactId6    = self::getModelIdByModelNameAndName('Contact', 'superContact6 superContact6son');
+            $superContactId7    = self::getModelIdByModelNameAndName('Contact', 'superContact7 superContact7son');
+            $superContactId8    = self::getModelIdByModelNameAndName('Contact', 'superContact8 superContact8son');
+            $superContactId9    = self::getModelIdByModelNameAndName('Contact', 'superContact9 superContact9son');
+            $superContactId10   = self::getModelIdByModelNameAndName('Contact', 'superContact10 superContact10son');
+            $superContactId11   = self::getModelIdByModelNameAndName('Contact', 'superContact11 superContact11son');
+            $superContactId12   = self::getModelIdByModelNameAndName('Contact', 'superContact12 superContact12son');
+            //Load Model MassDelete Views.
+            //MassDelete view for single selected ids
+            $this->setGetArray(array('selectedIds' => '5,6,7,8,9', 'selectAll' => '', ));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>5</strong>&#160;Contacts selected for removal') === false);
+
+            //MassDelete view for all result selected ids
+            $this->setGetArray(array('selectAll' => '1'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>14</strong>&#160;Contacts selected for removal') === false);
+            //MassDelete for selected ids
+            $contact2 = Contact::getById($superContactId2);
+            $contact3 = Contact::getById($superContactId3);
+            $this->setGetArray(array(
+                'selectedIds' => $superContactId2 . ',' . $superContactId2, // Not Coding Standard
+                'selectAll' => '',
+                'Contact_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
+
+            //Run Mass Delete using progress save.
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            //save Modal MassDelete using progress load for page 2.
+            $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 2));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDeleteProgress');
+            $this->assertFalse(strpos($content, '"value":76') === false);
+
+            //Set page size back to old value.
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            //save Model MassDelete for entire search result
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Contact_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
         }
     }
 ?>

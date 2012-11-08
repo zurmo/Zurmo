@@ -29,11 +29,12 @@
         public function renderGridViewData()
         {
             return array(
-                'name'        => 'description',
                 'header'      => false,
+                'htmlOptions' => array('class' => 'actions-column'),
+                'name'        => 'description',
+                'sortable'    => false,
                 'type'        => 'raw',
                 'value'       => 'MissionStatusElement::renderStatusTextAndActionArea($data);',
-                'htmlOptions' => array('class' => 'actions-column'),
             );
         }
     }

@@ -118,6 +118,7 @@
             if (!empty($_GET['attributeName']))
             {
                 $attributeForm = AttributesFormFactory::createAttributeFormByAttributeName($model, $_GET["attributeName"]);
+                $attributeForm->setScenario('updateAttribute');
             }
             else
             {

@@ -199,7 +199,7 @@
                             {
                                 //At this point the createdByUser is not populated yet in the comment, so we can
                                 //use the current user.
-                                if ($participant->person != Yii::app()->user->userModel)
+                                if ($participant->person->getClassId('Item') != Yii::app()->user->userModel->getClassId('Item'))
                                 {
                                     $this->conversationParticipants[$position]->hasReadLatest = false;
                                 }

@@ -55,19 +55,18 @@
             {
                 return parent::render();
             }
-            $postToProfileContent  = Yii::t('Default', 'Post to profile');
+            $postToProfileContent  = ZurmoHtml::tag('span', array(), Yii::t('Default', 'Post to Profile'));
             $postToProfileContent .= static::renderHelpSpan();
             $postToProfileContent .= ZurmoHtml::checkBox('postToProfile', false);
             $content               = parent::render();
-            $content              .= ZurmoHtml::tag('div', array('class' => 'post-to-profile'), $postToProfileContent);
+            $content              .= ZurmoHtml::tag('div', array('class' => 'post-to-profile clearfix'), $postToProfileContent);
             return $content;
         }
 
         protected static function renderHelpSpan()
         {
-            $title       = Yii::t('Default', 'Post this note to your profile when you have something important to tell your colleagues');
-            $content    = '<span id="post-to-profile-note-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= '?</span>';
+            $title       = Yii::t('Default', 'Post this note to your profile to share with your colleagues');
+            $content    = '<span id="post-to-profile-note-tooltip" class="tooltip" title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#post-to-profile-note-tooltip");
             return $content;

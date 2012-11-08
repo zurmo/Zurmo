@@ -44,6 +44,14 @@
             AccountTestHelper::createAccountByNameForOwner('superAccount2', $super);
             AccountTestHelper::createAccountByNameForOwner('superAccount3', $super);
             AccountTestHelper::createAccountByNameForOwner('superAccount4', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount5', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount6', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount7', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount8', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount9', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount10', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount11', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount12', $super);
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser(Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
         }
@@ -70,11 +78,19 @@
             //Default Controller actions requiring some sort of parameter via POST or GET
             //Load Model Edit Views
             $accounts = Account::getAll();
-            $this->assertEquals(4, count($accounts));
+            $this->assertEquals(12, count($accounts));
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
             $superAccountId2 = self::getModelIdByModelNameAndName('Account', 'superAccount2');
             $superAccountId3 = self::getModelIdByModelNameAndName('Account', 'superAccount3');
             $superAccountId4 = self::getModelIdByModelNameAndName('Account', 'superAccount4');
+            $superAccountId5 = self::getModelIdByModelNameAndName ('Account', 'superAccount5');
+            $superAccountId6 = self::getModelIdByModelNameAndName('Account', 'superAccount6');
+            $superAccountId7 = self::getModelIdByModelNameAndName('Account', 'superAccount7');
+            $superAccountId8 = self::getModelIdByModelNameAndName('Account', 'superAccount8');
+            $superAccountId9 = self::getModelIdByModelNameAndName ('Account', 'superAccount9');
+            $superAccountId10 = self::getModelIdByModelNameAndName('Account', 'superAccount10');
+            $superAccountId11 = self::getModelIdByModelNameAndName('Account', 'superAccount11');
+            $superAccountId12 = self::getModelIdByModelNameAndName('Account', 'superAccount12');
             $this->setGetArray(array('id' => $superAccountId));
             $this->runControllerWithNoExceptionsAndGetContent('accounts/default/edit');
             //Save account.
@@ -108,7 +124,7 @@
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEdit');
-            $this->assertFalse(strpos($content, '<strong>4</strong>&#160;records selected for updating') === false);
+            $this->assertFalse(strpos($content, '<strong>12</strong>&#160;records selected for updating') === false);
 
             //save Model MassEdit for selected Ids
             //Test that the 2 accounts do not have the office phone number we are populating them with.
@@ -134,10 +150,26 @@
             $account2 = Account::getById($superAccountId2);
             $account3 = Account::getById($superAccountId3);
             $account4 = Account::getById($superAccountId4);
+            $account5 = Account::getById($superAccountId5);
+            $account6 = Account::getById($superAccountId6);
+            $account7 = Account::getById($superAccountId7);
+            $account8 = Account::getById($superAccountId8);
+            $account9 = Account::getById($superAccountId9);
+            $account10 = Account::getById($superAccountId10);
+            $account11 = Account::getById($superAccountId11);
+            $account12 = Account::getById($superAccountId12);
             $this->assertEquals   ('7788', $account1->officePhone);
             $this->assertEquals   ('7788', $account2->officePhone);
             $this->assertNotEquals('7788', $account3->officePhone);
             $this->assertNotEquals('7788', $account4->officePhone);
+            $this->assertNotEquals('7788', $account5->officePhone);
+            $this->assertNotEquals('7788', $account6->officePhone);
+            $this->assertNotEquals('7788', $account7->officePhone);
+            $this->assertNotEquals('7788', $account8->officePhone);
+            $this->assertNotEquals('7788', $account9->officePhone);
+            $this->assertNotEquals('7788', $account10->officePhone);
+            $this->assertNotEquals('7788', $account11->officePhone);
+            $this->assertNotEquals('7788', $account12->officePhone);
 
             //save Model MassEdit for entire search result
             $this->setGetArray(array(
@@ -147,16 +179,36 @@
                 'Account'  => array('officePhone' => '4455'),
                 'MassEdit' => array('officePhone' => 1)
             ));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', 20);
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massEdit');
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
             //Test that all accounts have the new phone number.
             $account1 = Account::getById($superAccountId);
             $account2 = Account::getById($superAccountId2);
             $account3 = Account::getById($superAccountId3);
             $account4 = Account::getById($superAccountId4);
+            $account5 = Account::getById($superAccountId5);
+            $account6 = Account::getById($superAccountId6);
+            $account7 = Account::getById($superAccountId7);
+            $account8 = Account::getById($superAccountId8);
+            $account9 = Account::getById($superAccountId9);
+            $account10 = Account::getById($superAccountId10);
+            $account11 = Account::getById($superAccountId11);
+            $account12 = Account::getById($superAccountId12);
             $this->assertEquals('4455', $account1->officePhone);
             $this->assertEquals('4455', $account2->officePhone);
             $this->assertEquals('4455', $account3->officePhone);
             $this->assertEquals('4455', $account4->officePhone);
+            $this->assertEquals('4455', $account5->officePhone);
+            $this->assertEquals('4455', $account6->officePhone);
+            $this->assertEquals('4455', $account7->officePhone);
+            $this->assertEquals('4455', $account8->officePhone);
+            $this->assertEquals('4455', $account9->officePhone);
+            $this->assertEquals('4455', $account10->officePhone);
+            $this->assertEquals('4455', $account11->officePhone);
+            $this->assertEquals('4455', $account12->officePhone);
 
             //Run Mass Update using progress save.
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
@@ -167,13 +219,13 @@
             //save Modal MassEdit using progress load for page 2, 3 and 4.
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => 2));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":50') === false);
+            $this->assertFalse(strpos($content, '"value":16') === false);
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => 3));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":75') === false);
+            $this->assertFalse(strpos($content, '"value":25') === false);
             $this->setGetArray(array('selectAll' => '1', 'Account_page' => 4));
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massEditProgressSave');
-            $this->assertFalse(strpos($content, '"value":100') === false);
+            $this->assertFalse(strpos($content, '"value":33') === false);
             //Set page size back to old value.
             Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
 
@@ -264,7 +316,7 @@
             $this->resetPostArray();
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/delete');
             $accounts = Account::getAll();
-            $this->assertEquals(3, count($accounts));
+            $this->assertEquals(11, count($accounts));
             try
             {
                 Account::getById($superAccountId4);
@@ -296,7 +348,7 @@
             $this->assertEquals('456765421', $accounts[0]->officePhone);
             $this->assertTrue  ($accounts[0]->owner == $super);
             $accounts = Account::getAll();
-            $this->assertEquals(4, count($accounts));
+            $this->assertEquals(12, count($accounts));
         }
 
         /**
@@ -329,6 +381,67 @@
                                  SearchForm::SELECTED_LIST_ATTRIBUTES => array('name', 'type', 'owner')
             );
             $this->assertEquals($compareData, $data);
+        }
+
+       /**
+         * @deletes all accounts. This should always be last function
+         */
+        public function testMassDeleteActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $superAccountId2  = self::getModelIdByModelNameAndName('Account', 'superAccount2');
+            $superAccountId3  = self::getModelIdByModelNameAndName('Account', 'superAccount3');
+            $superAccountId5  = self::getModelIdByModelNameAndName('Account', 'superAccount5');
+            $superAccountId6  = self::getModelIdByModelNameAndName('Account', 'superAccount6');
+            $superAccountId7  = self::getModelIdByModelNameAndName('Account', 'superAccount7');
+            $superAccountId8  = self::getModelIdByModelNameAndName('Account', 'superAccount8');
+            $superAccountId9  = self::getModelIdByModelNameAndName('Account', 'superAccount9');
+            $superAccountId10 = self::getModelIdByModelNameAndName('Account', 'superAccount10');
+            $superAccountId11 = self::getModelIdByModelNameAndName('Account', 'superAccount11');
+            $superAccountId12 = self::getModelIdByModelNameAndName('Account', 'superAccount12');
+            //Load Model MassDelete Views.
+            //MassDelete view for single selected ids
+            $this->setGetArray(array('selectedIds' => '5,6,7,8', 'selectAll' => '', ));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>4</strong>&#160;Accounts selected for removal') === false);
+
+            //MassDelete view for all result selected ids
+            $this->setGetArray(array('selectAll' => '1'));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>12</strong>&#160;Accounts selected for removal') === false);
+            //MassDelete for selected ids
+            $account2 = Account::getById($superAccountId2);
+            $account3 = Account::getById($superAccountId3);
+            $this->setGetArray(array(
+                'selectedIds' => $superAccountId2 . ',' . $superAccountId3, // Not Coding Standard
+                'selectAll' => '',
+                'Account_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
+
+            //Run Mass Delete using progress save.
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            //save Modal MassDelete using progress load for page 2.
+            $this->setGetArray(array('selectAll' => '1', 'Account_page' => 2));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massDeleteProgress');
+            $this->assertFalse(strpos($content, '"value":100') === false);
+
+            //Set page size back to old value.
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            //save Model MassDelete for entire search result
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Account_page' => 1));
+            $this->setPostArray(array('selectedIds' => '5'));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
         }
     }
 ?>

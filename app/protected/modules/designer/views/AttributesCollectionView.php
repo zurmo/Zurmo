@@ -66,7 +66,8 @@
                         $information['elementType'] == 'Address' ||
                         $information['elementType'] == 'User' ||
                         $information['isReadOnly'] ||
-                        $attributeName == 'id')
+                        $attributeName == 'id' ||
+                        $this->isAttributeOnModelOrCastedUp($attributeName))
                     {
                         //temporary until we figure out how to handle these types.
                         $linkContent = null;
@@ -91,6 +92,22 @@
                 $content .= '</div>';
             }
             return $content;
+        }
+
+        /**
+         * If the attribute is not on the same model class but nested up, it should be blocked from being configured
+         * in the designer tool since it can have side effects. You can still manually override this in the code if
+         * necessary.
+         */
+        protected function isAttributeOnModelOrCastedUp($attributeName)
+        {
+            assert('is_string($attributeName)');
+            $attributeAdapter = new RedBeanModelAttributeToDataProviderAdapter($this->modelClassName, $attributeName);
+            if ($attributeAdapter->getAttributeModelClassName() != $this->modelClassName)
+            {
+                return true;
+            }
+            return false;
         }
 
         public function isUniqueToAPage()

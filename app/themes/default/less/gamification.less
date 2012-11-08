@@ -18,6 +18,9 @@
             float: left;
         }
     }
+    .ranking{
+        float: none;
+    }
 }
 
 .icon-leaderboard-weekly:before{
@@ -47,14 +50,15 @@
 	padding:3px 6px;
 	text-align:center;
 	.radius(6px);
+    .smaller();
 }
 
 .ranking{
+    float: right;
+    margin-right: 5px;
 	display:block;
 	background:@themeColor;
 	color:#fff;
-	//.b-shadow(~"0 0 8px 0 #666, inset 0 0 0 1px #fff");
-	//border:1px solid rgba(255, 255, 255, 0.9);
 	.b-shadow(~"0 0 8px 0 #666");
 	width:26px;
 	height:26px;
@@ -62,8 +66,9 @@
 	vertical-align:middle;
 	text-align:center;
 	font-weight:bold;
-	font-size:10px;
+	.smaller();
 	.radius(50%);
+    .t-shadow(none) !important;
 }
 
 .UserLeaderboardRankingForPortletView,
@@ -135,7 +140,7 @@
 		}
 	}
 	.badge-grade{
-		font-size:11;
+		font-size:11px;
 		position:absolute;
 		top:-8px;
 		right:-8px;
@@ -198,30 +203,29 @@
 	height:200px;
 	.radius( 28px );
 	clear:both;
+    cursor: auto;
 	&:after{
 		.radius(28px);
 		.b-shadow( ~"inset 0 0 1px rgba(155,155,155,.5), inset 0 1px 0 rgba(225,225,225,.5),  inset 0 -20px 0 rgba(155,155,155,.7), inset 0 -21px 0 rgba(255,255,255,.3)");
 	}
 	.badge-icon{
-	    font-size:199px;
+	    font-size:200px;
 		.radius(27px);
 		&:before{
 			position:relative;
-			top:-30px;
+			top:-20px;
 		}
 	}
-	.badge-message{
-		position:absolute;
-		bottom:35px;
-		left:0;
-		display:block;
-		text-align:center;
-		width:100%;
-		h3{
-			color:@themeColor2 !important;
-			margin-top:3px;
-		}
-	}
+}
+
+.badge-message{
+    display:block;
+    text-align:center;
+    width:100%;
+    h3{
+        color:@themeColor2 !important;
+        margin-top:3px;
+    }
 }
 
 
@@ -307,8 +311,8 @@
 		content:"9";
 	}
 }
-.game-badge-MassEditOpportunity,
-.MassEditOpportunity{
+.game-badge-MassEditOpportunities,
+.MassEditOpportunities{
 	.badge-icon:before{
 		content:"[";
 	}
@@ -544,7 +548,7 @@
 
 /*Modals*/
 .ModalGameNotification{
-	padding:20px;
+	padding:10px 20px 20px 20px;
 	text-align:center;
 	.b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
     #gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );
@@ -570,18 +574,18 @@ a.close-ModalGameNotification.simple-select{
     background: none !important;
     margin-right: 10px;
     margin-left:-5px;
-    font-size: 11px;
+    .smaller();
 }
 
 /*=User Profile Page*/
 .UserSocialItemsForPortletView{
     margin-right: 20px !important;
     .wide.form{
-        border: none !important;
-        background: none !important;
+        border:none;
+        border-bottom: 1px solid #fff;
         .b-shadow(none);
     }
-    #social-item-inline-edit-form{
+    /*#social-item-inline-edit-form{
         border: none !important;
         background: none !important;
         .b-shadow(none);
@@ -596,7 +600,9 @@ a.close-ModalGameNotification.simple-select{
             border-top:1px solid #ccc
         }
     }
+    */
 }
+
 #UserDetailsView{
     .details-table{
         .clearfix() !important;
@@ -607,7 +613,11 @@ a.close-ModalGameNotification.simple-select{
 .gravatar-container{
     float: right;
     margin: 15px 15px 15px 0;
-    a{}
+    a{  
+        display: block;
+        float: left;
+        position: relative;
+    }
     img{}
     span{
         text-align: center;
@@ -616,10 +626,8 @@ a.close-ModalGameNotification.simple-select{
         z-index: 1;
         display: none;
         width:100%;
-        height: 100%;
+        height: auto;
         background: rgba(255, 255, 255, 0.7);
-        width:auto;
-        height:auto;
         .box-sizing();
     }
     &:hover{

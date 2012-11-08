@@ -28,6 +28,12 @@
             }
         }
     }
+    .overlay-label-field{
+        padding-bottom: 0;
+    }
+    td{
+        //padding-bottom: 15px;
+    }
     .matching-actions-and-content{
         form{
             padding-bottom: 0;
@@ -36,11 +42,19 @@
     tr:hover{
         background:none !important;
     }
+    th{
+        height: auto !important;
+        line-height: 1 !important;
+        padding: 0 !important;
+    }
+    td{
+        padding-bottom: 15px;
+    }
     th, td{
         background:none !important;
-        height: auto !important;
-        line-height: inherit !important;
-        padding:0 !important;
+        //height: auto !important;
+        //line-height: inherit !important;
+        //padding:0 !important;
         border:none !important;
     }
     .email-matching-summary-content{
@@ -73,10 +87,11 @@
     }
 }
 .email-matching-actions{
-    margin:15px 0 5px 0;
+    margin:15px 0 15px 0;
     display: block;
     a{
         .zLink();
+        text-decoration: none;
     }
 }
 .email-matching-show-more,

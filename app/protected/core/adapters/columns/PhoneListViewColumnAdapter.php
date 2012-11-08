@@ -26,5 +26,24 @@
 
     class PhoneListViewColumnAdapter extends TextListViewColumnAdapter
     {
+        public function renderGridViewData()
+        {
+            if ($this->getIsLink())
+            {
+                return array(
+                    'name' => $this->attribute,
+                    'type' => 'raw',
+                    'value' => $this->view->getLinkString('$data->' . $this->attribute),
+                    'htmlOptions' => array( 'class' => 'phone')
+                );
+            }
+            else
+            {
+                return array(
+                    'name'  => $this->attribute,
+                    'htmlOptions' => array( 'class' => 'phone')
+                );
+            }
+        }
     }
 ?>

@@ -31,8 +31,6 @@
     return array(
         'Comments'
             => 'Commenti',
-        'Delete Comment'
-            => 'Cancella',
         'Show older comments'
             => 'Mostra post più vecchi',
         '{n} Comment created|{n} Comments created'

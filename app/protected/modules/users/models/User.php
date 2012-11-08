@@ -353,9 +353,9 @@
         public function getAvatarImage($size = 250)
         {
             $avatarUrl = $this->getAvatarImageUrl($size);
-            return ZurmoHtml::image($avatarUrl, null, array('class'  => 'gravatar',
-                                                            'width'  => $size,
-                                                            'height' => $size));
+            return ZurmoHtml::image($avatarUrl, $this->getFullName(), array('class'  => 'gravatar',
+                                                                              'width'  => $size,
+                                                                              'height' => $size));
         }
 
         private function getAvatarImageUrl($size)

@@ -25,7 +25,7 @@
      ********************************************************************************/
 
     /**
-     * Display the mMission latest information either the latest comment or the description of the mission.
+     * Display the Mission latest information either the latest comment or the description of the mission.
      * Current support is for  the list view only.
      */
     class MissionLatestElement extends Element implements DerivedElementInterface

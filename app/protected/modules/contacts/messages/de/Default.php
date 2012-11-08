@@ -95,10 +95,10 @@
         'The status specified is not unique and is invalid.'
             => 'Die angegebenen Status ist nicht eindeutig und ist ungültig',
         '{n} ContactsModuleSingularLabel created|{n} ContactsModulePluralLabel created'
-            => '??',
+            => '{n} ContactsModuleSingularLabel erstellt|{n} ContactsModulePluralLabel erstellt',
         '{n} ContactsModuleSingularLabel mass updated|{n} ContactsModulePluralLabel mass updated'
-            => '??',
+            => '{n} ContactsModuleSingularLabel wurde aktualisiert|{n} ContactsModulePluralLabel wurden aktualisiert',
         '{n} ContactsModuleSingularLabel search completed|{n} ContactsModuleSingularLabel searches completed'
-            => '??',
+            => '{n} ContactsModuleSingularLabel Suche wurde abgeschlossen|{n} ContactsModuleSingularLabel Suchen wurden abgeschlossen',
     );
 ?>

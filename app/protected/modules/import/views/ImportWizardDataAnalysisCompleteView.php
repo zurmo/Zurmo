@@ -52,7 +52,7 @@
             assert('$form instanceof ZurmoActiveForm');
             $content  = '<table>'     . "\n";
             $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td><h3>'    . "\n";
+            $content .= '<tr><td><h3>' . "\n";
             if (count($this->model->dataAnalyzerMessagesData) == 0)
             {
                 $content .= Yii::t('Default',
@@ -69,10 +69,10 @@
             {
                 $label =  $this->columnNamesAndAttributeIndexOrDerivedTypeLabels[$columnName];
                 $content .= '<tr><td>'    . "\n";
-                $content .= '<b>' . $columnName . ' >>> ' . $label . '</b></br>';
+                $content .= '<strong>' . $columnName . ' >>> ' . $label . '</strong><br />';
                 foreach ($messagesData as $messageData)
                 {
-                    $content .= $messageData['message'] . "</br>";
+                    $content .= $messageData['message'] . "<br />";
                 }
                 $content .= '</td></tr>'  . "\n";
             }

@@ -44,24 +44,28 @@
             $buttons = array();
             list($beginPage, $endPage) = $this->getPageRange();
             $currentPage = $this->getCurrentPage(false); // currentPage is calculated in getPageRange()
-            $buttons[] = $this->createPageButton($this->firstPageLabel, 0, self::CSS_FIRST_PAGE, true, true);
+            $buttons[]   = $this->createPageButton('refresh', 0, 'refresh', true, true);
             if (($pageCount = $this->getPageCount()) <= 1)
             {
                 return $buttons;
             }
+            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->firstPageLabel, 0, $this->firstPageCssClass, $currentPage <= 0, false);
             // prev page
             if (($page = $currentPage-1) < 0)
             {
                 $page = 0;
             }
-            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->prevPageLabel, $page, self::CSS_PREVIOUS_PAGE, $currentPage <= 0, false);
+            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->prevPageLabel, $page, $this->previousPageCssClass, $currentPage <= 0, false);
 
             // next page
             if (($page = $currentPage + 1) >= $pageCount - 1)
             {
                 $page = $pageCount - 1;
             }
-            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->nextPageLabel, $page, self::CSS_NEXT_PAGE, $currentPage >= $pageCount-1, false);
+            $buttons[]= $this->createPageButtonNoLinkIfHidden($this->nextPageLabel, $page, $this->nextPageCssClass, $currentPage >= $pageCount-1, false);
+
+            // last page
+            $buttons[] = $this->createPageButtonNoLinkIfHidden($this->lastPageLabel, $pageCount - 1, $this->lastPageCssClass, $currentPage >= $pageCount - 1, false);
 
             return $buttons;
         }

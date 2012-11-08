@@ -39,6 +39,8 @@
                 $owner->attachEventHandler('onEndRequest', array($this, 'handleGamification'));
             }
             $owner->attachEventHandler('onEndRequest', array($this, 'handleSaveGlobalStateCheck'));
+            // Uncomment next line after fix issues with API
+            //$owner->attachEventHandler('onEndRequest', array($this, 'handleEndLogRouteEvents'));
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
         }
 
@@ -48,6 +50,7 @@
         public function handleSaveGlobalStateCheck($event)
         {
             $allEventHandlers = Yii::app()->getEventHandlers('onEndRequest');
+
             if (count($allEventHandlers))
             {
                 foreach ($allEventHandlers as $eventHandler)
@@ -55,6 +58,22 @@
                     if ($eventHandler[0] instanceof CApplication && $eventHandler[1] == 'saveGlobalState')
                     {
                         Yii::app()->saveGlobalState();
+                    }
+                }
+            }
+        }
+
+        public static function handleEndLogRouteEvents($event)
+        {
+            $allEventHandlers = Yii::app()->getEventHandlers('onEndRequest');
+
+            if (count($allEventHandlers))
+            {
+                foreach ($allEventHandlers as $eventHandler)
+                {
+                    if ($eventHandler[0] instanceof CLogRouter && $eventHandler[1] == 'processLogs')
+                    {
+                        Yii::app()->log->processLogs($event);
                     }
                 }
             }

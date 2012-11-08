@@ -61,15 +61,6 @@
                                         ),
                                     )
                                 ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'latestDateTime', 'type' => 'ConversationLatestDateTime'),
-                                            ),
-                                        ),
-                                    )
-                                ),
                             ),
                         ),
                     ),

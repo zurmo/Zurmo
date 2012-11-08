@@ -206,9 +206,14 @@
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('application.core.views.assets')) . '/interactions.js');
-            return '<?xml version="1.0" encoding="utf-8"?>'.
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('application.core.views.assets')) . '/jquery.truncateText.js');
+            /*return '<?xml version="1.0" encoding="utf-8"?>'.
                    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
-                   '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';
+                   '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">';*/
+            return '<!doctype html>' .
+                   '<html lang="en">';
         }
 
         /**
@@ -228,7 +233,7 @@
             $defaultTheme = 'themes/default';
             $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
-            $cs->registerMetaTag('text/html; charset=UTF-8', null, 'Content-Type'); // Not Coding Standard
+            //$cs->registerMetaTag('UTF-8', null, 'charset'); // Not Coding Standard
 
             $specialCssContent = null;
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
@@ -275,10 +280,11 @@
                 $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
             }
             return '<head>' .
-                 '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
-                  $specialCssContent .
-                  "<title>$title</title>"  .
-                  '</head>';
+                   '<meta charset="utf-8">' .
+                   '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
+                   $specialCssContent .
+                   '<title>' . $title . '</title>'  .
+                   '</head>';
         }
 
         /**
@@ -355,8 +361,9 @@
          */
         public static function getScriptFilesThatLoadOnAllPages()
         {
+            //When debug is on, the application never minifies
             $scriptData = array();
-            if (MINIFY_SCRIPTS)
+            if (MINIFY_SCRIPTS && !YII_DEBUG)
             {
                 foreach (Yii::app()->minScript->usingAjaxShouldNotIncludeJsPathAliasesAndFileNames as $data)
                 {

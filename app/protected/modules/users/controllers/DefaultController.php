@@ -87,7 +87,8 @@
                     $searchForm,
                     $pageSize,
                     UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                    $dataProvider
+                    $dataProvider,
+                    'UsersActionBarForSearchAndListView'
                 );
                 $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeViewWithBreadcrumbsForCurrentUser($this, $mixedView, $breadcrumbLinks, 'UserBreadCrumbView'));

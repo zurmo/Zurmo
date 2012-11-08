@@ -32,12 +32,15 @@
         protected $portlet;
         protected $uniqueLayoutId;
         protected $moduleId;
+        protected $portletsAreRemovable;
 
-        public function __construct($portlet, $uniqueLayoutId, $moduleId)
+        public function __construct($portlet, $uniqueLayoutId, $moduleId, $portletsAreRemovable = true)
         {
-            $this->portlet        = $portlet;
-            $this->uniqueLayoutId = $uniqueLayoutId;
-            $this->moduleId       = $moduleId;
+            assert('is_bool($portletsAreRemovable)');
+            $this->portlet              = $portlet;
+            $this->uniqueLayoutId       = $uniqueLayoutId;
+            $this->moduleId             = $moduleId;
+            $this->portletsAreRemovable = $portletsAreRemovable;
         }
 
         public function render()
@@ -70,7 +73,7 @@
 
         protected function arePortletsRemovable()
         {
-            return true;
+            return $this->portletsAreRemovable;
         }
     }
 ?>

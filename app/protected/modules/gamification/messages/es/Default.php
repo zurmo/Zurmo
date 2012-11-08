@@ -28,5 +28,60 @@
     // KEEP them indented correctly.
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
-    return array();
+    return array(
+        'Account Management'
+             => 'Gestión de la cuenta',
+        'Achievements'
+             => 'Logros alcanzados',
+        'Communication'
+             => 'Comunicación',
+        'Congratulations!'
+             => 'Felicitaciones!',
+        'Continue'
+             => 'Continuar',
+        'Game on!'
+             => 'Game on!', // Same Word Translated
+        'I reached level {nextLevel}'
+             => 'Llegué al nivel {nextLevel}',
+        'I received a new badge: {badgeContent}'
+             => 'He recibido una nueva insignia: {badgeContent}',
+        'Leaderboard'
+             => 'Tabla de Posiciones',
+        'Leaderboard Ranking'
+             => 'Clasificación de tabla de posiciones',
+        'Level'
+             => 'Nivel',
+        'Monthly'
+             => 'Mensual',
+        'New Badge'
+             => 'Nueva Insignia ',
+        'New Business'
+             => 'Negocio Nuevo',
+        'No achievements earned.'
+             => 'No hay logros obtenidos.',
+        'Overall'
+             => 'Total',
+        'Overall Statistics'
+             => 'Estadísticas Totales',
+        'Points'
+             => 'Puntos',
+        'Rank'
+             => 'Posición',
+        'Sales'
+             => 'Venta',
+        'Skip'
+             => 'Omitir',
+        'Time Management'
+             => 'Gestión del Tiempo?',
+        'Weekly'
+             => 'Semanal',
+        'You have reached level {nextLevel}'
+             => 'Has alcanzado el nivel  {nextLevel}',
+        '{n} Zurmo early morning login|{n} Zurmo early morning logins'
+             => '{n} Inicio Zurmo a la mañana temprano|{n} Inicios Zurmo a la mañana temprano',
+        '{n} Zurmo login|{n} Zurmo logins'
+             => '{n} Zurmo inicio |{n} Zurmo inicios de sesión',
+        '{n} Zurmo nighttime login|{n} Zurmo nighttime logins'
+             => '{n} Inicio Zurmo a la noche|{n} Inicios Zurmo a la noche',
+    );
 ?>

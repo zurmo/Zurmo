@@ -28,8 +28,8 @@
     {
         /**
          * Override to exclude details
-         * because this action are checked using the
-         * resolveCanCurrentUserAccessAction method.
+         * because this action cannot be checked for UsersModule since some users do not have access to the users module
+         * but can still access other user's profiles.
          */
         public function filters()
         {
@@ -45,12 +45,6 @@
                 );
             }
             return $filters;
-        }
-
-        public function actionDetails($id)
-        {
-            UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
-            parent::actionDetails($id);
         }
     }
 ?>

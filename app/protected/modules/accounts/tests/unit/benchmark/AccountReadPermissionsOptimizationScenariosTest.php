@@ -181,6 +181,13 @@
                 $saved = $u4->save();
                 assert('$saved');       // Not Coding Standard
 
+                //Add contacts to help test that the rebuild is working correctly
+                $contact = ContactTestHelper::createContactByNameForOwner('jason', Yii::app()->user->userModel);
+                $contact->addPermissions($u2, Permission::READ);
+                $contact->addPermissions($g2, Permission::READ);
+                $saved = $contact->save();
+                assert('$saved');       // Not Coding Standard
+
                 ReadPermissionsOptimizationUtil::rebuild();
                 assert('self::getAccountMungeRowCount() == 0'); // Not Coding Standard
                 RedBeanModel::forgetAll();
@@ -266,6 +273,9 @@
                 $a1->delete();
             }
 
+            /**
+             * @depends testOwnedSecurableItemCreated_Slide2
+             */
             public function testOwnedSecurableItemOwnerChanged_Slide3()
             {
                 $u1 = User::getByUsername('u1.');
@@ -304,6 +314,9 @@
                 $this->assertEverythingHasBeenSetBackToHowItStarted();
             }
 
+            /**
+             * @depends testOwnedSecurableItemOwnerChanged_Slide3
+             */
             public function testOwnedSecurableItemBeingDeleted_Slide4()
             {
                 $u1 = User::getByUsername('u1.');
@@ -324,11 +337,13 @@
                 //Called in OwnedSecurableItem::beforeDelete();
                 //ReadPermissionsOptimizationUtil::securableItemBeingDeleted($a1);
                 $a1->delete();
-
                 $this->assertEquals(array(),
                                     self::getAccountMungeRows($a1));
             }
 
+            /**
+             * @depends testOwnedSecurableItemBeingDeleted_Slide4
+             */
             public function testUserGivenReadOnOwnedSecurableItem_Slide5()
             {
                 $u1 = User::getByUsername('u1.');
@@ -385,6 +400,9 @@
                 $a1->delete();
             }
 
+            /**
+             * @depends testUserGivenReadOnOwnedSecurableItem_Slide5
+             */
             public function testGroupGivenReadOnOwnedSecurableItem_Slide6()
             {
                 $u1  = User::getByUsername('u1.');
@@ -436,6 +454,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testGroupGivenReadOnOwnedSecurableItem_Slide6
+             */
             public function testUserLosesReadOnOwnedSecurableItem_Slide7()
             {
                 $u1 = User::getByUsername('u1.');
@@ -497,6 +518,9 @@
                 $a1->delete();
             }
 
+            /**
+             * @depends testUserLosesReadOnOwnedSecurableItem_Slide7
+             */
             public function testGroupLosesReadOnOwnedSecurableItem_Slide8()
             {
                 $u1  = User::getByUsername('u1.');
@@ -550,6 +574,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testGroupLosesReadOnOwnedSecurableItem_Slide8
+             */
             public function testUserAddedToRole_Slide9()
             {
                 $u1  = User::getByUsername('u1.');
@@ -653,6 +680,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testUserAddedToRole_Slide9
+             */
             public function testUserRemovedFromRole_Slide10()
             {
                 $u1  = User::getByUsername('u1.');
@@ -748,6 +778,9 @@
                 $this->assertTrue($u2->save());
             }
 
+            /**
+             * @depends testUserRemovedFromRole_Slide10
+             */
             public function testUserAddedToGroup_Slide11()
             {
                 $u2  = User::getByUsername('u2.');
@@ -801,6 +834,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testUserAddedToGroup_Slide11
+             */
             public function testUserRemovedFromGroup_Slide12()
             {
                 $u2  = User::getByUsername('u2.');
@@ -854,6 +890,9 @@
                 $a3->delete();
             }
 
+            /**
+             * @depends testUserRemovedFromGroup_Slide12
+             */
             public function testRoleDeleted_Slide13()
             {
                 $u1  = User::getByUsername('u1.');
@@ -939,6 +978,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testRoleDeleted_Slide13
+             */
             public function testParentRoleRemovedFromRole_Slide14()
             {
                 $u1  = User::getByUsername('u1.');
@@ -1162,6 +1204,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testParentRoleRemovedFromRole_Slide14
+             */
             public function testGroupDeleted_Slide15()
             {
                 $u1  = User::getByUsername('u1.');
@@ -1272,6 +1317,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testGroupDeleted_Slide15
+             */
             public function testUserDeleted_Slide16()
             {
                 $u1  = User::getByUsername('u1.');
@@ -1360,6 +1408,9 @@
                 $this->assertTrue($g2->save());
             }
 
+            /**
+             * @depends testUserDeleted_Slide16
+             */
             public function testGroupAddedToGroup_Slide17()
             {
                 $u2  = User::getByUsername('u2.');
@@ -1494,6 +1545,9 @@
                 $this->assertEquals(0, $g2->groups->count());
             }
 
+            /**
+             * @depends testGroupAddedToGroup_Slide17
+             */
             public function testGroupRemovedFromGroup_Slide18()
             {
                 $u2  = User::getByUsername('u2.');
@@ -1603,6 +1657,9 @@
                 $this->assertTrue($g1->save());
             }
 
+            /**
+             * @depends testGroupRemovedFromGroup_Slide18
+             */
             public function testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide19()
             {
                 $u1  = User::getByUsername('u1.');
@@ -1709,6 +1766,9 @@
                 $this->assertTrue($g3->save());
             }
 
+            /**
+             * @depends testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide19
+             */
             public function testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide20()
             {
                 $u1  = User::getByUsername('u1.');
@@ -1827,6 +1887,9 @@
                 $this->assertTrue($u1->save());
             }
 
+            /**
+             * @depends testUserAddedToRoleWhereUserIsMemberOfGroupWithChildrenGroups_Slide20
+             */
             public function testUserAddedToGroup_Slide21()
             {
                 $u2  = User::getByUsername('u2.');
@@ -1926,6 +1989,9 @@
                 $this->assertTrue($g3->save());
             }
 
+            /**
+             * @depends testUserAddedToGroup_Slide21
+             */
             public function testUserAddedToGroup_Slide22()
             {
                 $u2  = User::getByUsername('u2.');

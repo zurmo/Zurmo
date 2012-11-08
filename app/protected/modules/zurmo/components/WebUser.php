@@ -86,7 +86,7 @@
         protected function afterLogin($fromCookie)
         {
             //Only run afterLogin when not coming from a cookie otherwise Yii::app()->user is not available.
-            if(!$fromCookie)
+            if (!$fromCookie)
             {
                 AuditEvent::logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_LOGGED_IN);
                 if ($this->hasEventHandler('onAfterLogin'))
@@ -94,7 +94,6 @@
                     $this->onAfterLogin(new CEvent($this));
                 }
             }
-
         }
 
         /**

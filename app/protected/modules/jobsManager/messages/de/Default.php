@@ -99,8 +99,6 @@
             => 'Empfohlene Häufigkeit',
         'Remove the api test entry script for production use.'
             => 'Entfernen das script test API für Produktion.',
-        'Reset'
-            => 'Reset', // Same Word Translated
         'Return to Job Manager'
             => 'Zurück zum Job Manager',
         'Scheduled jobs are stuck'

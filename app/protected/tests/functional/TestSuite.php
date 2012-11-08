@@ -67,8 +67,9 @@
                      "    options\n"                                                                                        .
                      "    -p                port Example: -p4044\n"                                                         .
                      "    -h                host Example: -hhttp://www.sitetotest/app/\n"                                   .
-                     "    -b                browser <*firefox|*iexplore> if not specified, will run all in browsers \n"     ;
-                     "                      Example: -b*firefox \n"                                                         ;
+                     "    -b                browser <*firefox|*iexplore> if not specified, will run all in browsers \n"     .
+                     "    -c                test server control url Example: -chttp://www.sitetotest/controlUrl.php\n"      .
+                     "                      Example: -b*firefox \n"                                                         .
                      "    -userExtensions   Example: -userExtensions pathToTheUserExtensionJS \n"                           .
                      "\n"                                                                                                   .
                      "  Examples:\n"                                                                                        .
@@ -166,28 +167,29 @@
             $browsersToRun = self::resolveBrowserFromParameter();
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
-                self::clearPreviousTestResultsByBrowser($browserDisplayName);
+                self::clearPreviousTestResultsByServerAndBrowser(self::getServerByServerControlUrl(self::resolveHostFromParameterAndConstant()),
+                                                                 $browserDisplayName);
                 foreach ($htmlTestSuiteFiles as $pathToSuite)
                 {
                     if (!self::isInstallationTest($pathToSuite))
                     {
                         echo 'Restoring test db';
-                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restore'));
+                        self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'restore'));
                         echo "Restored test db";
                         if (!self::isInstallationTest($pathToSuite))
                         {
                             echo 'Set user default time zone.';
-                            self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'setUserDefaultTimezone'));
+                            self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'setUserDefaultTimezone'));
                             echo "User default time zone set.";
                         }
                         echo 'Clear cache on remote server';
-                        self::remoteAction(TEST_BASE_URL, array('clearCache'         => '1',
+                        self::remoteAction(self::resolveHostFromParameterAndConstant(), array('clearCache'         => '1',
                                                                 'ignoreBrowserCheck' => '1'));
                     }
                     else
                     {
                         echo 'Uninstall zurmo';
-                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'backupRemovePerInstance'));
+                        self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'backupRemovePerInstance'));
                     }
                     echo "Cache cleared";
 
@@ -215,10 +217,10 @@
                     echo $finalCommand . "\n";
                     exec($finalCommand);
                     echo 'Restoring test db';
-                    self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restore'));
+                    self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'restore'));
                     if (self::isInstallationTest($pathToSuite))
                     {
-                        self::remoteAction(TEST_BASE_CONTROL_URL, array('action' => 'restorePerInstance'));
+                        self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'restorePerInstance'));
                     }
                 }
             }
@@ -323,6 +325,20 @@
             return TEST_BASE_URL;
         }
 
+        protected static function resolveServerControlUrlFromParameterAndConstant()
+        {
+            global $argv, $argc;
+
+            for ($i = 0; $i < ($argc); $i++)
+            {
+                if (substr($argv[$i], 0, 2) == '-c')
+                {
+                    return substr($argv[$i], 2);
+                }
+            }
+            return TEST_BASE_CONTROL_URL;
+        }
+
         protected static function resolveUserExtensionsJsFromParameterAndConstant()
         {
             global $argv, $argc;
@@ -371,6 +387,19 @@
             return self::getBrowsersData();
         }
 
+        protected static function getServerByServerControlUrl($url)
+        {
+            if (stristr($url, 'dev9.zurmo.com'))
+            {
+                return 'dev9.zurmo.com';
+            }
+            elseif (stristr($url, 'dev8.zurmo.com'))
+            {
+                return 'dev8.zurmo.com';
+            }
+            return 'Unknown';
+        }
+
         protected static function getBrowsersData()
         {
             return array(
@@ -394,10 +423,11 @@
                         $resultFile != 'Details.html')
                     {
                         $data[] = array(
-                            'fileName' => $resultFile,
+                            'fileName'     => $resultFile,
                             'modifiedDate' => date ("F d Y H:i:s.", filemtime(TEST_RESULTS_PATH . $resultFile)),
-                            'status'   => self::getResultFileStatusByFileName($resultFile),
-                            'browser'       => self::getResultFileBrowserByFileName($resultFile),
+                            'status'       => self::getResultFileStatusByFileName($resultFile),
+                            'browser'      => self::getResultFileBrowserByFileName($resultFile),
+                            'server'       => self::getResultServerByFileName($resultFile),
                         );
                     }
                 }
@@ -406,7 +436,7 @@
             self::makeResultsSummaryFile($data);
         }
 
-        protected static function clearPreviousTestResultsByBrowser($browserDisplayName)
+        protected static function clearPreviousTestResultsByServerAndBrowser($server, $browserDisplayName)
         {
             if (is_dir(TEST_RESULTS_PATH))
             {
@@ -415,7 +445,8 @@
                 {
                     if ($resultFile != '.' &&
                     $resultFile != '..' &&
-                    stristr($resultFile, strtolower($browserDisplayName)))
+                    stristr($resultFile, strtolower($browserDisplayName)) &&
+                    stristr($resultFile, strtolower($server)))
                     {
                         unlink(TEST_RESULTS_PATH . $resultFile);
                     }
@@ -457,6 +488,19 @@
             return 'Unknown';
         }
 
+        protected static function getResultServerByFileName($resultFile)
+        {
+            if (stristr($resultFile, 'dev9.zurmo.com'))
+            {
+                return 'dev9.zurmo.com';
+            }
+            elseif (stristr($resultFile, 'dev8.zurmo.com'))
+            {
+                return 'dev8.zurmo.com';
+            }
+            return 'Unknown';
+        }
+
         protected static function makeResultsDetailsFile($data)
         {
             $fileName = TEST_RESULTS_PATH . 'Details.html';
@@ -464,6 +508,7 @@
             $content .= '<table border="1" width="100%">'                               . "\n";
             $content .= '<tr>'                                                          . "\n";
             $content .= '<td>Status</td>'                                               . "\n";
+            $content .= '<td>Server</td>'                                              . "\n";
             $content .= '<td>Browser</td>'                                              . "\n";
             $content .= '<td>Date</td>'                                                 . "\n";
             $content .= '<td>File</td>'                                                 . "\n";
@@ -478,6 +523,7 @@
                 }
                 $content .= '<tr>'                                                      . "\n";
                 $content .= '<td ' . $statusColor . '>' . $info['status']   . '</td>'   . "\n";
+                $content .= '<td>' . $info['server']                       . '</td>'   . "\n";
                 $content .= '<td>' . $info['browser']                       . '</td>'   . "\n";
                 $content .= '<td>' . $info['modifiedDate']                  . '</td>'   . "\n";
                 $content .= '<td>' . $link                                  . '</td>'   . "\n";
@@ -514,6 +560,7 @@
             $content .= '<table border="1" width="100%">'                               . "\n";
             $content .= '<tr>'                                                          . "\n";
             $content .= '<td>Status</td>'                                               . "\n";
+            $content .= '<td>Server</td>'                                               . "\n";
             $content .= '<td>Browser</td>'                                              . "\n";
             $content .= '<td>Date</td>'                                                 . "\n";
             $content .= '<td>Test Passed</td>'                                          . "\n";
@@ -528,10 +575,10 @@
             {
                 if (count($allBrowsersStats) == 0 || !in_array($info['browser'], $allBrowsersStats))
                 {
-                    $allBrowsersStats[$info['browser']] = array();
-                    $allBrowsersStats[$info['browser']]['testsPassed'] = 0;
-                    $allBrowsersStats[$info['browser']]['testsFailed'] = 0;
-                    $allBrowsersStats[$info['browser']]['modifiedDate'] = 0;
+                    $allBrowsersStats[$info['server']][$info['browser']] = array();
+                    $allBrowsersStats[$info['server']][$info['browser']]['testsPassed'] = 0;
+                    $allBrowsersStats[$info['server']][$info['browser']]['testsFailed'] = 0;
+                    $allBrowsersStats[$info['server']][$info['browser']]['modifiedDate'] = 0;
                 }
             }
 
@@ -539,43 +586,47 @@
             {
                 if ($info['status']=='status_passed')
                 {
-                    $allBrowsersStats[$info['browser']]['testsPassed']++;
+                    $allBrowsersStats[$info['server']][$info['browser']]['testsPassed']++;
                 }
                 else
                 {
-                    $allBrowsersStats[$info['browser']]['testsFailed']++;
+                    $allBrowsersStats[$info['server']][$info['browser']]['testsFailed']++;
                 }
 
-                if (strtotime($allBrowsersStats[$info['browser']]['modifiedDate']) < strtotime($info['modifiedDate']))
+                if (strtotime($allBrowsersStats[$info['server']][$info['browser']]['modifiedDate']) < strtotime($info['modifiedDate']))
                 {
-                    $allBrowsersStats[$info['browser']]['modifiedDate'] = $info['modifiedDate'];
+                    $allBrowsersStats[$info['server']][$info['browser']]['modifiedDate'] = $info['modifiedDate'];
                 }
             }
 
-            foreach ($allBrowsersStats as $browser => $browserStats)
+            foreach ($allBrowsersStats as $server => $serverStats)
             {
-                if ($browserStats['testsFailed'] > 0 || $browserStats['testsPassed'] <= 0)
+                foreach ($serverStats as $browser => $browserStats)
                 {
-                    $status = 'status_failed';
-                }
-                else
-                {
-                    $status = 'status_passed';
-                }
-                $statusColor = 'bgcolor="red"';
-                if ($status == 'status_passed')
-                {
-                    $statusColor = 'bgcolor="green"';
-                }
+                    if ($browserStats['testsFailed'] > 0 || $browserStats['testsPassed'] <= 0)
+                    {
+                        $status = 'status_failed';
+                    }
+                    else
+                    {
+                        $status = 'status_passed';
+                    }
+                    $statusColor = 'bgcolor="red"';
+                    if ($status == 'status_passed')
+                    {
+                        $statusColor = 'bgcolor="green"';
+                    }
 
-                $content .= '<tr>'                                              . "\n";
-                $content .= '<td ' . $statusColor . '>' . $status   . '</td>'   . "\n";
-                $content .= '<td>' . $browser                       . '</td>'   . "\n";
-                $content .= '<td>' . $browserStats['modifiedDate']  . '</td>'   . "\n";
-                $content .= '<td>' . $browserStats['testsPassed']   . '</td>'   . "\n";
-                $content .= '<td>' . $browserStats['testsFailed']   . '</td>'   . "\n";
-                $content .= '<td>' . $link                          . '</td>'   . "\n";
-                $content .= '</tr>'                                             . "\n";
+                    $content .= '<tr>'                                              . "\n";
+                    $content .= '<td ' . $statusColor . '>' . $status   . '</td>'   . "\n";
+                    $content .= '<td>' . $server                        . '</td>'   . "\n";
+                    $content .= '<td>' . $browser                       . '</td>'   . "\n";
+                    $content .= '<td>' . $browserStats['modifiedDate']  . '</td>'   . "\n";
+                    $content .= '<td>' . $browserStats['testsPassed']   . '</td>'   . "\n";
+                    $content .= '<td>' . $browserStats['testsFailed']   . '</td>'   . "\n";
+                    $content .= '<td>' . $link                          . '</td>'   . "\n";
+                    $content .= '</tr>'                                             . "\n";
+                }
             }
                 $content .= '</table>'                                          . "\n";
                 $content .= '</html>'                                           . "\n";
@@ -634,8 +685,8 @@
 
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
             curl_setopt($ch, CURLOPT_MAXREDIRS, 10 );
             curl_exec($ch);

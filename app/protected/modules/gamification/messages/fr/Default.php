@@ -28,5 +28,60 @@
     // KEEP them indented correctly.
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
-    return array();
+    return array(
+        'Account Management'
+            => 'Gestion des comptes',
+        'Achievements'
+            => 'Réussites',
+        'Communication'
+            => 'Communication', // Same Word Translated
+        'Congratulations!'
+            => 'Félicitations',
+        'Continue'
+            => 'Continuer',
+        'Game on!'
+             => 'Game on!', // Same Word Translated
+        'I reached level {nextLevel}'
+            => 'J\'ai atteint niveau {nextLevel}',
+        'I received a new badge: {badgeContent}'
+            => 'J\'ai reçu un nouveau badge: {badgeContent}',
+        'Leaderboard'
+            => 'Leaderboard', // Same Word Translated
+        'Leaderboard Ranking'
+            => 'Classement Leaderboard',
+        'Level'
+            => 'Niveau',
+        'Monthly'
+            => 'Mensuel',
+        'New Badge'
+            => 'Nouveau Badge',
+        'New Business'
+            => 'Nouvelles Affaires',
+        'No achievements earned.'
+            => 'Aucunes réussites obtenues.',
+        'Overall'
+            => 'Globale',
+        'Overall Statistics'
+            => 'Statistiques Globales',
+        'Points'
+            => 'Points', // Same Word Translated
+        'Rank'
+            => 'Rang',
+        'Sales'
+            => 'Affaires',
+        'Skip'
+            => 'Ignorer',
+        'Time Management'
+            => 'Gestion du temps',
+        'Weekly'
+            => 'Hebdomadaire',
+        'You have reached level {nextLevel}'
+            => 'Vous avez atteint le niveau {nextLevel}',
+        '{n} Zurmo early morning login|{n} Zurmo early morning logins'
+            => '{n} login Zurmo lève tôt|{n} logins Zurmo lèves tôts',
+        '{n} Zurmo login|{n} Zurmo logins'
+            => '{n} login Zurmo|{n} logins Zurmo',
+        '{n} Zurmo nighttime login|{n} Zurmo nighttime logins'
+            => '{n} login Zurmo noctambule|{n} logins noctambules',
+    );
 ?>

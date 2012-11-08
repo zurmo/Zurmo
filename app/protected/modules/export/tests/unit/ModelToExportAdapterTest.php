@@ -241,7 +241,7 @@
                 $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
                 $testItem->getAttributeLabel('email')             => 'a@a.com',
                 $testItem->getAttributeLabel('currency')          => null,
-                $testItem->getAttributeLabel('currencyValue')     => '100' . ' ' . $currencies[0]->code,
+                $testItem->getAttributeLabel('currencyValue')     => 100,
                 $testItem->getAttributeLabel('dropDown')          => $values[1],
                 $testItem->getAttributeLabel('radioDropDown')     => null,
                 $testItem->getAttributeLabel('multiDropDown')     => null,
@@ -266,6 +266,8 @@
                 'Secondary Email - Email Address' => null,
                 'Secondary Email - Is Invalid'    => null,
                 'Secondary Email - Opt Out'       => null,
+
+                'Currency Value Currency'         => 'USD',
 
                 $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',
@@ -354,7 +356,7 @@
                 $testItem->getAttributeLabel('url')               => 'http://www.asite.com',
                 $testItem->getAttributeLabel('email')             => 'a@a.com',
                 $testItem->getAttributeLabel('currency')          => null,
-                $testItem->getAttributeLabel('currencyValue')     => '100' . ' ' . $currencies[0]->code,
+                $testItem->getAttributeLabel('currencyValue')     => 100,
                 $testItem->getAttributeLabel('dropDown')          => null,
                 $testItem->getAttributeLabel('radioDropDown')     => null,
                 $testItem->getAttributeLabel('multiDropDown')     => null,
@@ -379,6 +381,8 @@
                 'Secondary Email - Email Address' => null,
                 'Secondary Email - Is Invalid'    => null,
                 'Secondary Email - Opt Out'       => null,
+
+                'Currency Value Currency'         => 'USD',
 
                 $testItem->getAttributeLabel('user')              => null,
                 $testItem->getAttributeLabel('owner')             => 'super',

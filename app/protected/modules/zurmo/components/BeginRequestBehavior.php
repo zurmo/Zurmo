@@ -154,7 +154,7 @@
         {
             if (!RedBeanDatabaseBuilderUtil::isAutoBuildStateValid())
             {
-                echo Yii::t('Default', 'Database upgrade not completed. Please try latter.');
+                echo Yii::t('Default', 'Database upgrade not completed. Please try again later.');
                 Yii::app()->end(0, false);
             }
         }

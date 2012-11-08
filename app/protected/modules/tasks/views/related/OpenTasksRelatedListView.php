@@ -40,6 +40,12 @@
                                     'routeParameters' => 'eval:$this->getCreateLinkRouteParameters()'),
                         ),
                     ),
+                    'rowMenu' => array(
+                        'elements' => array(
+                            array('type'                      => 'EditLink'),
+                            array('type'                      => 'RelatedDeleteLink'),
+                        ),
+                    ),
                     'derivedAttributeTypes' => array(
                         'CloseTaskCheckBox',
                     ),

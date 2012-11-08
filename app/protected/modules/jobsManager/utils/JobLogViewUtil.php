@@ -33,9 +33,10 @@
         {
             if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {
-                $content     = '<span id="active-nonmonitor-job-tooltip-' .
-                               $jobLog->id . '" class="tooltip" title="' . ZurmoHtml::encode($jobLog->message) . '">';
-                $content    .= '?</span><span class="job-label">' . Yii::t('Default', 'Completed with Errors') . '</span>';
+                $content    = '<span class="job-label">' . Yii::t('Default', 'Completed with Errors') . '</span>';
+                $content    .= '<span id="active-nonmonitor-job-tooltip-' .
+                               $jobLog->id . '" class="tooltip" title="' . ZurmoHtml::encode($jobLog->message) . '">?</span>';
+
                 $options     = array('content' =>
                                         array('title' =>
                                             array('text'   => Yii::t('Default', 'Error Log'),

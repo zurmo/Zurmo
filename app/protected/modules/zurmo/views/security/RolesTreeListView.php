@@ -46,10 +46,7 @@
             $content  = '<table class="configuration-list">';
             $content .= '<colgroup>';
             $content .= '<col style="width:50%" />';
-            $content .= '</colgroup>';
-            $content .= '<colgroup>';
             $content .= '<col style="width:25%" />';
-            $content .= '</colgroup>';
             $content .= '<col style="width:25%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';

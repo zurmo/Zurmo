@@ -87,17 +87,15 @@
                                                             );
             $content .= $formStart;
             $content .= '<div class="designer-toolbar">';
-            //$content .= $this->renderNotificationBar('NotificationBar');
             if ($this->designerRules->canConfigureLayoutPanelsType())
             {
                 $content .= $this->renderLayoutPanelsType($form);
             }
             $content .= '</div>';
             $content .= $this->renderDesignerLayoutEditorWidget();
-            $content .= $this->renderNotificationBar('NotificationBar');
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
             $content .= $this->renderCancelLink();
-            $content .= $this->renderSaveLayoutButton('NotificationBar');
+            $content .= $this->renderSaveLayoutButton('FlashMessageBar');
             $content .= '</div></div>';
 
             $formEnd  = $clipWidget->renderEndWidget();
@@ -130,7 +128,7 @@
                     'success' => 'function(data){designer.updateFlashBarAfterSaveLayout(data, "' . $notificationBarId . '")}', // Not Coding Standard
                     'error' => 'function(data){ ' . // Not Coding Standard
                         'var data = {' . // Not Coding Standard
-                        '   "message" : "' . Yii::t('Default', 'There was an error processing your request.'). '",
+                        '   "message" : "' . Yii::t('Default', 'There was an error processing your request'). '",
                             "type"    : "error"
                         };
                         designer.updateFlashBarAfterSaveLayout(data, "' . $notificationBarId . '")
@@ -182,19 +180,6 @@
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['designerLayoutEditor'];
-        }
-
-        protected function renderNotificationBar($barId)
-        {
-                $content = '<div id = "' . $barId . '"></div>';
-                $cClipWidget = new CClipWidget();
-                $cClipWidget->beginClip("metadataViewEditViewNotificationMessage");
-                $cClipWidget->widget('application.core.widgets.JNotify', array(
-                    'statusBarId' => $barId,
-                ));
-                $cClipWidget->endClip();
-                $content .= $cClipWidget->getController()->clips['metadataViewEditViewNotificationMessage'];
-                return $content;
         }
 
         protected function renderStickyAnchorScript()

@@ -101,17 +101,17 @@
         protected static function resolveRetrievableAttributesByModel($model)
         {
             $retrievableAttributeNames = array();
-           foreach ($model->attributeNames() as $name)
-           {
-               try
-               {
-                   $value = $model->{$name};
-                   $retrievableAttributeNames[] = $name;
-               }
-               catch (Exception $e)
-               {
-               }
-           }
+            foreach ($model->attributeNames() as $name)
+            {
+                try
+                {
+                    $value = $model->{$name};
+                    $retrievableAttributeNames[] = $name;
+                }
+                catch (Exception $e)
+                {
+                }
+            }
             return $retrievableAttributeNames;
         }
     }

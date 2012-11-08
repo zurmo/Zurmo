@@ -47,8 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} profile post created|{n} profile posts created',
-                          array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
+            return Yii::t('Default', '{n} profile post created|{n} profile posts created', array($value));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

@@ -28,5 +28,60 @@
     // KEEP them indented correctly.
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
-    return array();
+    return array(
+        'Account Management'
+             => 'Kontoverwaltung',
+        'Achievements'
+             => 'Erfolge',
+        'Communication'
+             => 'Kommunikation',
+        'Congratulations!'
+             => 'Herzlichen Glückwunsch!',
+        'Continue'
+             => 'Fortfahren',
+        'Game on!'
+             => 'Game on!', // Same Word Translated
+        'I reached level {nextLevel}'
+             => 'Erreichte ich Ebene {NextLevel}',
+        'I received a new badge: {badgeContent}'
+             => 'Ich verdiente ein neues Abzeiche {badgeContent}',
+        'Leaderboard'
+             => 'Rangliste',
+        'Leaderboard Ranking'
+             => 'Rangliste Platzierung',
+        'Level'
+             => 'Ebene',
+        'Monthly'
+             => 'Monatlich',
+        'New Badge'
+             => 'Neue Abzeichen',
+        'New Business'
+             => 'Neue Unternehmen',
+        'No achievements earned.'
+             => 'Keine Leistungen verdient.',
+        'Overall'
+             => 'Insgesamt',
+        'Overall Statistics'
+             => 'Gesamt Statistiken',
+        'Points'
+             => 'Punkte',
+        'Rank'
+             => 'Rang',
+        'Sales'
+             => 'Vertrieb',
+        'Skip'
+             => 'Überspringen',
+        'Time Management'
+             => 'Zeitmanagement',
+        'Weekly'
+             => 'Wöchentlich',
+        'You have reached level {nextLevel}'
+             => 'Du hast Ebene {NextLevel} erreicht',
+        '{n} Zurmo early morning login|{n} Zurmo early morning logins'
+             => '{n} Zurmo Morgenstund hat Gold im Mund login |{n} Zurmo Morgenstund hat Gold im Mund Logins',
+        '{n} Zurmo login|{n} Zurmo logins'
+             => '{n} Zurmo login |{n} Zurmo Logins', // Same Word Translated
+        '{n} Zurmo nighttime login|{n} Zurmo nighttime logins'
+             => '{n} Zurmo nachtzeit login |{n} Zurmo nachtzeit Logins',
+    );
 ?>

@@ -48,10 +48,6 @@
             => 'Nouvelle Conversation',
         'Create Conversations'
             => 'Créer Conversations',
-        'Created'
-            => 'Conversations commencées',
-        'created by {ownerStringContent}'
-            => 'crée par {ownerStringContent}',
         'Delete Conversations'
             => 'Supprimer Conversations',
         'Has Read Latest'

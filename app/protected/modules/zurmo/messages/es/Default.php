@@ -125,9 +125,9 @@
             => 'son obligatorios.',
         'Are you number one{spaceAndFirstName}? Find out how you size up to your colleagues on the Leaderboard.'
             => '¿Es el número uno {spaceAndFirstName}? Compárese con sus colegas en la tabla clasificatoria.',
-        'Are you sure you want to remove this group?'
+        'Are you sure you want to delete this group?'
             => '¿Está seguro que desea eliminar este grupo?',
-        'Are you sure you want to remove this role?'
+        'Are you sure you want to delete this role?'
             => '¿Está seguro que desea eliminar este role?',
         'Attachment'
             => 'Adjunto',
@@ -147,10 +147,6 @@
             => 'de {ownerStringContent}',
         'Cache has been successfully cleaned.'
             => 'Caché se ha limpiado correctamente.',
-        'Cancel'
-            => 'Cancelar',
-        'Cancel changes'
-            => 'Cancelar cambios',
         'Changes to active currencies saved successfully.'
             => 'Divisas activas cambiado con éxito.',
         'Changes to active languages saved successfully.'
@@ -191,6 +187,10 @@
             => 'Crear role',
         'Create Roles'
             => 'Crear roles',
+        'Created'
+            => 'Creado',
+        'created by {ownerStringContent}'
+            => 'creado por {ownerStringContent}',
         'Criteria Selected <span class="icon-clear">Z</span>'
             => 'Criterios Seleccionados <span class="icon-clear">Z</span>',
         'Currencies: Create'
@@ -215,6 +215,8 @@
             => 'Cantidad de elementos que figuran en el portlet',
         'Data'
             => 'Datos',
+        'Database upgrade not completed. Please try again later.'
+            => 'La actualización de la base de datos no se ha completado. Por favor, inténtelo de nuevo más tarde.',
         'days'
             => 'Días',
         'Dead'
@@ -481,6 +483,8 @@
             => 'Permitable', // Same Word Translated
         'Please provide data.'
             => 'Por favor, facilite los datos.',
+        'Please resolve the following issues for {modelString}:'
+            => '??',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Por favor, use Firefox, Chrome, o Internet Explorer.',
         'Policies'
@@ -489,6 +493,8 @@
             => 'Reglas guardado correctamente.',
         'Popup list page size'
             => 'Número de elementos en la lista popup',
+        'Post to Profile'
+            => 'Publicar en el perfil ',
         'Postal Code'
             => 'Código postal',
         'Primary Address'
@@ -619,6 +625,8 @@
             => 'El servicio web para los tipos de cambio no estaba disponible. El tipo de cambio no puede ser actualizado automáticamente.',
         'The currency was not removed because it is in use.'
             => 'La moneda no se ha eliminado porque está en uso.',
+        'The default value is {policyDefault}'
+            => '??',
         'The ID specified was invalid.'
             => ' ID no válido.',
         'The Import Wizard helps get your data into the system easily, find it under the config icon (that\'s the cog in the top right).'
@@ -659,6 +667,8 @@
             => 'Actualizar',
         'Update Custom Data'
             => 'Actualizar los datos personalizados',
+        'Updated'
+            => 'Actualizado',
         'Upload attachments to a record by clicking "More Options" when adding a note.'
             => 'Puedes subir archivos adjuntos a un registro haciendo clic en "Más opciones", al añadir una nota.',
         'User Membership'
@@ -701,6 +711,8 @@
             => 'Su versión de Yii es currentVersion y debe ser acceptableVersion',
         'ZurmoCRM'
             => 'ZurmoCRM', // Same Word Translated
+        '{modelString} is already connected to this record.'
+            => '??',
         '{url} (installed with Yii)'
             => '{url} (instalado con Yii)',
         '{url} (version {version} is installed)'

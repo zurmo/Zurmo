@@ -32,13 +32,15 @@
          */
         public function actionInlineCreateSave($redirectUrl = null)
         {
+            $socialItem = new SocialItem();
+            $socialItem->setScenario('createPost');
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'social-item-inline-edit-form')
             {
-                $this->actionInlineEditValidate(new SocialItem(), 'SocialItem');
+                $this->actionInlineEditValidate($socialItem, 'SocialItem');
             }
             $_POST['SocialItem']['explicitReadWriteModelPermissions']['type'] = ExplicitReadWriteModelPermissionsUtil::
                                                                                 MIXED_TYPE_EVERYONE_GROUP;
-            $this->attemptToSaveModelFromPost(new SocialItem(), $redirectUrl);
+            $this->attemptToSaveModelFromPost($socialItem, $redirectUrl);
         }
 
         public function actionPostGameNotificationToProfile($content)
@@ -103,10 +105,10 @@
             $socialItem    = SocialItem::getById((int)$id);
             $uniquePageId  = SocialItemsUtil::makeUniquePageIdByModel($socialItem);
             $content       = ZurmoHtml::tag('span', array(),
-                                            ZurmoHtml::link(Yii::t('Default', 'Comment'), '#',
+                                            ZurmoHtml::link(Yii::t('Default', 'Add comment'), '#',
                                                             array('class' => 'show-create-comment')));
             $inlineView    = new CommentForSocialItemInlineEditView($comment, 'default', 'comments', 'inlineCreateSave',
-                                                                    $urlParameters, $uniquePageId);
+                                                                    $urlParameters, $uniquePageId, $socialItem->id);
             $view          = new AjaxPageView($inlineView);
             echo $content . ZurmoHtml::tag('div', array('style' => 'display:none;'), $view->render());
         }

@@ -309,7 +309,7 @@
          */
         public static function resolveDynamicSearchClausesForModelIdsNeedingToBeItemIds($modelClassName, & $dynamicClauses)
         {
-            assert(is_array($dynamicClauses) && !empty($dynamicClauses));
+            assert(is_array($dynamicClauses) && !empty($dynamicClauses)); // Not Coding Standard
             $processRecursively = false;
 
             foreach ($dynamicClauses as $key => $clause)

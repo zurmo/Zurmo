@@ -131,5 +131,20 @@
             }
             return $this->params['showMaxSize'];
         }
+
+        /**
+         * @return string content
+         */
+        public static function getEditableTemplateForInlineEdit()
+        {
+            // Begin Not Coding Standard
+            return       '<td colspan="{colspan}">' .
+                         '<div class="file-upload-box">{content}{error}</div>' .
+                         '<a href="#" class="show-file-upload-box" onclick="jQuery' .
+                         '(this).hide().prev().show().find(\'input[type=file]\').click(); ' .
+                         'return false;">' . Yii::t('Default', 'Add Files') . '</a>' .
+                         '</td>';
+            // End Not Coding Standard
+        }
     }
 ?>

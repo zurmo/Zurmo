@@ -36,7 +36,7 @@
          */
         protected function getRelatedItemEditableTemplate()
         {
-            $editableTemplate = "<tr><td>\n";//"<tr><td colspan='3'>\n";
+            $editableTemplate = "<tr><td>\n";
             $editableTemplate .= '{label}<br/>{content}{error}';
             $editableTemplate .= "</td></tr>\n";
             return $editableTemplate;
@@ -48,7 +48,7 @@
          */
         protected function getRelatedItemEditableHiddenInputOnlyTemplate()
         {
-            $editableTemplate = "<tr><td>\n";//"<tr><td colspan='3'>\n";
+            $editableTemplate = "<tr><td>\n";
             $editableTemplate .= '{content}{error}';
             $editableTemplate .= "</td></tr>\n";
             return $editableTemplate;

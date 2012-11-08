@@ -37,25 +37,39 @@
          * @param string $viewModuleClassName
          * @return string content
          */
-        public static function renderItemAndCommentsContent(SocialItem $model, $redirectUrl)
+        public static function renderItemAndCommentsContent(SocialItem $model, $redirectUrl, $renderToUserString)
         {
             assert('is_string($redirectUrl) || $redirectUrl == null');
-
+            $userUrl  = Yii::app()->createUrl('/users/default/details', array('id' => $model->owner->id));
             $content  = '<div class="social-item">';
             $avatarImage = $model->owner->getAvatarImage(50);
             $content .= '<div class="comment model-details-summary clearfix">';
-            $content .= '<span class="user-details">' . $avatarImage;
-            $content .= ZurmoHtml::tag('strong', array(), strval($model->owner) );
+            $content .= '<span class="user-details">' . ZurmoHtml::link($avatarImage, $userUrl);
             $content .= '</span>';
+            $userLink = ZurmoHtml::link(strval($model->owner), $userUrl, array('class' => 'user-link'));
+            $content .= '<div class="comment-content"><p>';
 
-            $content .= '<div class="comment-content"><p>' . self::renderModelDescription($model) . '</p></div>';
+            if ($model->toUser->id > 0 && $renderToUserString)
+            {
+                $toUserUrl  = Yii::app()->createUrl('/users/default/details', array('id' => $model->toUser->id));
+                $toUserLink = ZurmoHtml::link(strval($model->toUser), $toUserUrl, array('class' => 'user-link'));
+                $content   .= Yii::t('Default', '{postedFromUser} to {postedToUser}',
+                                                array('{postedFromUser}' => $userLink,
+                                                      '{postedToUser}'   => $toUserLink));
+            }
+            else
+            {
+                $content   .= $userLink;
+            }
+            $content .= '</p>';
+            $content .= self::renderModelDescription($model) . '</div>';
             $content .= self::renderAfterDescriptionContent($model);
             $content .= self::renderItemFileContent($model);
 
             $content .= '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
                                     $model->latestDateTime, 'long', null) . '</strong>';
 
-            $content .= '<span class="delete-social-item">' . self::renderDeleteLinkContent($model) . '</span></span>';
+            $content .= ' · <span class="delete-comment">' . self::renderDeleteLinkContent($model) . '</span></span>';
             $content .= '</div>';
 
             $content .= self::renderCommentsContent($model);
@@ -110,10 +124,10 @@
             $url     =   Yii::app()->createUrl('socialItems/default/deleteViaAjax',
                                                array('id' => $model->id));
             // Begin Not Coding Standard
-            return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete Post'), $url,
+            return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete'), $url,
                          array('type'     => 'GET',
                                'complete' => "function(XMLHttpRequest, textStatus){
-                                              $('#deleteSocialItemLink" . $model->id . "').parent().parent().parent().parent().remove();}"),
+                                              $('#deleteSocialItemLink" . $model->id . "').parent().parent().parent().parent().parent().parent().remove();}"),
                          array('id'         => 'deleteSocialItemLink'   . $model->id,
                                 'class'     => 'deleteSocialItemLink'   . $model->id,
                                 'namespace' => 'delete'));
@@ -147,7 +161,7 @@
         private static function renderCreateCommentContent(SocialItem $model)
         {
             $content       = ZurmoHtml::tag('span', array(),
-                                            ZurmoHtml::link(Yii::t('Default', 'Add your comment'), '#',
+                                            ZurmoHtml::link(Yii::t('Default', 'Add comment'), '#',
                                                             array('class' => 'show-create-comment')));
             $comment       = new Comment();
             $uniquePageId  = self::makeUniquePageIdByModel($model);
@@ -161,7 +175,7 @@
                                    'redirectUrl'              => $redirectUrl); //After save, the url to go to.
 
             $inlineView    = new CommentForSocialItemInlineEditView($comment, 'default', 'comments', 'inlineCreateSave',
-                                                      $urlParameters, $uniquePageId);
+                                                      $urlParameters, $uniquePageId, $model->id);
             $content      .= ZurmoHtml::tag('div', array('style' => 'display:none;'), $inlineView->render());
             return ZurmoHtml::tag('div', array('id' => $uniquePageId), $content);
         }

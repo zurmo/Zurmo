@@ -220,7 +220,9 @@
                              'DefaultValueModelAttributeMappingRuleForm' =>
                              array('defaultValue' => $defaultValue),
                              'CurrencyRateToBaseModelAttributeMappingRuleForm' =>
-                                 array('rateToBase' => $rateToBase, 'id' => $currency->id)));
+                                 array('rateToBase' => $rateToBase),
+                             'CurrencyIdModelAttributeMappingRuleForm' =>
+                                 array('id' => $currency->id)));
         }
 
         public static function makeDateColumnMappingData($attributeName, $defaultValue = null,

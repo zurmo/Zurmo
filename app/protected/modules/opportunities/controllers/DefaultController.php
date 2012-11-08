@@ -208,6 +208,78 @@
             );
         }
 
+        /**
+         * Action for displaying a mass delete form and also action when that form is first submitted.
+         * When the form is submitted, in the event that the quantity of models to delete is greater
+         * than the pageSize, then once the pageSize quantity has been reached, the user will be
+         * redirected to the makeMassDeleteProgressView.
+         * In the mass delete progress view, a javascript refresh will take place that will call a refresh
+         * action, usually makeMassDeleteProgressView.
+         * If there is no need for a progress view, then a flash message will be added and the user will
+         * be redirected to the list view for the model.  A flash message will appear providing information
+         * on the delete records.
+         * @see Controler->makeMassDeleteProgressView
+         * @see Controller->processMassDelete
+         * @see
+         */
+        public function actionMassDelete()
+        {
+            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                            'massDeleteProgressPageSize');
+            $opportunity = new Opportunity(false);
+
+            $activeAttributes = $this->resolveActiveAttributesFromMassDeletePost();
+            $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
+                new OpportunitiesSearchForm($opportunity),
+                $pageSize,
+                Yii::app()->user->userModel->id
+            );
+            $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
+            $opportunity = $this->processMassDelete(
+                $pageSize,
+                $activeAttributes,
+                $selectedRecordCount,
+                'OpportunitiesPageView',
+                $opportunity,
+                OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
+                $dataProvider
+            );
+            $massDeleteView = $this->makeMassDeleteView(
+                $opportunity,
+                $activeAttributes,
+                $selectedRecordCount,
+                OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural')
+            );
+            $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
+                                         makeStandardViewForCurrentUser($this, $massDeleteView));
+            echo $view->render();
+        }
+
+        /**
+         * Action called in the event that the mass delete quantity is larger than the pageSize.
+         * This action is called after the pageSize quantity has been delted and continues to be
+         * called until the mass delete action is complete.  For example, if there are 20 records to delete
+         * and the pageSize is 5, then this action will be called 3 times.  The first 5 are updated when
+         * the actionMassDelete is called upon the initial form submission.
+         */
+        public function actionMassDeleteProgress()
+        {
+            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                            'massDeleteProgressPageSize');
+            $opportunity = new Opportunity(false);
+            $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
+                new OpportunitiesSearchForm($opportunity),
+                $pageSize,
+                Yii::app()->user->userModel->id
+            );
+            $this->processMassDeleteProgress(
+                'Opportunity',
+                $pageSize,
+                OpportunitiesModule::getModuleLabelByTypeAndLanguage('Plural'),
+                $dataProvider
+            );
+        }
+
         public function actionModalList()
         {
             $modalListLinkProvider = new SelectFromRelatedEditModalListLinkProvider(

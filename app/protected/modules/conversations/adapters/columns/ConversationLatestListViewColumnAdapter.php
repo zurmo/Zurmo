@@ -31,9 +31,10 @@
             return array(
                 'name'        => 'subject',
                 'header'      => false,
+                'htmlOptions' => array('style' => 'width:80%;'),
+                'sortable'    => false,
                 'type'        => 'raw',
                 'value'       => 'ConversationsUtil::renderSubjectAndLatestForDisplayView($data)',
-                'htmlOptions' => array('style' => 'width:80%;'),
             );
         }
     }

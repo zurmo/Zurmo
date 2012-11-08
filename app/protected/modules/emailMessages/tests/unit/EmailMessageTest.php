@@ -30,7 +30,7 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
-            UserTestHelper::createBasicUser('billy');
+            $billy = UserTestHelper::createBasicUser('billy');
             $jane = UserTestHelper::createBasicUser('jane');
             UserTestHelper::createBasicUser('sally');
             UserTestHelper::createBasicUser('jason');
@@ -362,11 +362,12 @@
             $billy                      = User::getByUsername('billy');
             Yii::app()->user->userModel = $billy;
             $emailMessage               = EmailMessageTestHelper::createDraftSystemEmail('billy test email', $billy);
+            ReadPermissionsOptimizationUtil::rebuild();
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
             Yii::app()->emailHelper->send($emailMessage);
             $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(2, Yii::app()->emailHelper->getSentCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
         }
     }
 ?>

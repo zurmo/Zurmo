@@ -127,5 +127,28 @@
             }
             return $columnCount;
         }
+
+        /**
+         * Get the maximum column count for a specific panel
+         * @return integer column count.
+         */
+        public static function getMaximumColumnCountForSpecificPanels($panel)
+        {
+            assert('is_array($panel)');
+            $columnCount = 0;
+            foreach ($panel['rows'] as $row)
+            {
+                $tempCount = 0;
+                foreach ($row['cells'] as $cell)
+                {
+                    $tempCount++;
+                }
+                if ($tempCount > $columnCount)
+                {
+                    $columnCount = $tempCount;
+                }
+            }
+            return $columnCount;
+        }
     }
 ?>

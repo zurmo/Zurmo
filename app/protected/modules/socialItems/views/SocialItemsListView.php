@@ -63,6 +63,13 @@
         protected $params;
 
         /**
+         * If a social item is posted to another user, should that show like 'Jim Smith to Mary Smith' or should it
+         * just show 'Jim Smith'.  Set to true if you want it to show 'Jim Smith to Mary Smith'
+         * @var boolean
+         */
+        protected $renderToUserString = false;
+
+        /**
          * Do not show any empty text since it would look strange in the social feed.
          * @var string
          */
@@ -75,7 +82,8 @@
                                     $paginationParams,
                                     $redirectUrl,
                                     $uniquePageId,
-                                    $params)
+                                    $params,
+                                    $renderToUserString = false)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -84,6 +92,7 @@
             assert('is_string($redirectUrl)');
             assert('is_string($uniquePageId)');
             assert('is_array($params)');
+            assert('is_bool($renderToUserString)');
             $this->dataProvider             = $dataProvider;
             $this->controllerId             = $controllerId;
             $this->moduleId                 = $moduleId;
@@ -94,6 +103,7 @@
             $this->gridIdSuffix             = $uniquePageId;
             $this->gridId                   = 'list-view';
             $this->params                   = $params;
+            $this->renderToUserString       = $renderToUserString;
         }
 
         protected function renderContent()
@@ -179,6 +189,11 @@
         protected function getShowTableOnEmpty()
         {
             return false;
+        }
+
+        public function getRenderToUserString()
+        {
+            return $this->renderToUserString;
         }
     }
 ?>

@@ -38,14 +38,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Select a field</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Type</td>
-	<td></td>
+	<td>select</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td>label=Type</td>
 </tr>
 <tr>
 	<td>addSelection</td>
@@ -78,19 +73,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td> 
-	<td>//div[@id='dk_container_savedSearchId']/div[@class='dk_options']/ul/li[2]/a</td> 
-	<td>TypeVendor</td> 
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Load a saved search</td>
+	<td>waitForTextPresent</td>
+	<td>Modify Structure</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=TypeVendor</td>
-	<td></td>
+	<td>select</td>
+	<td>id=savedSearchId</td>
+	<td>label=TypeVendor</td>
 </tr>
 <!-- changing name immediately of saved search-->
 <tr>
@@ -114,9 +104,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td> 
-	<td>//div[@id='dk_container_savedSearchId']/div[@class='dk_options']/ul/li[2]/a</td> 
-	<td>TypeVen</td> 
+	<td>waitForTextPresent</td>
+	<td>Modify Structure</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -130,14 +120,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Load a saved search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=TypeVen</td>
-	<td></td>
+	<td>select</td>
+	<td>id=savedSearchId</td>
+	<td>label=TypeVen</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -154,11 +139,6 @@
 	<td>id=more-search-link</td>
 	<td></td>
 </tr>
-<tr>
-	<td>assertText</td> 
-	<td>//div[@id='dk_container_savedSearchId']/div[@class='dk_options']/ul/li[2]/a</td> 
-	<td>TypeVendor</td> 
-</tr>
 <!--Test of adding filters-->
 <tr>
 	<td>click</td>
@@ -166,14 +146,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Load a saved search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=TypeVendor</td>
-	<td></td>
+	<td>select</td>
+	<td>id=savedSearchId</td>
+	<td>label=TypeVendor</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -182,18 +157,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=span.z-label &gt; span</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=#dk_container_AccountsSearchForm_dynamicClauses_1_attributeIndexOrDerivedType &gt; a.dk_toggle</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//a[contains(text(),'Name')])[2]</td>
-	<td></td>
+	<td>select</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_attributeIndexOrDerivedType</td>
+	<td>label=Name</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -221,11 +191,6 @@
 	<td>id=clear-search-link</td>
 	<td></td>
 </tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>Criteria Selected </td>
-	<td></td>
-</tr>
 <!-- Deleting saved search -->
 <tr>
 	<td>click</td>
@@ -233,14 +198,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Load a saved search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=TypeVendorAndName</td>
-	<td></td>
+	<td>select</td>
+	<td>id=savedSearchId</td>
+	<td>label=TypeVendorAndName</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -278,11 +238,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Criteria Selected </td>
-	<td></td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>index.php/accounts/default</td>
 	<td></td>
@@ -296,11 +251,6 @@
 	<td>click</td>
 	<td>id=more-search-link</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td> 
-	<td>//div[@id='dk_container_savedSearchId']/div[@class='dk_options']/ul/li[2]/a</td> 
-	<td>TypeVendor</td>
 </tr>
 </tbody></table>
 </body>

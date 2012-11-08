@@ -84,5 +84,60 @@
                 }
             }
         }
+
+        public static function makeMassDeleteData()
+        {
+            $account        = new Account();
+            $account->owner = Yii::app()->user->userModel;
+            $account->name  = 'Mass Delete Full Load Account';
+            $saved          = $account->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            //Load past meetings that will show up as latest activities
+            for ($i = 0; $i < 15; $i++)
+            {
+                $meeting = new Meeting();
+                $meeting->name             = 'MyMeeting ' . $i;
+                $meeting->owner            = Yii::app()->user->userModel;
+                $startStamp                = DateTimeUtil::convertTimestampToDbFormatDateTime(time()  - 10000 - ($i * 3600 * 24));
+                $meeting->startDateTime    = $startStamp;
+                $meeting->activityItems->add($account);
+                $saved = $meeting->save();
+                if (!$saved)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            //Load upcoming tasks
+            for ($i = 0; $i < 15; $i++)
+            {
+                $task = new Task();
+                $task->name             = 'MyTask ' . $i;
+                $task->completed        = false;
+                $task->owner            = Yii::app()->user->userModel;
+                $dueDateStamp           = DateTimeUtil::convertTimestampToDbFormatDateTime(time()  + 10000 + ($i * 3600 * 24));
+                $task->dueDateTime    = $dueDateStamp;
+                $task->activityItems->add($account);
+                $saved = $task->save();
+                if (!$saved)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+            //Load 20 so there is sufficient data for list view pagination testing
+            for ($i = 0; $i < 20; $i++)
+            {
+                $account        = new Account();
+                $account->owner = Yii::app()->user->userModel;
+                $account->name  = 'Mass Delete Test Account ' . $i;
+                $saved          = $account->save();
+                if (!$saved)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
     }
 ?>

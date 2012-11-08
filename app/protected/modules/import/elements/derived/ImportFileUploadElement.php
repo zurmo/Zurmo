@@ -82,7 +82,7 @@
         protected function renderDelimiterAndEnclosureContent($existingFilesInformation)
         {
             assert('is_array($existingFilesInformation)');
-            $params = array('htmlOptions' => array('size' => 5));
+            $params = array('htmlOptions' => array('size' => 5, 'encode' => 1));
             if (count($existingFilesInformation) == 1)
             {
                 $params['htmlOptions']['readonly']  = 'readonly';

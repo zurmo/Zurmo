@@ -156,15 +156,40 @@
             if (!$model->$relationAttributeName->contains($relationModel))
             {
                 $model->$relationAttributeName->add($relationModel);
+                if (!$model->save())
+                {
+                    $this->processSelectFromRelatedListSaveFails($model);
+                }
             }
-            $model->save();
+            else
+            {
+                $this->processSelectFromRelatedListSaveAlreadyConnected($model);
+            }
             $this->redirect(array('/' . $relationModuleId . '/defaultPortlet/modalRefresh',
-                                'id'             => $relationModelId,
-                                'portletId'      => $portletId,
-                                'uniqueLayoutId' => $uniqueLayoutId,
-                                'redirectUrl'    => $redirectUrl,
-                                'portletParams'  => array(  'relationModuleId' => $relationModuleId,
-                                                            'relationModelId'  => $relationModelId)));
+                                'id'                   => $relationModelId,
+                                'portletId'            => $portletId,
+                                'uniqueLayoutId'       => $uniqueLayoutId,
+                                'redirectUrl'          => $redirectUrl,
+                                'portletParams'        => array(  'relationModuleId' => $relationModuleId,
+                                                                  'relationModelId'  => $relationModelId),
+                                'portletsAreRemovable' => false));
+        }
+
+        protected function processSelectFromRelatedListSaveFails(RedBeanModel $model)
+        {
+            $header = Yii::t('Default', 'Please resolve the following issues for {modelString}:',
+                                        array('{modelString}' => strval($model)));
+            echo CJSON::encode(array('message'     => ZurmoHtml::errorSummary(array($model), $header),
+                                     'messageType' => 'error'));
+            Yii::app()->end(0, false);
+        }
+
+        protected function processSelectFromRelatedListSaveAlreadyConnected(RedBeanModel $model)
+        {
+            echo CJSON::encode(array('message'     => Yii::t('Default', '{modelString} is already connected to this record.',
+                                                                        array('{modelString}' => strval($model))),
+                                     'messageType' => 'message'));
+            Yii::app()->end(0, false);
         }
 
         public function actionMakeChartXML($portletId, $chartLibraryName)

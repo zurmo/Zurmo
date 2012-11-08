@@ -65,16 +65,11 @@
                 Yii::app()->emailHelper->setOutboundSettings();
                 Yii::app()->emailHelper->init();
 
-                //$userSmtpMailer = new EmailHelperForTesting();
                 self::$userMailer['outboundHost']     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundHost'];
                 self::$userMailer['outboundPort']     = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPort'];
                 self::$userMailer['outboundUsername'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundUsername'];
                 self::$userMailer['outboundPassword'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundPassword'];
                 self::$userMailer['outboundSecurity'] = Yii::app()->params['emailTestAccounts']['userSmtpSettings']['outboundSecurity'];
-                //$userSmtpMailer->setOutboundSettings();
-                //$userSmtpMailer->init();
-                //$userSmtpMailer->sendEmailThroughTransport = true;
-                //self::$userMailer = $userSmtpMailer;
             }
         }
 
@@ -94,6 +89,17 @@
 
         public static function tearDownAfterClass()
         {
+            $imap = new ZurmoImap();
+            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapHost'];
+            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapUsername'];
+            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapPassword'];
+            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapPort'];
+            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapSSL'];
+            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapFolder'];
+            $imap->init();
+            $imap->connect();
+            $imap->deleteMessages(true);
+
             Yii::app()->emailHelper->sendEmailThroughTransport = self::$emailHelperSendEmailThroughTransport;
             parent::tearDownAfterClass();
         }

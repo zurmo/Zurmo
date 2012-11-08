@@ -27,8 +27,4 @@ function rebuildSelectInputFromInputs(id, inputCollectionName)
     {
         $('#' + id).val(selected);
     }
-    $('#' + id).removeData('dropkick');
-    $('#dk_container_' + id).remove();
-    $('#' + id).dropkick();
-    $('#' + id).dropkick('rebindToggle');
 }

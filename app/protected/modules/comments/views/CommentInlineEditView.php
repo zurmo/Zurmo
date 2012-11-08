@@ -95,8 +95,7 @@
             }
             elseif ($element instanceOf FilesElement)
             {
-                $element->editableTemplate = '<td colspan="{colspan}">' .
-                                             '<div class="file-upload-box">{content}{error}</div></td>';
+                $element->editableTemplate = FilesElement::getEditableTemplateForInlineEdit();
             }
             else
             {

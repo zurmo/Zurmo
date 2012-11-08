@@ -65,7 +65,6 @@
             $content  = $this->renderError();
             $content .= $this->renderMultipleAttributesUsingCollectionContent();
             $content .= $this->renderRemovalNoticeContent();
-            $content .= '<br/>';
             $content .= '<div id="sortable-editable-dropdown-collection">';
             $content .= $cClipWidget->getController()->clips['EditableDropDownSortable'];
             $content .= '</div>';
@@ -105,7 +104,7 @@
                     }
                     else
                     {
-                        $items[$order]['{' . $language . 'Label}'] = null;
+                        $items[$order]['{' . $language . 'Label}'] = Yii::t('Default', $name, array(), null, $language);
                     }
                 }
             }
@@ -162,19 +161,19 @@
         {
             $activeLanguagesData = $this->getActiveLanguagesData();
             $baseLanguage           = $this->getBaseLanguage();
-            $content  = '<table>';
+            $content  = '<table id="picklist-values">';
             $content .= '<colgroup><col style="width:50%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr>';
-            $content .= '<td>';
+            $content .= '<tr><td>';
             $content .= '<div class="has-lang-label">' . ZurmoHtml::textField( $this->attribute . '_AddInput', '', array('size' => 50));
             $content .= static::renderLanguageLabelHtmlContent($activeLanguagesData[$baseLanguage]);
             $content .= '</div>';
-            $content .= ZurmoHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
             $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
-            $content .= '</td>';
-            $content .= '</tr>';
+            $content .= '</td></tr>';
+            $content .= '<tr><td>';
+            $content .= ZurmoHtml::button(Yii::t('Default', 'Add Item'), array('id' => $this->attribute . '_AddInputButton'));
+            $content .= '</td></tr>';
             $content .= '</tbody>';
             $content .= '</table>';
             return $content;

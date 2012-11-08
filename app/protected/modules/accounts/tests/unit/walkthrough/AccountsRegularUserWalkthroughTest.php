@@ -611,5 +611,48 @@
             $this->assertEquals ($super->getFullName(), $account2->owner->getFullName());
             $this->assertEquals ($billy->getFullName(), $account3->owner->getFullName());
         }
+
+         /**
+         * @deletes all accounts. This should always be last function
+         */
+
+        public function testRegularUserMassDelete()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $confused = User::getByUsername('confused');
+            $billy = User::getByUsername('billy');
+            $this->assertEquals(Right::DENY, $confused->getEffectiveRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE));
+            $confused->setRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE);
+            //Load MassDelete view for the 3 accounts.
+            $accounts = Account::getAll();
+            $this->assertEquals(8, count($accounts));
+            $account1 = AccountTestHelper::createAccountByNameForOwner('canDelete1', $confused);
+            $account2 = AccountTestHelper::createAccountByNameForOwner('canDelete2', $confused);
+            $account3 = AccountTestHelper::createAccountByNameForOwner('canDelete3', $billy);
+
+            $selectedIds = $account1->id . ',' . $account2->id . ',' . $account3->id ;    // Not Coding Standard
+            $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>3</strong>&#160;Accounts selected for removal') === false);
+
+            //Deleting 3 accounts
+            $this->setGetArray(array(
+                'selectedIds' => $selectedIds, // Not Coding Standard
+                'selectAll' => '',
+                'Account_page' => 1));
+            $this->setPostArray(array('selectedIds' => $account3->id));
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
+            //Deleting all accounts
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Account_page' => 1));
+            $this->setPostArray(array('selectedIds' => $account1->id));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+        }
     }
 ?>

@@ -350,6 +350,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_BULK_DELETE'   => array(
+                        'displayName' => ZurmoModule::RIGHT_BULK_DELETE,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_BULK_WRITE'   => array(
                         'displayName' => ZurmoModule::RIGHT_BULK_WRITE,
                         'explicit'    => null,
@@ -753,6 +759,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_BULK_DELETE'   => array(
+                        'displayName' => ZurmoModule::RIGHT_BULK_DELETE,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_BULK_WRITE'   => array(
                         'displayName' => ZurmoModule::RIGHT_BULK_WRITE,
                         'explicit'    => null,
@@ -1152,6 +1164,12 @@
                         'inherited'   => null,
                         'effective'   => Right::DENY,
                     ),
+                    'RIGHT_BULK_DELETE'   => array(
+                        'displayName' => ZurmoModule::RIGHT_BULK_DELETE,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
                     'RIGHT_BULK_WRITE'   => array(
                         'displayName' => ZurmoModule::RIGHT_BULK_WRITE,
                         'explicit'    => null,
@@ -1546,6 +1564,12 @@
                 'ZurmoModule'  => array(
                     'RIGHT_ACCESS_ADMINISTRATION'   => array(
                         'displayName' => ZurmoModule::RIGHT_ACCESS_ADMINISTRATION,
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'effective'   => Right::DENY,
+                    ),
+                    'RIGHT_BULK_DELETE'   => array(
+                        'displayName' => ZurmoModule::RIGHT_BULK_DELETE,
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

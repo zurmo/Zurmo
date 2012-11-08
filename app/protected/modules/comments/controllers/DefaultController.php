@@ -34,7 +34,7 @@
         {
             if (isset($_POST['ajax']) && $_POST['ajax'] === 'comment-inline-edit-form' . $uniquePageId)
             {
-                $this->actionInlineEditValidate(new Comment(), 'Comment');
+                $this->actionInlineEditValidate(new Comment());
             }
             $this->attemptToSaveModelFromPost(new Comment(), $redirectUrl);
         }

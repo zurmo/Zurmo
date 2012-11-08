@@ -86,11 +86,11 @@
                             foreach ($cell['elements'] as $elementKey => $elementInformation)
                             {
                                 //Expects listvie to always have a single cell per row
-                                if (count($row['cells']) !=1)
+                                if (count($row['cells']) != 1)
                                 {
                                     throw new NotSupportedException();
                                 }
-                                if($elementInformation['attributeName'] != 'null')
+                                if ($elementInformation['attributeName'] != 'null')
                                 {
                                     $attributeNames[] = $elementInformation['attributeName'];
                                 }

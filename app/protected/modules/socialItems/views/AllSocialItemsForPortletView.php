@@ -57,6 +57,20 @@
             return $inlineView->render();
         }
 
+        protected function renderSocialItemsContent()
+        {
+            $uniquePageId  = get_called_class();
+            $dataProvider  = $this->getDataProvider($uniquePageId);
+            $view          = new SocialItemsListView($dataProvider, 'default', 'socialItems',
+                                                      $this->resolveAndGetPaginationRoute(),
+                                                      $this->resolveAndGetPaginationParams(),
+                                                      $this->getNonAjaxRedirectUrl(),
+                                                      $uniquePageId,
+                                                      $this->params,
+                                                      true);
+            return $view->render();
+        }
+
         /**
          * Override to properly use myListDetails instead of just details as the action.
          * (non-PHPdoc)

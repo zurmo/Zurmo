@@ -39,7 +39,7 @@
                 {
                     if ($('#attributeTypeName').val() == '')
                     {
-                        alert('" . Yii::t('Default', 'You must first select a field type') . "');
+                        alert('" . CJavaScript::quote(Yii::t('Default', 'You must first select a field type')) . "');
                     }
                     else
                     {

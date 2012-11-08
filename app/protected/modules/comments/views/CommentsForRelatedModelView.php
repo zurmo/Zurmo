@@ -69,8 +69,7 @@
 
         protected function renderContent()
         {
-            $content = '<div>';
-            $content .= '<div>' . $this->renderHiddenRefreshLinkContent() . '</div>';
+            $content = '<div>' . $this->renderHiddenRefreshLinkContent() . '</div>';
             if (count($this->commentsData) > 0)
             {
                 if (count($this->commentsData) > $this->pageSize && $this->pageSize != null)
@@ -79,7 +78,6 @@
                 }
                 $content .= '<div id="CommentList' . $this->uniquePageId . '" class="CommentList">' . $this->renderCommentsContent() . '</div>';
             }
-            $content .= '</div>';
             return $content;
         }
 
@@ -120,9 +118,9 @@
                     $rows++;
                     continue;
                 }
-
-                $stringContent  = $comment->createdByUser->getAvatarImage(36);
-                $userName       = strval($comment->createdByUser);
+                $userUrl        = Yii::app()->createUrl('/users/default/details', array('id' => $comment->createdByUser->id));
+                $stringContent  = ZurmoHtml::link($comment->createdByUser->getAvatarImage(36), $userUrl);
+                $userName       = ZurmoHtml::link(strval($comment->createdByUser), $userUrl, array('class' => 'user-link'));
                 $stringContent .= '<div class="comment-content"><p>' . $userName . ': ' . $comment->description . '</p>';
 
                 //attachments
@@ -134,14 +132,17 @@
                    $this->relatedModel->createdByUser == Yii::app()->user->userModel ||
                    ($this->relatedModel instanceof OwnedSecurableItem && $this->relatedModel->owner == Yii::app()->user->userModel))
                 {
-                    $deleteCommentLink = '<span class="delete-comment">' . $this->renderDeleteLinkContent($comment) . '</span>';
+                    $deleteCommentLink   = ' · <span class="delete-comment">' . $this->renderDeleteLinkContent($comment) . '</span>';
+                    $editCommentLink     = ' · <span class="edit-comment">' . $this->renderEditLinkContent($comment) . '</span>';
                 }
                 else
                 {
                     $deleteCommentLink = null;
+                    $editCommentLink   = null;
                 }
+                $editCommentLink   = null; //temporary until edit link is added
                 $stringContent .= '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                              $comment->createdDateTime, 'long', null) . '</strong></span>' . $deleteCommentLink;
+                                              $comment->createdDateTime, 'long', null) . '</strong></span>' . $editCommentLink . $deleteCommentLink;
 
                 $stringContent .= '</div>';
 
@@ -156,13 +157,22 @@
             $url     =   Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/deleteViaAjax',
                             array_merge($this->getParams, array('id' => $comment->id)));
             // Begin Not Coding Standard
-            return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete Comment'), $url,
+            return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Delete'), $url,
                          array('type'     => 'GET',
                                'complete' => "function(XMLHttpRequest, textStatus){
                                               $('#deleteCommentLink" . $comment->id . "').parent().parent().parent().remove();}"),
                          array('id'         => 'deleteCommentLink' . $comment->id,
                                 'class'     => 'deleteCommentLink' . $comment->id,
                                 'namespace' => 'delete'));
+            // End Not Coding Standard
+        }
+
+        /*TODO*/
+        protected function renderEditLinkContent(Comment $comment)
+        {
+            $url     =   '';
+            // Begin Not Coding Standard
+            return       ZurmoHtml::ajaxLink(Yii::t('Default', 'Edit'), $url);
             // End Not Coding Standard
         }
 

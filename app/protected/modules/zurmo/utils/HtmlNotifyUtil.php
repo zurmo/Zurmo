@@ -32,28 +32,29 @@
         public static function renderHighlightBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
-            return '
-            <div class="ui-widget">
-                <div class="ui-state-highlight ui-corner-all">
-
-                    <p><span class="ui-icon ui-icon-info">&#160;</span>
-                    ' . $message .'
-                    </p>
-                </div>
-            </div>';
+            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-info'), '&#160' ) . $message;
+            $innerContent = ZurmoHtml::tag('p', array(), $content );
+            $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-highlight ui-corner-all'), $innerContent );
+            return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
         }
 
         public static function renderAlertBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
-            return '
-            <div class="ui-widget">
-                <div class="ui-state-error ui-corner-all">
-                    <p><span class="ui-icon ui-icon-alert">&#160;</span>
-                    <strong>' . Yii::t('Default', 'Alert') . ':</strong> ' . $message . '
-                    </p>
-                </div>
-            </div>';
+            $alertMessage = '<strong>' . Yii::t('Default', 'Alert') . ':</strong> ' . $message ;
+            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-alert'), '&#160' ) . $alertMessage;
+            $innerContent = ZurmoHtml::tag('p', array(), $content );
+            $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-highlight ui-corner-all'), $innerContent );
+            return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
+        }
+
+        public static function renderWarningBoxByMessage($message)
+        {
+            assert('$message != null && is_string($message)');
+            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-info'), '&#160' ) . $message;
+            $innerContent = ZurmoHtml::tag('p', array(), $content );
+            $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-warning ui-corner-all'), $innerContent );
+            return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
         }
     }
 ?>

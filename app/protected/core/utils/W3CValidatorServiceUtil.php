@@ -71,24 +71,69 @@
             $doc->registerXPathNamespace('m', 'http://www.w3.org/2005/10/markup-validator');
             $nodes = $doc->xpath('//m:markupvalidationresponse/m:validity');
             $validity = $nodes[0];
-            $nodes = $doc->xpath('//m:markupvalidationresponse/m:errors/m:errorcount');
-            $errorcount = strval($nodes[0]);
-            $nodes = $doc->xpath('//m:markupvalidationresponse/m:errors/m:errorlist/m:error');
 
-            if (!$validity || count($nodes) > 0)
+            $errorNodes = $doc->xpath('//m:markupvalidationresponse/m:errors/m:errorcount');
+            $errorCount = strval($errorNodes[0]);
+            $errorNodes = $doc->xpath('//m:markupvalidationresponse/m:errors/m:errorlist/m:error');
+
+            $warningNodes = $doc->xpath('//m:markupvalidationresponse/m:warnings/m:warningcount');
+
+            // We don't want to count and show warning about encoding type, which happen when we
+            // upload file directly to w3w or use API
+            // This warning will appear on all pages, and we can just ignore it.
+            $warningCount = strval($warningNodes[0]) - 1;
+            $warningNodes = $doc->xpath('//m:markupvalidationresponse/m:warnings/m:warninglist/m:warning');
+
+            if (!$validity || $errorCount > 0 || $warningCount > 0)
             {
                 $xhtmlValidationErrors[] = 'THIS IS NOT A VALID XHTML FILE';
-                $xhtmlValidationErrors[] = 'There are ' . $errorcount . ' errors';
-                foreach ($nodes as $node)
+
+                if ($errorCount)
                 {
-                    $nodes = $node->xpath('m:line');
-                    $line = strval($nodes[0]);
-                    $nodes = $node->xpath('m:col');
-                    $col = strval($nodes[0]);
-                    $nodes = $node->xpath('m:message');
-                    $message = strval($nodes[0]);
-                    $errorMessage = 'line: ' . $line . ', column: ' . $col . ' message: ' . $message ;
-                    $xhtmlValidationErrors[] = "$errorMessage";
+                    $xhtmlValidationErrors[] = 'There are ' . $errorCount . ' error(s)';
+                    foreach ($errorNodes as $node)
+                    {
+                        $errorNodes = $node->xpath('m:line');
+                        $line = strval($errorNodes[0]);
+                        $errorNodes = $node->xpath('m:col');
+                        $col = strval($errorNodes[0]);
+                        $errorNodes = $node->xpath('m:message');
+                        $message = strval($errorNodes[0]);
+                        $errorMessage = 'line: ' . $line . ', column: ' . $col . ' message: ' . $message ;
+                        $xhtmlValidationErrors[] = "$errorMessage";
+                    }
+                }
+
+                if ($warningCount)
+                {
+                    $xhtmlValidationErrors[] = 'There are ' . $warningCount . ' warning(s)';
+                    foreach ($warningNodes as $node)
+                    {
+                        $errorMessage = "";
+                        $warningNodes = $node->xpath('m:line');
+                        if (isset($warningNodes[0]))
+                        {
+                            $line = strval($warningNodes[0]);
+                            $errorMessage .= 'line: ' . $line . ', ';
+                        }
+                        $warningNodes = $node->xpath('m:col');
+                        if (isset($warningNodes[0]))
+                        {
+                            $col = strval($warningNodes[0]);
+                            $errorMessage .= ' column: ' . $col . ', ';
+                        }
+                        $warningNodes = $node->xpath('m:message');
+                        $message = strval($warningNodes[0]);
+
+                        if ($message == 'Using Direct Input mode: UTF-8 character encoding assumed')
+                        {
+                            // This is just message, because we didn't validated code by url
+                            // So just ignore this message.
+                            continue;
+                        }
+                        $errorMessage .=  'message: ' . $message ;
+                        $xhtmlValidationErrors[] = $errorMessage;
+                    }
                 }
             }
             return $xhtmlValidationErrors;

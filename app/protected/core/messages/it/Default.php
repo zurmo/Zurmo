@@ -55,6 +55,12 @@
             => 'e',
         'Application is not in maintenance mode. Please edit perInstance.php file, and set "$maintenanceMode = true;"'
             => 'L\'applicazione non è in modalità di manutenzione. Si prega di modificare il file perInstance.php, e impostare "$ maintenanceMode = true;"',
+        'Apply'
+            => 'Applica',
+        'Are you sure you want to delete this {modelLabel}?'
+            => 'Siete sicuro di voler eliminare questo(a) {modelLabel}?',
+        'Are you sure you want to unlink this {modelLabel}?'
+            => 'Siete sicuro di voler dissociare questo(a) {modelLabel}?',
         'Basic Search'
             => 'Ricerca',
         'Basic Search Fields'
@@ -69,6 +75,8 @@
             => 'da',
         'Cancel'
             => 'Annulla',
+        'Cancel Changes'
+            => 'Annulla le modifiche',
         'Cell Settings'
             => 'Configurazione delle celle',
         'Celsius'
@@ -91,6 +99,8 @@
             => 'Clicca qui',
         'Close'
             => 'Chiude',
+        'Columns'
+            => 'Colonne',
         'Copying files.'
             => 'Copia file.',
         'Could not extract upgrade "from version" in the manifest file.'
@@ -119,6 +129,8 @@
             => 'Valore predefinito',
         'Delete'
             => 'Elimina',
+        'Deleting'
+            => 'Eliminazione in corso',
         'Detail View Only'
             => 'Solo la vista dettaglio',
         'Details'
@@ -159,6 +171,8 @@
             => 'Nome Completo',
         'Go to Details'
             => 'Dettagli',
+        'Hidden Columns'
+            => 'Nascondi colonne',
         'Hour'
             => 'Ora',
         'Info'
@@ -185,6 +199,10 @@
             => 'Caricamento',
         'Loading UpgraderComponent.'
             => 'Caricamento di UpgraderComponent.',
+        'Mass Delete'
+            => 'Eliminazione di massa',
+        'Mass Delete is not reversable.'
+            => 'Eliminazione di massa non è reversibile.',
         'Mass Update'
             => 'Aggiornamento globale',
         'Max upload size: {maxSize}'
@@ -277,6 +295,8 @@
             => 'Rimuovi',
         'Removing upgrade files.'
             => 'Rimozione dei file di aggiornamento.',
+        'Reset'
+            => 'Reset', // Same Word Translated
         'Return to List'
             => 'Ritorna alla lista',
         'Row'
@@ -299,6 +319,8 @@
             => 'Seleziona',
         'Selected'
             => 'Dati selezionati',
+        'selected for removal.'
+            => 'selezionati per eliminare.',
         'selected for updating.'
             => 'selezionato',
         'Serialized Data'
@@ -311,6 +333,8 @@
             => 'Inizio',
         'Start typing to search'
             => 'Ricerca',
+        'successfully deleted'
+            => 'cancellati con successo',
         'Tab'
             => 'Tab', // Same Word Translated
         'The file did not exist'
@@ -319,6 +343,8 @@
             => 'La struttura non è valido. {error}',
         'There was an error during the extraction process of {zipFilePath}'
             => 'C\'era un errore durante il processo di estrazione di {zipFilePath}.',
+        'There was an error processing your request'
+            => 'C\'era un errore durante l\'elaborazione della vostra richiesta.',
         'There was an error uploading the file.'
             => 'Errore nel caricamento di file.',
         'There was an error with the web service.'
@@ -349,6 +375,8 @@
             => 'Digitare per trovare un tag.',
         'Unknown'
             => 'Ignoto ',
+        'Unlink'
+            => 'Dissociare',
         'Update'
             => 'Aggiorna',
         'updated successfully.'
@@ -367,6 +395,8 @@
             => 'Utente',
         'Users'
             => 'Utenti',
+        'Visible Columns'
+            => 'Visualizza colonne',
         'Yes'
             => 'Si',
         'Yesterday'

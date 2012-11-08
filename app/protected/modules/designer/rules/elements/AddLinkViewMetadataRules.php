@@ -54,7 +54,7 @@
             $modelNames  = array();
             foreach ($modules as $module)
             {
-                if ($module != 'UsersModule')
+                if (get_class($module) != 'UsersModule')
                 {
                     try
                     {

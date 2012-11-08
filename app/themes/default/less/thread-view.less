@@ -27,12 +27,6 @@
     top:-2px;
 }
 
-#ConversationsListView{
-    .items{
-        
-    }
-}
-
 .list-row-model-date{
     float: right;
     margin-right:10px;
@@ -75,7 +69,7 @@
         width:70%;
         float:left;
         td, th{
-            padding-bottom:10px !important;
+            //padding-bottom:10px !important;
         }
         > table{
             border-bottom: none;
@@ -95,12 +89,11 @@
     h2{
         margin-bottom:15px;
     }
-    
 }
 
 .comment-details{
-    margin:2px 0;
     display:inline-block;
+    .smaller();
     strong{
         color: #999;
         font-weight: normal !important;
@@ -119,45 +112,32 @@
 }
 
 .comment{
-    //margin-bottom:15px;
     line-height: 140%;
     .gravatar{
         margin-top:1px;
     }
     .comment-content{
-        font-size: 12px;
         padding-left:50px;
-        //margin:5px 0;
         line-height: 140%;
-    }
-    &:hover{
-        .delete-comment{
-            visibility:visible !important;
-            a{
-                color:@themeColor !important;
-            }
-        }
-        .delete-social-item{
-            visibility:visible !important;
-            a{
-                color:@themeColor !important;
-            }
-        }
     }
     &.unread{
         font-weight:bold;
     }
-    .delete-comment{
-        visibility:hidden;
-        margin-left: 5px;
+    .delete-comment, .edit-comment{
+        color:@themeColor;
+        .smaller();
         a{
-            margin-left:4px;
-        }
-        &:before{
-            .symbly(18px);
-            content:"_";
+            color:@themeColor;
+            .opacity(25);
+            &:hover{
+                .opacity(100);
+            }
         }
     }
+}
+
+.comment-content, .comment-details{
+    margin: 0 0 2px 0;
 }
 
 .model-details-summary{
@@ -193,32 +173,31 @@
 #CommentInlineEditForModelView,
 #CommentsForRelatedModelView{
     width:70%;
+    margin-right:30%;
     float:left;
     max-width: 600px;
     .box-sizing();
-    
-    .fileinput-button{
-        //margin-bottom: 15px;
-    }
 }
 
 #CommentInlineEditForModelView{
     margin-top: 15px;
     padding-left: 120px;
     td{
-        padding-right: 0 !important;
+        padding:0 0 0 10px !important;
     }
     h2{
-        margin-left:10px;
+        margin:0 0 13px 10px; 
     }
     .wide.form{
         padding:0;
         border:none;
         background:none;
         .b-shadow(none);
+        margin-bottom: 0;
     }
     form{
         padding:0;
+        margin-bottom: 15px;
     }
     .panel{
         width:100%;
@@ -227,31 +206,16 @@
     table{
         margin-bottom: 0;
     }
-    .form-toolbar{
-        border-top: none;
-        padding-top: 0;
-        text-align: right;
-        margin-top:15px;
-        a{
-            color:#fff !important;
-            margin-right:0;
-        }
-    }
-    .files{
-        float:left;
-    }
 }
 
 .attachments{
     margin-top:5px;
     list-style: none;
-    li:first-child strong{
-
-    }
     li{
         margin-bottom:2px;
     }
 }
+
 .icon-attachment{
     .symbly(18px);
     margin-right:4px;
@@ -294,21 +258,31 @@
 }
 
 .missionStatusChangeArea{
+    margin-top: 10px;
     display: inline-block;
     a{
         float: none;
         color:#fff !important;
-        &:first-child{
-            //margin-left: 15px;
-        }
     }
 }
+
+.actions-column{
+    .missionStatusChangeArea{
+        margin-top:0;
+    }
+}
+
 .comment-content{
     .missionStatusChangeArea{
         a:first-child{
             margin-left: 15px;
         }
     }
+}
+
+a.user-link{
+    color: @themeColor;
+    font-weight: bold;
 }
 
 .mission-status{
@@ -321,6 +295,16 @@
     }
 }
 
+.actions-column{
+    text-align: right;
+}
+
+#MissionDetailsView,
+#ConversationDetailsView{
+    .files{
+        padding-bottom: 10px;
+    }
+}
 
 /*=Social Items*/
 .SocialItemsListView,
@@ -328,6 +312,9 @@
     tr:hover{
         background: none !important;
         color: inherit !important;
+    }
+    td:first-child{
+        border-top:none;
     }
     .CommentList{
         margin-left: 80px;
@@ -341,70 +328,114 @@
     }
     .show-create-comment{
         margin-left: 80px;
+        .smaller();
+        color:@themeColor;
+        .opacity(50);
+        &:hover{
+            .opacity(100);
+        }
     }
     .wide.form{
+        margin-bottom: 0;
         border:none;
-        background: none !important;
-        .b-shadow(none);
-        form{
-            border:none;
-            background: none !important;
-            .b-shadow(none);
-            padding-bottom: 0;
-        }
-        table.files{
-            border-bottom: none;
-            float: left;
-        }
-        .panel > table{
-            padding-bottom: 10px;
-        }
-    }
-    .form-toolbar{
-        text-align: right;
-        a{
-            color:#fff !important;
-            margin-right:0;
-        }
+        border-bottom: 1px solid #fff;
+        .b-shadow(none);   
     }
     .comment-content{
         padding-right:15px;
     }
 }
 
-.delete-social-item{
-    margin-left:5px;
-    visibility: hidden;
-    a{
-        margin-left:4px;
+#comment-inline-edit-form,
+#social-item-inline-edit-form{
+    padding-top:15px;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    background: none !important;
+    .b-shadow(none);
+    td:first-child{
+        padding-left: 0;
     }
-    &:before{
-        .symbly(18px);
-        content: "_";
+    .file-upload-box{
+        padding: 11px 0 10px 0;
+        display: none;
+        float: left;
     }
-}
-
-
-#SocialItemInlineEditView{
     .form-toolbar{
         text-align: right;
+        border-top:none;
+        padding-top: 0;
+        margin-top: 2px;
         a{
             color:#fff !important;
             margin-right:0;
         }
     }
-    #social-item-inline-edit-form{
-        td:first-child{
-            padding-left: 0;
+    table.files{
+        border-bottom: none;
+        float: left;
+        margin-top: 5px;
+    }
+    .panel > table{
+        border:none;
+    }
+}
+
+#social-item-inline-edit-form{
+    .view-toolbar-container{
+        float: none;
+    }
+}
+
+#comment-inline-edit-form{
+    border-bottom: none;
+    .file-upload-box{
+        padding: 14px 0 0 0;
+    }
+    tr.template-download td{
+        padding-left:0 !important;  
+    }
+}
+
+.SocialItemsListView{
+    .items{
+        width: 100%;
+        > tbody > tr > td{
+            padding: 0 !important;
         }
     }
 }
 
 .social-item{
-    form{
-        td{
-           padding-left: 65px !important;
-           padding-top: 0 !important;
+    border-bottom: 1px solid #fff;
+    padding: 15px 0;
+    .wide.form{
+        border:none !important;
+        background: none !important;
+        .b-shadow(none);
+        form{ 
+            border:none !important;
+            background: none !important;
+            .b-shadow(none);
+            padding-bottom: 0;
+            td{
+                //padding-top: 0 !important;
+                padding: 5px 0 10px 65px !important;
+            }
+        }   
+    }
+    textarea{
+        width: 100%;
+    }
+    table{
+        border-bottom: none;
+    }
+    .form-toolbar{
+        text-align: right;
+        border:none;
+        padding-top: 0;
+        a{
+            margin-right: 0;
         }
     }
 }

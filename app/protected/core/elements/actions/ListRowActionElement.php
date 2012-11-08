@@ -39,8 +39,11 @@
 
         protected function getAjaxLinkOptions()
         {
-            return array('success'    => "js:function(){\$('#" . $this->getLinkId() . "').closest('.items').parent()
-                                                        .find('.pager').find('.first').find('a').click();}");
+            return array(
+            'error'      => 'function(xhr, textStatus, errorThrown) {alert("' .
+                            CJavaScript::quote(Yii::t('Default', 'There was an error processing your request')) . '");}',
+            'success'    => "js:function(){\$('#" . $this->getLinkId() . "').closest('.items').parent()
+                                                        .find('.pager').find('.refresh').find('a').click();}");
         }
 
         public function renderMenuItem()

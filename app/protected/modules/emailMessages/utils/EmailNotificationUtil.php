@@ -33,7 +33,7 @@
         public static function resolveNotificationHtmlTemplate($bodyContent)
         {
             assert('is_string($bodyContent)');
-            $url                                = Yii::app()->createAbsoluteUrl('users/default/edit',
+            $url                                = Yii::app()->createAbsoluteUrl('users/default/configurationEdit',
                                                   array('id' => Yii::app()->user->userModel->id));
             $htmlTemplate                       = self::getNotificationHtmlTemplate();
             $htmlContent                        = array();

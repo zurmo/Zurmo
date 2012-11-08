@@ -433,5 +433,43 @@
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default');
             $this->assertFalse(strpos($content, 'Fatal error: Method Account::__toString() must not throw an exception') > 0);
         }
+
+        public function testRegularUserMassDelete()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $confused = User::getByUsername('confused');
+            $nobody = User::getByUsername('nobody');
+            $this->assertEquals(Right::DENY, $confused->getEffectiveRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE));
+            $confused->setRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE);
+            //Load MassDelete view for the 3 opportunities.
+            $opportunities = Opportunity::getAll();
+            $this->assertEquals(9, count($opportunities));
+            $opportunity1 = OpportunityTestHelper::createOpportunityByNameForOwner('oppotunityDelete1', $confused);
+            $opportunity2 = OpportunityTestHelper::createOpportunityByNameForOwner('oppotunityDelete2', $confused);
+            $opportunity3 = OpportunityTestHelper::createOpportunityByNameForOwner('oppotunityDelete3', $nobody);
+            $selectedIds = $opportunity1->id . ',' . $opportunity2->id . ',' . $opportunity3->id ;    // Not Coding Standard
+            $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>3</strong>&#160;Opportunities selected for removal') === false);
+
+            //Deleting 3 opportunities
+            $this->setGetArray(array(
+                'selectedIds' => $selectedIds, // Not Coding Standard
+                'selectAll' => '',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array('selectedIds' => $opportunity3->id));
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
+            //Deleting all contacts
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array('selectedIds' => $opportunity1->id));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+        }
     }
 ?>

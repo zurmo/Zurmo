@@ -107,15 +107,20 @@
             $id               = $this->getId();
             $leftListContent  = $this->resolveLeftSideListBox();
             $rightListContent = $this->resolveRightSideListBox();
-            $content  = '<td><div class="multiselect-holder"><div class="multiselect-left">';
+            $content  = '<td>';
+            $content .= '<div class="multiselect-holder">';
+
+            $content .= '<div class="multiselect-left">';
             $content .= '<label>' . $this->leftSideDisplayLabel . '</label>';
             $content .= $leftListContent;
+            $content .= '</div>';
 
-            $content .= '</div><div class="multiselect-nav">';
+            $content .= '<div class="multiselect-nav">';
             $content .= ZurmoHtml::button( '7', array( 'id' => $id . 'moveRight', 'class' => 'icon-right-arrow' ) ); //used 7, 8 becuase those are rendered as icons with symbly, other option is to make it an A with a SPAN inside it
             $content .= ZurmoHtml::button( '8', array( 'id' => $id . 'moveLeft', 'class' => 'icon-left-arrow' ) );
+            $content .= '</div>';
 
-            $content .= '</div><div class="multiselect-right">';
+            $content .= '<div class="multiselect-right">';
             $content .= '<label>' . $this->rightSideDisplayLabel . '</label>';
             $content .= $rightListContent;
             $content .= '</div>';
@@ -127,6 +132,7 @@
                 $content .= ZurmoHtml::button( '6', array( 'id' => $id . 'moveDown', 'class' => 'icon-down-arrow' ) ); // value "down" in icon font
                 $content .= '</div>';
             }
+            $content .= '</div>';
             $content .= '</td>';
             echo $content;
         }

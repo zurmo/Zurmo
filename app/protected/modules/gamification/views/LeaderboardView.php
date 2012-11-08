@@ -80,12 +80,15 @@
                 assert('is_string($leaderboardData["userLabel"])');
                 assert('is_int($leaderboardData["points"])');
 
+                $userUrl  = Yii::app()->createUrl('/users/default/details', array('id' => $userId));
                 $user        = User::getById($userId);
                 $avatarImage = $user->getAvatarImage(24);
 
                 $content .= '<tr>';
                 $content .= '<td><span class="ranking">' . $leaderboardData['rank'] . '</span></td>';
-                $content .= '<td class="user-label">' . $avatarImage . '<span>' . $leaderboardData['userLabel'] . '</span></td>';
+                $content .= '<td class="user-label">' .
+                            ZurmoHtml::link($avatarImage . '<span>' . $leaderboardData['userLabel'] . '</span>', $userUrl) .
+                            '</td>';
                 $content .= '<td><span class="points">' . $leaderboardData['points'] . '</span></td>';
                 $content .= '</tr>';
             }

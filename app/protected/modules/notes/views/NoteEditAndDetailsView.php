@@ -34,7 +34,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'CancelLink', 'renderType' => 'Edit', 'label' => Yii::t('Default', 'Cancel changes')),
+                            array('type' => 'CancelChangesLink', 'renderType' => 'Edit'),
                             array('type' => 'NoteDeleteLink'),
                             array('type' => 'SaveButton', 'renderType' => 'Edit'),
                             array('type' => 'EditLink', 'renderType' => 'Details'),

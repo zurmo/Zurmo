@@ -168,7 +168,7 @@
                         $content .= self::renderShortenedListViewContent($notification);
                         $content .= ZurmoHtml::link("Delete<span class='icon'></span>", "#",
                                                 array("class"   => "remove",
-                                                      "onclick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ")"));
+                                                      "onclick" => "deleteNotificationFromAjaxListView(this, " . $notification->id . ", event)"));
                         $content .= '</div>';
                 }
             }

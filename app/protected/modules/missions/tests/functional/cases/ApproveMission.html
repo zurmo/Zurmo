@@ -12,157 +12,157 @@
 <tr><td rowspan="1" colspan="3">Approve and Delete Mission</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+    <td>setSpeed</td>
+    <td>1000</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=notifications-link</td>
-	<td></td>
+    <td>click</td>
+    <td>id=notifications-link</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>A mission status has changed</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>A mission status has changed</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=span.icon</td>
-	<td></td>
+    <td>click</td>
+    <td>css=span.icon</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=span.icon</td>
-	<td></td>
+    <td>click</td>
+    <td>css=span.icon</td>
+    <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php/missions/default</td>
-	<td></td>
+    <td>open</td>
+    <td>index.php/missions/default</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>css=a.icon-missions-taken-but-not-accepted</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>css=a.icon-missions-taken-but-not-accepted</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Created</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>link=Created</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=span.z-label</td>
-	<td></td>
+    <td>click</td>
+    <td>css=span.z-label</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>xpath=//div[@id='list-view']/table/tbody/tr/td/a</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>xpath=//div[@id='list-view']/table/tbody/tr/td/a</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Accepted</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>Accepted</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>New mission ${randomSuffix}</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>New mission ${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Jill Smith</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>Jill Smith</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>I picked it... soon ill have it.</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>I picked it... soon ill have it.</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Start this one really quick or the candy goes away...</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>Start this one really quick or the candy goes away...</td>
+    <td></td>
 </tr>
 <!--Edit Mission-->
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Edit</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>link=Edit</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Mission_description</td>
-	<td>New mission ${randomSuffix} - Great Job</td>
+    <td>type</td>
+    <td>id=Mission_description</td>
+    <td>New mission ${randomSuffix} - Great Job</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=button.ui-datepicker-trigger</td>
-	<td></td>
+    <td>click</td>
+    <td>css=button.ui-datepicker-trigger</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Mission_dueDateTime</td>
-	<td></td>
+    <td>type</td>
+    <td>id=Mission_dueDateTime</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>id=save</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>id=save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>New mission ${randomSuffix} - Great Job</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>New mission ${randomSuffix} - Great Job</td>
+    <td></td>
 </tr>
 <!--Remove comments-->
 <tr>
-	<td>click</td>
-	<td>xpath=//div[@class='comment-content']/span[2]/a</td>
-	<td></td>
+    <td>click</td>
+    <td>xpath=//div[@class='comment-content']/span[2]/a</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>xpath=//div[@class='comment-content']/span[2]/a</td>
-	<td></td>
+    <td>click</td>
+    <td>xpath=//div[@class='comment-content']/span[2]/a</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>I picked it... soon ill have it.</td>
-	<td></td>
+    <td>assertTextNotPresent</td>
+    <td>I picked it... soon ill have it.</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>Start this one really quick or the candy goes away...</td>
-	<td></td>
+    <td>assertTextNotPresent</td>
+    <td>Start this one really quick or the candy goes away...</td>
+    <td></td>
 </tr>
 <!--Delete mission-->
 <tr>
-	<td>click</td>
-	<td>link=Delete</td>
-	<td></td>
+    <td>click</td>
+    <td>link=Delete</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to remove this Mission?</td>
-	<td></td>
+    <td>assertConfirmation</td>
+    <td>Are you sure you want to delete this mission?</td>
+    <td></td>
 </tr>
 <tr>
-	<td>chooseOkOnNextConfirmation</td>
-	<td></td>
-	<td></td>
+    <td>chooseOkOnNextConfirmation</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='RecentlyViewedView']/ul/li/a/span[2]</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='RecentlyViewedView']/ul/li/a/span[2]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>The record you are trying to access does not exist.</td>
-	<td></td>
+    <td>assertTextPresent</td>
+    <td>The record you are trying to access does not exist.</td>
+    <td></td>
 </tr>
 
 </tbody></table>

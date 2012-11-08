@@ -36,3 +36,12 @@ input[type="button"] {
 * html .ui-multiselect-checkboxes label {
   border: none;
 }
+/*Dropdowns*/
+.hasDropDown span {
+  z-index: 0;
+}
+.hasDropDown select {
+  z-index: 5;
+  padding-right: 5px;
+  background: #ffffff url(../images/dropdown-arrow.png) 100% 0 no-repeat;
+}

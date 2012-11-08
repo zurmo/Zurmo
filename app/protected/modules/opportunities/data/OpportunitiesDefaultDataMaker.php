@@ -39,6 +39,7 @@
                         'Closed Won',
                         'Closed Lost',
             );
+            $labels = array();
             static::makeCustomFieldDataByValuesAndDefault('SalesStages', $values, $values[0]);
         }
     }

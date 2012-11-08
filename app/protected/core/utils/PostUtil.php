@@ -66,6 +66,32 @@
             }
         }
 
+        public static function sanitizePostForMassDelete($postVariableName)
+        {
+            foreach ($_POST[$postVariableName] as $attributeName => $values)
+            {
+                if (empty($_POST['MassDelete'][$attributeName]))
+                {
+                    unset($_POST[$postVariableName][$attributeName]);
+                }
+                else
+                {
+                    if (is_array($values) && isset($values['values']) && is_string($values['values']))
+                    {
+                        if ($_POST[$postVariableName][$attributeName]['values'] == '')
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] = array();
+                        }
+                        else
+                        {
+                            $_POST[$postVariableName][$attributeName]['values'] =
+                                explode(',', $_POST[$postVariableName][$attributeName]['values']); // Not Coding Standard
+                        }
+                    }
+                }
+            }
+        }
+
         /**
          * Sanitizes post data for date and date time attributes by converting them to the proper
          * format and timezone for saving.

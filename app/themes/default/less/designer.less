@@ -1,3 +1,35 @@
+.add-custom-field{
+    //.clearfix();
+    > div{
+        //width: 100%;
+        //float: left;
+        padding:15px 15px 15px 15px;
+        position:relative;
+    }
+    .hasDropDown{
+        //margin-right: 130px;
+        width: 86%;
+        margin-right: 15px;
+        float: left;
+    }
+    .configure-custom-field-button{
+        //float: left;
+        //width: 130px;
+        //margin-left: -130px;
+        position: relative;
+        top: 1px;
+        .zButton();
+        &:before{
+            content: "n";
+            .symbly(16px);
+            margin-right:5px;
+            position:relative;
+            top:0px;
+        }
+    }
+}
+
+
 .lead-conversion-radiobutton{
 	display:block;
 	margin-bottom:10px;
@@ -220,9 +252,12 @@
     }
 }
 
-#sortable-editable-dropdown-collection li {
-    height: auto;
-    font-size: 1em;
+#sortable-editable-dropdown-collection{
+    clear: left;
+    li {
+        height: auto;
+        font-size: 1em;
+    }
 }
 
 .ui-icon{
@@ -456,4 +491,29 @@
 	table{
 		border-top:none !important;
 	}
+}
+
+
+/*Picklist Creation*/
+#picklist-values{
+    margin: 15px 0;
+    td{
+        padding-left: 0;
+        padding-bottom: 0;
+    }
+    .errorMessage{
+        margin-top:-5px;
+    }
+}
+#DropDownAttributeForm_customFieldDataData_em_{
+    margin-bottom: 10px;
+}
+#customFieldDataData_ul{
+    li{
+        position: relative;
+    }
+}
+
+#customFieldDataData_AddInputButton{
+    .zButton();
 }

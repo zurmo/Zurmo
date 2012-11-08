@@ -156,8 +156,8 @@ a.remove {
 	padding:10px 15px 0 15px;
 }
 
-.juiportlet-widget-content table.items{
-	width:100%;
+.juiportlet-widget-content .items{
+	//width:100%;
 	border:none !important;
 	thead > tr{
 		th, td{
@@ -181,22 +181,35 @@ a.remove {
 }
 
 .juiportlet-widget.OpportunitiesForAccountRelatedListView{
-	h3{
-		text-indent:30px;
-		&:before{
-			.juiportlet-header-icon();
-			content: '9';
-		}
+	h3:before{
+		content: '9';
 	}
 }
 
 .juiportlet-widget.ContactsForAccountRelatedListView{
-	h3{
+	h3:before{
+		content: 'e';
+	}
+}
+.juiportlet-widget.OpportunitiesForContactRelatedListView,
+.juiportlet-widget.OpportunitiesForAccountRelatedListView,
+.juiportlet-widget.ContactsForOpportunityRelatedListView,
+.juiportlet-widget.ContactsForAccountRelatedListView{
+    h3{
 		text-indent:30px;
 		&:before{
 			.juiportlet-header-icon();
-			content: 'e';
 		}
 	}
+    td:first-child{
+        div{
+            .smaller();
+            margin-top:3px;
+            &:first-child{
+                font-size: 12px;
+                font-weight: bold;
+                margin-top: 0;
+            }
+        }    
+    }
 }
-

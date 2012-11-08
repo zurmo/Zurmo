@@ -118,9 +118,13 @@
          */
         protected function resolveElementDuringFormLayoutRender(& $element)
         {
-            if ($element->getAttribute() == 'description' || $element instanceOf ActivityItemsElement)
+            if ($element->getAttribute() == 'description')
             {
                 $element->editableTemplate = '<td colspan="{colspan}">{content}{error}</td>';
+            }
+            elseif ($element instanceOf ActivityItemsElement)
+            {
+                $element->editableTemplate = '{content}{error}';
             }
             elseif ($element instanceOf DerivedExplicitReadWriteModelPermissionsElement)
             {
@@ -154,7 +158,7 @@
                     'complete' => "function(XMLHttpRequest, textStatus){
                         //find if there is a latest activities portlet
                         $('.LatestActivtiesForPortletView').each(function(){
-                            $(this).find('.pager').find('.first').find('a').click();
+                            $(this).find('.pager').find('.refresh').find('a').click();
                         });}"
                 ));
             // End Not Coding Standard

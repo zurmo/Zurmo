@@ -139,8 +139,10 @@
         protected function getCGridViewPagerParams()
         {
             return array(
-                    'prevPageLabel' => '<span>previous</span>',
-                    'nextPageLabel' => '<span>next</span>',
+                    'firstPageLabel' => '<span>first</span>',
+                    'prevPageLabel'  => '<span>previous</span>',
+                    'nextPageLabel'  => '<span>next</span>',
+                    'lastPageLabel'  => '<span>last</span>',
                     'class'          => 'SimpleListLinkPager',
                     'paginationParams' => array_merge(GetUtil::getData(), array('portletId' => $this->params['portletId'])),
                     'route'         => 'defaultPortlet/details',

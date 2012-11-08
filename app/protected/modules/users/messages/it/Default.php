@@ -35,6 +35,8 @@
             => 'Accesso ai Utente',
         'Change Password'
             => 'Cambia Password',
+        'Change Profile Picture'
+            => 'Cambia la foto del profilo',
         'Change User Passwords'
             => 'Cambia Password di Utente',
         'Confirm Password'
@@ -67,6 +69,8 @@
             => 'Lunghezza minima del nome utente',
         'My Profile'
             => 'Il mio profile',
+        'No Profile Picture'
+            => 'Non visualizzare una foto',
         'Password Expires'
             => 'Password scadenza',
         'Password Expiry Days'
@@ -97,6 +101,10 @@
             => 'Fuso orario',
         'Turn off email notifications'
             => 'Disattivare le notifiche e-mail',
+        'Use Gravatar with custom email'
+            => 'Utilizza Gravatar con un email personalizzato',
+        'Use Gravatar with primary email ({primaryEmail})'
+            => 'Utilizza Gravatar con l\'indirizzo e-mail primario ({primaryEmail})',
         'User'
             => 'Utente',
         'User configuration saved successfully.'
@@ -109,5 +117,9 @@
             => 'Gli utenti non possono essere cancellati. È tuttavia possibile cambiare il proprio status di inattivo.',
         'Users Home'
             => 'Utenti Home',
+        'You need to choose an email address.'
+            => 'È necessario scegliere un indirizzo email.',
+        'Your Gravatar is an image that follows you from site to site appearing beside your name when you do things like comment or post on a blog.'
+            => 'Tuo Gravatar è un immagine associata al tuo indirizzo email che appare accanto al tuo nome quando scrivi un articolo, commenti un post o una foto.',
     );
 ?>

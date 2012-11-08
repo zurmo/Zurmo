@@ -74,7 +74,6 @@
                                 $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
                                     $this->model->getAttributeLabel($attributeName),
                                     $relatedDataAttribute);
-
                                 $data[$exportAttributeName] = $relatedDataValue;
                             }
                         }

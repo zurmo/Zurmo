@@ -64,11 +64,11 @@
             assert('$form instanceof ZurmoActiveForm');
             $content  = null;
             $content .= '<h3>' . Yii::t('Default', 'Congratulations! Your import is complete.  Below is a summary of the results.') . '</h3>';
-            $content .= '<span>'   . "\n";
-            $content .= Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . "\n";
-            $content .= Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . "\n";
-            $content .= Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . "\n";
-            $content .= '</span>' . "\n";
+            $content .= '<ul class="import-summary">';
+            $content .= '<li>' . Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . '</li>';
+            $content .= '<li>' . Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . '</li>';
+            $content .= '<li>' . Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . '</li>';
+            $content .= '</ul>';
             $content .= $this->renderErrorListContent();
             return $content;
         }

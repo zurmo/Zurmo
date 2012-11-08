@@ -29,6 +29,57 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
-
+        'A mission status has changed'
+            => 'Eine Mission Status war geändert',
+        'A mission you completed has been accepted'
+            => 'Eine Mission, die du abgeschlosst wurde akzeptiert',
+        'A mission you completed has been rejected'
+            => 'Eine Mission, die du abgeschlosst wurde abgelehnt',
+        'A mission you created has been completed'
+            => 'Eine Mission, die du erstelltst wurde abgeschlossen',
+        'A mission you created has been taken on by {takenByUserName}'
+            => 'Eine Mission, die du erstellst wurde von {takenByUserName} entnommen',
+        'Accept'
+            => 'Akzeptieren',
+        'Accepted'
+            => 'Akzeptiert',
+        'Access Missions Tab'
+            => 'Zugang Missions Tab',
+        'At least one mission has unread content'
+            => 'Mindestens ein Mission hat ungelesenen Nachrichten',
+        'Available'
+            => 'Verfügbar',
+        'Awaiting Acceptance'
+            => 'Wartet Akzeptanz',
+        'Complete'
+            => 'Komplett',
+        'Create Mission'
+            => 'Mission erstellen',
+        'Create Missions'
+            => 'Missionen erstellen',
+        'Delete Missions'
+            => 'Missionen löschen',
+        'Due'
+            => 'Fällig',
+        'Mission'
+            => 'Mission', // Same Word Translated
+        'Mission Latest'
+            => 'Mission Latest', // Same Word Translated
+        'Missions'
+            => 'Missionen',
+        'My Missions'
+            => 'Meine Missionen',
+        'Reject'
+            => 'Ablehnen',
+        'Rejected'
+            => 'Abgelehnt',
+        'Reward'
+            => 'Belohne',
+        'Taken By'
+            => 'Aufgenommen von',
+        'This mission is already taken'
+            => 'Diese Mission ist bereits vergeben',
+        '{n} Mission created|{n} Missions created'
+            => '{n} Mission erstellt|{n} Missionen erstellt',
     );
 ?>

@@ -33,12 +33,12 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>id=save</td>
+	<td>name=save</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=show-more-panels-link-yt3</td>
+	<td>link=More Options</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,8 +54,13 @@
 
 <!-- assert whether delete button has appeared or not-->
 <tr>
+	<td>waitForTextPresent</td>
+	<td>testNotes.txt</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertVisible</td>
-	<td>//div[@id='fileUploadyw1']/div[3]/table/tbody/tr/td[3]/button</td>
+	<td>//div[@id='fileUploadyw1']/div[2]/table/tbody/tr/td/span/button</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +70,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=save</td>
+	<td>name=save</td>
 	<td></td>
 </tr>
 <tr>

@@ -50,8 +50,8 @@
             //Render icon
             $content  .= '<em class="'.get_class($model).'"></em>';
             //Render date
-            $content .= '<strong>'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                            $model->{$orderByAttributeName}, 'long', null) . '</strong><br/>';
+            $content .= '<strong class="activity-date">'.DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
+                            $model->{$orderByAttributeName}, 'long', null) . '</strong>';
 
             $data                                            = array();
             $data['modelStringContent']                      = self::renderModelStringContent($model, $redirectUrl);

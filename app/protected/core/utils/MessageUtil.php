@@ -322,7 +322,7 @@
                     pathinfo($entry, PATHINFO_EXTENSION) == 'php')
                 {
                     //Avoid any models in the framework/models folder and test models
-                    if ( strpos($path, '/framework') === false &&
+                    if ( strpos($path, '/core') === false &&
                          strpos($path, '/tests') === false &&
                          strpos($path, '/models') !== false &&
                          strpos($fullEntryName, '.php') !== false)

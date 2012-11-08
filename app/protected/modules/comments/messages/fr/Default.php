@@ -31,8 +31,6 @@
     return array(
         'Comments'
             => 'Commentaires',
-        'Delete Comment'
-            => 'Supprimer',
         'Show older comments'
             => 'Historique des commentaires',
         '{n} Comment created|{n} Comments created'

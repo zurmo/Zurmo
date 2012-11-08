@@ -34,9 +34,6 @@
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('application.core.views.assets')) . '/dropDownInteractions.js', $position);
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('application.core.views.assets')) . '/jquery.dropkick-1.0.0.js', $position);
         }
     }
 ?>

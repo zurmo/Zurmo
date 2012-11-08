@@ -212,6 +212,21 @@
             }
         }
 
+        /**
+        for mass delete
+        */
+        protected function resolveActiveAttributesFromMassDeletePost()
+        {
+            if (isset($_POST['MassDelete']))
+            {
+                return $_POST['MassDelete'];
+            }
+            else
+            {
+                return array();
+            }
+        }
+
         protected function makeMassEditView(
             $model,
             $activeAttributes,
@@ -225,6 +240,23 @@
             $massEditViewClassName = $moduleName . 'MassEditView';
             $view  = new $massEditViewClassName($this->getId(), $this->getModule()->getId(), $model, $activeAttributes,
                                                       $selectedRecordCount, $title, $alertMessage);
+            return $view;
+        }
+
+        /** for mass delete */
+        protected function makeMassDeleteView(
+            $model,
+            $activeAttributes,
+            $selectedRecordCount,
+            $title)
+        {
+            $moduleName            = $this->getModule()->getPluralCamelCasedName();
+            $moduleClassName       = $moduleName . 'Module';
+            $title                 = Yii::t('Default', 'Mass Delete') . ': ' . $title;
+            $massDeleteViewClassName = 'MassDeleteView';
+            $selectedIds = GetUtil::getData();
+            $view  = new $massDeleteViewClassName($this->getId(), $this->getModule()->getId(), $model, $activeAttributes,
+                                                      $selectedRecordCount, $title, null, $moduleClassName, $selectedIds);
             return $view;
         }
 
@@ -248,6 +280,25 @@
         }
 
         protected function getMassEditProgressStartFromGet($getVariableName, $pageSize)
+        {
+            if ($_GET[$getVariableName . '_page'] == 1)
+            {
+                return 1;
+            }
+            elseif ($_GET[$getVariableName . '_page']>1)
+            {
+                return ((($_GET[$getVariableName . '_page'] - 1) * $pageSize) +1);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+       /**
+        for Mass Delete
+        */
+        protected function getMassDeleteProgressStartFromGet($getVariableName, $pageSize)
         {
             if ($_GET[$getVariableName . '_page'] == 1)
             {
@@ -318,11 +369,51 @@
             }
         }
 
+        /** for mass delete */
+        protected function getModelsToDelete($modelClassName, $dataProvider, $selectedRecordCount, $page, $pageSize)
+        {
+            if ($dataProvider === null)
+            {
+                $modelsToDelete = array();
+                $IdsToDelete = explode(",", $_GET['selectedIds']); // Not Coding Standard
+                if ($page == 1)
+                {
+                    $start = 0;
+                }
+                elseif ($page > 1)
+                {
+                    $start = ($page - 1) * $pageSize;
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+                if (($pageSize * $page) > $selectedRecordCount)
+                {
+                    $end = $selectedRecordCount;
+                }
+                else
+                {
+                    $end = $pageSize * $page;
+                }
+                for ($i = $start; $i < $end; ++$i)
+                {
+                    eval('$modelsToDelete[] = ' . $modelClassName . '::getById(intval(' . $IdsToDelete[$i] . '));');
+                    //$modelsToSave[] = $modelClassName::getById(intval($IdsToSave[$i]));
+                }
+                return $modelsToDelete;
+            }
+            else
+            {
+                return $dataProvider->getData();
+            }
+        }
+
         protected function getMassEditAlertMessage($postVariableName)
         {
             if (!isset($_POST[$postVariableName]) && isset($_POST['save']))
             {
-                    return Yii::t('Default', 'You must select at least one field to modify.');
+                return Yii::t('Default', 'You must select at least one field to modify.');
             }
         }
     }

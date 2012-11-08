@@ -1,21 +1,7 @@
 $(window).ready(function(){
 
     //main menu flyouts or mbmenu releacment
-    /*
-    $( '.nav > .parent' ).hover(
-        function(){
-            if ( $(this).find('ul').length > 0 ){
-                $(this).find('ul').stop(true, true).delay(0).fadeIn(100);
-            }
-        },
-        function(){
-            if ( $(this).find('ul').length > 0 ){
-                $(this).find('ul').stop(true, true).fadeOut(250);
-            }
-        }
-    );
-    */
-    $('.nav:not(.headerNav) > .parent').live({
+    $('.nav:not(.user-menu-item) > .parent').live({
         mouseenter: function() {
             if ( $(this).find('ul').length > 0 ){
                 $(this).find('ul').stop(true, true).delay(0).fadeIn(100);
@@ -28,30 +14,21 @@ $(window).ready(function(){
         }
     });
 
-    $('.headerNav').live({
-        click: function() {
-            var attrId = $(this).attr('id');
-            if ($(this).find('ul').css('display') == 'none')
-            {
-                if ($(this).find('ul').length > 0){
-                    $(this).find('ul').show();
-                    $(document).one('click',function (e)
-                    {
-                        var container = $(this).find('ul').find('ul');
-                        if (container.has(e.target).length === 0 && $(e.target).closest('ul.headerNav').attr('id') != attrId)
-                        {
-                            container.hide();
-                        }
-                     });
-                }
-            }
-            else
-            {
-                 $(this).find('ul').hide();
+    $('.user-menu-item').click(
+        function(){
+            if ( $(this).hasClass('nav-open') === false ){
+                $('.nav-open').removeClass('nav-open');
+                $(this).addClass('nav-open');
+            } else {
+                $('.nav-open').removeClass('nav-open');
             }
         }
+    );
+    /*
+    $('body > div').click(function(){
+        $('.nav-open').removeClass('nav-open');
     });
-
+    */
 
     //Main nav hover
      $('#MenuView a, #RecentlyViewedView a').hover(
@@ -118,15 +95,26 @@ $(window).ready(function(){
         }
     });
 
-    /*Dropdowns - Dropkick - also see dropDownInteractions.js */
-    $('html').click(function(e) {
-        $.each($('select:not(.ignore-style)'), function(index, value) {
-            if( $(this).attr('multiple') != 'multiple' && $(value).dropkick )
-            {
-                $(value).dropkick('close');
-            }
-        });
+    /*New Dropdowns
+
+    $('.hasDropDown').hover(
+        function(){
+            $('span', this).addClass('over-dd');
+        },
+        function(){
+            $('span', this).removeClass('over-dd');
+        }
+    );
+    */
+    $('.hasDropDown').live({
+        mouseenter: function(){
+            $('span', this).addClass('over-dd');
+        },
+        mouseleave: function(){
+            $('span', this).removeClass('over-dd');
+        }
     });
+
    //we're doing that because the multiselect widget isn't generated yet..
    window.setTimeout(
        function setCheckboxes(){
@@ -213,14 +201,20 @@ function onAjaxSubmitRelatedListAction(confirmTitle, gridId)
     return true;
 }
 
-function makeSmallLoadingSpinner(id){
+function makeSmallLoadingSpinner(id, color){
+    var color;
+    if ( color === 'dark' ){
+        color = '#999';
+    } else {
+        color = '#fff';
+    }
     $( '.z-spinner', '#' + id ).spin({
         lines : 11, // The number of lines to draw
         length : 4, // The length of each line
         width : 2, // The line thickness
         radius : 4, // The radius of the inner circle
         rotate : 0, // The rotation offset
-        color : '#fff', // #rgb or #rrggbb
+        color : color, // #rgb or #rrggbb
         speed : 1.5, // Rounds per second
         trail : 35, // Afterglow percentage
         shadow : false, // Whether to render a shadow
@@ -276,9 +270,27 @@ function makeGlobalSearchSpinner(id, state){
 }
 
 
-
-
-
+//Graceful handling of ajax processing. If there is a server generated error,
+//it can be displayed in an alert or dialog box
+function processAjaxSuccessUpdateHtmlOrShowDataOnFailure(dataOrHtml, updateId)
+{
+    try
+    {
+        jsonData = jQuery.parseJSON(dataOrHtml);
+        $('#FlashMessageBar').jnotifyAddMessage(
+            {
+                 text: jsonData.message,
+                 permanent: false,
+                 showIcon: true,
+                 type: jsonData.messageType
+             }
+        );
+    }
+    catch (e)
+    {
+        $('#' + updateId).html(dataOrHtml);
+    }
+}
 
 
 

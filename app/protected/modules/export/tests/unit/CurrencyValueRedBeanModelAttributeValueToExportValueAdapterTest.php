@@ -76,7 +76,10 @@
 
             $adapter = new CurrencyValueRedBeanModelAttributeValueToExportValueAdapter($model, 'currencyValue');
             $adapter->resolveData($data);
-            $compareData = array($model->getAttributeLabel('currencyValue') => $currencyValue->value . " " . $currencyValue->currency->code);
+            $compareData = array(
+                $model->getAttributeLabel('currencyValue') => $currencyValue->value,
+                $model->getAttributeLabel('currencyValue') . " " . Yii::t('Default', 'Currency') => $currencyValue->currency->code
+            );
             $this->assertEquals($compareData, $data);
 
             $data = array();

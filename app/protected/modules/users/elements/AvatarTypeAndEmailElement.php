@@ -42,23 +42,23 @@
         {
             $this->nonEditableTemplate = '<td colspan="{colspan}">{content}</td>';
             $avatarImage = $this->model->getAvatarImage(200);
+            $content     = '<div class="gravatar-container">';
             if (Yii::app()->user->userModel->id == $this->model->id ||
                 RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))
             {
-                $content     = '<div class="gravatar-container">';
                 $span        = ZurmoHtml::tag('span',
                                       array('id'    => 'profile-picture-tooltip'),
-                                      Yii::t('Default', 'Click me to change the profile picture.'),
+                                      Yii::t('Default', 'Change Profile Picture'),
                                       true);
                 $url         = Yii::app()->createUrl('/users/default/changeAvatar', array('id' => $this->model->id));
                 $modalTitle  = ModalView::getAjaxOptionsForModalLink(Yii::t('Default', 'Change Profile Picture') . ": " . strval($this->model));
                 $content    .= ZurmoHtml::ajaxLink($span . $avatarImage, $url, $modalTitle);
-                $content    .= '</div>';
             }
             else
             {
-                $content = $avatarImage;
+                $content .= $avatarImage;
             }
+            $content    .= '</div>';
             return $content;
         }
 
@@ -83,9 +83,9 @@
         {
             $primaryEmail = $this->model->primaryEmail;
             $radioOptions = array(User::AVATAR_TYPE_DEFAULT       => Yii::t('Default', 'No Profile Picture'),
-                                  User::AVATAR_TYPE_PRIMARY_EMAIL => Yii::t('Default', 'Use gravatar with primary email ({primaryEmail})',
+                                  User::AVATAR_TYPE_PRIMARY_EMAIL => Yii::t('Default', 'Use Gravatar with primary email ({primaryEmail})',
                                                                             array('{primaryEmail}' => $primaryEmail)),
-                                  User::AVATAR_TYPE_CUSTOM_EMAIL  => Yii::t('Default', 'Use gravatar with custom email'));
+                                  User::AVATAR_TYPE_CUSTOM_EMAIL  => Yii::t('Default', 'Use Gravatar with custom email'));
             return $radioOptions;
         }
 

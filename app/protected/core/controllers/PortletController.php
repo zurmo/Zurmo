@@ -114,8 +114,10 @@
          * Resets controller back to default.
          * @param array $portletParams - optional argument which allows you to override the standard parameters.
          */
-        public function actionModalRefresh($portletId, $uniqueLayoutId, $redirectUrl, array $portletParams = array())
+        public function actionModalRefresh($portletId, $uniqueLayoutId, $redirectUrl, array $portletParams = array(),
+                                           $portletsAreRemovable = true)
         {
+            assert('is_bool($portletsAreRemovable)');
             $portlet = Portlet::getById(intval($portletId));
             $portlet->params = array_merge(array(
                     'controllerId' => 'default',
@@ -127,7 +129,8 @@
                 $modelClassName = Yii::app()->findModule($portlet->params["relationModuleId"])->getPrimaryModelName();
                 $portlet->params['relationModel'] = $modelClassName::getById((int)$portlet->params['relationModelId']);
             }
-            $view = new AjaxPageView(new PortletRefreshView($portlet, $uniqueLayoutId, $this->getModule()->getId()));
+            $view = new AjaxPageView(new PortletRefreshView($portlet, $uniqueLayoutId, $this->getModule()->getId(),
+                                                            $portletsAreRemovable));
             echo $view->render();
         }
     }

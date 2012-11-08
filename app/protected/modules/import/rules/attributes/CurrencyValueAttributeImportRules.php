@@ -58,7 +58,7 @@
             $currencyValue->rateToBase = $columnMappingData['mappingRulesData']['CurrencyRateToBaseModelAttributeMappingRuleForm']
                                          ['rateToBase'];
             $currencyValue->currency   = Currency::
-                                         getById($columnMappingData['mappingRulesData']['CurrencyRateToBaseModelAttributeMappingRuleForm']['id']);
+                                         getById((int)$columnMappingData['mappingRulesData']['CurrencyIdModelAttributeMappingRuleForm']['id']);
             return array($this->getModelAttributeName() => $currencyValue);
         }
     }

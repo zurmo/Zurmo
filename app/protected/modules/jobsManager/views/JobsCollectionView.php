@@ -68,13 +68,19 @@
             if ($this->messageBoxContent != null)
             {
                 $content .= $this->messageBoxContent;
-                //$content .= '<br/>';
             }
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
             $content .= $clipWidget->renderEndWidget();
             $content .= '</div></div>';
+            $this->renderScripts();
             return $content;
+        }
+
+        protected function renderScripts()
+        {
+            //Utilized by the job modal. Needed when debug is turned on so the pagination works correctly
+            Yii::app()->clientScript->registerCoreScript('bbq');
         }
 
         public function getTitle()
@@ -90,14 +96,10 @@
           */
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
-            //$content  = '<div class="horizontal-line"></div>' . "\n";
             $content = $this->renderMonitorJobLayout();
-            //$content .= '<br/>';
             $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
             $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
-            //$content .= '<br/>';
             $content .= $this->renderSuggestedFrequencyContent();
-            //$content .= '<br/>';
             $content .= $this->renderHelpContent();
             return $content;
         }
@@ -155,8 +157,7 @@
         protected static function renderMonitorJobHeaderContent()
         {
             $title       = Yii::t('Default', 'The Monitor Job runs constantly making sure all jobs are running properly.');
-            $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">';
-            $content    .= '?</span>';
+            $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-monitor-job-tooltip");
             return $content;
@@ -205,7 +206,6 @@
             $content .= '<tr><th>' . Yii::t('Default', 'Job Name') . '</th>';
             $content .= '<th>' . Yii::t('Default', 'Recommended Frequency') . '</th>';
             $content .= '</tr>';
-
             $content .= '<tr>';
             $content .= '<td>' . ZurmoHtml::encode($this->monitorJobData['label']) . '</td>';
             $content .= '<td>' . ZurmoHtml::encode($this->monitorJobData['recommendedFrequencyContent']) . '</td>';
@@ -216,8 +216,8 @@
                 $title    = Yii::t('Default', 'Cron or scheduled job name: {type}', array('{type}' => $type));
                 $content .= '<tr>';
                 $content .= '<td>';
-                $content .= '<span id="suggested-frequency-job-tooltip-' . $type . '" class="tooltip" title="' . $title . '">';
-                $content .= '?</span><span class="job-label">' . ZurmoHtml::encode($jobData['label']) . '</span>';
+                $content .= '<span class="job-label">' . ZurmoHtml::encode($jobData['label']) . '</span>';
+                $content .= '<span id="suggested-frequency-job-tooltip-' . $type . '" class="tooltip" title="' . $title . '">?</span>';
                 $content .= '</td>';
                 $content .= '<td>' . ZurmoHtml::encode($jobData['recommendedFrequencyContent']) . '</td>';
                 $content .= '</tr>';

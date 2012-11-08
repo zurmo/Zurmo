@@ -53,6 +53,7 @@
          * @var boolean
          */
         protected $scoringModelsOnSaveIsMuted = false;
+        protected $scoringModelsOnDeleteIsMuted = false;
 
         public function setModalNotificationsEnabled($value)
         {
@@ -108,6 +109,16 @@
             $this->scoringModelsOnSaveIsMuted = false;
         }
 
+        public function muteScoringModelsOnDelete()
+        {
+            $this->scoringModelsOnDeleteIsMuted = true;
+        }
+
+        public function unmuteScoringModelsOnDelete()
+        {
+            $this->scoringModelsOnDeleteIsMuted = false;
+        }
+
         /**
          * Override as needed to customize various aspects of gamification.  A few examples of things you can do here:
          * GeneralGameLevelRules::setLastLevel(100);
@@ -142,6 +153,20 @@
                 $gamificationRulesType      = $modelClassName::getGamificationRulesType();
                 $gamificationRulesClassName = $gamificationRulesType . 'Rules';
                 $gamificationRulesClassName::scoreOnMassEditModels($modelClassName);
+            }
+        }
+
+        /**
+         * @param string $modelClassName(mass delete)
+         */
+        public function triggerMassDeleteEvent($modelClassName)
+        {
+            assert('is_string($modelClassName)');
+            if (is_subclass_of($modelClassName, 'Item') && $modelClassName::getGamificationRulesType() != null)
+            {
+                $gamificationRulesType      = $modelClassName::getGamificationRulesType();
+                $gamificationRulesClassName = $gamificationRulesType . 'Rules';
+                $gamificationRulesClassName::scoreOnMassDeleteModels($modelClassName);
             }
         }
 

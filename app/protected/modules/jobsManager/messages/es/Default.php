@@ -99,8 +99,6 @@
             => 'Frecuencia recomendad',
         'Remove the api test entry script for production use.'
             => 'Elimina el script test API para producción.',
-        'Reset'
-            => 'Renacimiento',
         'Return to Job Manager'
             => 'Volver al Administrador de Tareas',
         'Scheduled jobs are stuck'

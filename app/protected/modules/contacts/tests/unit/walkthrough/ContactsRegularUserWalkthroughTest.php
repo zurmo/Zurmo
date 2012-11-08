@@ -509,5 +509,43 @@
             $childGroup->users->remove($userInChildGroup);
             $this->assertTrue($childGroup->save());
         }
+
+        public function testRegularUserMassDelete()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $confused = User::getByUsername('confused');
+            $nobody = User::getByUsername('nobody');
+            $this->assertEquals(Right::DENY, $confused->getEffectiveRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE));
+            $confused->setRight('ZurmoModule', ZurmoModule::RIGHT_BULK_DELETE);
+            //Load MassDelete view for the 3 contacts.
+            $contacts = Contact::getAll();
+            $this->assertEquals(5, count($contacts));
+            $contact1 = ContactTestHelper::createContactByNameForOwner('contactDelete1', $confused);
+            $contact2 = ContactTestHelper::createContactByNameForOwner('contactDelete2', $confused);
+            $contact3 = ContactTestHelper::createContactByNameForOwner('contactDelete3', $nobody);
+            $selectedIds = $contact1->id . ',' . $contact2->id . ',' . $contact3->id ;    // Not Coding Standard
+            $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDelete');
+            $this->assertFalse(strpos($content, '<strong>3</strong>&#160;Contacts selected for removal') === false);
+
+            //Deleting 3 contacts
+            $this->setGetArray(array(
+                'selectedIds' => $selectedIds, // Not Coding Standard
+                'selectAll' => '',
+                'Contact_page' => 1));
+            $this->setPostArray(array('selectedIds' => $contact3->id));
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
+            //Deleting all contacts
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Contact_page' => 1));
+            $this->setPostArray(array('selectedIds' => $contact1->id));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+        }
     }
 ?>

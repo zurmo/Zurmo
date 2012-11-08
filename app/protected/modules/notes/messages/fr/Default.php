@@ -49,6 +49,8 @@
             => 'NotesModuleSingularLabel', // Same Word Translated
         'Occurred On'
             => 'Date',
+        'Post this note to your profile to share with your colleagues'
+            => 'Postez cette note à votre profil pour partager avec vos collègues',
         'The NotesModulePluralLabel form cannot be displayed.'
             => 'Le formulaire des NotesModulePluralLabel être affiché.',
         '{n} NotesModuleSingularLabel created|{n} NotesModulePluralLabel created'
