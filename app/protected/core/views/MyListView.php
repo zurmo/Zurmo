@@ -144,6 +144,11 @@
             return new $configViewClassName($formModel, $searchForm, $this->params);
         }
 
+        protected static function getPagerCssClass()
+        {
+            return 'pager horizontal';
+        }
+
         protected function getCGridViewPagerParams()
         {
             return array(

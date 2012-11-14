@@ -24,5 +24,5 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    header("Location: app/index.php")
+    header("Location: app/index.php");
 ?>

@@ -139,7 +139,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new AccountsSearchForm($account),
                 $pageSize,
-                Yii::app()->user->userModel->id);
+                Yii::app()->user->userModel->id,
+                null,
+                'AccountsSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $account = $this->processMassEdit(
                 $pageSize,
@@ -176,7 +178,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new AccountsSearchForm($account),
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                'AccountsSearchView'
             );
             $this->processMassEditProgressSave(
                 'Account',
@@ -210,7 +214,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new AccountsSearchForm($account),
                 $pageSize,
-                Yii::app()->user->userModel->id);
+                Yii::app()->user->userModel->id,
+                null,
+                'AccountsSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $account = $this->processMassDelete(
                 $pageSize,
@@ -247,7 +253,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new AccountsSearchForm($account),
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                'AccountsSearchView'
             );
             $this->processMassDeleteProgress(
                 'Account',
@@ -282,7 +290,7 @@
 
         public function actionExport()
         {
-            $this->export();
+            $this->export('AccountsSearchView');
         }
     }
 ?>

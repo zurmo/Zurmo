@@ -188,7 +188,7 @@
         'Create Roles'
             => 'Crea Ruoli',
         'Created'
-            => 'Creati',
+            => 'Creato',
         'created by {ownerStringContent}'
             => 'crea per {ownerStringContent}',
         'Criteria Selected <span class="icon-clear">Z</span>'
@@ -241,6 +241,8 @@
             => 'Strumenti per Sviluppatori',
         'Dr.'
             => 'Dr.', // Same Word Translated
+        'Due On'
+            => 'Data scadenza',
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Clicca sull\'icona di configurazione in alto a destra dei portlets per modificare i grafici nel Dashboard.',
         'Email Address'

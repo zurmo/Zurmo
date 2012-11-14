@@ -97,7 +97,7 @@
             => 'Suma',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
-        'An error occured during login. Please try again.'
+        'An error occured during login.  try again.'
             => 'Error de login. Por favor, inténtalo de nuevo.',
         'Any City'
             => 'Ciudad',
@@ -241,6 +241,8 @@
             => 'Herramientas para Desarrolladores',
         'Dr.'
             => 'Dr.', // Same Word Translated
+        'Due On'
+            => 'Fecha de vencimiento',
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Haga clic en el icono de configuración en la parte superior derecha de cada portlet para editar gráficos en el salpicadero.',
         'Email Address'
@@ -484,7 +486,7 @@
         'Please provide data.'
             => 'Por favor, facilite los datos.',
         'Please resolve the following issues for {modelString}:'
-            => '??',
+            => 'Por favor, resolver los siguientes problemas para {modelString}',
         'Please use FireFox, Chrome, or Internet Explorer.'
             => 'Por favor, use Firefox, Chrome, o Internet Explorer.',
         'Policies'
@@ -626,7 +628,7 @@
         'The currency was not removed because it is in use.'
             => 'La moneda no se ha eliminado porque está en uso.',
         'The default value is {policyDefault}'
-            => '??',
+            => 'El valor predeterminado es {policyDefault}?',
         'The ID specified was invalid.'
             => ' ID no válido.',
         'The Import Wizard helps get your data into the system easily, find it under the config icon (that\'s the cog in the top right).'
@@ -712,7 +714,7 @@
         'ZurmoCRM'
             => 'ZurmoCRM', // Same Word Translated
         '{modelString} is already connected to this record.'
-            => '??',
+            => '{modelString} ya está conectado a este registro.',
         '{url} (installed with Yii)'
             => '{url} (instalado con Yii)',
         '{url} (version {version} is installed)'

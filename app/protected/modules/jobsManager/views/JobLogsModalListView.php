@@ -32,6 +32,11 @@
             $this->rowsAreSelectable = false;
         }
 
+        protected static function getPagerCssClass()
+        {
+            return 'pager horizontal';
+        }
+
         protected function getCGridViewPagerParams()
         {
             return array(

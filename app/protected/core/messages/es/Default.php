@@ -130,7 +130,7 @@
         'Delete'
             => 'Eliminar',
         'Deleting'
-            => '??',
+            => 'Eliminación en progreso',
         'Detail View Only'
             => 'Solo vista de detalles',
         'Details'
@@ -200,9 +200,9 @@
         'Loading UpgraderComponent.'
             => 'Cargando UpgraderComponent.',
         'Mass Delete'
-            => '??',
+            => 'Borrar en masa',
         'Mass Delete is not reversable.'
-            => '??',
+            => 'Borradar en masa no es reversible.',
         'Mass Update'
             => 'Actualización Global',
         'Max upload size: {maxSize}'
@@ -320,7 +320,7 @@
         'Selected'
             => 'Seleccionado',
         'selected for removal.'
-            => '??',
+            => 'seleccionado para eliminación.',
         'selected for updating.'
             => 'seleccionado por actualización',
         'Serialized Data'
@@ -334,7 +334,7 @@
         'Start typing to search'
             => 'Escriba su búsqueda aquí',
         'successfully deleted'
-            => '??',
+            => 'eliminado con éxito',
         'Tab'
             => 'Tab', // Same Word Translated
         'The file did not exist'

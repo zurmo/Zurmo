@@ -43,8 +43,6 @@
             => 'Crear TasksModuleSingularLabel',
         'Delete TasksModulePluralLabel'
             => 'Eliminar TasksModulePluralLabel',
-        'Due On'
-            => 'Fecha de vencimiento',
         'My Open TasksModulePluralLabel'
             => 'Mis TasksModulePluralLabel abiertas',
         'Open TasksModulePluralLabel'

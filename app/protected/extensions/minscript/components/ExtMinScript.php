@@ -157,6 +157,8 @@ class ExtMinScript extends CApplicationComponent {
       $params['g'] = $group;
       //Files
       foreach ($groupMap[$group] as $path) {
+        // Replace THEME_NAME with real theme
+        $path = str_replace('THEME_NAME', Yii::app()->theme->name, $path);
         $filemtime = @filemtime($path);
         if ($filemtime !== false) {
           $filemtimes[] = $filemtime;

@@ -43,8 +43,6 @@
             => 'TasksModuleSingularLabel erstellen',
         'Delete TasksModulePluralLabel'
             => 'TasksModulePluralLabel löschen',
-        'Due On'
-            => 'Fällig am',
         'My Open TasksModulePluralLabel'
             => 'Meine offenen TasksModulePluralLabel',
         'Open TasksModulePluralLabel'

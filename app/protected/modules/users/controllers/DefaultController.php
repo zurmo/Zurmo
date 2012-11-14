@@ -320,9 +320,11 @@
             $user = new User(false);
             $activeAttributes = $this->resolveActiveAttributesFromMassEditPost();
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new UsersSearchForm($user),
-                $pageSize,
-                Yii::app()->user->userModel->id);
+                            new UsersSearchForm($user),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            null,
+                            'UsersSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $user = $this->processMassEdit(
                 $pageSize,
@@ -357,10 +359,11 @@
                             'massEditProgressPageSize');
             $user = new User(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new UsersSearchForm($user),
-                $pageSize,
-                Yii::app()->user->userModel->id
-            );
+                            new UsersSearchForm($user),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            null,
+                           'UsersSearchView');
             $this->processMassEditProgressSave(
                 'User',
                 $pageSize,
@@ -470,7 +473,7 @@
 
         public function actionExport()
         {
-            $this->export();
+            $this->export('UsersSearchView');
         }
 
         /**

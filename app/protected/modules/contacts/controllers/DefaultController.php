@@ -152,10 +152,11 @@
             $contact = new Contact(false);
             $activeAttributes = $this->resolveActiveAttributesFromMassEditPost();
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new ContactsSearchForm($contact),
-                $pageSize,
-                Yii::app()->user->userModel->id,
-                'ContactsStateMetadataAdapter');
+                            new ContactsSearchForm($contact),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            'ContactsStateMetadataAdapter',
+                            'ContactsSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $contact = $this->processMassEdit(
                 $pageSize,
@@ -190,11 +191,11 @@
                             'massEditProgressPageSize');
             $contact = new Contact(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new ContactsSearchForm($contact),
-                $pageSize,
-                Yii::app()->user->userModel->id,
-                'ContactsStateMetadataAdapter'
-            );
+                            new ContactsSearchForm($contact),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            'ContactsStateMetadataAdapter',
+                            'ContactsSearchView');
             $this->processMassEditProgressSave(
                 'Contact',
                 $pageSize,
@@ -225,11 +226,11 @@
 
             $activeAttributes = $this->resolveActiveAttributesFromMassDeletePost();
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new ContactsSearchForm($contact),
-                $pageSize,
-                Yii::app()->user->userModel->id,
-                'ContactsStateMetadataAdapter'
-            );
+                            new ContactsSearchForm($contact),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            'ContactsStateMetadataAdapter',
+                            'ContactsSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $contact = $this->processMassDelete(
                 $pageSize,
@@ -264,11 +265,11 @@
                             'massDeleteProgressPageSize');
             $contact = new Contact(false);
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
-                new ContactsSearchForm($contact),
-                $pageSize,
-                Yii::app()->user->userModel->id,
-                'ContactsStateMetadataAdapter'
-            );
+                            new ContactsSearchForm($contact),
+                            $pageSize,
+                            Yii::app()->user->userModel->id,
+                            'ContactsStateMetadataAdapter',
+                            'ContactsSearchView');
             $this->processMassDeleteProgress(
                 'Contact',
                 $pageSize,
@@ -332,7 +333,7 @@
 
         public function actionExport()
         {
-            $this->export();
+            $this->export('ContactsSearchView');
         }
     }
 ?>

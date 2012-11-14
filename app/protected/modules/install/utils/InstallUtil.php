@@ -604,6 +604,7 @@
                 $rootModels = array_merge($rootModels, array_diff($moduleAndDependenciesRootModelNames, $rootModels));
             }
             RedBeanDatabaseBuilderUtil::autoBuildModels($rootModels, $messageLogger);
+            ZurmoDatabaseCompatibilityUtil::createStoredFunctionsAndProcedures();
         }
 
         /**

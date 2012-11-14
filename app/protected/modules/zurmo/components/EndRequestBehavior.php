@@ -40,7 +40,7 @@
             }
             $owner->attachEventHandler('onEndRequest', array($this, 'handleSaveGlobalStateCheck'));
             // Uncomment next line after fix issues with API
-            //$owner->attachEventHandler('onEndRequest', array($this, 'handleEndLogRouteEvents'));
+            $owner->attachEventHandler('onEndRequest', array($this, 'handleEndLogRouteEvents'));
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
         }
 

@@ -150,8 +150,9 @@
             return null;
         }
 
-        protected function export()
+        protected function export($stickySearchKey = null)
         {
+            assert('$stickySearchKey == null || is_string($stickySearchKey)');
             $modelClassName        = $this->getModelName();
             $searchFormClassName   = static::getSearchFormClassName();
             // Set $pageSize to unlimited, because we don't want pagination
@@ -171,7 +172,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 $searchForm,
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                $stickySearchKey
             );
 
             if (!$dataProvider)

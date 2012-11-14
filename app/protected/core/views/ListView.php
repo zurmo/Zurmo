@@ -156,11 +156,12 @@
                 'afterAjaxUpdate'      => $this->getCGridViewAfterAjaxUpdate(),
                 'columns'              => $columns,
                 'nullDisplay'          => '&#160;',
+                'pagerCssClass'		   => static::getPagerCssClass(),
                 'showTableOnEmpty'     => $this->getShowTableOnEmpty(),
                 'emptyText'            => $this->getEmptyText(),
                 'template'             => static::getGridTemplate(),
-                'summaryText'          => $this->getSummaryText(),
-                'summaryCssClass'      => $this->getSummaryCssClass(),
+                'summaryText'          => static::getSummaryText(),
+                'summaryCssClass'      => static::getSummaryCssClass(),
             );
         }
 
@@ -168,6 +169,11 @@
         {
             $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
             return "{summary}\n{items}\n{pager}" . $preloader;
+        }
+
+        protected static function getPagerCssClass()
+        {
+            return 'pager vertical';
         }
 
         protected static function getSummaryText()

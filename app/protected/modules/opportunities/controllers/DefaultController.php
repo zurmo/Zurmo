@@ -161,7 +161,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
                 $pageSize,
-                Yii::app()->user->userModel->id);
+                Yii::app()->user->userModel->id,
+                null,
+                'OpportunitiesSearchView');
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $opportunity = $this->processMassEdit(
                 $pageSize,
@@ -198,7 +200,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                'OpportunitiesSearchView'
             );
             $this->processMassEditProgressSave(
                 'Opportunity',
@@ -232,7 +236,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                'OpportunitiesSearchView'
             );
             $selectedRecordCount = $this->getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
             $opportunity = $this->processMassDelete(
@@ -270,7 +276,9 @@
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 new OpportunitiesSearchForm($opportunity),
                 $pageSize,
-                Yii::app()->user->userModel->id
+                Yii::app()->user->userModel->id,
+                null,
+                'OpportunitiesSearchView'
             );
             $this->processMassDeleteProgress(
                 'Opportunity',
@@ -321,7 +329,7 @@
 
         public function actionExport()
         {
-            $this->export();
+            $this->export('OpportunitiesSearchView');
         }
     }
 ?>

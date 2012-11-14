@@ -182,16 +182,27 @@
             $searchModel,
             $pageSize,
             $userId,
-            $stateMetadataAdapterClassName = null
+            $stateMetadataAdapterClassName = null,
+            $stickySearchKey = null
             )
         {
             assert('$searchModel instanceof RedBeanModel || $searchModel instanceof ModelForm');
+            assert('is_string($stickySearchKey) || $stickySearchKey == null');
             if ($_GET['selectAll'])
             {
+                if(!isset($_GET[get_class($searchModel)]) && $stickySearchKey != null)
+                {
+                    $resolvedStickySearchKey = $stickySearchKey;
+                }
+                else
+                {
+                    $resolvedStickySearchKey = null;
+                }
                 return $this->resolveSearchDataProvider(
                     $searchModel,
                     $pageSize,
-                    $stateMetadataAdapterClassName);
+                    $stateMetadataAdapterClassName,
+                    $resolvedStickySearchKey);
             }
             else
             {

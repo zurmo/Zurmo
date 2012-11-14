@@ -48,7 +48,6 @@
         public static function tearDownAfterClass()
         {
             RedBeanColumnTypeOptimizer::$optimizedTableColumns = array();
-            ZurmoDatabaseCompatibilityUtil::dropStoredFunctionsAndProcedures();
             parent::tearDownAfterClass();
         }
 

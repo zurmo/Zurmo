@@ -53,6 +53,11 @@
             $this->relationModel          = $relationModel;
         }
 
+        protected static function getPagerCssClass()
+        {
+            return 'pager horizontal';
+        }
+
         protected function getCGridViewPagerParams()
         {
             return array(

@@ -26,7 +26,8 @@
 
     /**
      * Improved Locale class to overcome some issues in Yii's CLocale.
-     * Needed to override the almost the entire class as the CLocale's constructor and variables are protected.
+     * Needed to override almost the entire class as the CLocale's constructor and variables are protected.
+     * Any of the parent functions that uses the private attributes are overriden.
      */
     class ZurmoLocale extends CLocale
     {
@@ -311,7 +312,7 @@
          */
         public function getDateTimeFormat()
         {
-            if (in_array($this->_id, array('ja', 'zn_ch')))
+            if (in_array($this->_id, array('zn_ch')))
             {
                 return '{1} {0}';
             }

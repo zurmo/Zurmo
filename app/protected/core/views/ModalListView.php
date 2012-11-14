@@ -51,6 +51,11 @@
             return array();
         }
 
+        protected static function getPagerCssClass()
+        {
+            return 'pager horizontal';
+        }
+
         protected static function getSummaryText()
         {
             return Yii::t('Default', '{start}-{end} of {count} result(s).');
@@ -79,7 +84,7 @@
             // Begin Not Coding Standard
             return 'js:function(id, data) {
                         processAjaxSuccessError(id, data);
-                        processListViewSummaryClone("' . $this->getGridViewId() . '", "' . $this->getSummaryCssClass() . '");
+                        processListViewSummaryClone("' . $this->getGridViewId() . '", "' . static::getSummaryCssClass() . '");
                     }';
             // End Not Coding Standard
         }

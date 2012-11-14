@@ -1158,6 +1158,33 @@ footer, header, hgroup, menu, nav, section {
 	}
 }
 
+#ActionBarSearchAndListView{
+    > div{
+        position: relative;
+    }
+    > div:nth-child(1) {
+        z-index:10; 
+    }
+    > div:nth-child(2) {   
+        z-index:9;  
+    }
+    > div:nth-child(3) {
+        z-index:8;  
+    }
+    > div:nth-child(4) {   
+        z-index:7;  
+    }
+    > div:nth-child(5) {
+        z-index:6;  
+    }
+    > div:nth-child(6) {   
+        z-index:5;  
+    }
+}
+
+
+
+
 /*=dashboard*/
 #HomePageView .AppContent{
     padding-right:0;
@@ -2269,7 +2296,7 @@ div.wide.form{
         margin-left:10px;
     }
     .view-toolbar-container{
-        margin-top:15px;
+        //margin-top:15px;
     }
     .items{
         border: none;
@@ -4373,6 +4400,9 @@ div.hasHalfs{
 #MixedModelsSearchView{
     h1{
         margin-bottom:15px;
+    }
+    .search-view-0{
+        float: none;
     }
 }
 

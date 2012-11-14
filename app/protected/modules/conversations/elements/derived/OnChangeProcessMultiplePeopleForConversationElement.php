@@ -31,12 +31,6 @@
      */
     class OnChangeProcessMultiplePeopleForConversationElement extends MultiplePeopleForConversationElement
     {
-        protected function renderControlEditable()
-        {
-            return self::renderNotificationBar(self::getNotificationBarId()) .
-                   parent::renderControlEditable();
-        }
-
         protected function getOnAddContent()
         {
             return 'function(item){ ' . $this->renderOnAddOrDeleteAjaxScript() . '}';
@@ -47,22 +41,9 @@
             return 'function(item){ ' . $this->renderOnAddOrDeleteAjaxScript() . '}';
         }
 
-        protected static function renderNotificationBar($barId)
-        {
-                $content = '<div id = "' . $barId . '"></div>';
-                $cClipWidget = new CClipWidget();
-                $cClipWidget->beginClip("conversationParticipantsNotificationMessage");
-                $cClipWidget->widget('application.core.widgets.JNotify', array(
-                    'statusBarId' => $barId,
-                ));
-                $cClipWidget->endClip();
-                $content .= $cClipWidget->getController()->clips['conversationParticipantsNotificationMessage'];
-                return $content;
-        }
-
         protected static function getNotificationBarId()
         {
-            return 'NotificationBar';
+            return 'FlashMessageBar';
         }
 
         /**

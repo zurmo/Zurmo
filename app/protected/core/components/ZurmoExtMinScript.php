@@ -45,7 +45,7 @@
         public function init()
         {
             CApplicationComponent::init();
-            $minifyDir = dirname(dirname(__FILE__)) . '/vendors/minify/min';
+            $minifyDir = dirname(dirname(dirname(__FILE__))) . '/extensions/minscript/vendors/minify/min';
             $this -> _minifyDir = $minifyDir;
             if (!extension_loaded('apc'))
             {

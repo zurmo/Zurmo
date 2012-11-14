@@ -104,7 +104,7 @@
                                                 'itemOptions' => array( 'id'   => $allName))));
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ActionMenu");
-            $cClipWidget->widget('ext.zurmoinc.framework.widgets.MbMenu', array(
+            $cClipWidget->widget('application.core.widgets.MbMenu', array(
                 'htmlOptions' => array('id' => 'ListViewDeleteMassActionMenu'),
                 'items'                   => array($menuItems),
             ));

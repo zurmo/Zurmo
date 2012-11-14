@@ -70,42 +70,49 @@
         public function run()
         {
             self::$jobOwnerUserModel = Yii::app()->user->userModel;
-            Yii::app()->imap->connect();
-
-            $lastImapCheckTime     = EmailMessagesModule::getLastImapDropboxCheckTime();
-            if (isset($lastImapCheckTime) && $lastImapCheckTime != '')
+            if(Yii::app()->imap->connect())
             {
-                $criteria = "SINCE \"{$lastImapCheckTime}\" UNDELETED";
-                $lastImapCheckTimeStamp = strtotime($lastImapCheckTime);
+                $lastImapCheckTime     = EmailMessagesModule::getLastImapDropboxCheckTime();
+                if (isset($lastImapCheckTime) && $lastImapCheckTime != '')
+                {
+                   $criteria = "SINCE \"{$lastImapCheckTime}\" UNDELETED";
+                   $lastImapCheckTimeStamp = strtotime($lastImapCheckTime);
+                }
+                else
+                {
+                    $criteria = "ALL UNDELETED";
+                    $lastImapCheckTimeStamp = 0;
+                }
+                $messages = Yii::app()->imap->getMessages($criteria, $lastImapCheckTimeStamp);
+
+                $lastCheckTime = null;
+                if (count($messages))
+                {
+                   foreach ($messages as $message)
+                   {
+                       Yii::app()->user->userModel = self::$jobOwnerUserModel;
+                       $lastMessageCreatedTime = strtotime($message->createdDate);
+                       if (strtotime($message->createdDate) > strtotime($lastCheckTime))
+                       {
+                           $lastCheckTime = $message->createdDate;
+                       }
+                       $this->saveEmailMessage($message);
+                   }
+                   Yii::app()->user->userModel = self::$jobOwnerUserModel;
+                   Yii::app()->imap->expungeMessages();
+                   if ($lastCheckTime != '')
+                   {
+                       EmailMessagesModule::setLastImapDropboxCheckTime($lastCheckTime);
+                   }
+                }
+                return true;
             }
             else
             {
-                $criteria = "ALL UNDELETED";
-                $lastImapCheckTimeStamp = 0;
+                $messageContent     = Yii::t('Default', 'Failed to connect to mailbox');
+                $this->errorMessage = $messageContent;
+                return false;
             }
-            $messages = Yii::app()->imap->getMessages($criteria, $lastImapCheckTimeStamp);
-
-            $lastCheckTime = null;
-            if (count($messages))
-            {
-                foreach ($messages as $message)
-                {
-                    Yii::app()->user->userModel = self::$jobOwnerUserModel;
-                    $lastMessageCreatedTime = strtotime($message->createdDate);
-                    if (strtotime($message->createdDate) > strtotime($lastCheckTime))
-                    {
-                        $lastCheckTime = $message->createdDate;
-                    }
-                    $this->saveEmailMessage($message);
-                }
-                Yii::app()->user->userModel = self::$jobOwnerUserModel;
-                Yii::app()->imap->expungeMessages();
-                if ($lastCheckTime != '')
-                {
-                    EmailMessagesModule::setLastImapDropboxCheckTime($lastCheckTime);
-                }
-            }
-            return true;
         }
 
         /**
