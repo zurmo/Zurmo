@@ -53,8 +53,6 @@
             => 'Roll Up', // Same Word Translated
         'Show more'
             => 'Mostrar más',
-        'Summary'
-            => 'Sumario',
         'Turn roll up on to see activities from related records.'
             => 'Activar enrollar para ver las actividades conectadas.',
         'View'

@@ -32,12 +32,12 @@
         public $scriptFile = 'amcharts.js';
 
         public $assetFolderName = 'amChart';
-       
+
         public $id;
-        
+
         public function run()
-        {            
-            echo "<div id='chartContainer{$this->id}' style='width: 100%; height: 400px;'></div>";                                                                                                                   
+        {
+            echo "<div id='chartContainer{$this->id}' style='width: 100%; height: 400px;'></div>";
         }
     }
 ?>

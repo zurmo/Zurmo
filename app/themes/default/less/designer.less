@@ -13,12 +13,9 @@
         float: left;
     }
     .configure-custom-field-button{
-        //float: left;
-        //width: 130px;
-        //margin-left: -130px;
         position: relative;
         top: 1px;
-        .zButton();
+        ++.z-button;
         &:before{
             content: "n";
             .symbly(16px);
@@ -55,7 +52,7 @@
 .designer-toolbar{
     margin:15px 0 0 0;
     input[type="submit"]{
-        .zButton();
+        ++.z-button;
         margin-bottom:15px;
     }
     h3{
@@ -94,7 +91,7 @@
     border:1px solid #ccc;
     #gradient > .vertical(#f6f6f6, #ededed);
     .b-shadow(inset 0 1px 0 0 #ffffff);
-    color:@themeColor;
+    ++.themeColor;
     &.ui-state-disabled{
         color:#dcdcdc;
         #gradient > .vertical(#efefef, #ededed);
@@ -135,7 +132,6 @@
     padding: 10px 10px 10px 10px;
     width: 100% !important;
     min-height: 60px !important;
-    color:@themeColor !important;
     .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px );
 }
 
@@ -154,7 +150,6 @@
     padding: 0px;
     width: 100%;
     height: 100%;
-    color:@themeColor !important;
     border:1px solid #ccc;
     #gradient > .vertical(#f6f6f6, #ededed);
     .b-shadow(inset 0 1px 0 0 #ffffff);
@@ -215,7 +210,7 @@
 }
 
 .sortable-row-list{
-    color:@themeColor !important;
+    ++.themeColor-important;
 }
 
 .layout-single-column {
@@ -401,7 +396,6 @@
     .ui-widget-header .ui-state-active{
         z-index:9999;
         color:#212121;
-         .b-shadow(0 0 1px 1px @themeColor);
     }
 }
 
@@ -425,7 +419,7 @@
         margin-right:3px;
         position:relative;
         top:1px;
-        color:@themeColor2;
+        ++.themeColor2;
     }
     .sortable{
         list-style: none;
@@ -463,7 +457,7 @@
             padding-left:0 !important;
         }
         #customFieldDataData_AddInputButton{
-            .zButton();
+            ++.z-button;
             margin:15px 0 0 0;
             float: left;
             clear: both;
@@ -515,5 +509,5 @@
 }
 
 #customFieldDataData_AddInputButton{
-    .zButton();
+    ++.z-button;
 }

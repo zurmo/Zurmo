@@ -12,269 +12,274 @@
 <tr><td rowspan="1" colspan="3">CreateCalculatedNumberAttribute</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
-    <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>store</td>
-    <td>javascript{Math.floor(Math.random()*11000)}</td>
-    <td>randomSuffix</td>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/designer/default</td>
-    <td></td>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>open</td>
+	<td>index.php/designer/default</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=Fields</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
+	<td></td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>attributeTypeName</td>
-  <td>label=Integer</td>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>attributeTypeNameButton</td>
-  <td></td>
+	<td>select</td>
+	<td>attributeTypeName</td>
+	<td>label=Integer</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=IntegerAttributeForm_attributeName</td>
-    <td>att${randomSuffix}</td>
+	<td>clickAndWait</td>
+	<td>attributeTypeNameButton</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=IntegerAttributeForm_attributeLabels_en</td>
-    <td>att${randomSuffix}</td>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_attributeName</td>
+	<td>att${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=IntegerAttributeForm_defaultValue</td>
-    <td>22</td>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_attributeLabels_en</td>
+	<td>att${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=IntegerAttributeForm_minValue</td>
-    <td>0</td>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_defaultValue</td>
+	<td>22</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=IntegerAttributeForm_maxValue</td>
-    <td>22</td>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_minValue</td>
+	<td>0</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>id=IntegerAttributeForm_isRequired</td>
-    <td></td>
+	<td>type</td>
+	<td>id=IntegerAttributeForm_maxValue</td>
+	<td>22</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>id=IntegerAttributeForm_isAudited</td>
-    <td></td>
+	<td>click</td>
+	<td>id=IntegerAttributeForm_isRequired</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>click</td>
+	<td>id=IntegerAttributeForm_isAudited</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
-  <td>Create Field</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+	<td>Create Field</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>att${randomSuffix}</td>
-  <td></td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>att${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>attributeTypeName</td>
-    <td>label=Decimal</td>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>attributeTypeNameButton</td>
-    <td></td>
+	<td>select</td>
+	<td>attributeTypeName</td>
+	<td>label=Decimal</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=DecimalAttributeForm_attributeName</td>
-    <td>sal${randomSuffix}</td>
+	<td>clickAndWait</td>
+	<td>attributeTypeNameButton</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=DecimalAttributeForm_attributeLabels_en</td>
-    <td>sal${randomSuffix}</td>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_attributeName</td>
+	<td>sal${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=DecimalAttributeForm_defaultValue</td>
-    <td>900</td>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_attributeLabels_en</td>
+	<td>sal${randomSuffix}</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>id=DecimalAttributeForm_isRequired</td>
-    <td></td>
+	<td>type</td>
+	<td>id=DecimalAttributeForm_defaultValue</td>
+	<td>900</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>id=DecimalAttributeForm_isAudited</td>
-    <td></td>
+	<td>click</td>
+	<td>id=DecimalAttributeForm_isRequired</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>click</td>
+	<td>id=DecimalAttributeForm_isAudited</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
-  <td>Create Field</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+	<td>Create Field</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>sal${randomSuffix}</td>
-  <td></td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>sal${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>attributeTypeName</td>
-  <td>label=Calculated Number</td>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>attributeTypeNameButton</td>
-  <td></td>
+	<td>select</td>
+	<td>attributeTypeName</td>
+	<td>label=Calculated Number</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=CalculatedNumberAttributeForm_attributeName</td>
-    <td>cVal${randomSuffix}</td>
+	<td>clickAndWait</td>
+	<td>attributeTypeNameButton</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=CalculatedNumberAttributeForm_attributeLabels_en</td>
-    <td>cVal${randomSuffix}</td>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_attributeName</td>
+	<td>cVal${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=CalculatedNumberAttributeForm_formula</td>
-    <td>att${randomSuffix}Cstm * sal${randomSuffix}Cstm</td>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_attributeLabels_en</td>
+	<td>cVal${randomSuffix}</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_formula</td>
+	<td>att${randomSuffix}Cstm * sal${randomSuffix}Cstm</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
-  <td>Create Field</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+	<td>Create Field</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>cVal${randomSuffix}</td>
-  <td></td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>cVal${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=edit-link-cVal${randomSuffix}</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>click</td>
+	<td>id=edit-link-cVal${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>id=CalculatedNumberAttributeForm_formula</td>
-    <td>att${randomSuffix}Cstm * sal${randomSuffix}Cstm</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>type</td>
+	<td>id=CalculatedNumberAttributeForm_formula</td>
+	<td>att${randomSuffix}Cstm * sal${randomSuffix}Cstm</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>cVal${randomSuffix}</td>
-  <td></td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>cVal${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

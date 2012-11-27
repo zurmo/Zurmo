@@ -161,4 +161,16 @@
             }
             return $emailMessage;
         }
+
+        public static function createEmailAccount(User $user)
+        {
+            $emailAccount                    = new EmailAccount();
+            $emailAccount->user              = $user;
+            $emailAccount->name              = EmailAccount::DEFAULT_NAME;
+            $emailAccount->fromName          = $user->getFullName();
+            $emailAccount->fromAddress       = 'user@zurmo.com';
+            $emailAccount->useCustomOutboundSettings = false;
+            $emailAccount->outboundType      = 'smtp';
+            $emailAccount->save();
+        }
     }

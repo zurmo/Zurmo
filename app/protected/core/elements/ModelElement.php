@@ -333,7 +333,7 @@
         }
 
         /**
-         * Determines correct column span based on params 'wide' value
+         * Determines if a link should be shown
          */
         protected function showLinkOnNonEditable()
         {

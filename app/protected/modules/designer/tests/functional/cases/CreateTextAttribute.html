@@ -12,199 +12,204 @@
 <tr><td rowspan="1" colspan="3">CreateTextAttribute</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-  <td>store</td>
-  <td>javascript{Math.floor(Math.random()*11000)}</td>
-  <td>randomSuffix</td>
+	<td>setSpeed</td>
+	<td>1000</td>
+	<td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/designer/default</td>
-  <td></td>
+	<td>store</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/designer/default</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Fields</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>link=Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Create Field</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertTextNotPresent</td>
-  <td>txt${randomSuffix}</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Create Field</td>
+	<td></td>
 </tr>
 <tr>
-  <td>select</td>
-  <td>attributeTypeName</td>
-  <td>label=Text</td>
+	<td>assertTextNotPresent</td>
+	<td>txt${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>attributeTypeNameButton</td>
-  <td></td>
+	<td>select</td>
+	<td>attributeTypeName</td>
+	<td>label=Text</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>TextAttributeForm_attributeName</td>
-  <td>txt${randomSuffix}</td>
+	<td>clickAndWait</td>
+	<td>attributeTypeNameButton</td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>TextAttributeForm_attributeLabels_en</td>
-  <td>txt${randomSuffix}</td>
+	<td>type</td>
+	<td>TextAttributeForm_attributeName</td>
+	<td>txt${randomSuffix}</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>TextAttributeForm_defaultValue</td>
-  <td>AText</td>
+	<td>type</td>
+	<td>TextAttributeForm_attributeLabels_en</td>
+	<td>txt${randomSuffix}</td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>TextAttributeForm_maxLength</td>
-  <td>88</td>
+	<td>type</td>
+	<td>TextAttributeForm_defaultValue</td>
+	<td>AText</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td>off</td>
+	<td>type</td>
+	<td>TextAttributeForm_maxLength</td>
+	<td>88</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td></td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td>off</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td>on</td>
+	<td>click</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isAudited</td>
-  <td>off</td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td>on</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>TextAttributeForm_isAudited</td>
-  <td></td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isAudited</td>
+	<td>off</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isAudited</td>
-  <td>on</td>
+	<td>click</td>
+	<td>TextAttributeForm_isAudited</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>save</td>
-  <td></td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isAudited</td>
+	<td>on</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
-  <td>Create Field</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+	<td>Create Field</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>txt${randomSuffix}</td>
-  <td></td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>txt${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=edit-link-txt${randomSuffix}Cstm</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>click</td>
+	<td>id=edit-link-txt${randomSuffix}Cstm</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='TextAttributeEditView']/div/h1</td>
-  <td>exact:Edit Field: txt${randomSuffix}</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>TextAttributeForm_defaultValue</td>
-  <td>AText_New</td>
+	<td>assertText</td>
+	<td>//div[@id='TextAttributeEditView']/div/h1</td>
+	<td>exact:Edit Field: txt${randomSuffix}</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td>on</td>
+	<td>type</td>
+	<td>TextAttributeForm_defaultValue</td>
+	<td>AText_New</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td></td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td>on</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>TextAttributeForm_isRequired</td>
-  <td>off</td>
+	<td>click</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>save</td>
-  <td></td>
+	<td>verifyValue</td>
+	<td>TextAttributeForm_isRequired</td>
+	<td>off</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Designer Home</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertText</td>
-  <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-  <td>Accounts: Custom Fields</td>
+	<td>verifyTextPresent</td>
+	<td>Designer Home</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td></td>
-  <td>txt${randomSuffix}</td>
+	<td>assertText</td>
+	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+	<td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Accounts: Standard Fields</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td></td>
+	<td>txt${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Accounts: Standard Fields</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

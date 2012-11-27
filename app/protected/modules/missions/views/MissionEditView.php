@@ -26,6 +26,8 @@
 
     class MissionEditView extends SecuredEditView
     {
+        protected $viewContainsFileUploadElement = true;
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

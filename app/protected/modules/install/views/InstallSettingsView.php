@@ -269,6 +269,16 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'submitCrashToSentry', 'type' => 'CheckBox',
+                                                      'description' => Yii::t('Default', 'Should CRM crash reports be submitted to Sentry automatically.')),
+                                            ),
+                                        ),
+                                    )
+                                ),
                               ),
                         ),
                     ),

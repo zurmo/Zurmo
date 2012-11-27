@@ -81,11 +81,8 @@
                             array('type' => 'ChangePasswordLink',
                                 'htmlOptions' => array( 'class' => 'icon-password' )
                             ),
-                            array('type' => 'UserConfigurationEditLink',
-                                'htmlOptions' => array( 'class' => 'icon-user-config' )
-                            ),
-                            array('type' => 'SecurityDetailsLink',
-                                'htmlOptions' => array( 'class' => 'icon-security' )
+                            array('type' => 'UserConfigurationLink',
+                                'htmlOptions' => array( 'class' => 'icon-user-config' ),
                             ),
                         ),
                     ),

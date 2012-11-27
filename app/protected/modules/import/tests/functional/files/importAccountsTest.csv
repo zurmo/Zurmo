@@ -1,0 +1,4 @@
+name,officePhone,officeFax,employees,website,annualRevenue,description,baCity,baCountry,baPostalCode,baState,baStreet1,baStreet2,peEmailAddress,peIsInvalid,peOptOut,account,industry,type,owner
+account1, 123456,555,1,http://www.account1.com,100,desc1,city1,country1,postal1,state1,street11,street21,a@a.com,,,toUpdate,Automotive,Prospect,myusername1
+account2, 223456,666,2,http://www.account2.com,200,desc2,city2,country2,postal2,state2,street12,street22,b@b.com,1,1,toUpdate,Banking,Customer,myusername1
+account3, 323456,777,3,http://www.account3.com,300,desc3,city3,country3,postal3,state3,street13,street23,c@c.com,,,toUpdate,Energy,Vendor,myusername1

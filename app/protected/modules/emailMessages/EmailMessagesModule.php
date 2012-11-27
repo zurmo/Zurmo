@@ -46,7 +46,6 @@
         public function getRootModelNames()
         {
             return array('EmailBox',
-                         'EmailFileModel',
                          'EmailFolder',
                          'EmailMessageContent',
                          'EmailMessage',

@@ -53,8 +53,6 @@
             => 'Rollup',
         'Show more'
             => 'Plus',
-        'Summary'
-            => 'Sommaire',
         'Turn roll up on to see activities from related records.'
             => 'Activez la fonction de rollup pour voir les activités associées.',
         'View'

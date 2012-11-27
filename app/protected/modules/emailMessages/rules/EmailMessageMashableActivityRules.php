@@ -82,11 +82,9 @@
             return 'modifiedDateTime';
         }
 
-        /**
-         * Override if you want to display anything extra in the view for a particular model.
-         */
         public function getLatestActivityExtraDisplayStringByModel($model)
         {
+            return FileModelDisplayUtil::renderFileDataDetailsWithDownloadLinksContent($model, 'files');
         }
 
         /**
@@ -98,7 +96,8 @@
             assert('is_string($ownedByFilter)');
             assert('is_string($viewModuleClassName)');
             return "<span class='less-pronounced-text'>" .
-                   "{relatedModelsByImportanceContent} </span><br/><span>{modelStringContent}</span>";
+                   "{relatedModelsByImportanceContent} " .
+                   "</span><br/><span>{modelStringContent}</span><span>{extraContent}</span>";
         }
 
         public function renderRelatedModelsByImportanceContent(RedBeanModel $model)

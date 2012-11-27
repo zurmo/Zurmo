@@ -45,17 +45,39 @@
 
         protected function renderControlEditable()
         {
-            throw new NotImplementedException();
-        }
-
-        protected function renderError()
-        {
-            throw new NotImplementedException();
+            $emailMessageContent     = $this->model->{$this->attribute};
+            $inputNameIdPrefix       = $this->attribute;
+            $attribute               = 'htmlContent';
+            $id                      = $this->getEditableInputId  ($inputNameIdPrefix, $attribute);
+            $htmlOptions             = array();
+            $htmlOptions['id']       = $id;
+            $htmlOptions['name']     = $this->getEditableInputName($inputNameIdPrefix, $attribute);
+            $cClipWidget   = new CClipWidget();
+            $cClipWidget->beginClip("Redactor");
+            $cClipWidget->widget('application.core.widgets.Redactor', array(
+                                        'htmlOptions' => $htmlOptions,
+                                        'content'     => $emailMessageContent->$attribute,
+            ));
+            $cClipWidget->endClip();
+            $content  = $cClipWidget->getController()->clips['Redactor'];
+            $content .= $this->form->error($emailMessageContent, $attribute);
+            return $content;
         }
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Body');
+            $label = Yii::t('Default', 'Body');
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            else
+            {
+                return $this->form->labelEx($this->model,
+                                            $this->attribute,
+                                            array('for' => $this->getEditableInputId($this->attribute, 'htmlContent'),
+                                                  'label' => $label));
+            }
         }
     }
 ?>

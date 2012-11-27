@@ -29,11 +29,13 @@
      */
     class EmailHelper extends CApplicationComponent
     {
+        const OUTBOUND_TYPE_SMTP = 'smtp';
+
         /**
          * Currently supports smtp.
          * @var string
          */
-        public $outboundType = 'smtp';
+        public $outboundType = self::OUTBOUND_TYPE_SMTP;
 
         /**
          * Outbound mail server host name. Example mail.someplace.com
@@ -64,6 +66,18 @@
          * @var string
          */
         public $outboundSecurity;
+
+        /**
+         * Name to use in the email sent
+         * @var string
+         */
+        public $fromName;
+
+        /**
+         * Address to use in the email sent
+         * @var string
+         */
+        public $fromAddress;
 
         /**
          * Contains array of settings to load during initialization from the configuration table.
@@ -109,6 +123,30 @@
                 {
                     $this->$keyName = $keyValue;
                 }
+            }
+        }
+
+        /**
+         * Load user's outbound settings from user's email account or the system settings
+         * @param User   $user
+         * @param string $name  EmailAccount name or null for default name
+         */
+        public function loadOutboundSettingsFromUserEmailAccount(User $user, $name = null)
+        {
+            $userEmailAccount = EmailAccount::getByUserAndName($user, $name);
+            if ($userEmailAccount->useCustomOutboundSettings)
+            {
+                $settingsToLoad = array_merge($this->settingsToLoad, array('fromName', 'fromAddress'));
+                foreach ($settingsToLoad as $keyName)
+                {
+                    $this->$keyName = $userEmailAccount->$keyName;
+                }
+            }
+            else
+            {
+                $this->loadOutboundSettings();
+                $this->fromName = strval($user);
+                $this->fromAddress = $this->resolveFromAddressByUser($user);
             }
         }
 
@@ -220,8 +258,8 @@
             {
                 foreach ($emailMessage->files as $file)
                 {
-                    $attachment = $mailer->attachDynamicContent($file->fileContent->content, $file->name, $file->type);
-                    $emailMessage->attach($attachment);
+                    $mailer->attachDynamicContent($file->fileContent->content, $file->name, $file->type);
+                    //$emailMessage->attach($attachment);
                 }
             }
         }
@@ -330,7 +368,7 @@
         }
 
         /**
-         * Given a user, attempt to get the user's emal address, but if it is not available, then return the default
+         * Given a user, attempt to get the user's email address, but if it is not available, then return the default
          * address.  @see EmailHelper::defaultFromAddress
          * @param User $user
          */

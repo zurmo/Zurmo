@@ -89,11 +89,6 @@ a.remove {
 		color:#A7A7A7;
 		.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0  );
 	}
-	&:hover{
-		.icon:after{
-			color:@themeColor;
-		}
-	}
 }
 
 .juiportlet-widget-head a.edit {
@@ -112,11 +107,6 @@ a.remove {
 		display:block;
 		float:right;
 		color:#A7A7A7;
-	}
-	&:hover{
-		.icon:after{
-			color:@themeColor;
-		}
 	}
 }
 
@@ -180,17 +170,19 @@ a.remove {
 	top:6px;
 }
 
+.juiportlet-widget.OpportunitiesForContactRelatedListView,
 .juiportlet-widget.OpportunitiesForAccountRelatedListView{
 	h3:before{
-		content: '9';
+		content: "9";
+	}
+}
+.juiportlet-widget.ContactsForOpportunityRelatedListView,
+.juiportlet-widget.ContactsForAccountRelatedListView{
+	h3:before{
+		content: "e";
 	}
 }
 
-.juiportlet-widget.ContactsForAccountRelatedListView{
-	h3:before{
-		content: 'e';
-	}
-}
 .juiportlet-widget.OpportunitiesForContactRelatedListView,
 .juiportlet-widget.OpportunitiesForAccountRelatedListView,
 .juiportlet-widget.ContactsForOpportunityRelatedListView,
@@ -198,7 +190,7 @@ a.remove {
     h3{
 		text-indent:30px;
 		&:before{
-			.juiportlet-header-icon();
+			.juiportlet-header-icon();			
 		}
 	}
     td:first-child{

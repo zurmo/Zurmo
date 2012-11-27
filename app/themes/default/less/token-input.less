@@ -26,9 +26,6 @@ ul.token-input-list {
 	.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
 	width: 100%;
 	.box-sizing();
-	&:focus{
-    	.b-shadow(0 0 1px 1px @themeColor);
-	}
 	input[type="text"]{
 		border:none;
 		.b-shadow(~"none !important");
@@ -87,7 +84,6 @@ li.token-input-token {
 }
 
 li.token-input-selected-token {
-	background-color: @themeColor2;
 	color: #fff !important;
 	.b-shadow(0 0 1px 1px rgba(153, 153, 153, 0.3));
 }

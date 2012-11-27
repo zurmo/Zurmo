@@ -205,8 +205,8 @@
             $emailMessage = new EmailMessage();
             $emailMessage->owner   = $jane;
             $emailMessage->subject = 'My Email with an Attachment';
-            $emailFileModel        = ZurmoTestHelper::createFileModel('testNote.txt', 'EmailFileModel');
-            $emailMessage->files->add($emailFileModel);
+            $fileModel        = ZurmoTestHelper::createFileModel('testNote.txt', 'FileModel');
+            $emailMessage->files->add($fileModel);
 
             //Attempt to save without setting required information
             $saved        = $emailMessage->save();
@@ -252,7 +252,7 @@
             $emailMessage = EmailMessage::getById($id);
             $this->assertEquals('My Email with an Attachment', $emailMessage->subject);
             $this->assertEquals(1, $emailMessage->files->count());
-            $this->assertEquals($emailFileModel, $emailMessage->files->offsetGet(0));
+            $this->assertEquals($fileModel, $emailMessage->files->offsetGet(0));
         }
 
         /**

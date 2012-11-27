@@ -42,7 +42,7 @@
             )
         {
             parent::__construct(5, 1);
-            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user, 'SecurityDetailsLink'), 0, 0);
+            $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user, 'UserConfigurationLink'), 0, 0);
             //$this->setView(new UserSecurityDetailsView($controllerId, $moduleId, $user->id), 1, 0);
             $userGroupMembershipView = new UserGroupMembershipView($controllerId, $moduleId,
                                                                    $groupMembershipViewData, $user->id,

@@ -38,6 +38,10 @@
 
         public $subListPageSize;
 
+        public $themeColor;
+
+        public $backgroundTexture;
+
         public $hideWelcomeView = false;
 
         public $turnOffEmailNotifications = false;
@@ -66,6 +70,9 @@
                 array('subListPageSize',           'required'),
                 array('subListPageSize',           'type',      'type' => 'integer'),
                 array('subListPageSize',           'numerical', 'min' => 1),
+                array('themeColor',                'required'),
+                array('themeColor',                'type',      'type' => 'string'),
+                array('backgroundTexture',         'type',      'type' => 'string'),
                 array('hideWelcomeView',           'boolean'),
                 array('turnOffEmailNotifications', 'boolean')
             );
@@ -76,6 +83,8 @@
             return array(
                 'listPageSize'              => Yii::t('Default', 'List page size'),
                 'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
+                'themeColor'                => Yii::t('Default', 'Theme'),
+                'backgroundTexture'         => Yii::t('Default', 'Texture'),
                 'hideWelcomeView'           => Yii::t('Default', 'Hide welcome page'),
                 'turnOffEmailNotifications' => Yii::t('Default', 'Turn off email notifications')
             );

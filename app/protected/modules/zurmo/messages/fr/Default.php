@@ -163,6 +163,8 @@
             => 'Fermer',
         'Code'
             => 'Code', // Same Word Translated
+        'Comment'
+            => 'Commenter',
         'Configuration'
             => 'Configuration', // Same Word Translated
         'Configure'
@@ -615,6 +617,8 @@
             => 'Nb. d\'éléments de la sous-liste',
         'Successfully updated'
             => 'Mise à jour réussie',
+        'Summary'
+            => 'Sommaire',
         'Super Administrators'
             => 'Super Administrateur',
         'Tag Cloud fields allow you to tag records with values so that you can easily find them later.'

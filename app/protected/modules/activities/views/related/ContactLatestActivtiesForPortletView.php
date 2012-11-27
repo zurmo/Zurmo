@@ -29,6 +29,27 @@
      */
     class ContactLatestActivtiesForPortletView extends LatestActivtiesForPortletView
     {
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            return array_merge($metadata, array(
+                'global' => array(
+                    'toolbar' => array(
+                        'elements' => array(
+                            array('type'                    => 'CreateEmailMessageFromRelatedListLink',
+                                  'modelClassName'          => 'EmailMessage',
+                                  'routeParameters'         =>
+                                    array(  'relatedModelClassName'  => 'Contact',
+                                            'relatedId'        =>
+                                                'eval:$this->params["relationModel"]->id',
+                                            'toAddress'        =>
+                                                'eval:$this->params["relationModel"]->primaryEmail->emailAddress')
+                        ),
+                    ),
+                ),
+            )));
+        }
+
         public function getLatestActivitiesViewClassName()
         {
             return 'LatestActivitiesForContactListView';

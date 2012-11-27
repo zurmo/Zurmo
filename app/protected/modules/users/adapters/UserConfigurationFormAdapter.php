@@ -39,6 +39,8 @@
             $form                            = new UserConfigurationForm($user->id);
             $form->listPageSize              = Yii::app()->pagination->getByUserAndType($user, 'listPageSize');
             $form->subListPageSize           = Yii::app()->pagination->getByUserAndType($user, 'subListPageSize');
+            $form->themeColor                = Yii::app()->themeManager->resolveAndGetThemeColorValue($user);
+            $form->backgroundTexture         = Yii::app()->themeManager->resolveAndGetBackgroundTextureValue($user);
             $form->hideWelcomeView           = static::resolveAndGetHideWelcomeViewValue($user);
             $form->turnOffEmailNotifications = static::resolveAndGetTurnOffEmailNotificationsValue($user);
             return $form;
@@ -50,10 +52,12 @@
         public static function setConfigurationFromForm(UserConfigurationForm $form, User $user)
         {
             assert('$user instanceOf User && $user->id > 0');
-            Yii::app()->pagination    ->setByUserAndType($user, 'listPageSize',    (int)$form->listPageSize);
-            Yii::app()->pagination    ->setByUserAndType($user, 'subListPageSize', (int)$form->subListPageSize);
-            static::setHideWelcomeViewValue($user, (bool)$form->hideWelcomeView);
-            static::setTurnOffEmailNotificationsValue($user, (bool)$form->turnOffEmailNotifications);
+            Yii::app()->pagination    ->setByUserAndType        ($user, 'listPageSize',    (int)$form->listPageSize);
+            Yii::app()->pagination    ->setByUserAndType        ($user, 'subListPageSize', (int)$form->subListPageSize);
+            Yii::app()->themeManager->setThemeColorValue        ($user, $form->themeColor);
+            Yii::app()->themeManager->setBackgroundTextureValue ($user, $form->backgroundTexture);
+            static::setHideWelcomeViewValue                     ($user, (bool)$form->hideWelcomeView);
+            static::setTurnOffEmailNotificationsValue           ($user, (bool)$form->turnOffEmailNotifications);
         }
 
         /**
@@ -62,10 +66,12 @@
          */
         public static function setConfigurationFromFormForCurrentUser(UserConfigurationForm $form)
         {
-            Yii::app()->pagination    ->setForCurrentUserByType('listPageSize',    (int)$form->listPageSize);
-            Yii::app()->pagination    ->setForCurrentUserByType('subListPageSize', (int)$form->subListPageSize);
-            static::setHideWelcomeViewValue          (Yii::app()->user->userModel, (bool)$form->hideWelcomeView);
-            static::setTurnOffEmailNotificationsValue(Yii::app()->user->userModel, (bool)$form->turnOffEmailNotifications);
+            Yii::app()->pagination    ->setForCurrentUserByType ('listPageSize',     (int)$form->listPageSize);
+            Yii::app()->pagination    ->setForCurrentUserByType ('subListPageSize',  (int)$form->subListPageSize);
+            Yii::app()->themeManager->setThemeColorValue        (Yii::app()->user->userModel,       $form->themeColor);
+            Yii::app()->themeManager->setBackgroundTextureValue (Yii::app()->user->userModel,       $form->backgroundTexture);
+            static::setHideWelcomeViewValue                     (Yii::app()->user->userModel, (bool)$form->hideWelcomeView);
+            static::setTurnOffEmailNotificationsValue           (Yii::app()->user->userModel, (bool)$form->turnOffEmailNotifications);
         }
 
         public static function resolveAndGetHideWelcomeViewValue(User $user)

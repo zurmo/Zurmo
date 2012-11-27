@@ -14,7 +14,7 @@
 		width:100%;
 	}
 	.ui-icon-plusthick{	
-		.zButton();
+		++.z-button;
 		padding:0 5px;
 		&:after{
 			content:"Y";
@@ -26,10 +26,9 @@
 .show-file-upload-box{
     position: relative;
     bottom:-18px;
-    //float: right;
-    //margin-right: 105px;
     z-index: 5;
-    font-size: 11px;
+    font-weight: normal;
+    .smaller();
 }
 
 .fileupload-content{
@@ -71,7 +70,7 @@
         background:none;
         border:none;
         cursor: pointer;
-        color:@themeColor;
+        //++.themeColor;
         line-height: 16px;
         margin-top: -2px;
         span{
@@ -90,7 +89,7 @@
     button.start, button.cancel{
         cursor: pointer;
         border: none;
-        background: @themeColor;
+        //++.themeBackgroundColor;
         font-size: 10px !important;
         padding:2px;
         line-height: 1;
@@ -130,6 +129,7 @@
         margin-right: 5px;
         position: relative;
         top: 2px;
+        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
     }
     input {
         position: absolute;
@@ -145,11 +145,6 @@
         cursor: pointer;
         height: 30px;
         width: auto;
-    }
-    &:hover{
-        span{
-            color: @themeColor2;
-        }
     }
 }
 

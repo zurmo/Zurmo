@@ -44,7 +44,7 @@
             public static function getUntranslatedRightsLabels()
         {
             $labels                           = array();
-            $labels[self::RIGHT_ACCESS_SOCIAL_ITEMS] = 'Access Social Feed';
+            $labels[self::RIGHT_ACCESS_SOCIAL_ITEMS] = 'Access Social Items';
             return $labels;
         }
 

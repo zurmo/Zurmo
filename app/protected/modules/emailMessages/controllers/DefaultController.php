@@ -29,15 +29,26 @@
      */
     class EmailMessagesDefaultController extends ZurmoBaseController
     {
+        const USER_EMAIL_CONFIGURATION_FILTER_PATH =
+              'application.modules.emailMessages.controllers.filters.UserEmailConfigurationCheckControllerFilter';
+
         public function filters()
         {
             $moduleClassName = get_class($this->getModule());
             return array(
                 array(
-                    ZurmoBaseController::RIGHTS_FILTER_PATH . ' + configurationEdit',
+                    ZurmoBaseController::RIGHTS_FILTER_PATH . ' + configurationEdit, configurationEditOutbound, configurationEditArchiving',
                     'moduleClassName' => $moduleClassName,
                     'rightName'       => EmailMessagesModule::RIGHT_ACCESS_CONFIGURATION,
                ),
+               array(
+                    self::getRightsFilterPath() . ' + createEmailMessage',
+                    'moduleClassName' => $moduleClassName,
+                    'rightName' => $moduleClassName::getCreateRight(),
+                ),
+                array(self::USER_EMAIL_CONFIGURATION_FILTER_PATH . ' + createEmailMessage',
+                     'controller' => $this,
+                )
             );
         }
 
@@ -120,9 +131,21 @@
         {
             $configurationForm = EmailSmtpConfigurationFormAdapter::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
-            if (isset($_POST[$postVariableName]))
+            if (isset($_POST[$postVariableName]) || (isset($_POST['UserEmailConfigurationForm'])))
             {
-                $configurationForm->setAttributes($_POST[$postVariableName]);
+                if (isset($_POST[$postVariableName]))
+                {
+                    $configurationForm->setAttributes($_POST[$postVariableName]);
+                }
+                else
+                {
+                    $configurationForm->host            = $_POST['UserEmailConfigurationForm']['outboundHost'];
+                    $configurationForm->port            = $_POST['UserEmailConfigurationForm']['outboundPort'];
+                    $configurationForm->username        = $_POST['UserEmailConfigurationForm']['outboundUsername'];
+                    $configurationForm->password        = $_POST['UserEmailConfigurationForm']['outboundPassword'];
+                    $configurationForm->security        = $_POST['UserEmailConfigurationForm']['outboundSecurity'];
+                    $configurationForm->aTestToAddress  = $_POST['UserEmailConfigurationForm']['aTestToAddress'];
+                }
                 if ($configurationForm->aTestToAddress != null)
                 {
                     $emailHelper = new EmailHelper;
@@ -336,6 +359,211 @@
                     }
                 }
             }
+        }
+
+        public function actionPopulateContactEmailBeforeCreating($id)
+        {
+            $postData = PostUtil::getData();
+            $contact  = Contact::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
+            $contactPrimaryEmailForm       = new ContactPrimaryEmailForm();
+            $contactPrimaryEmailForm->name = strval($contact);
+            $this->actionValidatePopulateContactEmailBeforeCreating($postData, $contactPrimaryEmailForm);
+            if (isset($postData[get_class($contactPrimaryEmailForm)]))
+            {
+                //Process saving the email address and redirecting to create email view
+                $contactPrimaryEmailForm->setAttributes($postData[get_class($contactPrimaryEmailForm)]);
+                $email                 = new Email;
+                $email->emailAddress   = $contactPrimaryEmailForm->emailAddress;
+                $contact->primaryEmail = $email;
+                $saved = $contact->save();
+                if (!$saved)
+                {
+                    throw new FailedToSaveModelException($message, $code, $previous);
+                }
+                $this->redirect(array($this->getId() . '/createEmailMessage',
+                                      'relatedId'             => $contact->id,
+                                      'relatedModelClassName' => 'Contact',
+                                      'toAddress'             => $contact->primaryEmail->emailAddress));
+                Yii::app()->end(false);
+            }
+            $contactEditView = new ContactRequiresPrimaryEmailFirstModalView(
+                $this->getId(),
+                $this->getModule()->getId(),
+                $contactPrimaryEmailForm);
+            $view = new ModalView($this, $contactEditView);
+            Yii::app()->getClientScript()->setToAjaxMode();
+            echo $view->render();
+        }
+
+        protected function actionValidatePopulateContactEmailBeforeCreating($postData, ContactPrimaryEmailForm $contactForm)
+        {
+            if (isset($postData['ajax']) && $postData['ajax'] == 'edit-form')
+            {
+                $contactForm->setAttributes($postData[get_class($contactForm)]);
+                if ($contactForm->validate())
+                {
+                    Yii::app()->end(false);
+                }
+                else
+                {
+                    $errorData = array();
+                    foreach ($contactForm->getErrors() as $attribute => $errors)
+                    {
+                            $errorData[ZurmoHtml::activeId($contactForm, $attribute)] = $errors;
+                    }
+                    echo CJSON::encode($errorData);
+                }
+                Yii::app()->end(false);
+            }
+        }
+
+        public function actionCreateEmailMessage($toAddress = null, $relatedId = null, $relatedModelClassName = null)
+        {
+            $postData         = PostUtil::getData();
+            $getData          = GetUtil::getData();
+            $personOrAccount  = self::resolvePersonOrAccountFromGet($relatedId, $relatedModelClassName);
+            $emailMessage     = new EmailMessage();
+            $emailMessageForm = new CreateEmailMessageForm($emailMessage);
+            $emailMessageForm->setScenario('createNonDraft');
+            $postVariableName = get_class($emailMessageForm);
+            if ($toAddress == null && $personOrAccount != null && $personOrAccount->primaryEmail->emailAddress != null)
+            {
+                $toAddress = $personOrAccount->primaryEmail->emailAddress;
+            }
+            if (isset($postData[$postVariableName]))
+            {
+                if ($relatedId != null && $relatedModelClassName != null && $toAddress != null)
+                {
+                    $messageRecipient                   = new EmailMessageRecipient();
+                    $messageRecipient->toName           = strval($personOrAccount);
+                    $messageRecipient->toAddress        = $toAddress;
+                    $messageRecipient->type             = EmailMessageRecipient::TYPE_TO;
+                    $messageRecipient->personOrAccount  = $personOrAccount;
+                    $emailMessage->recipients->add($messageRecipient);
+                }
+                EmailMessageUtil::resolveEmailMessageFromPostData($postData, $emailMessageForm, Yii::app()->user->userModel);
+                $this->actionValidateCreateEmailMessage($postData, $emailMessageForm);
+                $this->attemptToSaveModelFromPost($emailMessageForm, null, false);
+            }
+            else
+            {
+                EmailMessageUtil::resolveSignatureToEmailMessage($emailMessage, Yii::app()->user->userModel);
+                EmailMessageUtil::resolvePersonOrAccountToEmailMessage($emailMessage, Yii::app()->user->userModel,
+                                                                       $toAddress, $relatedId, $relatedModelClassName);
+                $createEmailMessageModalEditView = new CreateEmailMessageModalEditView(
+                    $this->getId(),
+                    $this->getModule()->getId(),
+                    $emailMessageForm);
+                $view = new ModalView($this, $createEmailMessageModalEditView);
+                Yii::app()->getClientScript()->setToAjaxMode();
+                echo $view->render();
+            }
+        }
+
+        protected function resolvePersonOrAccountFromGet($relatedId = null, $relatedModelClassName = null)
+        {
+            $personOrAccount = null;
+            if ($relatedId != null && $relatedModelClassName != null)
+            {
+                $personOrAccount = $relatedModelClassName::getById((int)$relatedId);
+                //Only attempt to populate email if the user has write permissions
+                if ($relatedModelClassName == 'Contact' &&
+                   $personOrAccount->primaryEmail->emailAddress == null &&
+                   ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($personOrAccount, Permission::WRITE))
+                {
+                    $this->redirect(array($this->getId() . '/populateContactEmailBeforeCreating',
+                                          'id' => $personOrAccount->id));
+                    Yii::app()->end(false);
+                }
+            }
+            return $personOrAccount;
+        }
+
+        /**
+         * Override to process the security on the email message to match a related model if present.
+         * (non-PHPdoc)
+         * @see ZurmoBaseController::actionAfterSuccessfulModelSave()
+         */
+        protected function actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams = null)
+        {
+            assert('$model instanceof CreateEmailMessageForm');
+            $emailMessage          = $model->getModel();
+            $relatedId             = ArrayUtil::getArrayValue(GetUtil::getData(), 'relatedId');
+            $relatedModelClassName = ArrayUtil::getArrayValue(GetUtil::getData(), 'relatedModelClassName');
+            if ($relatedId != null &&
+                $relatedModelClassName != null &&
+                is_subclass_of($relatedModelClassName, 'OwnedSecurableItem'))
+            {
+                $relatedModel                      = $relatedModelClassName::getById((int)$relatedId);
+                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($relatedModel);
+                ExplicitReadWriteModelPermissionsUtil::resolveExplicitReadWriteModelPermissions($emailMessage,
+                                                       $explicitReadWriteModelPermissions);
+            }
+            parent::actionAfterSuccessfulModelSave($model, $modelToStringValue, $redirectUrlParams);
+        }
+
+        protected function actionValidateCreateEmailMessage($postData, CreateEmailMessageForm $emailMessageForm)
+        {
+            if (isset($postData['ajax']) && $postData['ajax'] == 'edit-form')
+            {
+                $emailMessageForm->setAttributes($postData[get_class($emailMessageForm)]);
+                if ($emailMessageForm->validate())
+                {
+                    Yii::app()->end(false);
+                }
+                else
+                {
+                    $errorData = array();
+                    foreach ($emailMessageForm->getErrors() as $attribute => $errors)
+                    {
+                            $errorData[ZurmoHtml::activeId($emailMessageForm, $attribute)] = $errors;
+                    }
+                    echo CJSON::encode($errorData);
+                }
+                Yii::app()->end(false);
+            }
+        }
+
+        /**
+         * Given a partial name or e-mail address, search for all Users, Leads or Contacts
+         * JSON encode the resulting array of contacts.
+         */
+        public function actionAutoCompleteForMultiSelectAutoComplete($term)
+        {
+            $pageSize               = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                                'autoCompleteListPageSize', get_class($this->getModule()));
+            $usersByFullName        = UserSearch::getUsersByPartialFullName($term, $pageSize);
+            $usersByEmailAddress    = UserSearch::getUsersByEmailAddress($term, 'contains');
+            $contacts               = ContactSearch::getContactsByPartialFullNameOrAnyEmailAddress($term, $pageSize, null, 'contains');
+            $autoCompleteResults    = array();
+            foreach ($usersByEmailAddress as $user)
+            {
+                $autoCompleteResults[] = array(
+                    'id'   => strval($user->primaryEmail),
+                    'name' => strval($user) . ' (' . $user->primaryEmail . ')',
+                );
+            }
+            foreach ($usersByFullName as $user)
+            {
+                $autoCompleteResults[] = array(
+                    'id'   => strval($user->primaryEmail),
+                    'name' => strval($user) . ' (' . $user->primaryEmail . ')',
+                );
+            }
+            foreach ($contacts as $contact)
+            {
+                $autoCompleteResults[] = array(
+                    'id'   => strval($contact->primaryEmail),
+                    'name' => strval($contact) . ' (' . $contact->primaryEmail . ')',
+                );
+            }
+            $emailValidator = new CEmailValidator();
+            if (count($autoCompleteResults) == 0 && $emailValidator->validateValue($term))
+            {
+                $autoCompleteResults[] = array('id' => $term, 'name' => $term);
+            }
+            echo CJSON::encode($autoCompleteResults);
         }
 
         protected static function makeSelectForm($userCanAccessLeads, $userCanAccessContacts)

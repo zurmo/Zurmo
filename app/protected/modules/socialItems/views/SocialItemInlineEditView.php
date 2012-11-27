@@ -43,7 +43,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'        => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Post")',
+                            array('type'        => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Comment")',
                                   'htmlOptions' => array('id' => 'savePost', 'name' => 'savePost')),
                         ),
                     ),

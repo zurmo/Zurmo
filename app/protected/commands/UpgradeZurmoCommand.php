@@ -29,6 +29,8 @@
      */
     class UpgradeZurmoCommand extends CConsoleCommand
     {
+        protected $interactive = true;
+
         public function getHelp()
         {
             return <<<EOD
@@ -42,6 +44,7 @@
      * username: username to log in as and run the import processes. Typically 'super'.
                   This user must be a super administrator.
      * action: define upgrade phase(possible options: "runPart1" or "runPart2")
+     * interactive: interactive or not
 EOD;
         }
 
@@ -77,6 +80,11 @@ EOD;
             else
             {
                 $upgradeStep = $args[1];
+            }
+
+            if (isset($args[2]))
+            {
+                $this->interactive = $args[2];
             }
 
             try
@@ -125,7 +133,15 @@ EOD;
             $messageStreamer->add(Yii::t('Default', 'This is the Zurmo upgrade process. Please backup files/database before you continue.'));
 
             $message = Yii::t('Default', 'Are you sure you want to upgrade Zurmo? [yes|no]');
-            $confirm = $this->confirm($messageStreamer, $message);
+
+            if ($this->interactive)
+            {
+                $confirm = $this->confirm($messageStreamer, $message);
+            }
+            else
+            {
+                $confirm = true;
+            }
 
             if ($confirm)
             {

@@ -18,7 +18,7 @@
 			height:14px;
 			line-height: 14px;
 			.radius(50%);
-			background:@themeColor2;
+			//++.themeBackgroundColor2;
 			border:none;
 			margin-right:6px;
 			outline: none !important;
@@ -64,7 +64,7 @@
 .panelTitle{
 	font-size:13px;
 	font-weight:bold;
-	color:@themeColor;
+	++.themeColor;
 	margin:10px 0;
 }
 
@@ -93,25 +93,25 @@
             border:none;
             background:none;
             font-size:11px !important;
-            padding:3px;
+            padding:3px !important;
             margin:0 3px;
-            color:@themeColor;
+            ++.themeColor;
             span{
                 font-size: 11px;
             }
-            &:hover{
-                background:@themeColor;
-                color:#FFF;
-                .radius(3px) !important;
-                border:none;
-            }
+        }
+        label:hover{
+            //++.themeBackgroundColor;
+            color:#FFF;
+            .radius(3px) !important;
+            border:none;
         }
         input[type="radio"], input[type="checkbox"]{
             visibility:hidden;
             display:none;
         }
         .ui-state-active{
-            background:@themeColor;
+            //++.themeBackgroundColor;
             color:#FFF;
             .radius(3px) !important;
             border:none;
@@ -144,5 +144,3 @@
         width: 200px;
     }
 }
-
-

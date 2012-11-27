@@ -64,23 +64,28 @@
          *
          */
         public static function getContactsByPartialFullNameOrAnyEmailAddress($partialNameOrEmailAddress, $pageSize,
-                                                                             $stateMetadataAdapterClassName = null)
+                                                                             $stateMetadataAdapterClassName = null, $operatorType = null)
         {
             assert('is_string($partialNameOrEmailAddress)');
             assert('is_int($pageSize)');
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
+            assert('$operatorType == null || is_string($operatorType)');
+            if ($operatorType == null)
+            {
+              $operatorType = 'startsWith';
+            }
             $metadata = array();
             $metadata['clauses'] = array(
                 1 => array(
                     'attributeName'        => 'primaryEmail',
                     'relatedAttributeName' => 'emailAddress',
-                    'operatorType'         => 'startsWith',
+                    'operatorType'         => $operatorType,
                     'value'                => $partialNameOrEmailAddress,
                 ),
                 2 => array(
                     'attributeName'        => 'secondaryEmail',
                     'relatedAttributeName' => 'emailAddress',
-                    'operatorType'         => 'startsWith',
+                    'operatorType'         => $operatorType,
                     'value'                => $partialNameOrEmailAddress,
                 ),
             );

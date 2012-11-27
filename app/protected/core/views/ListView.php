@@ -156,7 +156,7 @@
                 'afterAjaxUpdate'      => $this->getCGridViewAfterAjaxUpdate(),
                 'columns'              => $columns,
                 'nullDisplay'          => '&#160;',
-                'pagerCssClass'		   => static::getPagerCssClass(),
+                'pagerCssClass'        => static::getPagerCssClass(),
                 'showTableOnEmpty'     => $this->getShowTableOnEmpty(),
                 'emptyText'            => $this->getEmptyText(),
                 'template'             => static::getGridTemplate(),

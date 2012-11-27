@@ -101,10 +101,11 @@
                 'relations' => array(
                     'folder'        => array(RedBeanModel::HAS_ONE,  'EmailFolder'),
                     'content'       => array(RedBeanModel::HAS_ONE,  'EmailMessageContent',    RedBeanModel::OWNED),
-                    'files'         => array(RedBeanModel::HAS_MANY, 'EmailFileModel',         RedBeanModel::OWNED),
+                    'files'         => array(RedBeanModel::HAS_MANY, 'FileModel',              RedBeanModel::OWNED, 'relatedModel'),
                     'sender'        => array(RedBeanModel::HAS_ONE,  'EmailMessageSender',     RedBeanModel::OWNED),
                     'recipients'    => array(RedBeanModel::HAS_MANY, 'EmailMessageRecipient',  RedBeanModel::OWNED),
-                    'error'         => array(RedBeanModel::HAS_ONE,  'EmailMessageSendError' , RedBeanModel::OWNED)
+                    'error'         => array(RedBeanModel::HAS_ONE,  'EmailMessageSendError' , RedBeanModel::OWNED),
+                    'account'       => array(RedBeanModel::HAS_ONE,  'EmailAccount')
                 ),
                 'rules' => array(
                     array('subject', 'required'),
@@ -116,6 +117,7 @@
                 ),
                 'elements' => array(
                     'sentDateTime'  => 'DateTime',
+                    'files'         => 'Files',
                 )
             );
             return $metadata;

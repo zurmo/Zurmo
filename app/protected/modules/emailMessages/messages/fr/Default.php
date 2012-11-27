@@ -89,6 +89,8 @@
             => 'Chaque minute.',
         'Extra Mail Settings'
             => 'Paramètres supplémentaires',
+        'Failed to connect to mailbox'
+            => 'Problème de connexion à votre serveur de messagerie',
         'Folder'
             => 'Dossier',
         'From'

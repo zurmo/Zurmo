@@ -349,8 +349,8 @@
             $params['htmlOptions'] = array('id' => 'search-advanced-search', 'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $searchElement = new SaveButtonActionElement(null, null, null, $params);
             $content  = $searchElement->render();
-            $content .= ZurmoHtml::link(Yii::t('Default', 'Close'), '#', array('id' => 'cancel-advanced-search'));
-            return $content;
+            $closeButton = ZurmoHtml::link(Yii::t('Default', 'Close'), '#', array('id' => 'cancel-advanced-search'));
+            return $closeButton . $content;
         }
 
         protected function renderSaveInputAndSaveButtonContentForAdvancedSearch($form)

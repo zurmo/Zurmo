@@ -163,6 +163,8 @@
             => 'Chiudi',
         'Code'
             => 'Codice',
+        'Comment'
+            => 'Commenta',
         'Configuration'
             => 'Configurazine',
         'Configure'
@@ -615,6 +617,8 @@
             => 'Numero degli elementi nella lista Sublist',
         'Successfully updated'
             => 'modificato con successo',
+        'Summary'
+            => 'Sommario',
         'Super Administrators'
             => 'Amministratore Super',
         'Tag Cloud fields allow you to tag records with values so that you can easily find them later.'

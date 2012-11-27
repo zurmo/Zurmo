@@ -85,6 +85,12 @@
             }
         }
 
+        /**
+         * Send a test email.  Can use to determine if the SMTP settings are configured correctly.
+         * @param EmailHelper $emailHelper
+         * @param User $userToSendMessagesFrom
+         * @param string $toAddress
+         */
         public static function sendTestEmail(EmailHelper $emailHelper, User $userToSendMessagesFrom, $toAddress)
         {
             $emailMessage              = new EmailMessage();

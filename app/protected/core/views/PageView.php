@@ -311,7 +311,13 @@
          */
         protected function renderXHtmlBodyStart()
         {
-            return '<body>';
+            $classContent      = Yii::app()->themeManager->getActiveThemeColor();
+            $backgroundTexture = Yii::app()->themeManager->getActiveBackgroundTexture();
+            if ($backgroundTexture != null)
+            {
+                $classContent .= ' ' . $backgroundTexture;
+            }
+            return '<body class="' . $classContent . '">';
         }
 
         /**

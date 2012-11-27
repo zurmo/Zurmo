@@ -358,8 +358,8 @@
                 }
                 for ($i = $start; $i < $end; ++$i)
                 {
-                    eval('$modelsToSave[] = ' . $modelClassName . '::getById(intval(' . $IdsToSave[$i] . '));');
-                    //$modelsToSave[] = $modelClassName::getById(intval($IdsToSave[$i]));
+                    //eval('$modelsToSave[] = ' . $modelClassName . '::getById(intval(' . $IdsToSave[$i] . '));');
+                    $modelsToSave[] = $modelClassName::getById(intval($IdsToSave[$i]));
                 }
                 return $modelsToSave;
             }
@@ -398,8 +398,8 @@
                 }
                 for ($i = $start; $i < $end; ++$i)
                 {
-                    eval('$modelsToDelete[] = ' . $modelClassName . '::getById(intval(' . $IdsToDelete[$i] . '));');
-                    //$modelsToSave[] = $modelClassName::getById(intval($IdsToSave[$i]));
+                    //eval('$modelsToDelete[] = ' . $modelClassName . '::getById(intval(' . $IdsToDelete[$i] . '));');
+                    $modelsToDelete[] = $modelClassName::getById(intval($IdsToDelete[$i]));
                 }
                 return $modelsToDelete;
             }

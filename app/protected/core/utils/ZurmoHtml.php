@@ -162,7 +162,8 @@
                     $selectOption       =   str_replace("{bindId}", $htmlOptions['id'], $dataSelectOption[$value]);
                 }
                 $items[] = strtr($template, array('{input}'    =>  $option,
-                                                  '{label}'    =>  $label . $selectOption));
+                                                  '{label}'    =>  $label . $selectOption,
+                                                  '{value}'    =>  $value));
             }
             return implode($separator, $items);
         }

@@ -36,7 +36,6 @@
          */
         protected function renderControlEditable()
         {
-            assert('empty($this->model->{$this->attribute})');
             $htmlOptions             = array();
             $htmlOptions['id']       = $this->getEditableInputId();
             $htmlOptions['name']     = $this->getEditableInputName();

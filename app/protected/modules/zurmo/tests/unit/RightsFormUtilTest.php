@@ -435,7 +435,7 @@
                 ),
                 'SocialItemsModule'  => array(
                     'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
-                        'displayName' => 'Access Social Feed',
+                        'displayName' => 'Access Social Items',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -844,7 +844,7 @@
                 ),
                 'SocialItemsModule'  => array(
                     'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
-                        'displayName' => 'Access Social Feed',
+                        'displayName' => 'Access Social Items',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -1249,7 +1249,7 @@
                 ),
                 'SocialItemsModule'  => array(
                     'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
-                        'displayName' => 'Access Social Feed',
+                        'displayName' => 'Access Social Items',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,
@@ -1653,7 +1653,7 @@
                 ),
                 'SocialItemsModule'  => array(
                     'RIGHT_ACCESS_SOCIAL_ITEMS'   => array(
-                        'displayName' => 'Access Social Feed',
+                        'displayName' => 'Access Social Items',
                         'explicit'    => null,
                         'inherited'   => null,
                         'effective'   => Right::DENY,

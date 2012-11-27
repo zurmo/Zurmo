@@ -97,7 +97,7 @@
             => 'Suma',
         'An error has occurred. Please click'
             => 'Ha ocurrido un error. Por favor, haga clic',
-        'An error occured during login.  try again.'
+        'An error occured during login. Please try again.'
             => 'Error de login. Por favor, inténtalo de nuevo.',
         'Any City'
             => 'Ciudad',
@@ -163,6 +163,8 @@
             => 'Cerrar',
         'Code'
             => 'Código',
+        'Comment'
+            => 'Comentar',
         'Configuration'
             => 'Configuración',
         'Configure'
@@ -615,6 +617,8 @@
             => 'Número de elementos de la sublista',
         'Successfully updated'
             => 'Actualizado correctamente',
+        'Summary'
+            => 'Sumario',
         'Super Administrators'
             => 'Superadministradores',
         'Tag Cloud fields allow you to tag records with values so that you can easily find them later.'

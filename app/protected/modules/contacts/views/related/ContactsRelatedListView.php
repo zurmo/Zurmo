@@ -43,6 +43,11 @@
                     'rowMenu' => array(
                         'elements' => array(
                             array('type'                      => 'EditLink'),
+                            array('type'                      => 'CreateEmailMessageFromRelatedListLink',
+                                  'modelClassName'            => 'EmailMessage',
+                                  'routeParameters'           =>
+                                    array('relatedModelClassName'  => 'Contact')
+                            ),
                             array('type'                      => 'RelatedDeleteLink'),
                             array('type'                      => 'RelatedUnlink',
                                   'relationModelClassName'    => 'eval:get_class($this->params["relationModel"])',

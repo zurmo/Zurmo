@@ -196,7 +196,8 @@
                 'autoStart' => false,
             ),
             'themeManager' => array(
-                'basePath' => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes',
+                'basePath'  => INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes',
+                'class'     => 'application.core.components.ThemeManager',
             ),
             'timeZoneHelper' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoTimeZoneHelper',
@@ -325,6 +326,7 @@
                 'fr' => 'French',
                 'de' => 'German',
             ),
+            'sentryDsn'    => 'http://5232100222bc4404b368026413df2d9a:47f7a2f1542348d68bea7b00f2261ede@sentry.zurmo.com/2',
         ),
         'preload' => array(
             'browser',

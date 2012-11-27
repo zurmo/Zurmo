@@ -64,12 +64,15 @@
 
         protected function renderContent()
         {
+            $rand     = mt_rand(1, 6);
+            $theme    = 'themes/' . Yii::app()->theme->name;
+            $imgUrl   = Yii::app()->baseUrl . '/' . $theme . '/images/welcome-gallery-' . $rand . '.png';
             $content  = '<div class="clearfix">';
             $content .= '<h1>' . Yii::t('Default', 'Welcome to Zurmo'). '</h1>';
             $content .= static::renderSocialLinksContent();
             $content .= '<div id="welcome-content">';
-            $content .= '<div id="instructions"><div id="welcome-gallery">';
-            $content .= '</div><p>';
+            $content .= '<div id="instructions"><div id="welcome-gallery"><img src="' . $imgUrl . '" title="" /><span></span></div>';
+            $content .= '<p>';
             $content .= Yii::t('Default', 'Using a CRM shouldn\'t be a chore. With Zurmo, you can earn points, ' .
                                'collect badges, and compete against co-workers while getting your job done.');
             $content .= '</p>';
@@ -119,7 +122,7 @@
             if ($this->hasDashboardAccess)
             {
                 $label    = Yii::t('Default', 'Go to the dashboard');
-                $content  = ZurmoHtml::link($label, Yii::app()->createUrl('home/default'), array('class' => 'dashboard-link'));
+                $content  = ZurmoHtml::link($label, Yii::app()->createUrl('home/default'), array('class' => 'dashboard-link z-button'));
                 return $content;
             }
         }

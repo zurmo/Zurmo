@@ -66,7 +66,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Social Feed')",
+                    'title' => "eval:Yii::t('Default', 'Social Items')",
                 ),
             );
             return $metadata;
@@ -74,7 +74,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'What is going on?');
+            $title  = Yii::t('Default', 'What\'s going on?');
             return $title;
         }
 

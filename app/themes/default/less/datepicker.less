@@ -25,7 +25,7 @@
 		&:before{
 			content:"◀";
 		}
-		:hover{
+		&:hover{
 			cursor:pointer !important;
 		}	
 	}
@@ -102,7 +102,6 @@
 		td{
 			min-width:30px;
 			height:30px;
-			border:1px solid green;
     		border-color: #BBB;
     		border-style: solid;
     		border-width: 1px 1px 0 0;
@@ -117,7 +116,10 @@
     		}
     		&.ui-datepicker-today{
     			background-image:none !important;
-    			background:lighten(@themeColor, 50%) !important;
+    		}
+    		&:hover{
+    			background-image:none;
+    			background:#f5f5f5 url(../images/datepicker-sprite-ie.png) left bottom repeat-x !important;
     		}
 		}
 	}
@@ -127,11 +129,11 @@
 		.clearfix();
 	}
 	.ui-datepicker-current{
-		.zButton();
+		++.z-button;
 		float:left;
 	}
 	.ui-datepicker-close{
-		.zButton();
+		++.z-button;
 		float:right;
 	}
 	.ui-timepicker-div{
@@ -175,7 +177,6 @@
 			font-size: 46px;
 			letter-spacing: -6px;
 			vertical-align: middle;
-			color:@themeColor;
 			text-align: left;
 			vertical-align: top;
 			&:before{

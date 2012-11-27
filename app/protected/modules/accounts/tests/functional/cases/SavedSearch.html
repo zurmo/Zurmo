@@ -23,6 +23,11 @@
 </tr>
 <!--Creating saved search-->
 <tr>
+	<td>waitForElementPresent</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
 	<td></td>
@@ -38,9 +43,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
 	<td>label=Type</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_dynamicClauses_0_type_value</td>
+	<td></td>
 </tr>
 <tr>
 	<td>addSelection</td>
@@ -65,6 +80,11 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//div[@id='list-view']/table/tbody/tr[@class='odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=more-search-link</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,8 +135,18 @@
 </tr>
 <!--Changing name of existing saved search-->
 <tr>
+	<td>waitForElementPresent</td>
+	<td>more-search-link</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>savedSearchId</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,6 +222,7 @@
 	<td></td>
 </tr>
 <!-- Deleting saved search -->
+
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
@@ -201,6 +232,11 @@
 	<td>select</td>
 	<td>id=savedSearchId</td>
 	<td>label=TypeVendorAndName</td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>

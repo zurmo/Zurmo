@@ -11,17 +11,14 @@
 		margin:30px -5px 0 0 !important;
 	}
 	a{
-		color:@themeColor !important;
 		text-decoration:underline !important;
 	}
-	
 	.dashboard-link{
-		.zButton();
 		text-decoration:none !important;
-		color:#656565 !important;
-		margin-top:15px;
+		//color:#656565;
+		margin-top:30px;
 		font-size:14px !important;
-		line-height:28px;
+		line-height:32px;
 	}
 }
 
@@ -40,7 +37,6 @@
 	border-top:1px solid #fff;
 	.box-sizing();
 	padding-left:15px;
-	padding-top:30px;
 	width:50%;
 	float:left;
 	font-size:12px;
@@ -74,7 +70,6 @@
 		height:14px;
 		line-height: 14px;
 		.radius(50%);
-		background:@themeColor2;
 		border:none;
 		margin-right:6px;
 		outline: none !important;
@@ -88,18 +83,44 @@
 
 #instructions{
 	p{
-		font-size:16px;	
-		line-height:25px;
+		font-size:25px;	
+		line-height:35px;
+        padding-right: 100px;
+        padding-top: 15px;
 	}
 	.clearfix();
-	padding-bottom:30px;
+	padding-bottom:45px;
+    margin-bottom:45px;
 	border-bottom:1px solid #ccc;
 }
 
 #welcome-gallery{
-	width:350px;
-	height:250px;
-	margin-right:15px;
+	margin-right:45px;
 	float:left;
-	background: url(../images/welcome-gallery-1.png) left top no-repeat;
+	.radius(8px 0 0 8px);
+    position: relative;
+    img{
+        .radius(8px 0 0 8px);
+        z-index: 0;
+        position: relative;
+    }
+	span{
+        position: absolute;
+        right: 0;
+        top:0;
+		display: block;
+		width:100%;
+		height:100%;
+		//#gradient .vertical-three-colors(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), 80%, #fff);
+		//#gradient > .horizontal( rgba(255, 255, 255, 0), #fff );
+		background-color: transparent !important;
+		background-image: -o-linear-gradient(     0deg , rgba(255, 255, 255, 0) 55%, rgb(255, 255, 255) 100%);
+		background-image: -moz-linear-gradient(   0deg , rgba(255, 255, 255, 0) 55%, rgb(255, 255, 255) 100%);
+		background-image: -webkit-linear-gradient(0deg , rgba(255, 255, 255, 0) 55%, rgb(255, 255, 255) 100%);
+		background-image: -ms-linear-gradient(    0deg , rgba(255, 255, 255, 0) 55%, rgb(255, 255, 255) 100%);
+		background-image: linear-gradient(        0deg , rgba(255, 255, 255, 0) 55%, rgb(255, 255, 255) 100%);
+	}
 }
+
+
+

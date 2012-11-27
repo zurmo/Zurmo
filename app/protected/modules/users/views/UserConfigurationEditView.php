@@ -65,6 +65,24 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'themeColor', 'type' => 'ThemeColor'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'backgroundTexture', 'type' => 'BackgroundTexture'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'hideWelcomeView', 'type' => 'CheckBox'),
                                             ),
                                         ),

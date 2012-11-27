@@ -17,10 +17,9 @@
         }
     }
 }
-.configuration-list li a::before
+//.configuration-list li a:before,
 .back-to-app-menu-item span{
     vertical-align:middle;
-    color:@themeColor !important;
     &:before{
         content:"z";
         .symbly(21px);
@@ -76,10 +75,10 @@
         }
         table tr:hover{
             background-color:#D4E7BC;
-            color:@themeColor;
+            ++.themeColor;
             .pencil{
                 visibility:visible;
-                color:@themeColor;
+                ++.themeColor;
             }
         }
         table thead{
@@ -113,7 +112,7 @@
             display:inline-block;
         }
         a{
-            .zButton();
+            ++.z-button;
             float:right;
             position: absolute;
             right:15px;
@@ -122,6 +121,7 @@
             &:before{
                 content: "n";
                 .symbly(20px);
+                color: #666;
                 margin-right:5px;
                 position:relative;
                 top:-2px;
@@ -142,7 +142,7 @@ table.configuration-list{
         position:relative !important;
     }
     tr td:last-child a{
-        .zButton();
+        ++.z-button;
         float:right;
         &:before{
             content: "n";
@@ -199,7 +199,6 @@ table.configuration-list{
             padding-left:15px;
             padding-bottom: 10px;
             font-weight:bold !important;
-            color:@themeColor;
         }
     }
     td{
@@ -241,7 +240,7 @@ table.configuration-list{
     input[type="button"]{
         display:block !important;
         margin-bottom:15px !important;
-        .zButton();
+        ++.z-button;
         .symbly(22px);
     }
     .select-arrow{
@@ -427,7 +426,6 @@ table.configuration-list{
     }
     a{
         .zLink();
-        .smaller();
         margin-right:5px;
     }
     table{
@@ -531,9 +529,7 @@ table.configuration-list{
 .breadcrumbs{
     padding:0 0 15px 0;
     font-size:11px;
-    a{
-        color: @themeColor !important;
-    }
+   
 }
 
 /*designer*/
@@ -601,7 +597,7 @@ table.configuration-list{
         }
     }
     #edit-form{
-        padding-right:30px;
+        //padding-right:30px;
     }
 }
 #UserCreateView{
@@ -624,10 +620,33 @@ table.configuration-list{
 }
 
 #UsersSearchView{
+    .search-view-1{
+        table{
+            border-bottom: none;
+        }
+        th{
+            width: 15%;
+        }
+        td{
+            width: 85%;
+            padding-bottom: 15px;
+        }
+    }
     .view-toolbar-container{
         margin-top: 15px;
     }
 }
+
+
+/*User Profile*/
+#UserViewAccountConfiguration{
+    > a:before{
+        content: "n";
+        .view-toolbar-icons();
+        top:-2px;
+    }
+}
+
 
 /*=User Security*/
 .UserGroupMembershipView,
@@ -669,7 +688,7 @@ table.configuration-list{
 }
 
 .EmailTestingButton{
-    .zButton();
+    ++.z-button;
     border-top: 1px solid #e7e7e7;
     border-left: 1px solid #d7d7d7;
     border-right: 1px solid #d7d7d7;
@@ -949,4 +968,36 @@ table.configuration-list{
 
 #ImportErrorsListView{
     margin-bottom:15px;
+}
+
+/*Theme Chooser*/
+.color-swatch,
+.texture-swatch{
+    margin-bottom: 10px;
+    span{
+        display: inline-block;
+        width:32px;
+        height:16px;
+        //margin-right:6px;
+        //.radius(2px);
+    }
+    label{
+        float: none !important;
+        top: -3px;
+    }
+    input{
+        margin-right:12px !important;
+        margin-top: 2px;
+    }
+}
+.texture-swatch{
+    span{
+        width: 90px;
+        background:#DDDEDE;
+        border: 3px solid #DDDEDE;
+        margin-top: -3px;
+    }
+    label{
+        top:-6px;
+    }
 }

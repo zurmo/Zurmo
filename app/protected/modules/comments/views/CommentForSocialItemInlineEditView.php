@@ -53,7 +53,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'        => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Add Comment")',
+                            array('type'        => 'SaveButton', 'label' => 'eval:Yii::t("Default", "Comment")',
                                   'htmlOptions' => array('id'   => 'eval:"saveComment" . $this->model->id',
                                                          'name' => 'eval:"saveComment" . $this->model->id')),
                         ),

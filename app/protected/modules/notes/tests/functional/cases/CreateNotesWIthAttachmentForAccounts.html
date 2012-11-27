@@ -12,71 +12,71 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
-	<td>storeGlobal</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+    <td>storeGlobal</td>
+    <td>javascript{Math.floor(Math.random()*11000)}</td>
+    <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>css=a.icon-create</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>css=a.icon-create</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Account_name</td>
-	<td>My Account ${randomSuffix}</td>
+    <td>type</td>
+    <td>id=Account_name</td>
+    <td>My Account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>name=save</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>name=save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=More Options</td>
-	<td></td>
+    <td>click</td>
+    <td>link=More Options</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Note_description</td>
-	<td>test</td>
+    <td>type</td>
+    <td>id=Note_description</td>
+    <td>test</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=Note_files</td>
-	<td>C:\Inetpub\selenium\zurmo_bleeding\app\protected\modules\notes\tests\functional\files\testNotes.txt</td>
+    <td>type</td>
+    <td>id=Note_files</td>
+    <td>C:\Inetpub\selenium\zurmo_bleeding\app\protected\modules\notes\tests\functional\files\testNotes.txt</td>
 </tr>
 
 <!-- assert whether delete button has appeared or not-->
 <tr>
-	<td>waitForTextPresent</td>
-	<td>testNotes.txt</td>
-	<td></td>
+    <td>waitForTextPresent</td>
+    <td>testNotes.txt</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[@id='fileUploadyw1']/div[2]/table/tbody/tr/td/span/button</td>
-	<td></td>
+    <td>verifyTextPresent</td>
+    <td>testNotes.txt</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=span.z-label</td>
-	<td></td>
+    <td>click</td>
+    <td>css=span.z-label</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>name=save</td>
-	<td></td>
+    <td>click</td>
+    <td>name=save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>testNotes.txt</td>
-	<td></td>
+    <td>waitForText</td>
+    <td>//div[@id='list-viewAccountLatestActivtiesForPortletView']/table/tbody/tr/td/div/span[3]/ul/li/a</td>
+    <td>testNotes.txt</td>
 </tr>
 </tbody></table>
 </body>

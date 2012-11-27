@@ -115,6 +115,11 @@
             echo $view->render();
         }
 
+        protected static function getZurmoControllerUtil()
+        {
+            return new MissionZurmoControllerUtil();
+        }
+
         public function actionDelete($id)
         {
             $mission = Mission::GetById(intval($id));

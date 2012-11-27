@@ -29,5 +29,19 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        'Access Social Items'
+            => 'Acceso a los artículos Sociales',
+        'Post'
+            => 'Publicar',
+        'Social Item'
+            => 'Artículo Social',
+        'Social Items'
+            => 'Elementos Sociales',
+        'What\'s going on?'
+            => '¿Qué está pasando?',
+        '{n} Post created|{n} Posts created'
+            => '{n} puesto creado|{n} puestos creados',
+        '{postedFromUser} to {postedToUser}'
+            => '{postedFromUser} a {postedToUser}',
     );
 ?>

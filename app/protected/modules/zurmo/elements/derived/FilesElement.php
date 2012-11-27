@@ -32,24 +32,27 @@
     {
         protected function renderControlNonEditable()
         {
-            assert('$this->model instanceof Item');
-            $content = '<ul class="attachments">';
-            $content .= '<li><strong>' . Yii::t('Default', 'Attachments'). '</strong></li>';
-            foreach ($this->model->files as $fileModel)
+            assert('$this->model instanceof Item || $this->model->getModel() instanceof Item');
+            $content = null;
+            if ($this->model->files->count() > 0)
             {
-                $content .= '<li><span class="icon-attachment"></span>';
-                $content .= FileModelDisplayUtil::renderDownloadLinkContentByRelationModelAndFileModel($this->model,
-                                                                                                       $fileModel);
-                $content .= ' ' . FileModelDisplayUtil::convertSizeToHumanReadableAndGet((int)$fileModel->size);
-                $content .= '</li>';
+                $content  .= '<ul class="attachments">';
+                foreach ($this->model->files as $fileModel)
+                {
+                    $content .= '<li><span class="icon-attachment"></span>';
+                    $content .= FileModelDisplayUtil::renderDownloadLinkContentByRelationModelAndFileModel($this->model,
+                                                                                                           $fileModel);
+                    $content .= ' ' . FileModelDisplayUtil::convertSizeToHumanReadableAndGet((int)$fileModel->size);
+                    $content .= '</li>';
+                }
+                $content .= '</ul>';
             }
-            $content .= '</ul>';
             return $content;
         }
 
         protected function renderControlEditable()
         {
-            assert('$this->model instanceof Item');
+            assert('$this->model instanceof Item || $this->model->getModel() instanceof Item');
             $existingFilesInformation = array();
             foreach ($this->model->files as $existingFile)
             {
@@ -73,6 +76,7 @@
                 'existingFiles'        => $existingFilesInformation,
                 'maxSize'              => (int)InstallUtil::getMaxAllowedFileSize(),
                 'showMaxSize'          => $this->getShowMaxSize(),
+                'id'                   => $this->getId(),
             ));
 
             $cClipWidget->endClip();
@@ -130,6 +134,11 @@
                 return true;
             }
             return $this->params['showMaxSize'];
+        }
+
+        protected function getId()
+        {
+            return get_class($this->model);
         }
 
         /**

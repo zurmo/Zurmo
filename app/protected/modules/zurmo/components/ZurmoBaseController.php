@@ -190,7 +190,7 @@
             assert('is_string($stickySearchKey) || $stickySearchKey == null');
             if ($_GET['selectAll'])
             {
-                if(!isset($_GET[get_class($searchModel)]) && $stickySearchKey != null)
+                if (!isset($_GET[get_class($searchModel)]) && $stickySearchKey != null)
                 {
                     $resolvedStickySearchKey = $stickySearchKey;
                 }

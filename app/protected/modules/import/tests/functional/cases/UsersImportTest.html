@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>New Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
+</thead><tbody>
+<tr>
+        <td>setSpeed</td>
+        <td>3000</td>
+        <td></td>
+</tr>
+<tr>
+        <td>open</td>
+        <td>index.php/import/default</td>
+        <td></td>
+</tr>
+<tr>
+        <td>click</td>
+        <td>id=ImportWizardForm_importRulesType_7</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=yt0</td>
+        <td></td>
+</tr>
+<tr>
+        <td>click</td>
+        <td>id=ImportWizardForm_firstRowIsHeaderRow</td>
+        <td></td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=ImportWizardForm_file</td>
+        <td>C:\Inetpub\selenium\zurmo_bleeding\app\protected\modules\import\tests\functional\files\importUsersTest.csv</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=yt0</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForTextPresent</td>
+        <td>Please map the fields you would like to import.</td>
+        <td></td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=ImportWizardForm_column_0_attributeIndexOrDerivedType</td>
+        <td>label=Username</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=ImportWizardForm_column_1_attributeIndexOrDerivedType</td>
+        <td>label=Password</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=ImportWizardForm_column_4_attributeIndexOrDerivedType</td>
+        <td>label=Last Name</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=ImportWizardForm_column_2_attributeIndexOrDerivedType</td>
+        <td>label=Status</td>
+</tr>
+<tr>
+        <td>select</td>
+        <td>id=ImportWizardForm_column_3_attributeIndexOrDerivedType</td>
+        <td>label=First Name</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>id=yt1</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForTextPresent</td>
+        <td>Data Analysis is complete.</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Next</td>
+        <td></td>
+</tr>
+<tr>
+        <td>verifyTextPresent</td>
+        <td>Congratulations!</td>
+        <td></td>
+</tr>
+<tr>
+        <td>assertTextPresent</td>
+        <td>Rows with errors: 0</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>//div[@id='MenuView']/ul/li[5]/a/span[2]</td>
+        <td></td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=UsersSearchForm_anyMixedAttributes</td>
+        <td>my</td>
+</tr>
+<tr>
+        <td>typeKeys</td>
+        <td>id=UsersSearchForm_anyMixedAttributes</td>
+        <td>username1</td>
+</tr>
+<tr>
+        <td>waitForTextPresent</td>
+        <td>2 result(s)</td>
+        <td></td>
+</tr>
+<tr>
+        <td>assertTextPresent</td>
+        <td>myusername1</td>
+        <td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -163,6 +163,8 @@
             => 'schließen',
         'Code'
             => 'Code', // Same Word Translated
+        'Comment'
+            => 'Kommentar',
         'Configuration'
             => 'Konfiguration',
         'Configure'
@@ -615,6 +617,8 @@
             => 'Unterliste Seitengröße',
         'Successfully updated'
             => 'Erfolgreich aktualisiert',
+        'Summary'
+            => 'Zusammenfassung',
         'Super Administrators'
             => 'Super Administratoren',
         'Tag Cloud fields allow you to tag records with values so that you can easily find them later.'

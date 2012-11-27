@@ -37,14 +37,19 @@
         protected $viewContainsFileUploadElement = false;
 
         /**
+         * When rendering the content, should it be wrapped in a div that has the class 'wrapper' or not.
+         * @var boolean
+         */
+        protected $wrapContentInWrapperDiv = true;
+
+        /**
          * Override of parent function. Makes use of the ZurmoActiveForm
          * widget to provide an editable form.
          * @return A string containing the element's content.
          */
         protected function renderContent()
         {
-            $content  = '<div class="wrapper">';
-            $content .= $this->renderTitleContent();
+            $content = $this->renderTitleContent();
             $maxCellsPresentInAnyRow = $this->resolveMaxCellsPresentInAnyRow($this->getFormLayoutMetadata());
             if ($maxCellsPresentInAnyRow > 1)
             {
@@ -65,6 +70,7 @@
                                                                 )
                                                             );
             $content .= $formStart;
+            $content .= $this->renderOperationDescriptionContent();
             $content .= '<div class="attributesContainer">';
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderRightSideContent($form);
@@ -73,15 +79,25 @@
             $actionToolBarContent = $this->renderActionElementBar(true);
             if ($actionToolBarContent != null)
             {
-                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= '<div id="float-bar"><div class="view-toolbar-container clearfix dock"><div class="form-toolbar">';
                 $content .= $actionToolBarContent;
-                $content .= '</div></div>';
+                $content .= '</div></div></div>';
             }
             $formEnd  = $clipWidget->renderEndWidget();
             $content .= $formEnd;
-
-            $content .= '</div></div>';
+            $content .= '</div>';
+            if ($this->wrapContentInWrapperDiv)
+            {
+                return ZurmoHtml::tag('div', array('class' => 'wrapper'), $content);
+            }
             return $content;
+        }
+
+        /**
+         * Override as needed
+         */
+        protected function renderOperationDescriptionContent()
+        {
         }
 
         protected function renderRightSideContent($form = null)

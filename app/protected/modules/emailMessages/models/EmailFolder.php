@@ -72,6 +72,43 @@
             return Yii::t('Default', 'Archived Unmatched');
         }
 
+        public static function getTranslatedFolderNameByType($type)
+        {
+            assert('is_string($type)');
+            if ($type == self::TYPE_INBOX)
+            {
+                return self::getDefaultInboxName();
+            }
+            elseif ($type == self::TYPE_SENT)
+            {
+                return self::getDefaultSentName();
+            }
+            elseif ($type == self::TYPE_OUTBOX)
+            {
+                return self::getDefaultOutboxName();
+            }
+            elseif ($type == self::TYPE_DRAFT)
+            {
+                return self::getDefaultDraftName();
+            }
+            elseif ($type == self::TYPE_OUTBOX_ERROR)
+            {
+                return self::getDefaultOutboxErrorName();
+            }
+            elseif ($type == self::TYPE_ARCHIVED)
+            {
+                return self::getDefaultArchivedName();
+            }
+            elseif ($type == self::TYPE_ARCHIVED_UNMATCHED)
+            {
+                return self::getDefaultArchivedUnmatchedName();
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         public static function getByBoxAndType(EmailBox $box, $type)
         {
             assert('$box->id > 0');

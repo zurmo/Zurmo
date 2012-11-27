@@ -61,6 +61,8 @@
 
         public $scriptUrl = '';
 
+        public $submitCrashToSentry = true;
+
         public function rules()
         {
             return array(
@@ -84,6 +86,7 @@
                 array('installDemoData',       'boolean'),
                 array('hostInfo',              'type', 'type' => 'string'),
                 array('scriptUrl',             'type', 'type' => 'string'),
+                array('submitCrashToSentry',   'boolean'),
             );
         }
 

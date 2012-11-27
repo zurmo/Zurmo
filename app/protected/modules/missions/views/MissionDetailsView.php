@@ -98,6 +98,7 @@
             {
                 $element  = new FilesElement($this->model, 'null');
                 $element->nonEditableTemplate = '<div>{content}</div>';
+                $content .= '<div><strong>' . Yii::t('Default', 'Attachments'). '</strong></div>';
                 $content .= $element->render();
             }
             $element                      = new MissionStatusElement($this->model, 'status');

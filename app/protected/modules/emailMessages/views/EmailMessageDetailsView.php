@@ -33,6 +33,7 @@
                     'derivedAttributeTypes' => array(
                         'EmailMessageToRecipients',
                         'EmailMessageCcRecipients',
+                        'EmailMessageBccRecipients',
                         'EmailMessageContent'
                     ),
                     'nonPlaceableAttributeNames' => array(
@@ -45,7 +46,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'sentDateTime', 'type' => 'DateTime'),
+                                                array('attributeName' => 'sentDateTime', 'type' => 'EmailMessageSentDateTime'),
                                             ),
                                         ),
                                     )
@@ -81,6 +82,15 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'EmailMessageBccRecipients'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'subject', 'type' => 'Text'),
                                             ),
                                         ),
@@ -91,6 +101,15 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'content', 'type' => 'EmailMessageContent'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'Files'),
                                             ),
                                         ),
                                     )

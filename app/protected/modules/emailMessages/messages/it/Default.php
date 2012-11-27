@@ -89,6 +89,8 @@
             => 'Ogni minuto',
         'Extra Mail Settings'
             => 'Impostazioni avanzate',
+        'Failed to connect to mailbox'
+            => 'Problema di connessione al server di posta',
         'Folder'
             => 'Cartella',
         'From'

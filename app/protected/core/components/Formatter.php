@@ -61,5 +61,15 @@
         {
             return nl2br(ZurmoHtml::encode($value));
         }
+
+        /**
+         * Override to allow htmlOptions to be passed
+         * (non-PHPdoc)
+         * @see CFormatter::formatEmail()
+         */
+        public function formatEmail($value, $email = '', $htmlOptions = array())
+        {
+            return CHtml::mailto($value, $email, $htmlOptions);
+        }
     }
 ?>

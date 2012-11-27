@@ -55,6 +55,10 @@
 
         protected function renderContent()
         {
+            if ($this->messageBoxContent != null)
+            {
+                JNotify::addMessage('FlashMessageBar', $this->messageBoxContent, 'JobsCollectionMessage');
+            }
             $content = '<div>';
             $content .= $this->renderTitleContent();
             $content .= '<div class="wide form">';
@@ -64,11 +68,6 @@
                                                                 array('id' => 'jobs-collection-form')
                                                             );
             $content .= $formStart;
-
-            if ($this->messageBoxContent != null)
-            {
-                $content .= $this->messageBoxContent;
-            }
             $content .= $this->renderFormLayout($form);
             $content .= $this->renderViewToolBar();
             $content .= $clipWidget->renderEndWidget();
@@ -183,7 +182,8 @@
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
                                            array('type' => $type));
             $label = Yii::t('Default', 'Job Log');
-            return ZurmoHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type));
+            return ZurmoHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type),
+                                       array('class' => 'z-link'));
         }
 
         protected static function resolveAjaxOptionsForJobLogLink($type)
@@ -231,7 +231,8 @@
 
         protected static function renderHelpContent()
         {
-            $clickHereLink = ZurmoHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager');
+            $clickHereLink = ZurmoHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager',
+                                             array('class' => 'z-link'));
             $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
             $content .= '<span class="jobs-help">';
             $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',

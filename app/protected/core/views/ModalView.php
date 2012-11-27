@@ -61,7 +61,7 @@
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
-            assert('is_string($position)');
+            assert('is_string($position) || is_array($position)');
             return array(
                     'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width, $position),
                     'update'     => '#' . $containerId);
@@ -73,7 +73,7 @@
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
-            assert('is_string($position)');
+            assert('is_string($position) || is_array($position)');
             if ($height == 'auto')
             {
                 $heightContent = "'auto'";
@@ -82,11 +82,20 @@
             {
                 $heightContent = $height;
             }
+            if (is_array($position))
+            {
+                $position = CJSON::encode($position);
+            }
+            else
+            {
+                $position = '" . $position . "';
+            }
             // Begin Not Coding Standard
             return "js:function(){jQuery('#" . $containerId . "').html('');" .
                                     "makeLargeLoadingSpinner('" . $containerId . "');" .
+                                    "window.scrollTo(0, 0);" .
                                     "jQuery('#" . $containerId . "').dialog({'title':\"" . CJavaScript::quote($title) . "\",'autoOpen':true," .
-                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':'" . $position . "'}); return true;}";
+                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':" . $position . "}); return true;}";
             // End Not Coding Standard
         }
     }

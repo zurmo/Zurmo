@@ -145,5 +145,57 @@
             $emailHelper = new EmailHelper;
             $emailHelper->outboundHost = 'xxx';
         }
+
+        /**
+         * @depends testLoadOutboundSettings
+         */
+        public function testLoadOutboundSettingsFromUserEmailAccount()
+        {
+            $billy                      = User::getByUsername('billy');
+            Yii::app()->user->userModel = $billy;
+            $emailHelper = new EmailHelper;
+
+            //Load outbound setting when no EmailAccount was created
+            try
+            {
+                $emailHelper->loadOutboundSettingsFromUserEmailAccount($billy);
+            }
+            catch (NotFoundException $e)
+            {
+                $this->addToAssertionCount(1);
+            }
+
+            //Load outbound setting when EmailAccount useCustomOutboundSettings = false
+            EmailMessageTestHelper::createEmailAccount($billy);
+            $emailHelper->loadOutboundSettingsFromUserEmailAccount($billy);
+            $this->assertEquals('smtp', $emailHelper->outboundType);
+            $this->assertEquals(25, $emailHelper->outboundPort);
+            $this->assertEquals('xxx', $emailHelper->outboundHost);
+            $this->assertNull($emailHelper->outboundUsername);
+            $this->assertNull($emailHelper->outboundPassword);
+            $this->assertNull($emailHelper->outboundSecurity);
+            $this->assertEquals('notifications@zurmoalerts.com', $emailHelper->fromAddress);
+            $this->assertEquals(strval($billy), $emailHelper->fromName);
+
+            //Load outbound setting when EmailAccount useCustomOutboundSettings = true
+            $emailAccount = EmailAccount::getByUserAndName($billy);
+            $emailAccount->useCustomOutboundSettings = true;
+            $emailAccount->outboundType = 'xyz';
+            $emailAccount->outboundPort = 55;
+            $emailAccount->outboundHost = 'zurmo.com';
+            $emailAccount->outboundUsername = 'billy';
+            $emailAccount->outboundPassword = 'billypass';
+            $emailAccount->outboundSecurity = 'ssl';
+            $emailAccount->save();
+            $emailHelper->loadOutboundSettingsFromUserEmailAccount($billy);
+            $this->assertEquals('xyz', $emailHelper->outboundType);
+            $this->assertEquals(55, $emailHelper->outboundPort);
+            $this->assertEquals('zurmo.com', $emailHelper->outboundHost);
+            $this->assertEquals('billy', $emailHelper->outboundUsername);
+            $this->assertEquals('billypass', $emailHelper->outboundPassword);
+            $this->assertEquals('ssl', $emailHelper->outboundSecurity);
+            $this->assertEquals($billy->getFullName(), $emailHelper->fromName);
+            $this->assertEquals('user@zurmo.com', $emailHelper->fromAddress);
+        }
     }
 ?>

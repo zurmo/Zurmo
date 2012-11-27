@@ -218,14 +218,14 @@
         {
             //Init AmCharts
             $this->addChartPropertiesByType();
-            $javascript  = "var chartData = ". $this->convertDataArrayToJavascriptArray() . ";";
+            $javascript  = "var chartData_{$this->id} = ". $this->convertDataArrayToJavascriptArray() . ";";
             $javascript .=" $(document).ready(function () {     ";
             //Make chart Pie or Serial
             if ($this->chartIsPie)
             {
                 $javascript .="
                    var chart          = new AmCharts.AmPieChart();
-                   chart.dataProvider = chartData;
+                   chart.dataProvider = chartData_{$this->id};
                    chart.titleField   = '{$this->categoryField}';
                    chart.valueField   = '". $this->valueField . "';";
             }
@@ -234,7 +234,7 @@
                 //Init the AmSerialGraph
                 $javascript .="
                         var chart           = new AmCharts.AmSerialChart();
-                        chart.dataProvider  = chartData;
+                        chart.dataProvider  = chartData_{$this->id};
                         chart.categoryField = '{$this->categoryField}';
                 ";
             }

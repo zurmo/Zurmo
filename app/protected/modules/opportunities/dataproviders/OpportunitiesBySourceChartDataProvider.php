@@ -52,7 +52,7 @@
                                getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData, Yii::app()->language);
             $sql             = static::makeChartSqlQuery();
             $rows            = R::getAll($sql);
-            $chartData       = array();                                               
+            $chartData       = array();
             foreach ($rows as $row)
             {
                 $chartData[] = array(

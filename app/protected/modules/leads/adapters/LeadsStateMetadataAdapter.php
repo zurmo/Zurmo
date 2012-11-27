@@ -33,5 +33,21 @@
         {
             return $stateOrder < $startingStateOrder;
         }
+
+        public static function resolveStateMetadataAdapterClassNameByAccess($userCanAccessContacts, $userCanAccessLeads)
+        {
+            assert('is_bool($userCanAccessContacts)');
+            assert('is_bool($userCanAccessLeads)');
+            $stateMetadataAdapterClassName = null;
+            if ($userCanAccessContacts && !$userCanAccessLeads)
+            {
+                $stateMetadataAdapterClassName = 'ContactsStateMetadataAdapter';
+            }
+            elseif (!$userCanAccessContacts && $userCanAccessLeads)
+            {
+                $stateMetadataAdapterClassName = 'LeadsStateMetadataAdapter';
+            }
+            return $stateMetadataAdapterClassName;
+        }
     }
 ?>

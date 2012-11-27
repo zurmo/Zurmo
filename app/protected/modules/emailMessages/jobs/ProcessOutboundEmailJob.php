@@ -51,7 +51,6 @@
         }
 
         /**
-         *
          * (non-PHPdoc)
          * @see BaseJob::run()
          */

@@ -48,15 +48,20 @@
                                             $where, "person.firstname, person.lastname");
         }
 
-        public static function getUsersByEmailAddress($emailAddress)
+        public static function getUsersByEmailAddress($emailAddress, $operatorType = null)
         {
             assert('is_string($emailAddress)');
+            assert('$operatorType == null || is_string($operatorType)');
+            if ($operatorType == null)
+            {
+              $operatorType = 'equals';
+            }
             $metadata = array();
             $metadata['clauses'] = array(
                     1 => array(
                             'attributeName'        => 'primaryEmail',
                             'relatedAttributeName' => 'emailAddress',
-                            'operatorType'         => 'equals',
+                            'operatorType'         => $operatorType,
                             'value'                => $emailAddress,
                     ),
             );

@@ -116,7 +116,7 @@
             return $modelClassName::getTableName($this->getAttributeModelClassName());
         }
 
-        protected function getModel()
+        public function getModel()
         {
             if ($this->model == null)
             {
