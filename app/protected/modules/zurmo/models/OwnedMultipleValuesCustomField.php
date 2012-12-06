@@ -33,6 +33,13 @@
      */
     class OwnedMultipleValuesCustomField extends MultipleValuesCustomField
     {
+        /**
+         * OwnedMultipleValuesCustomField does not need to have a bean because it stores no attributes and has no relations
+         * @see RedBeanModel::canHaveBean();
+         * @var boolean
+         */
+        private static $canHaveBean = false;
+
         // On changing a member value the original value
         // is saved (ie: on change it again the original
         // value is not overwritten) so that on save the
@@ -50,6 +57,18 @@
          * @var boolean
          */
         private $originalCustomFieldValuesDataProcessed = false;
+
+       /**
+         * @see RedBeanModel::getHasBean()
+         */
+        public static function getCanHaveBean()
+        {
+            if (get_called_class() == 'OwnedMultipleValuesCustomField')
+            {
+                return self::$canHaveBean;
+            }
+            return parent::getCanHaveBean();
+        }
 
         public function __set($attributeName, $value)
         {

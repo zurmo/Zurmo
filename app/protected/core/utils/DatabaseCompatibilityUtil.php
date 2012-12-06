@@ -342,7 +342,10 @@
                 else
                 {
                     throw new BulkInsertFailedException(
-                              Yii::t('Default', 'Bulk insert failed. There was a row with an incorrect column quantity'));
+                              Yii::t('Default', 'Bulk insert failed. There was a row with an incorrect column quantity.') .
+                              ' ' .
+                              Yii::t('Default', 'Row Counter: {rowNumber} Serialized row data: {serializedRowData}',
+                              array('{rowNumber}' => $counter, '{serializedRowData}' => serialize($row))));
                 }
             }
             if ($counter > 0)

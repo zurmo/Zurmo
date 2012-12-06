@@ -138,6 +138,13 @@
         );
 
         /**
+         * Can the class have a bean.  Some classes do not have beans as they are just used for modeling purposes
+         * and do not need to store persistant data.
+         * @var boolean
+         */
+        private static $canHaveBean = true;
+
+        /**
          * Used in an extending class's getDefaultMetadata() method to specify
          * that a relation is 1:1 and that the class on the side of the relationship where this is not a column in that
          * model's table.  Example: model X HAS_ONE Y.  There will be a y_id on the x table.  But in Y you would have
@@ -414,10 +421,13 @@
             {
                 foreach (array_reverse(RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
-                    $tableName = self::getTableName($modelClassName);
-                    $newBean = R::dispense($tableName);
-                    $this->modelClassNameToBean[$modelClassName] = $newBean;
-                    $this->mapAndCacheMetadataAndSetHints($modelClassName, $newBean);
+                    if ($modelClassName::getCanHaveBean())
+                    {
+                        $tableName = self::getTableName($modelClassName);
+                        $newBean = R::dispense($tableName);
+                        $this->modelClassNameToBean[$modelClassName] = $newBean;
+                        $this->mapAndCacheMetadataAndSetHints($modelClassName, $newBean);
+                    }
                 }
                 // The yii way of doing defaults is the the default validator
                 // fills in the defaults on attributes that don't have values
@@ -436,23 +446,26 @@
                 $first = true;
                 foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
                 {
-                    if ($first)
+                    if ($modelClassName::getCanHaveBean())
                     {
-                        $lastBean = $bean;
-                        $first = false;
-                    }
-                    else
-                    {
-                        $tableName = self::getTableName($modelClassName);
-                        $lastBean = ZurmoRedBeanLinkManager::getBean($lastBean, $tableName);
-                        if ($lastBean === null)
+                        if ($first)
                         {
-                            throw new MissingBeanException();
+                            $lastBean = $bean;
+                            $first = false;
                         }
-                        assert('$lastBean->id > 0');
+                        else
+                        {
+                            $tableName = self::getTableName($modelClassName);
+                            $lastBean = ZurmoRedBeanLinkManager::getBean($lastBean, $tableName);
+                            if ($lastBean === null)
+                            {
+                                throw new MissingBeanException();
+                            }
+                            assert('$lastBean->id > 0');
+                        }
+                        $this->modelClassNameToBean[$modelClassName] = $lastBean;
+                        $this->mapAndCacheMetadataAndSetHints($modelClassName, $lastBean);
                     }
-                    $this->modelClassNameToBean[$modelClassName] = $lastBean;
-                    $this->mapAndCacheMetadataAndSetHints($modelClassName, $lastBean);
                 }
                 $this->modelClassNameToBean = array_reverse($this->modelClassNameToBean);
             }
@@ -609,6 +622,7 @@
                     array_key_exists($relationName, $metadata[$modelClassName]["relations"]))
                 {
                     $relatedModelClassName = $metadata[$modelClassName]['relations'][$relationName][1];
+                    self::resolveModelClassNameForClassesWithoutBeans($relatedModelClassName);
                     $relatedModelTableName = self::getTableName($relatedModelClassName);
                     $columnName = '';
                     if (strtolower($relationName) != strtolower($relatedModelClassName))
@@ -872,6 +886,7 @@
         {
             assert('is_string($modelClassName)');
             assert('$modelClassName != ""');
+            self::resolveModelClassNameForClassesWithoutBeans($modelClassName);
             assert('array_key_exists($modelClassName, $this->modelClassNameToBean)');
             return $this->modelClassNameToBean[$modelClassName];
         }
@@ -911,26 +926,29 @@
                 $metadata = array();
                 foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
                 {
-                    if ($modelClassName::canSaveMetadata())
+                    if ($modelClassName::getCanHaveBean())
                     {
-                        try
+                        if ($modelClassName::canSaveMetadata())
                         {
-                            $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
-                            $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                            try
+                            {
+                                $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
+                                $metadata[$modelClassName] = unserialize($globalMetadata->serializedMetadata);
+                            }
+                            catch (NotFoundException $e)
+                            {
+                                if (isset($defaultMetadata[$modelClassName]))
+                                {
+                                    $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
+                                }
+                            }
                         }
-                        catch (NotFoundException $e)
+                        else
                         {
                             if (isset($defaultMetadata[$modelClassName]))
                             {
                                 $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
                             }
-                        }
-                    }
-                    else
-                    {
-                        if (isset($defaultMetadata[$modelClassName]))
-                        {
-                            $metadata[$modelClassName] = $defaultMetadata[$modelClassName];
                         }
                     }
                 }
@@ -970,25 +988,28 @@
             $className = get_called_class();
             foreach (array_reverse(RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy)) as $modelClassName)
             {
-                if ($modelClassName::canSaveMetadata())
+                if ($modelClassName::getCanHaveBean())
                 {
-                    if (isset($metadata[$modelClassName]))
+                    if ($modelClassName::canSaveMetadata())
                     {
-                        try
+                        if (isset($metadata[$modelClassName]))
                         {
-                            $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
+                            try
+                            {
+                                $globalMetadata = GlobalMetadata::getByClassName($modelClassName);
+                            }
+                            catch (NotFoundException $e)
+                            {
+                                $globalMetadata = new GlobalMetadata();
+                                $globalMetadata->className = $modelClassName;
+                            }
+                            $globalMetadata->serializedMetadata = serialize($metadata[$modelClassName]);
+                            $saved = $globalMetadata->save();
+                            // TODO: decide how to deal with this properly if it fails.
+                            //       ie: throw or return false, or something other than
+                            //           this naughty assert.
+                            assert('$saved');
                         }
-                        catch (NotFoundException $e)
-                        {
-                            $globalMetadata = new GlobalMetadata();
-                            $globalMetadata->className = $modelClassName;
-                        }
-                        $globalMetadata->serializedMetadata = serialize($metadata[$modelClassName]);
-                        $saved = $globalMetadata->save();
-                        // TODO: decide how to deal with this properly if it fails.
-                        //       ie: throw or return false, or something other than
-                        //           this naughty assert.
-                        assert('$saved');
                     }
                 }
             }
@@ -1011,33 +1032,36 @@
             $className = get_called_Class();
             foreach (RuntimeUtil::getClassHierarchy($className, static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
-                if (isset($metadata[$modelClassName]['members']))
+                if ($modelClassName::getCanHaveBean())
                 {
-                    assert('is_array($metadata[$modelClassName]["members"])');
-                    foreach ($metadata[$modelClassName]["members"] as $memberName)
+                    if (isset($metadata[$modelClassName]['members']))
                     {
-                        assert('ctype_lower($memberName{0})');
+                        assert('is_array($metadata[$modelClassName]["members"])');
+                        foreach ($metadata[$modelClassName]["members"] as $memberName)
+                        {
+                            assert('ctype_lower($memberName{0})');
+                        }
                     }
-                }
-                if (isset($metadata[$modelClassName]['relations']))
-                {
-                    assert('is_array($metadata[$modelClassName]["relations"])');
-                    foreach ($metadata[$modelClassName]["relations"] as $relationName => $notUsed)
+                    if (isset($metadata[$modelClassName]['relations']))
                     {
-                        assert('ctype_lower($relationName{0})');
+                        assert('is_array($metadata[$modelClassName]["relations"])');
+                        foreach ($metadata[$modelClassName]["relations"] as $relationName => $notUsed)
+                        {
+                            assert('ctype_lower($relationName{0})');
+                        }
                     }
-                }
-                if (isset($metadata[$modelClassName]['rules']))
-                {
-                    assert('is_array($metadata[$modelClassName]["rules"])');
-                }
-                if (isset($metadata[$modelClassName]['defaultSortAttribute']))
-                {
-                    assert('is_string($metadata[$modelClassName]["defaultSortAttribute"])');
-                }
-                if (isset($metadata[$modelClassName]['rollupRelations']))
-                {
-                    assert('is_array($metadata[$modelClassName]["rollupRelations"])');
+                    if (isset($metadata[$modelClassName]['rules']))
+                    {
+                        assert('is_array($metadata[$modelClassName]["rules"])');
+                    }
+                    if (isset($metadata[$modelClassName]['defaultSortAttribute']))
+                    {
+                        assert('is_string($metadata[$modelClassName]["defaultSortAttribute"])');
+                    }
+                    if (isset($metadata[$modelClassName]['rollupRelations']))
+                    {
+                        assert('is_array($metadata[$modelClassName]["rollupRelations"])');
+                    }
                 }
                 // Todo: add more rules here as I think of them.
             }
@@ -1198,7 +1222,10 @@
                     {
                         list($relationType, $relatedModelClassName, $owns, $relationPolyOneToManyName) =
                              $this->relationNameToRelationTypeModelClassNameAndOwns[$attributeName];
-                        $relatedTableName = self::getTableName($relatedModelClassName);
+
+                        $tempRelatedModelClassName = $relatedModelClassName;
+                        self::resolveModelClassNameForClassesWithoutBeans($tempRelatedModelClassName);
+                        $relatedTableName          = self::getTableName($tempRelatedModelClassName);
                         switch ($relationType)
                         {
                             case self::HAS_ONE_BELONGS_TO:
@@ -1878,9 +1905,11 @@
                         // never actually saved.
                         foreach ($this->unlinkedRelationNames as $key => $relationName)
                         {
-                            $bean                  = $this->attributeNameToBeanAndClassName                [$relationName][0];
-                            $relatedModelClassName = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][1];
-                            $relatedTableName      = self::getTableName($relatedModelClassName);
+                            $bean                      = $this->attributeNameToBeanAndClassName                [$relationName][0];
+                            $relatedModelClassName     = $this->relationNameToRelationTypeModelClassNameAndOwns[$relationName][1];
+                            $tempRelatedModelClassName = $relatedModelClassName;
+                            self::resolveModelClassNameForClassesWithoutBeans($tempRelatedModelClassName);
+                            $relatedTableName          = self::getTableName($tempRelatedModelClassName);
                             $linkName = strtolower($relationName);
                             if ($linkName == strtolower($relatedModelClassName))
                             {
@@ -2213,9 +2242,12 @@
             // not on links. So for now at least they are done the slow way.
             foreach (RuntimeUtil::getClassHierarchy(get_class($this), static::$lastClassInBeanHeirarchy) as $modelClassName)
             {
-                $this->deleteOwnedRelatedModels  ($modelClassName);
-                $this->deleteForeignRelatedModels($modelClassName);
-                $this->deleteManyManyRelations ($modelClassName);
+                if ($modelClassName::getCanHaveBean())
+                {
+                    $this->deleteOwnedRelatedModels  ($modelClassName);
+                    $this->deleteForeignRelatedModels($modelClassName);
+                    $this->deleteManyManyRelations ($modelClassName);
+                }
             }
             foreach ($this->modelClassNameToBean as $modelClassName => $bean)
             {
@@ -3065,6 +3097,35 @@
         {
             assert('is_array($values)');
             return ArrayUtil::stringify($values);
+        }
+
+        /**
+         * @returns boolean
+         */
+        public static function getCanHaveBean()
+        {
+            return self::$canHaveBean;
+        }
+
+        /**
+         * Resolve and get model class name used for table retrieval factoring in when a class does
+         * not have a bean and must use a parent class
+         * @param string $modelClassName
+         */
+        protected static function resolveModelClassNameForClassesWithoutBeans(& $modelClassName)
+        {
+            assert('is_string($modelClassName)');
+            if (!$modelClassName::getCanHaveBean())
+            {
+                $modelClassName = get_parent_class($modelClassName);
+                if (!$modelClassName::getCanHaveBean())
+                {
+                    //For the moment, only support a single class in a chain of classes not having a bean.
+                    //Expand this support as needed.
+                    throw new NotSupportedException();
+                }
+            }
+            return $modelClassName;
         }
     }
 ?>

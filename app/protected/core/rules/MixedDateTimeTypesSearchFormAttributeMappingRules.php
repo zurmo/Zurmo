@@ -76,8 +76,22 @@
                 {
                     $firstDateValue        = static::resolveValueDataForBetweenIntoUsableFirstDateValue($value);
                     $secondDateValue       = static::resolveValueDataForBetweenIntoUsableSecondDateValue($value);
-                    $greaterThanValue      = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($firstDateValue);
-                    $lessThanValue         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($secondDateValue);
+                    if ($firstDateValue == null)
+                    {
+                        $greaterThanValue  = null;
+                    }
+                    else
+                    {
+                        $greaterThanValue  = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($firstDateValue);
+                    }
+                    if ($secondDateValue == null)
+                    {
+                        $lessThanValue     = null;
+                    }
+                    else
+                    {
+                        $lessThanValue     = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($secondDateValue);
+                    }
                     $attributeAndRelations = array(array($realAttributeName, null, 'greaterThanOrEqualTo', $greaterThanValue, true),
                                                    array($realAttributeName, null, 'lessThanOrEqualTo',    $lessThanValue, true));
                 }

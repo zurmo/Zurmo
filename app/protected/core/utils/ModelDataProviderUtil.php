@@ -494,11 +494,18 @@
                 $onTableJoinIdName  = $modelAttributeToDataProviderAdapter->getColumnName();
                 $tableJoinIdName    = 'id';
             }
-            $relationTableAliasName          = $joinTablesAdapter->addLeftTableAndGetAliasName(
-                                               $modelAttributeToDataProviderAdapter->getRelationTableName(),
-                                               $onTableJoinIdName,
-                                               $onTableAliasName,
-                                               $tableJoinIdName);
+            if (!$modelAttributeToDataProviderAdapter->canRelationHaveTable())
+            {
+                $relationTableAliasName          = $onTableAliasName;
+            }
+            else
+            {
+                $relationTableAliasName          = $joinTablesAdapter->addLeftTableAndGetAliasName(
+                                                   $modelAttributeToDataProviderAdapter->getRelationTableName(),
+                                                   $onTableJoinIdName,
+                                                   $onTableAliasName,
+                                                   $tableJoinIdName);
+            }
             $relationAttributeTableAliasName = $relationTableAliasName;
             //the second left join check being performed is if you
             //are in a contact filtering on related account email as an example.
@@ -518,7 +525,7 @@
                 elseif (get_parent_class($modelAttributeToDataProviderAdapter->getRelationModelClassName()) ==
                         $modelAttributeToDataProviderAdapter->getRelatedAttributeModelClassName())
                 {
-                    $onTableJoinIdName = "{$relationAttributeTableName}_id";
+                    $onTableJoinIdName = $modelAttributeToDataProviderAdapter->getColumnName();
                 }
                 else
                 {
@@ -556,7 +563,6 @@
                 if (!$joinTablesAdapter->isTableInFromTables('person'))
                 {
                     $personTableName = $attributeTableName;
-
                     $joinTablesAdapter->addFromTableAndGetAliasName($personTableName, "{$personTableName}_id",
                                                                     $modelTableName);
                 }
@@ -564,23 +570,48 @@
             elseif ($modelAttributeToDataProviderAdapter->getAttributeModelClassName() !=
                     $modelAttributeToDataProviderAdapter->getModelClassName())
             {
-                $modelClassName = $modelAttributeToDataProviderAdapter->getModelClassName();
+                $modelClassName             = $modelAttributeToDataProviderAdapter->getModelClassName();
+                $castedDownModelClassName   = $modelClassName; //In case the while loop is not used, this should be defined.
                 while (get_parent_class($modelClassName) !=
                        $modelAttributeToDataProviderAdapter->getAttributeModelClassName())
                 {
-                    $castedDownModelClassName   = $modelClassName;
-                    $modelClassName             = get_parent_class($modelClassName);
-                    $castedUpAttributeTableName = $modelClassName::getTableName($modelClassName);
-                    if (!$joinTablesAdapter->isTableInFromTables($castedUpAttributeTableName))
+                    $castedDownFurtherModelClassName = $castedDownModelClassName;
+                    $castedDownModelClassName        = $modelClassName;
+                    $modelClassName                  = get_parent_class($modelClassName);
+                    if ($modelClassName::getCanHaveBean())
                     {
-                        $joinTablesAdapter->addFromTableAndGetAliasName(
-                                                                $castedUpAttributeTableName,
-                                                                "{$castedUpAttributeTableName}_id",
-                                                                $castedDownModelClassName::getTableName($castedDownModelClassName));
+                        $castedUpAttributeTableName = $modelClassName::getTableName($modelClassName);
+                        if (!$joinTablesAdapter->isTableInFromTables($castedUpAttributeTableName))
+                        {
+                            if ($castedDownModelClassName::getCanHaveBean())
+                            {
+                                $resolvedTableJoinIdName = $castedDownModelClassName::getTableName($castedDownModelClassName);
+                            }
+                            elseif ($castedDownFurtherModelClassName::getCanHaveBean())
+                            {
+                                $resolvedTableJoinIdName = $castedDownModelClassName::getTableName($castedDownFurtherModelClassName);
+                            }
+                            else
+                            {
+                                throw new NotSupportedException();
+                            }
+                            $joinTablesAdapter->addFromTableAndGetAliasName(
+                                                                    $castedUpAttributeTableName,
+                                                                    "{$castedUpAttributeTableName}_id",
+                                                                    $resolvedTableJoinIdName);
+                        }
                     }
                 }
                 if (!$joinTablesAdapter->isTableInFromTables($attributeTableName))
                 {
+                    if (!$modelClassName::getCanHaveBean())
+                    {
+                        if (!$castedDownModelClassName::getCanHaveBean())
+                        {
+                            throw new NotSupportedException();
+                        }
+                        $modelClassName = $castedDownModelClassName;
+                    }
                     $tableAliasName             = $joinTablesAdapter->addFromTableAndGetAliasName(
                                                   $attributeTableName,
                                                   "{$attributeTableName}_id",

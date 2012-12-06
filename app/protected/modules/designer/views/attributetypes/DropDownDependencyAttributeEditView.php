@@ -32,6 +32,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
+                            array('type'  => 'CancelLink'),
                             array('type' => 'SaveButton'),
                         ),
                     ),

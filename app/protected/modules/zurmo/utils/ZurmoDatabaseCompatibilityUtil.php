@@ -1696,5 +1696,67 @@
                 throw new NotSupportedException();
             }
         }
+
+        public static function createIndexes()
+        {
+            // To-Do: Uncoment those lines, once we fix issue with RedBean string optimizer
+            // PT: https://www.pivotaltracker.com/story/show/40694789
+            /*
+            self::createUniqueIndex(
+                                    'messagesource',
+                                    'source_category_Index',
+                                    array(
+                                          'category',
+                                          'source(767)'
+                                          )
+                                    );
+            self::createUniqueIndex(
+                                    'messagetranslation',
+                                    'source_language_translation_Index',
+                                    array(
+                                          'messagesource_id',
+                                          'language',
+                                          'translation(767)'
+                                          )
+                                    );
+          */
+        }
+
+        protected static function createUniqueIndex($tableName, $indexName, $columns = array())
+        {
+            assert('RedBeanDatabase::isSetup()');
+            assert('$tableName != ""');
+            assert('$indexName != ""');
+            assert('!empty($columns)');
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                try
+                {
+                    $rows = R::getAll("SHOW INDEX FROM $tableName");
+                    if (!empty($rows))
+                    {
+                        foreach ($rows as $row)
+                        {
+                            // Delete only first index in sequence
+                            if ($row['Key_name'] == $indexName && $row['Seq_in_index'] == '1')
+                            {
+                                R::exec("DROP INDEX $indexName ON $tableName");
+                            }
+                        }
+                    }
+                    $columnsString = implode(",", $columns); // Not Coding Standard
+                    R::exec("ALTER TABLE $tableName  ADD  UNIQUE INDEX $indexName ($columnsString);");
+                }
+                catch (Exception $e)
+                {
+                    echo "Failed to add $indexName on  $tableName.\n";
+                    throw $e;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
     }
 ?>

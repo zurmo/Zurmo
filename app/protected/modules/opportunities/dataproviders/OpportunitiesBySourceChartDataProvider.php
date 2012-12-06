@@ -78,7 +78,7 @@
             $sumPart                  .= "* {$quote}currencyvalue{$quote}.{$quote}ratetobase{$quote}";
             $selectQueryAdapter->addClause('customfield', 'value', 'source');
             $selectQueryAdapter->addSummationClause($sumPart, 'amount');
-            $joinTablesAdapter->addFromTableAndGetAliasName('customfield', 'source_ownedcustomfield_id', 'opportunity');
+            $joinTablesAdapter->addFromTableAndGetAliasName('customfield', 'source_customfield_id', 'opportunity');
             $joinTablesAdapter->addFromTableAndGetAliasName('currencyvalue', 'amount_currencyvalue_id', 'opportunity');
             $groupBy                   = "{$quote}customfield{$quote}.{$quote}value{$quote}";
             $sql                       = SQLQueryUtil::makeQuery('opportunity', $selectQueryAdapter,

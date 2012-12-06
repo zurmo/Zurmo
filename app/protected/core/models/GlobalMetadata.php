@@ -70,5 +70,24 @@
             );
             return $metadata;
         }
+
+        /**
+         * Check if default metadata are changed
+         * @param string $className
+         * @return boolean
+         */
+        public static function isClassMetadataSavedInDatabase($className)
+        {
+            try
+            {
+                $globalMetadata = GlobalMetadata::getByClassName($className);
+                $isClassMetadataSavedInDatabase = true;
+            }
+            catch (NotFoundException $e)
+            {
+                $isClassMetadataSavedInDatabase = false;
+            }
+            return $isClassMetadataSavedInDatabase;
+        }
     }
 ?>

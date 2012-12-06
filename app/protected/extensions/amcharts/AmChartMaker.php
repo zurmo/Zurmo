@@ -69,7 +69,7 @@
                             5 => '["#262877", "#5979cd"]',
                 );
             $this->addChartProperties('fontFamily',                 '"Arial"');
-            $this->addChartProperties('color',                      '"#545454"');
+            $this->addChartProperties('color',                      "'#545454'");
             $this->addChartProperties('lineColor',                  '"#545454"');
             $this->addValueAxisProperties('axisColor',              '"#545454"');
             $this->addValueAxisProperties('gridColor',              '"#545454"');
@@ -122,28 +122,48 @@
             }
             elseif ($this->type === "Donut2D")
             {
+                $this->addChartProperties('color',                  "'#A39595'");
                 $this->addChartProperties('sequencedAnimation',     true);
                 $this->addChartProperties('startEffect',            "'elastic'");
                 $this->addChartProperties('innerRadius',            "'30%'");
                 $this->addChartProperties('startDuration',          2);
                 $this->addChartProperties('labelRadius',            15);
                 $this->addChartProperties('usePrefixes',            true);
+                $this->addChartProperties('radius',                 "'45%'");
+                $this->addChartProperties('labelRadius',            -55);
+                $this->addChartProperties('labelText',              "'[[title]]<br>[[percents]]%'");
+                $this->addChartProperties('pullOutRadius',          "'0%'");
+                $this->addChartProperties('startDuration',          0);
                 $this->chartIsPie = true;
             }
             elseif ($this->type === "Pie2D")
             {
+                $this->addChartProperties('color',                  "'#A39595'");
                 $this->addChartProperties('outlineColor',           "'#FFFFFF'");
                 $this->addChartProperties('outlineAlpha',           0.8);
                 $this->addChartProperties('outlineThickness',       2);
                 $this->addChartProperties('usePrefixes',            true);
+                $this->addChartProperties('radius',                 "'45%'");
+                $this->addChartProperties('labelRadius',            -55);
+                $this->addChartProperties('labelText',              "'[[title]]<br>[[percents]]%'");
+                $this->addChartProperties('labelTickColor',         "'#000000'");
+                $this->addChartProperties('pullOutRadius',          "'0%'");
+                $this->addChartProperties('startDuration',          0);
                 $this->chartIsPie = true;
             }
             elseif ($this->type === "Pie3D")
             {
+                $this->addChartProperties('color',                  "'#A39595'");
                 $this->addChartProperties('outlineColor',           "'#FFFFFF'");
                 $this->addChartProperties('outlineAlpha',           0.8);
                 $this->addChartProperties('outlineThickness',       2);
                 $this->addChartProperties('usePrefixes',            true);
+                $this->addChartProperties('radius',                 "'45%'");
+                $this->addChartProperties('labelRadius',            -55);
+                $this->addChartProperties('labelText',              "'[[title]]<br>[[percents]]%'");
+                $this->addChartProperties('labelTickColor',         "'#FFFFFF'");
+                $this->addChartProperties('pullOutRadius',          "'0%'");
+                $this->addChartProperties('startDuration',          0);
                 $this->makeChart3d();
                 $this->chartIsPie = true;
             }

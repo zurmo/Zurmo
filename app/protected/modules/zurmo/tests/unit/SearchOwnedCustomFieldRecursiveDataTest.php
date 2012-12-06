@@ -61,12 +61,11 @@
             $compareWhere      = "({$quote}customfield{$quote}.{$quote}value{$quote} IN('something'))";
             $this->assertEquals($compareWhere, $where);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
-            $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
+            $this->assertEquals(3, $joinTablesAdapter->getLeftTableJoinCount());
             $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
             $this->assertEquals('contact_opportunity',     $leftTables[0]['tableName']);
             $this->assertEquals('opportunity',             $leftTables[1]['tableName']);
-            $this->assertEquals('ownedcustomfield',        $leftTables[2]['tableName']);
-            $this->assertEquals('customfield',             $leftTables[3]['tableName']);
+            $this->assertEquals('customfield',             $leftTables[2]['tableName']);
             $this->assertTrue($joinTablesAdapter->getSelectDistinct());
 
             //Now test that the subsetSQL query produced is correct.
@@ -78,10 +77,8 @@
             $compareSubsetSql .= "{$quote}contact_opportunity{$quote}.{$quote}contact_id{$quote} = {$quote}contact{$quote}.{$quote}id{$quote} ";
             $compareSubsetSql .= "left join {$quote}opportunity{$quote} on ";
             $compareSubsetSql .= "{$quote}opportunity{$quote}.{$quote}id{$quote} = {$quote}contact_opportunity{$quote}.{$quote}opportunity_id{$quote} ";
-            $compareSubsetSql .= "left join {$quote}ownedcustomfield{$quote} on ";
-            $compareSubsetSql .= "{$quote}ownedcustomfield{$quote}.{$quote}id{$quote} = {$quote}opportunity{$quote}.{$quote}stage_ownedcustomfield_id{$quote} ";
             $compareSubsetSql .= "left join {$quote}customfield{$quote} on ";
-            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}ownedcustomfield{$quote}.{$quote}customfield_id{$quote} ";
+            $compareSubsetSql .= "{$quote}customfield{$quote}.{$quote}id{$quote} = {$quote}opportunity{$quote}.{$quote}stage_customfield_id{$quote} ";
             $compareSubsetSql .= "where " . $compareWhere . ' ';
             $compareSubsetSql .= 'limit 5 offset 1';
             $this->assertEquals($compareSubsetSql, $subsetSql);

@@ -93,22 +93,18 @@
                 $this->assertEquals($compareWhere, $where);
                 //Now test that the joinTablesAdapter has correct information.
                 $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
-                $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
+                $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
                 $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
-                $this->assertEquals('ownedmultiplevaluescustomfield', $leftTables[0]['tableName']);
-                $this->assertEquals('multiplevaluescustomfield',      $leftTables[1]['tableName']);
+                $this->assertEquals('multiplevaluescustomfield',      $leftTables[0]['tableName']);
 
                 //Now test that the subsetSQL query produced is correct.
                 $subsetSql         = TestOwnedCustomFieldsModel::
                                      makeSubsetOrCountSqlQuery('testownedcustomfieldsmodel', $joinTablesAdapter, 1, 5, $where, null);
                 $compareSubsetSql  = "select {$quote}testownedcustomfieldsmodel{$quote}.{$quote}id{$quote} id ";
                 $compareSubsetSql .= "from {$quote}testownedcustomfieldsmodel{$quote} ";
-                $compareSubsetSql .= "left join {$quote}ownedmultiplevaluescustomfield{$quote} on ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multipleindustries_ownedmultiplevaluescustomfield_id{$quote} ";
                 $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} on ";
                 $compareSubsetSql .= "{$quote}multiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield{$quote}.{$quote}multiplevaluescustomfield_id{$quote} ";
+                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multipleindustries_multiplevaluescustomfield_id{$quote} ";
                 $compareSubsetSql .= "where " . $compareWhere . ' ';
                 $compareSubsetSql .= 'limit 5 offset 1';
                 $this->assertEquals($compareSubsetSql, $subsetSql);
@@ -148,30 +144,22 @@
                 $this->assertEquals($compareWhere, $where);
                 //Now test that the joinTablesAdapter has correct information.
                 $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
-                $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
+                $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
                 $leftTables = $joinTablesAdapter->getLeftTablesAndAliases();
-                $this->assertEquals('ownedmultiplevaluescustomfield', $leftTables[0]['tableName']);
+                $this->assertEquals('multiplevaluescustomfield',      $leftTables[0]['tableName']);
                 $this->assertEquals('multiplevaluescustomfield',      $leftTables[1]['tableName']);
-                $this->assertEquals('ownedmultiplevaluescustomfield', $leftTables[2]['tableName']);
-                $this->assertEquals('multiplevaluescustomfield',      $leftTables[3]['tableName']);
 
                 //Now test that the subsetSQL query produced is correct.
                 $subsetSql         = TestOwnedCustomFieldsModel::
                                      makeSubsetOrCountSqlQuery('testcustomfieldsmodel', $joinTablesAdapter, 1, 5, $where, null);
                 $compareSubsetSql  = "select {$quote}testcustomfieldsmodel{$quote}.{$quote}id{$quote} id ";
                 $compareSubsetSql .= "from {$quote}testcustomfieldsmodel{$quote} ";
-                $compareSubsetSql .= "left join {$quote}ownedmultiplevaluescustomfield{$quote} on ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multipleindustries_ownedmultiplevaluescustomfield_id{$quote} ";
                 $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} on ";
                 $compareSubsetSql .= "{$quote}multiplevaluescustomfield{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield{$quote}.{$quote}multiplevaluescustomfield_id{$quote} ";
-                $compareSubsetSql .= "left join {$quote}ownedmultiplevaluescustomfield{$quote} ownedmultiplevaluescustomfield1 on ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield1{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multiplesomethings_ownedmultiplevaluescustomfield_id{$quote} ";
+                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multipleindustries_multiplevaluescustomfield_id{$quote} ";
                 $compareSubsetSql .= "left join {$quote}multiplevaluescustomfield{$quote} multiplevaluescustomfield1 on ";
                 $compareSubsetSql .= "{$quote}multiplevaluescustomfield1{$quote}.{$quote}id{$quote} = ";
-                $compareSubsetSql .= "{$quote}ownedmultiplevaluescustomfield1{$quote}.{$quote}multiplevaluescustomfield_id{$quote} ";
+                $compareSubsetSql .= "{$quote}testownedcustomfieldsmodel{$quote}.{$quote}multiplesomethings_multiplevaluescustomfield_id{$quote} ";
                 $compareSubsetSql .= "where " . $compareWhere . ' ';
                 $compareSubsetSql .= 'limit 5 offset 1';
                 $this->assertEquals($compareSubsetSql, $subsetSql);

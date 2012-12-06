@@ -30,6 +30,25 @@
      */
     abstract class MashableActivity extends Activity implements MashableActivityInterface
     {
+        /**
+         * MashableActivity does not need to have a bean because it stores no attributes and has no relations
+         * @see RedBeanModel::canHaveBean();
+         * @var boolean
+         */
+        private static $canHaveBean = false;
+
+            /**
+         * @see RedBeanModel::getHasBean()
+         */
+        public static function getCanHaveBean()
+        {
+            if (get_called_class() == 'MashableActivity')
+            {
+                return self::$canHaveBean;
+            }
+            return parent::getCanHaveBean();
+        }
+
         public static function getMashableActivityRulesType()
         {
             return 'Activity';

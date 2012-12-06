@@ -35,6 +35,44 @@
             AccountTestHelper::createAccountByNameForOwner('anAccount', $super);
         }
 
+        /**
+         * This test specifically looks at when searching a note's owner.  Because note extends mashableactivity which
+         * does not have a bean, the query is constructed slightly different than if mashableactivity had a bean.
+         */
+        public function testQueryIsProperlyGeneratedForNoteWithRelatedOwnerSearch()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $_FAKEPOST = array(
+                'Note' => array(
+                    'owner'   => array( 'id' => Yii::app()->user->userModel->id)
+                ),
+            );
+            $metadataAdapter = new SearchDataProviderMetadataAdapter(
+                new Note(false),
+                1,
+                $_FAKEPOST['Note']
+            );
+            $_GET['Note_sort'] = 'description.desc';
+            $searchAttributeData = $metadataAdapter->getAdaptedMetadata();
+            $quote               = DatabaseCompatibilityUtil::getQuote();
+            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('Note');
+            $where               = RedBeanModelDataProvider::makeWhere('Note', $searchAttributeData, $joinTablesAdapter);
+            $orderByColumnName   = RedBeanModelDataProvider::resolveSortAttributeColumnName('Note', $joinTablesAdapter, 'description');
+            $subsetSql           = Note::makeSubsetOrCountSqlQuery('note', $joinTablesAdapter, 1, 5, $where, $orderByColumnName);
+            $compareSubsetSql    = "select {$quote}note{$quote}.{$quote}id{$quote} id ";
+            $compareSubsetSql   .= "from ({$quote}note{$quote}, {$quote}activity{$quote}, {$quote}ownedsecurableitem{$quote})";
+            $compareSubsetSql   .= " where ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = " . Yii::app()->user->userModel->id . ")";
+            $compareSubsetSql   .= " and {$quote}activity{$quote}.{$quote}id{$quote} =";
+            $compareSubsetSql   .= " {$quote}note{$quote}.{$quote}activity_id{$quote}";
+            $compareSubsetSql   .= " and {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = {$quote}activity{$quote}.{$quote}ownedsecurableitem_id{$quote}";
+            $compareSubsetSql   .= " order by {$quote}note{$quote}.{$quote}description{$quote} limit 5 offset 1";
+            $this->assertEquals($compareSubsetSql, $subsetSql);
+        }
+
+        /**
+         * @depends testQueryIsProperlyGeneratedForNoteWithRelatedOwnerSearch
+         */
         public function testCreateAndGetNoteById()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

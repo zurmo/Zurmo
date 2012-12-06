@@ -89,6 +89,11 @@
             'gamificationObserver' => array(
                 'class' => 'application.modules.gamification.observers.GamificationObserver',
             ),
+            /* Will be enabled later
+            'messages' => array(
+                'class' => 'application.core.components.ZurmoMessageSource',
+            ),
+            */
             'minScript' => array(
                 'class' => 'application.core.components.ZurmoExtMinScript',
                 'groupMap' => array(

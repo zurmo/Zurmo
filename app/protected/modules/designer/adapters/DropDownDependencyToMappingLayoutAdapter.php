@@ -67,6 +67,10 @@
             $parentAttributeName            = null;
             foreach ($mappingData as $dependencyData)
             {
+                if ($dependencyData['attributeName'] == null)
+                {
+                     break;
+                }
                 self::resolveAvailableCustomFieldAttributes($availableCustomFieldAttributes, $parentAttributeName);
                 $valuesToParentValues = self::resolveValuesToParentValues($dependencyData);
                 $dependencyMapping   = new DropDownDependencyCustomFieldMapping(

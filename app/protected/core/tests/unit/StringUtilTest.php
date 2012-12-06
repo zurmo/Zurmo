@@ -32,19 +32,19 @@
         public function testGetChoppedStringContentFromString()
         {
             $testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
-            $compairSting = 'This is a test string to test the getchoppedstringcontent...';
+            $compareSting = 'This is a test string to test the getchoppedstringcontent...';
             $newSting     = StringUtil::getChoppedStringContent($testString, 60);
-            $this->assertEquals($compairSting, $newSting);
+            $this->assertEquals($compareSting, $newSting);
 
             $testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
-            $compairSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
+            $compareSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class.';
             $newSting     = StringUtil::getChoppedStringContent($testString, 100);
-            $this->assertEquals($compairSting, $newSting);
+            $this->assertEquals($compareSting, $newSting);
 
             $testString   = 'This is a test string to test the getchoppedstringcontent method for stringutil class. This is a test string to test the getchoppedstringcontent method for stringutil class.';
-            $compairSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class. This is a test string to test...';
+            $compareSting = 'This is a test string to test the getchoppedstringcontent method for stringutil class. This is a test string to test...';
             $newSting     = StringUtil::getChoppedStringContent($testString, 119);
-            $this->assertEquals($compairSting, $newSting);
+            $this->assertEquals($compareSting, $newSting);
         }
     }
 ?>

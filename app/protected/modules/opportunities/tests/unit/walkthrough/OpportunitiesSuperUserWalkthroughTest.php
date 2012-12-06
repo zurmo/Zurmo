@@ -236,6 +236,39 @@
             //Set page size back to old value.
             Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', $pageSize);
 
+            //save Model MassEdit for selected Ids
+            //Test that the 2 contacts do not have the closed date populating them with.
+            //Test that closed dates are properly updated
+            $opportunity1 = Opportunity::getById($superOpportunityId);
+            $opportunity2 = Opportunity::getById($superOpportunityId2);
+            $opportunity3 = Opportunity::getById($superOpportunityId3);
+            $opportunity4 = Opportunity::getById($superOpportunityId4);
+            $this->assertNotEquals('2012-12-05', $opportunity1->closeDate);
+            $this->assertNotEquals('2012-12-05', $opportunity2->closeDate);
+            $this->assertNotEquals('2012-12-05', $opportunity3->closeDate);
+            $this->assertNotEquals('2012-12-05', $opportunity4->closeDate);
+            $this->setGetArray(array(
+                'selectedIds' => $superOpportunityId . ',' . $superOpportunityId2, // Not Coding Standard
+                'selectAll' => '',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array(
+                'Opportunity'  => array('closeDate' => '12/5/12'),
+                'MassEdit' => array('closeDate' => 1)
+            ));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massEditProgressPageSize', 20);
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massEdit');
+
+            $opportunity1 = Opportunity::getById($superOpportunityId);
+            $opportunity2 = Opportunity::getById($superOpportunityId2);
+            $opportunity3 = Opportunity::getById($superOpportunityId3);
+            $opportunity4 = Opportunity::getById($superOpportunityId4);
+            $this->assertEquals('2012-12-05', $opportunity1->closeDate);
+            $this->assertEquals('2012-12-05', $opportunity2->closeDate);
+            $this->assertNotEquals('2012-12-05', $opportunity3->closeDate);
+            $this->assertNotEquals('2012-12-05', $opportunity4->closeDate);
+
             //Autocomplete for Opportunity
             $this->setGetArray(array('term' => 'super'));
             $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/autoComplete');

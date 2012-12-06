@@ -471,8 +471,8 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/notes/note/api/list/filter/' . $searchParamsQuery, 'GET', $headers);
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
-            $this->assertEquals(3, count($response['data']['items']));
             $this->assertEquals(4, $response['data']['totalCount']);
+            $this->assertEquals(3, count($response['data']['items']));
             $this->assertEquals(1, $response['data']['currentPage']);
             $this->assertEquals('Third Note', $response['data']['items'][0]['description']);
             $this->assertEquals('Second Note', $response['data']['items'][1]['description']);

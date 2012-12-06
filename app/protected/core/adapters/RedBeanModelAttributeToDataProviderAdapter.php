@@ -196,6 +196,15 @@
         }
 
         /**
+         * If the relation model class can have a bean.
+         */
+        public function canRelationHaveTable()
+        {
+            $modelClassName = $this->getRelationModelClassName();
+            return $modelClassName::getCanHaveBean();
+        }
+
+        /**
          * If the attribute is a relation, returns the relation's table name.
          */
         public function getRelationTableName()
