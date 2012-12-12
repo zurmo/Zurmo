@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">MixedModelSearch</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+    <td>setTimeout</td>
+    <td>45000</td>
+    <td></td>
 </tr>
 <tr>
 	<td>storeGlobal</td>
@@ -28,6 +28,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=globalSearchInput</td>
 	<td>My Contact ${randomSuffix}</td>
@@ -36,6 +41,11 @@
 	<td>typeKeys</td>
 	<td>id=globalSearchInput</td>
 	<td>\10</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -48,9 +58,24 @@
 	<td><br /></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//a[@id='ui-active-menuitem']/span[2]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -69,9 +94,19 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -79,9 +114,19 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>css=span.z-label</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -115,14 +160,39 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>css=a.icon-create</td>
 	<td></td>
 </tr>
 <tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=Contact_firstName</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -133,6 +203,11 @@
 	<td>click</td>
 	<td>id=Contact_lastName</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -149,11 +224,26 @@
 	<td>css=span.z-label</td>
 	<td></td>
 </tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
 <!--Test searching the lead-->
 <tr>
 	<td>focus</td>
 	<td>id=globalSearchInput</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -166,6 +256,11 @@
 	<td>\10</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>waitForTextPresent</td>
 	<td>All results</td>
 	<td></td>
@@ -176,9 +271,24 @@
 	<td><br /></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//a[@id='ui-active-menuitem']/span[2]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -192,9 +302,29 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='LeadEditAndDetailsView']/div/div/div/ul/li/ul/li[4]/a/span[2]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -202,9 +332,24 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>css=#AccountSkip &gt; span.z-label</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -212,14 +357,29 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ui-multiselect-globalSearchScope-option-3</td>
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>focus</td>
 	<td>id=globalSearchInput</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -232,6 +392,11 @@
 	<td>\10</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>waitForTextPresent</td>
 	<td>All results</td>
 	<td></td>
@@ -242,9 +407,24 @@
 	<td><br /></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//a[@id='ui-active-menuitem']/span[2]</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -278,9 +458,19 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -288,9 +478,19 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>css=span.z-label</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -303,9 +503,19 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>css=label.ui-corner-all.ui-state-hover</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -313,14 +523,29 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-2</td>
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=ui-multiselect-MixedModelsSearchForm_anyMixedAttributesScope-option-3</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -331,6 +556,11 @@
 	<td>click</td>
 	<td>css=span.z-label</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>

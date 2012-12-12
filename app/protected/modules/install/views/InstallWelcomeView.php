@@ -64,7 +64,8 @@
                                            'If you do not have this information, then you will need to contact ' .
                                            'them before you can continue. If you\'re all ready...');
             $content .= '<br/><br/>';
-            $content .= ZurmoHtml::link(Yii::t('Default', 'Click to start'), $nextPageUrl);
+            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Click to start')),
+                                        $nextPageUrl, array('class' => 'z-button'));
             $content .= '</td></tr></table>';
             $content .= '</div>';
             return $content;

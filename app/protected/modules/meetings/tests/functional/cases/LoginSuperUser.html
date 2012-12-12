@@ -12,8 +12,8 @@
 <tr><td rowspan="1" colspan="3">Login as Super User</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
+    <td>setTimeout</td>
+    <td>45000</td>
     <td></td>
 </tr>
 <tr>
@@ -27,6 +27,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>type</td>
     <td>LoginForm_username</td>
     <td>super</td>
@@ -37,7 +42,7 @@
     <td>super</td>
 </tr>
 <tr>
-    <td>click</td>
+    <td>clickAndWait</td>
     <td>Login</td>
     <td></td>
 </tr>
@@ -45,6 +50,11 @@
     <td>waitForPageToLoad</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>waitForText</td>

@@ -247,6 +247,8 @@
             => 'Data scadenza',
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Clicca sull\'icona di configurazione in alto a destra dei portlets per modificare i grafici nel Dashboard.',
+        'Email'
+            => 'Email', // Same Word Translated
         'Email Address'
             => 'Indirizzo Email',
         'Enable game notification popup'
@@ -504,7 +506,7 @@
         'Primary Address'
             => 'Indirizzo primario',
         'Primary Email'
-            => 'Email',
+            => 'Email Primario',
         'Qualified'
             => 'Qualificato',
         'Rate to'
@@ -577,6 +579,8 @@
             => 'Selezionate un ruolo',
         'Self-Generated'
             => 'Autogenerato',
+        'Send a test email to'
+            => 'Inviare una prova di email a ',
         'Set your preferences, password, and contact details in your My Profile area.'
             => 'Potrete cambiare le vostre preferenze, password, e coordinate nella sezione Il mio profile.',
         'Settings'

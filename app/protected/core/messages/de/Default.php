@@ -69,8 +69,12 @@
             => 'Vor',
         'Between'
             => 'zwischen',
-        'Bulk insert failed. There was a row with an incorrect column quantity'
-            => 'Fehler bei der BULK INSERT-Operation. Eine Zeile enthält eine Reihe von schlechten Säulen',
+        'Blue'
+            => 'Blau',
+        'Brown'
+            => 'Braun',
+        'Bulk insert failed. There was a row with an incorrect column quantity.'
+            => 'Fehler bei der BULK INSERT-Operation. Eine Zeile enthält eine Reihe von schlechten Säulen.',
         'by'
             => 'Von',
         'Cancel'
@@ -89,6 +93,8 @@
             => 'Audit ist abgeschlossen.',
         'Checking permissions, files, upgrade version....'
             => 'Überprüfen der Berechtigungen, Dateien aktualisierte Version...',
+        'Cherry'
+            => 'Kirsche',
         'Clear'
             => 'Löschen',
         'Clearing assets and runtime folders.'
@@ -145,6 +151,8 @@
             => 'Fehler',
         'Error during upgrade!'
             => 'Fehler beim Upgrade!',
+        'Exclusive Paper'
+            => 'Exklusive Papier',
         'Export'
             => 'Exportieren',
         'Fahrenheit'
@@ -165,6 +173,8 @@
             => 'firstDateTime muss vor secondDateTime kommen',
         'Float'
             => 'Float', // Same Word Translated
+        'French Stucco'
+            => 'Französisch Stucco',
         'from'
             => 'von',
         'Full Name'
@@ -173,6 +183,8 @@
             => 'Zur Detailansicht',
         'Hidden Columns'
             => 'Ausgeblendete Spalten',
+        'Honey'
+            => 'Honig',
         'Hour'
             => 'Stunde',
         'Info'
@@ -193,6 +205,12 @@
             => 'Letzte Änderung',
         'Last Modified Date and User'
             => 'Letzte Änderung Datum und benutzer ',
+        'Light Noise'
+            => 'Licht Lärm',
+        'Light Toast'
+            => 'Licht Toast',
+        'Lime'
+            => 'Lime', // Same Word Translated
         'List'
             => 'Liste',
         'Loading'
@@ -241,6 +259,8 @@
             => 'Kein Import-Prozesse gefunden',
         'No {moduleLabelPluralLowerCase} found'
             => 'Keine Ergebnisse gefunden',
+        'Noise'
+            => 'Lärm',
         'None'
             => 'Keiner',
         'Not all files and folders are writeable by upgrade user. Please make these files or folders writeable:'
@@ -267,6 +287,8 @@
             => 'Panel Einstellungen',
         'Panel Title'
             => 'Panel-Titel',
+        'Paper'
+            => 'Papier',
         'Part 1 complete.'
             => 'Teil 1 ist abgeschlossen.',
         'Please check if the file is a valid zip archive.'
@@ -301,6 +323,8 @@
             => 'Zurück zur Liste',
         'Row'
             => 'Reihe',
+        'Row Counter: {rowNumber} Serialized row data: {serializedRowData}'
+            => 'Row Counter: {rowNumber} Serialized row data: {serializedRowData}', // Same Word Translated
         'Running tasks after schema is updated.'
             => 'Laufende Aufgaben nach dem Schema wird aktualisiert.',
         'Running tasks before updating schema.'
@@ -369,6 +393,8 @@
             => 'Morgen',
         'total'
             => 'gesamt',
+        'Turquoise'
+            => 'Türkis',
         'Type'
             => 'Typ',
         'Type to find a tag'
@@ -395,6 +421,8 @@
             => 'Benutzer',
         'Users'
             => 'Benutzern',
+        'Violet'
+            => 'Violett',
         'Visible Columns'
             => 'Sichtbare Spalten',
         'Yes'

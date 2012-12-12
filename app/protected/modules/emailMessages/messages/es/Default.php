@@ -29,6 +29,10 @@
     // KEEP all the language files up-to-date with each other.
     // DON'T MAKE A MESS!
     return array(
+        '<h2>Not so fast</h2><div class="large-icon"></div><p>Configure your email settings before you can send emails.</p>'
+            => '<h2>No tan rápido</h2></i><div class="large-icon"></div><p>Configurar los ajustes de email antes de enviar mensajes de correo electrónico.</p>',
+        '<h2>Not so fast</h2><div class="large-icon"></div><p>The administrator must first configure the system outbound email settings.</p>'
+            => '<h2>No tan rápido</h2></i><div class="large-icon"></div><p>El administrador debe configurar los ajustes del sistema de correo electrónico salientes.</p>',
         '<span class="email-from"><strong>From:</strong> {senderContent}</span>'
             => '<span class="email-de"><strong>De:</strong> {senderContent}</span>',
         '<span class="email-to"><strong>To:</strong> {recipientContent}</span>'
@@ -49,6 +53,10 @@
             => 'Elemento archivado inigualable',
         'At least one archived email message does not match any records in the system. <a href="{url}">Click here</a> to manually match them.'
             => 'Por lo menos un email mensaje archivado no han encontrado registros en el sistema. <a href="{url}">Haga clic aquí</a> para igualar manualmente.',
+        'Bcc'
+            => 'CCO',
+        'Bcc Recipients'
+            => 'Destinatarios CCO',
         'Body'
             => 'Cuerpo',
         'Cc'
@@ -57,10 +65,14 @@
             => 'Destinatarios de CC',
         'Clear Old Sent Notifications Email Job'
             => 'Eliminar mensajes de notificación viejos',
+        'Compose Email'
+            => 'Componer Email',
         'Could not connect to IMAP server.'
             => 'Verificación de la cuenta IMAP ha fallado.',
         'Create Emails'
             => 'Crear Emails',
+        'Currently in the {folderType} folder'
+            => 'Actualmente en la carpeta {folderType}',
         'Data Cleanup'
             => 'Limpieza de datos',
         'Delete Emails'
@@ -143,6 +155,8 @@
             => 'Inicie el proceso de correo saliente',
         'Recipient info can\'t be extracted from email message'
             => 'Información del destinatario no se puede extraer del email',
+        'Recipients'
+            => 'Destinatarios',
         'Response from Server'
             => 'Respuesta del Servidor',
         'Select ContactsModuleSingularLabel'
@@ -151,8 +165,8 @@
             => 'Seleccionar ContactsModuleSingularLabel / LeadsModuleSingularLabel',
         'Select LeadsModuleSingularLabel'
             => 'Seleccionar LeadsModuleSingularLabel',
-        'Send a test email to'
-            => 'Enviar un mensaje de prueba a',
+        'Send'
+            => 'Enviar',
         'Send system notifications from'
             => 'Enviar notificaciones del sistema de',
         'Send Test Email'
@@ -175,18 +189,26 @@
             => 'Los parámetros de prueba para la cuenta de email',
         'Text Content'
             => 'Mensaje',
+        'There is no primary email associated with {contactName}. Please add one to continue.'
+            => 'No hay ninguna principal de correo electrónico asociada a {contactName}. Por favor, añada una para continuar.',
+        'This field is required'
+            => 'Este campo es obligatorio',
         'This message sent from Zurmo'
             => 'Este mensaje enviado desde Zurmo',
         'To'
             => 'Para',
         'To Address'
             => 'Dirección de destino',
+        'To address cannot be blank'
+            => 'La dirección de destino no puede estar en blanco',
         'To Name'
             => 'Nombre del destinatario',
         'To Recipients'
             => 'Para destinatarios',
         'to: {recipientContent}'
             => 'Para: {recipientContent}',
+        'Type name or email'
+            => 'Escriba el nombre o dirección de correo electrónico',
         'Unmatched Archived Emails'
             => 'Inigualables Emails Archivados',
         'You do not have rights to access, create, or connect emails in the system'

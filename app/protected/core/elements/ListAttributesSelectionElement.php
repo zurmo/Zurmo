@@ -37,7 +37,7 @@
             assert('$this->model->getListAttributesSelector() != null');
             $content      = $this->renderSelectionContent();
             $content      = ZurmoHtml::tag('div', array('class' => 'attributesContainer'), $content);
-            $linkContent  = $this->renderApplyLinkContent() . $this->renderApplyResetContent();
+            $linkContent  = $this->renderApplyResetContent() . $this->renderApplyLinkContent();
             $linkContent  = ZurmoHtml::tag('div', array('class' => 'form-toolbar clearfix'), $linkContent);
             $this->renderEditableScripts();
             return $content . ZurmoHtml::tag('div', array('class' => 'view-toolbar-container'), $linkContent);
@@ -126,6 +126,7 @@
             $params = array();
             $params['label']       = Yii::t('Default', 'Reset');
             $params['htmlOptions'] = array('id'  => 'list-attributes-reset',
+                                           'class' => 'default-btn',
                                            'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $searchElement = new SaveButtonActionElement(null, null, null, $params);
             return $searchElement->render();

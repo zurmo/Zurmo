@@ -37,6 +37,8 @@
             => 'Apache', // Same Word Translated
         'APC'
             => 'APC', // Same Word Translated
+        'Automatically submit crash reports to Sentry.'
+            => 'Enviar automáticamente informes de error a Sentry.',
         'Below you will find the results of the system check. If any required ' .
         'services are not setup correctly, you will need to make sure they are ' .
         'installed correctly before you can continue.'

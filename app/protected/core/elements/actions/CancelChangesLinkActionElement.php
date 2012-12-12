@@ -33,9 +33,14 @@
         {
             if (!empty($this->modelId) && $this->modelId > 0)
             {
-                return Yii::t('Default', 'Cancel Changes');
+                $text = Yii::t('Default', 'Cancel Changes');
             }
-            return Yii::t('Default', 'Cancel');
+            else
+            {
+                $text = Yii::t('Default', 'Cancel');
+            }
+
+            return ZurmoHtml::tag('span', array('class' => 'z-label'), $text);
         }
     }
 ?>

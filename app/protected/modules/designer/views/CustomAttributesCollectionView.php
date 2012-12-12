@@ -30,8 +30,7 @@
         {
             $dropDownContent = ZurmoHtml::dropDownList('attributeTypeName', null, $this->getValueTypeDropDownArray());
 
-            $linkContent     = ZurmoHtml::button(Yii::t('Default', 'Configure'),
-                                                        array('id' => 'attributeTypeNameButton', 'class' => 'configure-custom-field-button'));
+            $linkContent     = static::renderConfigureLinkContent(null, 'attributeTypeNameButton');
             $url             = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/attributeEdit/',
                                                      array('moduleClassName' => $this->moduleClassName));
             Yii::app()->clientScript->registerScript('attributeTypeCreateLink', "
@@ -51,9 +50,8 @@
             $content = null;
             $content .= '<div class="add-custom-field">';
             $content .= '<h1>' . Yii::t('Default', 'Create Field') . '</h1>';
-            $content .= '<div>';
-            $content .= $dropDownContent . $linkContent;
-            $content .= '</div></div>';
+            $content .= '<div class="panel-buffer"><div>' . $dropDownContent . '</div>' . $linkContent . '</div>';
+            $content .= '</div>';
             return $content;
         }
 

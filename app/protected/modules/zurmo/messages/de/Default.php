@@ -247,6 +247,8 @@
             => 'Fällig am',
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Durch Klicken auf die Config-Icon in der rechten oberen Ecke jedes Portlet ermöglicht es, Diagramme auf dem Dashboard zu bearbeiten.',
+        'Email'
+            => 'E-Mail',
         'Email Address'
             => 'E-Mail Adresse',
         'Enable game notification popup'
@@ -577,6 +579,8 @@
             => 'Wählen Sie eine Rolle',
         'Self-Generated'
             => 'Selbstgeneriert',
+        'Send a test email to'
+            => 'Senden eine Testnachricht  zu',
         'Set your preferences, password, and contact details in your My Profile area.'
             => 'Ändern deine Einstellungen, Kennwort und Kontaktdaten im Mein Profil.',
         'Settings'

@@ -34,10 +34,6 @@
                         'elements' => array(
                             array('type' => 'CancelLink', 'renderType' => 'Edit'),
                             array('type' => 'SaveButton', 'renderType' => 'Edit'),
-                            array('type' => 'ListLink',
-                                'renderType' => 'Details',
-                                'label' => "eval:Yii::t('Default', 'Return to List')"
-                            ),
                             array('type' => 'EditLink', 'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
                             array('type' => 'OpportunityDeleteLink', 'renderType' => 'Details'),

@@ -93,7 +93,7 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:30%" /><col style="width:70%" />';
+            $content .= '<col style="width:15%" /><col />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
@@ -106,7 +106,7 @@
                 assert('is_bool($languageData["canInactivate"])');
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $language,
+                $content .= '<td class="checkbox-column">' . self::renderActiveCheckBoxContent($form, $language,
                                                                        $languageData['active'],
                                                                        $languageData['canInactivate']) . '</td>';
                 $content .= '<td>' . $languageData['label'] . '</td>';
@@ -124,7 +124,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'  => 'ConfigurationLink',
-                                  'label' => "eval:Yii::t('Default', 'Cancel')"),
+                                  'label' => "eval:ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Cancel'))"),
                             array('type'  => 'SaveButton',
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),

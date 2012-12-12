@@ -33,6 +33,7 @@
 
         protected function getDefaultLabel()
         {
+            //return ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Create'));
             return Yii::t('Default', 'Create');
         }
 

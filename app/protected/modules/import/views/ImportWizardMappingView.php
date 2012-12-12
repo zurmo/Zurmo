@@ -207,14 +207,15 @@
                                    array('id' => $this->model->id));
             $content             = ZurmoHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
             // Begin Not Coding Standard
-            $content            .= ZurmoHtml::ajaxButton(Yii::t('Default', 'Add Field'), $ajaxOnChangeUrl,
+            $content            .= ZurmoHtml::ajaxLink(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Add Field')),
+                                    $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
                                           'success' => 'js:function(data){
                                             $(\'#columnCounter\').val(parseInt($(\'#columnCounter\').val()) + 1)
                                             $(\'#addExtraColumnButton\').parent().parent().prev().after(data);
                                           }'),
-                                    array('id' => 'addExtraColumnButton'));
+                                    array('id' => 'addExtraColumnButton', 'class' => 'z-button'));
             // End Not Coding Standard
             return $content;
         }

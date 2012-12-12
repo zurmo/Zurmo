@@ -50,14 +50,13 @@
             $title          = Yii::t('Default', 'Create a math formula that is calculated from other fields.' .
                                    ' Use the Formula Name from the Available Fields grid below to create your formula.' .
                                    ' Example formula (field1 x field2) / field3');
-            $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">';
-            $spanContent   .= '</span>';
+            $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">?</span>';
             if (count($attributeData) > 0)
             {
                 $content  = '<strong>' . Yii::t('Default', 'Available Fields:') . '</strong> ' . $spanContent;
-                $content .= '<table style="width:auto">';
-                $content .= '<tr><td><b>' . Yii::t('Default', 'Field Name') . '</b></td>';
-                $content .= '<td><b>' . Yii::t('Default', 'Formula Name') . '</b></td></tr>';
+                $content .= '<table id="available-fields">';
+                $content .= '<tr><th>' . Yii::t('Default', 'Field Name') . '</th>';
+                $content .= '<th>' . Yii::t('Default', 'Formula Name') . '</th></tr>';
                 foreach ($attributeData as $attributeName => $data)
                 {
                     $content .= '<tr><td>' . $data['attributeLabel'] . '</td><td>' . $attributeName . '</td></tr>';

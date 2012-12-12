@@ -38,7 +38,7 @@
          * - Copy, add and remove files
          * @param MessageStreamer $messageStreamer
          */
-        public static function runPart1(MessageStreamer $messageStreamer)
+        public static function runPart1(MessageStreamer $messageStreamer, $doNotlAlterFiles = false)
         {
             try
             {
@@ -68,10 +68,14 @@
                 self::processConfigFiles($pathToConfigurationFolder);
                 self::processAfterConfigFiles();
 
-                $messageStreamer->add(Yii::t('Default', 'Copying files.'));
-                self::processBeforeFiles();
-                self::processFiles($upgradeExtractPath, $configuration);
-                self::processAfterFiles();
+                if (!$doNotlAlterFiles)
+                {
+                    $messageStreamer->add(Yii::t('Default', 'Copying files.'));
+                    self::processBeforeFiles();
+                    self::processFiles($upgradeExtractPath, $configuration);
+                    self::processAfterFiles();
+                }
+
                 self::clearCache();
                 $messageStreamer->add(Yii::t('Default', 'Clearing cache.'));
                 $messageStreamer->add(Yii::t('Default', 'Part 1 complete.'));
@@ -251,7 +255,7 @@
         {
             // Remove extracted files, if they already exists.
             $fileInfo = pathinfo($upgradeZipFilePath);
-            FileUtil::deleteDirectoryRecoursive($fileInfo['dirname'], false, array($fileInfo['basename'], 'index.html'));
+            FileUtil::deleteDirectoryRecursive($fileInfo['dirname'], false, array($fileInfo['basename'], 'index.html'));
 
             $isExtracted = false;
             $zip = new ZipArchive();
@@ -436,7 +440,7 @@
 
         protected static function removeUpgradeFiles($upgradeExtractPath)
         {
-            FileUtil::deleteDirectoryRecoursive($upgradeExtractPath, true);
+            FileUtil::deleteDirectoryRecursive($upgradeExtractPath, true);
         }
 
         /**

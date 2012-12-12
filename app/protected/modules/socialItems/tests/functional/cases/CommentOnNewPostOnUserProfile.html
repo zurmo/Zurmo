@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+    <td>setTimeout</td>
+    <td>45000</td>
+    <td></td>
+</tr>
+<tr>
     <td>verifyTextPresent</td>
     <td>Test Post ${randomSuffix}</td>
     <td></td>
@@ -20,6 +25,11 @@
     <td>click</td>
     <td>//div[@id='UserSocialItemsForPortletView']/div[2]/div/table/tbody/tr/td/div/div[3]/span/a</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>type</td>
@@ -32,9 +42,15 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>waitForTextPresent</td>
+    <!--td>//div[@id='list-viewUserSocialItemsForPortletView']/table/tbody/tr/td/div/div[2]/div[2]/div/div/p</td-->
     <td>Test comment ${randomSuffix}</td>
-    <td></td>
+	    <td></td>
 </tr>
 </tbody></table>
 </body>

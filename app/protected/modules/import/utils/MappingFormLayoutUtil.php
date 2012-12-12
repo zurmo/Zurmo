@@ -123,7 +123,7 @@
             if ($columnType == 'extraColumn')
             {
                 $content .= ZurmoHtml::link(Yii::t('Default', 'Remove Field'),
-                            '#', array('class' => 'remove-extra-column-link'));
+                            '#', array('class' => 'remove-extra-column-link z-link'));
                 Yii::app()->clientScript->registerScript('mappingExtraColumnRemoveLink', "
                 $('.remove-extra-column-link').click( function()
                     {

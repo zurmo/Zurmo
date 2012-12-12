@@ -67,10 +67,11 @@
         protected function renderTestButton()
         {
             $content  = '<span>';
-            $content .= ZurmoHtml::ajaxButton(Yii::t('Default', 'Send Test Email'),
+            $content .= ZurmoHtml::ajaxLink(
+                ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Send Test Email')),
                 Yii::app()->createUrl('emailMessages/default/sendTestMessage/', array()),
-                    static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
-                    array('id' => 'SendATestEmailToButton', 'class' => 'EmailTestingButton')
+                static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
+                array('id' => 'SendATestEmailToButton', 'class' => 'EmailTestingButton z-button')
             );
             $content .= '</span>';
             return $content;

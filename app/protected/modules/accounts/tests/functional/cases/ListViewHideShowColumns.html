@@ -11,29 +11,29 @@
 <thead>
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
-<tr> 
-    <td>setTimeout</td> 
-    <td>45000</td> 
-    <td></td> 
-</tr>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
+	<td>setTimeout</td>
+	<td>45000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=clear-search-link</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
-	<td>//a[id='clear-search-link' contains(text(), "Criteria Selected")] </td>
+	<td>//a[id='clear-search-link' contains(text(), &quot;Criteria Selected&quot;)] </td>
 	<td></td>
 </tr>
 <tr>
@@ -47,6 +47,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=select-list-attributes-link</td>
 	<td></td>
@@ -58,23 +63,28 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=#list-attributes-apply &gt; span.z-label</td>
+	<td>id=list-attributes-apply</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[2]/a</td>
 	<td>Name</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[3]/a</td>
 	<td>Type</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[4]/a</td>
 	<td>Owner</td>
-	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -178,33 +188,38 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=#list-attributes-apply &gt; span.z-label</td>
+	<td>id=list-attributes-apply</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Name</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Office Phone</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
+	<td>waitForText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[6]/a</td>
 	<td>Primary Email</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[2]/a</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[3]/a</td>
 	<td>Type</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[4]/a</td>
 	<td>Owner</td>
-	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[5]/a</td>
+	<td>Office Phone</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -217,24 +232,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForNotText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[2]/a</td>
+	<td>Primary Email</td>
+</tr>
+<tr>
+	<td>waitForNotText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[3]/a</td>
+	<td>Primary Email</td>
+</tr>
+<tr>
+	<td>waitForNotText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[4]/a</td>
+	<td>Primary Email</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[2]/a</td>
 	<td>Name</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[3]/a</td>
 	<td>Type</td>
-	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountsListView']/div/table/thead/tr/th[4]/a</td>
 	<td>Owner</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>//div[@id='list-view']/table/thead/tr/th[@id='list-view_c4' contains(text(), "Primary Email")]</td>
-	<td></td>
 </tr>
 </tbody></table>
 </body>

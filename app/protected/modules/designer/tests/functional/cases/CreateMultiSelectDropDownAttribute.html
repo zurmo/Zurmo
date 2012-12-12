@@ -12,254 +12,374 @@
 <tr><td rowspan="1" colspan="3">CreateMultiSelectDropDownAttribute</td></tr>
 </thead><tbody>
 <tr>
-	<td>setTimeout</td>
-	<td>45000</td>
-	<td></td>
+    <td>setTimeout</td>
+    <td>45000</td>
+    <td></td>
 </tr>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
+    <td>store</td>
+    <td>javascript{Math.floor(Math.random()*11000)}</td>
+    <td>randomSuffix</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
+    <td>open</td>
+    <td>index.php/designer/default</td>
+    <td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>index.php/designer/default</td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='TitleBarAndDesignerPageMenuView']/div/ul/li[1]/a/span</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Fields</td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Standard Fields</td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Create Field</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>link=Fields</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>mdd${randomSuffix}</td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>attributeTypeName</td>
-	<td>label=Multi-Select Pick List</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>attributeTypeNameButton</td>
-	<td></td>
+    <td>verifyTextPresent</td>
+    <td>Accounts: Standard Fields</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>MultiSelectDropDownAttributeForm_attributeName</td>
-	<td>mdd${randomSuffix}</td>
+    <td>verifyTextPresent</td>
+    <td>Create Field</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>MultiSelectDropDownAttributeForm_attributeLabels_en</td>
-	<td>mdd${randomSuffix}</td>
+    <td>assertTextNotPresent</td>
+    <td>mdd${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>customFieldDataData_AddInput</td>
-	<td>test1</td>
+    <td>select</td>
+    <td>attributeTypeName</td>
+    <td>label=Multi-Select Pick List</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>customFieldDataData_AddInputButton</td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>customFieldDataData_AddInput</td>
-	<td>test2</td>
+    <td>clickAndWait</td>
+    <td>attributeTypeNameButton</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>customFieldDataData_AddInputButton</td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>customFieldDataData_AddInput</td>
-	<td>test3</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>customFieldDataData_AddInputButton</td>
-	<td></td>
+    <td>type</td>
+    <td>MultiSelectDropDownAttributeForm_attributeName</td>
+    <td>mdd${randomSuffix}</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>MultiSelectDropDownAttributeForm_defaultValueOrder</td>
-	<td>label=test3</td>
+    <td>type</td>
+    <td>MultiSelectDropDownAttributeForm_attributeLabels_en</td>
+    <td>mdd${randomSuffix}</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td>off</td>
+    <td>type</td>
+    <td>customFieldDataData_AddInput</td>
+    <td>test1</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td></td>
+    <td>click</td>
+    <td>customFieldDataData_AddInputButton</td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td>on</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td>off</td>
+    <td>type</td>
+    <td>customFieldDataData_AddInput</td>
+    <td>test2</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td></td>
+    <td>click</td>
+    <td>customFieldDataData_AddInputButton</td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td>on</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+    <td>type</td>
+    <td>customFieldDataData_AddInput</td>
+    <td>test3</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Designer Home</td>
-	<td></td>
+    <td>click</td>
+    <td>customFieldDataData_AddInputButton</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
-	<td>Create Field</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-	<td>Accounts: Custom Fields</td>
+    <td>select</td>
+    <td>MultiSelectDropDownAttributeForm_defaultValueOrder</td>
+    <td>label=test3</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>mdd${randomSuffix}</td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Standard Fields</td>
-	<td></td>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=edit-link-mdd${randomSuffix}Cstm</td>
-	<td></td>
+    <td>click</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='MultiSelectDropDownAttributeEditView']/div/h1</td>
-	<td>exact:Edit Field: mdd${randomSuffix}</td>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td>on</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>customFieldDataData_AddInput</td>
-	<td>test4</td>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td>off</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>customFieldDataData_AddInputButton</td>
-	<td></td>
+    <td>click</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>MultiSelectDropDownAttributeForm_defaultValueOrder</td>
-	<td>label=test4</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td>on</td>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td>on</td>
+</tr>
+<!--tr>
+  <td>setSpeed</td>
+  <td>3000</td>
+  <td></td>
+</tr-->
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isAudited</td>
-	<td>off</td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td>on</td>
+    <td>waitForTextNotPresent</td>
+    <td>//div[@id='DesignerBreadCrumbView']/div/span</td>
+    <td>Create Field:</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td></td>
+    <td>waitForText</td>
+    <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div/h1</td>
+    <td>Create Field</td>
 </tr>
 <tr>
-	<td>verifyValue</td>
-	<td>MultiSelectDropDownAttributeForm_isRequired</td>
-	<td>off</td>
+    <td>waitForText</td>
+    <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+    <td>Accounts: Custom Fields</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>save</td>
-	<td></td>
+    <td>verifyTextPresent</td>
+    <td>mdd${randomSuffix}</td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Designer Home</td>
-	<td></td>
+    <td>verifyTextPresent</td>
+    <td>Accounts: Standard Fields</td>
+    <td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
-	<td>Accounts: Custom Fields</td>
+    <td>clickAndWait</td>
+    <td>id=edit-link-mdd${randomSuffix}Cstm</td>
+    <td></td>
+</tr>
+<!--tr>
+  <td>setSpeed</td>
+  <td>1</td>
+  <td></td>
+</tr-->
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>mdd${randomSuffix}</td>
-	<td></td>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Accounts: Standard Fields</td>
-	<td></td>
+    <td>waitForText</td>
+    <td>//div[@id='MultiSelectDropDownAttributeEditView']/div/h1</td>
+    <td>exact:Edit Field: mdd${randomSuffix}</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>customFieldDataData_AddInput</td>
+    <td>test4</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>customFieldDataData_AddInputButton</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>select</td>
+    <td>MultiSelectDropDownAttributeForm_defaultValueOrder</td>
+    <td>label=test4</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isAudited</td>
+    <td>off</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td>on</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>verifyValue</td>
+    <td>MultiSelectDropDownAttributeForm_isRequired</td>
+    <td>off</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForTextNotPresent</td>
+    <td>//div[@id='DesignerBreadCrumbView']/div/span</td>
+    <td>Edit Field:</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='StandardAndCustomAttributesListView']/div[2]/div[2]/h1</td>
+    <td>Accounts: Custom Fields</td>
+</tr>
+<tr>
+    <td>verifyTextPresent</td>
+    <td>mdd${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+    <td>verifyTextPresent</td>
+    <td>Accounts: Standard Fields</td>
+    <td></td>
 </tr>
 </tbody></table>
 </body>

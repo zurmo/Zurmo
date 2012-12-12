@@ -23,6 +23,10 @@
 	}
 }
 
+.add-label{
+    font-weight:normal !important;
+}
+
 .show-file-upload-box{
     position: relative;
     bottom:-18px;
@@ -31,8 +35,13 @@
     .smaller();
 }
 
-.fileupload-content{
-    width: 100%;
+#CommentInlineEditForModelView{
+    .fileupload-content{
+        width: 100%;
+        td.name{
+            padding:5px 0 0 0 !important;
+        }
+    }
 }
 
 .files{
@@ -48,9 +57,6 @@
         color: #CC0000;
         font-weight: bold;
     }
-    .z-spinner{
-        display: inline-block;
-    }
 }
 
 .file-size{
@@ -59,8 +65,17 @@
     color:#999;
 }
 
-.upload-spinner{
-    display: inline-block;
+
+.template-upload{
+    .name{
+        position:relative;
+    }
+    .z-spinner{
+        position:relative;
+        float:left;
+        display: block;
+        margin-top:-1px;
+    }
 }
 
 .upload-actions{
@@ -86,26 +101,37 @@
     .icon-delete:hover:before{
         .opacity(100);
     }
-    button.start, button.cancel{
+    button.start,
+    button.cancel{
         cursor: pointer;
         border: none;
-        //++.themeBackgroundColor;
-        font-size: 10px !important;
-        padding:2px;
-        line-height: 1;
-        .radius(2px);
+        .radius(4px);
         margin: 0 0 0 4px;
         color: #fff;
         font-weight: normal;
+        background:none;
         &:hover{
             .b-shadow(0 0 1px 0 #333);
         }
+        span{
+            display:none;
+            padding:2px;
+            font-size: 10px !important;
+            line-height: 1;
+        }
+        .ui-button-text{
+            display:block;
+            .radius(4px);
+            span{
+                display:block;
+                padding:1px;
+            }
+        }
     }
-    button.start{
+    button.start span{
         #gradient > .vertical(#97c43d, #6fa82d );
-        display: none;
     }
-    button.cancel{
+    button.cancel span{
         #gradient > .vertical(#c43d53, #a82d31 );
     }
 }
@@ -126,7 +152,7 @@
         .symbly(36px);
         font-size: 24px;
         padding: 0 6px !important;
-        margin-right: 5px;
+        margin:0 5px 0 0 !important;
         position: relative;
         top: 2px;
         background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
@@ -148,12 +174,16 @@
     }
 }
 
+.fileupload-buttonbar{
+    position:relative;
+}
+
 .max-upload-size{
     .field-description();
     margin-top: 0;
-    position: relative;
-    top: 10px;
-    left: 10px;
+    position: absolute;
+    bottom: 3px;
+    left: 100px;
 }
 
 .ImportWizardView {

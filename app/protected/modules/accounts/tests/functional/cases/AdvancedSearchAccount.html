@@ -11,25 +11,20 @@
 <thead>
 <tr><td rowspan="1" colspan="3">Advanced Search Account</td></tr>
 </thead><tbody>
-<tr> 
-    <td>setTimeout</td> 
-    <td>45000</td> 
-    <td></td> 
-</tr>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
+	<td>setTimeout</td>
+	<td>45000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!--Test empty search-->
 <tr>
@@ -48,6 +43,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
 	<td></td>
@@ -58,7 +58,12 @@
 	<td>label=Website</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_website</td>
 	<td></td>
 </tr>
@@ -71,6 +76,11 @@
 	<td>click</td>
 	<td>css=#search-advanced-search &gt; span.z-label</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -87,6 +97,11 @@
 	<td>click</td>
 	<td>id=clear-search-link</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -115,6 +130,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
 	<td></td>
@@ -125,7 +145,12 @@
 	<td>label=Name</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
 	<td></td>
 </tr>
@@ -140,12 +165,22 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=AccountsSearchForm_dynamicClauses_1_attributeIndexOrDerivedType</td>
 	<td>label=Office Phone</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_1_officePhone</td>
 	<td></td>
 </tr>
@@ -160,12 +195,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=AccountsSearchForm_dynamicClauses_2_attributeIndexOrDerivedType</td>
 	<td>label=Any Email Address</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_2_anyEmail</td>
 	<td></td>
 </tr>
@@ -180,6 +220,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_3_attributeIndexOrDerivedType</td>
 	<td></td>
@@ -190,7 +235,12 @@
 	<td>label=Any Street</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>id=AccountsSearchForm_dynamicClauses_3_anyStreet</td>
 	<td></td>
 </tr>
@@ -205,6 +255,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForTextPresent</td>
 	<td>Changing The Account ${randomSuffix}</td>
 	<td></td>
@@ -215,11 +270,6 @@
 	<td></td>
 </tr>
 <!--Test saving a search with no name-->
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
@@ -236,95 +286,14 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>assertTextPresent</td>
 	<td>Name cannot be blank.</td>
 	<td></td>
-</tr>
-<!--Test a saved search-->
-<tr>
-	<td>type</td>
-	<td>id=AccountsSearchForm_savedSearchName</td>
-	<td>Saved Search ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=#save-advanced-search &gt; span.z-label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/ul/li[3]/a/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='MenuView']/ul/li[2]/a/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=clear-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Load a saved search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=savedSearchId</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Saved Search ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=savedSearchId</td>
-	<td>Saved Search ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>4 Criteria Selected</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Changing The Account ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
-	<td>Changing The Account ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>id=AccountsSearchForm_dynamicClauses_1_officePhone</td>
-	<td>456777</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>id=AccountsSearchForm_dynamicClauses_2_anyEmail</td>
-	<td>test2@testcompany.com</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>id=AccountsSearchForm_dynamicClauses_3_anyStreet</td>
-	<td>456 Main Street</td>
 </tr>
 <!--Test invalid structure-->
 <tr>
@@ -339,153 +308,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td>id=search-advanced-search</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
 	<td>The structure is invalid.</td>
-	<td></td>
-</tr>
-<!--Test deleting a saved search-->
-<tr>
-	<td>click</td>
-	<td>xpath=(//a[contains(text(),'_')])[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//a[contains(text(),'_')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=AccountsSearchForm_dynamicStructure</td>
-	<td>1 or 2</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=#search-advanced-search &gt; span.z-label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>2 Criteria Selected</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Changing The Account ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=save-as-advanced-search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=#save-advanced-search &gt; span.z-label</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=clear-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=savedSearchId</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Saved Search ${randomSuffix}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=savedSearchId</td>
-	<td>Saved Search ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=show-dynamic-search-structure-div-link-search-form</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>id=AccountsSearchForm_dynamicStructure</td>
-	<td>1 or 2</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=save-as-advanced-search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=span.icon</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=cancel-advanced-search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=span.icon-clear</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextPresent</td>
-	<td>Load a saved search</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertTextNotPresent</td>
-	<td>Saved Search ${randomSuffix}</td>
 	<td></td>
 </tr>
 </tbody></table>

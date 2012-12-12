@@ -17,11 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>store</td>
 	<td>javascript{Math.floor(Math.random()*11000)}</td>
 	<td>randomSuffix</td>
@@ -32,9 +27,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -42,9 +42,29 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>link=Fields</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -52,9 +72,24 @@
 	<td>label=Pick List</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>attributeTypeNameButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -77,6 +112,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bbbb</td>
@@ -85,6 +125,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -97,6 +142,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>verifyValue</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td>off</td>
@@ -105,6 +155,11 @@
 	<td>click</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
@@ -120,6 +175,11 @@
 	<td>click</td>
 	<td>DropDownAttributeForm_isAudited</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
@@ -130,6 +190,16 @@
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
@@ -162,9 +232,24 @@
 	<td>label=Pick List</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>attributeTypeNameButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -187,6 +272,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>aaa2</td>
@@ -195,6 +285,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -207,6 +302,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bbb1</td>
@@ -215,6 +315,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -227,6 +332,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bbb3</td>
@@ -235,6 +345,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -247,6 +362,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ccc2</td>
@@ -255,6 +375,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -267,6 +392,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>verifyValue</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td>off</td>
@@ -275,6 +405,11 @@
 	<td>click</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
@@ -290,6 +425,11 @@
 	<td>click</td>
 	<td>DropDownAttributeForm_isAudited</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
@@ -300,6 +440,16 @@
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
@@ -332,9 +482,24 @@
 	<td>label=Pick List</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>attributeTypeNameButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -357,6 +522,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ab1</td>
@@ -365,6 +535,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -377,6 +552,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>aa2</td>
@@ -385,6 +565,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -397,6 +582,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ac2</td>
@@ -405,6 +595,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -417,6 +612,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ab3</td>
@@ -425,6 +625,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -437,6 +642,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ba1</td>
@@ -445,6 +655,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -457,6 +672,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bc1</td>
@@ -465,6 +685,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -477,6 +702,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bb2</td>
@@ -485,6 +715,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -497,6 +732,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ba3</td>
@@ -505,6 +745,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -517,6 +762,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>bc3</td>
@@ -525,6 +775,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -537,6 +792,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>cb1</td>
@@ -545,6 +805,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -557,6 +822,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>ca2</td>
@@ -565,6 +835,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -577,6 +852,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>cc2</td>
@@ -585,6 +865,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -597,6 +882,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=customFieldDataData_AddInput</td>
 	<td>cb3</td>
@@ -605,6 +895,11 @@
 	<td>click</td>
 	<td>id=customFieldDataData_AddInputButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -617,6 +912,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>verifyValue</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td>off</td>
@@ -625,6 +925,11 @@
 	<td>click</td>
 	<td>DropDownAttributeForm_isRequired</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyValue</td>
@@ -650,6 +955,16 @@
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
@@ -682,9 +997,24 @@
 	<td>label=Dependent Pick Lists</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>attributeTypeNameButton</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -707,6 +1037,11 @@
 	<td>label=tc_${randomSuffix}</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//select[@id='DropDownDependencyAttributeForm_mappingData_1_attributeName']/option</td>
 	<td>(None)</td>
@@ -715,6 +1050,11 @@
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_1_attributeName</td>
 	<td>label=ts_${randomSuffix}</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -727,9 +1067,19 @@
 	<td>label=aaaa</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_1</td>
 	<td>label=aaaa</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -737,9 +1087,19 @@
 	<td>label=aaaa</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_3</td>
 	<td>label=bbbb</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -747,9 +1107,19 @@
 	<td>label=bbbb</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_5</td>
 	<td>label=bbbb</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -757,9 +1127,19 @@
 	<td>label=cccc</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_1_valuesToParentValues_7</td>
 	<td>label=cccc</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -767,9 +1147,19 @@
 	<td>label=cccc</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_attributeName</td>
 	<td>label=tcity_${randomSuffix}</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -782,9 +1172,19 @@
 	<td>label=aaa1</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_1</td>
 	<td>label=aaa1</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -792,9 +1192,19 @@
 	<td>label=aaa1</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_3</td>
 	<td>label=aaa2</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -802,9 +1212,19 @@
 	<td>label=aaa2</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_5</td>
 	<td>label=aaa2</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -812,9 +1232,19 @@
 	<td>label=aaa3</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_7</td>
 	<td>label=aaa3</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -822,9 +1252,19 @@
 	<td>label=aaa3</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_9</td>
 	<td>label=bbb1</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -832,9 +1272,19 @@
 	<td>label=bbb1</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_11</td>
 	<td>label=bbb1</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -842,9 +1292,19 @@
 	<td>label=bbb2</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_13</td>
 	<td>label=bbb2</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -852,9 +1312,19 @@
 	<td>label=bbb2</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_15</td>
 	<td>label=bbb3</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -862,9 +1332,19 @@
 	<td>label=bbb3</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_17</td>
 	<td>label=bbb3</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -872,9 +1352,19 @@
 	<td>label=ccc1</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_19</td>
 	<td>label=ccc1</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -882,9 +1372,19 @@
 	<td>label=ccc1</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_21</td>
 	<td>label=ccc2</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -892,9 +1392,19 @@
 	<td>label=ccc2</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_23</td>
 	<td>label=ccc2</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -902,9 +1412,19 @@
 	<td>label=ccc3</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=DropDownDependencyAttributeForm_mappingData_2_valuesToParentValues_25</td>
 	<td>label=ccc3</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -912,9 +1432,24 @@
 	<td>label=ccc3</td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>

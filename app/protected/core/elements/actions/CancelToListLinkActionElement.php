@@ -24,21 +24,16 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class CancelToListLinkActionElement extends LinkActionElement
+    class CancelToListLinkActionElement extends CancelLinkActionElement
     {
         public function getActionType()
         {
             return null;
         }
 
-        protected function getDefaultLabel()
-        {
-            return Yii::t('Default', 'Return to List');
-        }
-
         protected function getDefaultRoute()
         {
-            return Yii::app()->createUrl($this->moduleId);
+            return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId);
         }
     }
 ?>

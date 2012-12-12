@@ -1,5 +1,8 @@
 .gravatar{
     float:left;
+    border:1px solid #fff !important;
+    background:#DFDFDF;
+    padding:2px;
 }
 
 .icon-missions-created:before,
@@ -175,6 +178,12 @@
     float:left;
     max-width: 600px;
     .box-sizing();
+    .wide.form{
+        .unstyle-panel();
+    }
+    h2{
+        font-size:15px;
+    }
 }
 
 #CommentInlineEditForModelView{
@@ -251,8 +260,19 @@
 }
 
 .mission-change-status-link{
-    margin-right:10px;
+    margin:0 5px !important;
 }
+
+#MissionDetailsView{
+    .missionStatusChangeArea{
+        margin-bottom:10px;
+    }
+    .mission-change-status-link{
+        position:relative;
+        top:9px;
+    }
+}
+
 
 .missionStatusChangeArea{
     margin-top: 10px;
@@ -284,6 +304,7 @@ a.user-link{
 
 .mission-status{
     margin:0 5px;
+    font-weight:bold;
 }
 
 #MissionsListView{
@@ -294,6 +315,11 @@ a.user-link{
 
 .actions-column{
     text-align: right;
+    .mission-status{
+        vertical-align:60%;
+        font-weight:normal;
+        font-style:italic;
+    }
 }
 
 #MissionDetailsView,
@@ -349,6 +375,7 @@ a.user-link{
     border-bottom: 1px solid #ccc;
     background: none !important;
     .b-shadow(none);
+    .reset-filter();
     td:first-child{
         padding-left: 0;
     }
@@ -365,6 +392,7 @@ a.user-link{
         a{
             color:#fff;
             margin-right:0;
+            float:right;
         }
     }
     table.files{

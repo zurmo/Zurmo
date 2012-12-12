@@ -123,7 +123,7 @@
 
         protected function renderFormLinks()
         {
-            $listButton = ZurmoHtml::link(Yii::t('Default', 'Return to List'), Yii::app()->createUrl($this->moduleId));
+            $listButton = ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Return to List')), Yii::app()->createUrl($this->moduleId));
             $content = '<div id="' . $this->progressBarId . '-links" style="display:none;">';
             $content .= $listButton;
             $content .= '</div>';

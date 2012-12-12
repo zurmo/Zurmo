@@ -47,14 +47,24 @@
             => 'Nuovo Utente',
         'Create Users'
             => 'Crea Utente',
+        'Custom Outbound Email Settings'
+            => 'Parametri personali della posta in uscita',
         'day(s)'
             => 'giorno/i',
+        'Email Configuration'
+            => 'Configurazione email',
+        'Email Signature'
+            => 'Firma email',
         'Enforce Strong Passwords'
             => 'Attuare l\'uso di password forti',
+        'General'
+            => 'Generale',
         'Hash'
             => 'Hash', // Same Word Translated
         'Hide welcome page'
             => 'Nascondere la pagina di benvenuto',
+        'If unchecked, will use system SMTP settings.'
+            => 'Se non è spunta, le impostazioni SMTP del sistema saranno utilizzati.',
         'Inactive users cannot log in using the web, mobile or web API. Login for active users is controlled by group rights.'
             => 'Gli utenti inatyivi no possono login nel web, mobile, o web API.  Il login per gli utente attivi è controllato per i diritti del grupo.',
         'Inherited Value:'
@@ -85,6 +95,8 @@
             => 'Login  web',
         'Sign in Via Web API'
             => 'Login Web API',
+        'Texture'
+            => 'Apparenza',
         'The password is too short. Minimum length is {minimumLength}.'
             => 'La password è troppo corta. La lunghezza minima è {minimumLength} carattere.',
         'The password must have at least one lowercase letter'
@@ -97,6 +109,8 @@
             => 'Il fuso oraria non è valido.',
         'The username is too short. Minimum length is {minimumLength}.'
             => 'Il nome di utente è troppo corto.  La lunghezza minima è {minimumLength} carattere.',
+        'Theme'
+            => 'Tema',
         'Time Zone'
             => 'Fuso orario',
         'Turn off email notifications'
@@ -109,6 +123,8 @@
             => 'Utente',
         'User configuration saved successfully.'
             => 'Configurazione salva con successo',
+        'User email configuration saved successfully.'
+            => 'Configurazione email salvata con successo.',
         'User Search'
             => 'Ricerca Utente',
         'Users'

@@ -12,19 +12,24 @@
 <tr><td rowspan="1" colspan="3">ConvertCreateAccount</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>1000</td>
+	<td>setTimeout</td>
+	<td>45000</td>
 	<td></td>
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/leads/default</td>
+	<td>index.php/leads/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForPageToLoad</td>
 	<td></td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -37,14 +42,14 @@
 	<td>\10</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>link=Silly Sally ${randomSuffix}</td>
 	<td>Silly Sally ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>setSpeed</td>
-	<td>5000</td>
-	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -57,12 +62,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
 	<td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
 	<td>exact:Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>link=Convert</td>
 	<td></td>
 </tr>
@@ -72,9 +82,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>link=Select Account</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -82,9 +102,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//div[@id='account-skip-title']/a[1]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -95,6 +125,16 @@
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -107,9 +147,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>//*[@id=&quot;AccountSelect&quot;]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -122,6 +172,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>Account_name</td>
 	<td>my created account ${randomSuffix}</td>
@@ -130,6 +190,16 @@
 	<td>clickAndWait</td>
 	<td>save</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -145,6 +215,16 @@
 	<td>clickAndWait</td>
 	<td>link=my created account ${randomSuffix}</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -170,11 +250,6 @@
 	<td>verifyText</td>
 	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[9]/td</td>
 	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td[1]</td>
-	<td>456-777-6655</td>
 </tr>
 <tr>
 	<td>assertText</td>

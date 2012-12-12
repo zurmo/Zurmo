@@ -192,20 +192,6 @@
             Yii::app()->end(0, false);
         }
 
-        public function actionMakeChartXML($portletId, $chartLibraryName)
-        {
-            $portlet = Portlet::getById(intval($portletId));
-            assert('$portlet->getView() instanceof ChartView');
-            $chartDataProviderType = $portlet->getView()->getChartDataProviderType();
-            $chartDataProvider     = ChartDataProviderFactory::createByType($chartDataProviderType);
-            ControllerSecurityUtil::resolveCanCurrentUserAccessModule(
-                                        $chartDataProvider->getModel()->getModuleClassName(), true);
-            $adapterClassName      = 'ChartDataProviderTo' . $chartLibraryName . 'ChartAdapter';
-            $fusionChart = $adapterClassName::makeChartByChartDataProvider($chartDataProvider,
-                                $portlet->getView()->getChartParams());
-            echo $fusionChart->getXML();
-        }
-
         public function resolveAndGetModuleId()
         {
             return $this->getModule()->getId();

@@ -101,11 +101,13 @@
                                         '<span class="pass">' . Yii::t('Default', 'PASS') . '</span>');
             }
             $content .= '<br/><br/>';
-            $content .= ZurmoHtml::link(Yii::t('Default', 'Recheck System'), $currentPageUrl);
+            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Recheck System')),
+                                        $currentPageUrl, array('class' => 'z-button'));
             if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
             {
-                $content .= ' ' . Yii::t('Default', 'or') . ' ';
-                $content .= ZurmoHtml::link(Yii::t('Default', 'Continue'), $nextPageUrl);
+                $content .= ' <span class="install-or">' . Yii::t('Default', 'or') . '</span> ';
+                $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Continue')),
+                                        $nextPageUrl, array('class' => 'z-button'));
             }
             $content .= '</td></tr></table>';
             $content .= '</div>';

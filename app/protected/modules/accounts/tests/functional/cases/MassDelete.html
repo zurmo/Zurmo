@@ -12,132 +12,212 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>3000</td>
-    <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/accounts/default</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=clear-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!-- Loading mass delete demo data -->
 <tr>
-  <td>open</td>
-  <td>index.php/zurmo/demo/loadMassDeleteDemoData</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/zurmo/demo/loadMassDeleteDemoData</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/accounts/default</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!--Preparing data to delete-->
 <tr>
-  <td>type</td>
-  <td>AccountsSearchForm_anyMixedAttributes</td>
-  <td>Mass Delete </td>
+	<td>type</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>Mass Delete </td>
 </tr>
 <tr>
-  <td>keyUp</td>
-  <td>AccountsSearchForm_anyMixedAttributes</td>
-  <td>\10</td>
+	<td>keyUp</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Mass Delete Test Account 0</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Mass Delete Test Account 0</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>Mass Delete Test Account 0</td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=list-view-rowSelector_0</td>
-  <td></td>
+	<td>click</td>
+	<td>id=list-view-rowSelector_0</td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=list-view-rowSelector_1</td>
-  <td></td>
+	<td>click</td>
+	<td>id=list-view-rowSelector_1</td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=list-view-rowSelector_2</td>
-  <td></td>
+	<td>click</td>
+	<td>id=list-view-rowSelector_2</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>//li[@id='list-view-deleteMassActionSelected']/a/span[2]</td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>//li[@id='list-view-deleteMassActionSelected']/a/span[2]</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertTextPresent</td>
-  <td>selected for removal</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>name=delete</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>assertTextPresent</td>
-  <td>successfully deleted</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>selected for removal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!-- selecting all for mass delete-->
 <tr>
-  <td>verifyElementPresent</td>
-  <td>list-view-endless-page</td>
-  <td></td>
+	<td>type</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>Mass Delete </td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=list-view-endless-page</td>
-  <td></td>
+	<td>keyUp</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>id=list-view-rowSelector_all</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>//li[@id='list-view-deleteMassActionSelected']/a/span[2]</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>18 result(s)</td>
+	<td></td>
 </tr>
 <tr>
-  <td>assertTextPresent</td>
-  <td>selected for removal</td>
-  <td></td>
+	<td>click</td>
+	<td>id=list-view-endless-page</td>
+	<td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>name=delete</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>records successfully deleted</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>Mass Delete Test Account 8</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=list-view-rowSelector_all</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[@id='list-view-deleteMassActionSelected']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>selected for removal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>records successfully deleted</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -145,9 +225,19 @@
 	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>No results found.</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -155,9 +245,9 @@
 	<td></td>
 </tr>
 <tr>
-  <td>assertTextPresent</td>
-  <td>selected for removal</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>selected for removal</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -165,9 +255,19 @@
 	<td></td>
 </tr>
 <tr>
-  <td>assertTextPresent</td>
-  <td>Advanced</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

@@ -69,8 +69,12 @@
             => 'Avant',
         'Between'
             => 'Entre',
-        'Bulk insert failed. There was a row with an incorrect column quantity'
-            => 'Erreur avec l\'opération BULK INSERT.  Une ligne contient une mauvaise quantité de colonnes',
+        'Blue'
+            => 'Bleu',
+        'Brown'
+            => 'Brun',
+        'Bulk insert failed. There was a row with an incorrect column quantity.'
+            => 'Erreur avec l\'opération BULK INSERT.  Une ligne contient une mauvaise quantité de colonnes.',
         'by'
             => 'par',
         'Cancel'
@@ -89,6 +93,8 @@
             => 'Vérification terminée.',
         'Checking permissions, files, upgrade version....'
             => 'Vérification des permissions, dossiers, version mise à jour...',
+        'Cherry'
+            => 'Cerise',
         'Clear'
             => 'Effacer',
         'Clearing assets and runtime folders.'
@@ -145,6 +151,8 @@
             => 'Erreur',
         'Error during upgrade!'
             => 'Erreur lors de la mise à jour!',
+        'Exclusive Paper'
+            => 'Papief exclusif',
         'Export'
             => 'Exporter',
         'Fahrenheit'
@@ -165,6 +173,8 @@
             => 'firstDateTime doit être avant secondDateTime',
         'Float'
             => 'Float', // Same Word Translated
+        'French Stucco'
+            => 'Stuc français',
         'from'
             => 'de',
         'Full Name'
@@ -173,6 +183,8 @@
             => 'Au détails',
         'Hidden Columns'
             => 'Colonnes Masquées',
+        'Honey'
+            => 'Miel',
         'Hour'
             => 'Heure',
         'Info'
@@ -193,6 +205,12 @@
             => 'Dernière modification',
         'Last Modified Date and User'
             => 'Dernière modification',
+        'Light Noise'
+            => 'Bruit léger',
+        'Light Toast'
+            => 'Toast léger',
+        'Lime'
+            => 'Citron vert',
         'List'
             => 'Liste',
         'Loading'
@@ -241,6 +259,8 @@
             => 'Aucun traitement d\'importation trouvé.',
         'No {moduleLabelPluralLowerCase} found'
             => 'Aucun résultat trouvé',
+        'Noise'
+            => 'Bruit',
         'None'
             => 'Aucun',
         'Not all files and folders are writeable by upgrade user. Please make these files or folders writeable:'
@@ -267,6 +287,8 @@
             => 'Paramètres du panneau',
         'Panel Title'
             => 'Titre du panneau',
+        'Paper'
+            => 'Papier',
         'Part 1 complete.'
             => 'Partie 1 complète.',
         'Please check if the file is a valid zip archive.'
@@ -301,6 +323,8 @@
             => 'Retour à la liste',
         'Row'
             => '[Ajouter une ligne]',
+        'Row Counter: {rowNumber} Serialized row data: {serializedRowData}'
+            => 'Row Counter: {rowNumber} Serialized row data: {serializedRowData}', // Same Word Translated
         'Running tasks after schema is updated.'
             => 'Tâches en cours d\'exécution (après la mise a jour du schéma).',
         'Running tasks before updating schema.'
@@ -369,6 +393,8 @@
             => 'Demain',
         'total'
             => 'total', // Same Word Translated
+        'Turquoise'
+            => 'Turquoise', // Same Word Translated
         'Type'
             => 'Type', // Same Word Translated
         'Type to find a tag'
@@ -395,6 +421,8 @@
             => 'Utilisateur',
         'Users'
             => 'Utilisateurs',
+        'Violet'
+            => 'Violet', // Same Word Translated
         'Visible Columns'
             => 'Colonnes affichées',
         'Yes'

@@ -250,7 +250,7 @@
 
         protected function getAddFieldLabelContent()
         {
-            return ZurmoHtml::tag('span', array(), Yii::t('Default', 'Add criteria'));
+            return Yii::t('Default', 'Add criteria');
         }
 
         protected function renderAfterFormLayout($form)

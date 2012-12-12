@@ -41,7 +41,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'ConfigurationLink',
-                                            'label' => "eval:Yii::t('Default', 'Cancel')"),
+                                            'label' => "eval:ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Cancel'))"),
                             array('type' => 'SaveButton',    'renderType' => 'Edit'),
                             array('type' => 'EditLink',      'renderType' => 'Details'),
                         ),

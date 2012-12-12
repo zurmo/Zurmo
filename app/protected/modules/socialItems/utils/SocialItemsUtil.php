@@ -67,7 +67,7 @@
             $content .= self::renderItemFileContent($model);
 
             $content .= '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
-                                    $model->latestDateTime, 'long', null) . '</strong>';
+                                    $model->createdDateTime, 'long', null) . '</strong>';
 
             $content .= ' · <span class="delete-comment">' . self::renderDeleteLinkContent($model) . '</span></span>';
             $content .= '</div>';

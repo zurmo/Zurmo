@@ -35,7 +35,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc updgradeZurmo <username> <action>
+      zurmoc updgradeZurmo <username> <action> <doNotlAlterFiles> <interactive>
 
     DESCRIPTION
       This command runs a Zurmo upgrade.
@@ -44,6 +44,8 @@
      * username: username to log in as and run the import processes. Typically 'super'.
                   This user must be a super administrator.
      * action: define upgrade phase(possible options: "runPart1" or "runPart2")
+     * doNotlAlterFiles: Should files be altered or not. This should be set to 1 if you
+                         already updated files using Mercurial
      * interactive: interactive or not
 EOD;
         }
@@ -84,7 +86,16 @@ EOD;
 
             if (isset($args[2]))
             {
-                $this->interactive = $args[2];
+                $doNotlAlterFiles = $args[2];
+            }
+            else
+            {
+                $doNotlAlterFiles = 0;
+            }
+
+            if (isset($args[3]))
+            {
+                $this->interactive = $args[3];
             }
 
             try
@@ -127,7 +138,7 @@ EOD;
             }
         }
 
-        protected function runPart1($messageStreamer)
+        protected function runPart1($messageStreamer, $doNotlAlterFiles = false)
         {
             set_time_limit(3600);
             $messageStreamer->add(Yii::t('Default', 'This is the Zurmo upgrade process. Please backup files/database before you continue.'));
@@ -145,7 +156,7 @@ EOD;
 
             if ($confirm)
             {
-                UpgradeUtil::runPart1($messageStreamer);
+                UpgradeUtil::runPart1($messageStreamer, $doNotlAlterFiles);
             }
             else
             {

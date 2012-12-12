@@ -48,20 +48,23 @@
             $inputId = $this->getEditableInputId  ($this->getExpiresAttributeName());
             $compareValue = Policy::YES;
             $htmlOptions = array(
-                'name' => $this->getEditableInputName($this->getExpiresAttributeName()),
-                'id'   => $this->getEditableInputId  ($this->getExpiresAttributeName(), 'value'),
+                'name'  => $this->getEditableInputName($this->getExpiresAttributeName()),
+                'id'    => $this->getEditableInputId  ($this->getExpiresAttributeName(), 'value'),
                 'onchange' => 'enableDisablePolicyTextField($(this).val(), \''. $inputId . '\', \''. $compareValue . '\');',
             );
-            $content  = $this->getInheritedContent();
+            $content  = '<div class="hasHalfs"><div class="threeFifths">';
+            $content .= $this->getInheritedContent();
             $content .= $this->form->dropDownList($this->model, $this->getExpiresAttributeName(), $dropDownArray, $htmlOptions);
-            $content .= '&#160;' . Yii::t('Default', 'every') . '&#160;';
+            $content .= '</div>';
+            $content .= '<span class="mad-lib twoFifths">' . Yii::t('Default', 'every');
             $htmlOptions = array(
                 'id'       => $inputId,
                 'name'     => $this->getEditableInputName($this->getExpiryAttributeName()),
                 'readonly' => $this->getReadOnlyValue(),
             );
             $content .= $this->form->textField($this->model, $this->getExpiryAttributeName(), $htmlOptions);
-            $content .= '&#160;' . Yii::t('Default', 'days');
+            $content .= Yii::t('Default', 'days') . '</span>';
+            $content .= '</div>';
             return $content;
         }
 

@@ -76,7 +76,7 @@
                                     $("#" + key).html(value);
                                 });
                               }'),
-                         array('id' => $id, 'href' => $page, 'style' => $style));
+                         array('id' => $id, 'href' => $page, 'style' => $style, 'class' => 'z-link'));
             // End Not Coding Standard
         }
     }

@@ -65,10 +65,16 @@
                 $content .= $this->messageBoxContent;
                 $content .= '<br/>';
             }
-            $content .= $this->renderFormLayout($form);
-            $content .= $this->renderViewToolBar();
-            $content .= $clipWidget->renderEndWidget();
-            $content .= '</div></div>';
+            $content     .= $this->renderFormLayout($form);
+            $actionContent = $this->renderActionElementBar(true);
+            if ($actionContent != null)
+            {
+                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+                $content .= $actionContent;
+                $content .= '</div></div>';
+            }
+            $content     .= $clipWidget->renderEndWidget();
+            $content     .= '</div></div>';
             return $content;
         }
 
@@ -87,7 +93,7 @@
         {
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:20%" /><col style="width:20%" /><col style="width:40%" /><col style="width:20%" />';
+            $content .= '<col style="width:15%" /><col style="width:15%" /><col style="width:50%" /><col style="width:20%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
@@ -100,7 +106,7 @@
             {
                 $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
                 $content .= '<tr>';
-                $content .= '<td>' . self::renderActiveCheckBoxContent($form, $currency) . '</td>';
+                $content .= '<td class="checkbox-column">' . self::renderActiveCheckBoxContent($form, $currency) . '</td>';
                 $content .= '<td>' . $currency->code . '</td>';
                 $content .= '<td>' . $currency->rateToBase . '</td>';
                 $content .= '<td>';
@@ -110,8 +116,8 @@
                 }
                 else
                 {
-                    $content .= ZurmoHtml::link(Yii::t('Default', 'Remove'), Yii::app()->createUrl($route,
-                                            array('id' => $currency->id)));
+                    $content .= ZurmoHtml::link(Yii::t('Default', 'Remove'),
+                      Yii::app()->createUrl($route, array('id' => $currency->id)), array('class' => 'z-link'));
                 }
                 $content .= '</td>';
                 $content .= '</tr>';
@@ -168,9 +174,8 @@
         protected static function renderActiveHeaderContent()
         {
             $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
-            $content     = Yii::t('Default', 'Active') . '&#160;';
-            $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">';
-            $content    .= '?</span>';
+            $content     = Yii::t('Default', 'Active');
+            $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-currencies-tooltip");
             return $content;

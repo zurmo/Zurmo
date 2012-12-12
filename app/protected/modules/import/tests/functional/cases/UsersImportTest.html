@@ -12,8 +12,8 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
-        <td>setSpeed</td>
-        <td>3000</td>
+        <td>setTimeout</td>
+        <td>45000</td>
         <td></td>
 </tr>
 <tr>
@@ -22,14 +22,34 @@
         <td></td>
 </tr>
 <tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>click</td>
         <td>id=ImportWizardForm_importRulesType_7</td>
         <td></td>
 </tr>
 <tr>
         <td>clickAndWait</td>
-        <td>id=yt0</td>
+        <td>link=Next</td>
         <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>click</td>
@@ -42,9 +62,24 @@
         <td>C:\Inetpub\selenium\zurmo_bleeding\app\protected\modules\import\tests\functional\files\importUsersTest.csv</td>
 </tr>
 <tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>clickAndWait</td>
-        <td>id=yt0</td>
+        <td>link=Next</td>
         <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>waitForTextPresent</td>
@@ -57,9 +92,19 @@
         <td>label=Username</td>
 </tr>
 <tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>select</td>
         <td>id=ImportWizardForm_column_1_attributeIndexOrDerivedType</td>
         <td>label=Password</td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>select</td>
@@ -67,9 +112,19 @@
         <td>label=Last Name</td>
 </tr>
 <tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>select</td>
         <td>id=ImportWizardForm_column_2_attributeIndexOrDerivedType</td>
         <td>label=Status</td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>select</td>
@@ -77,9 +132,24 @@
         <td>label=First Name</td>
 </tr>
 <tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>clickAndWait</td>
         <td>id=yt1</td>
         <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>waitForTextPresent</td>
@@ -90,6 +160,16 @@
         <td>clickAndWait</td>
         <td>link=Next</td>
         <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
 </tr>
 <tr>
         <td>verifyTextPresent</td>
@@ -107,24 +187,34 @@
         <td></td>
 </tr>
 <tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
         <td>type</td>
         <td>id=UsersSearchForm_anyMixedAttributes</td>
-        <td>my</td>
-</tr>
-<tr>
-        <td>typeKeys</td>
-        <td>id=UsersSearchForm_anyMixedAttributes</td>
-        <td>username1</td>
-</tr>
-<tr>
-        <td>waitForTextPresent</td>
-        <td>2 result(s)</td>
-        <td></td>
-</tr>
-<tr>
-        <td>assertTextPresent</td>
         <td>myusername1</td>
-        <td></td>
+</tr>
+<tr>
+        <td>keyUp</td>
+        <td>UsersSearchForm_anyMixedAttributes</td>
+        <td>\10</td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>waitForText</td>
+        <td>//div[@id='list-view']/table/tbody/tr/td[4]</td>
+        <td>myusername1</td>
 </tr>
 </tbody></table>
 </body>

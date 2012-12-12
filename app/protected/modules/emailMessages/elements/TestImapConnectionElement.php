@@ -60,10 +60,11 @@
         {
             $id       = 'testImapConnection';
             $content  = '<span>';
-            $content .= ZurmoHtml::ajaxButton(Yii::t('Default', 'Test Connection'),
+            $content .= ZurmoHtml::ajaxLink(
+                ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Test Connection')),
                 Yii::app()->createUrl('emailMessages/default/testImapConnection/', array()),
-                    static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
-                    array('id' => $id, 'class' => 'EmailTestingButton')
+                static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
+                array('id' => $id, 'class' => 'EmailTestingButton z-button')
             );
             $content .= '</span>';
             return $content;

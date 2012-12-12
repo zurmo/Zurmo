@@ -61,6 +61,16 @@
                 $this->htmlOptions['name'] = $name;
             }
 
+            if (!isset($this->options['currentText']))
+            {
+                $this->options['currentText'] = ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Now'));
+            }
+
+            if (!isset($this->options['closeText']))
+            {
+                $this->options['closeText'] = ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Done'));
+            }
+
             if ($this->flat === false)
             {
                 if ($this->hasModel())

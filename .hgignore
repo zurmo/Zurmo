@@ -33,6 +33,7 @@ app/report
 .settings
 README.md
 
+.idea
 .idea/.name
 .idea/ZurmoUI.iml
 .idea/encodings.xml

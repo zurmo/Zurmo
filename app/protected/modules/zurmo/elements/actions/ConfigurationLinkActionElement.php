@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Return to Admin Menu');
+            return ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Return to Admin Menu'));
         }
 
         protected function getDefaultRoute()

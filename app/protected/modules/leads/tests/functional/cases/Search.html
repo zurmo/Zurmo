@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
   <td>open</td>
@@ -22,9 +22,14 @@
   <td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
@@ -47,9 +52,14 @@
   <td>\10</td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='LeadsListView']/div/table/tbody/tr/td[2]/a</td>
   <td>Silly Sally ${randomSuffix}</td>
-  <td></td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>

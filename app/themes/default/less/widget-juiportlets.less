@@ -80,8 +80,16 @@ a.remove {
 	outline: none;
 	position:relative;
 	z-index:9999;
+	.icon{
+	    line-height:1;
+	    position:relative;
+	    float:right;
+	}
 	.icon:after{
-		content:"_";
+		position:absolute;
+		top:6px;
+		right:0;
+		content:"—";
 		.symbly(24px);
 		text-indent:0;
 		display:block;
@@ -100,7 +108,15 @@ a.remove {
 	margin-right:8px;
 	outline: none;
 	position:relative;
+	.icon{
+	    line-height:1;
+	    position:relative;
+	    float:right;
+	}
 	.icon:after{
+		position:absolute;
+		top:6px;
+		right:0;
 		content:"n";
 		.symbly(24px);
 		text-indent:0;

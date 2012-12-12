@@ -116,11 +116,11 @@
         }
 
         /**
-         * Copy folders and files recoursive
+         * Copy folders and files recursive
          * @param string $source
          * @param string $target
          */
-        public static function copyRecoursive($source, $target)
+        public static function copyRecursive($source, $target)
         {
             if (is_dir($source))
             {
@@ -135,7 +135,7 @@
                     $fullPath = $source . '/' . $filename;
                     if (is_dir($fullPath))
                     {
-                        self::copyRecoursive($fullPath, $target . '/' . $filename);
+                        self::copyRecursive($fullPath, $target . '/' . $filename);
                         continue;
                     }
                     copy($fullPath, $target . '/' . $filename);
@@ -154,7 +154,7 @@
          * @param boolean $removeDirectoryItself - Should directory be removed also, or just its content
          * @param array $filesOrFoldersToSkip - List of files/folders not to be deleted
          */
-        public static function deleteDirectoryRecoursive($directory, $removeDirectoryItself = true, $filesOrFoldersToSkip = array())
+        public static function deleteDirectoryRecursive($directory, $removeDirectoryItself = true, $filesOrFoldersToSkip = array())
         {
             assert(is_dir($directory)); // Not Coding Standard
             assert(($removeDirectoryItself && empty($skip)) || !$removeDirectoryItself); // Not Coding Standard
@@ -185,7 +185,7 @@
                     }
                     else
                     {
-                        self::deleteDirectoryRecoursive($entry, true);
+                        self::deleteDirectoryRecursive($entry, true);
                     }
                 }
             }

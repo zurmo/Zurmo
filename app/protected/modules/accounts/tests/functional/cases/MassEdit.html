@@ -12,174 +12,209 @@
 <tr><td rowspan="1" colspan="3">Mass Edit</td></tr>
 </thead><tbody>
 <tr>
-    <td>setTimeout</td>
-    <td>45000</td>
-    <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>setSpeed</td>
-    <td>3000</td>
-    <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/accounts/default</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>verifyTextPresent</td>
-    <td>Advanced</td>
-    <td></td>
+	<td>verifyTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>list-view-rowSelector_0</td>
-    <td>off</td>
+	<td>verifyValue</td>
+	<td>list-view-rowSelector_0</td>
+	<td>off</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>list-view-rowSelector_0</td>
-    <td></td>
+	<td>click</td>
+	<td>list-view-rowSelector_0</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>list-view-rowSelector_0</td>
-    <td>on</td>
+	<td>verifyValue</td>
+	<td>list-view-rowSelector_0</td>
+	<td>on</td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/accounts/default</td>
-    <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
 </tr>
 <tr>
-    <td>assertEditable</td>
-    <td>list-view-rowSelector_0</td>
-    <td></td>
+	<td>assertEditable</td>
+	<td>list-view-rowSelector_0</td>
+	<td></td>
 </tr>
 <tr>
-    <td>assertEditable</td>
-    <td>list-view-rowSelector_1</td>
-    <td></td>
+	<td>assertEditable</td>
+	<td>list-view-rowSelector_1</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>list-view-rowSelector_all</td>
-    <td></td>
+	<td>click</td>
+	<td>list-view-rowSelector_all</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>list-view-rowSelector_0</td>
-    <td>on</td>
+	<td>verifyValue</td>
+	<td>list-view-rowSelector_0</td>
+	<td>on</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>list-view-rowSelector_1</td>
-    <td>on</td>
+	<td>verifyValue</td>
+	<td>list-view-rowSelector_1</td>
+	<td>on</td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/accounts/default</td>
-    <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>list-view-rowSelector_0</td>
-    <td></td>
+	<td>click</td>
+	<td>list-view-rowSelector_0</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>list-view-rowSelector_1</td>
-    <td></td>
+	<td>click</td>
+	<td>list-view-rowSelector_1</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>2 records selected for updating</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>MassEdit_owner</td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>2 records selected for updating</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Owner cannot be blank.</td>
-    <td></td>
+	<td>click</td>
+	<td>MassEdit_owner</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>MassEdit_owner</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>MassEdit_industry</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>Account_industry_value</td>
-    <td>label=Financial Services</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>Owner cannot be blank.</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>click</td>
+	<td>MassEdit_owner</td>
+	<td></td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>//div[@id='AccountsListView']/div/table/tbody/tr[1]/td[2]/a</td>
-    <td></td>
+	<td>click</td>
+	<td>MassEdit_industry</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>select</td>
+	<td>Account_industry_value</td>
+	<td>label=Financial Services</td>
 </tr>
 <tr>
-    <td>verifyTextPresent</td>
-    <td>Financial Services</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/accounts/default</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>//div[@id='AccountsListView']/div/table/tbody/tr[1]/td[2]/a</td>
+	<td></td>
 </tr>
 <tr>
-    <td>assertAlert</td>
-    <td>You must select at least one record</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Financial Services</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[@id='list-view-massActionSelected']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertAlert</td>
+	<td>You must select at least one record</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

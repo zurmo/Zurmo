@@ -47,5 +47,18 @@
                 'attributeLabels',
             );
         }
+
+        /**
+         * Always show attribute label without label tag.
+         */
+        protected function renderLabel()
+        {
+            $label = $this->getFormattedAttributeLabel();
+            if ($this->form === null)
+            {
+                return $label;
+            }
+            return ZurmoHtml::label($label, false, array('required' => true));
+        }
     }
 ?>

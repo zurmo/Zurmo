@@ -137,6 +137,7 @@ EOD;
                                                                 $databaseConnectionInfo['databaseHost'],
                                                                 Yii::app()->db->username,
                                                                 Yii::app()->db->password,
+                                                                $databaseConnectionInfo['databasePort'],
                                                                 $databaseConnectionInfo['databaseName'],
                                                                 $filePath);
             if ($result)
@@ -178,6 +179,7 @@ EOD;
                                                                  $databaseConnectionInfo['databaseHost'],
                                                                  Yii::app()->db->username,
                                                                  Yii::app()->db->password,
+                                                                 $databaseConnectionInfo['databasePort'],
                                                                  $databaseConnectionInfo['databaseName'],
                                                                  $filePath);
             if ($result)

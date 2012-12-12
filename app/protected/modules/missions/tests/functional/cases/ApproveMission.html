@@ -12,14 +12,19 @@
 <tr><td rowspan="1" colspan="3">Approve and Delete Mission</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
+    <td>setTimeout</td>
+    <td>45000</td>
     <td></td>
 </tr>
 <tr>
     <td>click</td>
     <td>id=notifications-link</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>assertTextPresent</td>
@@ -32,9 +37,19 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>click</td>
     <td>css=span.icon</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>open</td>
@@ -42,9 +57,24 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>clickAndWait</td>
     <td>css=a.icon-missions-taken-but-not-accepted</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -52,9 +82,29 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>click</td>
     <td>css=span.z-label</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='MissionsListView']/div/table/tbody/tr/td[2]/div/span</td>
+    <td>Accepted</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -62,9 +112,19 @@
     <td></td>
 </tr>
 <tr>
-    <td>assertTextPresent</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='ModelDetailsSummaryView']/div/div/div/span</td>
     <td>Accepted</td>
-    <td></td>
 </tr>
 <tr>
     <td>assertTextPresent</td>
@@ -93,6 +153,16 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>type</td>
     <td>id=Mission_description</td>
     <td>New mission ${randomSuffix} - Great Job</td>
@@ -113,6 +183,16 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>assertTextPresent</td>
     <td>New mission ${randomSuffix} - Great Job</td>
     <td></td>
@@ -124,9 +204,19 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>click</td>
     <td>xpath=//div[@class='comment-content']/span[2]/a</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>assertTextNotPresent</td>
@@ -140,12 +230,12 @@
 </tr>
 <!--Delete mission-->
 <tr>
-    <td>click</td>
+    <td>clickAndWait</td>
     <td>link=Delete</td>
     <td></td>
 </tr>
 <tr>
-    <td>assertConfirmation</td>
+    <td>waitForConfirmation</td>
     <td>Are you sure you want to delete this mission?</td>
     <td></td>
 </tr>
@@ -155,14 +245,34 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
     <td>clickAndWait</td>
     <td>//div[@id='RecentlyViewedView']/ul/li/a/span[2]</td>
     <td></td>
 </tr>
 <tr>
-    <td>assertTextPresent</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='ModelNotFoundView']/h2</td>
     <td>The record you are trying to access does not exist.</td>
-    <td></td>
 </tr>
 
 </tbody></table>

@@ -57,6 +57,11 @@
                 'moduleClassName' => 'ZurmoModule',
                 'rightName' => ZurmoModule::RIGHT_BULK_WRITE,
             );
+            $filters[] = array(
+                self::getRightsFilterPath() . ' + massDelete, massDeleteProgress',
+                'moduleClassName' => 'ZurmoModule',
+                'rightName' => ZurmoModule::RIGHT_BULK_DELETE,
+            );
             return $filters;
         }
 

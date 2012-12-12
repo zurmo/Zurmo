@@ -10,11 +10,27 @@
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
-</thead><tbody>
+</thead>
+<tbody>
+<tr>
+    <td>setTimeout</td>
+    <td>45000</td>
+    <td></td>
+</tr>
 <tr>
     <td>clickAndWait</td>
     <td>//div[@id='MenuView']/ul/li/a/span[2]</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>
@@ -27,6 +43,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>type</td>
     <td>//div[@id='list-viewAllSocialItemsForPortletView']/table/tbody/tr/td/div/div[3]/div/div/div/form/div/table/tbody/tr/td/textarea</td>
     <td>Test comment ${randomSuffix}</td>
@@ -37,9 +58,15 @@
     <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>waitForTextPresent</td>
+    <!--td>//div[@id='list-viewAllSocialItemsForPortletView']/table/tbody/tr/td/div/div[2]/div[2]/div/div/p</td-->
     <td>Test comment ${randomSuffix}</td>
-    <td></td>
+	    <td></td>
 </tr>
 </tbody></table>
 </body>

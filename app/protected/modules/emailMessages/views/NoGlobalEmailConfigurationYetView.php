@@ -36,7 +36,7 @@
             $url      = Yii::app()->createUrl('/emailMessages/default/configurationEditOutbound');
             $content  = '<div class="' . $this->getIconName() . '">';
             $content .= $this->getMessageContent();
-            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array(), $this->getCreateLinkDisplayLabel()), $url);
+            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), $this->getCreateLinkDisplayLabel()), $url, array('class' => 'z-button green-button'));
             $content .= '</div>';
             return $content;
         }
@@ -53,7 +53,7 @@
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>Not so fast</h2></i><div class="large-icon"></div>' .
+            return Yii::t('Default', '<h2>Not so fast</h2><div class="large-icon"></div>' .
                                      '<p>The administrator must first configure the system outbound email settings.</p>');
         }
     }

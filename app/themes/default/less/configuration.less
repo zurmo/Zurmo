@@ -17,7 +17,7 @@
         }
     }
 }
-//.configuration-list li a:before,
+
 .back-to-app-menu-item span{
     vertical-align:middle;
     &:before{
@@ -26,67 +26,66 @@
         margin-right:6px;
     }
 }
+
 .back-to-app-menu-item a:hover span, .back-to-app-menu-item a:hover span:before{
     color: #fff !important;
 }
 
 #ConfigurationPageView{
-        table{
-            border: 1px solid #DFDFDF;
-            border-collapse: collapse;
-            border-spacing: 1px;
-            width:100%;
-        }
-        table th,
-        table td{
-            border: 1px solid #DFDFDF;
-            vertical-align:middle;
-            padding:10px;
-            overflow: hidden;
-        }
-        table tbody,
-        table tbody tr:last-child,
-        table tbody tr:last-child td{
-            border-bottom: none;
-        }
-        table thead tr th:last-child,
-        table tbody tr td:last-child{}
-        table th{
-            font-weight:bold !important;
-            height:35px;
-            line-height: 35px;
-            background: url(../images/table-items-header.png) left top repeat-x;
-            padding:0 0 0 10px !important;
-        }
-        .checkbox-column{
-            width:35px;
-            text-align:center;
-        }
-        .button-column{
-            width:25px;
-            text-align:center;
-            vertical-align:top !important;
-        }
-        tr.odd{
+    table{
+        border: 1px solid #DFDFDF;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        width:100%;
+    }
+    table th,
+    table td{
+        border: 1px solid #DFDFDF;
+        vertical-align:middle;
+        padding:10px;
+        overflow: hidden;
+    }
+    table tbody,
+    table tbody tr:last-child,
+    table tbody tr:last-child td{
+        border-bottom: none;
+    }
+    table thead tr th:last-child,
+    table tbody tr td:last-child{}
+    table th{
+        font-weight:bold !important;
+        height:35px;
+        line-height: 35px;
+        background: url(../images/table-items-header.png) left top repeat-x;
+        padding:0 0 0 10px !important;
+    }
+    .checkbox-column{
+        width:35px;
+        text-align:center;
+    }
+    .button-column{
+        width:25px;
+        text-align:center;
+        vertical-align:top !important;
+    }
+    tr.odd{
 
+    }
+    tr.even{
+        background:#fafafa;
+    }
+    table tr:hover{
+        background-color:#D4E7BC;
+        .pencil{
+            visibility:visible;
         }
-        tr.even{
-            background:#fafafa;
-        }
-        table tr:hover{
-            background-color:#D4E7BC;
-            ++.themeColor;
-            .pencil{
-                visibility:visible;
-                ++.themeColor;
-            }
-        }
-        table thead{
-            #gradient > .vertical(#f9f9f9, #f4f4f4);
-        }
-        table thead tr:hover{
-            #gradient > .vertical(#f9f9f9, #f4f4f4);
-        }
+    }
+    table thead{
+        #gradient > .vertical(#f9f9f9, #f4f4f4);
+    }
+    table thead tr:hover{
+        #gradient > .vertical(#f9f9f9, #f4f4f4);
+    }
 }
 
 .configuration-list{
@@ -118,7 +117,11 @@
             right:15px;
             top:14px;
             vertical-align: middle;
-            &:before{
+            margin:0;
+            .z-label{
+                .z-label-smaller();
+            }
+            .z-label:before{
                 content: "n";
                 .symbly(20px);
                 color: #666;
@@ -141,22 +144,29 @@ table.configuration-list{
     tbody > tr > td{
         position:relative !important;
     }
-    tr td:last-child a{
+    td:last-child a{
         ++.z-button;
         float:right;
-        &:before{
+        margin:0;
+        .z-label{
+            .z-label-smaller();
+        }
+        .z-label:before{
             content: "n";
-            .symbly(16px);
+            .symbly(20px);
+            color: #666;
             margin-right:5px;
             position:relative;
-            top:0px;
+            top:-2px;
+            font-weight: normal !important;
+            vertical-align: middle;
         }
     }
 }
 
 #DevelopmentMenuView{
     .configuration-list{
-        li a{
+        li span{
             &:before{
                 content: "";
                 margin-right:0px;
@@ -205,16 +215,6 @@ table.configuration-list{
         text-align:left;
         padding-left:15px;
     }
-    th{
-        /*text-align:left;
-        font-size: 12px !important;
-        color: #666;
-        font-weight: 400 !important;*/
-    }
-}
-
-.AdministrativeArea.AppContent{
-    //padding-right:0;
 }
 
 #GroupUserMembershipEditView td{
@@ -239,9 +239,14 @@ table.configuration-list{
     }
     input[type="button"]{
         display:block !important;
-        margin-bottom:15px !important;
+        margin:0 0 15px 0 !important;
         ++.z-button;
         .symbly(22px);
+        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+        padding:0 15px;
+        line-height:25px;
+        .radius( 4px );
+        cursor:pointer;
     }
     .select-arrow{
         display: none !important;
@@ -389,6 +394,9 @@ table.configuration-list{
             border-bottom: none !important;
         }
     }
+    .checkbox-column{
+        padding-left:15px !important;
+    }
 }
 
 /*Jobs*/
@@ -416,16 +424,11 @@ table.configuration-list{
             text-align:left;
             font-weight: bold !important;
             height: auto  !important;
-            //line-height: 100%  !important;
             background: url(../images/table-items-header.png) left top repeat-x;
             padding: 0 0 0 10px !important;
         }
     }
-    .tooltip{
-        //margin-top:9px;
-    }
     a{
-        .zLink();
         margin-right:5px;
     }
     table{
@@ -438,11 +441,10 @@ table.configuration-list{
         border-top:none;
     }
 }
-
-#active-monitor-job-tooltip{
-    //position: absolute;
-    //margin-top:-9px;
-    //float:left;
+.reset-job-link{
+    //#gradient > .vertical(#c43d53, #a82d31 );
+    margin:0 !important;
+    float:right;
 }
 
 #JobLogsModalListView{
@@ -491,24 +493,32 @@ table.configuration-list{
 }
 
 /*Currency*/
+
 #currency-collection-form{
-    padding-bottom: 10px;
+    padding-bottom: 10px !important;
     .portlet-toolbar{
         position: relative;
         top:auto;
         left:auto;
         right:auto;
         .form-toolbar();
-        a:before{
-            content:"";
-        }
     }
     .view-toolbar-container{
         margin-bottom:5px;
     }
+    .checkbox-column{
+        padding-left:15px !important;
+    }
+}
+
+#CurrenciesCollectionView,
+#CurrencyCreateView{
+    float:left;
+    width:100%;
 }
 
 #CurrenciesCollectionView{
+    .unstyle-panel();
     .form form{
         padding: 0;
     }
@@ -570,6 +580,8 @@ table.configuration-list{
         text-align:center;
         border-right:1px solid #cccccc;
         .t-shadow( rgba(255, 255, 255, 0.8) 0px 1px);
+        .smaller();
+        .radius(1px 0 0 1px);
     }
     .errorMessage{
         margin-bottom: 15px;
@@ -693,24 +705,34 @@ table.configuration-list{
     border-left: 1px solid #d7d7d7;
     border-right: 1px solid #d7d7d7;
     border-bottom: 1px solid #bababa;
-
 }
 
+#testImapConnection{
+    margin:0;
+}
+
+
+#TestImapConnectionMessageView,
 #TestEmailMessageView{
+    min-height:60px;
     padding:15px;
+    line-height:150%;
+    .b-shadow(inset 0 0 0 2px #ffffff);
+    #gradient > .vertical(#ffffff, #F5F5F5);
 }
 
 #send-test-email-field{
     width:100%;
     float:left;
     > div{
-        margin-right:130px;
+        margin-right:170px;
     }
     & + span{
         float:left;
-        width:130px;
-        margin-left: -130px;
-        input{
+        width:170px;
+        margin-left: -170px;
+        a{
+            margin:0 !important;
             float:right;
         }
     }
@@ -736,6 +758,7 @@ table.configuration-list{
     }
     #addExtraColumnButton{
         .zButton;
+        margin:0;
     }
     .required-fields{
         font-size:12px;
@@ -769,6 +792,9 @@ table.configuration-list{
 
 /*=Step 4,Mapping view*/
 #ImportWizardMappingView{
+    > .wrapper{
+        padding-bottom:10px;
+    }
 	#edit-form{
 		padding:0;
 	}
@@ -839,7 +865,11 @@ table.configuration-list{
 
 .remove-extra-column-link{
     display: inline-block;
-    margin-top:5px;
+    position:relative;
+    top: -21px;
+    left: 100%;
+    margin-left: 15px;
+    z-index: 99999;
     ++.z-link;
 }
 
@@ -870,16 +900,16 @@ table.configuration-list{
 }
 
 #ImportWizardImportRulesView{
-    span{
-        text-align: left;
-        display: block;
-        margin-bottom: 20px;
-    }
     .radio-input{
         margin-bottom:10px !important;
     }
     table{
         margin-bottom: 0 !important;
+        span{
+            text-align: left;
+            display: block;
+            margin-bottom: 20px;
+        }
     }
 }
 
@@ -908,6 +938,7 @@ table.configuration-list{
     h3, h3 + span{
         margin-bottom:15px;
         display:block;
+        position:relative;
     }
     .process-container-view{
         .clearfix();
@@ -949,6 +980,7 @@ table.configuration-list{
 
 .import-summary{
     margin:0 0 15px 15px;
+    line-height:150%;
     li{
         margin-bottom: 3px;
     }
@@ -956,7 +988,7 @@ table.configuration-list{
 
 
 .ui-progressbar{
-     background: url(../images/ajax-loader.gif) left top no-repeat;
+     //background: url(../images/ajax-loader.gif) left top no-repeat;
 }
 
 #SequentialProcessView{
@@ -964,10 +996,16 @@ table.configuration-list{
         margin:0;
         padding:0;
     }
+    h3{
+        text-indent:30px;
+    }
 }
 
 #ImportErrorsListView{
     margin-bottom:15px;
+    > #list-view{
+        .b-shadow(none);
+    }
 }
 
 /*Theme Chooser*/

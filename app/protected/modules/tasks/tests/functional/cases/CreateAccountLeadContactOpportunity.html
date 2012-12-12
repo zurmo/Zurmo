@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">Create Account Lead Contact Opportunity</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
   <td>storeGlobal</td>
@@ -33,6 +33,11 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>Create Account</td>
   <td></td>
@@ -48,6 +53,16 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>my account ${randomSuffix}</td>
   <td></td>
@@ -61,9 +76,14 @@
   <td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -86,15 +106,36 @@
   <td>label=In Progress</td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>select</td>
   <td>Contact_title_value</td>
   <td>label=Mrs.</td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>save</td>
   <td></td>
-</tr><tr>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>waitForText</td>
   <td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
   <td>exact:Silly Sally ${randomSuffix}</td>
@@ -118,6 +159,11 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>Create Contact</td>
   <td></td>
@@ -138,9 +184,19 @@
   <td>label=Mrs.</td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>select</td>
   <td>Contact_state_id</td>
   <td>label=Customer</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
@@ -151,6 +207,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -176,6 +237,11 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>Create Opportunity</td>
   <td></td>
@@ -196,9 +262,19 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>click</td>
   <td>//div[@id='ui-datepicker-div']/div/a[2]/span</td>
   <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
   <td>click</td>
@@ -206,9 +282,24 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>save</td>
   <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>

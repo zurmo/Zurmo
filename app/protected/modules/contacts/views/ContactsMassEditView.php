@@ -32,8 +32,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink',
-                                  'label' => "eval:Yii::t('Default', 'Cancel')"),
+                            array('type' => 'CancelLink'),
                             array('type' => 'SaveButton'),
                         ),
                     ),

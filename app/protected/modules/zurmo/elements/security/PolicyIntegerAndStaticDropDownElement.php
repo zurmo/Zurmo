@@ -59,7 +59,6 @@
                                 $this->getHelperValue(),
                                 $dropDownArray,
                                 $htmlOptions);
-            $content      .= '&#160;';
             $htmlOptions   = array(
                                 'id'       => $inputId,
                                 'readonly' => $this->getReadOnlyValue());
@@ -100,8 +99,7 @@
             if ($policyDefault != null)
             {
                 $title    = Yii::t('Default', 'The default value is {policyDefault}', array('{policyDefault}' => $policyDefault));
-                $content  = '<span class="tooltip policy-default-tooltip" title="' . $title . '">';
-                $content .= '?</span>';
+                $content  = '<span class="tooltip policy-default-tooltip" title="' . $title . '">?</span>';
                 $qtip     = new ZurmoTip();
                 $qtip->addQTip(".policy-default-tooltip");
                 return $content;

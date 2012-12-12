@@ -479,10 +479,14 @@
         public function testDatabaseConnection_mysql()
         {
             $this->assertTrue  (DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort));
-            $this->assertEquals(array(1045, "Access denied for user '{$this->rootUsername}'@'{$this->hostname}' (using password: YES)"),
-                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong', $this->databasePort));
-            $this->assertEquals(array(1045, "Access denied for user 'nobody'@'{$this->hostname}' (using password: YES)"),
-                DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password', $this->databasePort));
+
+            $compareData = array(1045, "Access denied for user");
+            $result = DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, $this->rootUsername,   'wrong', $this->databasePort);
+            $result[1] = substr($result[1], 0, 22);
+            $this->assertEquals($compareData, $result);
+            $result = DatabaseCompatibilityUtil::checkDatabaseConnection('mysql', $this->hostname, 'nobody', 'password', $this->databasePort);
+            $result[1] = substr($result[1], 0, 22);
+            $this->assertEquals($compareData, $result);
         }
 
         public function testCheckDatabaseExists()
@@ -559,11 +563,11 @@
 
                 $this->assertEquals(2, $totalRows[0]);
 
-                $this->assertTrue(DatabaseCompatibilityUtil::backupDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
+                $this->assertTrue(DatabaseCompatibilityUtil::backupDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
 
                 //Drop database, and restore it from backup.
                 $this->assertTrue(DatabaseCompatibilityUtil::createDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName));
-                $this->assertTrue(DatabaseCompatibilityUtil::restoreDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
+                $this->assertTrue(DatabaseCompatibilityUtil::restoreDatabase('mysql', $this->hostname, $this->rootUsername, $this->rootPassword, $this->databasePort, $this->temporaryDatabaseName, $this->databaseBackupTestFile));
                 $connection = @mysql_connect($this->hostname . ':' . $this->databasePort, $this->rootUsername, $this->rootPassword);
 
                 $this->assertTrue(is_resource($connection));

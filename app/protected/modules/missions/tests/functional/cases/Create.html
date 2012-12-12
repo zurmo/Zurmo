@@ -13,8 +13,8 @@
 </thead>
 <tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
+    <td>setTimeout</td>
+    <td>45000</td>
     <td></td>
 </tr>
 <tr>
@@ -27,11 +27,31 @@
     <td>index.php/missions/default</td>
     <td></td>
 </tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
 <!--Create mission-->
 <tr>
     <td>clickAndWait</td>
     <td>css=a.icon-create</td>
     <td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>type</td>
@@ -57,6 +77,11 @@
     <td>clickAndWait</td>
     <td>name=save</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>assertTextPresent</td>
@@ -89,6 +114,16 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
     <td>assertTextPresent</td>
     <td>Available</td>
     <td></td>
@@ -109,6 +144,11 @@
     <td>click</td>
     <td>css=span.z-label</td>
     <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>

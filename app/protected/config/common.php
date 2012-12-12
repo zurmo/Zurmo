@@ -77,9 +77,6 @@
             'format' => array(
                 'class' => 'application.core.components.Formatter',
             ),
-            'fusioncharts' => array(
-                'class' => 'application.extensions.fusioncharts.fusionCharts',
-            ),
             'imap' => array(
                 'class'       => 'application.modules.emailMessages.components.ZurmoImap',
             ),
@@ -110,7 +107,6 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.yiiactiveform.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-2.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/extendedGridView/jquery.yiigridview.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/fusionChart/jquery.fusioncharts.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/elements/assets/Modal.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/views/assets/dynamicSearchViewUtils.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/views/assets/FormUtils.js',
@@ -140,7 +136,6 @@
                     array('system.web.js.source',                                       '/jquery.yiiactiveform.js'),
                     array('application.extensions.qtip.assets',                         '/jquery.qtip-2.min.js'),
                     array('application.core.widgets.assets',   '/extendedGridView/jquery.yiigridview.js'),
-                    array('application.core.widgets.assets',   '/fusionChart/jquery.fusioncharts.js'),
                     array('application.core.elements.assets',  '/Modal.js'),
                     array('application.core.views.assets',     '/FormUtils.js'),
                     array('application.core.views.assets',     '/dynamicSearchViewUtils.js'),

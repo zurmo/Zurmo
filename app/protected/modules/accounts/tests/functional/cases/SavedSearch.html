@@ -12,14 +12,24 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForPageToLoad</td>
 	<td></td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!--Creating saved search-->
 <tr>
@@ -74,18 +84,13 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=#save-advanced-search &gt; span.z-label</td>
+	<td>id=save-advanced-search</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='list-view']/table/tbody/tr[@class='odd']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>id=more-search-link</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -93,14 +98,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Modify Structure</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
+	<td>selectAndWait</td>
 	<td>id=savedSearchId</td>
 	<td>label=TypeVendor</td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!-- changing name immediately of saved search-->
 <tr>
@@ -119,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
 	<td></td>
@@ -133,11 +148,21 @@
 	<td>id=save-as-advanced-search</td>
 	<td></td>
 </tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
 <!--Changing name of existing saved search-->
 <tr>
-	<td>waitForElementPresent</td>
-	<td>more-search-link</td>
+	<td>click</td>
+	<td>id=clear-search-link</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -150,9 +175,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>selectAndWait</td>
 	<td>id=savedSearchId</td>
 	<td>label=TypeVen</td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-as-advanced-search</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -165,21 +210,11 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!--Test of adding filters-->
-<tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=savedSearchId</td>
-	<td>label=TypeVendor</td>
-</tr>
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
@@ -191,9 +226,24 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_attributeIndexOrDerivedType</td>
+	<td></td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=AccountsSearchForm_dynamicClauses_1_attributeIndexOrDerivedType</td>
 	<td>label=Name</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_dynamicClauses_1_name</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -211,9 +261,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td> 
-	<td>Changing The Account ${randomSuffix}</td> 
-	<td></td> 
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <!--Clear Saved Search-->
 <tr>
@@ -221,15 +271,19 @@
 	<td>id=clear-search-link</td>
 	<td></td>
 </tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
 <!-- Deleting saved search -->
-
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
+	<td>selectAndWait</td>
 	<td>id=savedSearchId</td>
 	<td>label=TypeVendorAndName</td>
 </tr>
@@ -239,23 +293,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Criteria Selected </td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Criteria Selected</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>xpath=(//a[contains(text(),'_')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=_</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,17 +314,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=span.icon</td>
+	<td>//a[@id='removeSavedSearch']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=clear-search-link</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -284,9 +333,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=more-search-link</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 </tbody></table>
 </body>

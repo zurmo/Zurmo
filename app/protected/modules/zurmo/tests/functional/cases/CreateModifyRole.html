@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">CreateModifyRole</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+    <td>setTimeout</td>
+    <td>45000</td>
+    <td></td>
 </tr>
 <tr>
   <td>store</td>
@@ -37,6 +37,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertTextPresent</td>
   <td>Roles</td>
   <td></td>
@@ -57,9 +62,24 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>//div[@id='ActionBarForRolesTreeListView']/div/div/a</td>
   <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>type</td>
@@ -75,6 +95,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -95,6 +120,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertValue</td>
@@ -112,6 +142,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertTextPresent</td>
   <td>Roles Home</td>
   <td></td>
@@ -127,6 +162,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>type</td>
   <td>Role_name</td>
   <td>testRole${randomSuffix2}</td>
@@ -137,6 +177,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>waitForTextPresent</td>
   <td>Select a Parent Role</td>
   <td></td>
@@ -145,6 +190,11 @@
   <td>click</td>
   <td>link=testRole${randomSuffix}</td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForValue</td>
@@ -160,6 +210,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -187,6 +242,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertValue</td>
   <td>Role_name</td>
   <td>testRole${randomSuffix2}</td>
@@ -206,6 +266,11 @@
   <td></td>
   <td></td>
 </tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
 <!-- Create a User -->
 <tr>
   <td>open</td>
@@ -218,6 +283,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertTextPresent</td>
   <td>Users - Manage Users</td>
   <td></td>
@@ -228,14 +298,39 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>//div[@id='UsersActionBarForSearchAndListView']/div/div/a[1]</td>
   <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>select</td>
   <td>UserPasswordForm_title_value</td>
   <td>label=Mr.</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>type</td>
@@ -268,6 +363,16 @@
   <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertText</td>
   <td>link=Edit</td>
   <td>Edit</td>
@@ -288,6 +393,11 @@
   <td></td>
   <td></td>
 </tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
 <!-- Search for a user -->
 <tr>
   <td>verifyTextPresent</td>
@@ -303,6 +413,11 @@
   <td>keyUp</td>
   <td>UsersSearchForm_anyMixedAttributes</td>
   <td>\10</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -326,6 +441,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertText</td>
   <td>//div[@id='UserDetailsView']/div/div/table/tbody/tr[2]/th</td>
   <td>Department</td>
@@ -346,9 +466,19 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>click</td>
   <td>User_role_SelectLink</td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -376,6 +506,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertText</td>
   <td>//div[@id='UserDetailsView']/div/div[3]/table/tbody/tr[1]/td/a</td>
   <td>testRole${randomSuffix2}</td>
@@ -391,6 +526,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>link=testRole${randomSuffix}</td>
   <td></td>
@@ -401,9 +541,19 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>click</td>
   <td>link=Delete Role</td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertConfirmation</td>
@@ -419,6 +569,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertTextPresent</td>
@@ -441,6 +596,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertValue</td>
   <td>Role_role_name</td>
   <td></td>
@@ -449,6 +609,11 @@
   <td>click</td>
   <td>link=Delete Role</td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertConfirmation</td>
@@ -464,6 +629,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertTextPresent</td>
@@ -486,6 +656,11 @@
   <td></td>
 </tr>
 <tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>type</td>
   <td>UsersSearchForm_anyMixedAttributes</td>
   <td>Jhon Smith${randomSuffix}</td>
@@ -494,6 +669,11 @@
   <td>keyUp</td>
   <td>UsersSearchForm_anyMixedAttributes</td>
   <td>\10</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>waitForTextPresent</td>
@@ -514,6 +694,11 @@
   <td>waitForPageToLoad</td>
   <td></td>
   <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
 </tr>
 <tr>
   <td>assertText</td>

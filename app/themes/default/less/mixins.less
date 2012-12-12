@@ -20,6 +20,19 @@
             box-shadow: @style;
 }
 
+.ie-shadow(@color:0, @blur:0, @alpha:0){
+    /* http://www.useragentman.com/blog/2011/08/24/how-to-simulate-css3-box-shadow-in-ie7-8-without-javascript/ */
+    zoom: 1;
+    filter:progid:DXImageTransform.Microsoft.Shadow(Color=lighten(@color, @alpha), Strength=@blur, Direction=0),
+           progid:DXImageTransform.Microsoft.Shadow(Color=lighten(@color, @alpha), Strength=@blur, Direction=90),
+           progid:DXImageTransform.Microsoft.Shadow(Color=lighten(@color, @alpha), Strength=@blur, Direction=180),
+           progid:DXImageTransform.Microsoft.Shadow(Color=lighten(@color, @alpha), Strength=@blur, Direction=270);
+}
+
+.no-ie-shadow(){
+    filter: progid:DXImageTransform.Microsoft.Shadow(enabled = false);
+}
+
 .text-overflow(){
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
@@ -47,6 +60,12 @@
     box-sizing: border-box;
 }
 
+.border-box{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .animateAll(@time: 0.5s){
     -webkit-transition: all @time ease-out;
        -moz-transition: all @time ease-out;
@@ -54,7 +73,6 @@
         -ms-transition: all @time ease-out;
             transition: all @time ease-out;
 }
-
 
 .cf:before,
 .cf:after{
@@ -65,6 +83,19 @@
     clear:both;
 }
 .cf{
+    zoom:1;
+}
+
+.clearfix{
+    &:before{
+        content:"";
+        display:table;
+    }
+    &:after{
+        content:"";
+        display:table;
+        clear:both;
+    }
     zoom:1;
 }
 
@@ -86,36 +117,80 @@
     .b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
 }
 
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"],
 .zButton,
 .z-button,
 a.zButton,
-a.z-button{
-    cursor:pointer;
-    padding:0 15px 0 15px;
-    line-height:23px;
-    margin:0;
-    //font-size:11px;
-    font-weight:bold;
-    text-indent:0;
-    display:inline-block;
+a.z-button {
     border-top:1px solid    rgba(200, 200, 200, 0.4);
     border-left: 1px solid  rgba(185, 185, 185, 0.4);
     border-right:1px solid  rgba(185, 185, 185, 0.4);
     border-bottom:1px solid rgba(170, 170, 170, 0.4);
-    color:#666;
-    .radius( 4px );
+    color:#666 !important;
     .b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.15));
-    //.t-shadow( 0px 1px 0 rgba(255, 255, 255, 0.75) ) !important;
+    .t-shadow( 0px 1px 0 rgba(255, 255, 255, 0.75) ) !important;
+    .radius( 3px );
+    overflow: hidden;
+    position: relative;
+    cursor:pointer;
+    margin:0 10px;
+    text-indent:0;
+    display:inline-block;
+    ++.border-box;
+    .clearfix();
+    &.attachLoading.z-button{
+        color: #fff;
+    }
+    &:not(.attachLoading) span{
+        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+    }
 }
 
+.default-btn{
+    .zButton() !important;
+}
+
+
+/*
 .zButton:not(.attacheLoading),
 .z-button:not(.attachLoading){
      background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
+*/
+
+.green-button,
+.attachLoading{
+    color:#FFF;
+    cursor:pointer;
+}
+
+.z-label{
+    ++.border-box;
+    float:left;
+    font-weight:bold;
+    padding:0 25px;
+    line-height:25px;
+    display: inline-block;
+    .radius( 3px );
+    position:relative;
+    z-index:1;
+}
+
+.z-label-smaller{
+    padding:0 15px;
+}
+
 
 .zButton.loading, .z-button.loading{
     .z-spinner{
         display:inline-block;
+        position: absolute;
+        margin: 1px 0 0 4px;
     }
     .z-icon{
         display:none;
@@ -123,10 +198,12 @@ a.z-button{
 }
 
 .z-spinner{
-	 width:23px;
-	 height:23px;
-	 display:none;
-	 float:left;
+    z-index:10;
+	width:23px;
+	height:23px;
+    display:none;
+    position:absolute;
+    left:0px;
 }
 
 .z-spinner.loading{
@@ -134,8 +211,8 @@ a.z-button{
 }
 
 .zLink, .z-link{
-    padding:1px 4px;
-    .radius(2px);
+    padding:2px 4px;
+    .radius(3px);
     color:#fff !important;
     .smaller();
 }
@@ -212,5 +289,6 @@ a.z-button{
     .b-shadow(none);
     padding: 0;
     margin: 0;
+    .reset-filter();
 }
 

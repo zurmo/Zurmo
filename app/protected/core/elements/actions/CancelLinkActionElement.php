@@ -40,7 +40,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Cancel');
+            return ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Cancel'));
         }
 
         protected function getDefaultRoute()

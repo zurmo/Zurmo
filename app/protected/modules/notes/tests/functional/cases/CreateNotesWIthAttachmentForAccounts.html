@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+  <td>setTimeout</td>
+  <td>45000</td>
+  <td></td>
+</tr>
+<tr>
     <td>storeGlobal</td>
     <td>javascript{Math.floor(Math.random()*11000)}</td>
     <td>randomSuffix</td>
@@ -22,9 +27,29 @@
     <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
     <td>clickAndWait</td>
     <td>css=a.icon-create</td>
     <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
     <td>type</td>
@@ -37,14 +62,34 @@
     <td></td>
 </tr>
 <tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
     <td>click</td>
     <td>link=More Options</td>
     <td></td>
 </tr>
 <tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
     <td>type</td>
     <td>id=Note_description</td>
     <td>test</td>
+</tr>
+<tr>
+  <td>setSpeed</td>
+  <td>3000</td>
+  <td></td>
 </tr>
 <tr>
     <td>type</td>
@@ -65,13 +110,13 @@
 </tr>
 <tr>
     <td>click</td>
-    <td>css=span.z-label</td>
+    <td>name=save</td>
     <td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>name=save</td>
-    <td></td>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
 </tr>
 <tr>
     <td>waitForText</td>

@@ -139,10 +139,10 @@
             catch (NotFoundException $e)
             {
                 $filesToInclude   = FileUtil::getFilesFromDir(Yii::app()->basePath . '/modules', Yii::app()->basePath . '/modules', 'application.modules');
-                $filesToIncludeFromFramework = FileUtil::getFilesFromDir(Yii::app()->basePath . '/core', Yii::app()->basePath . '/core', 'application.core');
+                $filesToIncludeFromCore = FileUtil::getFilesFromDir(Yii::app()->basePath . '/core', Yii::app()->basePath . '/core', 'application.core');
                 $totalFilesToIncludeFromModules = count($filesToInclude);
 
-                foreach ($filesToIncludeFromFramework as $key => $file)
+                foreach ($filesToIncludeFromCore as $key => $file)
                 {
                     $filesToInclude[$totalFilesToIncludeFromModules + $key] = $file;
                 }

@@ -12,114 +12,139 @@
 <tr><td rowspan="1" colspan="3">Search</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-  <td>open</td>
-  <td>index.php/contacts/default</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/contacts/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Create</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Update</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Create</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Advanced</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Update</td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>ContactsSearchForm_anyMixedAttributes</td>
-  <td>Jane ${randomSuffix}</td>
+	<td>verifyTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Jinny Jane ${randomSuffix}</td>
-  <td></td>
+	<td>type</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>Jane ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Jinny Jane ${randomSuffix}</td>
-  <td></td>
+	<td>keyUp</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
 </tr>
 <tr>
-  <td>verifyValue</td>
-  <td>ContactsSearchForm_anyMixedAttributes</td>
-  <td>Jane ${randomSuffix}</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Jinny Jane ${randomSuffix}</td>
-  <td></td>
+	<td>waitForText</td>
+	<td>//div[@id='ContactsListView']/div/table/tbody/tr/td[2]/a</td>
+	<td>Jinny Jane ${randomSuffix}</td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>link=Jinny Jane ${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>Jinny Jane ${randomSuffix}</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>link=Delete</td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>waitForConfirmation</td>
-  <td>Are you sure you want to delete this contact?</td>
-  <td></td>
+	<td>waitForTextPresent</td>
+	<td>Jinny Jane ${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>clickAndWait</td>
+	<td>link=Delete</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Create</td>
-  <td></td>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to delete this contact?</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Update</td>
-  <td></td>
+	<td>chooseOkOnNextConfirmation</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Advanced</td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>type</td>
-  <td>ContactsSearchForm_anyMixedAttributes</td>
-  <td>Jane ${randomSuffix}</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>keyUp</td>
-    <td>ContactsSearchForm_anyMixedAttributes</td>
-    <td>\10</td>
+	<td>verifyTextPresent</td>
+	<td>Create</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForTextPresent</td>
-  <td>No results found.</td>
-  <td></td>
+	<td>verifyTextPresent</td>
+	<td>Update</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>Jane ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

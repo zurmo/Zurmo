@@ -67,7 +67,8 @@
     a.simple-select,
     .after-form-details-content a,
     .ui-dialog-title,
-    .show-file-upload-box
+    .show-file-upload-box,
+    #clear-search-linkmodal
     {
         color: @themeColor;
     }
@@ -75,9 +76,10 @@
     #notifications-flyout .single-notification h4,
     .view-toolbar a:hover,
     .view-toolbar a:active,
+    .view-toolbar a.active,
     .portlet-toolbar .icon-delete:before,
     .portlet-toolbar .icon-edit:before,
-    .ZeroModelsYetView a:before,
+    //.ZeroModelsYetView a span:before,
     #StickyListMenu  > li > a:hover > span,
     .addfileinput-button:hover span
     .pager a:hover:before,
@@ -87,8 +89,13 @@
     input[type="button"]:hover,
     input[type="button"]:hover:before,
     input[type="button"]:hover:after,
-    .configuration-list li a:hover:before,
-    .addfileinput-button:hover span
+    .configuration-list li a:hover,
+    .configuration-list li a:hover span:before,
+    .configuration-list td:last-child a:hover,
+    .configuration-list td:last-child a:hover span:before,
+    .addfileinput-button:hover span,
+    #HomeDashboardPortletSelectionView li span,
+    .hide-welcome span
     {
         color: @themeColor2;
     }
@@ -110,9 +117,7 @@
     {
          color: @themeColor2 !important;
     }
-
-    .upload-actions button.start,
-    .upload-actions button.cancel,
+    
     #InstallAccessFailurePageView a,
     #ErrorPageView a,
     .ui-tooltip-default .ui-tooltip-icon,
@@ -132,14 +137,12 @@
         background-color: @themeColor !important;
     }
     
-    #HomeDashboardPortletSelectionView li span,
     #MyMissionsForPortletView .filter-portlet-model-bar label a:hover,
     #MyMissionsForPortletView .filter-portlet-model-bar  .ui-state-active,
     .points,
     .ranking,
     .badge-grade,
-    li.token-input-selected-token,
-    .hide-welcome span
+    li.token-input-selected-token
     {
         background-color: @themeColor2;   
     }
@@ -158,7 +161,9 @@
     }
 
     #HeaderView{
-        #gradient > .vertical( darken(@headerBarColor, 5%), @headerBarColor );
+        background: darken(@headerBarColor, 10%);
+        .b-shadow( ~"inset 0 10px 50px 0 @{headerBarColor}");
+        //#gradient > .vertical( darken(@headerBarColor, 5%), @headerBarColor );
     }
     #HeaderLinksView + div{
         #gradient > .vertical( @themeColorHeader, @themeColorHeader2 );
@@ -173,14 +178,12 @@
         border-right: 1px solid @borderColor;
     }
     #MenuView a > span{
-        //.t-shadow( 0px -1px 0 rgba(0, 0, 0, 0.2) ) !important;
         .t-shadow(rgba(255, 255, 255, 0.8) 0px 1px);
     }
     #MenuView li.active > a > span,
     #MenuView a:hover > span{
         background-color: @themeColor2;
         .t-shadow( 0px -1px 0 rgba(0, 0, 0, 0.2) ) !important;
-        //.t-shadow( 0px 1px 0 lighten(@themeColorBtn, 10%) );
     }
     #RecentlyViewedView a > span:first-child{
         background-color: @themeColor2;
@@ -197,50 +200,63 @@
     @themeColorBtnDefault     : #97c43d;
     @themeColorBtn2Default    : darken(@themeColorBtnDefault, 10%);
 
-    .green-button,
-    .attachLoading{
+    .ZeroModelsYetView a .z-label,
+    .dashboard-link .z-label,
+    .attachLoading .z-label{
         color:#fff;
         #gradient > .vertical( @themeColorBtnDefault, @themeColorBtn2Default );
         .t-shadow( 0px -1px 0 rgba(0, 0, 0, 0.2) ) !important;
     }
     
-    .dashboard-link:hover,
-    .zButton:hover, .z-button:hover,
-    .zButton:active, .z-button:active{
+    .zButton:hover .z-label,
+    .z-button:hover .z-label,
+    .zButton:active .z-label,
+    .z-button:active .z-label,
+    {
         color: darken(@themeColorBtnDefault, 40%) !important;
         #gradient > .vertical( @themeColorBtnDefault, darken(@themeColorBtn2Default, 10%) );
         .t-shadow( 0px 1px 0 lighten(@themeColorBtnDefault, 15%) ) !important;
     }
     
-    .zButton:active, .z-button:active{
+    .zButton:active .z-label,
+    .z-button:active .z-label{
         .b-shadow(~"inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
     }
 
-    .zButton:not(.attachLoading):hover, .z-button:not(.attachLoading):hover,
-    .zButton:not(.attachLoading):active, .z-button:not(.attachLoading):active,
-    .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover,
-    .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover,
-    .form-toolbar a:not(.attachLoading):hover,
-    .form-toolbar a:not(.z-button):hover,
-    .configuration-list li a:hover{
+    .ui-datepicker-current:hover .z-label,
+    .ui-datepicker-close:hover .z-label,
+    .ui-datepicker-current:active .z-label,
+    .ui-datepicker-close:active .z-label,
+    .zButton:not(.attachLoading):hover .z-label,
+    .z-button:not(.attachLoading):hover .z-label,
+    .zButton:not(.attachLoading):active .z-label,
+    .z-button:not(.attachLoading):active .z-label,
+    .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
+    .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+    .form-toolbar a:not(.attachLoading):hover .z-label,
+    .form-toolbar a:not(.z-button):hover .z-label,
+    .configuration-list li a:hover .z-label{
         color: @themeColor2 !important;
         #gradient > .vertical( #fefefe, #ededed ) !important;
         .t-shadow( 0px 1px 0 rgba(255, 255, 255, 0.75) ) !important;
     }
     
-    .dashboard-link{
+    .green-button .z-label,
+    .dashboard-link .z-label{
         color:#fff !important;
         #gradient > .vertical( @themeColorBtnDefault, @themeColorBtn2Default ) !important;
         .t-shadow( 0px -1px 0 rgba(0, 0, 0, 0.2) ) !important;
     }
     
-    .dashboard-link:not(.attachLoading):hover{
+    .green-button:not(.attachLoading):hover .z-label,
+    .dashboard-link:not(.attachLoading):hover .z-label{
         color: darken(@themeColorBtnDefault, 40%) !important;
         #gradient > .vertical( @themeColorBtnDefault, darken(@themeColorBtn2Default, 10%) ) !important;
         .t-shadow( 0px 1px 0 lighten(@themeColorBtnDefault, 15%) ) !important;
     }
     
-    .dashboard-link:active{
+    .green-button:active .z-label,
+    .dashboard-link:active .z-label{
         .b-shadow(~"inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF") !important;
     }
     
@@ -275,6 +291,58 @@
     #layout-container .ui-widget-content .ui-state-active,
     #layout-container .ui-widget-header .ui-state-active{
         .b-shadow(0 0 1px 1px @themeColor);
+    }
+
+    .action-take{
+        @topColor: #ffa660;
+        @bottomColor: #ffad43;
+        .z-label{
+            #gradient > .vertical(@topColor, @bottomColor ) !important; //yellow
+        }
+        &:hover .z-label{
+            color: darken(@topColor, 40%) !important;
+            #gradient > .vertical( @topColor, darken(@bottomColor, 10%) ) !important;
+            .t-shadow( 0px 1px 0 lighten(@topColor, 15%) ) !important;
+        }
+    }
+
+    .action-complete{
+        @topColor: #97c43d;
+        @bottomColor: #6fa82d;
+        .z-label{
+            #gradient > .vertical(@topColor, @bottomColor ) !important; //green
+        }
+        &:hover .z-label{
+            color: darken(@topColor, 40%) !important;
+            #gradient > .vertical( @topColor, darken(@bottomColor, 10%) ) !important;
+            .t-shadow( 0px 1px 0 lighten(@topColor, 15%) ) !important;
+        }
+    }
+
+    .action-accept{
+        @topColor: #97c43d;
+        @bottomColor: #6fa82d;
+        .z-label{
+            #gradient > .vertical(@topColor, @bottomColor ) !important; //green
+        }
+        &:hover .z-label{
+            color: darken(@topColor, 40%) !important;
+            #gradient > .vertical( @topColor, darken(@bottomColor, 10%) ) !important;
+            .t-shadow( 0px 1px 0 lighten(@topColor, 15%) ) !important;
+        }
+    }
+
+    .action-reject{
+        @topColor: #c43d53;
+        @bottomColor: #a82d31;
+        .z-label{
+            #gradient > .vertical(@topColor, @bottomColor ) !important; //red
+        }
+        &:hover .z-label{
+            color: darken(@topColor, 40%) !important;
+            #gradient > .vertical( @topColor, darken(@bottomColor, 10%) ) !important;
+            .t-shadow( 0px 1px 0 lighten(@topColor, 15%) ) !important;
+        }
     }
 }
 

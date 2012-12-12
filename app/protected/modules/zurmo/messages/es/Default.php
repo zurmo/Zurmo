@@ -247,6 +247,8 @@
             => 'Fecha de vencimiento',
         'Edit charts on the dashboard by clicking the config icon in the top right of each portlet.'
             => 'Haga clic en el icono de configuración en la parte superior derecha de cada portlet para editar gráficos en el salpicadero.',
+        'Email'
+            => 'Email', // Same Word Translated
         'Email Address'
             => 'Dirección de email',
         'Enable game notification popup'
@@ -577,6 +579,8 @@
             => 'Seleccione un role',
         'Self-Generated'
             => 'Autogenerado',
+        'Send a test email to'
+            => 'Enviar un mensaje de prueba a',
         'Set your preferences, password, and contact details in your My Profile area.'
             => 'Cambiar las preferencias de usuario, contraseña y datos de contacto en mi perfil.',
         'Settings'

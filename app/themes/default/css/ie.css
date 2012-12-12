@@ -1,15 +1,296 @@
+.border-box,
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"],
+.zButton,
+.z-button,
+a.zButton,
+a.z-button,
+.default-btn .modal-view-toolbar a,
+.default-btn .modal-view-toolbar input[type="submit"],
+.default-btn .modal-view-toolbar input[type="button"],
+.default-btn .form-toolbar a,
+.default-btn .form-toolbar input[type="submit"],
+.default-btn .form-toolbar input[type="button"],
+.default-btn .zButton,
+.default-btn .z-button,
+.default-btn a.zButton,
+.default-btn a.z-button,
+.default-btn,
+.z-label {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.cf:before,
+.cf:after {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  zoom: 1;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.flyout {
+  border: 1px solid #b6b6b6;
+  background-color: #ebebeb;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f5f5f5), to(#ebebeb));
+  background-image: -moz-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #ebebeb));
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -o-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: linear-gradient(top, #f5f5f5, #ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ebebeb', GradientType=0);
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+}
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"],
+.zButton,
+.z-button,
+a.zButton,
+a.z-button {
+  border-top: 1px solid rgba(200, 200, 200, 0.4);
+  border-left: 1px solid rgba(185, 185, 185, 0.4);
+  border-right: 1px solid rgba(185, 185, 185, 0.4);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+  color: #666 !important;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+  text-indent: 0;
+  display: inline-block;
+  zoom: 1;
+}
+.modal-view-toolbar a:before,
+.modal-view-toolbar input[type="submit"]:before,
+.modal-view-toolbar input[type="button"]:before,
+.form-toolbar a:before,
+.form-toolbar input[type="submit"]:before,
+.form-toolbar input[type="button"]:before,
+.zButton:before,
+.z-button:before,
+a.zButton:before,
+a.z-button:before {
+  content: "";
+  display: table;
+}
+.modal-view-toolbar a:after,
+.modal-view-toolbar input[type="submit"]:after,
+.modal-view-toolbar input[type="button"]:after,
+.form-toolbar a:after,
+.form-toolbar input[type="submit"]:after,
+.form-toolbar input[type="button"]:after,
+.zButton:after,
+.z-button:after,
+a.zButton:after,
+a.z-button:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.modal-view-toolbar a.attachLoading.z-button,
+.modal-view-toolbar input[type="submit"].attachLoading.z-button,
+.modal-view-toolbar input[type="button"].attachLoading.z-button,
+.form-toolbar a.attachLoading.z-button,
+.form-toolbar input[type="submit"].attachLoading.z-button,
+.form-toolbar input[type="button"].attachLoading.z-button,
+.zButton.attachLoading.z-button,
+.z-button.attachLoading.z-button,
+a.zButton.attachLoading.z-button,
+a.z-button.attachLoading.z-button {
+  color: #fff;
+}
+.modal-view-toolbar a:not(.attachLoading) span,
+.modal-view-toolbar input[type="submit"]:not(.attachLoading) span,
+.modal-view-toolbar input[type="button"]:not(.attachLoading) span,
+.form-toolbar a:not(.attachLoading) span,
+.form-toolbar input[type="submit"]:not(.attachLoading) span,
+.form-toolbar input[type="button"]:not(.attachLoading) span,
+.zButton:not(.attachLoading) span,
+.z-button:not(.attachLoading) span,
+a.zButton:not(.attachLoading) span,
+a.z-button:not(.attachLoading) span {
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+.default-btn {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(200, 200, 200, 0.4);
+  border-left: 1px solid rgba(185, 185, 185, 0.4);
+  border-right: 1px solid rgba(185, 185, 185, 0.4);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+  color: #666 !important;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+  text-indent: 0;
+  display: inline-block;
+  zoom: 1;
+}
+.default-btn:before {
+  content: "";
+  display: table;
+}
+.default-btn:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.default-btn.attachLoading.z-button {
+  color: #fff;
+}
+.default-btn:not(.attachLoading) span {
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+/*
+.zButton:not(.attacheLoading),
+.z-button:not(.attachLoading){
+     background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+*/
+.green-button,
+.attachLoading {
+  color: #FFF;
+  cursor: pointer;
+}
+.z-label {
+  float: left;
+  font-weight: bold;
+  padding: 0 25px;
+  line-height: 25px;
+  display: inline-block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  position: relative;
+  z-index: 1;
+}
+.z-label-smaller {
+  padding: 0 15px;
+}
+.zButton.loading .z-spinner,
+.z-button.loading .z-spinner {
+  display: inline-block;
+  position: absolute;
+  margin: 1px 0 0 4px;
+}
+.zButton.loading .z-icon,
+.z-button.loading .z-icon {
+  display: none;
+}
+.z-spinner {
+  z-index: 10;
+  width: 23px;
+  height: 23px;
+  display: none;
+  position: absolute;
+  left: 0px;
+}
+.z-spinner.loading {
+  display: block !important;
+}
+.zLink,
+.z-link {
+  padding: 2px 4px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: #fff !important;
+  font-size: 11px;
+}
+.zLink:hover,
+.z-link:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+.unstyle-panel {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
 /*Target only Explorer*/
 /*ALl input fields*/
 .form input[type="text"],
-.form input[type="password"],
-.form select.multiple,
-.form textarea {
+.form input[type="password"] {
   height: 26px;
 }
+/*
 input[type="submit"],
-input[type="button"] {
-  height: 26px;
+input[type="button"]{
+	height:26px;
 }
+*/
 /*Top Right Create New Menu*/
 #ShortcutsMenu > li > a {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
@@ -24,12 +305,12 @@ input[type="button"] {
   font-size: 38px !important;
   letter-spacing: -25px !important;
 }
-.calendar-events-1 span :before,
-.calendar-events-2 span :before,
-.calendar-events-3 span :before,
-.calendar-events-4 span :before,
-.calendar-events-5 span :before,
-.calendar-events-6 span :before {
+.calendar-events-1 span:before,
+.calendar-events-2 span:before,
+.calendar-events-3 span:before,
+.calendar-events-4 span:before,
+.calendar-events-5 span:before,
+.calendar-events-6 span:before {
   top: 10px !important;
 }
 /* remove label borders in IE6 because IE6 does not support transparency */
@@ -42,6 +323,32 @@ input[type="button"] {
 }
 .hasDropDown select {
   z-index: 5;
-  padding-right: 5px;
+  padding-right: 15px;
   background: #ffffff url(../images/dropdown-arrow.png) 100% 0 no-repeat;
+}
+.add-label {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+#ActionBarSearchAndListView > div:first-child {
+  z-index: 10005;
+}
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"] {
+  border-top: 1px solid #ebebeb;
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  border-bottom: 1px solid #cdcdcd;
+  color: #666;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+  text-indent: 0;
+  display: inline-block;
 }

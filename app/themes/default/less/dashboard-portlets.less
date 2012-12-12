@@ -12,18 +12,12 @@
 			vertical-align:middle;
 		}
 		span{
-			.symbly(16px);
-			color:#fff;
-			width:14px;
-			height:14px;
-			line-height: 14px;
-			.radius(50%);
-			//++.themeBackgroundColor2;
+			.symbly(24px);
+			line-height: 11px;
 			border:none;
 			margin-right:6px;
 			outline: none !important;
 			display:inline-block;
-			text-align:center;
 		}
 		a{
 			outline: none !important;
@@ -133,14 +127,20 @@
     .missionStatusChangeArea{
         a{
             &:first-child{
-                margin-left: 0;
+                margin-left: 0 !important;
             }
             &:last-child{
-                margin-right: 0;
+                margin-right: 0 !important;
             }
         }
     }
     .actions-column{
         width: 200px;
+    }
+    td:first-child{
+        border-top:none;
+    }
+    .mission-status{
+        .smaller();
     }
 }

@@ -40,7 +40,7 @@
             }
             // Begin Not Coding Standard
             $content  = '<div>
-                            <h1>Zurmo Open Source CRM</span></h1>';
+                            <h1>Zurmo Open Source CRM</h1>';
 
             $content .= '<div id="aboutText" class="clearfix">
                             <div id="leftCol">
@@ -83,10 +83,11 @@
                                     <li>Evan Fazio       - Gamification</li>
                                     <li>Justin Ferguson  - Documentation</li>
                                     <li>Theresa Neil     - User Interface Design</li>
-                                    <li>Sérgio Peixoto   - Portugese Translation and Development</li>
+                                    <li>Sérgio Peixoto   - Portuguese Translation and Development</li>
                                     <li>Mandy Robinson   - Icons</li>
                                     <li>Hisateru Tanaka  - Japanese Translation</li>
                                     <li>Sacha Telgenhof  - Language Infrastructure</li>
+                                    <li>Subtle Patterns  - Background Textures</li>
                                     <li>Holy Xing        - Chinese Translation</li>
                                 </ul>
                             </div>

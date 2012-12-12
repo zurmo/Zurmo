@@ -32,7 +32,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink',
+                            array('type' => 'CancelToListLink',
                                   'label' => "eval:Yii::t('Default', 'Return to Job Manager')"),
                         ),
                     ),

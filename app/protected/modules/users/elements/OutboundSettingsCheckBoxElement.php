@@ -85,7 +85,7 @@
 
         protected function renderLabel()
         {
-            $label = Yii::t('Default', 'Customize Outbound Email Settings');
+            $label = Yii::t('Default', 'Custom Outbound Email Settings');
             if ($this->form === null)
             {
                 return $this->getFormattedAttributeLabel();

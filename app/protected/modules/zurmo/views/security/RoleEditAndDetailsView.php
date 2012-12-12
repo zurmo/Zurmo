@@ -35,8 +35,8 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'ListLink',     'renderType'   => 'Edit', 'label' => 'Cancel'),
-                            array('type' => 'SaveButton',   'renderType' => 'Edit'),
+                            array('type' => 'CancelToListLink', 'renderType'   => 'Edit'),
+                            array('type' => 'SaveButton',       'renderType' => 'Edit'),
                             array('type' => 'EditLink',
                                                             'renderType'       => 'Details',
                                                             'resolveToDisplay' => 'canModifyName'

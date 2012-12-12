@@ -12,9 +12,9 @@
 <tr><td rowspan="1" colspan="3">ConvertSelectAccount</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
-    <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
     <td>open</td>
@@ -22,9 +22,14 @@
     <td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
     <td>waitForTextPresent</td>
@@ -77,8 +82,18 @@
     <td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>User Search</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+    <td>waitForElementPresent</td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
     <td></td>
 </tr>
 <tr>
@@ -92,9 +107,14 @@
     <td>\10</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='UsersModalListView']/div/table/tbody/tr/td/a</td>
     <td>Sam Smith</td>
-    <td></td>
 </tr>
 <tr>
     <td>click</td>
@@ -212,6 +232,11 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
     <td>waitForText</td>
     <td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
     <td>exact:Sizzy Sanny ${randomSuffix}</td>
@@ -230,11 +255,6 @@
     <td>assertText</td>
     <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[4]/td[1]</td>
     <td>Frog Technology</td>
-</tr>
-<tr>
-    <td>assertText</td>
-    <td>//div[@id='LeadEditAndDetailsView']/div/div[2]/table/tbody/tr[6]/td[1]</td>
-    <td>456-777-6654</td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -292,6 +312,11 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
     <td>type</td>
     <td>LeadsSearchForm_anyMixedAttributes</td>
     <td>Sanny ${randomSuffix}</td>
@@ -302,14 +327,14 @@
     <td>\10</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
     <td>waitForText</td>
     <td>link=Sizzy Sanny ${randomSuffix}</td>
     <td>Sizzy Sanny ${randomSuffix}</td>
-</tr>
-<tr>
-    <td>setSpeed</td>
-    <td>5000</td>
-    <td></td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -320,6 +345,11 @@
     <td>waitForPageToLoad</td>
     <td></td>
     <td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -332,9 +362,9 @@
     <td></td>
 </tr>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
     <td>click</td>
@@ -347,8 +377,13 @@
     <td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Account Search</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+    <td>waitForElementPresent</td>
+    <td>AccountsSearchForm_anyMixedAttributes</td>
     <td></td>
 </tr>
 <tr>
@@ -362,9 +397,14 @@
     <td>\10</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='list-viewmodal']/table/tbody/tr/td[1]/a</td>
     <td>my account ${randomSuffix}</td>
-    <td></td>
 </tr>
 <tr>
     <td>click</td>
@@ -387,10 +427,15 @@
     <td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--tr>
     <td>waitForTextPresent</td>
     <td>Lead successfully converted.</td>
     <td></td>
-</tr>
+</tr-->
 <tr>
     <td>assertText</td>
     <td>//div[@id='ContactEditAndDetailsView']/div/h1</td>

@@ -12,230 +12,265 @@
 <tr><td rowspan="1" colspan="3">Create Account</td></tr>
 </thead>
 <tbody>
-<tr> 
-    <td>setTimeout</td> 
-    <td>45000</td> 
-    <td></td> 
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>setSpeed</td>
-    <td>1000</td>
-    <td></td>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
 </tr>
 <tr>
-    <td>storeGlobal</td>
-    <td>javascript{Math.floor(Math.random()*11000)}</td>
-    <td>randomSuffix</td>
+	<td>open</td>
+	<td>index.php/accounts/default/create</td>
+	<td></td>
 </tr>
 <tr>
-    <td>open</td>
-    <td>index.php/accounts/default/create</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Create Account</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>Create Account</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_name</td>
-    <td>my account ${randomSuffix}</td>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>Account_owner_SelectLink</td>
-    <td></td>
+	<td>click</td>
+	<td>Account_owner_SelectLink</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForElementPresent</td>
-    <td>UsersSearchForm_anyMixedAttributes</td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UsersSearchForm_anyMixedAttributes</td>
-    <td>Sam Smith</td>
+	<td>waitForElementPresent</td>
+	<td>UsersSearchForm_anyMixedAttributes</td>
+	<td></td>
 </tr>
 <tr>
-    <td>keyUp</td>
-    <td>UsersSearchForm_anyMixedAttributes</td>
-    <td>\10</td>
+	<td>type</td>
+	<td>UsersSearchForm_anyMixedAttributes</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Sam Smith</td>
-    <td></td>
+	<td>keyUp</td>
+	<td>UsersSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>link=Sam Smith</td>
-    <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>waitForValue</td>
-    <td>Account_owner_name</td>
-    <td>Sam Smith</td>
+	<td>waitForText</td>
+	<td>//div[@id='UsersModalListView']/div/table/tbody/tr/td/a</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
-    <td>assertNotValue</td>
-    <td>Account_owner_id</td>
-    <td></td>
+	<td>click</td>
+	<td>link=Sam Smith</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_employees</td>
-    <td>5</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_officeFax</td>
-    <td>123555</td>
+	<td>waitForValue</td>
+	<td>Account_owner_name</td>
+	<td>Sam Smith</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_officePhone</td>
-    <td>456777</td>
+	<td>assertNotValue</td>
+	<td>Account_owner_id</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_annualRevenue</td>
-    <td>500</td>
+	<td>type</td>
+	<td>Account_employees</td>
+	<td>5</td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>Account_industry_value</td>
-    <td>label=Financial Services</td>
+	<td>type</td>
+	<td>Account_officeFax</td>
+	<td>123555</td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>Account_type_value</td>
-    <td>label=Vendor</td>
+	<td>type</td>
+	<td>Account_officePhone</td>
+	<td>456777</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_website</td>
-    <td>http://www.testingcompany.com</td>
+	<td>type</td>
+	<td>Account_annualRevenue</td>
+	<td>500</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_street1</td>
-    <td>123 ABC Street</td>
+	<td>select</td>
+	<td>Account_industry_value</td>
+	<td>label=Financial Services</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_street2</td>
-    <td>suite 100</td>
+	<td>select</td>
+	<td>Account_type_value</td>
+	<td>label=Vendor</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_city</td>
-    <td>Chicago</td>
+	<td>type</td>
+	<td>Account_website</td>
+	<td>http://www.testingcompany.com</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_state</td>
-    <td>IL</td>
+	<td>type</td>
+	<td>Account_billingAddress_street1</td>
+	<td>123 ABC Street</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_postalCode</td>
-    <td>60611</td>
+	<td>type</td>
+	<td>Account_billingAddress_street2</td>
+	<td>suite 100</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_billingAddress_country</td>
-    <td>USA</td>
+	<td>type</td>
+	<td>Account_billingAddress_city</td>
+	<td>Chicago</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_street1</td>
-    <td>456 Main Street</td>
+	<td>type</td>
+	<td>Account_billingAddress_state</td>
+	<td>IL</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_street2</td>
-    <td>Suite 200</td>
+	<td>type</td>
+	<td>Account_billingAddress_postalCode</td>
+	<td>60611</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_city</td>
-    <td>New York</td>
+	<td>type</td>
+	<td>Account_billingAddress_country</td>
+	<td>USA</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_state</td>
-    <td>NY</td>
+	<td>type</td>
+	<td>Account_shippingAddress_street1</td>
+	<td>456 Main Street</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_postalCode</td>
-    <td>12133</td>
+	<td>type</td>
+	<td>Account_shippingAddress_street2</td>
+	<td>Suite 200</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_shippingAddress_country</td>
-    <td>USA</td>
+	<td>type</td>
+	<td>Account_shippingAddress_city</td>
+	<td>New York</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_description</td>
-    <td>This is a test account</td>
+	<td>type</td>
+	<td>Account_shippingAddress_state</td>
+	<td>NY</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>type</td>
+	<td>Account_shippingAddress_postalCode</td>
+	<td>12133</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>my account ${randomSuffix}</td>
-    <td></td>
+	<td>type</td>
+	<td>Account_shippingAddress_country</td>
+	<td>USA</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>link=Edit</td>
-    <td>Edit</td>
+	<td>type</td>
+	<td>Account_description</td>
+	<td>This is a test account</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=Edit</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>save</td>
-    <td>Save</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_name</td>
-    <td>my account ${randomSuffix}</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_website</td>
-    <td>http://www.testingcompany.com</td>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_owner_name</td>
-    <td>Sam Smith</td>
+	<td>assertText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
 </tr>
 <tr>
-    <td>verifySelectedLabel</td>
-    <td>Account_industry_value</td>
-    <td>Financial Services</td>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifySelectedLabel</td>
-    <td>Account_type_value</td>
-    <td>Vendor</td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>save</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_website</td>
+	<td>http://www.testingcompany.com</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>Account_owner_name</td>
+	<td>Sam Smith</td>
+</tr>
+<tr>
+	<td>verifySelectedLabel</td>
+	<td>Account_industry_value</td>
+	<td>Financial Services</td>
+</tr>
+<tr>
+	<td>verifySelectedLabel</td>
+	<td>Account_type_value</td>
+	<td>Vendor</td>
 </tr>
 <!--
 <tr>
@@ -245,49 +280,49 @@
 </tr>
 -->
 <tr>
-    <td>verifyValue</td>
-    <td>Account_billingAddress_street1</td>
-    <td>123 ABC Street</td>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_street1</td>
+	<td>123 ABC Street</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_billingAddress_street2</td>
-    <td>suite 100</td>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_street2</td>
+	<td>suite 100</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_billingAddress_city</td>
-    <td>Chicago</td>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_city</td>
+	<td>Chicago</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_billingAddress_state</td>
-    <td>IL</td>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_state</td>
+	<td>IL</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_billingAddress_country</td>
-    <td>USA</td>
+	<td>verifyValue</td>
+	<td>Account_billingAddress_country</td>
+	<td>USA</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_description</td>
-    <td>This is a test account</td>
+	<td>verifyValue</td>
+	<td>Account_description</td>
+	<td>This is a test account</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_officePhone</td>
-    <td>456777</td>
+	<td>verifyValue</td>
+	<td>Account_officePhone</td>
+	<td>456777</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_officeFax</td>
-    <td>123555</td>
+	<td>verifyValue</td>
+	<td>Account_officeFax</td>
+	<td>123555</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_annualRevenue</td>
-    <td>500</td>
+	<td>verifyValue</td>
+	<td>Account_annualRevenue</td>
+	<td>500</td>
 </tr>
 <!--
 <tr>
@@ -297,49 +332,59 @@
 </tr>
 -->
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_street1</td>
-    <td>456 Main Street</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_street1</td>
+	<td>456 Main Street</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_street2</td>
-    <td>Suite 200</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_street2</td>
+	<td>Suite 200</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_city</td>
-    <td>New York</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_city</td>
+	<td>New York</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_state</td>
-    <td>NY</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_state</td>
+	<td>NY</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_postalCode</td>
-    <td>12133</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_postalCode</td>
+	<td>12133</td>
 </tr>
 <tr>
-    <td>verifyValue</td>
-    <td>Account_shippingAddress_country</td>
-    <td>USA</td>
+	<td>verifyValue</td>
+	<td>Account_shippingAddress_country</td>
+	<td>USA</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>Account_name</td>
-    <td>Changing The Account ${randomSuffix}</td>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>Changing The Account ${randomSuffix}</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Changing The Account ${randomSuffix}</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Changing The Account ${randomSuffix}</td>
+	<td></td>
 </tr>
 <!-- Creating contact for testing edit and unlink-->
 <tr>
@@ -348,9 +393,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -373,9 +423,19 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Test Contact ${randomSuffix}</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Test Contact ${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -383,19 +443,44 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=Contact_firstName</td>
 	<td>Changing Test </td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>click</td>
 	<td>name=save</td>
 	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Changing Test Contact ${randomSuffix}</td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Changing Test Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>2000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -403,19 +488,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmation</td>
+	<td>waitForConfirmation</td>
 	<td>Are you sure you want to unlink this contact?</td>
 	<td></td>
 </tr>
 <tr>
-  <td>chooseOkOnNextConfirmation</td>
-  <td></td>
-  <td></td>
+	<td>chooseOkOnNextConfirmation</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForTextNotPresent</td>
-    <td>Changing Test Contact ${randomSuffix}</td>
-    <td></td>
+	<td>setSpeed</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>Changing Test Contact ${randomSuffix}</td>
+	<td></td>
 </tr>
 <!-- Creating contact for testing delete-->
 <tr>
@@ -424,6 +519,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=Contact_firstName</td>
 	<td>Test </td>
@@ -444,31 +549,20 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Test Contact ${randomSuffix}</td>
-    <td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div[2]/table/tbody/tr/td[2]/div/ul/li/ul/li[2]/a</td>
+	<td>waitForPageToLoad</td>
 	<td></td>
-</tr>
-<!--<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this contact?</td>
 	<td></td>
 </tr>
 <tr>
-  <td>chooseOkOnNextConfirmation</td>
-  <td></td>
-  <td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>waitForTextNotPresent</td>
-    <td>Test Contact ${randomSuffix}</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>Test Contact ${randomSuffix}</td>
+	<td></td>
 </tr>
--->
 </tbody>
 </table>
 </body>
