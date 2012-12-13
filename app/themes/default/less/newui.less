@@ -1697,6 +1697,8 @@ a.simple-select{
     border: none !important;
     margin-left:10px;
     text-decoration:underline;
+    .smaller();
+    font-weight:normal;
     &:before{
         content:""  !important;
     }
@@ -2022,6 +2024,12 @@ div.wide.form{
     }
 }
 
+#NoUserEmailConfigurationYetView{
+    .z-label{
+        z-index:auto;
+    }
+}
+
 
 .ZurmoSearchView{
     padding:0;
@@ -2120,6 +2128,9 @@ div.wide.form{
     width: 100%;
     .box-sizing();
     .clearfix();
+    .form-toolbar, .z-button{
+        font-size:12px;
+    }
 }
 
 .search-form-tools{
@@ -2275,11 +2286,15 @@ div.wide.form{
     width: 100%;
 }
 
+.search-view-1 > .hasDropDown{
+    margin-bottom:8px;
+}
+
 .dynamic-search-row{
     float: left;
     width: 100%;
     display: block;
-    margin:15px 0 0 0;
+    margin:8px 0;
     > div{
         float: left;
         width: 100%;
@@ -2321,12 +2336,12 @@ div.wide.form{
 .search-save-container{
     float: left;
     display: inline-block;
-    margin:15px 3px 10px 0;
+    margin:8px 3px 10px 0;
 }
 
 .dynamic-search-row + .add-fields-container,
 .dynamic-search-row + .add-fields-container + .search-save-container{
-    margin:10px 3px 10px 0;
+    margin:8px 3px 10px 0;
 }
 
 .add-fields-container{
@@ -2360,8 +2375,8 @@ div.wide.form{
 }
 
 #save-search-area{
-    width: 50%;
-    margin-top:0;
+    width: 45%;
+    margin-top:5px;
     border-top:none;
     input, a{
         display: inline-block;
@@ -2377,7 +2392,7 @@ div.wide.form{
         line-height: 26px;
     }
     #save-advanced-search{
-        color:#fff;
+        margin:0;
     }
 }
 

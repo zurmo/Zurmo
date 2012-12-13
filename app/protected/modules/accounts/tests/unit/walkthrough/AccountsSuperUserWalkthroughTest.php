@@ -400,6 +400,7 @@
             $superAccountId10 = self::getModelIdByModelNameAndName('Account', 'superAccount10');
             $superAccountId11 = self::getModelIdByModelNameAndName('Account', 'superAccount11');
             $superAccountId12 = self::getModelIdByModelNameAndName('Account', 'superAccount12');
+
             //Load Model MassDelete Views.
             //MassDelete view for single selected ids
             $this->setGetArray(array('selectedIds' => '5,6,7,8', 'selectAll' => '', ));  // Not Coding Standard
@@ -442,6 +443,41 @@
             Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
             Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+        }
+        
+         /**
+         * @deletes all accounts. This should always be last function
+         */
+        public function testMassDeletesSelectAllActions()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            
+            //Setup test data owned by the super user.
+            AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
+            AccountTestHelper::createAccountByNameForOwner('superAccount2', $super);
+
+
+            $accounts = Account::getAll();
+            $this->assertEquals(2, count($accounts));
+            
+            $superAccountId  = self::getModelIdByModelNameAndName('Account', 'superAccount');
+            $superAccountId2  = self::getModelIdByModelNameAndName('Account', 'superAccount2');
+
+
+            
+            $this->setGetArray(array(                                        
+                'selectAll' => '1',           // Not Coding Standard
+                'Account_page' => 1));
+            $this->setPostArray(array('selectedIds' => '2'));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 2);
+            $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
+            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            
+            $accounts = Account::getAll();
+            $this->assertEquals(0, count($accounts));
+            
         }
     }
 ?>

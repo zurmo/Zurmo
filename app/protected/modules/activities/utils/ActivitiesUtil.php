@@ -78,7 +78,7 @@
             {
                 $modelDisplayString = '<span style="text-decoration:line-through;">' . $modelDisplayString . '</span>';
             }
-            $params          = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl);
+            $params          = array('label' => $modelDisplayString, 'redirectUrl' => $redirectUrl, 'wrapLabel' => false);
             $moduleClassName = $model->getModuleClassName();
             $moduleId        = $moduleClassName::getDirectoryName();
             $element  = new DetailsLinkActionElement('default', $moduleId, $model->id, $params);

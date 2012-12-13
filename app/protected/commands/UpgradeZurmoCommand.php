@@ -107,7 +107,7 @@ EOD;
                 if ($upgradeStep == 'runPart1')
                 {
                     $messageStreamer->add(Yii::t('Default', 'Starting Zurmo upgrade process.'));
-                    $this->runPart1($messageStreamer);
+                    $this->runPart1($messageStreamer, $doNotlAlterFiles);
                     $messageStreamer->add(Yii::t('Default', 'Zurmo upgrade phase 1 completed.'));
                     $messageStreamer->add(Yii::t('Default', 'Please execute next command: "{command}" to complete upgrade process.',
                             array('{command}' => './zurmoc upgradeZurmo super runPart2')));

@@ -186,8 +186,8 @@
             {
                 foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
                 {
-                    $elementclassname = $elementInformation['type'] . 'ActionElement';
-                    $params = array_slice($elementInformation, 1);
+                    $elementclassname  = $elementInformation['type'] . 'ActionElement';
+                    $params            = array_slice($elementInformation, 1);
                     array_walk($params, array($this, 'resolveEvaluateSubString'));
                     $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
                     if (!$this->shouldRenderToolBarElement($element, $elementInformation))

@@ -61,7 +61,7 @@
                                 $htmlOptions);
             $htmlOptions   = array(
                                 'id'       => $inputId,
-                                'readonly' => $this->getReadOnlyValue());
+                                'class'    => $this->resolveInputClassDisabled());
             $content      .= $this->form->textField($this->model, $this->attribute, $htmlOptions);
             return $content;
         }
@@ -142,12 +142,12 @@
             return $helperValue;
         }
 
-        protected function getReadOnlyValue()
+        protected function resolveInputClassDisabled()
         {
             if ($this->model->{$this->attribute} == null &&
             $this->getHelperValue() != PolicyIntegerAndStaticDropDownElement::HELPER_DROPDOWN_VALUE_YES)
             {
-                return 'readonly';
+                return 'disabled';
             }
             return null;
         }

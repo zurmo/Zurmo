@@ -133,7 +133,7 @@
                                 $elementclassname = $elementInformation['type'] . 'Element';
                                 $params = array_slice($elementInformation, 2);
                                 if (empty($this->activeAttributes[$elementInformation['attributeName']]))
-                                {
+                                {   
                                     $params['disabled'] = true;
                                     $checked = false;
                                 }

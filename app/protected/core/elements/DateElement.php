@@ -48,6 +48,7 @@
                 'htmlOptions'         => array(
                     'id'              => $this->getEditableInputId(),
                     'name'            => $this->getEditableInputName(),
+                    'disabled'        => $this->getDisabledValue(),
                 ),
                 'options'             => array(
                     'showOn'          => 'both',

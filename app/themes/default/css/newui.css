@@ -6428,6 +6428,8 @@ a.simple-select {
   border: none !important;
   margin-left: 10px;
   text-decoration: underline;
+  font-size: 11px;
+  font-weight: normal;
 }
 a.simple-select:before {
   content: "" !important;
@@ -6809,6 +6811,9 @@ div.wide.form label.hasCheckBox {
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 60%;
 }
+#NoUserEmailConfigurationYetView .z-label {
+  z-index: auto;
+}
 .ZurmoSearchView {
   padding: 0;
   -webkit-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
@@ -6971,6 +6976,10 @@ div.wide.form label.hasCheckBox {
   display: table;
   clear: both;
 }
+#search-form .form-toolbar,
+#search-form .z-button {
+  font-size: 12px;
+}
 .search-form-tools {
   position: absolute;
   top: 16px;
@@ -7127,11 +7136,14 @@ div.wide.form label.hasCheckBox {
   display: inline-block;
   width: 100%;
 }
+.search-view-1 > .hasDropDown {
+  margin-bottom: 8px;
+}
 .dynamic-search-row {
   float: left;
   width: 100%;
   display: block;
-  margin: 15px 0 0 0;
+  margin: 8px 0;
 }
 .dynamic-search-row > div {
   float: left;
@@ -7178,11 +7190,11 @@ div.wide.form label.hasCheckBox {
 .search-save-container {
   float: left;
   display: inline-block;
-  margin: 15px 3px 10px 0;
+  margin: 8px 3px 10px 0;
 }
 .dynamic-search-row + .add-fields-container,
 .dynamic-search-row + .add-fields-container + .search-save-container {
-  margin: 10px 3px 10px 0;
+  margin: 8px 3px 10px 0;
 }
 .add-fields-container a {
   margin-left: 23px;
@@ -7210,8 +7222,8 @@ div.wide.form label.hasCheckBox {
   margin-left: 23px;
 }
 #save-search-area {
-  width: 50%;
-  margin-top: 0;
+  width: 45%;
+  margin-top: 5px;
   border-top: none;
 }
 #save-search-area input,
@@ -7229,7 +7241,7 @@ div.wide.form label.hasCheckBox {
   line-height: 26px;
 }
 #save-search-area #save-advanced-search {
-  color: #fff;
+  margin: 0;
 }
 #show-dynamic-search-structure-div-search-form input {
   text-indent: 40px;

@@ -41,11 +41,11 @@
                 {
                     if (helperValue == compareValue)
                     {
-                        $('#' + textFieldId).removeAttr('readonly');
+                        $('#' + textFieldId).removeClass('disabled');
                     }
                     else
                     {
-                        $('#' + textFieldId).attr('readonly', 'readonly');
+                        $('#' + textFieldId).addClass('disabled');
                         $('#' + textFieldId).val('');
                     }
                 }

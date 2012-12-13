@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Delete Role'));
+            return Yii::t('Default', 'Delete Role');
         }
 
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)

@@ -107,6 +107,15 @@
             return $this->params['redirectUrl'];
         }
 
+        protected function wrapLabel()
+        {
+            if (!isset($this->params['wrapLabel']))
+            {
+                return true;
+            }
+            return $this->params['wrapLabel'];
+        }
+
         protected function getRoute()
         {
             return $this->getDefaultRoute();
@@ -115,6 +124,15 @@
         public function isFormRequiredToUse()
         {
             return $this->formRequiredToUse;
+        }
+
+        protected function resolveLabelAndWrap()
+        {
+            if($this->wrapLabel())
+            {
+                return ZurmoHtml::tag('span', array('class' => 'z-label'), $this->getLabel());
+            }
+            return $this->getLabel();
         }
     }
 ?>

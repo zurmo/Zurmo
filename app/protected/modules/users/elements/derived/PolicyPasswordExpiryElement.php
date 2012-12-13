@@ -60,7 +60,7 @@
             $htmlOptions = array(
                 'id'       => $inputId,
                 'name'     => $this->getEditableInputName($this->getExpiryAttributeName()),
-                'readonly' => $this->getReadOnlyValue(),
+                'class'    => $this->resolveInputClassDisabled()          
             );
             $content .= $this->form->textField($this->model, $this->getExpiryAttributeName(), $htmlOptions);
             $content .= Yii::t('Default', 'days') . '</span>';
@@ -121,14 +121,13 @@
             );
         }
 
-        protected function getReadOnlyValue()
+        protected function resolveInputClassDisabled()
         {
             $expires = $this->getExpiryAttributeName();
             $expiry = $this->getExpiresAttributeName();
-            if ($this->model->{$expiry} == null &&
-            $expires != Policy::YES)
+            if ($this->model->{$expiry} == null && $expires != Policy::YES)
             {
-                return 'readonly';
+                return 'disabled';
             }
             return null;
         }

@@ -28,7 +28,7 @@
     {
         public function render()
         {
-            return ZurmoHtml::link($this->getLabel(), $this->route, $this->getHtmlOptions());
+            return ZurmoHtml::link($this->resolveLabelAndWrap(), $this->route, $this->getHtmlOptions());
         }
 
         public function renderMenuItem()

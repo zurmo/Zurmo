@@ -6495,3 +6495,5 @@ data/app/protected/modules/zurmo/tests/unit/ZurmoModelDataProviderUtilTest.php.i
 data/app/themes/default/fonts/ZurmoGamificationSymblyRegular-Regular.glyphs.i
 data/app/themes/default/fonts/font-squirrel-settings.png.i
 data/app/themes/default/fonts/generator_config.txt.i
+data/app/protected/core/adapters/InferredRedBeanModelAttributeToDataProviderAdapter.php.i
+data/app/protected/modules/reports/tests/unit/QueryBuilderDocumentationTest.php.i

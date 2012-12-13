@@ -127,7 +127,7 @@
                     {
                         if (strval($castedDownModel) != null)
                         {
-                            $params          = array('label' => strval($castedDownModel));
+                            $params          = array('label' => strval($castedDownModel), 'wrapLabel' => false);
                             $moduleClassName = $castedDownModel->getModuleClassName();
                             $moduleId        = $moduleClassName::getDirectoryName();
                             $element         = new DetailsLinkActionElement('default', $moduleId,
