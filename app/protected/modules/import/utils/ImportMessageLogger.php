@@ -51,7 +51,7 @@
                 }
                 else
                 {
-                    $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Rows processed: {rowsProcessed}',
+                    $this->add(array(MessageLogger::INFO, Zurmo::t('ImportModule', 'Rows processed: {rowsProcessed}',
                                array('{rowsProcessed}' => $this->rowCount))));
                 }
                 $this->pagingCount = 0;
@@ -68,7 +68,7 @@
             {
                 $this->messageStreamer->addIgnoringTemplate("\n");
             }
-            $this->add(array(MessageLogger::INFO, Yii::t('Default', 'Import complete.  Rows processed: {rowsProcessed}',
+            $this->add(array(MessageLogger::INFO, Zurmo::t('ImportModule', 'Import complete.  Rows processed: {rowsProcessed}',
                        array('{rowsProcessed}' => $this->rowCount))));
         }
 

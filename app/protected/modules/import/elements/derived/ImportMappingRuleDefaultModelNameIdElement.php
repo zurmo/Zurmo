@@ -62,7 +62,7 @@
         {
             $module              = Yii::app()->getModule($this->resolveModuleId());
             $moduleSingularLabel = $module->getModuleLabelByTypeAndLanguage('Singular');
-            return Yii::t('Default', '{moduleSingularLabel} Search',
+            return Zurmo::t('ImportModule', '{moduleSingularLabel} Search',
                                       array('{moduleSingularLabel}' => $moduleSingularLabel));
         }
 

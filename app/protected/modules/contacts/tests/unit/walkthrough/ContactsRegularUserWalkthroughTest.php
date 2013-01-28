@@ -510,7 +510,10 @@
             $this->assertTrue($childGroup->save());
         }
 
-        public function testRegularUserMassDelete()
+         /**
+         * @deletes selected contacts.
+         */
+        public function testRegularMassDeleteActionsForSelectedIds()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $confused = User::getByUsername('confused');
@@ -523,29 +526,87 @@
             $contact1 = ContactTestHelper::createContactByNameForOwner('contactDelete1', $confused);
             $contact2 = ContactTestHelper::createContactByNameForOwner('contactDelete2', $confused);
             $contact3 = ContactTestHelper::createContactByNameForOwner('contactDelete3', $nobody);
+            $contact4 = ContactTestHelper::createContactByNameForOwner('contactDelete4', $confused);
+            $contact5 = ContactTestHelper::createContactByNameForOwner('contactDelete5', $confused);
+            $contact6 = ContactTestHelper::createContactByNameForOwner('contactDelete6', $nobody);
+            $contact7 = ContactTestHelper::createContactByNameForOwner('contactDelete7', $confused);
+            $contact8 = ContactTestHelper::createContactByNameForOwner('contactDelete8', $confused);
+            $contact9 = ContactTestHelper::createContactByNameForOwner('contactDelete9', $nobody);
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
             $selectedIds = $contact1->id . ',' . $contact2->id . ',' . $contact3->id ;    // Not Coding Standard
             $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDelete');
             $this->assertFalse(strpos($content, '<strong>3</strong>&#160;Contacts selected for removal') === false);
 
-            //Deleting 3 contacts
+            //calculating contacts after adding 9 new records
+            $contacts = Contact::getAll();
+            $this->assertEquals(14, count($contacts));
+            //Deleting 6 contacts for pagination scenario
+            //Run Mass Delete using progress save for page1
+            $selectedIds = $contact1->id . ',' . $contact2->id . ',' . // Not Coding Standard
+                           $contact3->id . ',' . $contact4->id . ',' . // Not Coding Standard
+                           $contact5->id . ',' . $contact6->id;        // Not Coding Standard
             $this->setGetArray(array(
                 'selectedIds' => $selectedIds, // Not Coding Standard
                 'selectAll' => '',
                 'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => $contact3->id));
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
-            //Deleting all contacts
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $content = $this->runControllerWithExitExceptionAndGetContent('contacts/default/massDelete');
+            $contacts = Contact::getAll();
+            $this->assertEquals(9, count($contacts));
+
+            //Run Mass Delete using progress save for page2
+            $selectedIds = $contact1->id . ',' . $contact2->id . ',' . // Not Coding Standard
+                           $contact3->id . ',' . $contact4->id . ',' . // Not Coding Standard
+                           $contact5->id . ',' . $contact6->id;        // Not Coding Standard
+            $this->setGetArray(array(
+                'selectedIds' => $selectedIds, // Not Coding Standard
+                'selectAll' => '',
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDeleteProgress');
+            $contacts = Contact::getAll();
+            $this->assertEquals(8, count($contacts));
+        }
+
+         /**
+         *Test Bug with mass delete and multiple pages when using select all
+         */
+        public function testRegularMassDeletePagesProperlyAndRemovesAllSelected()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $confused = User::getByUsername('confused');
+            $billy = User::getByUsername('billy');
+
+            //Load MassDelete view for the 8 contacts.
+            $contacts = Contact::getAll();
+            $this->assertEquals(8, count($contacts));
+             //Deleting all contacts
+
+            //mass Delete pagination scenario
+            //Run Mass Delete using progress save for page1
             $this->setGetArray(array(
                 'selectAll' => '1',
                 'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => $contact1->id));
+            $this->setPostArray(array('selectedRecordCount' => 8));
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('contacts/default/massDelete');
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            $content = $this->runControllerWithExitExceptionAndGetContent('contacts/default/massDelete');
+            $contacts = Contact::getAll();
+            $this->assertEquals(3, count($contacts));
+
+           //Run Mass Delete using progress save for page2
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 8));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/massDeleteProgress');
+            $contacts = Contact::getAll();
+            $this->assertEquals(0, count($contacts));
         }
     }
 ?>

@@ -50,12 +50,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Social Item');
+            return Zurmo::t('SocialItemsModule', 'Social Item');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Social Item');
+            return Zurmo::t('SocialItemsModule', 'Social Item');
         }
 
         /**

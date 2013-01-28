@@ -35,7 +35,7 @@
         {
             if (trim($this->fromAddress) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('EmailMessagesModule', '(Unnamed)');
             }
             return $this->fromAddress;
         }

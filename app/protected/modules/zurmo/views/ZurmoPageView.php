@@ -28,7 +28,7 @@
     {
         public function getTitle()
         {
-            return Yii::t('Default', 'ZurmoCRM');
+            return Zurmo::t('ZurmoModule', 'ZurmoCRM');
         }
 
         protected function getStyles()

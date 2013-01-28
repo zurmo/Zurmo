@@ -35,7 +35,7 @@
 
         protected function getSubtitle()
         {
-            Yii::t('Default', 'Oh no!');
+            Zurmo::t('ZurmoModule', 'Oh no!');
         }
     }
 ?>

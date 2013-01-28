@@ -39,7 +39,7 @@
             $uploadedFile  = CUploadedFile::getInstanceByName($filesVariableName);
             if ($uploadedFile == null)
             {
-                throw new FailedFileUploadException(Yii::t('Default', 'The file did not exist'));
+                throw new FailedFileUploadException(Zurmo::t('Core', 'The file did not exist'));
             }
             elseif ($uploadedFile->getHasError())
             {
@@ -47,36 +47,36 @@
                 $messageParams = array('{file}' => $uploadedFile->getName(), '{limit}' => self::getSizeLimit());
                 if ($error == UPLOAD_ERR_NO_FILE)
                 {
-                    $message = Yii::t('Default', 'The file did not exist');
+                    $message = Zurmo::t('Core', 'The file did not exist');
                 }
                 elseif ($error == UPLOAD_ERR_INI_SIZE || $error == UPLOAD_ERR_FORM_SIZE)
                 {
-                    $message = Yii::t('yii', 'The file "{file}" is too large. Its size cannot exceed {limit} bytes.',
+                    $message = Zurmo::t('yii', 'The file "{file}" is too large. Its size cannot exceed {limit} bytes.',
                                                  $messageParams);
                 }
                 elseif ($error == UPLOAD_ERR_PARTIAL)
                 {
-                    $message = Yii::t('yii', 'The file "{file}" is too large. Its size cannot exceed {limit} bytes.',
+                    $message = Zurmo::t('yii', 'The file "{file}" is too large. Its size cannot exceed {limit} bytes.',
                                                  $messageParams);
                 }
                 elseif ($error == UPLOAD_ERR_NO_TMP_DIR)
                 {
-                    $message = Yii::t('yii', 'Missing the temporary folder to store the uploaded file "{file}".',
+                    $message = Zurmo::t('yii', 'Missing the temporary folder to store the uploaded file "{file}".',
                                                  $messageParams);
                 }
                 elseif ($error == UPLOAD_ERR_CANT_WRITE)
                 {
-                    $message = Yii::t('yii', 'Failed to write the uploaded file "{file}" to disk.',
+                    $message = Zurmo::t('yii', 'Failed to write the uploaded file "{file}" to disk.',
                                                  $messageParams);
                 }
                 elseif (defined('UPLOAD_ERR_EXTENSION') && $error == UPLOAD_ERR_EXTENSION)
                 {
-                    $message = Yii::t('yii', 'File upload was stopped by extension.');
+                    $message = Zurmo::t('yii', 'File upload was stopped by extension.');
                 }
                 else
                 {
                     //Unsupported or unknown error.
-                    $message = Yii::t('Default', 'There was an error uploading the file.');
+                    $message = Zurmo::t('Core', 'There was an error uploading the file.');
                 }
                 throw new FailedFileUploadException($message);
             }

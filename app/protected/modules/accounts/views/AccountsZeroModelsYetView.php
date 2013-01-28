@@ -32,12 +32,12 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default', 'Create AccountsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('AccountsModule', 'Create AccountsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>"As we must Account for every idle word, so must we Account for every idle ' .
+            return Zurmo::t('AccountsModule', '<h2>"As we must Account for every idle word, so must we Account for every idle ' .
                                      'silence."</h2><i>- Benjamin Franklin</i></i><div class="large-icon"></div><p>Be the first to create an Account and, ' .
                                      'as Ben would say, "So must we Account for every company, organization, or ' .
                                      'customer we interact with."</p>');

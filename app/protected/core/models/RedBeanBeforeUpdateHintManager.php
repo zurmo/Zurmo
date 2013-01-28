@@ -43,7 +43,13 @@
                     if (in_array($value, array('blob', 'longblob', 'boolean', 'date', 'datetime', 'string',
                                                'text', 'longtext', 'id')))
                     {
-                        RedBeanColumnTypeOptimizer::optimize($info->getMeta("type"), $key, $value);
+                        RedBeanColumnTypeOptimizer::optimize($info->getMeta("type"), $key, $value, null);
+                    }
+                    elseif (preg_match('/string\((.*)\)/', $value, $matches))
+                    {
+                        $type   = 'string';
+                        $length = $matches[1];
+                        RedBeanColumnTypeOptimizer::optimize($info->getMeta("type"), $key, $type, $length);
                     }
                 }
             }

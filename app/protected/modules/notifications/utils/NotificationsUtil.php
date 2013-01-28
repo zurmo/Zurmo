@@ -31,7 +31,7 @@
     {
         protected static function getEmailSubject()
         {
-            return Yii::t('Default', 'You have a new notification');
+            return Zurmo::t('NotificationsModule', 'You have a new notification');
         }
 
         /**
@@ -174,7 +174,7 @@
             }
             else
             {
-                $content .= '<div class="single-notification">' . Yii::t('Default', 'There are no recent notifications.') . '</div>';
+                $content .= '<div class="single-notification">' . Zurmo::t('NotificationsModule', 'There are no recent notifications.') . '</div>';
             }
             return $content;
         }

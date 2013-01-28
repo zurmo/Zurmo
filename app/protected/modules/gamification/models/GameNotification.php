@@ -37,7 +37,7 @@
 
         public function __toString()
         {
-            return Yii::t('Default', '(Unnamed)');
+            return Zurmo::t('GamificationModule', '(Unnamed)');
         }
 
         /**

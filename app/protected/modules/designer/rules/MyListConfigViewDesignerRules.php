@@ -28,7 +28,7 @@
     {
         public function getDisplayName()
         {
-            return Yii::t('Default', 'My List Configuration View');
+            return Zurmo::t('DesignerModule', 'My List Configuration View');
         }
 
         public function maxCellsPerRow()

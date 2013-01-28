@@ -28,7 +28,7 @@
     {
         public function getTitle()
         {
-            return Yii::t('Default', 'Email Configuration');
+            return Zurmo::t('EmailMessagesModule', 'Email Configuration');
         }
 
         protected function getCategoryData()

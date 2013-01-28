@@ -83,7 +83,7 @@
         {
             echo NotificationsUtil::getRecentAjaxContentByUser(Yii::app()->user->userModel, 10);
             $linkHtmlOptions = array('class' => 'view-all-notifications');
-            echo ZurmoHtml::link(Yii::t('Default', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
+            echo ZurmoHtml::link(Zurmo::t('NotificationsModule', 'View All Notifications'), array('/notifications/default'), $linkHtmlOptions);
         }
 
         public function actionDeleteFromAjax($id)

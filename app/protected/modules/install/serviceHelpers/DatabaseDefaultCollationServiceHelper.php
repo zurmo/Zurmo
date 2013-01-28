@@ -56,21 +56,21 @@
                 if ($databaseDefaultCollation != null)
                 {
                     $notAllowedCollations = implode(', ', $this->notAllowedDatabaseCollations);
-                    $this->message  = Yii::t('Default', 'Database default collation is: {collation}',
+                    $this->message  = Zurmo::t('InstallModule', 'Database default collation is: {collation}',
                                              array('{collation}' => $databaseDefaultCollation));
                     $this->message .= ' . ';
-                    $this->message .= Yii::t('Default', 'Database default collation should not be in: {listOfCollations}',
+                    $this->message .= Zurmo::t('InstallModule', 'Database default collation should not be in: {listOfCollations}',
                                              array('{listOfCollations}' => $notAllowedCollations));
                 }
                 else
                 {
-                    $this->message = Yii::t('Default', 'Could not get value of database default collation.');
+                    $this->message = Zurmo::t('InstallModule', 'Could not get value of database default collation.');
                 }
                 $passed = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database default collation meets minimum requirement.');
+                $this->message = Zurmo::t('InstallModule', 'Database default collation meets minimum requirement.');
             }
             return $passed;
         }

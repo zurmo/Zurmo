@@ -35,7 +35,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Match archived emails');
+            return Zurmo::t('EmailMessagesModule', 'Match archived emails');
         }
 
         public static function getType()

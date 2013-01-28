@@ -49,7 +49,7 @@
          */
         protected function renderLabel()
         {
-            return ZurmoHtml::label(Yii::t('Default', 'Field Type'), false);
+            return ZurmoHtml::label(Zurmo::t('DesignerModule', 'Field Type'), false);
         }
 
         public static function isReadOnly()

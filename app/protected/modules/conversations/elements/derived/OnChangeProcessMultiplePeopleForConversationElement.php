@@ -65,7 +65,7 @@
                             {
                                 $('#" . self::getNotificationBarId() . "').jnotifyAddMessage(
                                 {
-                                    text: '" . Yii::t('Default', 'Participants updated successfully') . "',
+                                    text: '" . Zurmo::t('ConversationsModule', 'Participants updated successfully') . "',
                                     permanent: false,
                                     showIcon: true,
                                     type: data.type

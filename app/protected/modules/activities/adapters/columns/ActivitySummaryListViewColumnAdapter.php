@@ -32,7 +32,7 @@
             //we could maybe just pass template in, but does task even know how to get its relatedaccountname?
             return array(
                     'name' => 'summary',
-                    'header' => Yii::t('Default', 'Summary'),
+                    'header' => Zurmo::t('ActivitiesModule', 'Summary'),
                     'type'  => 'raw',
                     'value'  => 'ActivitiesUtil::renderSummaryContent($data, "' .
                                 $this->view->redirectUrl . '", "' .

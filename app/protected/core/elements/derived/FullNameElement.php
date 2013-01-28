@@ -52,12 +52,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Name');
+            return Zurmo::t('Core', 'Name');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Full Name');
+            return Zurmo::t('Core', 'Full Name');
         }
 
         /**

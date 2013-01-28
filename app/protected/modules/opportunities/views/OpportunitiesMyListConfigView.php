@@ -71,7 +71,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('OpportunitiesModule', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         public static function getModelForMetadataClassName()

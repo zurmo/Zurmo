@@ -111,18 +111,18 @@
                 }
                 if (!$atLeastOneElementPlaced)
                 {
-                    $this->message = Yii::t('Default', 'You must have at least one field placed in order to save a layout.');
+                    $this->message = Zurmo::t('DesignerModule', 'You must have at least one field placed in order to save a layout.');
                     return false;
                 }
             }
             else
             {
-                $this->message = Yii::t('Default', 'You must have at least one panel in order to save a layout.');
+                $this->message = Zurmo::t('DesignerModule', 'You must have at least one panel in order to save a layout.');
                 return false;
             }
             if ($this->designerRules->requireAllRequiredFieldsInLayout() && !$this->areAllRequiredAttributesPlaced())
             {
-                $this->message = Yii::t('Default', 'All required fields must be placed in this layout.');
+                $this->message = Zurmo::t('DesignerModule', 'All required fields must be placed in this layout.');
                 return false;
             }
             if ($this->designerRules->requireOnlyUniqueFieldsInLayout() && !$this->areAllPlacedAttributesUnique())
@@ -134,7 +134,7 @@
             {
                 $viewClassName::setMetadata($this->makeMergedSaveableMetadata($viewClassName, $savableMetadata));
             }
-            $this->message = Yii::t('Default', 'Layout saved successfully.');
+            $this->message = Zurmo::t('DesignerModule', 'Layout saved successfully.');
             return true;
         }
 
@@ -345,7 +345,7 @@
                             if (in_array($usedAttribute, $this->placedDirectAttributeNamesAsElements))
                             {
                                 $this->message =
-                                Yii::t('Default', 'All fields placed must be unique. Two of the placed ' .
+                                Zurmo::t('DesignerModule', 'All fields placed must be unique. Two of the placed ' .
                                                   'fields: {field1Label} and {field2Label} contain the same fields.',
                                                    array('{field1Label}'   => $this->placeableLayoutAttributes
                                                                               [$attributeName]['attributeLabel'],

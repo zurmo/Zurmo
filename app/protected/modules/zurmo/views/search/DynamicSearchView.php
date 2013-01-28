@@ -223,9 +223,7 @@
             $content              = ZurmoHtml::hiddenField($hiddenInputName, $rowCount, $idInputHtmlOptions);
             // Begin Not Coding Standard
             $addFieldLabelContent = $this->getAddFieldLabelContent();
-            $aContent             = ZurmoHtml::tag('span', array('class' => 'z-spinner'), null);
-            $aContent            .= ZurmoHtml::tag('span', array('class' => 'z-icon'), null);
-            $aContent            .= ZurmoHtml::tag('span', array('class' => 'z-label'), $addFieldLabelContent);
+            $aContent             = ZurmoHtml::wrapLink($addFieldLabelContent);
             $content             .= ZurmoHtml::ajaxLink($aContent, $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'rowNumber=\' + $(\'#rowCounter-' . $this->getSearchFormId(). '\').val()',
@@ -250,7 +248,7 @@
 
         protected function getAddFieldLabelContent()
         {
-            return Yii::t('Default', 'Add criteria');
+            return Zurmo::t('ZurmoModule', 'Add criteria');
         }
 
         protected function renderAfterFormLayout($form)
@@ -305,7 +303,7 @@
             {
                 $style3 = 'display:none;';
             }
-            $content  = ZurmoHtml::link(Yii::t('Default', 'Modify Structure'), '#',
+            $content  = ZurmoHtml::link(Zurmo::t('ZurmoModule', 'Modify Structure'), '#',
                             array('id'    => 'show-dynamic-search-structure-div-link-' . $this->getSearchFormId() . '',
                                   'style' => $style1));
             $content .= ZurmoHtml::tag('div',
@@ -323,7 +321,7 @@
                                          'name'  => $this->getStructureInputName(),
                                          'class' => 'dynamic-search-structure-input');
             $content             = $form->textField($this->model, 'dynamicStructure', $idInputHtmlOptions);
-            $content            .= ZurmoHtml::tag('span', array(), Yii::t('Default', 'Search Operator'));
+            $content            .= ZurmoHtml::tag('span', array(), Zurmo::t('ZurmoModule', 'Search Operator'));
             $content            .= $form->error($this->model, 'dynamicStructure');
             return $content;
         }
@@ -355,7 +353,7 @@
 
         protected function getClearSearchLabelContent()
         {
-            return Yii::t('Default', 'Criteria Selected <span class="icon-clear">Z</span>');
+            return Zurmo::t('ZurmoModule', 'Criteria Selected <span class="icon-clear">Z</span>');
         }
 
         protected function getClearSearchLinkStartingStyle()

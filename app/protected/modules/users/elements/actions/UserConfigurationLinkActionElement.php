@@ -40,11 +40,11 @@
                                'url'   => null,
                                'itemOptions' => array('class' => 'icon-user-config_', 'id' => 'UserViewAccountConfiguration'),
                                'items' => array(
-                                   array('label'   => Yii::t('Default', 'General'),
+                                   array('label'   => Zurmo::t('UsersModule', 'General'),
                                        'url'     => $this->route . '/configurationEdit?id=' . $this->modelId),
-                                   array('label'   => Yii::t('Default', 'Email'),
+                                   array('label'   => Zurmo::t('UsersModule', 'Email'),
                                        'url'     => $this->route . '/emailConfiguration?id=' . $this->modelId),
-                                   array('label'   => Yii::t('Default', 'Security'),
+                                   array('label'   => Zurmo::t('UsersModule', 'Security'),
                                        'url'     => $this->route . '/securityDetails?id=' . $this->modelId)));
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ActionMenu");
@@ -57,7 +57,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Configuration');
+            return Zurmo::t('UsersModule', 'Configuration');
         }
 
         protected function getDefaultRoute()

@@ -38,7 +38,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Create');
+            return Zurmo::t('Core', 'Create');
         }
 
         protected function getDefaultRoute()

@@ -33,7 +33,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Remove the api test entry script for production use.');
+            return Zurmo::t('JobsManagerModule', 'Remove the api test entry script for production use.');
         }
 
         public static function getType()

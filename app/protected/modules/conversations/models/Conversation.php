@@ -43,7 +43,7 @@
             {
                 if (trim($this->subject) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('ConversationsModule', '(Unnamed)');
                 }
                 return $this->subject;
             }

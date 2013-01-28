@@ -33,7 +33,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'TasksModulePluralLabel For OpportunitiesModuleSingularLabel',
+            return Zurmo::t('TasksModule', 'TasksModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
     }

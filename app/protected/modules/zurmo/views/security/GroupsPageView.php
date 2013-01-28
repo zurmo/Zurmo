@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Groups');
+            return Zurmo::t('ZurmoModule', 'Groups');
         }
     }
 ?>

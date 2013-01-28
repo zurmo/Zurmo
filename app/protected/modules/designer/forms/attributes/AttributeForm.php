@@ -74,7 +74,7 @@
             $attributeLabel = ModelFormAttributeLabelsUtil::getTranslatedAttributeLabelByLabels($this->attributeLabels);
             if ($attributeLabel == null)
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('DesignerModule', '(Unnamed)');
             }
             return $attributeLabel;
         }
@@ -84,10 +84,10 @@
             return array(
                 array('attributeName', 'required'),
                 array('attributeName', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/', // Not Coding Standard
-                                                'message' =>  Yii::t('Default', 'Name must not contain spaces or special characters'),
+                                                'message' =>  Zurmo::t('DesignerModule', 'Name must not contain spaces or special characters'),
                 ),
                 array('attributeName', 'match', 'pattern' => '/^[a-z]/', // Not Coding Standard
-                                                'message' =>  Yii::t('Default', 'First character must be a lower case letter'),
+                                                'message' =>  Zurmo::t('DesignerModule', 'First character must be a lower case letter'),
                 ),
                 array('attributeName',
                     'length',
@@ -113,11 +113,11 @@
         public function attributeLabels()
         {
             return array(
-                'attributeName'   => Yii::t('Default', 'Field Name'),
-                'attributeLabels' => Yii::t('Default', 'Display Name'),
-                'defaultValue'    => Yii::t('Default', 'Default Value'),
-                'isAudited'       => Yii::t('Default', 'Track Audit Log'),
-                'isRequired'      => Yii::t('Default', 'Required Field'),
+                'attributeName'   => Zurmo::t('DesignerModule', 'Field Name'),
+                'attributeLabels' => Zurmo::t('DesignerModule', 'Display Name'),
+                'defaultValue'    => Zurmo::t('DesignerModule', 'Default Value'),
+                'isAudited'       => Zurmo::t('DesignerModule', 'Track Audit Log'),
+                'isRequired'      => Zurmo::t('DesignerModule', 'Required Field'),
             );
         }
 
@@ -166,7 +166,7 @@
             $model = new $modelClassName();
             if ($model->isAttribute($this->attributeName))
             {
-                $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+                $this->addError('attributeName', Zurmo::t('DesignerModule', 'A field with this name is already used.'));
             }
         }
 
@@ -177,7 +177,7 @@
         {
             if (in_array($this->attributeName, DatabaseCompatibilityUtil::getDatabaseReserverWords()))
             {
-                $this->addError('attributeName', Yii::t('Default', '"{$attributeName}" field name is a database reserved word. Please enter a different one.',
+                $this->addError('attributeName', Zurmo::t('DesignerModule', '"{$attributeName}" field name is a database reserved word. Please enter a different one.',
                                                  array('{$attributeName}' => $this->attributeName)));
             }
         }
@@ -189,7 +189,7 @@
             {
                 if ( empty($data[$language]))
                 {
-                    $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
+                    $this->addError($attribute . '[' . $language . ']', Zurmo::t('DesignerModule', 'Label must not be empty.'));
                 }
             }
         }

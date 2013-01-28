@@ -70,9 +70,9 @@
             $content .= '<col style="width:10%" /><col style="width:80%" /><col style="width:10%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Rank') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'User') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Points') . '</th>';
+            $content .= '<tr><th>' . Zurmo::t('GamificationModule', 'Rank') . '</th>';
+            $content .= '<th>' . Zurmo::t('GamificationModule', 'User') . '</th>';
+            $content .= '<th>' . Zurmo::t('GamificationModule', 'Points') . '</th>';
             $content .= '</tr>';
             foreach ($this->leaderboardData as $userId => $leaderboardData)
             {

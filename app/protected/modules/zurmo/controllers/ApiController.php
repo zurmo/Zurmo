@@ -38,7 +38,7 @@
             }
             catch (Exception $e)
             {
-                $message = Yii::t('Default', 'An error occured during login. Please try again.');
+                $message = Zurmo::t('ZurmoModule', 'An error occured during login. Please try again.');
                 throw new ApiException($message);
             }
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
@@ -52,7 +52,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Invalid username or password.');
+                $message = Zurmo::t('ZurmoModule', 'Invalid username or password.');
                 throw new ApiException($message);
             }
         }
@@ -67,7 +67,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Sign out failed.');
+                $message = Zurmo::t('ZurmoModule', 'Sign out failed.');
                 throw new ApiException($message);
             }
         }

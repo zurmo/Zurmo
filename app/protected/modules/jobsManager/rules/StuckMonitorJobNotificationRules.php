@@ -33,7 +33,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'The monitor job is stuck.');
+            return Zurmo::t('JobsManagerModule', 'The monitor job is stuck.');
         }
 
         public static function getType()

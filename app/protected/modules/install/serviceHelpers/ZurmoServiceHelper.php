@@ -36,7 +36,7 @@
         protected function checkService()
         {
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkZurmo',
-                                                                                Yii::t('Default', 'Zurmo Version'));
+                                                                                Zurmo::t('InstallModule', 'Zurmo Version'));
         }
 
         /**
@@ -76,7 +76,7 @@
             }
             else
             {
-                $this->message .= Yii::t('Default', 'Your ZurmoCRM software is outdated, new stable release available:') . ' ' . $latestStableVersion;
+                $this->message .= Zurmo::t('InstallModule', 'Your ZurmoCRM software is outdated, new stable release available:') . ' ' . $latestStableVersion;
                 return false;
             }
         }

@@ -32,12 +32,12 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default', 'Create LeadsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('LeadsModule', 'Create LeadsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>"Lead, follow, or get out of the way."</h2> ' .
+            return Zurmo::t('LeadsModule', '<h2>"Lead, follow, or get out of the way."</h2> ' .
                                      '<i>- Thomas Paine</i></i><div class="large-icon"></div><p>Leads are potential clients that should be followed up ' .
                                      'on.  Be the first to create a Lead or get out of the way so someone else can.</p>');
         }

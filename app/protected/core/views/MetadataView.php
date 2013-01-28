@@ -32,6 +32,8 @@
     {
         protected $editableDesignerMetadata = false;
 
+        protected $disableFloatOnToolbar  = false;
+
         protected $modelId;
 
         /**
@@ -50,6 +52,28 @@
         public static function getDefaultMetadata()
         {
             return array();
+        }
+
+        /**
+         * @returns string content of $content passed in wrapped in the view-toolbar-container and view-toolbar. Also
+         * accommodates for ignoring the dock if necessary
+         */
+        protected function resolveAndWrapDockableViewToolbarContent($content)
+        {
+            assert('is_string($content)');
+            if ($this->disableFloatOnToolbar)
+            {
+                $disableFloatContent = ' disable-float-bar';
+            }
+            else
+            {
+                $disableFloatContent = null;
+            }
+            $content = ZurmoHtml::tag('div', array('class' => 'form-toolbar'), $content);
+            $content = ZurmoHtml::tag('div', array('class' => 'view-toolbar-container clearfix dock' .
+                       $disableFloatContent), $content);
+            $content = ZurmoHtml::tag('div', array('class' => 'float-bar'), $content);
+            return $content;
         }
 
         /**
@@ -178,7 +202,7 @@
         {
             if ($title == null)
             {
-                $title = Yii::t('Default', 'Options');
+                $title = Zurmo::t('Core', 'Options');
             }
             $metadata  = $this::getMetadata();
             $menuItems = array('label' => $title, 'items' => array());

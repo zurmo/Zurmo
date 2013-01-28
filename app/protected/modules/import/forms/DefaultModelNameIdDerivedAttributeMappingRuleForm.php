@@ -76,8 +76,8 @@
 
         public function attributeLabels()
         {
-            return array('defaultModelId'              => Yii::t('Default', 'Default Value'),
-                         'defaultModelStringifiedName' => Yii::t('Default', 'Default Name'));
+            return array('defaultModelId'              => Zurmo::t('ImportModule', 'Default Value'),
+                         'defaultModelStringifiedName' => Zurmo::t('ImportModule', 'Default Name'));
         }
 
         public static function getAttributeName()

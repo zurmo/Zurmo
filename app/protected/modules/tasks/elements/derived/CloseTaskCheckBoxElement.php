@@ -50,12 +50,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Close Task Check Box');
+            return Zurmo::t('TasksModule', 'Close Task Check Box');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Close Task Check Box');
+            return Zurmo::t('TasksModule', 'Close Task Check Box');
         }
 
         /**

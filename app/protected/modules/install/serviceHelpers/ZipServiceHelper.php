@@ -36,12 +36,12 @@
             $zipInstalled =  InstallUtil::checkZip();
             if ($zipInstalled)
             {
-                $this->message  = Yii::t('Default', 'Zip extension is loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'Zip extension is loaded.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Zip extension is not loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'Zip extension is not loaded.');
                 return false;
             }
         }

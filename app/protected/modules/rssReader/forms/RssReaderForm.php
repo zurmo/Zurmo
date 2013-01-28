@@ -44,8 +44,8 @@
         public function attributeLabels()
         {
             return array(
-                'title' => Yii::t('Default', 'Title'),
-                'url'   => Yii::t('Default', 'RSS URL'),
+                'title' => Zurmo::t('RssReaderModule', 'Title'),
+                'url'   => Zurmo::t('RssReaderModule', 'RSS URL'),
             );
         }
 

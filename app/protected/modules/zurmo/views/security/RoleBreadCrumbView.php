@@ -31,7 +31,7 @@
     {
             protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Roles Home');
+            return Zurmo::t('ZurmoModule', 'Roles Home');
         }
     }
 ?>

@@ -38,7 +38,7 @@
         {
             return array(
                 array('apiKey', 'required'),
-                array('apiKey', 'type', 'type' => 'Text'),
+                array('apiKey', 'type', 'type' => 'string'),
             );
         }
 
@@ -48,7 +48,7 @@
         public function attributeLabels()
         {
             return array(
-                'apiKey' => Yii::t('Default', 'Google Map API Key'),
+                'apiKey' => Zurmo::t('MapsModule', 'Google Map API Key'),
             );
         }
     }

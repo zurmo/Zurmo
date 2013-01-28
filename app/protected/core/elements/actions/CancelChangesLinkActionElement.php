@@ -33,11 +33,11 @@
         {
             if (!empty($this->modelId) && $this->modelId > 0)
             {
-                return Yii::t('Default', 'Cancel Changes');
+                return Zurmo::t('Core', 'Cancel Changes');
             }
             else
             {
-                return Yii::t('Default', 'Cancel');
+                return Zurmo::t('Core', 'Cancel');
             }
         }
     }

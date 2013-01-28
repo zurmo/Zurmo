@@ -48,10 +48,10 @@
             {
                 $span        = ZurmoHtml::tag('span',
                                       array('id'    => 'profile-picture-tooltip'),
-                                      Yii::t('Default', 'Change Profile Picture'),
+                                      Zurmo::t('UsersModule', 'Change Profile Picture'),
                                       true);
                 $url         = Yii::app()->createUrl('/users/default/changeAvatar', array('id' => $this->model->id));
-                $modalTitle  = ModalView::getAjaxOptionsForModalLink(Yii::t('Default', 'Change Profile Picture') . ": " . strval($this->model));
+                $modalTitle  = ModalView::getAjaxOptionsForModalLink(Zurmo::t('UsersModule', 'Change Profile Picture') . ": " . strval($this->model));
                 $content    .= ZurmoHtml::ajaxLink($span . $avatarImage, $url, $modalTitle);
             }
             else
@@ -82,10 +82,10 @@
         private function resolveRadioOptions()
         {
             $primaryEmail = $this->model->primaryEmail;
-            $radioOptions = array(User::AVATAR_TYPE_DEFAULT       => Yii::t('Default', 'No Profile Picture'),
-                                  User::AVATAR_TYPE_PRIMARY_EMAIL => Yii::t('Default', 'Use Gravatar with primary email ({primaryEmail})',
+            $radioOptions = array(User::AVATAR_TYPE_DEFAULT       => Zurmo::t('UsersModule', 'No Profile Picture'),
+                                  User::AVATAR_TYPE_PRIMARY_EMAIL => Zurmo::t('UsersModule', 'Use Gravatar with primary email ({primaryEmail})',
                                                                             array('{primaryEmail}' => $primaryEmail)),
-                                  User::AVATAR_TYPE_CUSTOM_EMAIL  => Yii::t('Default', 'Use Gravatar with custom email'));
+                                  User::AVATAR_TYPE_CUSTOM_EMAIL  => Zurmo::t('UsersModule', 'Use Gravatar with custom email'));
             return $radioOptions;
         }
 
@@ -113,7 +113,7 @@
 
         protected static function renderTooltipContent()
         {
-            $title       = Yii::t('Default', 'Your Gravatar is an image that follows you from site to site appearing beside your ' .
+            $title       = Zurmo::t('UsersModule', 'Your Gravatar is an image that follows you from site to site appearing beside your ' .
                                              'name when you do things like comment or post on a blog.');
             $content     = '<span id="user-gravatar-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= '?</span>';

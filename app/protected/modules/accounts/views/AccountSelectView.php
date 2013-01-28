@@ -89,7 +89,7 @@
                                                       null,
                                                       array('htmlOptions' =>
                                                           array('name'   => 'AccountSelect', 'id' => 'AccountSelect'),
-                                                                'label'  => Yii::t('Default', 'Complete Conversion')));
+                                                                'label'  => Zurmo::t('AccountsModule', 'Complete Conversion')));
             $content .= $element->render();
             $content .= '</div></div>';
             return $content;

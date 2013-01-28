@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Radio Pick List');
+            return Zurmo::t('DesignerModule', 'Radio Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A radio button pick list');
+            return Zurmo::t('DesignerModule', 'A radio button pick list');
         }
 
         public function getAttributeTypeName()

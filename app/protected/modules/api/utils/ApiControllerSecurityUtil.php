@@ -38,7 +38,7 @@
          */
         protected static function renderAccessFailureContent($fromAjax = false, $nonAjaxFailureMessageContent = null)
         {
-            $message = Yii::t('Default', 'You do not have permissions for this action.');
+            $message = Zurmo::t('ApiModule', 'You do not have permissions for this action.');
             throw new SecurityException($message);
         }
     }

@@ -51,7 +51,7 @@
             {
                 if (trim($this->description) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('MissionsModule', '(Unnamed)');
                 }
                 return $this->description;
             }
@@ -204,23 +204,23 @@
             {
                 if ($this->status == self::STATUS_TAKEN)
                 {
-                    $messageContent = Yii::t('Default', 'A mission you created has been taken on by {takenByUserName}',
+                    $messageContent = Zurmo::t('MissionsModule', 'A mission you created has been taken on by {takenByUserName}',
                                                         array('{takenByUserName}' => strval($this->takenByUser)));
                     MissionsUtil::makeAndSubmitStatusChangeNotificationMessage($this->owner, $this->id, $messageContent);
                 }
                 elseif ($this->status == self::STATUS_COMPLETED)
                 {
-                    $messageContent = Yii::t('Default', 'A mission you created has been completed');
+                    $messageContent = Zurmo::t('MissionsModule', 'A mission you created has been completed');
                     MissionsUtil::makeAndSubmitStatusChangeNotificationMessage($this->owner, $this->id, $messageContent);
                 }
                 elseif ($this->status == self::STATUS_REJECTED && $this->takenByUser->id > 0)
                 {
-                    $messageContent = Yii::t('Default', 'A mission you completed has been rejected');
+                    $messageContent = Zurmo::t('MissionsModule', 'A mission you completed has been rejected');
                     MissionsUtil::makeAndSubmitStatusChangeNotificationMessage($this->takenByUser, $this->id, $messageContent);
                 }
                 elseif ($this->status == self::STATUS_ACCEPTED && $this->takenByUser->id > 0)
                 {
-                    $messageContent = Yii::t('Default', 'A mission you completed has been accepted');
+                    $messageContent = Zurmo::t('MissionsModule', 'A mission you completed has been accepted');
                     MissionsUtil::makeAndSubmitStatusChangeNotificationMessage($this->takenByUser, $this->id, $messageContent);
                 }
             }

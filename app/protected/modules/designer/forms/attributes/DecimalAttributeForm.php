@@ -61,18 +61,18 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'precisionLength' => Yii::t('Default', 'Precision'),
+                'precisionLength' => Zurmo::t('DesignerModule', 'Precision'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Decimal');
+            return Zurmo::t('DesignerModule', 'Decimal');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A decimal field');
+            return Zurmo::t('DesignerModule', 'A decimal field');
         }
 
         public function getAttributeTypeName()

@@ -44,6 +44,12 @@
             {
                 throw new NotSupportedException();
             }
+            $userCanDelete = UserTestHelper::createBasicUser('usercandelete');
+            $userCanDelete->primaryEmail->emailAddress = 'usercandelete@supertest.com';
+            if (!$userCanDelete->save())
+            {
+                throw new NotSupportedException();
+            }
             ContactsModule::loadStartingData();
         }
 
@@ -51,14 +57,12 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/matchingList');
-
             $message1             = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($super);
             $message2             = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($super);
             $message3             = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($super);
             $contact              = ContactTestHelper::createContactByNameForOwner('gail', $super);
             $startingContactState = ContactsUtil::getStartingState();
             $startingLeadState    = LeadsUtil::getStartingState();
-
             //test validating selecting an existing contact
             $this->setGetArray(array('id' => $message1->id));
             $this->setPostArray(array('ajax' => 'select-contact-form-' . $message1->id,
@@ -96,6 +100,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/completeMatch', true);
             $this->assertEquals('bob.message@zurmotest.com', $contact->primaryEmail->emailAddress);
             $this->assertTrue($message1->sender->personOrAccount->isSame($contact));
+            $this->assertEquals('Archived', $message1->folder);
 
             //test creating new contact and saving
             $this->assertEquals(1, Contact::getCount());
@@ -110,6 +115,7 @@
             $contacts = Contact::getByName('George Patton');
             $contact  = $contacts[0];
             $this->assertTrue($message2->sender->personOrAccount->isSame($contact));
+            $this->assertEquals('Archived', $message2->folder);
 
             //test creating new lead and saving
             $this->assertEquals(2, Contact::getCount());
@@ -124,6 +130,7 @@
             $contacts = Contact::getByName('Billy Kid');
             $contact  = $contacts[0];
             $this->assertTrue($message3->sender->personOrAccount->isSame($contact));
+            $this->assertEquals('Archived', $message3->folder);
         }
 
         /**
@@ -176,5 +183,21 @@
             $this->assertTrue($nobody->save());
             $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/matchingList');
         }
+
+        public function testDeleteAction()
+        {
+            $userCanDelete = $this->logoutCurrentUserLoginNewUserAndGetByUsername('usercandelete');
+            $userCanDelete->setRight('EmailMessagesModule', EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES);
+            $this->assertTrue($userCanDelete->save());
+            $userCanDelete->setRight('ContactsModule', ContactsModule::RIGHT_ACCESS_CONTACTS);
+            $userCanDelete->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
+            $userCanDelete->setRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);
+            $contact              = ContactTestHelper::createContactByNameForOwner('gail', $userCanDelete);
+            $startingContactState = ContactsUtil::getStartingState();
+            $startingLeadState    = LeadsUtil::getStartingState();
+            $message1 = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($userCanDelete);
+            $this->setGetArray(array('id' => $message1->id));
+            $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/delete', true);
+       }
     }
 ?>

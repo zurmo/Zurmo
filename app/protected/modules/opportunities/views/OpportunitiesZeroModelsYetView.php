@@ -32,12 +32,12 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default', 'Create OpportunitiesModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('OpportunitiesModule', 'Create OpportunitiesModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>"In the middle of difficulty lies Opportunity."</h2> ' .
+            return Zurmo::t('OpportunitiesModule', '<h2>"In the middle of difficulty lies Opportunity."</h2> ' .
                                      '<i>- Albert Einstein</i></i><div class="large-icon"></div><p>In the middle of a well-implemented ' .
                                      'CRM system lies Opportunities, or expressions of potential revenue. ' .
                                      'Nothing difficult about creating an Opportunity, so go ahead and create the ' .

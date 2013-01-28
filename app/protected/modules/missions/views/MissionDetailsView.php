@@ -74,21 +74,21 @@
             {
                 $element                      = new TextElement($this->model, 'reward');
                 $element->nonEditableTemplate = '<div class="comment-content">' .
-                                                Yii::t('Default', 'Reward') . ': {content}</div>';
+                                                Zurmo::t('MissionsModule', 'Reward') . ': {content}</div>';
                 $content                     .= $element->render();
             }
             if ($this->model->takenByUser->id > 0)
             {
                 $element                      = new UserElement($this->model, 'takenByUser');
                 $element->nonEditableTemplate = '<div class="comment-content">' .
-                                                Yii::t('Default', 'Taken By') . ': {content}</div>';
+                                                Zurmo::t('MissionsModule', 'Taken By') . ': {content}</div>';
                 $content                     .= $element->render();
             }
             if (!DateTimeUtil::isDateTimeValueNull($this->model, 'dueDateTime'))
             {
                 $element                      = new DateTimeElement($this->model, 'dueDateTime');
                 $element->nonEditableTemplate = '<div class="comment-content">' .
-                                                Yii::t('Default', 'Due') . ': {content}</div>';
+                                                Zurmo::t('MissionsModule', 'Due') . ': {content}</div>';
                 $content                     .= $element->render();
             }
             $date = '<span class="comment-details"><strong>'. DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(
@@ -98,12 +98,12 @@
             {
                 $element  = new FilesElement($this->model, 'null');
                 $element->nonEditableTemplate = '<div>{content}</div>';
-                $content .= '<div><strong>' . Yii::t('Default', 'Attachments'). '</strong></div>';
+                $content .= '<div><strong>' . Zurmo::t('MissionsModule', 'Attachments'). '</strong></div>';
                 $content .= $element->render();
             }
             $element                      = new MissionStatusElement($this->model, 'status');
             $element->nonEditableTemplate = '<div class="comment-content">' .
-                                            Yii::t('Default', 'Status') . ': {content}</div>';
+                                            Zurmo::t('MissionsModule', 'Status') . ': {content}</div>';
             $content                     .= $element->render();
             $content .= '</div>';
             return ZurmoHtml::tag('div', array('id' => 'ModelDetailsSummaryView'), $content);
@@ -124,7 +124,7 @@
 
         protected function renderMissionCreateCommentContent()
         {
-            $content       = ZurmoHtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
+            $content       = ZurmoHtml::tag('h2', array(), Zurmo::t('MissionsModule', 'Add Comment'));
             $comment       = new Comment();
             $uniquePageId  = 'CommentInlineEditForModelView';
             $redirectUrl   = Yii::app()->createUrl('/missions/default/inlineCreateCommentFromAjax',

@@ -32,13 +32,13 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default',
+            return Zurmo::t('MissionsModule',
                           'Create Mission');
         }
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>"Make your life a mission - not an intermission."' .
+            return Zurmo::t('MissionsModule', '<h2>"Make your life a mission - not an intermission."' .
                                      '</h2><i>- Arnold Glasgow</i></i><div class="large-icon"></div><p>' .
                                      'Create a Mission in the CRM for something that needs to get done. ' .
                                      'Could be getting lunch for the team at the local taco stand or completing ' .

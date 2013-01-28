@@ -65,9 +65,9 @@
                 'model'                  => $this->model,
                 'form'                   => $form,
                 'leftSideAttributeName'  => 'userNonMembershipData',
-                'leftSideDisplayLabel'   => Yii::t('Default', 'Non Members'),
+                'leftSideDisplayLabel'   => Zurmo::t('ZurmoModule', 'Non Members'),
                 'rightSideAttributeName' => 'userMembershipData',
-                'rightSideDisplayLabel'  => Yii::t('Default', 'Members'),
+                'rightSideDisplayLabel'  => Zurmo::t('ZurmoModule', 'Members'),
             ));
             $cClipWidget->endClip();
             $cellsContent  = $cClipWidget->getController()->clips['SortableCompareLists'];

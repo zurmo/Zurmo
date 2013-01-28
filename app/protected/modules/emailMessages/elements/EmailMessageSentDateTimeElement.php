@@ -36,7 +36,7 @@
             {
                 return parent::renderControlNonEditable();
             }
-            return Yii::t('Default', 'Currently in the {folderType} folder',
+            return Zurmo::t('EmailMessagesModule', 'Currently in the {folderType} folder',
                                      array('{folderType}' => EmailFolder::getTranslatedFolderNameByType($this->model->folder->type)));
         }
     }

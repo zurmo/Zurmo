@@ -49,7 +49,7 @@
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
                     ),
-                'hintText' => Yii::t('Default', 'Type to find a tag')
+                'hintText' => Zurmo::t('Core', 'Type to find a tag')
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['ModelElement'];

@@ -29,9 +29,9 @@
         protected function getDropDownArray()
         {
             return array(
-                DateTimeCalculatorUtil::YESTERDAY => Yii::t('Default', 'Yesterday'),
-                DateTimeCalculatorUtil::TODAY     => Yii::t('Default', 'Today'),
-                DateTimeCalculatorUtil::TOMORROW  => Yii::t('Default', 'Tomorrow'),
+                DateTimeCalculatorUtil::YESTERDAY => Zurmo::t('Core', 'Yesterday'),
+                DateTimeCalculatorUtil::TODAY     => Zurmo::t('Core', 'Today'),
+                DateTimeCalculatorUtil::TOMORROW  => Zurmo::t('Core', 'Tomorrow'),
             );
         }
     }

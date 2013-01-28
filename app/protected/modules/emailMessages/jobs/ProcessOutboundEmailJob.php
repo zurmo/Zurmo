@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Process Outbound Email Job');
+           return Zurmo::t('EmailMessagesModule', 'Process Outbound Email Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 1 minute.');
+            return Zurmo::t('EmailMessagesModule', 'Every 1 minute.');
         }
 
         /**

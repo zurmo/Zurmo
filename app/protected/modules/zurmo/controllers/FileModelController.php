@@ -42,7 +42,7 @@
             }
             catch (FailedFileUploadException $e)
             {
-                $fileUploadData = array('error' => Yii::t('Default', 'Error') . ' ' . $e->getMessage());
+                $fileUploadData = array('error' => Zurmo::t('ZurmoModule', 'Error') . ' ' . $e->getMessage());
             }
             echo CJSON::encode(array($fileUploadData));
             Yii::app()->end(0, false);

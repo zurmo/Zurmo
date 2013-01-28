@@ -54,20 +54,20 @@
             {
                 if ($actualBytes == null)
                 {
-                    $this->message = Yii::t('Default', 'Could not get value of database max_allowed_packet.');
+                    $this->message = Zurmo::t('InstallModule', 'Could not get value of database max_allowed_packet.');
                 }
                 else
                 {
-                    $this->message  = Yii::t('Default', 'Database max_allowed_packet size is:') . ' ';
+                    $this->message  = Zurmo::t('InstallModule', 'Database max_allowed_packet size is:') . ' ';
                     $this->message .= round($actualBytes / 1024000) . 'M ';
-                    $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                    $this->message .= Zurmo::t('InstallModule', 'minimum requirement is:') . ' ';
                     $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
                 }
                 $passed = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database max_allowed_packet size meets minimum requirement.');
+                $this->message = Zurmo::t('InstallModule', 'Database max_allowed_packet size meets minimum requirement.');
             }
             return $passed;
         }

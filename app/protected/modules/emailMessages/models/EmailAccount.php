@@ -35,7 +35,7 @@
         {
             if (trim($this->name) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('EmailMessagesModule', '(Unnamed)');
             }
             return $this->name;
         }
@@ -139,7 +139,7 @@
                                   array('outboundSecurity',          'type',      'type' => 'string'),
                                   array('outboundType',              'type',      'type' => 'string'),
                                   array('outboundPort',              'type',      'type' => 'integer'),
-                                  array('useCustomOutboundSettings', 'type',      'type' => 'boolean'),
+                                  array('useCustomOutboundSettings', 'boolean'),
                                   array('fromName',                  'length',    'max' => 64),
                                   array('replyToName',               'length',    'max' => 64),
                                   array('outboundType',              'length',    'max' => 4),
@@ -178,7 +178,7 @@
                 {
                     if ($this->$attribute == null)
                     {
-                        $this->addError($attribute, Yii::t('Default', 'This field is required'));
+                        $this->addError($attribute, Zurmo::t('EmailMessagesModule', 'This field is required'));
                         $haveError = true;
                     }
                 }

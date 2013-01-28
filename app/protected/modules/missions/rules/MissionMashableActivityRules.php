@@ -65,13 +65,13 @@
                 {
                     return "<span>{modelStringContent}</span><br/>" .
                            "<span class='less-pronounced-text'>" .
-                           Yii::t('Default', 'created by {ownerStringContent}') . "</span>" .
+                           Zurmo::t('MissionsModule', 'created by {ownerStringContent}') . "</span>" .
                            "<span>{extraContent}</span>";
                 }
                 else
                 {
                     return "<span>{modelStringContent} </span><span class='less-pronounced-text'>" .
-                           Yii::t('Default', 'created by {ownerStringContent}') . "</span><span>{extraContent}</span>";
+                           Zurmo::t('MissionsModule', 'created by {ownerStringContent}') . "</span><span>{extraContent}</span>";
                 }
             }
             else

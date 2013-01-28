@@ -50,7 +50,7 @@
             assert('$this->model->isAttribute($dateTimeAttributeName)');
             if (empty($this->model->{$dateTimeAttributeName}))
             {
-                return Yii::t('Default', 'Unknown');
+                return Zurmo::t('Core', 'Unknown');
             }
             $content = ZurmoHtml::encode(
                         DateTimeUtil::
@@ -58,7 +58,7 @@
 
             if ($this->model->{$userModelName}->id > 0)
             {
-                $content .= '&#160;' . Yii::t('Default', 'by') . '&#160;' . Yii::app()->format->text($this->model->{$userModelName});
+                $content .= '&#160;' . Zurmo::t('Core', 'by') . '&#160;' . Yii::app()->format->text($this->model->{$userModelName});
             }
             return $content;
         }

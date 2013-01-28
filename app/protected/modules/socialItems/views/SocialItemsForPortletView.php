@@ -66,7 +66,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Social Items')",
+                    'title' => "eval:Zurmo::t('SocialItemsModule', 'Social Items')",
                 ),
             );
             return $metadata;
@@ -74,7 +74,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'What\'s going on?');
+            $title  = Zurmo::t('SocialItemsModule', 'What\'s going on?');
             return $title;
         }
 
@@ -174,7 +174,7 @@
 
         protected function renderActionContent()
         {
-            $actionElementContent = $this->renderActionElementMenu(Yii::t('Default', 'Create'));
+            $actionElementContent = $this->renderActionElementMenu(Zurmo::t('SocialItemsModule', 'Create'));
             $content              = null;
             if ($actionElementContent != null)
             {

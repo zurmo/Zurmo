@@ -32,7 +32,7 @@
          */
         protected function renderControlNonEditable()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Inherited - Deny'));
+            return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Inherited - Deny'));
         }
     }
 ?>

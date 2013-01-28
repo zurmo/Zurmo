@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Module Permissions');
+            return Zurmo::t('ZurmoModule', 'Module Permissions');
         }
 
         protected function getDefaultRoute()

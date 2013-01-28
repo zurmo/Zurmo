@@ -46,19 +46,19 @@
                             <div id="leftCol">
                                 <div id="ZurmoLogo" class="zurmo-logo"></div>
                                 <div><p>';
-            $content .= Yii::t('Default', '<strong>Zurmo</strong> is a <strong>Customer Relationship Management</strong> system by <strong>Zurmo Inc.</strong>');
+            $content .= Zurmo::t('ZurmoModule', '<strong>Zurmo</strong> is a <strong>Customer Relationship Management</strong> system by <strong>Zurmo Inc.</strong>');
             $content .= '</p><p>';
-            $content .= Yii::t('Default', 'Visit the <strong>Zurmo Open Source Project</strong> at {url}.',
+            $content .= Zurmo::t('ZurmoModule', 'Visit the <strong>Zurmo Open Source Project</strong> at {url}.',
                            array('{url}' => '<a href="http://www.zurmo.org">http://www.zurmo.org</a>'));
             $content .= '<br/>';
             $content .= '</p>';
             $content .= '<p>';
-            $content .= Yii::t('Default', 'Visit <strong>Zurmo Inc.</strong> at {url}.',
+            $content .= Zurmo::t('ZurmoModule', 'Visit <strong>Zurmo Inc.</strong> at {url}.',
                         array('{url}' => '<a href="http://www.zurmo.com">http://www.zurmo.com</a>'));
             $content .= '<br/>';
             $content .= '</p>';
             $content .= '<p>';
-            $content .= Yii::t('Default', '<strong>Zurmo</strong> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.');
+            $content .= Zurmo::t('ZurmoModule', '<strong>Zurmo</strong> is licensed under the GPLv3.  You can read the license <a href="http://www.zurmo.org/license">here</a>.');
             $content .= '</p></div>
                             <div>
                                 <h3>Core Team</h3>
@@ -95,19 +95,19 @@
             $content .= '<div id="rightCol">';
             $content .= static::renderSocialLinksContent();
             $content .= '<div><h3>Application Info</h3><p>';
-            $content .= Yii::t('Default', 'This is <strong>version {zurmoVersion}</strong> of <strong>Zurmo</strong>.',
+            $content .= Zurmo::t('ZurmoModule', 'This is <strong>version {zurmoVersion}</strong> of <strong>Zurmo</strong>.',
                         array('{zurmoVersion}' => $zurmoVersion));
             $content .= '</p>';
             $content .= '<p>';
-            $content .= Yii::t('Default', '<strong>Zurmo</strong> uses the following great Open Source tools and frameworks:');
+            $content .= Zurmo::t('ZurmoModule', '<strong>Zurmo</strong> uses the following great Open Source tools and frameworks:');
             $content .= '<ul>';
             $content .= '<li>';
-            $content .= Yii::t('Default', '{url} (version {version} is installed)',
+            $content .= Zurmo::t('ZurmoModule', '{url} (version {version} is installed)',
                            array('{url}'     => '<a href="http://www.yiiframework.com">Yii Framework</a>',
                                  '{version}' => $yiiVersion));
             $content .= '</li>';
             $content .= '<li>';
-            $content .= Yii::t('Default', '{url} (version {version} is installed)',
+            $content .= Zurmo::t('ZurmoModule', '{url} (version {version} is installed)',
                            array('{url}'     => '<a href="http://www.redbeanphp.com">RedBeanPHP ORM</a>',
                                  '{version}' => $redBeanVersion));
             $content .= '</li>';

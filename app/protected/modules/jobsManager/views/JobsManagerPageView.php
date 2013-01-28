@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Job Manager', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('JobsManagerModule', 'Job Manager', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

@@ -70,18 +70,18 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'formula' => Yii::t('Default', 'Formula'),
+                'formula' => Zurmo::t('DesignerModule', 'Formula'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Calculated Number');
+            return Zurmo::t('DesignerModule', 'Calculated Number');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A calculated number based on other field values');
+            return Zurmo::t('DesignerModule', 'A calculated number based on other field values');
         }
 
         public function getAttributeTypeName()
@@ -98,7 +98,7 @@
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
             if (!CalculatedNumberUtil::isFormulaValid($this->{$attribute}, $adapter))
             {
-                $this->addError('formula', Yii::t('Default', 'The formula is invalid.'));
+                $this->addError('formula', Zurmo::t('DesignerModule', 'The formula is invalid.'));
             }
         }
 
@@ -115,7 +115,7 @@
                           getByNameAndModelClassName($this->attributeName, $this->modelClassName);
                 if (count($models) > 0)
                 {
-                    $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+                    $this->addError('attributeName', Zurmo::t('DesignerModule', 'A field with this name is already used.'));
                 }
             }
             catch (NotFoundException $e)

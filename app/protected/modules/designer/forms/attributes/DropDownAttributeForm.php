@@ -110,20 +110,20 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'customFieldDataData'   => Yii::t('Default', 'Pick List Values'),
-                'customFieldDataLabels' => Yii::t('Default', 'Pick List Value Translations'),
-                'defaultValueOrder'     => Yii::t('Default', 'Default Value'),
+                'customFieldDataData'   => Zurmo::t('DesignerModule', 'Pick List Values'),
+                'customFieldDataLabels' => Zurmo::t('DesignerModule', 'Pick List Value Translations'),
+                'defaultValueOrder'     => Zurmo::t('DesignerModule', 'Default Value'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Pick List');
+            return Zurmo::t('DesignerModule', 'Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A pick list with specific values to select from');
+            return Zurmo::t('DesignerModule', 'A pick list with specific values to select from');
         }
 
         public function getAttributeTypeName()
@@ -158,7 +158,7 @@
                     $nonUniqueValuesString .= $nonUniqueValue;
                 }
                 $this->addError('customFieldDataData',
-                Yii::t('Default',
+                Zurmo::t('DesignerModule',
                 'Each item must be uniquely named and the following are not: {values}',
                 array('{values}' => $nonUniqueValuesString)));
             }
@@ -168,12 +168,12 @@
                 {
                     if ($value != str_replace(',', '', $value)) // Not Coding Standard
                     {
-                        $this->addError('customFieldDataData', Yii::t('Default', 'Each value must not contain a comma.'));
+                        $this->addError('customFieldDataData', Zurmo::t('DesignerModule', 'Each value must not contain a comma.'));
                         return;
                     }
                     elseif ($value == '')
                     {
-                        $this->addError('customFieldDataData', Yii::t('Default', 'Value cannot be blank.'));
+                        $this->addError('customFieldDataData', Zurmo::t('DesignerModule', 'Value cannot be blank.'));
                         return;
                     }
                 }

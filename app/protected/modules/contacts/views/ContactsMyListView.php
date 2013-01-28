@@ -33,7 +33,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('ContactsModule', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true),
                 ),
                 'global' => array(
@@ -76,7 +76,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('ContactsModule', 'My ContactsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()

@@ -36,7 +36,7 @@
         protected function checkService()
         {
             return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkMemcache',
-                                                                                Yii::t('Default', 'Memcache extension'));
+                                                                                Zurmo::t('InstallModule', 'Memcache extension'));
         }
 
         /**
@@ -55,8 +55,8 @@
             $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
             if ($passed)
             {
-                $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
-                $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                $this->message  = $displayLabel . ' ' . Zurmo::t('InstallModule', 'version installed:') . ' ' . $actualVersion;
+                $this->message .= ' ' .Zurmo::t('InstallModule', 'Minimum version required:') . ' ' . $minimumVersionLabel;
                 return true;
             }
             else
@@ -67,19 +67,19 @@
                     {
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .
-                        Yii::t('Default', 'is installed, but the version is unknown.');
+                                          Zurmo::t('InstallModule', 'is installed, but the version is unknown.');
                         return true;
                     }
                 }
                 else
                 {
-                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed.');
+                    $this->message  = $displayLabel . ' ' . Zurmo::t('InstallModule', 'is not installed.');
                 }
                 if ($this->message != null)
                 {
                     $this->message .= "\n";
                 }
-                $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel . '.';
+                $this->message .= Zurmo::t('InstallModule', 'Minimum version required:') . ' ' . $minimumVersionLabel . '.';
                 return false;
             }
         }

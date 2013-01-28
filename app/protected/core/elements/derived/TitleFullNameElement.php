@@ -103,12 +103,12 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::app()->format->text(Yii::t('Default', 'Name')));
+            return Yii::app()->format->text(Yii::app()->format->text(Zurmo::t('Core', 'Name')));
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Title/First/LastName');
+            return Zurmo::t('Core', 'Title/First/LastName');
         }
 
         /**

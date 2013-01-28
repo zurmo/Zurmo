@@ -62,7 +62,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Zurmo News')",
+                    'title' => "eval:Zurmo::t('RssReaderModule', 'Zurmo News')",
                     'url'   => 'http://www.zurmo.org/feed',
                 ),
                 'global' => array(

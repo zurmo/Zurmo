@@ -42,7 +42,7 @@
                 {
                     if (new DateTimeZone($model->$attributeName) === false)
                     {
-                        $model->addError($attributeName, Yii::t('Default', 'The time zone is invalid.'));
+                        $model->addError($attributeName, Zurmo::t('UsersModule', 'The time zone is invalid.'));
                     }
                 }
                 catch (Exception $e)

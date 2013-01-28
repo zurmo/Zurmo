@@ -51,7 +51,7 @@
             catch (Exception $e)
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'Export file you requested is not available anymore.')
+                    Zurmo::t('ExportModule', 'Export file you requested is not available anymore.')
                 );
                 $this->redirect(Yii::app()->createUrl('home/default/index'));
             }

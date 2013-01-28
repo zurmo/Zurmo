@@ -28,7 +28,7 @@
     {
         protected function renderContent()
         {
-            return Yii::t('Default', 'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.');
+            return Zurmo::t('ZurmoModule', 'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.');
         }
     }
 ?>

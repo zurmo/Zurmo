@@ -56,14 +56,14 @@
             $content .= $this->getInheritedContent();
             $content .= $this->form->dropDownList($this->model, $this->getExpiresAttributeName(), $dropDownArray, $htmlOptions);
             $content .= '</div>';
-            $content .= '<span class="mad-lib twoFifths">' . Yii::t('Default', 'every');
+            $content .= '<span class="mad-lib twoFifths">' . Zurmo::t('UsersModule', 'every');
             $htmlOptions = array(
                 'id'       => $inputId,
                 'name'     => $this->getEditableInputName($this->getExpiryAttributeName()),
-                'class'    => $this->resolveInputClassDisabled()          
+                'class'    => $this->resolveInputClassDisabled()
             );
             $content .= $this->form->textField($this->model, $this->getExpiryAttributeName(), $htmlOptions);
-            $content .= Yii::t('Default', 'days') . '</span>';
+            $content .= Zurmo::t('UsersModule', 'days') . '</span>';
             $content .= '</div>';
             return $content;
         }
@@ -116,8 +116,8 @@
         protected function getExpiresDropDownArray()
         {
             return array(
-                ''          => Yii::t('Default', 'Not Set'),
-                Policy::YES => Yii::t('Default', 'Yes'),
+                ''          => Zurmo::t('UsersModule', 'Not Set'),
+                Policy::YES => Zurmo::t('UsersModule', 'Yes'),
             );
         }
 
@@ -146,7 +146,7 @@
             $inheritedAttributeName = $this->getExpiryAttributeName() . '__inherited';
             if ($this->model->{$inheritedAttributeName} != null)
             {
-                return Yii::t('Default', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
+                return Zurmo::t('UsersModule', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
             }
             return null;
         }

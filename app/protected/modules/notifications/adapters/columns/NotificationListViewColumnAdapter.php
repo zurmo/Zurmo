@@ -30,7 +30,7 @@
         {
             return array(
                 'name'   => 'type',
-                'header' => Yii::t('Default', 'Notification'),
+                'header' => Zurmo::t('NotificationsModule', 'Notification'),
                 'type'   => 'raw',
                 'value'  => 'NotificationsUtil::renderListViewContent($data)'
             );

@@ -31,7 +31,7 @@
     {
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'At least one mission has unread content');
+            return Zurmo::t('MissionsModule', 'At least one mission has unread content');
         }
 
         public static function getType()

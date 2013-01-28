@@ -48,12 +48,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Bcc');
+            return Zurmo::t('EmailMessagesModule', 'Bcc');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Bcc Recipients');
+            return Zurmo::t('EmailMessagesModule', 'Bcc Recipients');
         }
 
         public static function getModelAttributeNames()

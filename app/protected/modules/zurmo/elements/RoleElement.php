@@ -51,7 +51,7 @@
 
         protected function getModalTitleForSelectingModel()
         {
-            return Yii::t('Default', 'Select a Role');
+            return Zurmo::t('ZurmoModule', 'Select a Role');
         }
     }
 ?>

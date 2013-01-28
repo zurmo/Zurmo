@@ -208,7 +208,7 @@
             }
             else
             {
-                echo Yii::t('Default', "Invalid request");
+                echo Zurmo::t('ApiModule', "Invalid request");
                 Yii::app()->end();
             }
             $this->setParams($params);

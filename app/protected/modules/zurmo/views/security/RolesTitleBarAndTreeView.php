@@ -34,7 +34,7 @@
             assert('$moduleId != null');
             assert('is_array($roles)');
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView (Yii::t('Default', 'Roles'), Yii::t('Default', 'Home'), 1), 0, 0);
+            $this->setView(new TitleBarView (Zurmo::t('ZurmoModule', 'Roles'), Zurmo::t('ZurmoModule', 'Home'), 1), 0, 0);
             $this->setView(new RolesTreeView($controllerId, $moduleId, $roles), 1, 0);
         }
 

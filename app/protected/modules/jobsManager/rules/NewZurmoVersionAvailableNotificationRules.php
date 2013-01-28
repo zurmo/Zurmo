@@ -33,7 +33,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'New stable Zurmo release available');
+            return Zurmo::t('JobsManagerModule', 'New stable Zurmo release available');
         }
 
         public static function getType()

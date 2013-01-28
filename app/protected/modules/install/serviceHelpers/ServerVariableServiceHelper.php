@@ -36,7 +36,7 @@
             $serverVariableAccesible =  InstallUtil::checkServerVariable($message);
             if ($serverVariableAccesible)
             {
-                $this->message  = Yii::t('Default', '$_SERVER is accessible.');
+                $this->message  = Zurmo::t('InstallModule', '$_SERVER is accessible.');
                 return true;
             }
             else

@@ -260,11 +260,11 @@
          */
         protected function makeMessages()
         {
-            $label   = '{found} record(s) will be updated ';
-            $label  .= 'and {unfound} record(s) will be skipped during import.';
-            $this->addMessage(Yii::t('Default', $label,
-                              array('{found}' => $this->messageCountData[static::FOUND],
-                                    '{unfound}' => $this->messageCountData[static::UNFOUND])));
+            $label   = Zurmo::t('ImportModule', '{found} record(s) will be updated ' .
+                                         'and {unfound} record(s) will be skipped during import.',
+                                         array('{found}'   => $this->messageCountData[static::FOUND],
+                                               '{unfound}' => $this->messageCountData[static::UNFOUND]));
+            $this->addMessage($label);
             $this->resolveMakeExternalSystemIdTooLargeMessage();
         }
 
@@ -272,10 +272,10 @@
         {
             if ($this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG] > 0)
             {
-                $label   = '{invalid} value(s) were too large. ';
-                $label  .= 'These rows will be skipped during the import.';
-                $this->addMessage(Yii::t('Default', $label,
-                              array('{invalid}' => $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG])));
+                $label   = Zurmo::t('ImportModule', '{invalid} value(s) were too large. ' .
+                                             'These rows will be skipped during the import.',
+                                             array('{invalid}' => $this->messageCountData[static::EXTERNAL_SYSTEM_ID_TOO_LONG]));
+                $this->addMessage($label);
             }
         }
     }

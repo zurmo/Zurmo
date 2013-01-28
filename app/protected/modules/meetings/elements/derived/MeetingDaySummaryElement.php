@@ -52,12 +52,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Summary');
+            return Zurmo::t('MeetingsModule', 'Summary');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'MeetingsModuleSingularLabel Day Summary',
+            return Zurmo::t('MeetingsModule', 'MeetingsModuleSingularLabel Day Summary',
                           LabelUtil::getTranslationParamsForAllModules());
         }
 

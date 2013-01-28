@@ -73,14 +73,14 @@
             {
                 if (!preg_match($validator->integerPattern, $sanitizedValue))
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid integer format.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid integer format.'));
                 }
             }
             else
             {
                 if (!preg_match($validator->numberPattern, $sanitizedValue))
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid number format.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid number format.'));
                 }
             }
             return $sanitizedValue;

@@ -91,8 +91,8 @@
             }
             $editView = new MissionEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost($mission),
-                                                 Yii::t('Default', 'Create Mission'));
-            $breadcrumbLinks = array(Yii::t('Default', 'Create'));
+                                                 Zurmo::t('MissionsModule', 'Create Mission'));
+            $breadcrumbLinks = array(Zurmo::t('MissionsModule', 'Create'));
             $view     = new MissionsPageView(ZurmoDefaultViewUtil::
                                              makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
                                                                                     'MissionBreadCrumbView'));
@@ -108,7 +108,7 @@
                                                  $this->attemptToSaveModelFromPost($mission),
                                                  strval($mission));
             $breadcrumbLinks = array(StringUtil::getChoppedStringContent(strval($mission), 25) =>
-                                     array('default/details',  'id' => $id), Yii::t('Default', 'Edit'));
+                                     array('default/details',  'id' => $id), Zurmo::t('MissionsModule', 'Edit'));
             $view     = new MissionsPageView(ZurmoDefaultViewUtil::
                                              makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
                                                                                     'MissionBreadCrumbView'));
@@ -139,7 +139,7 @@
                                    'relatedModelRelationName' => 'comments',
                                    'redirectUrl'              => $redirectUrl); //After save, the url to go to.
             $uniquePageId  = 'CommentInlineEditForModelView';
-            echo             ZurmoHtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
+            echo             ZurmoHtml::tag('h2', array(), Zurmo::t('MissionsModule', 'Add Comment'));
             $inlineView    = new CommentInlineEditView($comment, 'default', 'comments', 'inlineCreateSave',
                                                        $urlParameters, $uniquePageId);
             $view          = new AjaxPageView($inlineView);
@@ -181,7 +181,7 @@
             }
             else
             {
-                $content .= '<div>' . Yii::t('Default', 'This mission is already taken') . '</div>';
+                $content .= '<div>' . Zurmo::t('MissionsModule', 'This mission is already taken') . '</div>';
             }
             $content = ZurmoHtml::tag('div', array('id'    => MissionStatusElement::getStatusChangeDivId($mission->id),
                                                    'class' => 'missionStatusChangeArea'), $content);

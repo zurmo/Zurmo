@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'NotesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('NotesModule', 'NotesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

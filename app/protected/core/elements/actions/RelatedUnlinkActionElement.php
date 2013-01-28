@@ -36,12 +36,12 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Unlink');
+            return Zurmo::t('Core', 'Unlink');
         }
 
         protected function getHtmlOptions()
         {
-            $confirmTitle           = Yii::t('Default', 'Are you sure you want to unlink this {modelLabel}?',
+            $confirmTitle           = Zurmo::t('Core', 'Are you sure you want to unlink this {modelLabel}?',
                                                         array('{modelLabel}' => $this->getModelSingularLabel()));
             $confirmTitle           = Yii::app()->format->text($confirmTitle);
             $htmlOptions            = parent::getHtmlOptions();

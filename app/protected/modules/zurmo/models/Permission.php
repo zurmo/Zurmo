@@ -93,11 +93,11 @@
             }
             catch (NotFoundException $e)
             {
-                $s = Yii::t('Default', '(Unknown)');
+                $s = Zurmo::t('ZurmoModule', '(Unknown)');
             }
             $s .= ':';
-            $s .= $this->type == self::ALLOW ? Yii::t('Default', 'Allow') :
-                                               Yii::t('Default', 'Deny');
+            $s .= $this->type == self::ALLOW ? Zurmo::t('ZurmoModule', 'Allow') :
+                                               Zurmo::t('ZurmoModule', 'Deny');
             $s .= ':' . self::permissionsToString($this->permissions);
             return $s;
         }

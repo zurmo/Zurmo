@@ -69,7 +69,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'DetailsLink',
-                                'label' => "eval:Yii::t('Default', 'Profile')",
+                                'label' => "eval:Zurmo::t('UsersModule', 'Profile')",
                                 'htmlOptions' => array( 'class' => 'icon-user-details' )
                             ),
                             array('type' => 'EditLink',

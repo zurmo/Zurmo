@@ -80,7 +80,7 @@
                 }
                 catch (AccessDeniedSecurityException $e)
                 {
-                    $importRowDataResultsUtil->addMessage(Yii::t('Default', 'You do not have permission to create/update this record and/or its related record.'));
+                    $importRowDataResultsUtil->addMessage(Zurmo::t('ImportModule', 'You do not have permission to create/update this record and/or its related record.'));
                     $importRowDataResultsUtil->setStatusToError();
                 }
                 $importResultsUtil->addRowDataResults($importRowDataResultsUtil);
@@ -178,7 +178,7 @@
                     {
                         ExternalSystemIdUtil::updateByModel($model, $externalSystemId);
                     }
-                    $importRowDataResultsUtil->addMessage(Yii::t('Default', 'Record saved correctly.'));
+                    $importRowDataResultsUtil->addMessage(Zurmo::t('ImportModule', 'Record saved correctly.'));
                     if ($makeNewModel)
                     {
                         if ($model instanceof SecurableItem)
@@ -546,25 +546,25 @@
             if (isset($args[3]))
             {
                 set_time_limit($args[3]);
-                $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
+                $messageStreamer->add(Zurmo::t('ImportModule', 'Script will run at most for {seconds} seconds.',
                                       array('{seconds}' => $args[3])));
             }
             else
             {
                 set_time_limit('1200');
-                $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
+                $messageStreamer->add(Zurmo::t('ImportModule', 'Script will run at most for {seconds} seconds.',
                                       array('{seconds}' => '1200')));
             }
             if (isset($args[0]))
             {
                 $importName = $args[0];
-                $messageStreamer->add(Yii::t('Default', 'Starting import for process: {processName}',
+                $messageStreamer->add(Zurmo::t('ImportModule', 'Starting import for process: {processName}',
                                       array('{processName}' => $importName)));
             }
             else
             {
                 $importName = null;
-                $messageStreamer->add(Yii::t('Default', 'Starting import. Looking for processes.'));
+                $messageStreamer->add(Zurmo::t('ImportModule', 'Starting import. Looking for processes.'));
             }
 
             $messageLogger = new ImportMessageLogger($messageStreamer);
@@ -578,7 +578,7 @@
                 $importName = $args[1];
             }
             Yii::app()->custom->runImportsForImportCommand($messageLogger, $importName);
-            $messageStreamer->add(Yii::t('Default', 'Ending import.'));
+            $messageStreamer->add(Zurmo::t('ImportModule', 'Ending import.'));
         }
     }
 ?>

@@ -102,7 +102,7 @@
                 }
                 if ($optOut)
                 {
-                    $content  .= Yii::t('Default', 'Opted Out');
+                    $content  .= Zurmo::t('EmailMessagesModule', 'Opted Out');
                 }
                 if ($isInvalid)
                 {
@@ -110,7 +110,7 @@
                     {
                         $content  .= ',&#160;';
                     }
-                    $content  .= Yii::t('Default', 'Invalid');
+                    $content  .= Zurmo::t('EmailMessagesModule', 'Invalid');
                 }
                 if ($optOut || $isInvalid)
                 {

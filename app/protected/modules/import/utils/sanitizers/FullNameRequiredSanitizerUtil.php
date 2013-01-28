@@ -67,7 +67,7 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'A full name value is required but missing.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'A full name value is required but missing.'));
                 }
             }
             return $value;

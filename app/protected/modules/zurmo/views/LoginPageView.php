@@ -40,7 +40,7 @@
 
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Sign in');
+            return Zurmo::t('ZurmoModule', 'Sign in');
         }
     }
 ?>

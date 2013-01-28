@@ -42,7 +42,7 @@
             catch (NotFoundException $e)
             {
             }
-            return Yii::t('Default', '(Unnamed)');
+            return Zurmo::t('ConversationsModule', '(Unnamed)');
         }
 
         public static function getModuleClassName()

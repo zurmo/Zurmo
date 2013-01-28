@@ -140,13 +140,31 @@
                 'source'  => Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getAutoCompleteControllerId()
                                                         . '/' . static::$autoCompleteActionId),
                 'options' => array(
-                    'select' => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}', // Not Coding Standard
-                    'appendTo'       => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()'
+                    'select'   => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}', // Not Coding Standard
+                    'appendTo' => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()',
+                    'search'   => 'js: function(event, ui)
+                                  {
+                                      var context = $("#' . $this->getIdForTextField() . '").parent();
+                                      $(".model-select-icon", context).fadeOut(100);
+                                      makeToggableSpinner(context, true);
+                                  }',
+                    'open'     => 'js: function(event, ui)
+                                  {
+                                       var context = $("#' . $this->getIdForTextField() . '").parent();
+                                       $(".model-select-icon", context).fadeIn(250);
+                                       makeToggableSpinner(context, false);
+                                  }',
+                    'close'    => 'js: function(event, ui)
+                                  {
+                                      var context = $("#' . $this->getIdForTextField() . '").parent();
+                                      $(".model-select-icon", context).fadeIn(250);
+                                      makeToggableSpinner(context, false);
+                                  }'
                 ),
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
                     'onblur' => 'clearIdFromAutoCompleteField($(this).val(), \'' . $idInputName . '\');'
-                    )
+                )
             ));
             $cClipWidget->endClip();
             return $cClipWidget->getController()->clips['ModelElement'];
@@ -165,7 +183,7 @@
         protected function renderSelectLink()
         {
             $id = $this->getIdForSelectLink();
-            $content = ZurmoHtml::ajaxLink('<span></span>',
+            $content = ZurmoHtml::ajaxLink('<span class="model-select-icon"></span><span class="z-spinner"></span>',
                 Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getSelectLinkControllerId() . '/'. static::$modalActionId .'/', array(
                 'modalTransferInformation' => $this->getModalTransferInformation(),
                 )),
@@ -190,7 +208,7 @@
         {
             $module              = Yii::app()->getModule(static::$moduleId);
             $moduleSingularLabel = $module->getModuleLabelByTypeAndLanguage('Singular');
-            return Yii::t('Default', '{moduleSingularLabel} Search',
+            return Zurmo::t('Core', '{moduleSingularLabel} Search',
                                       array('{moduleSingularLabel}' => $moduleSingularLabel));
         }
 

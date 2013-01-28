@@ -100,7 +100,7 @@
             $name        = $this->mappingFormModelClassName . '[' . $columnName . '][attributeIndexOrDerivedType]';
             $id          = $this->mappingFormModelClassName . '_' . $columnName . '_attributeIndexOrDerivedType';
             $htmlOptions = array('id' => $id,
-                'empty' => Yii::t('Default', 'Do not map this field')
+                'empty' => Zurmo::t('ImportModule', 'Do not map this field')
             );
             Yii::app()->clientScript->registerScript('AttributeDropDown' . $id,
                                                      $this->renderAttributeDropDownOnChangeScript($id,
@@ -122,7 +122,7 @@
                                        $htmlOptions);
             if ($columnType == 'extraColumn')
             {
-                $content .= ZurmoHtml::link(Yii::t('Default', 'Remove Field'),
+                $content .= ZurmoHtml::link(Zurmo::t('ImportModule', 'Remove Field'),
                             '#', array('class' => 'remove-extra-column-link z-link'));
                 Yii::app()->clientScript->registerScript('mappingExtraColumnRemoveLink', "
                 $('.remove-extra-column-link').click( function()
@@ -186,7 +186,6 @@
                                                            $attributeIndexOrDerivedType,
                                                            $columnType);
                 }
-
                 foreach ($mappingRuleFormsAndElementTypes as $notUsed => $ruleFormAndElementType)
                 {
                     $mappingRuleForm        = $ruleFormAndElementType['mappingRuleForm'];

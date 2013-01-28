@@ -44,6 +44,9 @@
             $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_ACCESS_CONVERSATIONS, Right::ALLOW);
             $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_CREATE_CONVERSATIONS, Right::ALLOW);
             $everyone->setRight('ConversationsModule', ConversationsModule::RIGHT_DELETE_CONVERSATIONS, Right::ALLOW);
+            $everyone->setRight('EmailMessagesModule', EmailMessagesModule::RIGHT_ACCESS_EMAIL_MESSAGES, Right::ALLOW);
+            $everyone->setRight('EmailMessagesModule', EmailMessagesModule::RIGHT_CREATE_EMAIL_MESSAGES, Right::ALLOW);
+            $everyone->setRight('EmailMessagesModule', EmailMessagesModule::RIGHT_DELETE_EMAIL_MESSAGES, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_ACCESS_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_CREATE_LEADS, Right::ALLOW);
             $everyone->setRight('LeadsModule',         LeadsModule::RIGHT_DELETE_LEADS, Right::ALLOW);

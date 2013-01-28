@@ -61,7 +61,7 @@
                 {
                     ZurmoConfigurationUtil::setByModuleName('MapsModule', 'googleMapApiKey', $configurationForm->apiKey);
                     Yii::app()->user->setFlash('notification',
-                                                Yii::t('Default', 'Maps configuration saved successfully.')
+                                                Zurmo::t('MapsModule', 'Maps configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('maps/default/configurationView'));
                 }

@@ -31,7 +31,7 @@
             $s = strval($this->value);
             if ($s == '')
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('Core', '(None)');
             }
             return $s;
         }

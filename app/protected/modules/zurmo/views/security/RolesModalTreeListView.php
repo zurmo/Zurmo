@@ -71,7 +71,7 @@
          */
         protected function renderContent()
         {
-            return $this->renderTreeMenu('role', 'roles', Yii::t('Default', 'Roles'));
+            return $this->renderTreeMenu('role', 'roles', Zurmo::t('ZurmoModule', 'Roles'));
         }
 
         protected function makeTreeMenuNodeLink($label, $action, $roleId)

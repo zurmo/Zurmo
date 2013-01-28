@@ -40,7 +40,7 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Created On'));
+            return Yii::app()->format->text(Zurmo::t('Core', 'Created On'));
         }
 
         protected function renderControlNonEditable()
@@ -51,7 +51,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Created Date and User');
+            return Zurmo::t('Core', 'Created Date and User');
         }
 
         /**

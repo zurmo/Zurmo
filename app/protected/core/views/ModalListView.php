@@ -58,7 +58,7 @@
 
         protected static function getSummaryText()
         {
-            return Yii::t('Default', '{start}-{end} of {count} result(s).');
+            return Zurmo::t('Core', '{start}-{end} of {count} result(s).');
         }
 
         protected function getCGridViewPagerParams()

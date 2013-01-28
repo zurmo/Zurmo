@@ -33,7 +33,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Enable Minify for CSS and JavaScript files.');
+            return Zurmo::t('JobsManagerModule', 'Enable Minify for CSS and JavaScript files.');
         }
 
         public static function getType()

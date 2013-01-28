@@ -51,7 +51,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Switch Dashboard');
+            return Zurmo::t('HomeModule', 'Switch Dashboard');
         }
 
         protected function getDefaultRoute()

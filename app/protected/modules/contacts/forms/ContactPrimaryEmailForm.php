@@ -39,7 +39,7 @@
             {
                 if (trim($this->name) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('ContactsModule', '(Unnamed)');
                 }
                 return $this->name;
             }
@@ -75,7 +75,7 @@
         public function attributeLabels()
         {
             return array(
-                'emailAddress'          => Yii::t('Default', 'Primary Email'),
+                'emailAddress'          => Zurmo::t('ContactsModule', 'Primary Email'),
             );
         }
     }

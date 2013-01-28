@@ -69,7 +69,7 @@
             $content = parent::renderRightSideFormLayoutForEdit($form);
             if ($this->getModel() instanceof OwnedSecurableItem)
             {
-                $content .= "<h3>".Yii::t('Default', 'Rights and Permissions') . '</h3><div id="owner-box">';
+                $content .= "<h3>".Zurmo::t('ZurmoModule', 'Rights and Permissions') . '</h3><div id="owner-box">';
                 $element  = new UserElement($this->getModel(), 'owner', $form);
                 $element->editableTemplate = '{label}{content}{error}';
                 $content .= $element->render().'</div>';

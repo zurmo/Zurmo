@@ -28,7 +28,7 @@
     {
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)
         {
-            $htmlOptions['confirm'] = Yii::t('Default', 'Are you sure you want to delete this {modelLabel}?',
+            $htmlOptions['confirm'] = Zurmo::t('OpportunitiesModule', 'Are you sure you want to delete this {modelLabel}?',
                                       array('{modelLabel}' => OpportunitiesModule::getModuleLabelByTypeAndLanguage('SingularLowerCase')));
             return $htmlOptions;
         }

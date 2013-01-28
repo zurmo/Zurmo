@@ -47,7 +47,7 @@
             if (!$userCanAccessContacts)
             {
                 $scenarioSpecificContent = // Not Coding Standard
-                Yii::t('Default', 'Conversion requires access to the ContactsModulePluralLowerCaseLabel' .
+                Zurmo::t('LeadsModule', 'Conversion requires access to the ContactsModulePluralLowerCaseLabel' .
                                   ' module which you do not have. Please contact your administrator.',
                        LabelUtil::getTranslationParamsForAllModules());
                 $userCanConvertProperly  = false;
@@ -56,7 +56,7 @@
             elseif ( !$userCanAccessAccounts && $convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_REQUIRED)
             {
                 $scenarioSpecificContent = // Not Coding Standard
-                Yii::t('Default', 'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently' .
+                Zurmo::t('LeadsModule', 'Conversion is set to require an AccountsModuleSingularLowerCaseLabel.  Currently' .
                                   ' you do not have access to the AccountsModulePluralLowerCaseLabel module.' .
                                   ' Please contact your administrator.',
                        LabelUtil::getTranslationParamsForAllModules());

@@ -78,7 +78,7 @@
             $adapter->resolveData($data);
             $compareData = array(
                 $model->getAttributeLabel('currencyValue') => $currencyValue->value,
-                $model->getAttributeLabel('currencyValue') . " " . Yii::t('Default', 'Currency') => $currencyValue->currency->code
+                $model->getAttributeLabel('currencyValue') . " " . Zurmo::t('ExportModule', 'Currency') => $currencyValue->currency->code
             );
             $this->assertEquals($compareData, $data);
 

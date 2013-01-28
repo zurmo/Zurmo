@@ -64,11 +64,12 @@
     .juiportlet-widget-head a.edit:hover .icon:after,
     .latest-activity-toolbar a,
     a.more-panels-link,
-    a.simple-select,
+    a.simple-link,
     .after-form-details-content a,
     .ui-dialog-title,
     .show-file-upload-box,
-    #clear-search-linkmodal
+    #clear-search-linkmodal,
+    .z-action-link
     {
         color: @themeColor;
     }
@@ -95,7 +96,9 @@
     .configuration-list td:last-child a:hover span:before,
     .addfileinput-button:hover span,
     #HomeDashboardPortletSelectionView li span,
-    .hide-welcome span
+    .hide-welcome span,
+    #more-search-link:hover,
+    #select-list-attributes-link:hover
     {
         color: @themeColor2;
     }
@@ -232,7 +235,7 @@
     .zButton:not(.attachLoading):active .z-label,
     .z-button:not(.attachLoading):active .z-label,
     .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-    .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+    .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
     .form-toolbar a:not(.attachLoading):hover .z-label,
     .form-toolbar a:not(.z-button):hover .z-label,
     .configuration-list li a:hover .z-label{

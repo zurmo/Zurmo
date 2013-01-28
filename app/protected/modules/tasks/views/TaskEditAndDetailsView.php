@@ -114,7 +114,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create TasksModuleSingularLabel',
+            return Zurmo::t('TasksModule', 'Create TasksModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

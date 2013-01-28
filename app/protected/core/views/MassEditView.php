@@ -96,8 +96,8 @@
         {
             $message = '<strong>' . $this->selectedRecordCount . '</strong>&#160;' .
                     LabelUtil::getUncapitalizedRecordLabelByCount($this->selectedRecordCount) . ' ' .
-                    Yii::t('Default', 'selected for updating.');
-            return ZurmoHtml::tag('span', array('class' => 'operation-description'), $message);
+                    Zurmo::t('Core', 'selected for updating.');
+            return ZurmoHtml::wrapLabel($message, 'operation-description');
         }
 
         /**
@@ -133,7 +133,7 @@
                                 $elementclassname = $elementInformation['type'] . 'Element';
                                 $params = array_slice($elementInformation, 2);
                                 if (empty($this->activeAttributes[$elementInformation['attributeName']]))
-                                {   
+                                {
                                     $params['disabled'] = true;
                                     $checked = false;
                                 }

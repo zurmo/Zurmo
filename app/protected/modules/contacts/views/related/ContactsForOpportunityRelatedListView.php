@@ -97,13 +97,13 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel',
+            return Zurmo::t('ContactsModule', 'ContactsModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected static function resolveAjaxOptionsForSelectList()
         {
-            $title = Yii::t('Default', 'ContactsModuleSingularLabel Search',
+            $title = Zurmo::t('ContactsModule', 'ContactsModuleSingularLabel Search',
                             LabelUtil::getTranslationParamsForAllModules());
             return ModalView::getAjaxOptionsForModalLink($title);
         }

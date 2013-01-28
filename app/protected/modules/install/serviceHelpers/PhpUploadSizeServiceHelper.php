@@ -41,13 +41,13 @@
                                                                             $actualUploadSizeBytes);
             if ($uploadSizeBytesPassed)
             {
-                $this->message = Yii::t('Default', 'PHP upload_max_filesize value meets minimum requirement.');
+                $this->message = Zurmo::t('InstallModule', 'PHP upload_max_filesize value meets minimum requirement.');
             }
             else
             {
-                $this->message  = Yii::t('Default', 'PHP upload_max_filesize value is:') . ' ';
+                $this->message  = Zurmo::t('InstallModule', 'PHP upload_max_filesize value is:') . ' ';
                 $this->message .= round($actualUploadSizeBytes / 1024000) . 'M ';
-                $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                $this->message .= Zurmo::t('InstallModule', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
                 $passed = false;
             }

@@ -89,7 +89,7 @@
             $content .= '&#160;' . $this->renderEditableFirstDateContent();
             $content .= '</span>';
             $content .= '<span id="' . $secondDateSpanAreaId . '" ' . $startingDivStyleSecondDate . '>';
-            $content .= '&#160;' . Yii::t('Default', 'and') . $this->renderEditableSecondDateContent();
+            $content .= '&#160;' . Zurmo::t('Core', 'and') . $this->renderEditableSecondDateContent();
             $content .= '</span>';
             return $content;
         }
@@ -166,7 +166,7 @@
             $htmlOptions = array(
                 'id'   => $this->getEditableInputId($this->attribute,   'type'),
             );
-            $htmlOptions['empty']    = Yii::t('Default', '(None)');
+            $htmlOptions['empty']    = Zurmo::t('Core', '(None)');
             $htmlOptions['disabled'] = $this->getDisabledValue();
             return $htmlOptions;
         }

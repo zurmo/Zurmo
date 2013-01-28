@@ -284,19 +284,19 @@
             }
             if (!empty($missing))
             {
-                $error = Yii::t('Default', '$_SERVER does not have {vars}.', array('{vars}' => implode(', ', $missing)));
+                $error = Zurmo::t('InstallModule', '$_SERVER does not have {vars}.', array('{vars}' => implode(', ', $missing)));
                 return false;
             }
 
             if (!isset($_SERVER["REQUEST_URI"]) && isset($_SERVER["QUERY_STRING"]))
             {
-                $error = Yii::t('Default', 'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
+                $error = Zurmo::t('InstallModule', 'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.');
                 return false;
             }
 
             if (!isset($_SERVER["PATH_INFO"]) && strpos($_SERVER["PHP_SELF"], $_SERVER["SCRIPT_NAME"]) !== 0)
             {
-                $error = Yii::t('Default', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]' .
+                $error = Zurmo::t('InstallModule', 'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"]' .
                                            ' (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.');
                 return false;
             }
@@ -725,6 +725,32 @@
             file_put_contents($perInstanceConfigFile, $contents);
         }
 
+        /**
+         * Generate zurmo token and write it to version.php file.
+         * @param $instanceRoot
+         * @return string
+         */
+        public static function setZurmoTokenAndWriteToPerInstanceFile($instanceRoot, $perInstanceFilename = 'perInstance.php')
+        {
+            assert('is_dir($instanceRoot)');
+
+            if (!defined('ZURMO_TOKEN') || ZURMO_TOKEN == 'defaultValue')
+            {
+                $perInstanceConfigFile     = "$instanceRoot/protected/config/$perInstanceFilename";
+                $contents = file_get_contents($perInstanceConfigFile);
+
+                $zurmoToken = substr(md5(microtime() * mt_rand()), 0, 15);
+
+                $contents = preg_replace('/define\(\'ZURMO_TOKEN\', \'defaultValue\'\);/',
+                    "define('ZURMO_TOKEN', '$zurmoToken');",
+                    $contents);
+
+                file_put_contents($perInstanceConfigFile, $contents);
+                return $zurmoToken;
+            }
+            return ZURMO_TOKEN;
+        }
+
         public static function isDebugConfigWritable($instanceRoot)
         {
             $debugConfigFileDist = "$instanceRoot/protected/config/debugDIST.php";
@@ -840,7 +866,7 @@
                 $debugFilename     = "debug.php";
             }
 
-            $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Connecting to Database.'));
             InstallUtil::connectToDatabase( $form->databaseType,
                                             $form->databaseHostname,
                                             $form->databaseName,
@@ -848,21 +874,21 @@
                                             $form->databasePassword,
                                             $form->databasePort);
             ForgetAllCacheUtil::forgetAllCaches();
-            $messageStreamer->add(Yii::t('Default', 'Dropping existing tables.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Dropping existing tables.'));
             InstallUtil::dropAllTables();
-            $messageStreamer->add(Yii::t('Default', 'Creating super user.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Creating super user.'));
             InstallUtil::createSuperUser(   'super',
                                             $form->superUserPassword);
             $messageLogger = new MessageLogger($messageStreamer);
             Yii::app()->custom->runBeforeInstallationAutoBuildDatabase($messageLogger);
-            $messageStreamer->add(Yii::t('Default', 'Starting database schema creation.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Starting database schema creation.'));
             InstallUtil::autoBuildDatabase($messageLogger);
-            $messageStreamer->add(Yii::t('Default', 'Database schema creation complete.'));
-            $messageStreamer->add(Yii::t('Default', 'Rebuilding Permissions.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Database schema creation complete.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Rebuilding Permissions.'));
             ReadPermissionsOptimizationUtil::rebuild();
-            $messageStreamer->add(Yii::t('Default', 'Freezing database.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Freezing database.'));
             InstallUtil::freezeDatabase();
-            $messageStreamer->add(Yii::t('Default', 'Writing Configuration File.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Writing Configuration File.'));
 
             InstallUtil::writeConfiguration(INSTANCE_ROOT,
                                             $form->databaseType,
@@ -880,14 +906,14 @@
                                             $form->hostInfo,
                                             $form->scriptUrl,
                                             $form->submitCrashToSentry);
-            $messageStreamer->add(Yii::t('Default', 'Setting up default data.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
 
             // Send notification to super admin to delete test.php file in case if this
             // installation is used in production mode.
             $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'If this website is in production mode, please remove the app/test.php file.');
+            $message->textContent       = Zurmo::t('InstallModule', 'If this website is in production mode, please remove the app/test.php file.');
             $rules                      = new RemoveApiTestEntryScriptFileNotificationRules();
             NotificationsUtil::submit($message, $rules);
 
@@ -896,13 +922,13 @@
             if (!$setIncludePathServiceHelper->runCheckAndGetIfSuccessful())
             {
                 $message                    = new NotificationMessage();
-                $message->textContent       = Yii::t('Default', 'Minify has been disabled due to a system issue. Try to resolve the problem and re-enable Minify.');
+                $message->textContent       = Zurmo::t('InstallModule', 'Minify has been disabled due to a system issue. Try to resolve the problem and re-enable Minify.');
                 $rules                      = new EnableMinifyNotificationRules();
                 NotificationsUtil::submit($message, $rules);
             }
 
-            ZurmoModule::setZurmoToken();
-            $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+            InstallUtil::setZurmoTokenAndWriteToPerInstanceFile(INSTANCE_ROOT);
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Installation Complete.'));
         }
 
         /**
@@ -931,7 +957,7 @@
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
-            $messageStreamer->add(Yii::t('Default', 'Connecting to Database.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Connecting to Database.'));
 
             $form->databaseHostname  = $args[0];
             $form->databaseName      = $args[1];
@@ -940,33 +966,46 @@
             $form->databasePort      = $args[4];
             $form->superUserPassword = $args[5];
 
-            InstallUtil::runInstallation($form, $messageStreamer);
-            if (isset($args[6]))
+            if (!empty($args[6]))
             {
-                $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
+                $form->hostInfo = $args[6];
+            }
+            if (!empty($args[7]))
+            {
+                $form->scriptUrl = $args[7];
+            }
+
+            InstallUtil::runInstallation($form, $messageStreamer);
+            if (isset($args[8]))
+            {
+                $messageStreamer->add(Zurmo::t('InstallModule', 'Starting to load demo data.'));
                 $messageLogger = new MessageLogger($messageStreamer);
 
-                if (isset($args[7]))
+                if (isset($args[9]))
                 {
-                    DemoDataUtil::load($messageLogger, intval($args[7]));
+                    DemoDataUtil::load($messageLogger, intval($args[9]));
                 }
                 else
                 {
                     DemoDataUtil::load($messageLogger, 6);
                 }
-                $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
+                $messageStreamer->add(Zurmo::t('InstallModule', 'Finished loading demo data.'));
             }
-            // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
-            $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'The system has detected that the hostInfo and/or scriptUrl are ' .
-                                                            'not set up. Please open the perInstance.php config file and ' .
-                                                            'set up these parameters.');
-            $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
-            NotificationsUtil::submit($message, $rules);
 
-            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+            if (empty($args[6]) || empty($args[7]))
+            {
+                // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
+                $message                    = new NotificationMessage();
+                $message->textContent       = Zurmo::t('InstallModule', 'The system has detected that the hostInfo and/or scriptUrl are ' .
+                                                                'not set up. Please open the perInstance.php config file and ' .
+                                                                'set up these parameters.');
+                $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
+                NotificationsUtil::submit($message, $rules);
+            }
+
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
-            $messageStreamer->add(Yii::t('Default', 'Installation Complete.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Installation Complete.'));
         }
 
         /**
@@ -993,7 +1032,7 @@
 
             // Send notification to super admin to clean assets folder(optional).
             $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'Please delete all files from assets folder on server.');
+            $message->textContent       = Zurmo::t('InstallModule', 'Please delete all files from assets folder on server.');
             $rules                      = new ClearAssetsFolderNotificationRules();
             NotificationsUtil::submit($message, $rules);
             return true;

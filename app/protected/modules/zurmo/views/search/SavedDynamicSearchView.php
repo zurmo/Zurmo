@@ -50,13 +50,13 @@
         {
             $savedSearches = SavedSearch::getByOwnerAndViewClassName(Yii::app()->user->userModel, get_class($this));
             $idOrName      = static::getSavedSearchListDropDown();
-            $htmlOptions   = array('id' => $idOrName, 'empty' => Yii::t('Default', 'Load a saved search'));
+            $htmlOptions   = array('id' => $idOrName, 'empty' => Zurmo::t('ZurmoModule', 'Load a saved search'));
             if (count($savedSearches) == 0)
             {
                 $htmlOptions['style'] = "display:none;";
                 $htmlOptions['class'] = 'ignore-style';
                 $idOrName      = static::getSavedSearchListDropDown();
-                $htmlOptions   = array('id' => $idOrName, 'empty' => Yii::t('Default', 'Load a saved search'));
+                $htmlOptions   = array('id' => $idOrName, 'empty' => Zurmo::t('ZurmoModule', 'Load a saved search'));
                 $content       = ZurmoHtml::dropDownList($idOrName,
                                                      $this->model->savedSearchId,
                                                      self::resolveSavedSearchesToIdAndLabels($savedSearches),
@@ -166,7 +166,7 @@
 
         protected function renderAfterAddExtraRowContent($form)
         {
-            $content  = '<strong class="mp-divider"> &middot; </strong>' . ZurmoHtml::link(Yii::t('Default', 'Save search'), '#', array('id' => 'save-as-advanced-search'));
+            $content  = '<strong class="mp-divider"> &middot; </strong>' . ZurmoHtml::link(Zurmo::t('ZurmoModule', 'Save search'), '#', array('id' => 'save-as-advanced-search'));
             $content  = ZurmoHtml::tag('div', array('class' => 'search-save-container'), $content);
             $content .= '<div id="save-search-area" class="view-toolbar-container clearfix" style="display:none;">';
             $content .= $this->renderSaveInputAndSaveButtonContentForAdvancedSearch($form);
@@ -178,7 +178,7 @@
         {
             $content               = $form->textField($this->model, 'savedSearchName');
             $content              .= $form->hiddenField($this->model, 'savedSearchId');
-            $params['label']       = Yii::t('Default', 'Save');
+            $params['label']       = Zurmo::t('ZurmoModule', 'Save');
             $params['htmlOptions'] = array('id'      => 'save-advanced-search',
                                            'value'   => 'saveSearch',
                                            'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
@@ -224,7 +224,7 @@
             // End Not Coding Standard
             if ($this->model->savedSearchId != null)
             {
-                $label = Yii::t('Default', 'Delete') . "<span class='icon'></span>";
+                $label = Zurmo::t('ZurmoModule', 'Delete') . "<span class='icon'></span>";
                 return ZurmoHtml::link($label, "#", array( 'id'      => 'removeSavedSearch',
                                                            'class'   => 'remove',
                                                            'onclick' => "deleteSavedSearchAndRemoveFromView('" . $this->model->savedSearchId . "')"));

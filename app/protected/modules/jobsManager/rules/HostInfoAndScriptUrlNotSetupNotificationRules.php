@@ -34,7 +34,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'hostInfo or scriptUrl not set up');
+            return Zurmo::t('JobsManagerModule', 'hostInfo or scriptUrl not set up');
         }
 
         public static function getType()

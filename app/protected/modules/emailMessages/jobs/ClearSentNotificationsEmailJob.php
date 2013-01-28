@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Clear Old Sent Notifications Email Job');
+           return Zurmo::t('EmailMessagesModule', 'Clear Old Sent Notifications Email Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a day, early in the morning.');
+            return Zurmo::t('EmailMessagesModule', 'Once a day, early in the morning.');
         }
 
         /**

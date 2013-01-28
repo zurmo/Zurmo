@@ -74,23 +74,23 @@
         {
             if ($mission->status == Mission::STATUS_AVAILABLE)
             {
-                return ZurmoHtml::tag('span', array('class' => 'mission-status'), Yii::t('Default', 'Available'));
+                return ZurmoHtml::wrapLabel(Zurmo::t('MissionsModule', 'Available'), 'mission-status');
             }
             elseif ($mission->status == Mission::STATUS_TAKEN)
             {
-                return ZurmoHtml::tag('span', array('class' => 'mission-status'), Yii::t('Default', 'In Progress'));
+                return ZurmoHtml::wrapLabel(Zurmo::t('MissionsModule', 'In Progress'), 'mission-status');
             }
             elseif ($mission->status == Mission::STATUS_COMPLETED)
             {
-                return ZurmoHtml::tag('span', array('class' => 'mission-status'), Yii::t('Default', 'Awaiting Acceptance'));
+                return ZurmoHtml::wrapLabel(Zurmo::t('MissionsModule', 'Awaiting Acceptance'), 'mission-status');
             }
             elseif ($mission->status == Mission::STATUS_REJECTED)
             {
-                return ZurmoHtml::tag('span', array('class' => 'mission-status'), Yii::t('Default', 'Rejected'));
+                return ZurmoHtml::wrapLabel(Zurmo::t('MissionsModule', 'Rejected'), 'mission-status');
             }
             elseif ($mission->status == Mission::STATUS_ACCEPTED)
             {
-                return ZurmoHtml::tag('span', array('class' => 'mission-status'), Yii::t('Default', 'Accepted'));
+                return ZurmoHtml::wrapLabel(Zurmo::t('MissionsModule', 'Accepted'), 'mission-status');
             }
             else
             {
@@ -105,28 +105,28 @@
                !$mission->owner->isSame(Yii::app()->user->userModel))
             {
                 return self::renderAjaxStatusActionChangeLink(Mission::STATUS_TAKEN, $mission->id,
-                                                              Yii::t('Default', 'Start'), $updateDivId);
+                                                              Zurmo::t('MissionsModule', 'Start'), $updateDivId);
             }
             elseif ($mission->status == Mission::STATUS_TAKEN &&
                    $mission->takenByUser->isSame(Yii::app()->user->userModel))
             {
                 return self::renderAjaxStatusActionChangeLink(Mission::STATUS_COMPLETED, $mission->id,
-                                                              Yii::t('Default', 'Complete'), $updateDivId);
+                                                              Zurmo::t('MissionsModule', 'Complete'), $updateDivId);
             }
             elseif ($mission->status == Mission::STATUS_COMPLETED &&
                    $mission->owner->isSame(Yii::app()->user->userModel))
             {
                 $content  = self::renderAjaxStatusActionChangeLink(      Mission::STATUS_ACCEPTED, $mission->id,
-                                                                         Yii::t('Default', 'Accept'), $updateDivId);
+                                                                         Zurmo::t('MissionsModule', 'Accept'), $updateDivId);
                 $content .= ' ' . self::renderAjaxStatusActionChangeLink(Mission::STATUS_REJECTED, $mission->id,
-                                                                         Yii::t('Default', 'Reject'), $updateDivId);
+                                                                         Zurmo::t('MissionsModule', 'Reject'), $updateDivId);
                 return $content;
             }
             elseif ($mission->status == Mission::STATUS_REJECTED &&
                    $mission->takenByUser->isSame(Yii::app()->user->userModel))
             {
                 return self::renderAjaxStatusActionChangeLink(Mission::STATUS_COMPLETED, $mission->id,
-                                                              Yii::t('Default', 'Complete'), $updateDivId);
+                                                              Zurmo::t('MissionsModule', 'Complete'), $updateDivId);
             }
         }
 
@@ -138,9 +138,7 @@
             assert('is_string($updateDivId)');
             $url     =   Yii::app()->createUrl('missions/default/ajaxChangeStatus',
                                                array('status' => $newStatus, 'id' => $missionId));
-            $aContent                = ZurmoHtml::tag('span', array('class' => 'z-spinner'), null);
-            $aContent               .= ZurmoHtml::tag('span', array('class' => 'z-icon'), null);
-            $aContent               .= ZurmoHtml::tag('span', array('class' => 'z-label'), $label);
+            $aContent                = ZurmoHtml::wrapLink($label);
             return       ZurmoHtml::ajaxLink($aContent, $url,
                          array('type'       => 'GET',
                                'success'    => 'function(data){$("#' . $updateDivId . '").replaceWith(data)}'
@@ -175,12 +173,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('MissionsModule', 'Status');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('MissionsModule', 'Status');
         }
 
         /**

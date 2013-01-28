@@ -29,9 +29,9 @@
         protected function getDropDownArray()
         {
             return array(
-                Permission::DENY  => Yii::t('Default', 'Owner Only'),
-                ''                => Yii::t('Default', 'Not Set - Ad-hoc / Owner'),
-                Permission::ALLOW => Yii::t('Default', 'All'),
+                Permission::DENY  => Zurmo::t('ZurmoModule', 'Owner Only'),
+                ''                => Zurmo::t('ZurmoModule', 'Not Set - Ad-hoc / Owner'),
+                Permission::ALLOW => Zurmo::t('ZurmoModule', 'All'),
             );
         }
     }

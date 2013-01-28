@@ -73,14 +73,14 @@
                 $jobInProcess      = JobInProcess::getByType($type);
                 $jobInProcess->delete();
                 $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                     Yii::t('Default', 'The job {jobName} has been reset.',
+                                     Zurmo::t('JobsManagerModule', 'The job {jobName} has been reset.',
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }
             catch (NotFoundException $e)
             {
                 $messageBoxContent = HtmlNotifyUtil::renderHighlightBoxByMessage(
-                                 Yii::t('Default', 'The job {jobName} was not found to be stuck and therefore was not reset.',
+                                 Zurmo::t('JobsManagerModule', 'The job {jobName} was not found to be stuck and therefore was not reset.',
                                          array('{jobName}' => $jobClassName::getDisplayName())));
                 $this->processListAction($messageBoxContent);
             }

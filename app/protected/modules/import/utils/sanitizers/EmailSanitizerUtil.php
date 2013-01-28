@@ -69,11 +69,11 @@
             $validatedEmail = $validator->validateValue($value);
             if ($validatedEmail === false)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid email format.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid email format.'));
             }
             if (strlen($validatedEmail) > $maxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Email was too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Email was too long.'));
             }
             return  $value;
         }

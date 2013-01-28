@@ -106,7 +106,7 @@
             }
             $content .= '</table>';
             $element  = new SaveButtonActionElement($this->controllerId, $this->moduleId,
-                                                        null, array('label' => Yii::t('Default', 'Install')));
+                                                        null, array('label' => Zurmo::t('InstallModule', 'Install')));
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">' . $element->render() . '</div></div>';
             return $content;
         }
@@ -123,7 +123,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseHostname', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Can either be a domain ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Can either be a domain ' .
                                                       'name or an IP address.')),
                                             ),
                                         ),
@@ -134,7 +134,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databasePort', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Database port.')),
+                                                      'description' => Zurmo::t('InstallModule', 'Database port.')),
                                             ),
                                         ),
                                     ),
@@ -144,7 +144,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseAdminUsername', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Leave this blank unless you ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Leave this blank unless you ' .
                                                       'would like to create the user and database for Zurmo to run in.')),
                                             ),
                                         ),
@@ -155,7 +155,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseAdminPassword', 'type' => 'Password',
-                                                      'description' => Yii::t('Default', 'Leave this blank unless you ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Leave this blank unless you ' .
                                                       'would like to create the user and database for Zurmo to run in.'))
                                             ),
                                         ),
@@ -166,7 +166,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseName', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'The name of the database you ' .
+                                                      'description' => Zurmo::t('InstallModule', 'The name of the database you ' .
                                                       'want to run Zurmo in.')),
                                             ),
                                         ),
@@ -177,7 +177,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'removeExistingData', 'type' => 'CheckBox',
-                                                      'description' => Yii::t('Default', 'WARNING! - If the database ' .
+                                                      'description' => Zurmo::t('InstallModule', 'WARNING! - If the database ' .
                                                       'already exists the data will be completely removed. ' .
                                                       'This must be checked if you are specifying an existing database.')),
                                             ),
@@ -189,7 +189,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databaseUsername', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'User who can connect ' .
+                                                      'description' => Zurmo::t('InstallModule', 'User who can connect ' .
                                                       'to the database.')),
                                             ),
                                         ),
@@ -200,7 +200,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'databasePassword', 'type' => 'Password',
-                                                      'description' => Yii::t('Default', 'User`s password.')),
+                                                      'description' => Zurmo::t('InstallModule', 'User`s password.')),
                                             ),
                                         ),
                                     )
@@ -210,7 +210,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'superUserPassword', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Zurmo administrative password. ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Zurmo administrative password. ' .
                                                       'The username is `super`. You can change this later.')),
                                             ),
                                         ),
@@ -221,7 +221,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'memcacheHostname', 'type' => 'MemcacheText',
-                                                      'description' => Yii::t('Default', 'Memcache host name. Default ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Memcache host name. Default ' .
                                                       'is 127.0.0.1')),
                                             ),
                                         ),
@@ -232,7 +232,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'memcachePortNumber', 'type' => 'MemcacheText',
-                                                      'description' => Yii::t('Default', 'Memcache port number. Default ' .
+                                                      'description' => Zurmo::t('InstallModule', 'Memcache port number. Default ' .
                                                       'is 11211')),
                                             ),
                                         ),
@@ -243,7 +243,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'installDemoData', 'type' => 'CheckBox',
-                                                      'description' => Yii::t('Default', 'Install demo data.')),
+                                                      'description' => Zurmo::t('InstallModule', 'Install demo data.')),
                                             ),
                                         ),
                                     )
@@ -253,7 +253,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'hostInfo', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'Host name where Zurmo will be installed.'))
+                                                      'description' => Zurmo::t('InstallModule', 'Host name where Zurmo will be installed.'))
                                             ),
                                         ),
                                     )
@@ -263,7 +263,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'scriptUrl', 'type' => 'Text',
-                                                      'description' => Yii::t('Default', 'The relative path where ' .
+                                                      'description' => Zurmo::t('InstallModule', 'The relative path where ' .
                                                       'Zurmo will be installed.')),
                                             ),
                                         ),
@@ -274,7 +274,7 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'submitCrashToSentry', 'type' => 'CheckBox',
-                                                      'description' => Yii::t('Default', 'Automatically submit crash reports to Sentry.')),
+                                                      'description' => Zurmo::t('InstallModule', 'Automatically submit crash reports to Sentry.')),
                                             ),
                                         ),
                                     )

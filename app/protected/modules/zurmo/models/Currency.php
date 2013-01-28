@@ -123,7 +123,7 @@
         {
             if (trim($this->code) == '')
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('ZurmoModule', '(None)');
             }
             return $this->code;
         }

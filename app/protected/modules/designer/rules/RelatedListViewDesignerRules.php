@@ -28,7 +28,7 @@
     {
         public function getDisplayName()
         {
-            return Yii::t('Default', 'Related List View');
+            return Zurmo::t('DesignerModule', 'Related List View');
         }
 
         /**

@@ -36,7 +36,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Cancel');
+            return Zurmo::t('LeadsModule', 'Cancel');
         }
 
         protected function getDefaultRoute()

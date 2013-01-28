@@ -35,12 +35,12 @@
             $SPLInstalled =  InstallUtil::checkSPL();
             if ($SPLInstalled)
             {
-                $this->message  = Yii::t('Default', 'SPL extension is loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'SPL extension is loaded.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'SPL extension is not loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'SPL extension is not loaded.');
                 return false;
             }
         }

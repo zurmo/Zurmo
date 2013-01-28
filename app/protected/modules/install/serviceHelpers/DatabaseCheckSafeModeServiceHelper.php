@@ -46,12 +46,12 @@
                                                                  $this->form->databasePassword,
                                                                  $this->form->databasePort))
             {
-                $this->message  = Yii::t('Default', 'Database is in strict mode.');
+                $this->message  = Zurmo::t('InstallModule', 'Database is in strict mode.');
                 $passed = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database is not in strict mode.');
+                $this->message = Zurmo::t('InstallModule', 'Database is not in strict mode.');
             }
             return $passed;
         }

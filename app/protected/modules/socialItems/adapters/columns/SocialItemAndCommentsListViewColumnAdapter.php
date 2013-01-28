@@ -30,7 +30,7 @@
         {
             return array(
                     'name' => 'summary',
-                    'header' => Yii::t('Default', 'Summary'),
+                    'header' => Zurmo::t('SocialItemsModule', 'Summary'),
                     'type'  => 'raw',
                     'value'  => 'SocialItemsUtil::renderItemAndCommentsContent($data, "' .
                                 $this->view->redirectUrl . '", "' . $this->view->getRenderToUserString() . '")',

@@ -39,7 +39,7 @@
         {
             $url      = Yii::app()->createUrl('/missions/default/details', array('id' => $mission->id));
             $content  = $mission->description;
-            $details  = '<span class="list-item-details">' . Yii::t('Default', 'Updated') . ': ' .
+            $details  = '<span class="list-item-details">' . Zurmo::t('MissionsModule', 'Updated') . ': ' .
                         DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($mission->latestDateTime) .
                         '</span>';
             $link     = ZurmoHtml::link($content, $url);
@@ -158,7 +158,7 @@
             $message->htmlContent         = $messageContent;
             $url                          = Yii::app()->createAbsoluteUrl('missions/default/details/',
                                                                 array('id' => $missionId));
-            $message->htmlContent        .= '-' . ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
+            $message->htmlContent        .= '-' . ZurmoHtml::link(Zurmo::t('MissionsModule', 'Click Here'), $url);
             $rules                        = new MissionStatusChangeNotificationRules();
             $rules->addUser($userToReceiveMessage);
             $rules->setAllowDuplicates(true);
@@ -176,7 +176,7 @@
             assert('$userToReceiveMessage->id > 0');
             $message                      = new NotificationMessage();
             $url                          = Yii::app()->createAbsoluteUrl('missions/default/list/');
-            $message->htmlContent         = ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
+            $message->htmlContent         = ZurmoHtml::link(Zurmo::t('MissionsModule', 'Click Here'), $url);
             $rules                        = new MissionUnreadCommentNotificationRules();
             $rules->addUser($userToReceiveMessage);
             NotificationsUtil::submit($message, $rules);

@@ -149,7 +149,7 @@
         {
             if ($this->{$params['compareAttributeName']} != null && $this->{$attribute} == null)
             {
-                $this->addError($attribute, Yii::t('Default', 'You must specify a value.'));
+                $this->addError($attribute, Zurmo::t('ZurmoModule', 'You must specify a value.'));
             }
         }
     }

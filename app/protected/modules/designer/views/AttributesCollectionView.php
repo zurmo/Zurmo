@@ -127,7 +127,7 @@
         {
             assert('is_string($url) || $url == null');
             assert('is_string($id)');
-            return ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Configure')),
+            return ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('DesignerModule', 'Configure')),
                                 $url, array('id' => $id, 'class' => 'z-button'));
         }
     }

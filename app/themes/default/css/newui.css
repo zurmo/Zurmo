@@ -33,6 +33,7 @@ a.search-form-tools input[type="submit"],
 a#progressBar-links a,
 .default-btn #progressBar-links a,
 .default-btn a#progressBar-links a,
+.ui-progressbar,
 #InstallPageView .AppContainer a,
 a#InstallPageView .AppContainer a,
 .default-btn #InstallPageView .AppContainer a,
@@ -590,6 +591,27 @@ table.configuration-list td:last-child a.loading .z-icon,
   color: #fff !important;
   text-decoration: underline;
 }
+.z-action-link {
+  font-size: 11px;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.z-action-link:hover {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  text-decoration: none;
+}
+.z-action-link-active {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
 .unstyle-panel,
 #NoteInlineEditForPortletView .wide.form,
 #inline-edit-form {
@@ -696,11 +718,12 @@ body.blue a.remove:hover .icon:after,
 body.blue .juiportlet-widget-head a.edit:hover .icon:after,
 body.blue .latest-activity-toolbar a,
 body.blue a.more-panels-link,
-body.blue a.simple-select,
+body.blue a.simple-link,
 body.blue .after-form-details-content a,
 body.blue .ui-dialog-title,
 body.blue .show-file-upload-box,
-body.blue #clear-search-linkmodal {
+body.blue #clear-search-linkmodal,
+body.blue .z-action-link {
   color: #282a76;
 }
 body.blue #notifications-flyout .single-notification h4,
@@ -723,7 +746,9 @@ body.blue .configuration-list td:last-child a:hover,
 body.blue .configuration-list td:last-child a:hover span:before,
 body.blue .addfileinput-button:hover span,
 body.blue #HomeDashboardPortletSelectionView li span,
-body.blue .hide-welcome span {
+body.blue .hide-welcome span,
+body.blue #more-search-link:hover,
+body.blue #select-list-attributes-link:hover {
   color: #7cb830;
 }
 body.blue .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -909,7 +934,7 @@ body.blue .z-button:not(.attachLoading):hover .z-label,
 body.blue .zButton:not(.attachLoading):active .z-label,
 body.blue .z-button:not(.attachLoading):active .z-label,
 body.blue .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.blue .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.blue .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.blue .form-toolbar a:not(.attachLoading):hover .z-label,
 body.blue .form-toolbar a:not(.z-button):hover .z-label,
 body.blue .configuration-list li a:hover .z-label {
@@ -1223,11 +1248,12 @@ body.brown a.remove:hover .icon:after,
 body.brown .juiportlet-widget-head a.edit:hover .icon:after,
 body.brown .latest-activity-toolbar a,
 body.brown a.more-panels-link,
-body.brown a.simple-select,
+body.brown a.simple-link,
 body.brown .after-form-details-content a,
 body.brown .ui-dialog-title,
 body.brown .show-file-upload-box,
-body.brown #clear-search-linkmodal {
+body.brown #clear-search-linkmodal,
+body.brown .z-action-link {
   color: #547980;
 }
 body.brown #notifications-flyout .single-notification h4,
@@ -1250,7 +1276,9 @@ body.brown .configuration-list td:last-child a:hover,
 body.brown .configuration-list td:last-child a:hover span:before,
 body.brown .addfileinput-button:hover span,
 body.brown #HomeDashboardPortletSelectionView li span,
-body.brown .hide-welcome span {
+body.brown .hide-welcome span,
+body.brown #more-search-link:hover,
+body.brown #select-list-attributes-link:hover {
   color: #b88f30;
 }
 body.brown .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -1436,7 +1464,7 @@ body.brown .z-button:not(.attachLoading):hover .z-label,
 body.brown .zButton:not(.attachLoading):active .z-label,
 body.brown .z-button:not(.attachLoading):active .z-label,
 body.brown .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.brown .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.brown .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.brown .form-toolbar a:not(.attachLoading):hover .z-label,
 body.brown .form-toolbar a:not(.z-button):hover .z-label,
 body.brown .configuration-list li a:hover .z-label {
@@ -1750,11 +1778,12 @@ body.lime a.remove:hover .icon:after,
 body.lime .juiportlet-widget-head a.edit:hover .icon:after,
 body.lime .latest-activity-toolbar a,
 body.lime a.more-panels-link,
-body.lime a.simple-select,
+body.lime a.simple-link,
 body.lime .after-form-details-content a,
 body.lime .ui-dialog-title,
 body.lime .show-file-upload-box,
-body.lime #clear-search-linkmodal {
+body.lime #clear-search-linkmodal,
+body.lime .z-action-link {
   color: #2b434f;
 }
 body.lime #notifications-flyout .single-notification h4,
@@ -1777,7 +1806,9 @@ body.lime .configuration-list td:last-child a:hover,
 body.lime .configuration-list td:last-child a:hover span:before,
 body.lime .addfileinput-button:hover span,
 body.lime #HomeDashboardPortletSelectionView li span,
-body.lime .hide-welcome span {
+body.lime .hide-welcome span,
+body.lime #more-search-link:hover,
+body.lime #select-list-attributes-link:hover {
   color: #bcc98e;
 }
 body.lime .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -1963,7 +1994,7 @@ body.lime .z-button:not(.attachLoading):hover .z-label,
 body.lime .zButton:not(.attachLoading):active .z-label,
 body.lime .z-button:not(.attachLoading):active .z-label,
 body.lime .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.lime .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.lime .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.lime .form-toolbar a:not(.attachLoading):hover .z-label,
 body.lime .form-toolbar a:not(.z-button):hover .z-label,
 body.lime .configuration-list li a:hover .z-label {
@@ -2277,11 +2308,12 @@ body.cherry a.remove:hover .icon:after,
 body.cherry .juiportlet-widget-head a.edit:hover .icon:after,
 body.cherry .latest-activity-toolbar a,
 body.cherry a.more-panels-link,
-body.cherry a.simple-select,
+body.cherry a.simple-link,
 body.cherry .after-form-details-content a,
 body.cherry .ui-dialog-title,
 body.cherry .show-file-upload-box,
-body.cherry #clear-search-linkmodal {
+body.cherry #clear-search-linkmodal,
+body.cherry .z-action-link {
   color: #6c8092;
 }
 body.cherry #notifications-flyout .single-notification h4,
@@ -2304,7 +2336,9 @@ body.cherry .configuration-list td:last-child a:hover,
 body.cherry .configuration-list td:last-child a:hover span:before,
 body.cherry .addfileinput-button:hover span,
 body.cherry #HomeDashboardPortletSelectionView li span,
-body.cherry .hide-welcome span {
+body.cherry .hide-welcome span,
+body.cherry #more-search-link:hover,
+body.cherry #select-list-attributes-link:hover {
   color: #933140;
 }
 body.cherry .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -2490,7 +2524,7 @@ body.cherry .z-button:not(.attachLoading):hover .z-label,
 body.cherry .zButton:not(.attachLoading):active .z-label,
 body.cherry .z-button:not(.attachLoading):active .z-label,
 body.cherry .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.cherry .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.cherry .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.cherry .form-toolbar a:not(.attachLoading):hover .z-label,
 body.cherry .form-toolbar a:not(.z-button):hover .z-label,
 body.cherry .configuration-list li a:hover .z-label {
@@ -2804,11 +2838,12 @@ body.turquoise a.remove:hover .icon:after,
 body.turquoise .juiportlet-widget-head a.edit:hover .icon:after,
 body.turquoise .latest-activity-toolbar a,
 body.turquoise a.more-panels-link,
-body.turquoise a.simple-select,
+body.turquoise a.simple-link,
 body.turquoise .after-form-details-content a,
 body.turquoise .ui-dialog-title,
 body.turquoise .show-file-upload-box,
-body.turquoise #clear-search-linkmodal {
+body.turquoise #clear-search-linkmodal,
+body.turquoise .z-action-link {
   color: #447799;
 }
 body.turquoise #notifications-flyout .single-notification h4,
@@ -2831,7 +2866,9 @@ body.turquoise .configuration-list td:last-child a:hover,
 body.turquoise .configuration-list td:last-child a:hover span:before,
 body.turquoise .addfileinput-button:hover span,
 body.turquoise #HomeDashboardPortletSelectionView li span,
-body.turquoise .hide-welcome span {
+body.turquoise .hide-welcome span,
+body.turquoise #more-search-link:hover,
+body.turquoise #select-list-attributes-link:hover {
   color: #44bbcc;
 }
 body.turquoise .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -3017,7 +3054,7 @@ body.turquoise .z-button:not(.attachLoading):hover .z-label,
 body.turquoise .zButton:not(.attachLoading):active .z-label,
 body.turquoise .z-button:not(.attachLoading):active .z-label,
 body.turquoise .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.turquoise .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.turquoise .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.turquoise .form-toolbar a:not(.attachLoading):hover .z-label,
 body.turquoise .form-toolbar a:not(.z-button):hover .z-label,
 body.turquoise .configuration-list li a:hover .z-label {
@@ -3331,11 +3368,12 @@ body.violet a.remove:hover .icon:after,
 body.violet .juiportlet-widget-head a.edit:hover .icon:after,
 body.violet .latest-activity-toolbar a,
 body.violet a.more-panels-link,
-body.violet a.simple-select,
+body.violet a.simple-link,
 body.violet .after-form-details-content a,
 body.violet .ui-dialog-title,
 body.violet .show-file-upload-box,
-body.violet #clear-search-linkmodal {
+body.violet #clear-search-linkmodal,
+body.violet .z-action-link {
   color: #4a3970;
 }
 body.violet #notifications-flyout .single-notification h4,
@@ -3358,7 +3396,9 @@ body.violet .configuration-list td:last-child a:hover,
 body.violet .configuration-list td:last-child a:hover span:before,
 body.violet .addfileinput-button:hover span,
 body.violet #HomeDashboardPortletSelectionView li span,
-body.violet .hide-welcome span {
+body.violet .hide-welcome span,
+body.violet #more-search-link:hover,
+body.violet #select-list-attributes-link:hover {
   color: #91a1dc;
 }
 body.violet .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -3544,7 +3584,7 @@ body.violet .z-button:not(.attachLoading):hover .z-label,
 body.violet .zButton:not(.attachLoading):active .z-label,
 body.violet .z-button:not(.attachLoading):active .z-label,
 body.violet .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.violet .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.violet .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.violet .form-toolbar a:not(.attachLoading):hover .z-label,
 body.violet .form-toolbar a:not(.z-button):hover .z-label,
 body.violet .configuration-list li a:hover .z-label {
@@ -3858,11 +3898,12 @@ body.honey a.remove:hover .icon:after,
 body.honey .juiportlet-widget-head a.edit:hover .icon:after,
 body.honey .latest-activity-toolbar a,
 body.honey a.more-panels-link,
-body.honey a.simple-select,
+body.honey a.simple-link,
 body.honey .after-form-details-content a,
 body.honey .ui-dialog-title,
 body.honey .show-file-upload-box,
-body.honey #clear-search-linkmodal {
+body.honey #clear-search-linkmodal,
+body.honey .z-action-link {
   color: #46201c;
 }
 body.honey #notifications-flyout .single-notification h4,
@@ -3885,7 +3926,9 @@ body.honey .configuration-list td:last-child a:hover,
 body.honey .configuration-list td:last-child a:hover span:before,
 body.honey .addfileinput-button:hover span,
 body.honey #HomeDashboardPortletSelectionView li span,
-body.honey .hide-welcome span {
+body.honey .hide-welcome span,
+body.honey #more-search-link:hover,
+body.honey #select-list-attributes-link:hover {
   color: #abbc42;
 }
 body.honey .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
@@ -4071,7 +4114,7 @@ body.honey .z-button:not(.attachLoading):hover .z-label,
 body.honey .zButton:not(.attachLoading):active .z-label,
 body.honey .z-button:not(.attachLoading):active .z-label,
 body.honey .toolbar-mbmenu .options-menu > li > a:not(.attachLoading):hover .z-label,
-body.honey .portlet-toolbar a:not(.attachLoading):not(.simple-select):hover .z-label,
+body.honey .portlet-toolbar a:not(.attachLoading):not(.simple-link):hover .z-label,
 body.honey .form-toolbar a:not(.attachLoading):hover .z-label,
 body.honey .form-toolbar a:not(.z-button):hover .z-label,
 body.honey .configuration-list li a:hover .z-label {
@@ -4887,7 +4930,10 @@ section {
   left: auto;
 }
 #user-header-menu > li > a:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal !important;
+  font-size: 12px !important;
+  font-family: "ZurmoGamificationSymblyReguRg" !important;
   color: #ddd;
   position: relative;
   top: 0;
@@ -4956,6 +5002,9 @@ section {
   display: block !important;
   left: auto;
   right: 2px;
+}
+body > .ui-autocomplete {
+  width: 335px;
 }
 #globalSearchInput {
   font-style: italic;
@@ -5196,7 +5245,10 @@ section {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e0e0e0', endColorstr='#c6c6c6', GradientType=0);
 }
 #ShortcutsMenu > li > a :after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 16px;
+  font-family: "ZurmoGamificationSymblyReguRg";
   margin-left: 10px;
 }
 #ShortcutsMenu ul {
@@ -5609,11 +5661,11 @@ section {
   margin-top: 0;
 }
 /*=Inner toolbar*/
-#float-bar {
+.float-bar {
   height: 40px;
   display: block;
 }
-#float-bar .view-toolbar-container {
+.float-bar .view-toolbar-container {
   z-index: 222222;
   position: fixed !important;
   -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.5);
@@ -5637,7 +5689,7 @@ section {
   float: left;
   width: auto;
 }
-#float-bar .view-toolbar-container.dock {
+.float-bar .view-toolbar-container.dock {
   position: relative !important;
   bottom: 0;
   left: 0;
@@ -5723,8 +5775,13 @@ form .view-toolbar-container,
   vertical-align: middle;
 }
 .view-toolbar .parent > a:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
   margin-left: 10px;
+  position: relative;
+  top: 1px;
 }
 .view-toolbar > ul,
 .view-toolbar > a {
@@ -6071,6 +6128,22 @@ td {
   font-weight: normal;
   text-align: left;
 }
+#list-view {
+  overflow-x: auto;
+  position: relative;
+  background: -webkit-linear-gradient(left, #ffffff 30%, rgba(255, 255, 255, 0)), -webkit-linear-gradient(left, rgba(255, 255, 255, 0), #ffffff 70%) 100%, -webkit-radial-gradient(0 50%, farthest-side, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)) 100% 0;
+  background-repeat: no-repeat;
+  background-size: 40px 100%,
+        40px 100%, 
+        20px 100%,
+        20px 100%;
+  /* Opera doesn't support this in the shorthand */
+
+  background-attachment: local,
+        local,
+        scroll,
+        scroll;
+}
 table.items {
   width: 100%;
   border: 1px solid #DFDFDF;
@@ -6089,7 +6162,6 @@ table.items > thead > tr > td {
   vertical-align: middle;
   padding: 10px 5px;
   word-wrap: break-word;
-  word-break: break-all;
 }
 table.items > tbody > tr > th,
 table.items > thead > tr > th {
@@ -6317,9 +6389,7 @@ td.empty {
   top: -35px;
   right: 8px;
 }
-.portlet-toolbar .icon-create,
 .portlet-toolbar a {
-  padding: 0 10px 0 10px;
   line-height: 25px;
   margin: 0;
   font-weight: bold;
@@ -6345,16 +6415,13 @@ td.empty {
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
 }
-.portlet-toolbar .icon-create .z-label,
 .portlet-toolbar a .z-label {
-  padding: 0 0 0 5px;
+  padding: 0 10px 0 10px;
   float: none;
 }
-.portlet-toolbar .icon-create:not(.attachLoading),
 .portlet-toolbar a:not(.attachLoading) {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
-.portlet-toolbar .icon-create:active,
 .portlet-toolbar a:active {
   color: #656565;
   -webkit-box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
@@ -6364,6 +6431,12 @@ td.empty {
   box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #FFF;
 }
 .portlet-toolbar .icon-create:before {
+  content: "";
+  margin: 0;
+  padding: 0;
+  display: none;
+}
+.portlet-toolbar .icon-create .z-label:before {
   content: "Y";
   font-weight: normal;
   font-size: 24px;
@@ -6376,7 +6449,6 @@ td.empty {
   vertical-align: middle;
   position: relative;
   top: -2px;
-  color: #fff;
   margin: 0 5px 0 0 !important;
 }
 .portlet-toolbar .icon-delete:before {
@@ -6411,7 +6483,7 @@ td.empty {
   color: #fff;
   margin-left: 0;
 }
-a.simple-select {
+a.simple-link {
   background: none !important;
   background-image: none !important;
   -webkit-box-shadow: none  !important;
@@ -6431,10 +6503,11 @@ a.simple-select {
   font-size: 11px;
   font-weight: normal;
 }
-a.simple-select:before {
+a.simple-link:before {
   content: "" !important;
 }
-.portlet-toolbar a.simple-select {
+/*needed for specifity*/
+.portlet-toolbar a.simple-link {
   background: none !important;
 }
 /*=Popup Modals*/
@@ -6681,9 +6754,11 @@ div.wide.form label.hasCheckBox {
 .cgrid-view.loading .list-preloader {
   display: block;
 }
-#NoUserEmailConfigurationYetView h2,
-#NoGlobalEmailConfigurationYetView h2,
-.ZeroModelsYetView h2 {
+/*
+#NoUserEmailConfigurationYetView,
+#NoGlobalEmailConfigurationYetView,
+.ZeroModelsYetView*/
+.splash-view h2 {
   font-family: "Times New Roman", Times, serif;
   font-style: italic;
   font-size: 48px;
@@ -6691,18 +6766,14 @@ div.wide.form label.hasCheckBox {
   font-weight: normal;
   padding: 15px 50px 15px 30px;
 }
-#NoUserEmailConfigurationYetView i,
-#NoGlobalEmailConfigurationYetView i,
-.ZeroModelsYetView i {
+.splash-view i {
   font-size: 13px;
   color: #555;
   font-weight: bold;
   display: block;
   margin-left: 30px;
 }
-#NoUserEmailConfigurationYetView p,
-#NoGlobalEmailConfigurationYetView p,
-.ZeroModelsYetView p {
+.splash-view p {
   font-size: 16px;
   line-height: 24px;
   color: #555;
@@ -6711,9 +6782,7 @@ div.wide.form label.hasCheckBox {
   width: 70%;
   margin: 45px 0 0 30px;
 }
-#NoUserEmailConfigurationYetView a,
-#NoGlobalEmailConfigurationYetView a,
-.ZeroModelsYetView a {
+.splash-view a {
   margin-left: 30px;
   margin-top: 30px;
   float: left;
@@ -6727,9 +6796,7 @@ div.wide.form label.hasCheckBox {
   position: relative;
   cursor: pointer;
 }
-#NoUserEmailConfigurationYetView a span:before,
-#NoGlobalEmailConfigurationYetView a span:before,
-.ZeroModelsYetView a span:before {
+.splash-view a span:before {
   content: "Y";
   font-weight: normal;
   font-size: 24px;
@@ -6739,72 +6806,56 @@ div.wide.form label.hasCheckBox {
   left: -5px;
   margin-right: 3px;
 }
-#NoUserEmailConfigurationYetView .large-icon,
-#NoGlobalEmailConfigurationYetView .large-icon,
-.ZeroModelsYetView .large-icon {
+.splash-view .large-icon {
   width: 25%;
   text-align: center;
   margin-top: 30px;
   border-right: 1px solid #ccc;
   float: left;
 }
-#NoUserEmailConfigurationYetView .Contact .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Contact .large-icon:after,
-.ZeroModelsYetView .Contact .large-icon:after {
+.splash-view .Contact .large-icon:after {
   content: "y";
   font-weight: normal;
   font-size: 300px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 50%;
 }
-#NoUserEmailConfigurationYetView .Account .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Account .large-icon:after,
-.ZeroModelsYetView .Account .large-icon:after {
+.splash-view .Account .large-icon:after {
   content: "P";
   font-weight: normal;
   font-size: 300px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 65%;
 }
-#NoUserEmailConfigurationYetView .Lead .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Lead .large-icon:after,
-.ZeroModelsYetView .Lead .large-icon:after {
+.splash-view .Lead .large-icon:after {
   content: ".";
   font-weight: normal;
   font-size: 300px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 65%;
 }
-#NoUserEmailConfigurationYetView .Opportunity .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Opportunity .large-icon:after,
-.ZeroModelsYetView .Opportunity .large-icon:after {
+.splash-view .Opportunity .large-icon:after {
   content: "9";
   font-weight: normal;
   font-size: 300px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 80%;
 }
-#NoUserEmailConfigurationYetView .Conversation .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Conversation .large-icon:after,
-.ZeroModelsYetView .Conversation .large-icon:after {
+.splash-view .Conversation .large-icon:after {
   content: "b";
   font-weight: normal;
   font-size: 230px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 90%;
 }
-#NoUserEmailConfigurationYetView .Mission .large-icon:after,
-#NoGlobalEmailConfigurationYetView .Mission .large-icon:after,
-.ZeroModelsYetView .Mission .large-icon:after {
+.splash-view .Mission .large-icon:after {
   content: "Q";
   font-weight: normal;
   font-size: 230px;
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 80%;
 }
-#NoUserEmailConfigurationYetView .EmailMessage .large-icon:after,
-#NoGlobalEmailConfigurationYetView .EmailMessage .large-icon:after,
-.ZeroModelsYetView .EmailMessage .large-icon:after {
+.splash-view .EmailMessage .large-icon:after {
   content: "g";
   font-weight: normal;
   font-size: 250px;
@@ -6866,11 +6917,8 @@ div.wide.form label.hasCheckBox {
   position: relative;
 }
 .cgrid-view {
-  -webkit-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
-  -moz-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
-  -o-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
-  -ms-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
-  box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
+  /*.b-shadow( 0 0 20px 5px rgba(153, 153, 153, 0.12) );*/
+
   position: relative;
 }
 .juiportlet-widget-content .cgrid-view {
@@ -6897,7 +6945,7 @@ div.wide.form label.hasCheckBox {
   position: relative;
   float: left;
   width: 100%;
-  z-index: 0;
+  z-index: 50;
 }
 .search-view-0 table {
   padding: 0;
@@ -6982,6 +7030,7 @@ div.wide.form label.hasCheckBox {
 }
 .search-form-tools {
   position: absolute;
+  z-index: 100;
   top: 16px;
   left: 265px;
   line-height: 25px;
@@ -6993,14 +7042,24 @@ div.wide.form label.hasCheckBox {
 }
 #more-search-linkmodal:after,
 #more-search-link:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  position: relative;
+  top: 1px;
   margin-left: 5px;
 }
 #select-list-attributes-link {
   margin-left: 25px;
 }
 #select-list-attributes-link:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  position: relative;
+  top: 1px;
   margin-left: 5px;
 }
 #mixed-models-form-search {
@@ -7010,13 +7069,18 @@ div.wide.form label.hasCheckBox {
 #ModalView .list-view-items-summary-clone {
   margin: 10px 10px 0 0;
 }
+#ModalView .SearchView {
+  position: relative;
+  z-index: 5;
+}
 #ModalView .search-view-0 {
   margin: 5px 0 0 10px !important;
   width: 220px;
   float: left;
+  z-index: 10000;
 }
 #ModalView .search-view-1 {
-  z-index: 100;
+  z-index: 1100;
   min-width: 400px;
   max-width: 75%;
   height: auto;
@@ -7151,13 +7215,14 @@ div.wide.form label.hasCheckBox {
 }
 .dynamic-search-row > div > span:first-child + div {
   margin-right: 0 !important;
-  width: 45%;
+  width: 46%;
   float: left;
 }
 .dynamic-search-row > div .criteria-value-container {
   margin-right: 30px !important;
-  width: 45%;
+  width: 46%;
   float: right;
+  position: relative;
 }
 .dynamic-search-row > div .has-model-select {
   float: left;
@@ -7485,7 +7550,7 @@ div.wide.form label.hasCheckBox {
   z-index: 0;
 }
 #right-side-edit-view-panel .ui-autocomplete {
-  width: auto !important;
+  width: auto;
 }
 #right-side-edit-view-panel input[type="text"] {
   margin-bottom: 4px;
@@ -7551,7 +7616,7 @@ div.wide.form label.hasCheckBox {
 .has-model-select a:hover:before {
   color: #525252 !important;
 }
-.has-model-select a span {
+.has-model-select a .model-select-icon {
   width: 100%;
   height: 100%;
   line-height: 24px;
@@ -7559,14 +7624,20 @@ div.wide.form label.hasCheckBox {
   text-align: center;
   vertical-align: center;
 }
-.has-model-select a span:before {
+.has-model-select a .model-select-icon:before {
   content: "Y";
   font-weight: normal;
-  font-size: 24px;
+  font-size: 26px;
   font-family: "ZurmoGamificationSymblyReguRg";
   color: #8b8b8b;
   text-align: center;
-  vertical-align: bottom;
+}
+.has-model-select .z-spinner {
+  z-index: 999999;
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  display: block !important;
 }
 .has-date-select {
   clear: left;
@@ -7909,7 +7980,11 @@ div.wide.form label.hasCheckBox {
   font-size: 11px;
 }
 .toolbar-mbmenu .options-menu > li > a:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  top: 0;
   margin-left: 5px;
 }
 .toolbar-mbmenu .options-menu ul {
@@ -8112,7 +8187,10 @@ div.wide.form label.hasCheckBox {
   padding-bottom: 15px;
 }
 #inline-edit-form > table td > a:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
   margin-left: 5px;
 }
 #inline-edit-form > table label {
@@ -8264,8 +8342,6 @@ div.wide.form label.hasCheckBox {
   height: 13px;
   text-align: center;
   vertical-align: middle;
-  font-size: 11px;
-  line-height: 12px;
   color: #666;
   border: 1px solid #fff;
   -webkit-box-shadow: inset 0 0 0 1px #dddddd;
@@ -8293,6 +8369,9 @@ div.wide.form label.hasCheckBox {
   background-image: -o-linear-gradient(top, #e8e8e8, #f5f5f5);
   background-image: linear-gradient(top, #e8e8e8, #f5f5f5);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#f5f5f5', GradientType=0);
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
 }
 .BreadCrumbView #StickyListMenu ul {
   display: none;
@@ -8517,11 +8596,13 @@ div.hasHalfs .twoThirds {
   font-family: "ZurmoGamificationSymblyReguRg";
 }
 .edit-row-menu > li > a:after {
-  content: "▾";
+  content: "÷";
+  font-weight: normal;
+  font-size: 12px;
+  font-family: "ZurmoGamificationSymblyReguRg";
   position: relative;
   top: -2px;
   left: 2px;
-  font-size: 10px;
 }
 .edit-row-menu > li a {
   -webkit-text-shadow: none !important;
@@ -8784,12 +8865,22 @@ div.hasHalfs .twoThirds {
 .LatestActivitiesListView .latest-activity-toolbar #filter-latest-activities-link,
 .LatestActivitiesView .latest-activity-toolbar #filter-latest-activities-link {
   margin-left: 20px;
-  text-decoration: underline;
+  text-decoration: none;
   -webkit-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   -moz-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   -o-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   -ms-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
   text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+}
+.LatestActivitiesListView .latest-activity-toolbar #filter-latest-activities-link:after,
+.LatestActivitiesView .latest-activity-toolbar #filter-latest-activities-link:after {
+  content: "÷";
+  font-weight: normal;
+  font-size: 14px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  position: relative;
+  top: 1px;
+  margin-left: 5px;
 }
 .LatestActivitiesListView .latest-activity-toolbar,
 .LatestActivitiesView .latest-activity-toolbar,
@@ -9071,12 +9162,12 @@ div.hasHalfs .twoThirds {
 /*=Auto Complete*/
 .ui-autocomplete {
   margin-top: 2px;
-  width: 335px;
+  width: auto;
   padding-top: 2px;
   padding-bottom: 2px;
   text-align: left;
   z-index: 9999999;
-  position: relative;
+  position: absolute;
 }
 .ui-autocomplete li {
   list-style: none;
@@ -9311,14 +9402,60 @@ div.hasHalfs .twoThirds {
   font-size: 11px;
 }
 /*=Progress*/
-.AppContent.ProgressView {
-  padding-right: 0;
+.ProgressView h3 {
+  position: relative;
+}
+.ProgressView #sequential-process-spinner + #progressBar-msg {
+  display: block;
 }
 .progress-counter {
   padding: 15px;
 }
 #progressBar-links {
   margin-top: 15px;
+}
+#progressBar-links a {
+  margin-left: 0;
+}
+.progressbar-wrapper {
+  width: 100%;
+  position: relative;
+  margin-top: 15px;
+}
+#progress-percent {
+  width: 50px;
+  display: inline-block;
+  font-weight: bold;
+}
+.ui-progressbar {
+  padding-left: 35px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+}
+.ui-widget-header.ui-progressbar-value {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  height: 5px;
+  margin: 5px 0 0 0;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  background-color: transparent !important;
+  background-color: #afafaf !important;
+  background-repeat: repeat-x !important;
+  background-image: -moz-linear-gradient(0deg, #969696, #afafaf) !important;
+  background-image: -ms-linear-gradient(0deg, #969696, #afafaf) !important;
+  background-image: -webkit-linear-gradient(0deg, #969696, #afafaf) !important;
+  background-image: -o-linear-gradient(0deg, #969696, #afafaf) !important;
+  background-image: linear-gradient(0deg, #969696, #afafaf) !important;
 }
 /*=About*/
 #AboutView {
@@ -11062,9 +11199,6 @@ table.configuration-list td:last-child a .z-label:before {
   margin: 0;
   padding: 0;
 }
-#SequentialProcessView h3 {
-  text-indent: 30px;
-}
 #ImportErrorsListView {
   margin-bottom: 15px;
 }
@@ -11636,10 +11770,7 @@ div.wide.form .errorMessage {
   font-style: italic;
   display: inline-block;
   color: #999;
-  margin-top: 0;
-  position: absolute;
-  bottom: 3px;
-  left: 100px;
+  margin: 9px 0 0 10px;
 }
 .ImportWizardView .files {
   margin-top: 15px;
@@ -13983,7 +14114,7 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   width: 310px;
   height: 310px;
 }
-a.close-ModalGameNotification.simple-select {
+a.close-ModalGameNotification.simple-link {
   background: none !important;
   margin-right: 10px;
   margin-left: -5px;
@@ -14295,6 +14426,20 @@ a.close-ModalGameNotification.simple-select {
   vertical-align: middle;
   position: relative;
   top: 0;
+}
+.icon-conversations-closed:before {
+  content: "l";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
 }
 .icon-missions-available:before {
   content: "Q";
@@ -14813,7 +14958,7 @@ a.user-link {
   -o-box-shadow: none !important;
   -ms-box-shadow: none !important;
   box-shadow: none !important;
-  padding-bottom: 15px;
+  padding-bottom: 0;
   margin-bottom: 0;
 }
 .email-archive-item .wide.form > form {
@@ -14824,6 +14969,9 @@ a.user-link {
 }
 .email-archive-item .overlay-label-field {
   padding-bottom: 0;
+}
+.email-archive-item .matching-actions-and-content > div {
+  margin-top: 15px;
 }
 .email-archive-item .matching-actions-and-content form {
   padding-bottom: 0;
@@ -14858,7 +15006,12 @@ a.user-link {
 .email-archive-item .email-from strong,
 .email-archive-item .email-to strong {
   font-weight: bold;
-  color: #999;
+}
+.email-archive-item .email-from,
+.email-archive-item .email-to,
+.email-archive-item .email-subject {
+  line-height: 140%;
+  margin-bottom: 2px;
 }
 .email-archive-item .beforeOptOutCheckBox + .hasCheckBox {
   left: 0 !important;
@@ -14872,18 +15025,10 @@ a.user-link {
   margin-right: 0;
 }
 .email-matching-actions {
-  margin: 15px 0 15px 0;
+  margin: 5px 0 0 0 !important;
   display: block;
 }
 .email-matching-actions a {
-  padding: 2px 4px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  color: #fff !important;
-  font-size: 11px;
   text-decoration: none;
 }
 .email-matching-show-more,
@@ -14894,9 +15039,6 @@ a.user-link {
 .email-matching-show-less {
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
-}
-.matching-actions-and-content {
-  border-top: 1px solid #fff;
 }
 .icon-down-arrow {
   font-weight: normal;
@@ -14942,6 +15084,22 @@ a.user-link {
   -o-box-shadow: inset 0 0 0 2px #ffffff;
   -ms-box-shadow: inset 0 0 0 2px #ffffff;
   box-shadow: inset 0 0 0 2px #ffffff;
+}
+.active-panel {
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff;
+  -moz-box-shadow: inset 0 0 0 2px #ffffff;
+  -o-box-shadow: inset 0 0 0 2px #ffffff;
+  -ms-box-shadow: inset 0 0 0 2px #ffffff;
+  box-shadow: inset 0 0 0 2px #ffffff;
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
 /*Email Compose*/
 #CreateEmailMessageModalEditView .panel {

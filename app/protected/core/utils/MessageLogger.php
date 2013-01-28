@@ -122,11 +122,11 @@
             assert('$type == MessageLogger::ERROR || $type == MessageLogger::INFO');
             if ($type == MessageLogger::ERROR)
             {
-                return Yii::t('Default', 'Error');
+                return Zurmo::t('Core', 'Error');
             }
             else
             {
-                return Yii::t('Default', 'Info');
+                return Zurmo::t('Core', 'Info');
             }
         }
 

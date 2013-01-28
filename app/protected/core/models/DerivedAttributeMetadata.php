@@ -90,10 +90,10 @@
                     array('name',   'type', 'type' => 'string'),
                     array('name',   'length', 'max'   => 64),
                     array('name',   'match', 'pattern' => '/^[A-Za-z0-9_]+$/', // Not Coding Standard
-                                    'message' =>  Yii::t('Default', 'Name must not contain spaces or special characters'),
+                                    'message' =>  Zurmo::t('Core', 'Name must not contain spaces or special characters'),
                     ),
                     array('name',   'match', 'pattern' => '/^[a-z]/', // Not Coding Standard
-                                    'message' =>  Yii::t('Default', 'First character must be a lower case letter'),
+                                    'message' =>  Zurmo::t('Core', 'First character must be a lower case letter'),
                     ),
                     array('modelClassName',      'required'),
                     array('modelClassName',      'match', 'pattern' => '/[A-Z]([a-zA-Z]*[a-z]|[a-z]?)/',
@@ -115,7 +115,7 @@
                 $unserializedData = unserialize($this->serializedMetadata);
                 if (!isset($unserializedData['attributeLabels']))
                 {
-                    $message = Yii::t('Default', 'Missing the attribute labels.');
+                    $message = Zurmo::t('Core', 'Missing the attribute labels.');
                     $this->addError('name', $message);
                 }
             }
@@ -134,7 +134,7 @@
                 {
                     return;
                 }
-                $message = Yii::t('Default', '{attribute} "{value}" is already in use.',
+                $message = Zurmo::t('Core', '{attribute} "{value}" is already in use.',
                                   array('{attribute}' => $attribute, '{name}' => $this->$attribute));
                 $this->addError('name', $message);
             }

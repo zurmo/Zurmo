@@ -30,21 +30,49 @@
     {
         public static function configureConfigFiles()
         {
+            $perInstanceTestConfigCreated = false;
             chdir(COMMON_ROOT);
 
             if (!is_file(INSTANCE_ROOT . '/protected/config/debugTest.php'))
             {
-                copy(INSTANCE_ROOT . '/protected/config/debugDIST.php', INSTANCE_ROOT . '/protected/config/debugTest.php');
+                copy(INSTANCE_ROOT . '/protected/config/debugDIST.php',
+                    INSTANCE_ROOT . '/protected/config/debugTest.php');
             }
             if (!is_file(INSTANCE_ROOT . '/protected/config/perInstanceTest.php'))
             {
-                copy(INSTANCE_ROOT . '/protected/config/perInstanceDIST.php', INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
+                $perInstanceTestConfigCreated = copy(INSTANCE_ROOT . '/protected/config/perInstanceDIST.php',
+                    INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
 
-                //Mark test application installed, because we need this variable to be set to true, for api tests
+                // Mark test application installed, because we need this variable to be set to true, for api tests
                 $contents = file_get_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php');
                 $contents = preg_replace('/\$installed\s*=\s*false;/',
                                          '$installed = true;',
                                          $contents);
+                // Update database credentials to use a test db and user.
+                $contents = preg_replace('/\$connectionString\s*=\s*\'mysql:host=localhost;port=3306;dbname=zurmo\';/', // Not Coding Standard
+                    '$connectionString = \'mysql:host=localhost;port=3306;dbname=zurmo_test\';', // Not Coding Standard
+                    $contents);
+                $contents = preg_replace('/\$username\s*=\s*\'zurmo\';/',
+                    '$username = \'zurmo_test\';',
+                    $contents);
+                $contents = preg_replace('/\$password\s*=\s*\'zurmo\';/',
+                    '$password = \'zurmo_test\';',
+                    $contents);
+                // Add temp db Settings
+                $tempDbSettings = <<<EOD
+    \$instanceConfig['components']['tempDb'] = array(
+        'class' => 'CDbConnection',
+        'connectionString' => 'mysql:host=localhost;port=3306;dbname=zurmo_temp', // Not Coding Standard,
+        'username'         => 'zurmo_temp',
+        'password'         => 'zurmo_temp',
+        'emulatePrepare' => true,
+        'charset'        => 'utf8',
+    );
+EOD;
+                $contents = preg_replace('=//@see CustomManagement=', // Not Coding Standard
+                    "//@see CustomManagement\n" . $tempDbSettings,
+                    $contents,
+                    1);
 
                 file_put_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php', $contents);
             }
@@ -105,6 +133,13 @@ EOD;
                         $contents);
 
                 file_put_contents(INSTANCE_ROOT . '/protected/config/perInstanceTest.php', $contents);
+            }
+
+            if ($perInstanceTestConfigCreated)
+            {
+                echo "\nPlease update the newly created ".INSTANCE_ROOT .
+                    "/protected/config/perInstanceTest.php with latest test and tempDb credentials.\n";
+                exit;
             }
         }
     }

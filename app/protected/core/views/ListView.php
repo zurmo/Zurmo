@@ -178,7 +178,7 @@
 
         protected static function getSummaryText()
         {
-            return Yii::t('Default', '{count} result(s)');
+            return Zurmo::t('Core', '{count} result(s)');
         }
 
         protected static function getSummaryCssClass()
@@ -342,7 +342,7 @@
                     ),
                     array(
                         'class'           => 'CLinkColumn',
-                        'header'          => Yii::t('Default', 'Name'),
+                        'header'          => Zurmo::t('Core', 'Name'),
                         'labelExpression' => '$data->name',
                         'urlExpression'   => 'Yii::app()->createUrl("/{$this->grid->getOwner()->getModule()->getId()}/{$this->grid->getOwner()->getId()}/details", array("id" => $data->id))',
                     )

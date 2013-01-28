@@ -94,12 +94,12 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Attachments'));
+            return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Attachments'));
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Attachments');
+            return Zurmo::t('ZurmoModule', 'Attachments');
         }
 
         /**
@@ -151,7 +151,7 @@
                          '<div class="file-upload-box">{content}{error}</div>' .
                          '<a href="#" class="show-file-upload-box" onclick="jQuery' .
                          '(this).hide().prev().show().find(\'input[type=file]\').click(); ' .
-                         'return false;">' . Yii::t('Default', 'Add Files') . '</a>' .
+                         'return false;">' . Zurmo::t('ZurmoModule', 'Add Files') . '</a>' .
                          '</td>';
             // End Not Coding Standard
         }

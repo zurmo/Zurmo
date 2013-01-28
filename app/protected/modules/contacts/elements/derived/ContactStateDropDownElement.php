@@ -69,7 +69,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('ContactsModule', 'Status');
         }
 
         /**

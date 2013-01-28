@@ -61,13 +61,13 @@
             switch ($right)
             {
                 case self::NONE:
-                    return Yii::t('Default', '(None)');
+                    return Zurmo::t('ZurmoModule', '(None)');
 
                 case self::ALLOW:
-                    return Yii::t('Default', 'Allow');
+                    return Zurmo::t('ZurmoModule', 'Allow');
 
                 case self::DENY:
-                    return Yii::t('Default', 'Deny');
+                    return Zurmo::t('ZurmoModule', 'Deny');
 
                 default:
                     return '???';

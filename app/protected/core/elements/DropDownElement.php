@@ -116,7 +116,7 @@
             );
             if ($this->getAddBlank())
             {
-                $htmlOptions['empty'] = Yii::t('Default', '(None)');
+                $htmlOptions['empty'] = Zurmo::t('Core', '(None)');
             }
             $htmlOptions['disabled'] = $this->getDisabledValue();
             return $htmlOptions;

@@ -31,7 +31,7 @@
     {
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'Notes');
+            $title  = Zurmo::t('NotesModule', 'Notes');
             return $title;
         }
 
@@ -40,7 +40,7 @@
             if (null != $messageContent = RequiredAttributesValidViewUtil::
                                          resolveValidView('NotesModule', $this->getInlineEditViewClassName()))
             {
-                $message = Yii::t('Default', 'The NotesModulePluralLabel form cannot be displayed.',
+                $message = Zurmo::t('NotesModule', 'The NotesModulePluralLabel form cannot be displayed.',
                            LabelUtil::getTranslationParamsForAllModules());
                 $message .= '<br/>' . $messageContent . '<br/><br/>';
                 return $message;

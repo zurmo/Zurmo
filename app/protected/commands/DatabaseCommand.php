@@ -107,7 +107,10 @@ EOD;
             }
             catch (Exception $e)
             {
-                $messageStreamer->add(Yii::t('Default', 'An error occur during database backup/restore: ') . $e->getMessage());
+                $messageStreamer->add(
+                                      Zurmo::t('Commands', 'An error occur during database backup/restore: {message}',
+                                               array('{message}' => $e->getMessage()))
+                                      );
             }
         }
 
@@ -121,16 +124,16 @@ EOD;
             // If file already exist, ask user to confirm that want to overwrite it.
             if (file_exists($filePath))
             {
-                $message = Yii::t('Default', 'Backup file already exists. Are you sure you want to overwrite the existing file?.');
+                $message = Zurmo::t('Commands', 'Backup file already exists. Are you sure you want to overwrite the existing file?.');
                 if (!$this->confirm($message))
                 {
-                    $messageStreamer->add(Yii::t('Default', 'Backup not completed.'));
-                    $messageStreamer->add(Yii::t('Default', 'Please delete existing file or enter new one, and start backup process again.'));
+                    $messageStreamer->add(Zurmo::t('Commands', 'Backup not completed.'));
+                    $messageStreamer->add(Zurmo::t('Commands', 'Please delete existing file or enter new one, and start backup process again.'));
                     Yii::app()->end();
                 }
             }
 
-            $messageStreamer->add(Yii::t('Default', 'Starting database backup process.'));
+            $messageStreamer->add(Zurmo::t('Commands', 'Starting database backup process.'));
             $databaseConnectionInfo = RedBeanDatabase::getDatabaseInfoFromDsnString(Yii::app()->db->connectionString);
 
             $result = DatabaseCompatibilityUtil::backupDatabase($databaseConnectionInfo['databaseType'],
@@ -142,18 +145,18 @@ EOD;
                                                                 $filePath);
             if ($result)
             {
-                 $messageStreamer->add(Yii::t('Default', 'Database backup completed.'));
+                 $messageStreamer->add(Zurmo::t('Commands', 'Database backup completed.'));
             }
             else
             {
-                $messageStreamer->add(Yii::t('Default', 'There was an error during backup.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'There was an error during backup.'));
                 // It is possible that empty file is created, so delete it.
                 if (file_exists($filePath))
                 {
-                    $messageStreamer->add(Yii::t('Default', 'Deleting backup file.'));
+                    $messageStreamer->add(Zurmo::t('Commands', 'Deleting backup file.'));
                     unlink($filePath);
                  }
-                 $messageStreamer->add(Yii::t('Default', 'Please backup database manually.'));
+                 $messageStreamer->add(Zurmo::t('Commands', 'Please backup database manually.'));
             }
         }
 
@@ -165,14 +168,14 @@ EOD;
          */
         protected function restoreDatabase($filePath, $messageStreamer)
         {
-            $messageStreamer->add(Yii::t('Default', 'Starting database restore process.'));
+            $messageStreamer->add(Zurmo::t('Commands', 'Starting database restore process.'));
             $databaseConnectionInfo = RedBeanDatabase::getDatabaseInfoFromDsnString(Yii::app()->db->connectionString);
 
             $tables = DatabaseCompatibilityUtil::getAllTableNames();
             if (!empty($tables))
             {
-                $messageStreamer->add(Yii::t('Default', 'Database needs to be empty.'));
-                $messageStreamer->add(Yii::t('Default', 'Database is not restored.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'Database needs to be empty.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'Database is not restored.'));
                 Yii::app()->end();
             }
             $result = DatabaseCompatibilityUtil::restoreDatabase($databaseConnectionInfo['databaseType'],
@@ -184,12 +187,12 @@ EOD;
                                                                  $filePath);
             if ($result)
             {
-                $messageStreamer->add(Yii::t('Default', 'Database restored.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'Database restored.'));
             }
             else
             {
-                $messageStreamer->add(Yii::t('Default', 'There was an error during restore.'));
-                $messageStreamer->add(Yii::t('Default', 'Please restore database manually.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'There was an error during restore.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'Please restore database manually.'));
             }
         }
     }

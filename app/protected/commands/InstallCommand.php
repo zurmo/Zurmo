@@ -33,7 +33,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <database-port> <superuser-password> [demodata] [load-magnitude]
+      zurmoc install <database-hostname> <database-name> <database-username> <database-password> <database-port> <superuser-password> [hostInfo] [scriptUrl] [demodata] [load-magnitude]
 
     DESCRIPTION
       This command runs a silent install on the application, optional loading demo data if specified. This version
@@ -49,6 +49,8 @@
      * superuser-password : The password for the super administrator that is created.  The username will be 'super'
 
      Optional Parameters:
+     * hostInfo: If you want to set the hostInfo for the perInstance.php specify it in this parameter. Can be an empty value ''.
+     * scriptUrl: If you want to set the scriptUrl for the perInstance.php specify it in this parameter. Can be an empty value ''.
      * demodata: If you want demodata to load just specify 'demodata' otherwise leave blank.
      * load-magnitude: Conditional, used only if demodata parameter specified, and it specify load magnitude for demodata (demodata volume).
 
@@ -66,13 +68,13 @@ EOD;
         {
             $this->usageError('The database user, database name, password, host and port must be specified.');
         }
-        if (isset($args[6]) && $args[6] != 'demodata')
+        if (isset($args[8]) && $args[8] != 'demodata')
         {
-            $this->usageError('Invalid parameter specified.  If specified the 7th parameter should be \'demodata\'');
+            $this->usageError('Invalid parameter specified.  If specified the 9th parameter should be \'demodata\'');
         }
-        if (isset($args[7]) && (intval($args[7]) < 1))
+        if (isset($args[9]) && (intval($args[9]) < 1))
         {
-            $this->usageError('Invalid parameter specified.  If specified the 8th parameter should be integer and greater then 0');
+            $this->usageError('Invalid parameter specified.  If specified the 10th parameter should be integer and greater then 0');
         }
         if (Yii::app()->isApplicationInstalled())
         {

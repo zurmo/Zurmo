@@ -66,17 +66,17 @@
 
         public static function getListTypeCreatedLabel()
         {
-            return Yii::t('Default', 'Created');
+            return Zurmo::t('MissionsModule', 'Created');
         }
 
         public static function getListTypeAvailableLabel()
         {
-            return Yii::t('Default', 'Available');
+            return Zurmo::t('MissionsModule', 'Available');
         }
 
         public static function getListTypeMineTakenButNotAcceptedLabel()
         {
-            return Yii::t('Default', 'My Missions');
+            return Zurmo::t('MissionsModule', 'My Missions');
         }
     }
 ?>

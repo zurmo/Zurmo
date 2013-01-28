@@ -83,7 +83,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('TasksModule', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         public static function getModelForMetadataClassName()

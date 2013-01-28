@@ -32,7 +32,7 @@
             {
                 return array(
                 'name' => 'lastName',
-                'header' => Yii::t('Default', 'Name'),
+                'header' => Zurmo::t('Core', 'Name'),
                 'type' => 'raw',
                 'value' => $this->view->getLinkString('$data'),
                 );
@@ -41,7 +41,7 @@
             {
                 return array(
                     'name' => 'lastName',
-                    'header' => Yii::t('Default', 'Name'),
+                    'header' => Zurmo::t('Core', 'Name'),
                     'value'  => 'strval($data)',
                 );
             }

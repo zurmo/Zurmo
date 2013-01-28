@@ -79,7 +79,7 @@
                 $content .= '<ul class="attachments">';
                 if ($showHeaderLabel)
                 {
-                    $content .= '<li><strong>' . Yii::t('Default', 'Attachments'). '</strong></li>';
+                    $content .= '<li><strong>' . Zurmo::t('ZurmoModule', 'Attachments'). '</strong></li>';
                 }
                 foreach ($model->{$filesRelationName} as $fileModel)
                 {

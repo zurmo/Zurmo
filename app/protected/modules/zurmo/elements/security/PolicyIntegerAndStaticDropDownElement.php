@@ -98,7 +98,7 @@
             $policyDefault                  = $moduleName::getPolicyDefault($this->getFormattedAttributeLabel());
             if ($policyDefault != null)
             {
-                $title    = Yii::t('Default', 'The default value is {policyDefault}', array('{policyDefault}' => $policyDefault));
+                $title    = Zurmo::t('ZurmoModule', 'The default value is {policyDefault}', array('{policyDefault}' => $policyDefault));
                 $content  = '<span class="tooltip policy-default-tooltip" title="' . $title . '">?</span>';
                 $qtip     = new ZurmoTip();
                 $qtip->addQTip(".policy-default-tooltip");
@@ -124,8 +124,8 @@
         protected function getHelperDropDownArray()
         {
             return array(
-                ''          => Yii::t('Default', 'Not Set'),
-                PolicyIntegerAndStaticDropDownElement::HELPER_DROPDOWN_VALUE_YES => Yii::t('Default', 'Yes'),
+                ''          => Zurmo::t('ZurmoModule', 'Not Set'),
+                PolicyIntegerAndStaticDropDownElement::HELPER_DROPDOWN_VALUE_YES => Zurmo::t('ZurmoModule', 'Yes'),
             );
         }
 
@@ -166,7 +166,7 @@
             $inheritedAttributeName = $this->attribute . '__inherited';
             if ($this->model->{$inheritedAttributeName} != null)
             {
-                return Yii::t('Default', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
+                return Zurmo::t('ZurmoModule', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
             }
             return null;
         }

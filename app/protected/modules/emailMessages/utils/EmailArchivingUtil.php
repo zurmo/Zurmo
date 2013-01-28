@@ -114,7 +114,6 @@
         public static function resolveEmailRecipientsFromEmailMessage(ImapMessage $emailMessage)
         {
             // Check if email is forwarded or not.
-            $emailRecipients = false;
             if (self::isMessageForwarded($emailMessage))
             {
                 // Somebody sent email to Zurmo user, the user forwarded it to dropbox, so the user is a recipient
@@ -127,11 +126,26 @@
             }
             else
             {
-                // Zurmo user sent email, so recipients are in 'To' ans 'CC' fields
+                // Zurmo user sent email, so recipients are in 'To' and 'CC' fields
                 $emailRecipients = $emailMessage->to;
+
+                foreach ($emailMessage->to as $key => $value)
+                {
+                    if ($value['email'] == Yii::app()->imap->imapUsername)
+                    {
+                        unset($emailMessage->to[$key]);
+                    }
+                }
                 if (!empty($emailMessage->cc))
                 {
-                    $emailRecipients = array_unique(array_merge($emailRecipients, $emailMessage->cc));
+                    foreach ($emailMessage->cc as $key => $value)
+                    {
+                        if ($value['email'] == Yii::app()->imap->imapUsername)
+                        {
+                            unset($emailMessage->cc[$key]);
+                        }
+                    }
+                    $emailRecipients = ArrayUtil::arrayUniqueRecursive(array_merge($emailRecipients, $emailMessage->cc));
                 }
             }
             return $emailRecipients;

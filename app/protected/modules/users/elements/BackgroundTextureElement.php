@@ -65,7 +65,7 @@
 
         protected function makeData()
         {
-            $data = array('' => Yii::t('Default', 'None'));
+            $data = array('' => Zurmo::t('UsersModule', 'None'));
             return array_merge($data, Yii::app()->themeManager->getBackgroundTextureNamesAndLabels());
         }
 

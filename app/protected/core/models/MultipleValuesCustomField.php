@@ -33,7 +33,7 @@
         {
             if ($this->values->count() == 0)
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('Core', '(None)');
             }
             $s = null;
 

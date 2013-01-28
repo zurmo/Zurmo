@@ -28,7 +28,7 @@
     {
         public function actionIndex()
         {
-            $title           = Yii::t('Default', 'Available Modules');
+            $title           = Zurmo::t('DesignerModule', 'Available Modules');
             $breadcrumbLinks = array(
                  $title,
             );
@@ -72,7 +72,7 @@
             $moduleClassName = $_GET['moduleClassName'];
             $module          = new $_GET['moduleClassName'](null, null);
             $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
-                               ': ' . Yii::t('Default', 'Fields');
+                               ': ' . Zurmo::t('DesignerModule', 'Fields');
             $breadcrumbLinks = array($title);
             $overrideClassName = $moduleClassName . 'AttributesListView';
             $overrideClassFile = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR .
@@ -91,12 +91,14 @@
                 $derivedAttributesAdapter = new DerivedAttributesAdapter(get_class($model));
                 $customAttributes         = array_merge($adapter->getCustomAttributes(),
                                                         $derivedAttributesAdapter->getAttributes());
+                $customAttributes = ArrayUtil::subValueSort($customAttributes, 'attributeLabel', 'asort');
+                $standardAttributes = ArrayUtil::subValueSort($adapter->getStandardAttributes(), 'attributeLabel', 'asort');
                 $canvasView = new StandardAndCustomAttributesListView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             $module,
                             $moduleClassName::getModuleLabelByTypeAndLanguage('Plural'),
-                            $adapter->getStandardAttributes(),
+                            $standardAttributes,
                             $customAttributes,
                             $modelClassName
                 );
@@ -136,7 +138,7 @@
             }
             $title           = static::resolveAttributeEditTitle($attributeForm);
             $breadcrumbLinks = array(
-                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Fields') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Zurmo::t('DesignerModule', 'Fields') =>
                     array('default/attributesList',  'moduleClassName' => $_GET['moduleClassName']),
                 $title,
             );
@@ -158,11 +160,11 @@
         {
             if (empty($model->attributeName))
             {
-                return Yii::t('Default', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
+                return Zurmo::t('DesignerModule', 'Create Field') . ': ' . $model::getAttributeTypeDisplayName();
             }
             else
             {
-                return Yii::t('Default', 'Edit Field')   . ': ' . strval($model);
+                return Zurmo::t('DesignerModule', 'Edit Field')   . ': ' . strval($model);
             }
         }
 
@@ -225,8 +227,9 @@
                     }
                 }
             }
+            $editableViewsCollection = ArrayUtil::subValueSort($editableViewsCollection, 'titleLabel', 'asort');
             $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
-                               ': ' . Yii::t('Default', 'Layouts');
+                               ': ' . Zurmo::t('DesignerModule', 'Layouts');
             $breadcrumbLinks = array($title);
             $canvasView = new ActionBarAndModuleEditableMetadataCollectionView(
                         $this->getId(),
@@ -276,7 +279,7 @@
                     !PanelsDisplayTypeLayoutMetadataUtil::populateSaveableMetadataFromPostData($savableMetadata,
                         $_POST['LayoutPanelsTypeForm']))
                 {
-                    echo CJSON::encode(array('message' => Yii::t('Default', 'Invalid panel configuration type'), 'type' => 'error'));
+                    echo CJSON::encode(array('message' => Zurmo::t('DesignerModule', 'Invalid panel configuration type'), 'type' => 'error'));
                 }
                 elseif ($layoutMetadataAdapter->setMetadataFromLayout(ArrayUtil::getArrayValue($_POST, 'layout'), $savableMetadata))
                 {
@@ -293,9 +296,9 @@
                 }
                 Yii::app()->end(0, false);
             }
-            $title           = Yii::t('Default', 'Edit Layout') . ': ' . $designerRules->resolveDisplayNameByView($_GET['viewClassName']);
+            $title           = Zurmo::t('DesignerModule', 'Edit Layout') . ': ' . $designerRules->resolveDisplayNameByView($_GET['viewClassName']);
             $breadcrumbLinks = array(
-                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Yii::t('Default', 'Layouts') =>
+                    $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . ': ' . Zurmo::t('DesignerModule', 'Layouts') =>
                     array('default/moduleLayoutsList',  'moduleClassName' => $_GET['moduleClassName']),
                 $title,
             );
@@ -333,7 +336,7 @@
                 $this->actionModuleSave($moduleForm, $module);
             }
             $title           = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') .
-                               ': ' . Yii::t('Default', 'General');
+                               ': ' . Zurmo::t('DesignerModule', 'General');
             $breadcrumbLinks = array($title);
             $canvasView = new ActionBarAndModuleEditView(
                         $this->getId(),

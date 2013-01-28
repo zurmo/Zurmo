@@ -36,12 +36,12 @@
             $IMAPInstalled =  InstallUtil::checkIMAP();
             if ($IMAPInstalled)
             {
-                $this->message  = Yii::t('Default', 'IMAP extension is loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'IMAP extension is loaded.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'IMAP extension is not loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'IMAP extension is not loaded.');
                 return false;
             }
         }

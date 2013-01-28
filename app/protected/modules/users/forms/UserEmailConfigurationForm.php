@@ -49,8 +49,8 @@
         public function attributeLabels()
         {
             return array_merge($this->model->attributeLabels(), array(
-                'aTestToAddress'            => Yii::t('Default', 'Send a test email to'),
-                'emailSignatureHtmlContent' => Yii::t('Default', 'Email Signature')
+                'aTestToAddress'            => Zurmo::t('UsersModule', 'Send a test email to'),
+                'emailSignatureHtmlContent' => Zurmo::t('UsersModule', 'Email Signature')
             ));
         }
 

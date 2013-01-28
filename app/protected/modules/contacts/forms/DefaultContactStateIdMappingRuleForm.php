@@ -72,7 +72,7 @@
 
         public function attributeLabels()
         {
-            return array('defaultStateId' => Yii::t('Default', 'Default Value'));
+            return array('defaultStateId' => Zurmo::t('ContactsModule', 'Default Value'));
         }
 
         public static function getAttributeName()

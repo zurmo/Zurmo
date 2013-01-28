@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} Conversation created|{n} Conversations created', array($value));
+            return Zurmo::t('ConversationsModule', '{n} Conversation created|{n} Conversations created', array($value));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

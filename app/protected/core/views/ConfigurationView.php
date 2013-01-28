@@ -41,7 +41,7 @@
 
         protected function renderContent()
         {
-            return Yii::t('Default', 'This module doesn\'t have anything to configure.');
+            return Zurmo::t('Core', 'This module doesn\'t have anything to configure.');
         }
     }
 ?>

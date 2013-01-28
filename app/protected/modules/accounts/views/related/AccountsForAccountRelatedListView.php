@@ -33,7 +33,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'AccountsModulePluralLabel For AccountsModuleSingularLabel',
+            return Zurmo::t('AccountsModule', 'AccountsModulePluralLabel For AccountsModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
     }

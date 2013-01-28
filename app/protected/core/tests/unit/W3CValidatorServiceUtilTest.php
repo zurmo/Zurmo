@@ -28,8 +28,6 @@
     {
         public function testValidate()
         {
-            $original_directory = getcwd();
-            chdir('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
             $xHtml = <<<END
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -56,8 +54,6 @@ END;
 </html>
 END;
             $this->assertTrue(count(W3CValidatorServiceUtil::validate($xHtml)) >= 1);
-
-            chdir($original_directory);
         }
     }
 ?>

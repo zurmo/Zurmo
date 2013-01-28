@@ -34,11 +34,11 @@
             $passed = InstallUtil::isPdoInstalled();
             if ($passed)
             {
-                $this->message = Yii::t('Default', 'pdo is installed.');
+                $this->message = Zurmo::t('InstallModule', 'pdo is installed.');
             }
             else
             {
-                $this->message = Yii::t('Default', 'pdo is not installed.');
+                $this->message = Zurmo::t('InstallModule', 'pdo is not installed.');
             }
             return $passed;
         }

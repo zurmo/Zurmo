@@ -73,7 +73,7 @@
             }
             if ($lastName == null)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The full name must contain a last name, which is required.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The full name must contain a last name, which is required.'));
             }
             $model              = new $modelClassName(false);
             $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
@@ -81,15 +81,15 @@
             $lastNameMinLength  = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, 'lastName');
             if (strlen($lastName) > $lastNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last name specified is too long.'));
             }
             if (strlen($lastName) < $lastNameMinLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Last name specified is too short.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last name specified is too short.'));
             }
             if ($firstName != null && strlen($firstName) > $firstNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'First name specified is too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'First name specified is too long.'));
             }
             return $value;
         }

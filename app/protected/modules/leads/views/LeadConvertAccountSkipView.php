@@ -71,7 +71,7 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr>';
-            $content .= '<th>' . Yii::t('Default', 'Complete LeadsModuleSingularLowerCaseLabel conversion without ' .
+            $content .= '<th>' . Zurmo::t('LeadsModule', 'Complete LeadsModuleSingularLowerCaseLabel conversion without ' .
                                                    'selecting or creating an AccountsModuleSingularLowerCaseLabel.',
                                                    LabelUtil::getTranslationParamsForAllModules()) . '</th>';
             $content .= '</tr>';
@@ -85,7 +85,7 @@
                                                       array('htmlOptions' =>
                                                           array('name'   => 'AccountSkip', 'id' => 'AccountSkip',
                                                                 'params' => array('AccountSkip' => true)),
-                                                                'label'  => Yii::t('Default', 'Complete Conversion')));
+                                                                'label'  => Zurmo::t('LeadsModule', 'Complete Conversion')));
             $content .= $element->render();
             $content .= '</div></div>';
             return $content;

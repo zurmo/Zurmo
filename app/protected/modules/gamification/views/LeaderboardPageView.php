@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Leaderboard');
+            return Zurmo::t('GamificationModule', 'Leaderboard');
         }
     }
 ?>

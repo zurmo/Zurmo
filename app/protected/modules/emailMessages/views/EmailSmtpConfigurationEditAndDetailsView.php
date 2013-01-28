@@ -31,7 +31,7 @@
     {
         public function getTitle()
         {
-            return Yii::t('Default', 'Email Configuration');
+            return Zurmo::t('EmailMessagesModule', 'Email Configuration');
         }
 
         public static function getDefaultMetadata()
@@ -48,7 +48,7 @@
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(
-                            'title' => Yii::t("Default", "Outbound Email Configuration (SMTP)"),
+                            'title' => Zurmo::t('EmailMessagesModule', 'Outbound Email Configuration (SMTP)'),
                             'rows' => array(
                                 array('cells' =>
                                     array(

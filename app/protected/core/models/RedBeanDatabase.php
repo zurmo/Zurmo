@@ -173,7 +173,7 @@
                 $databaseConnactionInfo = array(
                     'databaseType' => $matches['1'],
                     'databaseHost' => $matches['2'],
-                    'databasePort' => $databasePort,
+                    'databasePort' => intval($databasePort),
                     'databaseName' => $matches['4']
                 );
                 return $databaseConnactionInfo;

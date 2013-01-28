@@ -35,7 +35,7 @@
         {
             $this->minimumVersion = Yii::app()->params['redBeanVersion'];
             $passed = $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkRedBean',
-                                                                                Yii::t('Default', 'RedBean'));
+                                                                                Zurmo::t('InstallModule', 'RedBean'));
 
             return $passed;
         }

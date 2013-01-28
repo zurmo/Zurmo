@@ -43,7 +43,7 @@
 
         public function attributeLabels()
         {
-            return array('timeZone' => Yii::t('Default', 'Time Zone'));
+            return array('timeZone' => Zurmo::t('UsersModule', 'Time Zone'));
         }
     }
 ?>

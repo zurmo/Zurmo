@@ -74,7 +74,7 @@
                     }
                 }
                 Yii::app()->languageHelper->setActiveLanguages($activeLanguages);
-                Yii::app()->user->setFlash('notification', Yii::t('Default', 'Changes to active languages saved successfully.'));
+                Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'Changes to active languages saved successfully.'));
             }
         }
     }

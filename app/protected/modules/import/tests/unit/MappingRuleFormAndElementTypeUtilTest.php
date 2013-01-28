@@ -244,12 +244,21 @@
             $stringDefaultValueMappingRuleForm   = new DefaultValueModelAttributeMappingRuleForm(
                                                    'ImportModelTestItem', 'string');
             $stringDefaultValueMappingRuleForm->defaultValue = 'abc';
-            $lastNameDefaultValueMappingRuleForm = new DefaultValueModelAttributeMappingRuleForm(
-                                                   'ImportModelTestItem', 'lastName');
+            $lastNameDefaultValueMappingRuleForm   = new DefaultValueModelAttributeMappingRuleForm(
+                                                     'ImportModelTestItem', 'lastName');
+            $numericalDefaultValueMappingRuleForm  = new DefaultValueModelAttributeMappingRuleForm(
+                                                     'ImportModelTestItem', 'numerical');
+            $precisionDefaultValueMappingRuleForm  = new DefaultValueModelAttributeMappingRuleForm(
+                                                     'ImportModelTestItem', 'decimal');
             //Validate true because scenario is not extra column
             $mappingRuleFormsData = array('column_0' => array(
-                                          array('mappingRuleForm' => $stringDefaultValueMappingRuleForm),
-                                          array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm)));
+                      array('mappingRuleForm' => $stringDefaultValueMappingRuleForm, 'elementType' => 'Text')),
+                      'column_1' => array(
+                      array('mappingRuleForm' => $lastNameDefaultValueMappingRuleForm, 'elementType' => 'Text')),
+                      'column_2' => array(
+                      array('mappingRuleForm' => $numericalDefaultValueMappingRuleForm, 'elementType' => 'Integer')),
+                      'column_3' => array(
+                      array('mappingRuleForm' => $precisionDefaultValueMappingRuleForm, 'elementType' => 'Decimal')));
             $validated = MappingRuleFormAndElementTypeUtil::validateMappingRuleForms($mappingRuleFormsData);
             $this->assertTrue($validated);
 

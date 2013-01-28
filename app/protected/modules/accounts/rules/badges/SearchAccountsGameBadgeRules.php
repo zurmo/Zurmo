@@ -31,7 +31,7 @@
     {
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} AccountsModuleSingularLabel search completed|{n} AccountsModuleSingularLabel searches completed',
+            return Zurmo::t('AccountsModule', '{n} AccountsModuleSingularLabel search completed|{n} AccountsModuleSingularLabel searches completed',
                           array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 

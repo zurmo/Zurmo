@@ -64,7 +64,7 @@
 
         public function getTitle()
         {
-            return Yii::t('Default', 'Currencies: Create');
+            return Zurmo::t('ZurmoModule', 'Currencies: Create');
         }
     }
 ?>

@@ -118,7 +118,7 @@
 
         protected function getAfterFormLayoutTranslatedTitleContent()
         {
-            return Yii::t('Default', 'Dropdown Dependency Mapping');
+            return Zurmo::t('DesignerModule', 'Dropdown Dependency Mapping');
         }
 
         protected static function renderScripts()

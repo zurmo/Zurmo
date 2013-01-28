@@ -36,7 +36,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Process Inbound Email Job');
+           return Zurmo::t('EmailMessagesModule', 'Process Inbound Email Job');
         }
 
         /**
@@ -49,7 +49,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 1 minute.');
+            return Zurmo::t('EmailMessagesModule', 'Every 1 minute.');
         }
 
         /**
@@ -109,7 +109,7 @@
             }
             else
             {
-                $messageContent     = Yii::t('Default', 'Failed to connect to mailbox');
+                $messageContent     = Zurmo::t('EmailMessagesModule', 'Failed to connect to mailbox');
                 $this->errorMessage = $messageContent;
                 return false;
             }
@@ -127,34 +127,34 @@
             switch ($messageType)
             {
                 case "OwnerNotExist":
-                    $subject = Yii::t('Default', 'Invalid email address');
-                    $textContent = Yii::t('Default', 'Email address does not exist in system') . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', 'Email address does not exist in system') . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', 'Invalid email address');
+                    $textContent = Zurmo::t('EmailMessagesModule', 'Email address does not exist in system') . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', 'Email address does not exist in system') . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 case "NoRighsForModule":
-                    $subject = Yii::t('Default', 'Missing Rights');
-                    $textContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system') . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', 'You do not have rights to access, create, or connect emails in the system') . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', 'Missing Rights');
+                    $textContent = Zurmo::t('EmailMessagesModule', 'You do not have rights to access, create, or connect emails in the system') . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', 'You do not have rights to access, create, or connect emails in the system') . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 case "SenderNotExtracted":
-                    $subject = Yii::t('Default', "Sender info can't be extracted from email message");
-                    $textContent = Yii::t('Default', "Sender info can't be extracted from email message") . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', "Sender info can't be extracted from email message") . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', "Sender info can't be extracted from email message");
+                    $textContent = Zurmo::t('EmailMessagesModule', "Sender info can't be extracted from email message") . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', "Sender info can't be extracted from email message") . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 case "RecipientNotExtracted":
-                    $subject = Yii::t('Default', "Recipient info can't be extracted from email message");
-                    $textContent = Yii::t('Default', "Recipient info can't be extracted from email message") . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', "Recipient info can't be extracted from email message") . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', "Recipient info can't be extracted from email message");
+                    $textContent = Zurmo::t('EmailMessagesModule', "Recipient info can't be extracted from email message") . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', "Recipient info can't be extracted from email message") . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 case "EmailMessageNotValidated":
-                    $subject = Yii::t('Default', 'Email message could not be validated');
-                    $textContent = Yii::t('Default', 'Email message could not be validated') . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', 'Email message could not be validated') . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', 'Email message could not be validated');
+                    $textContent = Zurmo::t('EmailMessagesModule', 'Email message could not be validated') . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', 'Email message could not be validated') . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 case "EmailMessageNotSaved":
-                    $subject = Yii::t('Default', 'Email message could not be saved');
-                    $textContent = Yii::t('Default', 'Email message could not be saved') . "\n\n" . $originalMessage->textBody;
-                    $htmlContent = Yii::t('Default', 'Email message could not be saved') . "<br\><br\>" . $originalMessage->htmlBody;
+                    $subject = Zurmo::t('EmailMessagesModule', 'Email message could not be saved');
+                    $textContent = Zurmo::t('EmailMessagesModule', 'Email message could not be saved') . "\n\n" . $originalMessage->textBody;
+                    $htmlContent = Zurmo::t('EmailMessagesModule', 'Email message could not be saved') . "<br\><br\>" . $originalMessage->htmlBody;
                     break;
                 default:
                     throw NotSupportedException();
@@ -327,7 +327,7 @@
             {
                 $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);
                 $notificationMessage                    = new NotificationMessage();
-                $notificationMessage->htmlContent       = Yii::t('Default', 'At least one archived email message does ' .
+                $notificationMessage->htmlContent       = Zurmo::t('EmailMessagesModule', 'At least one archived email message does ' .
                                                                  'not match any records in the system. ' .
                                                                  '<a href="{url}">Click here</a> to manually match them.',
                     array(

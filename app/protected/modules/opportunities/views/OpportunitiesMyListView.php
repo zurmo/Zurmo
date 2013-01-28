@@ -33,7 +33,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('OpportunitiesModule', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true),
                 ),
                 'global' => array(
@@ -91,7 +91,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('OpportunitiesModule', 'My OpportunitiesModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()

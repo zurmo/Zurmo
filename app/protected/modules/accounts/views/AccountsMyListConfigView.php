@@ -71,7 +71,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('AccountsModule', 'My AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         public static function getModelForMetadataClassName()

@@ -50,7 +50,7 @@
 
         public function attributeLabels()
         {
-            return array('rateToBase'   => Yii::t('Default', 'Rate To Base'));
+            return array('rateToBase'   => Zurmo::t('ImportModule', 'Rate To Base'));
         }
 
         public static function getAttributeName()

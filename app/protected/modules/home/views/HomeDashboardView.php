@@ -90,7 +90,7 @@
 
         protected static function resolveAjaxOptionsForAddPortlet()
         {
-            $title = Yii::t('Default', 'Add Portlet');
+            $title = Zurmo::t('HomeModule', 'Add Portlet');
             return ModalView::getAjaxOptionsForModalLink($title);
         }
     }

@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Add Portlet');
+            return Zurmo::t('HomeModule', 'Add Portlet');
         }
 
         protected function getDefaultRoute()

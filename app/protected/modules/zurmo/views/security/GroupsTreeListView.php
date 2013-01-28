@@ -34,8 +34,8 @@
         {
             $content  = $this->renderViewToolBar(false); //why do we need it if its empty?
             $content .= '<div>';
-            $content .= '<h1>' . Yii::t('Default', 'Groups') . '</h1>';
-            $content .= $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
+            $content .= '<h1>' . Zurmo::t('ZurmoModule', 'Groups') . '</h1>';
+            $content .= $this->renderTreeMenu('group', 'groups', Zurmo::t('ZurmoModule', 'Group'));
             $content .= '</div>';
             return $content;
         }
@@ -53,7 +53,7 @@
             $content .= '<col style="width:25%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Name') . '</th><th>' . Yii::t('Default', 'Users') . '</th><th></th></tr>';
+            $content .= '<tr><th>' . Zurmo::t('ZurmoModule', 'Name') . '</th><th>' . Zurmo::t('ZurmoModule', 'Users') . '</th><th></th></tr>';
             static::renderTreeListViewNode($content, $data, 0);
             $content .= '</tbody>';
             $content .= '</table>';

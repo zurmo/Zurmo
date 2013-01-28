@@ -56,17 +56,17 @@
             if ($expiresValue == Policy::YES)
             {
                 $expiryValue = $this->model->{$this->getExpiryAttributeName()};
-                $content    .= Yii::app()->format->text(Yii::t('Default', 'Yes'));
+                $content    .= Yii::app()->format->text(Zurmo::t('UsersModule', 'Yes'));
                 $content    .= ',&#160;';
-                $content    .= Yii::app()->format->text(Yii::t('Default', 'every'));
+                $content    .= Yii::app()->format->text(Zurmo::t('UsersModule', 'every'));
                 $content    .= '&#160;';
                 $content    .= $expiryValue;
                 $content    .= '&#160;';
-                $content    .= Yii::app()->format->text(Yii::t('Default', 'day(s)'));
+                $content    .= Yii::app()->format->text(Zurmo::t('UsersModule', 'day(s)'));
             }
             elseif ($expiresValue == Policy::NO || $expiresValue == null)
             {
-                $content    .= Yii::app()->format->text(Yii::t('Default', 'No'));
+                $content    .= Yii::app()->format->text(Zurmo::t('UsersModule', 'No'));
             }
             else
             {

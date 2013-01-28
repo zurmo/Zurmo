@@ -322,13 +322,13 @@
             if (typeof file.size !== 'number') {
                 return '';
             }
-            if (file.size >= 1000000000) {
-                return (file.size / 1000000000).toFixed(2) + ' GB';
+            if (file.size >= 1073741824) {
+                return (file.size / 1073741824).toFixed(2) + ' GB';
             }
-            if (file.size >= 1000000) {
-                return (file.size / 1000000).toFixed(2) + ' MB';
+            if (file.size >= 1048576) {
+                return (file.size / 1048576).toFixed(2) + ' MB';
             }
-            return (file.size / 1000).toFixed(2) + ' KB';
+            return (file.size / 1024).toFixed(2) + ' KB';
         },
 
         _hasError: function (file) {

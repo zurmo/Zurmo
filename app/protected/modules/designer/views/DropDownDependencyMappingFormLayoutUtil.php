@@ -172,7 +172,7 @@
 
             if ($mapping->allowsAttributeSelection())
             {
-                $htmlOptions['empty'] = Yii::t('Default', '(None)');
+                $htmlOptions['empty'] = Zurmo::t('DesignerModule', '(None)');
                 $data                 = $mapping->getAvailableCustomFieldAttributes();
             }
             else
@@ -217,7 +217,7 @@
             {
                 $content .= '<tr>';
                 $content .= '<td>';
-                $content .= Yii::t('Default', 'Display {label} when', array('{label}' => $label));
+                $content .= Zurmo::t('DesignerModule', 'Display {label} when', array('{label}' => $label));
                 $content .= '</td>';
                 $content .= '</tr><tr>';
                 $content .= '<td>';
@@ -250,7 +250,7 @@
             $inputId             = $this->formName . '_mappingData_' . $position . '_valuesToParentValues_' . $valuePosition;
             $htmlOptions          = array();
             $htmlOptions['id']    = $inputId;
-            $htmlOptions['empty'] = Yii::t('Default', '(None)');
+            $htmlOptions['empty'] = Zurmo::t('DesignerModule', '(None)');
             $dataAndLabels        = CustomFieldDataUtil::
                                     getDataIndexedByDataAndTranslatedLabelsByLanguage(
                                         $parentMapping->getCustomFieldData(),

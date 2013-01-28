@@ -34,7 +34,7 @@
         protected function checkService()
         {
             $this->minimumVersion = Yii::app()->params['yiiVersion'];
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkYii', Yii::t('Default', 'Yii'));
+            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkYii', Zurmo::t('InstallModule', 'Yii'));
         }
     }
 ?>

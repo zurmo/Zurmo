@@ -120,7 +120,7 @@
 
         protected function getAfterFormLayoutTranslatedTitleContent()
         {
-            return Yii::t('Default', 'Pick List Values');
+            return Zurmo::t('DesignerModule', 'Pick List Values');
         }
     }
 ?>

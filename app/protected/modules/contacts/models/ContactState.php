@@ -31,15 +31,15 @@
     {
         public static function getByName($name)
         {
-            assert('is_string($name) && $name != ""');
-            return self::makeModels(R::find('contactstate', "name = '$name'"));
+            assert('is_string($name) && $name != ""');            
+            return self::makeModels(R::find('contactstate', "name = :name ", array(':name' => $name)));            
         }
 
         public function __toString()
         {
             if (trim($this->name) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('ContactsModule', '(Unnamed)');
             }
             return $this->name;
         }

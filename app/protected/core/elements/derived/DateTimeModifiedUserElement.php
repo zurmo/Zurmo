@@ -40,7 +40,7 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Last Modified'));
+            return Yii::app()->format->text(Zurmo::t('Core', 'Last Modified'));
         }
 
         protected function renderControlNonEditable()
@@ -51,7 +51,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Last Modified Date and User');
+            return Zurmo::t('Core', 'Last Modified Date and User');
         }
 
         /**

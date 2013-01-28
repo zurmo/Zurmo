@@ -67,7 +67,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Invalid API request type.');
+                $message = Zurmo::t('ApiModule', 'Invalid API request type.');
                 throw new ApiException($message);
             }
         }
@@ -90,7 +90,7 @@
             }
             else
             {
-                $message = Yii::t('Default', 'Invalid response type.');
+                $message = Zurmo::t('ApiModule', 'Invalid response type.');
                 throw new ApiException($message);
             }
         }

@@ -76,7 +76,7 @@
                 null,
                 'UsersSearchView'
             );
-            $title           = Yii::t('Default', 'Users');
+            $title           = Zurmo::t('UsersModule', 'Users');
             $breadcrumbLinks = array(
                  $title,
             );
@@ -90,13 +90,7 @@
             }
             else
             {
-                $mixedView = $this->makeActionBarSearchAndListView(
-                    $searchForm,
-                    $pageSize,
-                    UsersModule::getModuleLabelByTypeAndLanguage('Plural'),
-                    $dataProvider,
-                    'UsersActionBarForSearchAndListView'
-                );
+                $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider, 'UsersActionBarForSearchAndListView');
                 $view = new UsersPageView(ZurmoDefaultAdminViewUtil::
                                          makeViewWithBreadcrumbsForCurrentUser($this, $mixedView, $breadcrumbLinks, 'UserBreadCrumbView'));
             }
@@ -127,7 +121,7 @@
         public function actionDetails($id)
         {
             $user = User::getById(intval($id));
-            $title           = Yii::t('Default', 'Profile');
+            $title           = Zurmo::t('UsersModule', 'Profile');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($user), 'UsersModule'), $user);
             $params = array(
@@ -154,7 +148,7 @@
 
         public function actionCreate()
         {
-            $title           = Yii::t('Default', 'Create User');
+            $title           = Zurmo::t('UsersModule', 'Create User');
             $breadcrumbLinks = array($title);
             $user             = new User();
             $user->language   = Yii::app()->language;
@@ -176,7 +170,7 @@
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user            = User::getById(intval($id));
             $user->setScenario('editUser');
-            $title           = Yii::t('Default', 'Details');
+            $title           = Zurmo::t('UsersModule', 'Details');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $this->attemptToValidateAjaxFromPost($user, 'User');
             if ($user == Yii::app()->user->userModel)
@@ -209,7 +203,7 @@
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            $title           = Yii::t('Default', 'Change Password');
+            $title           = Zurmo::t('UsersModule', 'Change Password');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $user->setScenario('changePassword');
             $userPasswordForm = new UserPasswordForm($user);
@@ -240,9 +234,8 @@
                     }
                 }
             }
-            $title                         = Yii::t('Default', 'Confirm your time zone');
+            $title                         = Zurmo::t('UsersModule', 'Confirm your time zone');
             $timeZoneView                  = new UserTimeZoneConfirmationView($this->getId(),
-
                                                                  $this->getModule()->getId(),
                                                                  $confirmTimeZoneForm,
                                                                  $title);
@@ -397,7 +390,7 @@
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            $title           = Yii::t('Default', 'Security');
+            $title           = Zurmo::t('UsersModule', 'Security');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $modulePermissionsData =  PermissionsUtil::getAllModulePermissionsDataByPermitable($user);
             $modulePermissionsForm = ModulePermissionsFormUtil::makeFormFromPermissionsData($modulePermissionsData);
@@ -438,7 +431,7 @@
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            $title           = Yii::t('Default', 'Configuration');
+            $title           = Zurmo::t('UsersModule', 'Configuration');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $configurationForm = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($user);
             $postVariableName   = get_class($configurationForm);
@@ -456,7 +449,7 @@
                         UserConfigurationFormAdapter::setConfigurationFromFormForCurrentUser($configurationForm);
                     }
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'User configuration saved successfully.')
+                        Zurmo::t('UsersModule', 'User configuration saved successfully.')
                     );
                     $this->redirect(array($this->getId() . '/details', 'id' => $user->id));
                 }
@@ -477,7 +470,7 @@
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user  = User::getById(intval($id));
-            $title = Yii::t('Default', 'Email Configuration');
+            $title = Zurmo::t('UsersModule', 'Email Configuration');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $emailAccount = EmailAccount::resolveAndGetByUserAndName($user);
             $userEmailConfigurationForm = new UserEmailConfigurationForm($emailAccount);
@@ -491,7 +484,7 @@
                 {
                     $userEmailConfigurationForm->save();
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'User email configuration saved successfully.')
+                        Zurmo::t('UsersModule', 'User email configuration saved successfully.')
                     );
                     $this->redirect(array($this->getId() . '/details', 'id' => $user->id));
                 }

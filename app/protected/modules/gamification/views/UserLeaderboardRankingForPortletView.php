@@ -66,7 +66,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Leaderboard Ranking')",
+                    'title' => "eval:Zurmo::t('GamificationModule', 'Leaderboard Ranking')",
                 ),
             );
             return $metadata;
@@ -74,7 +74,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'Leaderboard Ranking');
+            $title  = Zurmo::t('GamificationModule', 'Leaderboard Ranking');
             return $title;
         }
 

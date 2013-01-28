@@ -59,13 +59,13 @@
             {
                 if ($item['quantity'] == 1)
                 {
-                    $label = Yii::t('Default', '{quantity} MeetingsModuleSingularLabel',
+                    $label = Zurmo::t('MeetingsModule', '{quantity} MeetingsModuleSingularLabel',
                                     array_merge(LabelUtil::getTranslationParamsForAllModules(),
                                     array('{quantity}' => $item['quantity'])));
                 }
                 else
                 {
-                    $label = Yii::t('Default', '{quantity} MeetingsModulePluralLabel',
+                    $label = Zurmo::t('MeetingsModule', '{quantity} MeetingsModulePluralLabel',
                                     array_merge(LabelUtil::getTranslationParamsForAllModules(),
                                     array('{quantity}' => $item['quantity'])));
                 }

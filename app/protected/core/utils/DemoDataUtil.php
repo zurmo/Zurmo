@@ -86,8 +86,12 @@
                 }
                 $dataMaker->makeAll($demoDataHelper);
                 static::$loadedModules[] = $module->getName();
-                $messageLogger->addInfoMessage(Yii::t('Default', 'Demo data loaded for ' .
-                                               $module::getModuleLabelByTypeAndLanguage('Plural')));
+                $messageLogger->addInfoMessage(Zurmo::t('Core', 'Demo data loaded for {module}',
+                                                        array(
+                                                            '{module}' => $module::getModuleLabelByTypeAndLanguage('Plural')
+                                                            )
+                                                        )
+                                               );
             }
         }
 

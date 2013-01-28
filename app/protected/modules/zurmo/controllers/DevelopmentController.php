@@ -45,11 +45,11 @@
         {
             if (isset($_GET['clearCache']) && $_GET['clearCache'] == 1)
             {
-                Yii::app()->user->setFlash('notification', Yii::t('Default', 'Cache has been successfully cleaned.'));
+                Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'Cache has been successfully cleaned.'));
             }
             if (isset($_GET['resolveCustomData']) && $_GET['resolveCustomData'] == 1)
             {
-                Yii::app()->user->setFlash('notification', Yii::t('Default', 'Custom data updated successfully.'));
+                Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'Custom data updated successfully.'));
             }
 
             $view = new ConfigurationPageView(ZurmoDefaultAdminViewUtil::

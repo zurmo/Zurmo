@@ -62,14 +62,14 @@
                     catch (NotFoundException $e)
                     {
                         throw new InvalidValueToSanitizeException(
-                        Yii::t('Default', 'The default status specified does not exist.'));
+                        Zurmo::t('ContactsModule', 'The default status specified does not exist.'));
                     }
                     return $state;
                 }
                 else
                 {
                     throw new InvalidValueToSanitizeException(
-                    Yii::t('Default', 'The status is required.  Neither a value nor a default was specified.'));
+                    Zurmo::t('ContactsModule', 'The status is required.  Neither a value nor a default was specified.'));
                 }
             }
             return $value;

@@ -48,7 +48,7 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'From');
+            return Zurmo::t('EmailMessagesModule', 'From');
         }
     }
 ?>

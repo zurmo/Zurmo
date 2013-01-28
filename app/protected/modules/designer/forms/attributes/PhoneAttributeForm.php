@@ -41,12 +41,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Phone');
+            return Zurmo::t('DesignerModule', 'Phone');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A phone field');
+            return Zurmo::t('DesignerModule', 'A phone field');
         }
 
         public function getModelAttributePartialRule()

@@ -29,7 +29,7 @@
         protected function getDropDownArray()
         {
             return array(
-                DateTimeCalculatorUtil::NOW    => Yii::t('Default', 'Now'),
+                DateTimeCalculatorUtil::NOW    => Zurmo::t('Core', 'Now'),
             );
         }
     }

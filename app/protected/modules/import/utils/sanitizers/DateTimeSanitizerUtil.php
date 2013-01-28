@@ -78,7 +78,7 @@
             $timeStamp = CDateTimeParser::parse($value, $mappingRuleData['format']);
             if ($timeStamp === false || !is_int($timeStamp))
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid datetime format.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid datetime format.'));
             }
             return DateTimeUtil::convertTimestampToDbFormatDateTime($timeStamp);
         }

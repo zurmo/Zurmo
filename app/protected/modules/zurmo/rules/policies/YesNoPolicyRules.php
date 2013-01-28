@@ -48,7 +48,7 @@
         {
             $attributeName = FormModelUtil::getDerivedAttributeNameFromTwoStrings($this->moduleName, $this->policy);
             return array(
-                array($attributeName, 'type', 'type' => 'string'),
+                array($attributeName, 'type', 'type' => 'integer'),
             );
         }
 

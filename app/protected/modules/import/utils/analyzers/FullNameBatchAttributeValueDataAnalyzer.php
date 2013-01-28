@@ -118,18 +118,18 @@
             $tooShort = $this->messageCountData[static::FULL_NAME_TOO_SHORT];
             if ($tooLarge > 0)
             {
-                $label   = '{count} value(s) are too large for this field. ';
-                $label  .= 'These rows will be skipped during import.';
-                $this->addMessage(Yii::t('Default', $label,
-                                  array('{count}' => $tooLarge)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) are too large for this field. ' .
+                                             'These rows will be skipped during import.',
+                                             array('{count}' => $tooLarge));
+                $this->addMessage($label);
             }
                     $tooLarge = $this->messageCountData[static::FULL_NAME_TOO_LONG];
             if ($tooShort > 0)
             {
-                $label   = '{count} value(s) are too short for this field. ';
-                $label  .= 'These rows will be skipped during import.';
-                $this->addMessage(Yii::t('Default', $label,
-                                  array('{count}' => $tooShort)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) are too short for this field. ' .
+                                             'These rows will be skipped during import.',
+                                             array('{count}' => $tooShort));
+                $this->addMessage($label);
             }
         }
     }

@@ -63,7 +63,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My Missions')",
+                    'title' => "eval:Zurmo::t('MissionsModule', 'My Missions')",
                 ),
             );
             return $metadata;
@@ -71,7 +71,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'My Missions');
+            $title  = Zurmo::t('MissionsModule', 'My Missions');
             return $title;
         }
 

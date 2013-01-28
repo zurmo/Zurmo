@@ -54,7 +54,7 @@
             if ($model->$attributeName != null && strlen($model->$attributeName) < $minLength)
             {
                 $model->addError($attributeName,
-                                 Yii::t('Default', 'The username is too short. Minimum length is {minimumLength}.',
+                                 Zurmo::t('UsersModule', 'The username is too short. Minimum length is {minimumLength}.',
                                  array('{minimumLength}' => $minLength)));
             }
         }

@@ -31,7 +31,7 @@
     {
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'A mission status has changed');
+            return Zurmo::t('MissionsModule', 'A mission status has changed');
         }
 
         public static function getType()

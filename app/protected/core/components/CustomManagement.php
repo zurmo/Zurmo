@@ -67,8 +67,8 @@
          */
         public function runImportsForImportCommand(ImportMessageLogger $messageLogger, $importName = null)
         {
-            $messageLogger->addErrorMessage(Yii::t('Default', 'No import processes found.'));
-            $messageLogger->addErrorMessage(Yii::t('Default', 'CustomManagement class needs to be extended.'));
+            $messageLogger->addErrorMessage(Zurmo::t('Core', 'No import processes found.'));
+            $messageLogger->addErrorMessage(Zurmo::t('Core', 'CustomManagement class needs to be extended.'));
         }
     }
 ?>

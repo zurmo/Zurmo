@@ -79,7 +79,7 @@
             {
                 return $skipCount . ' ' .
                     LabelUtil::getUncapitalizedModelLabelByCountAndModelClassName($skipCount, $modelClassName) .
-                    ' ' . Yii::t('Default', 'skipped because you do not have sufficient permissions.');
+                    ' ' . Zurmo::t('ZurmoModule', 'skipped because you do not have sufficient permissions.');
             }
             throw new NotSupportedException();
         }

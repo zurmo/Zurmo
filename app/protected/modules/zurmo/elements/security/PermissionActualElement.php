@@ -41,13 +41,13 @@
             $value = $this->model->{$this->attribute};
             if     ($value == Permission::DENY)
             {
-                return Yii::app()->format->text(Yii::t('Default', 'Owner Only'));
+                return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Owner Only'));
             }
             elseif ($value == Permission::ALLOW)
             {
-                return Yii::app()->format->text(Yii::t('Default', 'All'));
+                return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'All'));
             }
-            return Yii::app()->format->text    (Yii::t('Default', 'Ad-hoc / Owner'));
+            return Yii::app()->format->text    (Zurmo::t('ZurmoModule', 'Ad-hoc / Owner'));
         }
     }
 ?>

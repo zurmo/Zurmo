@@ -86,8 +86,6 @@
 
             if (!$validity || $errorCount > 0 || $warningCount > 0)
             {
-                $xhtmlValidationErrors[] = 'THIS IS NOT A VALID XHTML FILE';
-
                 if ($errorCount)
                 {
                     $xhtmlValidationErrors[] = 'There are ' . $errorCount . ' error(s)';
@@ -134,6 +132,11 @@
                         $errorMessage .=  'message: ' . $message ;
                         $xhtmlValidationErrors[] = $errorMessage;
                     }
+                }
+
+                if (!empty($xhtmlValidationErrors))
+                {
+                    array_unshift($xhtmlValidationErrors, 'THIS IS NOT A VALID XHTML FILE');
                 }
             }
             return $xhtmlValidationErrors;

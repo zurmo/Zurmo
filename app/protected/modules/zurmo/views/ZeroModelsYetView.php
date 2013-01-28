@@ -30,6 +30,8 @@
      */
     abstract class ZeroModelsYetView extends View
     {
+        public $cssClasses = array('splash-view');
+
         protected $controllerId;
 
         protected $moduleId;

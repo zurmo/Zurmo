@@ -63,12 +63,12 @@
 
             if (!isset($this->options['currentText']))
             {
-                $this->options['currentText'] = ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Now'));
+                $this->options['currentText'] = ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Now'));
             }
 
             if (!isset($this->options['closeText']))
             {
-                $this->options['closeText'] = ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Done'));
+                $this->options['closeText'] = ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Done'));
             }
 
             if ($this->flat === false)

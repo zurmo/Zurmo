@@ -142,6 +142,7 @@
             try
             {
                 $xhtmlValidationErrors = W3CValidatorServiceUtil::validate($content);
+
                 if (count($xhtmlValidationErrors))
                 {
                     foreach ($xhtmlValidationErrors as $xhtmlValidationError)
@@ -161,7 +162,7 @@
             }
             catch (Exception $e)
             {
-                self::$xhtmlValidationErrors[] = str_replace('{text}', 'Error accessising W3C validation service.', $wrapper);
+                self::$xhtmlValidationErrors[] = str_replace('{text}', 'Error accessing W3C validation service.', $wrapper);
                 self::$xhtmlValidationErrors[] = str_replace('{text}', $e->getMessage(), $wrapper);
             }
             return $valid;

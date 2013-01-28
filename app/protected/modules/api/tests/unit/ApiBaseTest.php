@@ -52,7 +52,6 @@
                 $freeze = true;
             }
             $this->freeze = $freeze;
-            ZurmoModule::setZurmoToken(1111111111);
         }
 
         public function teardown()
@@ -78,7 +77,7 @@
         {
             if (!$this->isApiTestUrlConfigured())
             {
-                $this->markTestSkipped(Yii::t('Default', 'API test url is not configured in perInstanceTest.php file.'));
+                $this->markTestSkipped(Zurmo::t('ApiModule', 'API test url is not configured in perInstanceTest.php file.'));
             }
             $this->assertTrue(strlen($this->serverUrl) > 0);
         }

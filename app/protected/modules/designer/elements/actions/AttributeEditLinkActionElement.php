@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Edit');
+            return Zurmo::t('DesignerModule', 'Edit');
         }
 
         protected function getDefaultRoute()

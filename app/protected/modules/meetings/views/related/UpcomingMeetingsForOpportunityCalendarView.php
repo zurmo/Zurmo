@@ -36,7 +36,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel',
+            return Zurmo::t('MeetingsModule', 'MeetingsModulePluralLabel For OpportunitiesModuleSingularLabel',
                         LabelUtil::getTranslationParamsForAllModules());
         }
     }

@@ -57,7 +57,7 @@
 
         public static function getDisplayLabel()
         {
-            return Yii::t('Default', 'General');
+            return Zurmo::t('GamificationModule', 'General');
         }
     }
 ?>

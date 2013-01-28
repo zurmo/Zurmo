@@ -81,12 +81,12 @@
         public function attributeLabels()
         {
             return array(
-                'listPageSize'              => Yii::t('Default', 'List page size'),
-                'subListPageSize'           => Yii::t('Default', 'Sublist page size'),
-                'themeColor'                => Yii::t('Default', 'Theme'),
-                'backgroundTexture'         => Yii::t('Default', 'Texture'),
-                'hideWelcomeView'           => Yii::t('Default', 'Hide welcome page'),
-                'turnOffEmailNotifications' => Yii::t('Default', 'Turn off email notifications')
+                'listPageSize'              => Zurmo::t('UsersModule', 'List page size'),
+                'subListPageSize'           => Zurmo::t('UsersModule', 'Sublist page size'),
+                'themeColor'                => Zurmo::t('UsersModule', 'Theme'),
+                'backgroundTexture'         => Zurmo::t('UsersModule', 'Texture'),
+                'hideWelcomeView'           => Zurmo::t('UsersModule', 'Hide welcome page'),
+                'turnOffEmailNotifications' => Zurmo::t('UsersModule', 'Turn off email notifications')
             );
         }
     }

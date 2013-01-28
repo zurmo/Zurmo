@@ -88,7 +88,7 @@
                 }
                 else
                 {
-                    $message = Yii::t('Default', '{attribute} "{value}" is already in use.');
+                    $message = Zurmo::t('Core', '{attribute} "{value}" is already in use.');
                 }
                 $this->addError($model, $attributeName, $message, array('{value}' => $value));
             }

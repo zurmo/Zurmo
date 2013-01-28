@@ -103,7 +103,7 @@
             {
                 $gridSize = 2;
             }
-            $title = Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
+            $title = Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel Conversion',
                                                 LabelUtil::getTranslationParamsForAllModules()) . ': ' . $title;
             parent::__construct($gridSize, 1);
 
@@ -170,34 +170,34 @@
                     }
                 );
             ");
-            $createLink = ZurmoHtml::link(Yii::t('Default', 'Create AccountsModuleSingularLabel',
+            $createLink = ZurmoHtml::link(Zurmo::t('LeadsModule', 'Create AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-create-link'));
-            $selectLink = ZurmoHtml::link(Yii::t('Default', 'Select AccountsModuleSingularLabel',
+            $selectLink = ZurmoHtml::link(Zurmo::t('LeadsModule', 'Select AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-select-link'));
-            $skipLink   = ZurmoHtml::link(Yii::t('Default', 'Skip AccountsModuleSingularLabel',
+            $skipLink   = ZurmoHtml::link(Zurmo::t('LeadsModule', 'Skip AccountsModuleSingularLabel',
                             LabelUtil::getTranslationParamsForAllModules()), '#', array('class' => 'account-skip-link'));
             $content = $this->renderTitleContent();
             $content .= '<div class="lead-conversion-actions">';
             $content .= '<div id="account-select-title">';
             if ($this->userCanCreateAccount)
             {
-                $content .= $createLink .  '&#160;' . Yii::t('Default', 'or') . '&#160;';
+                $content .= $createLink .  '&#160;' . Zurmo::t('LeadsModule', 'or') . '&#160;';
             }
-            $content .= Yii::t('Default', 'Select AccountsModuleSingularLabel',
+            $content .= Zurmo::t('LeadsModule', 'Select AccountsModuleSingularLabel',
                                     LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
 
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
+                $content .= Zurmo::t('LeadsModule', 'or') . '&#160;' . $skipLink;
             }
             $content .= '</div>';
             $content .= '<div id="account-create-title">';
-            $content .= Yii::t('Default', 'Create AccountsModuleSingularLabel',
+            $content .= Zurmo::t('LeadsModule', 'Create AccountsModuleSingularLabel',
                                     LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
-            $content .= Yii::t('Default', 'or') . '&#160;' . $selectLink . '&#160;';
+            $content .= Zurmo::t('LeadsModule', 'or') . '&#160;' . $selectLink . '&#160;';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
             {
-                $content .= Yii::t('Default', 'or') . '&#160;' . $skipLink;
+                $content .= Zurmo::t('LeadsModule', 'or') . '&#160;' . $skipLink;
             }
             $content .= '</div>';
             if ($this->convertToAccountSetting == LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED)
@@ -205,10 +205,10 @@
                 $content .= '<div id="account-skip-title">';
                 if ($this->userCanCreateAccount)
                 {
-                    $content .= $createLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
+                    $content .= $createLink . '&#160;' . Zurmo::t('LeadsModule', 'or') . '&#160;';
                 }
-                $content .= $selectLink . '&#160;' . Yii::t('Default', 'or') . '&#160;';
-                $content .= Yii::t('Default', 'Skip AccountsModuleSingularLabel',
+                $content .= $selectLink . '&#160;' . Zurmo::t('LeadsModule', 'or') . '&#160;';
+                $content .= Zurmo::t('LeadsModule', 'Skip AccountsModuleSingularLabel',
                                         LabelUtil::getTranslationParamsForAllModules()) . '&#160;';
                 $content .= '</div>';
             }

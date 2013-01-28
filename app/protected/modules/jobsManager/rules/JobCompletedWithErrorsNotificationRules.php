@@ -31,7 +31,7 @@
     {
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'A job was completed with errors.');
+            return Zurmo::t('JobsManagerModule', 'A job was completed with errors.');
         }
 
         public static function getType()

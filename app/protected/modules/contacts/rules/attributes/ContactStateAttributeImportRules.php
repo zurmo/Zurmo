@@ -36,7 +36,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('ContactsModule', 'Status');
         }
 
         public function getRealModelAttributeNames()

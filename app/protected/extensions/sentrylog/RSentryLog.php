@@ -75,7 +75,7 @@ class RSentryLog extends CLogRoute
 
       $format = explode("\n", $log[0]);
       $title = strip_tags($format[0]);
-      $sentryEventId = $this->_client->getIdent($this->_client->captureMessage($title, array(), $level, true));
+      $sentryEventId = $this->_client->getIdent($this->_client->captureMessage($title, array('zurmoVersion' => VERSION), $level, true));
       if (isset($sentryEventId) && $sentryEventId!= '')
       {
           echo "<script>$('#zurmoSentryId').append('The reference id for this error is {$sentryEventId}.');</script>";

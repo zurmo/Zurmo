@@ -42,7 +42,7 @@
 
         protected function renderLabel()
         {
-            $label = Yii::t('Default', 'ContactsModuleSingularLabel or LeadsModuleSingularLabel',
+            $label = Zurmo::t('LeadsModule', 'ContactsModuleSingularLabel or LeadsModuleSingularLabel',
                                                 LabelUtil::getTranslationParamsForAllModules());
             if ($this->form === null)
             {

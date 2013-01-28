@@ -33,12 +33,12 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Delete');
+            return Zurmo::t('Core', 'Delete');
         }
 
         protected function getHtmlOptions()
         {
-            $confirmTitle           = Yii::t('Default', 'Are you sure you want to delete this {modelLabel}?',
+            $confirmTitle           = Zurmo::t('Core', 'Are you sure you want to delete this {modelLabel}?',
                                                         array('{modelLabel}' => $this->getModelSingularLabel()));
             $confirmTitle           = Yii::app()->format->text($confirmTitle);
             $htmlOptions            = parent::getHtmlOptions();

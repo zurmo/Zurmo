@@ -35,11 +35,16 @@
             $originalAHash = spl_object_hash($a);
 
             $id = $a->id;
+            $modelIdentifier = $a->getModelIdentifier();
             unset($a);
 
             $a = A::getById($id);
             $fromPhpAHash = spl_object_hash($a);
             unset($a);
+
+            $modelFromCache = RedBeanModelsCache::getModel($modelIdentifier);
+            $this->assertEquals(1,                 $modelFromCache->a);
+            $this->assertEquals('a@zurmoinc.com', $modelFromCache->uniqueRequiredEmail);
 
             RedBeanModelsCache::forgetAll(true);
             $a = A::getById($id);
@@ -49,6 +54,61 @@
 
             $this->assertEquals   ($fromPhpAHash,      $originalAHash);
             $this->assertNotEquals($fromMemcacheAHash, $originalAHash);
+        }
+
+        public function testForgetModel()
+        {
+            $a = new A();
+            $a->a = 1;
+            $a->uniqueRequiredEmail = 'a2@zurmoinc.com';
+            $this->assertTrue($a->save());
+            $modelIdentifier = $a->getModelIdentifier();
+
+            $modelFromCache = RedBeanModelsCache::getModel($modelIdentifier);
+            $this->assertEquals(1,                 $modelFromCache->a);
+            $this->assertEquals('a2@zurmoinc.com', $modelFromCache->uniqueRequiredEmail);
+
+            RedBeanModelsCache::forgetModel($a);
+            try
+            {
+                RedBeanModelsCache::getModel($modelIdentifier);
+                $this->fail('NotFoundException exception is not thrown.');
+            }
+            catch (NotFoundException $e)
+            {
+                $this->assertTrue(true);
+            }
+        }
+
+        public function testForgetAll()
+        {
+            $a = new A();
+            $a->a = 1;
+            $a->uniqueRequiredEmail = 'a3@zurmoinc.com';
+            $this->assertTrue($a->save());
+            $modelIdentifier = $a->getModelIdentifier();
+
+            $modelFromCache = RedBeanModelsCache::getModel($modelIdentifier);
+            $this->assertEquals(1,                 $modelFromCache->a);
+            $this->assertEquals('a3@zurmoinc.com', $modelFromCache->uniqueRequiredEmail);
+
+            // Set some GeneralCache, which should stay in cache after cleanup
+            GeneralCache::cacheEntry('somethingForTesting', 34);
+            $value = GeneralCache::getEntry('somethingForTesting');
+            $this->assertEquals(34, $value);
+
+            RedBeanModelsCache::forgetAll();
+            try
+            {
+                RedBeanModelsCache::getModel($modelIdentifier);
+                $this->fail('NotFoundException exception is not thrown.');
+            }
+            catch (NotFoundException $e)
+            {
+                // Data from generalCache should still be in cache
+                $value = GeneralCache::getEntry('somethingForTesting');
+                $this->assertEquals(34, $value);
+            }
         }
     }
 ?>

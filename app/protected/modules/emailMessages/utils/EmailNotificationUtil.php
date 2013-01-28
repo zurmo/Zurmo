@@ -38,8 +38,8 @@
             $htmlTemplate                       = self::getNotificationHtmlTemplate();
             $htmlContent                        = array();
             $htmlContent['{bodyContent}']       = $bodyContent;
-            $htmlContent['{sourceContent}']     = Yii::t('Default', 'This message sent from Zurmo');
-            $htmlContent['{preferenceContent}'] = ZurmoHtml::link(Yii::t('Default', 'Manage your email preferences'), $url);
+            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo');
+            $htmlContent['{preferenceContent}'] = ZurmoHtml::link(Zurmo::t('EmailMessagesModule', 'Manage your email preferences'), $url);
             return strtr($htmlTemplate, $htmlContent);
         }
 
@@ -70,8 +70,8 @@
             $htmlTemplate                       = self::getNotificationTextTemplate();
             $htmlContent                        = array();
             $htmlContent['{bodyContent}']       = $bodyContent;
-            $htmlContent['{sourceContent}']     = Yii::t('Default', 'This message sent from Zurmo');
-            $htmlContent['{preferenceContent}'] = Yii::t('Default', 'Manage your email preferences') . ZurmoHtml::link(null, $url);
+            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo');
+            $htmlContent['{preferenceContent}'] = Zurmo::t('EmailMessagesModule', 'Manage your email preferences') . ZurmoHtml::link(null, $url);
             return strtr($htmlTemplate, $htmlContent);
         }
 

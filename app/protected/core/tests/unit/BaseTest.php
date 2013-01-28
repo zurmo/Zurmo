@@ -76,6 +76,8 @@
             {
                 TestDatabaseUtil::deleteAllTablesExceptLog();
             }
+
+            PermissionsCache::forgetAll();
             RedBeanModel::forgetAll();
             RedBeanDatabase::close();
             assert('!RedBeanDatabase::isSetup()'); // Not Coding Standard

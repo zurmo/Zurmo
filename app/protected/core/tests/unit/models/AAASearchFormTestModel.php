@@ -52,10 +52,10 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'concactedName'                    => Yii::t('Default', 'Concated Name'),
-                'AAAName'                          => Yii::t('Default', 'AAAName'),
-                'differentOperatorA'               => Yii::t('Default', 'differentOperatorA'),
-                'differentOperatorB'               => Yii::t('Default', 'differentOperatorB'),
+                'concactedName'                    => Zurmo::t('Core', 'Concated Name'),
+                'AAAName'                          => Zurmo::t('Core', 'AAAName'),
+                'differentOperatorA'               => Zurmo::t('Core', 'differentOperatorA'),
+                'differentOperatorB'               => Zurmo::t('Core', 'differentOperatorB'),
             ));
         }
 

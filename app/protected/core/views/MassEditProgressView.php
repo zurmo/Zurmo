@@ -67,8 +67,8 @@
 
         protected function getMessage()
         {
-            return Yii::t('Default', 'Updating') . "&#160;" . $this->start . "-" . $this->getEndSize() . "&#160;" . Yii::t('Default', 'of') . "&#160;" .
-            $this->totalRecordCount . "&#160;" . Yii::t('Default', 'total') . "&#160;" .
+            return Zurmo::t('Core', 'Updating') . "&#160;" . $this->start . "-" . $this->getEndSize() . "&#160;" . Zurmo::t('Core', 'of') . "&#160;" .
+            $this->totalRecordCount . "&#160;" . Zurmo::t('Core', 'total') . "&#160;" .
             Yii::t('Default', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
         }
 
@@ -78,7 +78,7 @@
                             $this->totalRecordCount, $this->skipCount);
             $content =  $successfulCount . "&#160;" .
             LabelUtil::getUncapitalizedRecordLabelByCount($successfulCount)
-            . "&#160;" . Yii::t('Default', 'updated successfully.');
+            . "&#160;" . Zurmo::t('Core', 'updated successfully.');
             if ($this->skipCount > 0)
             {
                 $content .= '<br/>' .
@@ -90,7 +90,7 @@
 
         protected function renderFormLinks()
         {
-            $listButton = ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Return to List')),
+            $listButton = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Return to List')),
                                         Yii::app()->createUrl($this->moduleId));
             $content = '<div id="' . $this->progressBarId . '-links" style="display:none;">';
             $content .= $listButton;
@@ -101,6 +101,11 @@
         protected function onProgressComplete()
         {
             MassEditInsufficientPermissionSkipSavingUtil::clear(get_class($this->model));
+        }
+
+        protected function headerLabelPrefixContent()
+        {
+            return Zurmo::t('Core', 'Mass Update');
         }
     }
 ?>

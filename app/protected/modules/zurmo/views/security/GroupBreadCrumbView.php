@@ -31,7 +31,7 @@
     {
             protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Groups Home');
+            return Zurmo::t('ZurmoModule', 'Groups Home');
         }
     }
 ?>

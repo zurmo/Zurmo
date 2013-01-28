@@ -31,7 +31,7 @@
     {
         public function getTitle()
         {
-            return Yii::t('Default', 'Global Configuration');
+            return Zurmo::t('ZurmoModule', 'Global Configuration');
         }
 
         public static function getDefaultMetadata()
@@ -41,7 +41,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'ConfigurationLink',
-                                            'label' => "eval:Yii::t('Default', 'Cancel')"),
+                                            'label' => "eval:Zurmo::t('ZurmoModule', 'Cancel')"),
                             array('type' => 'SaveButton',    'renderType' => 'Edit'),
                             array('type' => 'EditLink',      'renderType' => 'Details'),
                         ),

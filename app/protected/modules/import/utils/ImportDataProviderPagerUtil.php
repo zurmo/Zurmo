@@ -37,7 +37,7 @@
             $currentPage = $dataProvider->getPagination()->getCurrentPage();
             $pageCount   = $dataProvider->getPagination()->getPageCount();
             $content = null;
-            $content .= Yii::t('Default', 'Sample Row');
+            $content .= Zurmo::t('ImportModule', 'Sample Row');
             $previousStyle = null;
             if (!($currentPage > 0))
             {
@@ -49,10 +49,10 @@
                 $nextStyle = 'display:none;';
             }
             $content .= '&#160;';
-            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Yii::t('Default', 'Previous'),
+            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Zurmo::t('ImportModule', 'Previous'),
                                              $url, $dataProvider->getPagination()->pageVar, $currentPage, $previousStyle);
             $content .= '&#160;';
-            $content .= self::renderAjaxLink('sample-column-header-next-page-link', Yii::t('Default', 'Next'),
+            $content .= self::renderAjaxLink('sample-column-header-next-page-link', Zurmo::t('ImportModule', 'Next'),
                                              $url, $dataProvider->getPagination()->pageVar, $currentPage + 2, $nextStyle);
             return $content;
         }

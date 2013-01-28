@@ -38,7 +38,7 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'convertToAccountSetting' => Yii::t('Default', 'LeadsModuleSingularLabel Conversion',
+                'convertToAccountSetting' => Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel Conversion',
                                                 LabelUtil::getTranslationParamsForAllModules()),
             ));
         }

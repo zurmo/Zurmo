@@ -33,7 +33,7 @@
                 $fullName = $this->getFullName();
                 if ($fullName == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('ZurmoModule', '(Unnamed)');
                 }
                 return $fullName;
             }

@@ -46,7 +46,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'  => 'SaveButton', 'label' => Yii::t('Default', 'Send')),
+                            array('type'  => 'SaveButton', 'label' => Zurmo::t('EmailMessagesModule', 'Send')),
                         ),
                     ),
                     'derivedAttributeTypes' => array(

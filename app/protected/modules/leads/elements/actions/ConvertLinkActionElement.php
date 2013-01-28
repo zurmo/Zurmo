@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Convert');
+            return Zurmo::t('LeadsModule', 'Convert');
         }
 
         protected function getDefaultRoute()

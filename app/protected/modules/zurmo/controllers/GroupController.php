@@ -60,7 +60,7 @@
 
         public function actionList()
         {
-            $title           = Yii::t('Default', 'Groups');
+            $title           = Zurmo::t('ZurmoModule', 'Groups');
             $breadcrumbLinks = array(
                  $title,
             );
@@ -89,7 +89,7 @@
 
         public function actionCreate()
         {
-            $title           = Yii::t('Default', 'Create Group');
+            $title           = Zurmo::t('ZurmoModule', 'Create Group');
             $breadcrumbLinks = array($title);
             $titleBarAndCreateView = new GroupActionBarAndEditView($this->getId(), $this->getModule()->getId(),
                                                                    $this->attemptToSaveModelFromPost(new Group()));
@@ -101,7 +101,7 @@
         public function actionEdit($id)
         {
             $group               = Group::getById(intval($id));
-            $title           = Yii::t('Default', 'Edit');
+            $title           = Zurmo::t('ZurmoModule', 'Edit');
             $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $this->resolveCanGroupBeEdited($group);
             $titleBarAndEditView = new GroupActionBarAndEditView($this->getId(),
@@ -123,7 +123,7 @@
                 $_GET['modalTransferInformation']['sourceNameFieldId']
             );
             Yii::app()->getClientScript()->setToAjaxMode();
-            $pageTitle           = Yii::t('Default', 'Select a Parent Group');
+            $pageTitle           = Zurmo::t('ZurmoModule', 'Select a Parent Group');
             $view                = new ModalView($this, $groupsModalTreeView);
             echo $view->render();
         }
@@ -142,7 +142,7 @@
         public function actionEditUserMembership($id)
         {
             $group              = Group::getById(intval($id));
-            $title           = Yii::t('Default', 'User Membership');
+            $title           = Zurmo::t('ZurmoModule', 'User Membership');
             $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $membershipForm     = GroupUserMembershipFormUtil::makeFormFromGroup($group);
             $postVariableName   = get_class($membershipForm);
@@ -153,7 +153,7 @@
                 if (GroupUserMembershipFormUtil::setMembershipFromForm($membershipForm, $group))
                 {
                         Yii::app()->user->setFlash('notification',
-                            Yii::t('Default', 'User Membership Saved Successfully.')
+                            Zurmo::t('ZurmoModule', 'User Membership Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);
@@ -173,7 +173,7 @@
         public function actionEditModulePermissions($id)
         {
             $group            = Group::getById(intval($id));
-            $title           = Yii::t('Default', 'Module Permissions');
+            $title           = Zurmo::t('ZurmoModule', 'Module Permissions');
             $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $data             =  PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
             $permissionsForm  = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
@@ -187,7 +187,7 @@
                 if (ModulePermissionsFormUtil::setPermissionsFromCastedPost($readyToSetPostData, $group))
                 {
                         Yii::app()->user->setFlash('notification',
-                            Yii::t('Default', 'Module Permissions Saved Successfully.')
+                            Zurmo::t('ZurmoModule', 'Module Permissions Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);
@@ -214,7 +214,7 @@
         public function actionEditRights($id)
         {
             $group              = Group::getById(intval($id));
-            $title           = Yii::t('Default', 'Rights');
+            $title           = Zurmo::t('ZurmoModule', 'Rights');
             $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $rightsData         = RightsUtil::getAllModuleRightsDataByPermitable($group);
             $rightsForm         = RightsFormUtil::makeFormFromRightsData($rightsData);
@@ -227,7 +227,7 @@
                     PermissionsCache::forgetAll();
                     $group->forget();
                     $group      = Group::getById(intval($id));
-                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'Rights Saved Successfully.'));
+                    Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'Rights Saved Successfully.'));
                     $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                     Yii::app()->end(0, false);
                 }
@@ -252,7 +252,7 @@
         public function actionEditPolicies($id)
         {
             $group              = Group::getById(intval($id));
-            $title           = Yii::t('Default', 'Policies');
+            $title           = Zurmo::t('ZurmoModule', 'Policies');
             $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $data               = PoliciesUtil::getAllModulePoliciesDataByPermitable($group);
             $policiesForm       = PoliciesFormUtil::makeFormFromPoliciesData($data);
@@ -267,7 +267,7 @@
                     {
                         PermissionsCache::forgetAll();
                         Yii::app()->user->setFlash('notification',
-                            Yii::t('Default', 'Policies Saved Successfully.')
+                            Zurmo::t('ZurmoModule', 'Policies Saved Successfully.')
                         );
                         $this->redirect(array($this->getId() . '/details', 'id' => $group->id));
                         Yii::app()->end(0, false);

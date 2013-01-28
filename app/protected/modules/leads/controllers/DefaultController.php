@@ -73,12 +73,7 @@
             }
             else
             {
-                $mixedView = $this->makeActionBarSearchAndListView(
-                    $searchForm,
-                    $pageSize,
-                    LeadsModule::getModuleLabelByTypeAndLanguage('Plural'),
-                    $dataProvider
-                );
+                $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider);
                 $view = new LeadsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $mixedView));
             }
@@ -172,14 +167,14 @@
                 $selectedRecordCount,
                 'LeadsPageView',
                 $contact,
-                Yii::t('Default', 'Leads'),
+                Zurmo::t('LeadsModule', 'Leads'),
                 $dataProvider
             );
             $massEditView = $this->makeMassEditView(
                 $contact,
                 $activeAttributes,
                 $selectedRecordCount,
-                Yii::t('Default', 'Leads')
+                Zurmo::t('LeadsModule', 'Leads')
             );
             $view = new LeadsPageView(ZurmoDefaultViewUtil::
                                      makeStandardViewForCurrentUser($this, $massEditView));
@@ -207,7 +202,7 @@
             $this->processMassEditProgressSave(
                 'Contact',
                 $pageSize,
-                Yii::t('Default', 'Leads'),
+                Zurmo::t('LeadsModule', 'Leads'),
                 $dataProvider
             );
         }
@@ -246,14 +241,14 @@
                 $selectedRecordCount,
                 'LeadsPageView',
                 $contact,
-                Yii::t('Default', 'Leads'),
+                Zurmo::t('LeadsModule', 'Leads'),
                 $dataProvider
             );
             $massDeleteView = $this->makeMassDeleteView(
                 $contact,
                 $activeAttributes,
                 $selectedRecordCount,
-                Yii::t('Default', 'Leads')
+                Zurmo::t('LeadsModule', 'Leads')
             );
             $view = new LeadsPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this, $massDeleteView));
@@ -281,7 +276,7 @@
             $this->processMassDeleteProgress(
                 'Contact',
                 $pageSize,
-                Yii::t('Default', 'Leads'),
+                Zurmo::t('LeadsModule', 'Leads'),
                 $dataProvider
             );
         }
@@ -357,13 +352,13 @@
             if ($contact->save())
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'LeadsModuleSingularLabel successfully converted.',
+                    Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel successfully converted.',
                                            LabelUtil::getTranslationParamsForAllModules())
                 );
                 $this->redirect(array('/contacts/default/details', 'id' => $contact->id));
             }
             Yii::app()->user->setFlash('notification',
-                Yii::t('Default', 'LeadsModuleSingularLabel was not converted. An error occurred.')
+                Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel was not converted. An error occurred.')
             );
             $this->redirect(array('default/details', 'id' => $contact->id));
             Yii::app()->end(0, false);

@@ -78,7 +78,7 @@
                     $currencyHelper = Yii::app()->currencyHelper;
                     if (!ZurmoCurrencyCodes::isValidCode($model->code))
                     {
-                        $model->addError('code', Yii::t('Default', 'Invalid currency code'));
+                        $model->addError('code', Zurmo::t('ZurmoModule', 'Invalid currency code'));
                         $currencyHelper->resetErrors();
                         return $model;
                     }
@@ -86,14 +86,14 @@
                     if ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_INVALID_CODE)
                     {
                         Yii::app()->user->setFlash('notification',
-                                Yii::t('Default', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
+                                Zurmo::t('ZurmoModule', 'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.')
                         );
                         $currencyHelper->resetErrors();
                     }
                     elseif ($currencyHelper->getWebServiceErrorCode() == $currencyHelper::ERROR_WEB_SERVICE)
                     {
                         Yii::app()->user->setFlash('notification',
-                                Yii::t('Default', 'The currency rate web service was unavailable. The rate could not be automatically updated.')
+                                Zurmo::t('ZurmoModule', 'The currency rate web service was unavailable. The rate could not be automatically updated.')
                         );
                         $currencyHelper->resetErrors();
                     }
@@ -123,7 +123,7 @@
                 }
                 if (!$atLeastOneCurrencyIsActive)
                 {
-                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'You must have at least one active currency.'));
+                    Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'You must have at least one active currency.'));
                 }
                 else
                 {
@@ -141,7 +141,7 @@
                         $saved = $currency->save();
                         assert('$saved');
                     }
-                    Yii::app()->user->setFlash('notification', Yii::t('Default', 'Changes to active currencies saved successfully.'));
+                    Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'Changes to active currencies saved successfully.'));
                 }
             }
         }
@@ -158,7 +158,7 @@
             }
             else
             {
-                Yii::app()->user->setFlash('notification', Yii::t('Default', 'The currency was not removed because it is in use.'));
+                Yii::app()->user->setFlash('notification', Zurmo::t('ZurmoModule', 'The currency was not removed because it is in use.'));
             }
             $this->redirect(array($this->getId() . '/configurationList'));
         }

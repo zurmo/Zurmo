@@ -46,7 +46,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Delete');
+            return Zurmo::t('Core', 'Delete');
         }
 
         protected function getDefaultRoute()

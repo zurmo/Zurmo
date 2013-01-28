@@ -55,8 +55,8 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                               'savedSearchId'      => Yii::t('Default',   'Id'),
-                               'savedSearchName'    => Yii::t('Default', 'Name'),
+                               'savedSearchId'      => Zurmo::t('ZurmoModule',   'Id'),
+                               'savedSearchName'    => Zurmo::t('ZurmoModule', 'Name'),
                                'loadSavedSearchUrl' => 'LoadSavedSearchUrl',
             ));
         }
@@ -66,7 +66,7 @@
             if ($this->$attribute == null)
             {
                 $this->addError('savedSearchName', Yii::t('yii', '{attribute} cannot be blank.',
-                                                        array('{attribute}' => Yii::t('Default', 'Name'))));
+                                                        array('{attribute}' => Zurmo::t('ZurmoModule', 'Name'))));
             }
         }
     }

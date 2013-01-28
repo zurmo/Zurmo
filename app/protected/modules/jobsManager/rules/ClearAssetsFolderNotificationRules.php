@@ -33,7 +33,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Clear the assets folder on server(optional).');
+            return Zurmo::t('JobsManagerModule', 'Clear the assets folder on server(optional).');
         }
 
         public static function getType()

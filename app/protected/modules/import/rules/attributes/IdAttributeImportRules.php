@@ -43,7 +43,7 @@
         public function getDisplayLabel()
         {
             $model = $this->model;
-            return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' . Yii::t('Default', 'Id');
+            return $model::getModelLabelByTypeAndLanguage('Singular') . ' ' . Zurmo::t('ImportModule', 'Id');
         }
 
         public static function getSanitizerUtilTypesInProcessingOrder()

@@ -86,9 +86,10 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} dropdown value(s) are missing from the field. ';
-                $label  .= 'These values will be added upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $label   = Zurmo::t('ImportModule', '{count} dropdown value(s) are missing from the field. ' .
+                                             'These values will be added upon import.',
+                                             array('{count}' => $invalid));
+                $this->addMessage($label);
             }
         }
     }

@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('AccountsModule', 'AccountsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

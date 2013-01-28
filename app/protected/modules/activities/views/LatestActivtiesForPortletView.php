@@ -68,7 +68,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Latest Activities')",
+                    'title' => "eval:Zurmo::t('ActivitiesModule', 'Latest Activities')",
                 ),
             );
             return $metadata;
@@ -76,7 +76,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'Latest Activities');
+            $title  = Zurmo::t('ActivitiesModule', 'Latest Activities');
             return $title;
         }
 
@@ -201,7 +201,7 @@
 
         protected function renderActionContent()
         {
-            $actionElementContent = $this->renderActionElementMenu(Yii::t('Default', 'Create'));
+            $actionElementContent = $this->renderActionElementMenu(Zurmo::t('ActivitiesModule', 'Create'));
             $content              = null;
             if ($actionElementContent != null)
             {

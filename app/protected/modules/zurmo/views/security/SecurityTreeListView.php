@@ -112,7 +112,7 @@
                 $content .= '<td>';
                 if (isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
                 {
-                    $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Configure') ),
+                    $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Configure') ),
                                             $node['route']);
                 }
                 $content .= '</td>';

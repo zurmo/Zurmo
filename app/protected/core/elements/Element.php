@@ -195,7 +195,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t("Default", get_class());
+            return Zurmo::t('Core', get_class());
         }
 
         public static function isReadOnly()

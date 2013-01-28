@@ -34,11 +34,11 @@
             $passed = InstallUtil::isPdoMysqlInstalled();
             if ($passed)
             {
-                $this->message = Yii::t('Default', 'pdo_mysql is installed.');
+                $this->message = Zurmo::t('InstallModule', 'pdo_mysql is installed.');
             }
             else
             {
-                $this->message = Yii::t('Default', 'pdo_mysql is not installed.');
+                $this->message = Zurmo::t('InstallModule', 'pdo_mysql is not installed.');
             }
             return $passed;
         }

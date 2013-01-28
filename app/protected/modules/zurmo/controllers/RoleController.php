@@ -48,7 +48,7 @@
 
         public function actionList()
         {
-            $title           = Yii::t('Default', 'Roles');
+            $title           = Zurmo::t('ZurmoModule', 'Roles');
             $breadcrumbLinks = array(
                  $title,
             );
@@ -69,7 +69,7 @@
 
         public function actionCreate()
         {
-            $title           = Yii::t('Default', 'Create Role');
+            $title           = Zurmo::t('ZurmoModule', 'Create Role');
             $breadcrumbLinks = array($title);
             $editView = new RoleEditAndDetailsView('Edit',
                                                    $this->getId(),
@@ -84,7 +84,7 @@
         public function actionEdit($id)
         {
             $role            = Role::getById(intval($id));
-            $title           = Yii::t('Default', 'Edit');
+            $title           = Zurmo::t('ZurmoModule', 'Edit');
             $breadcrumbLinks = array(strval($role) => array('role/edit',  'id' => $id), $title);
             $editView = new RoleEditAndDetailsView('Edit',
                                                    $this->getId(),
@@ -114,13 +114,13 @@
         public function actionModalParentList()
         {
             echo $this->renderModalList(
-                'SelectParentRoleModalTreeListView', Yii::t('Default', 'Select a Parent Role'));
+                'SelectParentRoleModalTreeListView', Zurmo::t('ZurmoModule', 'Select a Parent Role'));
         }
 
         public function actionModalList()
         {
             echo $this->renderModalList(
-                'RolesModalTreeListView', Yii::t('Default', 'Select a Role'));
+                'RolesModalTreeListView', Zurmo::t('ZurmoModule', 'Select a Role'));
         }
 
         protected function renderModalList($modalViewName, $pageTitle)

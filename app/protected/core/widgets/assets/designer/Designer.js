@@ -241,7 +241,12 @@ var designer = {
     initDroppableCells : function(selector)
     {
         var designer = this;
-        $( selector ).droppable("destroy");
+        $( selector).each(function(){
+            if ($(this).data('droppable'))
+            {
+                $(this).droppable("destroy");
+            }
+        });
         $( selector ).droppable({
                 accept: ".element-to-place, .cell-element",
                 //activeClass: "ui-state-hover",
@@ -279,7 +284,6 @@ var designer = {
     initSortableRows : function(selector)
     {
         var designer = this;
-        $( selector ).sortable("destroy");
         $( selector ).sortable({
             revert: true,
             axis: "y",
@@ -359,7 +363,6 @@ var designer = {
             }
         });
         designer.initSortableRows(".sortable-row-list");
-
         $( ".rowToPlace" ).draggable({
             connectToSortable: ".sortable-row-list",
             helper: "clone",

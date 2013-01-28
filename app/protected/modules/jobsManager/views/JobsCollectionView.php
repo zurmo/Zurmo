@@ -84,7 +84,7 @@
 
         public function getTitle()
         {
-            return Yii::t('Default', 'Job Manager: Home');
+            return Zurmo::t('JobsManagerModule', 'Job Manager: Home');
         }
 
         /**
@@ -96,8 +96,8 @@
         protected function renderFormLayout(ZurmoActiveForm $form)
         {
             $content = $this->renderMonitorJobLayout();
-            $content .= '<h3>' . Yii::t('Default', 'Available Jobs') . '</h3>';
-            $content .= $this->renderJobLayout($this->jobsData, Yii::t('Default', 'Job Name'));
+            $content .= '<h3>' . Zurmo::t('JobsManagerModule', 'Available Jobs') . '</h3>';
+            $content .= $this->renderJobLayout($this->jobsData, Zurmo::t('JobsManagerModule', 'Job Name'));
             $content .= $this->renderSuggestedFrequencyContent();
             $content .= $this->renderHelpContent();
             return $content;
@@ -120,8 +120,8 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $jobLabelHeaderContent . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Last Completed Run') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Status') . '</th>';
+            $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Last Completed Run') . '</th>';
+            $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
             $content .= '</tr>';
             foreach ($jobsData as $type => $jobData)
@@ -155,7 +155,7 @@
 
         protected static function renderMonitorJobHeaderContent()
         {
-            $title       = Yii::t('Default', 'The Monitor Job runs constantly making sure all jobs are running properly.');
+            $title       = Zurmo::t('JobsManagerModule', 'The Monitor Job runs constantly making sure all jobs are running properly.');
             $content     = '<span id="active-monitor-job-tooltip" class="tooltip" title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-monitor-job-tooltip");
@@ -170,7 +170,7 @@
             {
                 $params = array('type' => $type);
                 $route   = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/resetJob/', $params);
-                $content = ZurmoHtml::link(Yii::t('Default', 'Reset'), $route, array('class' => 'z-link reset-job-link'));
+                $content = ZurmoHtml::link(Zurmo::t('JobsManagerModule', 'Reset'), $route, array('class' => 'z-link reset-job-link'));
                 return $content;
             }
             return null;
@@ -181,7 +181,7 @@
             assert('is_string($type) && $type != ""');
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/jobLogsModalList/',
                                            array('type' => $type));
-            $label = Yii::t('Default', 'Job Log');
+            $label = Zurmo::t('JobsManagerModule', 'Job Log');
             return ZurmoHtml::ajaxLink($label, $route, static::resolveAjaxOptionsForJobLogLink($type),
                                        array('class' => 'z-link'));
         }
@@ -190,21 +190,21 @@
         {
             assert('is_string($type) && $type != ""');
             $jobClassName = $type . 'Job';
-            $title        = Yii::t('Default', 'Job Log for {jobDisplayName}',
+            $title        = Zurmo::t('JobsManagerModule', 'Job Log for {jobDisplayName}',
                                               array('{jobDisplayName}' => $jobClassName::getDisplayName()));
             return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function renderSuggestedFrequencyContent()
         {
-            $content  = '<h3>' . Yii::t('Default', 'How often should I run each Job?') . '</h3>';
+            $content  = '<h3>' . Zurmo::t('JobsManagerModule', 'How often should I run each Job?') . '</h3>';
             $content .= '<table id="jobs-frequency">';
             $content .= '<colgroup>';
             $content .= '<col style="width:40%" /><col style="width:60%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Job Name') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Recommended Frequency') . '</th>';
+            $content .= '<tr><th>' . Zurmo::t('JobsManagerModule', 'Job Name') . '</th>';
+            $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Recommended Frequency') . '</th>';
             $content .= '</tr>';
             $content .= '<tr>';
             $content .= '<td>' . ZurmoHtml::encode($this->monitorJobData['label']) . '</td>';
@@ -213,7 +213,7 @@
 
             foreach ($this->jobsData as $type => $jobData)
             {
-                $title    = Yii::t('Default', 'Cron or scheduled job name: {type}', array('{type}' => $type));
+                $title    = Zurmo::t('JobsManagerModule', 'Cron or scheduled job name: {type}', array('{type}' => $type));
                 $content .= '<tr>';
                 $content .= '<td>';
                 $content .= '<span class="job-label">' . ZurmoHtml::encode($jobData['label']) . '</span>';
@@ -231,11 +231,11 @@
 
         protected static function renderHelpContent()
         {
-            $clickHereLink = ZurmoHtml::link(Yii::t('Default', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager',
+            $clickHereLink = ZurmoHtml::link(Zurmo::t('JobsManagerModule', 'Click Here'), 'http://zurmo.org/wiki/how-to-set-up-job-manager',
                                              array('class' => 'z-link'));
-            $content  = '<h3>' . Yii::t('Default', 'How to Setup the Jobs to Run Automatically') . '</h3>';
+            $content  = '<h3>' . Zurmo::t('JobsManagerModule', 'How to Setup the Jobs to Run Automatically') . '</h3>';
             $content .= '<span class="jobs-help">';
-            $content .= Yii::t('Default', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',
+            $content .= Zurmo::t('JobsManagerModule', '{ClickHereLink} for help on setting up a cron in Linux or a scheduled task in Windows',
                                array('{ClickHereLink}' => $clickHereLink));
             $content .= '</span>';
             return $content;

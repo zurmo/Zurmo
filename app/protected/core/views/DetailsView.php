@@ -347,7 +347,7 @@
          */
         protected function getMorePanelsLinkLabel()
         {
-            return Yii::t('Default', 'More Details');
+            return Zurmo::t('Core', 'More Details');
         }
 
         /**
@@ -356,7 +356,7 @@
          */
         protected function getLessPanelsLinkLabel()
         {
-            return Yii::t('Default', 'Fewer Details');
+            return Zurmo::t('Core', 'Fewer Details');
         }
 
         public function getTitle()

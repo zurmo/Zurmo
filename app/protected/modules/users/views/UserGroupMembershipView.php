@@ -60,7 +60,7 @@
             $content .= '<col style="width:100%" />';
             $content .= '</colgroup>';
             $content .= '<tbody>';
-            $content .= '<tr><th>' . Yii::t('Default', 'Group') . '</th></tr>'; //<th></th>
+            $content .= '<tr><th>' . Zurmo::t('UsersModule', 'Group') . '</th></tr>'; //<th></th>
             foreach ($this->groupMembership as $groupId => $information)
             {
                 $content .= '<tr>';

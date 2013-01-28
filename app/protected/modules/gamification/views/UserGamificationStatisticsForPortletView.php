@@ -66,7 +66,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Overall Statistics')",
+                    'title' => "eval:Zurmo::t('GamificationModule', 'Overall Statistics')",
                 ),
             );
             return $metadata;
@@ -87,8 +87,8 @@
             $content .= '<tr>';
             $content .= '<th></th>';
             $content .= '<th></th>';
-            $content .= '<th>' . Yii::t('Default', 'Points') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Level') . '</th>';
+            $content .= '<th>' . Zurmo::t('GamificationModule', 'Points') . '</th>';
+            $content .= '<th>' . Zurmo::t('GamificationModule', 'Level') . '</th>';
             $content .= '</tr>';
             foreach ($this->params["statisticsData"] as $statisticItem)
             {

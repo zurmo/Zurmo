@@ -36,7 +36,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('UsersModule', 'Status');
         }
 
         public function getRealModelAttributeNames()

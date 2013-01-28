@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} MeetingsModuleSingularLabel created|{n} MeetingsModulePluralLabel created',
+            return Zurmo::t('MeetingsModule', '{n} MeetingsModuleSingularLabel created|{n} MeetingsModulePluralLabel created',
                           array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 

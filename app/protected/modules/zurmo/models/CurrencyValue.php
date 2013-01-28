@@ -49,7 +49,7 @@
         {
             if (trim($this->value) == '')
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('ZurmoModule', '(None)');
             }
             return strval($this->value);
         }

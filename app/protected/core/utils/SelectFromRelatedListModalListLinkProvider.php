@@ -90,7 +90,7 @@
             $string  .= 'processAjaxSuccessUpdateHtmlOrShowDataOnFailure(dataOrHtml, \"' .
                         $this->uniquePortletPageId . '\")}",'; // Not Coding Standard
             $string  .= '"error"    => "function(xhr, textStatus, errorThrown) {alert(\'' .
-                        CJavaScript::quote(Yii::t('Default', 'There was an error processing your request')) . '\');}",'; // Not Coding Standard
+                        CJavaScript::quote(Zurmo::t('Core', 'There was an error processing your request')) . '\');}",'; // Not Coding Standard
             $string  .= '"data"     => array(\'modelId\' => $data->id)';
             $string  .= ')),'; // Not Coding Standard
             $string  .= '"id" => "modalLink' . $this->portletId . '_$data->id")';

@@ -507,12 +507,18 @@
             //todo: test save with account.
         }
 
-        public function testMassDeleteActions()
+        /**
+         * @deletes selected leads.
+         */
+        public function testMassDeleteActionsForSelectedIds()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $opportunities = Opportunity::getAll();
+            $this->assertEquals(14, count($opportunities));
+            $superOpportunityId   = self::getModelIdByModelNameAndName('Opportunity', 'mySuperNewOpportunity');
             $superOpportunityId2  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp2');
             $superOpportunityId3  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp3');
+            $superOpportunityId4  = self::getModelIdByModelNameAndName('Opportunity', 'myNewOpportunity');
             $superOpportunityId5  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp5');
             $superOpportunityId6  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp6');
             $superOpportunityId7  = self::getModelIdByModelNameAndName('Opportunity', 'superOpp7');
@@ -533,36 +539,75 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDelete');
             $this->assertFalse(strpos($content, '<strong>14</strong>&#160;Opportunities selected for removal') === false);
-            //MassDelete for selected ids
-            $opportunity2 = Opportunity::getById($superOpportunityId2);
-            $opportunity3 = Opportunity::getById($superOpportunityId3);
-            $this->setGetArray(array(
-                'selectedIds' => $superOpportunityId2 . ',' . $superOpportunityId3, // Not Coding Standard
-                'selectAll' => '',
-                'Opportunity_page' => 1));
-            $this->setPostArray(array('selectedIds' => '5'));
-            $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
 
-            //Run Mass Delete using progress save.
+            //MassDelete for selected ids for page 1
+            $this->setGetArray(array(
+                'selectedIds' => $superOpportunityId  . ',' . $superOpportunityId2 . ',' . // Not Coding Standard
+                                 $superOpportunityId3 . ',' . $superOpportunityId4 . ',' . // Not Coding Standard
+                                 $superOpportunityId5 . ',' . $superOpportunityId6,        // Not Coding Standard
+                'selectAll'        => '',
+                'massDelete'       => '',
+                'Opportunity_page' => 1));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $this->runControllerWithExitExceptionAndGetContent('opportunities/default/massDelete');
+
+            //MassDelete for selected Record Count
+            $Opportunities = Opportunity::getAll();
+            $this->assertEquals(9, count($Opportunities));
+
+            //MassDelete for selected ids for page 2
+            $this->setGetArray(array(
+                'selectedIds' => $superOpportunityId . ',' . $superOpportunityId2 . ',' .  // Not Coding Standard
+                                 $superOpportunityId3 . ',' . $superOpportunityId4 . ',' . // Not Coding Standard
+                                 $superOpportunityId5 . ',' . $superOpportunityId6,        // Not Coding Standard
+                'selectAll'        => '',
+                'massDelete'       => '',
+                'Opportunity_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDeleteProgress');
+
+           //MassDelete for selected Record Count
+            $Opportunities = Opportunity::getAll();
+            $this->assertEquals(8, count($Opportunities));
+        }
+
+         /**
+         *Test Bug with mass delete and multiple pages when using select all
+         */
+        public function testMassDeletePagesProperlyAndRemovesAllSelected()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //MassDelete for selected Record Count
+            $Opportunities = Opportunity::getAll();
+            $this->assertEquals(8, count($Opportunities));
+
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            //save Modal MassDelete using progress load for page 2.
-            $this->setGetArray(array('selectAll' => '1', 'Opportunity_page' => 2));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDeleteProgress');
-            $this->assertFalse(strpos($content, '"value":83') === false);
-
-            //Set page size back to old value.
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
             //save Model MassDelete for entire search result
             $this->setGetArray(array(
-                'selectAll' => '1',
+                'selectAll' => '1',           // Not Coding Standard
                 'Opportunity_page' => 1));
-            $this->setPostArray(array('selectedIds' => '5'));
+            $this->setPostArray(array('selectedRecordCount' => 8));
+            //Run Mass Delete using progress save for page1.
+            $this->runControllerWithExitExceptionAndGetContent('opportunities/default/massDelete');
+
+            //check for previous mass delete progress
+            $Opportunities = Opportunity::getAll();
+            $this->assertEquals(3, count($Opportunities));
+
+            $this->setGetArray(array(
+                'selectAll' => '1',           // Not Coding Standard
+                'Opportunity_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 8));
+            //Run Mass Delete using progress save for page2.
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
-            $this->runControllerWithRedirectExceptionAndGetContent('opportunities/default/massDelete');
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            $this->runControllerWithNoExceptionsAndGetContent('opportunities/default/massDeleteProgress');
+
+            //calculating lead's count
+            $Opportunities = Opportunity::getAll();
+            $this->assertEquals(0, count($Opportunities));
         }
     }
 ?>

@@ -30,7 +30,7 @@
         {
             return array(
                 'name'        => $this->attribute,
-                'header'      => Yii::t('Default' , 'Close'),
+                'header'      => Zurmo::t('TasksModule', 'Close'),
                 'value'       => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
                 'type'        => 'raw',
                 'htmlOptions' => array('class' => 'checkbox-column')

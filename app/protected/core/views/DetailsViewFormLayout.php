@@ -154,7 +154,7 @@
                 }
                 else
                 {
-                    $tabTitle = Yii::t('Default', 'Tab'). ' ' . ($panelNumber + 1);
+                    $tabTitle = Zurmo::t('Core', 'Tab'). ' ' . ($panelNumber + 1);
                 }
                $this->addTabsContent('<li><a href="#' . $tabId . '">' . $tabTitle . '</a></li>');
                return $content;
@@ -283,7 +283,7 @@
         {
             if ($this->morePanelsLinkLabel == null)
             {
-                Yii::t('Default', 'More Options');
+                Zurmo::t('Core', 'More Options');
             }
             else
             {
@@ -295,7 +295,7 @@
         {
             if ($this->lessPanelsLinkLabel == null)
             {
-                Yii::t('Default', 'Fewer Options');
+                Zurmo::t('Core', 'Fewer Options');
             }
             else
             {

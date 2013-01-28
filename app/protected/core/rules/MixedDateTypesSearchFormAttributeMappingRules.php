@@ -134,15 +134,15 @@
 
         public static function getValidValueTypesAndLabels()
         {
-            return array(self::TYPE_YESTERDAY   => Yii::t('Default', 'Yesterday'),
-                         self::TYPE_TODAY       => Yii::t('Default', 'Today'),
-                         self::TYPE_TOMORROW    => Yii::t('Default', 'Tomorrow'),
-                         self::TYPE_BEFORE      => Yii::t('Default', 'Before'),
-                         self::TYPE_AFTER       => Yii::t('Default', 'After'),
-                         self::TYPE_ON          => Yii::t('Default', 'On{date}', array('{date}' => null)),
-                         self::TYPE_BETWEEN     => Yii::t('Default', 'Between'),
-                         self::TYPE_NEXT_7_DAYS => Yii::t('Default', 'Next 7 Days'),
-                         self::TYPE_LAST_7_DAYS => Yii::t('Default', 'Last 7 Days'),
+            return array(self::TYPE_YESTERDAY   => Zurmo::t('Core', 'Yesterday'),
+                         self::TYPE_TODAY       => Zurmo::t('Core', 'Today'),
+                         self::TYPE_TOMORROW    => Zurmo::t('Core', 'Tomorrow'),
+                         self::TYPE_BEFORE      => Zurmo::t('Core', 'Before'),
+                         self::TYPE_AFTER       => Zurmo::t('Core', 'After'),
+                         self::TYPE_ON          => Zurmo::t('Core', 'On{date}', array('{date}' => null)),
+                         self::TYPE_BETWEEN     => Zurmo::t('Core', 'Between'),
+                         self::TYPE_NEXT_7_DAYS => Zurmo::t('Core', 'Next 7 Days'),
+                         self::TYPE_LAST_7_DAYS => Zurmo::t('Core', 'Last 7 Days'),
             );
         }
 

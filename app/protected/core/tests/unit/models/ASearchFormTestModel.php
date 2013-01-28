@@ -58,12 +58,12 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'anyA'                             => Yii::t('Default', 'Any A'),
-                'ABName'                           => Yii::t('Default', 'ABName'),
-                'differentOperatorA'               => Yii::t('Default', 'differentOperatorA'),
-                'differentOperatorB'               => Yii::t('Default', 'differentOperatorB'),
-                'dateDateTimeADate__Date'          => Yii::t('Default', 'dateDateTimeADate Date'),
-                'dateDateTimeADateTime__DateTime'  => Yii::t('Default', 'dateDateTimeADateTime DateTime'),
+                'anyA'                             => Zurmo::t('Core', 'Any A'),
+                'ABName'                           => Zurmo::t('Core', 'ABName'),
+                'differentOperatorA'               => Zurmo::t('Core', 'differentOperatorA'),
+                'differentOperatorB'               => Zurmo::t('Core', 'differentOperatorB'),
+                'dateDateTimeADate__Date'          => Zurmo::t('Core', 'dateDateTimeADate Date'),
+                'dateDateTimeADateTime__DateTime'  => Zurmo::t('Core', 'dateDateTimeADateTime DateTime'),
             ));
         }
 

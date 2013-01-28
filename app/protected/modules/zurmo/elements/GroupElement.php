@@ -51,7 +51,7 @@
 
         protected function getModalTitleForSelectingModel()
         {
-            return Yii::t('Default', 'Select a Group');
+            return Zurmo::t('ZurmoModule', 'Select a Group');
         }
     }
 ?>

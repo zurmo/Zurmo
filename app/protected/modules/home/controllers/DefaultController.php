@@ -142,7 +142,7 @@
                 }
             }
             $editView = new DashboardEditView($this->getId(), $this->getModule()->getId(), $dashboard,
-                                              Yii::t('Default', 'Create Dashboard'));
+                                              Zurmo::t('HomeModule', 'Create Dashboard'));
             $view     = new HomePageView(ZurmoDefaultViewUtil::makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
         }

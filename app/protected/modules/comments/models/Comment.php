@@ -39,7 +39,7 @@
         {
             if (trim($this->description) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('CommentsModule', '(Unnamed)');
             }
             return $this->description;
         }

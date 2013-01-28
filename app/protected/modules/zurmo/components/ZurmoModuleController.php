@@ -222,7 +222,7 @@
                     else
                     {
                         Yii::app()->user->setFlash('notification',
-                            Yii::t('Default', 'There is no data to export.')
+                            Zurmo::t('ZurmoModule', 'There is no data to export.')
                         );
                     }
                 }
@@ -247,7 +247,7 @@
                     $exportItem->save();
                     $exportItem->forget();
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'A large amount of data has been requested for export.  You will receive ' .
+                        Zurmo::t('ZurmoModule', 'A large amount of data has been requested for export.  You will receive ' .
                         'a notification with the download link when the export is complete.')
                     );
                 }
@@ -255,7 +255,7 @@
             else
             {
                 Yii::app()->user->setFlash('notification',
-                    Yii::t('Default', 'There is no data to export.')
+                    Zurmo::t('ZurmoModule', 'There is no data to export.')
                 );
             }
             $this->redirect(array($this->getId() . '/index'));
@@ -271,7 +271,7 @@
             }
             catch (NotFoundException $e)
             {
-                $messageContent  = Yii::t('Default', 'The record you are trying to access does not exist.');
+                $messageContent  = Zurmo::t('ZurmoModule', 'The record you are trying to access does not exist.');
                 $messageView     = new ModelNotFoundView($messageContent);
                 $view            = new ModelNotFoundPageView($messageView);
                 echo $view->render();
@@ -304,7 +304,7 @@
             $dataList   = $dataProvider->getData();
             if (count($dataList) > 0)
             {
-                $menuItems = array('label' => '▾'); //char code is &#9662;
+                $menuItems = array('label' => '÷'); //char code is &#247;
                 foreach ($dataList as $row => $data)
                 {
                     $url = Yii::app()->createUrl($this->getModule()->getId() . '/' . $this->getId() . '/details',

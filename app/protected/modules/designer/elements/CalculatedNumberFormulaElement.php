@@ -47,16 +47,16 @@
             $model          = new $modelClassName(false);
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
             $attributeData  = $adapter->getAttributes();
-            $title          = Yii::t('Default', 'Create a math formula that is calculated from other fields.' .
+            $title          = Zurmo::t('DesignerModule', 'Create a math formula that is calculated from other fields.' .
                                    ' Use the Formula Name from the Available Fields grid below to create your formula.' .
                                    ' Example formula (field1 x field2) / field3');
             $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">?</span>';
             if (count($attributeData) > 0)
             {
-                $content  = '<strong>' . Yii::t('Default', 'Available Fields:') . '</strong> ' . $spanContent;
+                $content  = '<strong>' . Zurmo::t('DesignerModule', 'Available Fields:') . '</strong> ' . $spanContent;
                 $content .= '<table id="available-fields">';
-                $content .= '<tr><th>' . Yii::t('Default', 'Field Name') . '</th>';
-                $content .= '<th>' . Yii::t('Default', 'Formula Name') . '</th></tr>';
+                $content .= '<tr><th>' . Zurmo::t('DesignerModule', 'Field Name') . '</th>';
+                $content .= '<th>' . Zurmo::t('DesignerModule', 'Formula Name') . '</th></tr>';
                 foreach ($attributeData as $attributeName => $data)
                 {
                     $content .= '<tr><td>' . $data['attributeLabel'] . '</td><td>' . $attributeName . '</td></tr>';
@@ -65,7 +65,7 @@
             }
             else
             {
-                $content  = '<span class="error">' . Yii::t('Default', 'There are no fields in this module to be used in a formula.');
+                $content  = '<span class="error">' . Zurmo::t('DesignerModule', 'There are no fields in this module to be used in a formula.');
                 $content .= '</span>';
             }
             $qtip = new ZurmoTip();

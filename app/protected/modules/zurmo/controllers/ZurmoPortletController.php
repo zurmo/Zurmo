@@ -177,7 +177,7 @@
 
         protected function processSelectFromRelatedListSaveFails(RedBeanModel $model)
         {
-            $header = Yii::t('Default', 'Please resolve the following issues for {modelString}:',
+            $header = Zurmo::t('ZurmoModule', 'Please resolve the following issues for {modelString}:',
                                         array('{modelString}' => strval($model)));
             echo CJSON::encode(array('message'     => ZurmoHtml::errorSummary(array($model), $header),
                                      'messageType' => 'error'));
@@ -186,7 +186,7 @@
 
         protected function processSelectFromRelatedListSaveAlreadyConnected(RedBeanModel $model)
         {
-            echo CJSON::encode(array('message'     => Yii::t('Default', '{modelString} is already connected to this record.',
+            echo CJSON::encode(array('message'     => Zurmo::t('ZurmoModule', '{modelString} is already connected to this record.',
                                                                         array('{modelString}' => strval($model))),
                                      'messageType' => 'message'));
             Yii::app()->end(0, false);

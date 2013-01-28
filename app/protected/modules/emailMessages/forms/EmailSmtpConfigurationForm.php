@@ -61,13 +61,13 @@
         public function attributeLabels()
         {
             return array(
-                'host'                                 => Yii::t('Default', 'Host'),
-                'port'                                 => Yii::t('Default', 'Port'),
-                'username'                             => Yii::t('Default', 'Username'),
-                'password'                             => Yii::t('Default', 'Password'),
-                'security'                             => Yii::t('Default', 'Extra Mail Settings'),
-                'userIdOfUserToSendNotificationsAs'    => Yii::t('Default', 'Send system notifications from'),
-                'aTestToAddress'                       => Yii::t('Default', 'Send a test email to')
+                'host'                                 => Zurmo::t('EmailMessagesModule', 'Host'),
+                'port'                                 => Zurmo::t('EmailMessagesModule', 'Port'),
+                'username'                             => Zurmo::t('EmailMessagesModule', 'Username'),
+                'password'                             => Zurmo::t('EmailMessagesModule', 'Password'),
+                'security'                             => Zurmo::t('EmailMessagesModule', 'Extra Mail Settings'),
+                'userIdOfUserToSendNotificationsAs'    => Zurmo::t('EmailMessagesModule', 'Send system notifications from'),
+                'aTestToAddress'                       => Zurmo::t('EmailMessagesModule', 'Send a test email to')
             );
         }
     }

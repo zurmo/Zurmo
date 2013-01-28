@@ -43,7 +43,7 @@
             $this->assertEquals('PolicyEffectivePasswordExpiry', $rules->getEffectiveElementAttributeType());
             $this->assertTrue($rules->isElementTypeDerived());
             $compareValidationRules = array(
-                array('UsersModule__POLICY_PASSWORD_EXPIRES', 'type', 'type' => 'string'),
+                array('UsersModule__POLICY_PASSWORD_EXPIRES', 'type', 'type' => 'integer'),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'type', 'type' => 'integer'),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'length',  'max'  => 3),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'validateIsRequiredByComparingHelper',
@@ -57,7 +57,7 @@
             $this->assertEquals('PolicyEffectivePasswordExpiry', $rules->getEffectiveElementAttributeType());
             $this->assertTrue($rules->isElementTypeDerived());
             $compareValidationRules = array(
-                array('UsersModule__POLICY_PASSWORD_EXPIRES', 'type', 'type' => 'string'),
+                array('UsersModule__POLICY_PASSWORD_EXPIRES', 'type', 'type' => 'integer'),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'type', 'type' => 'integer'),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'length',  'max'  => 3),
                 array('UsersModule__POLICY_PASSWORD_EXPIRY_DAYS', 'validateIsRequiredByComparingHelper',

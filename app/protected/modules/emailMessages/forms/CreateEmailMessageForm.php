@@ -46,7 +46,7 @@
         public function attributeLabels()
         {
             return array_merge($this->model->attributeLabels(), array(
-                'recipientsData'            => Yii::t('Default', 'Recipients'),
+                'recipientsData'            => Zurmo::t('EmailMessagesModule', 'Recipients'),
             ));
         }
 
@@ -61,7 +61,7 @@
             {
                 return;
             }
-            $this->addError($attribute . '_to', Yii::t('Default', 'To address cannot be blank'));
+            $this->addError($attribute . '_to', Zurmo::t('EmailMessagesModule', 'To address cannot be blank'));
         }
     }
 ?>

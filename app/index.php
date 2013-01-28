@@ -54,5 +54,6 @@
         $webApplication->setRuntimePath($runtimePath);
     }
     $webApplication->run();
+
     exit;
 ?>

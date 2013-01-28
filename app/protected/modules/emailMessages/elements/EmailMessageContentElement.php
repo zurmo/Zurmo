@@ -66,7 +66,7 @@
 
         protected function renderLabel()
         {
-            $label = Yii::t('Default', 'Body');
+            $label = Zurmo::t('EmailMessagesModule', 'Body');
             if ($this->form === null)
             {
                 return $label;

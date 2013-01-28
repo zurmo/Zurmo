@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Change Password');
+            return Zurmo::t('UsersModule', 'Change Password');
         }
 
         protected function getDefaultRoute()

@@ -92,7 +92,7 @@
                 $this->moduleId,
                 $this->modelId,
                 array('htmlOptions' => array('class'   => 'icon-delete',
-                                             'confirm' => Yii::t('Default', 'Are you sure want to delete this dashboard?')))
+                                             'confirm' => Zurmo::t('HomeModule', 'Are you sure want to delete this dashboard?')))
             );
             if (!ActionSecurityUtil::canCurrentUserPerformAction($deleteDashboardLinkActionElement->getActionType(), $this->model))
             {

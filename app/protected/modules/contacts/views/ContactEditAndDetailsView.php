@@ -190,7 +190,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create ContactsModuleSingularLabel',
+            return Zurmo::t('ContactsModule', 'Create ContactsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Email Address Information');
+            return Zurmo::t('DesignerModule', 'Email Address Information');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'Email address fields');
+            return Zurmo::t('DesignerModule', 'Email address fields');
         }
 
         public function getAttributeTypeName()

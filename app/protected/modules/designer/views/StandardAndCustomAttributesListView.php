@@ -40,7 +40,7 @@
         {
             parent::__construct(3, 1);
             $this->setView(new ActionBarForDesignerModuleView($controllerId, $moduleId, $module, 'DesignerFieldsLink'), 0, 0);
-            $title = $moduleDisplayName . ': ' .  Yii::t('Default', 'Custom Fields');
+            $title = $moduleDisplayName . ': ' .  Zurmo::t('DesignerModule', 'Custom Fields');
             $this->setView(new CustomAttributesCollectionView(
                 $controllerId,
                 $moduleId,
@@ -49,7 +49,7 @@
                 $modelClassName,
                 $title
             ), 1, 0);
-            $title = $moduleDisplayName . ': ' .  Yii::t('Default', 'Standard Fields');
+            $title = $moduleDisplayName . ': ' .  Zurmo::t('DesignerModule', 'Standard Fields');
             $this->setView(new AttributesCollectionView(
                 $controllerId,
                 $moduleId,

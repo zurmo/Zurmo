@@ -63,7 +63,7 @@
         {
             if (trim($this->type) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('GamificationModule', '(Unnamed)');
             }
             return $this->type;
         }

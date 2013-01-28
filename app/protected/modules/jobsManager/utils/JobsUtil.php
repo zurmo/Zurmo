@@ -45,7 +45,7 @@
             }
             else
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('JobsManagerModule', '(Unnamed)');
             }
         }
     }

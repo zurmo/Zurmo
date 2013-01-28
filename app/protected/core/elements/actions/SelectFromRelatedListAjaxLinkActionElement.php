@@ -32,7 +32,7 @@
             {
                 $params['htmlOptions'] = array();
             }
-            $params['htmlOptions'] = array_merge(array('class' => 'simple-select'), $params['htmlOptions']);
+            $params['htmlOptions'] = array_merge(array('class' => 'simple-link'), $params['htmlOptions']);
             parent::__construct($controllerId, $moduleId, $modelId, $params);
         }
 
@@ -43,7 +43,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Select');
+            return Zurmo::t('Core', 'Select');
         }
 
         protected function getDefaultRoute()

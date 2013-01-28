@@ -45,7 +45,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processRead($params['id']);
@@ -61,7 +61,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'Specified custom field name was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'Specified custom field name was invalid.');
                 throw new ApiException($message);
             }
 

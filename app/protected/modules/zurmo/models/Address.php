@@ -31,7 +31,7 @@
             $address = $this->makeAddress();
             if ($address == '')
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('ZurmoModule', '(None)');
             }
             return $address;
         }

@@ -37,14 +37,14 @@
             $data = $this->getAndValidateUnserializedData();
             if ($data['type'] == GameNotification::TYPE_LEVEL_CHANGE)
             {
-                return Yii::t('Default', 'I reached level {nextLevel}', array('{nextLevel}' => $data['levelValue']));
+                return Zurmo::t('GamificationModule', 'I reached level {nextLevel}', array('{nextLevel}' => $data['levelValue']));
             }
             elseif ($data['type'] == GameNotification::TYPE_NEW_BADGE)
             {
                 $gameBadgeRulesClassName = $data['badgeType'] . 'GameBadgeRules';
                 $value                   = $gameBadgeRulesClassName::getItemCountByGrade(1);
-                $content                 = Yii::t('Default', 'Game on!') . ' ' .
-                                           Yii::t('Default', 'I received a new badge: {badgeContent}',
+                $content                 = Zurmo::t('GamificationModule', 'Game on!') . ' ' .
+                                           Zurmo::t('GamificationModule', 'I received a new badge: {badgeContent}',
                                            array('{badgeContent}' =>
                                                  $gameBadgeRulesClassName::getPassiveDisplayLabel($value)));
                 return $content;
@@ -53,8 +53,8 @@
             {
                 $gameBadgeRulesClassName = $data['badgeType'] . 'GameBadgeRules';
                 $value                   = $gameBadgeRulesClassName::getItemCountByGrade((int)$data['grade']);
-                $content                 = Yii::t('Default', 'Game on!') . ' ' .
-                                           Yii::t('Default', 'I received a new badge: {badgeContent}',
+                $content                 = Zurmo::t('GamificationModule', 'Game on!') . ' ' .
+                                           Zurmo::t('GamificationModule', 'I received a new badge: {badgeContent}',
                                            array('{badgeContent}' =>
                                                  $gameBadgeRulesClassName::getPassiveDisplayLabel($value)));
                 return $content;

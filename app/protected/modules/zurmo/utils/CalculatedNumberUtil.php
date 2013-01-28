@@ -63,7 +63,7 @@
             $result = static::matheval($formula);
             if ($result === false)
             {
-                return Yii::t('Default', 'Invalid');
+                return Zurmo::t('ZurmoModule', 'Invalid');
             }
             return $result;
         }

@@ -34,12 +34,12 @@
             $soapInstalled =  InstallUtil::checkSoap();
             if ($soapInstalled)
             {
-                $this->message  = Yii::t('Default', 'SOAP is installed.');
+                $this->message  = Zurmo::t('InstallModule', 'SOAP is installed.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'SOAP is not installed.');
+                $this->message  = Zurmo::t('InstallModule', 'SOAP is not installed.');
                 return false;
             }
         }

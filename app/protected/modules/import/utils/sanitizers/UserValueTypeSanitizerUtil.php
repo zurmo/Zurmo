@@ -90,13 +90,13 @@
                 {
                     if ((int)$value <= 0)
                     {
-                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
+                        throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The user id specified did not match any existing records.'));
                     }
                     return User::getById((int)$value);
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The user id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The user id specified did not match any existing records.'));
                 }
             }
             elseif ($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
@@ -107,7 +107,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other user id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The other user id specified did not match any existing records.'));
                 }
             }
             else
@@ -118,7 +118,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The username specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The username specified did not match any existing records.'));
                 }
             }
         }

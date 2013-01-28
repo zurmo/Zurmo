@@ -33,7 +33,7 @@
 
         protected function checkService()
         {
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkPhp', Yii::t('Default', 'PHP'));
+            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkPhp', Zurmo::t('InstallModule', 'PHP'));
         }
     }
 ?>

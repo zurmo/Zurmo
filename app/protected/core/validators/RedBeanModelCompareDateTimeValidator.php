@@ -62,7 +62,7 @@
                     if ($firstDateTime > $secondDateTime)
                     {
                         $this->addError($object, $attribute,
-                            Yii::t('Default', 'firstDateTime must occur before secondDateTime'),
+                            Zurmo::t('Core', 'firstDateTime must occur before secondDateTime'),
                             array(  'firstDateTime'  => $object->getAttributeLabel($attribute),
                                     'secondDateTime' => $object->getAttributeLabel($this->compareAttribute)));
                     }
@@ -72,7 +72,7 @@
                     if ($firstDateTime < $secondDateTime)
                     {
                         $this->addError($object, $attribute,
-                            Yii::t('Default', 'firstDateTime must occur after secondDateTime'),
+                            Zurmo::t('Core', 'firstDateTime must occur after secondDateTime'),
                             array(  'firstDateTime'  => $object->getAttributeLabel($attribute),
                                     'secondDateTime' => $object->getAttributeLabel($this->compareAttribute)));
                     }

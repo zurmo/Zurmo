@@ -55,8 +55,8 @@
         public function attributeLabels()
         {
             return array_merge($this->model->attributeLabels(), array(
-                'newPassword'            => Yii::t('Default', 'Password'),
-                'newPassword_repeat'     => Yii::t('Default', 'Confirm Password'),
+                'newPassword'            => Zurmo::t('UsersModule', 'Password'),
+                'newPassword_repeat'     => Zurmo::t('UsersModule', 'Confirm Password'),
             ));
         }
 
@@ -77,7 +77,7 @@
             if (strlen($this->$attribute) < $minLength)
             {
                 $this->addError('newPassword',
-                    Yii::t('Default', 'The password is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
+                    Zurmo::t('UsersModule', 'The password is too short. Minimum length is {minimumLength}.', array('{minimumLength}' => $minLength)));
             }
         }
 
@@ -89,17 +89,17 @@
                 if (strtolower($this->$attribute) == $this->$attribute)
                 {
                     $this->addError('newPassword',
-                        Yii::t('Default', 'The password must have at least one uppercase letter'));
+                        Zurmo::t('UsersModule', 'The password must have at least one uppercase letter'));
                 }
                 if (strtoupper($this->$attribute) == $this->$attribute)
                 {
                     $this->addError('newPassword',
-                        Yii::t('Default', 'The password must have at least one lowercase letter'));
+                        Zurmo::t('UsersModule', 'The password must have at least one lowercase letter'));
                 }
                 if (ctype_alpha($this->$attribute) || ctype_digit($this->$attribute))
                 {
                     $this->addError('newPassword',
-                        Yii::t('Default', 'The password must have at least one number and one letter'));
+                        Zurmo::t('UsersModule', 'The password must have at least one number and one letter'));
                 }
             }
         }

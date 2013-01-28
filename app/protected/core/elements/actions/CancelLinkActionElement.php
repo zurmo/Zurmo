@@ -40,7 +40,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Cancel');
+            return Zurmo::t('Core', 'Cancel');
         }
 
         protected function getDefaultRoute()

@@ -41,7 +41,7 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                               'ownedItemsOnly' => Yii::t('Default', 'Only Items I Own'),
+                               'ownedItemsOnly' => Zurmo::t('ZurmoModule', 'Only Items I Own'),
             ));
         }
 

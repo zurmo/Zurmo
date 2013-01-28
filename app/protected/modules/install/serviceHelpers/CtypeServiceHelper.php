@@ -34,12 +34,12 @@
             $ctypeInstalled =  InstallUtil::checkCtype();
             if ($ctypeInstalled)
             {
-                $this->message  = Yii::t('Default', 'Ctype extension is loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'Ctype extension is loaded.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Ctype extension is not loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'Ctype extension is not loaded.');
                 return false;
             }
         }

@@ -31,7 +31,7 @@
             assert('$this->attribute == "id"');
             return array(
                 'name'  => $this->attribute,
-                'header' => Yii::t('Default', 'Row Id'),
+                'header' => Zurmo::t('ImportModule', 'Row Id'),
                 'value' => '$data->id',
                 'type'  => 'raw',
 

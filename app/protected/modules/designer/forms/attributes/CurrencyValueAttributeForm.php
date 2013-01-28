@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Currency');
+            return Zurmo::t('DesignerModule', 'Currency');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A currency field');
+            return Zurmo::t('DesignerModule', 'A currency field');
         }
 
         public function getAttributeTypeName()

@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Roles');
+            return Zurmo::t('ZurmoModule', 'Roles');
         }
     }
 ?>

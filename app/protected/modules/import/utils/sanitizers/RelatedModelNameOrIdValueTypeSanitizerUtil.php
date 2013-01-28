@@ -81,7 +81,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The id specified did not match any existing records.'));
                 }
             }
             elseif ($mappingRuleData["type"] == RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
@@ -92,7 +92,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The other id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The other id specified did not match any existing records.'));
                 }
             }
             else
@@ -112,7 +112,7 @@
                     //defaults cannot be specified at this time, an error must be thrown.
                     if (!$saved)
                     {
-                        throw new InvalidValueToSanitizeException(Yii::t('Default',
+                        throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule',
                         'A new related model could not be created because there are unspecified required attributes on that related model.'));
                     }
                     return $newRelatedModel;

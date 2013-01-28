@@ -52,7 +52,7 @@
 
         protected function renderContent()
         {
-            $titleView = new TitleBarView(Yii::t('Default', 'Global search'), null, 1);
+            $titleView = new TitleBarView(Zurmo::t('ZurmoModule', 'Global search'), null, 1);
             $content = $titleView->render();
             $model = new MixedModelsSearchForm();
             $model->setGlobalSearchAttributeNamesAndLabelsAndAll($this->moduleNamesAndLabelsAndAll);
@@ -81,7 +81,7 @@
             $content .= $scope->render();
             //Search button
             $params = array();
-            $params['label']       = Yii::t('Default', 'Search');
+            $params['label']       = Zurmo::t('ZurmoModule', 'Search');
             $params['htmlOptions'] = array('id' => $this->getSearchFormId() . '-search',
                 'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $searchElement = new SaveButtonActionElement(null, null, null, $params);

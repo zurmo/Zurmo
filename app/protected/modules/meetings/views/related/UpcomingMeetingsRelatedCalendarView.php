@@ -55,7 +55,7 @@
             $metadata = parent::getDefaultMetadata();
             $metadata = array_merge($metadata, array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('MeetingsModule', 'Upcoming MeetingsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                 ),
                 'global' => array(
                     'toolbar' => array(

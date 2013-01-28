@@ -37,8 +37,8 @@
 
         protected function renderContent()
         {
-            $message = Yii::t('Default', 'Sorry! Your browser is not supported.') . ' ' .
-                       Yii::t('Default', 'Please use FireFox, Chrome, or Internet Explorer.');
+            $message = Zurmo::t('ZurmoModule', 'Sorry! Your browser is not supported.') . ' ' .
+                       Zurmo::t('ZurmoModule', 'Please use FireFox, Chrome, or Internet Explorer.');
             $message = Yii::app()->format->text($message);
             $content = "<div>$message</div><!-- Detected: {$this->browserName} -->";
             return $content;

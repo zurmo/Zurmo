@@ -218,12 +218,12 @@
 
         protected function renderLabel()
         {
-            return ZurmoHtml::label(Yii::t('Default', 'Related to'), false);
+            return ZurmoHtml::label(Zurmo::t('Core', 'Related to'), false);
         }
 
         public static function getDisplayName()
         {
-            $content         =  Yii::t('Default', 'Related') . '&#160;';
+            $content         =  Zurmo::t('Core', 'Related') . '&#160;';
             $relationContent = null;
             foreach (static::getRelatedItemsModelClassNames() as $relationModelClassName)
             {

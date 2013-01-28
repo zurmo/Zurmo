@@ -63,11 +63,11 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $content  = null;
-            $content .= '<h3>' . Yii::t('Default', 'Congratulations! Your import is complete.  Below is a summary of the results.') . '</h3>';
+            $content .= '<h3>' . Zurmo::t('ImportModule', 'Congratulations! Your import is complete.  Below is a summary of the results.') . '</h3>';
             $content .= '<ul class="import-summary">';
-            $content .= '<li>' . Yii::t('Default', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . '</li>';
-            $content .= '<li>' . Yii::t('Default', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . '</li>';
-            $content .= '<li>' . Yii::t('Default', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . '</li>';
+            $content .= '<li>' . Zurmo::t('ImportModule', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . '</li>';
+            $content .= '<li>' . Zurmo::t('ImportModule', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . '</li>';
+            $content .= '<li>' . Zurmo::t('ImportModule', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . '</li>';
             $content .= '</ul>';
             $content .= $this->renderErrorListContent();
             return $content;
@@ -84,10 +84,7 @@
 
         protected function renderErrorListContent()
         {
-            $content  = null;
-            $content .= '<h3>' . "\n";
-            $content .= Yii::t('Default', 'Information about the rows with errors');
-            $content .= '</h3>'   . "\n";
+            $content  = '<h3>' . Zurmo::t('ImportModule', 'Information about the rows with errors') . '</h3>';
             $content .= $this->importErrorsListView->render();
             return $content;
         }

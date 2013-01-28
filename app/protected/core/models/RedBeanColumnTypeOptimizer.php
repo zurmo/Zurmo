@@ -34,11 +34,12 @@
         * @param string  $columnName name of the column
         * @param string  $datatype
         */
-        public static function optimize($table, $columnName, $datatype)
+        public static function optimize($table, $columnName, $datatype, $length = null)
         {
             try
             {
-                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType($datatype);
+                $databaseColumnType = DatabaseCompatibilityUtil::mapHintTypeIntoDatabaseColumnType($datatype, $length);
+
                 if (isset(self::$optimizedTableColumns[$table]))
                 {
                     $fields = self::$optimizedTableColumns[$table];
@@ -58,7 +59,18 @@
                     $columnType = $fields[$columnName];
                     if (strtolower($columnType) != strtolower($databaseColumnType))
                     {
-                        R::exec("alter table {$table} change {$columnName} {$columnName} " . $databaseColumnType);
+                        if (strtolower($datatype) == 'string' && isset($length) && $length > 0)
+                        {
+                            $maxLength = R::getCell("SELECT MAX(LENGTH($columnName)) FROM $table");
+                            if ($maxLength <= $length)
+                            {
+                                R::exec("alter table {$table} change {$columnName} {$columnName} " . $databaseColumnType);
+                            }
+                        }
+                        else
+                        {
+                            R::exec("alter table {$table} change {$columnName} {$columnName} " . $databaseColumnType);
+                        }
                     }
                 }
                 else

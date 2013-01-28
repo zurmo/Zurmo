@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Multi-Select Pick List');
+            return Zurmo::t('DesignerModule', 'Multi-Select Pick List');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A pick list that can have multiple selections');
+            return Zurmo::t('DesignerModule', 'A pick list that can have multiple selections');
         }
 
         public function getAttributeTypeName()

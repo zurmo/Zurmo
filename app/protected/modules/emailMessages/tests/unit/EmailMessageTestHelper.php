@@ -63,6 +63,46 @@
             return $emailMessage;
         }
 
+        public static function createOutboxEmail(User $owner, $subject,
+                                                       $htmlContent, $textContent,
+                                                       $fromName, $fromAddress,
+                                                       $toName, $toAddress)
+        {
+            $emailMessage              = new EmailMessage();
+            $emailMessage->owner       = $owner;
+            $emailMessage->subject     = $subject;
+
+            //Set sender, and recipient, and content
+            $emailContent              = new EmailMessageContent();
+            $emailContent->textContent = $textContent;
+            $emailContent->htmlContent = $htmlContent;
+            $emailMessage->content     = $emailContent;
+
+            //Sending from the system, does not have a 'person'.
+            $sender                    = new EmailMessageSender();
+            $sender->fromAddress       = $fromAddress;
+            $sender->fromName          = $fromName;
+            $emailMessage->sender      = $sender;
+
+            //Recipient is billy.
+            $recipient                 = new EmailMessageRecipient();
+            $recipient->toAddress      = $toAddress;
+            $recipient->toName         = $toName;
+            $recipient->type           = EmailMessageRecipient::TYPE_TO;
+            $emailMessage->recipients->add($recipient);
+
+            $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
+
+            //Save, at this point the email should be in the draft folder
+            $saved = $emailMessage->save();
+            if (!$saved)
+            {
+                throw new NotSupportedException();
+            }
+            return $emailMessage;
+        }
+
         public static function isSetEmailAccountsTestConfiguration()
         {
             $isSetEmailAccountsTestConfiguration = false;

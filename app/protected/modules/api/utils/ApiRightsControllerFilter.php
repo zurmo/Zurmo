@@ -38,7 +38,7 @@
          */
         protected static function renderAccessFailureContent()
         {
-            $message = Yii::t('Default', 'You do not have rights to perform this action.');
+            $message = Zurmo::t('ApiModule', 'You do not have rights to perform this action.');
             throw new SecurityException($message);
         }
     }

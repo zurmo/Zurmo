@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} Mission created|{n} Missions created', array($value));
+            return Zurmo::t('MissionsModule', '{n} Mission created|{n} Missions created', array($value));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

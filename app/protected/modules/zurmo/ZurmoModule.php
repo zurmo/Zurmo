@@ -159,7 +159,7 @@
                     {
                         $s             .= strval($auditEvent);
                         $s             .= ", $name";
-                        $s             .= ', ' . Yii::t('Default', 'Changed') . ' ';
+                        $s             .= ', ' . Zurmo::t('ZurmoModule', 'Changed') . ' ';
                     }
                     $attributeModel = $model;
                     $attributeLabels = array();
@@ -182,9 +182,9 @@
                         }
                     }
                     $s .= join(' ', $attributeLabels);
-                    $s .= ' ' . Yii::t('Default', 'from') . ' ';
+                    $s .= ' ' . Zurmo::t('ZurmoModule', 'from') . ' ';
                     $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $oldValue, $format) . ' ';
-                    $s .= Yii::t('Default', 'to') . ' ';
+                    $s .= Zurmo::t('ZurmoModule', 'to') . ' ';
                     $s .= AuditUtil::stringifyValue($attributeModel, $attributeName, $newValue, $format);
                     break;
             }
@@ -256,7 +256,7 @@
                             'ZURMO_API_REQUEST_TYPE: REST',
                 );
                 $data = array(
-                            'zurmoToken' => ZurmoModule::getZurmoToken(),
+                            'zurmoToken' => ZURMO_TOKEN,
                             'zurmoVersion' => VERSION,
                             'serializedData' => ''
                 );
@@ -296,37 +296,6 @@
                 }
                 self::setLastAttemptedInfoUpdateTimeStamp();
             }
-        }
-
-        /**
-         * Get the global configuration value - Zurmo token which is used to indentify installation.
-         * @return string - $zurmoToken.
-         */
-        public static function getZurmoToken()
-        {
-            if (null != $zurmoToken = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'zurmoToken'))
-            {
-                return $zurmoToken;
-            }
-            else
-            {
-                $zurmoToken = self::setZurmoToken();
-                return $zurmoToken;
-            }
-        }
-
-        /**
-         * Set Zurmo token.
-         */
-        public static function setZurmoToken($zurmoToken = null)
-        {
-            if (!isset($zurmoToken) || !is_int($zurmoToken))
-            {
-                $zurmoToken = mt_rand( 1000000000 , 9999999999 );
-            }
-
-            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'zurmoToken', $zurmoToken);
-            return $zurmoToken;
         }
     }
 ?>

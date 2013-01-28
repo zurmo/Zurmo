@@ -80,7 +80,7 @@
 
         public function getTitle()
         {
-            return Yii::t('Default', 'Currencies: List');
+            return Zurmo::t('ZurmoModule', 'Currencies: List');
         }
 
         /**
@@ -97,10 +97,10 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Code') . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Rate to') . '&#160;' .
+            $content .= '<th>' . Zurmo::t('ZurmoModule', 'Code') . '</th>';
+            $content .= '<th>' . Zurmo::t('ZurmoModule', 'Rate to') . '&#160;' .
                         Yii::app()->currencyHelper->getBaseCode(). ' ' . $this->renderLastUpdatedHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Remove') . '</th>';
+            $content .= '<th>' . Zurmo::t('ZurmoModule', 'Remove') . '</th>';
             $content .= '</tr>';
             foreach ($this->currencies as $currency)
             {
@@ -112,11 +112,11 @@
                 $content .= '<td>';
                 if (count($this->currencies) == 1 || CurrencyValue::isCurrencyInUseById($currency->id))
                 {
-                    $content .= Yii::t('Default', 'Currency in use.');
+                    $content .= Zurmo::t('ZurmoModule', 'Currency in use.');
                 }
                 else
                 {
-                    $content .= ZurmoHtml::link(Yii::t('Default', 'Remove'),
+                    $content .= ZurmoHtml::link(Zurmo::t('ZurmoModule', 'Remove'),
                       Yii::app()->createUrl($route, array('id' => $currency->id)), array('class' => 'z-link'));
                 }
                 $content .= '</td>';
@@ -134,7 +134,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'  => 'SaveButton',
-                                  'label' => "eval:Yii::t('Default', 'Update')",
+                                  'label' => "eval:Zurmo::t('ZurmoModule', 'Update')",
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),
                      ),
@@ -158,11 +158,11 @@
 
         protected static function renderLastUpdatedHeaderContent()
         {
-            $content = Yii::t('Default', 'Last Updated') . ': ';
+            $content = Zurmo::t('ZurmoModule', 'Last Updated') . ': ';
             $lastAttempedDateTime = Yii::app()->currencyHelper->getLastAttemptedRateUpdateDateTime();
             if ($lastAttempedDateTime == null)
             {
-                $content .= Yii::t('Default', 'Never');
+                $content .= Zurmo::t('ZurmoModule', 'Never');
             }
             else
             {
@@ -173,8 +173,8 @@
 
         protected static function renderActiveHeaderContent()
         {
-            $title       = Yii::t('Default', 'Active currencies can be used when creating new records and as a default currency for a user.');
-            $content     = Yii::t('Default', 'Active');
+            $title       = Zurmo::t('ZurmoModule', 'Active currencies can be used when creating new records and as a default currency for a user.');
+            $content     = Zurmo::t('ZurmoModule', 'Active');
             $content    .= '<span id="active-currencies-tooltip" class="tooltip"  title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-currencies-tooltip");

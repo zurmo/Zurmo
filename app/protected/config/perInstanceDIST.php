@@ -52,4 +52,5 @@
     {
         require_once INSTANCE_ROOT . '/protected/config/perInstanceConfig.php';
     }
+    define('ZURMO_TOKEN', 'defaultValue');
 ?>

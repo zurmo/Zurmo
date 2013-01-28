@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} Zurmo early morning login|{n} Zurmo early morning logins',
+            return Zurmo::t('GamificationModule', '{n} Zurmo early morning login|{n} Zurmo early morning logins',
                           array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 

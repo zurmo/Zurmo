@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Import');
+            return Zurmo::t('ImportModule', 'Import');
         }
     }
 ?>

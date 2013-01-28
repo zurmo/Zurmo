@@ -38,7 +38,6 @@
                 'rules' => array(
                     array('boolean', 'required'),
                     array('boolean', 'boolean'),
-                    array('boolean', 'type',      'type' => 'boolean'),
                     array('boolean', 'numerical', 'min'  => 0, 'max' => 1),
 
                     array('integer', 'required'),

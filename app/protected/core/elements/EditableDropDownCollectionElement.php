@@ -153,7 +153,7 @@
 
         protected function renderRemoveLink()
         {
-            return ZurmoHtml::link( ZurmoHtml::tag('span', array(), Yii::t('Default', 'Remove')), '#',
+            return ZurmoHtml::link( ZurmoHtml::tag('span', array(), Zurmo::t('Core', 'Remove')), '#',
                                     array('class' => 'remove-sortable-item-link'));
         }
 
@@ -172,7 +172,7 @@
             $content .= '<div id="' . $this->attribute . '_AddInput_em_" class="errorMessage" style="display:none"></div>';
             $content .= '</td></tr>';
             $content .= '<tr><td>';
-            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Add Item')), '#', array('id' => $this->attribute . '_AddInputButton'));
+            $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Add Item')), '#', array('id' => $this->attribute . '_AddInputButton'));
             $content .= '</td></tr>';
             $content .= '</tbody>';
             $content .= '</table>';
@@ -204,7 +204,7 @@
                         if ($('#" . $this->attribute . "_AddInput').val()=='')
                         {
                             $('#" . $this->attribute . "_AddInput').addClass($.fn.yiiactiveform.getSettings('#edit-form').errorCssClass);
-                            $('#" . $this->attribute . "_AddInput_em_').html('" . Yii::t('Default', 'You must enter a value') . "').show();
+                            $('#" . $this->attribute . "_AddInput_em_').html('" . Zurmo::t('Core', 'You must enter a value') . "').show();
                             return false;
                         }
                         else
@@ -399,7 +399,7 @@
             $modelLabelAttributeLabelsData =  $this->model->getModelPluralNameAndAttributeLabelsThatUseCollectionData();
             if (count($modelLabelAttributeLabelsData) > 1)
             {
-                $message = Yii::t('Default', 'This pick-list is used by more than one module.');
+                $message = Zurmo::t('Core', 'This pick-list is used by more than one module.');
                 foreach ($modelLabelAttributeLabelsData as $modelLabel => $attributeLabel)
                 {
                     $message .= '<br/>' . $modelLabel . '&#160;-&#160;' . $attributeLabel;
@@ -415,7 +415,7 @@
             {
                 return;
             }
-            $message = Yii::t('Default', 'Some values cannot be removed because they are currently in use. Try changing the records that use them first.');
+            $message = Zurmo::t('Core', 'Some values cannot be removed because they are currently in use. Try changing the records that use them first.');
             $content  = HtmlNotifyUtil::renderHighlightBoxByMessage($message);
             return $content;
         }

@@ -41,9 +41,9 @@
         protected function getDropDownArray()
         {
             return array(
-                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID      => Yii::t('Default', 'Zurmo Id'),
-                RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID  => Yii::t('Default', 'Other Id'),
-                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME    => Yii::t('Default', 'Name'));
+                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID      => Zurmo::t('ImportModule', 'Zurmo Id'),
+                RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID  => Zurmo::t('ImportModule', 'Other Id'),
+                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME    => Zurmo::t('ImportModule', 'Name'));
         }
     }
 ?>

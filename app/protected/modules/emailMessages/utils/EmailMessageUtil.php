@@ -219,7 +219,7 @@
                                                                  'relatedId'             => $model->id,
                                                                  'relatedModelClassName' => get_class($model)));
                 $modalAjaxOptions  = ModalView::getAjaxOptionsForModalLink(
-                                     Yii::t('Default', 'Compose Email'), 'modalContainer', 'auto', 800,
+                                     Zurmo::t('EmailMessagesModule', 'Compose Email'), 'modalContainer', 'auto', 800,
                                                                     array(
                                                                         'my' => 'top',
                                                                         'at' => 'bottom',

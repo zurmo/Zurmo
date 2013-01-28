@@ -31,7 +31,7 @@
     {
         protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Missions');
+            return Zurmo::t('MissionsModule', 'Missions');
         }
     }
 ?>

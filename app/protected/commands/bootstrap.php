@@ -32,6 +32,11 @@
     $yii   = COMMON_ROOT   . "/../yii/framework/yii.php";
     // Debug is used per instance.
     $debug = INSTANCE_ROOT . '/protected/config/debug.php';
+    // Use the dist config file if per instance is not readable
+    if (!is_readable($debug))
+    {
+      $debug = INSTANCE_ROOT . '/protected/config/debugDIST.php';
+    }
     //Console configuration file
     $config = INSTANCE_ROOT . '/protected/config/console.php';
 

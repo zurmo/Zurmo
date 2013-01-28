@@ -79,11 +79,11 @@
         {
             return array(
                 LeadsModule::CONVERT_NO_ACCOUNT           =>
-                Yii::t('Default', 'Do not show AccountsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules()),
+                Zurmo::t('LeadsModule', 'Do not show AccountsModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules()),
                 LeadsModule::CONVERT_ACCOUNT_NOT_REQUIRED =>
-                Yii::t('Default', 'AccountsModuleSingularLabel Optional', LabelUtil::getTranslationParamsForAllModules()),
+                Zurmo::t('LeadsModule', 'AccountsModuleSingularLabel Optional', LabelUtil::getTranslationParamsForAllModules()),
                 LeadsModule::CONVERT_ACCOUNT_REQUIRED     =>
-                Yii::t('Default', 'AccountsModuleSingularLabel Required', LabelUtil::getTranslationParamsForAllModules()));
+                Zurmo::t('LeadsModule', 'AccountsModuleSingularLabel Required', LabelUtil::getTranslationParamsForAllModules()));
         }
     }
 ?>

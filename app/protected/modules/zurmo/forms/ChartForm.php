@@ -43,8 +43,8 @@
         public function attributeLabels()
         {
             return array(
-                'title' => Yii::t('Default', 'Title'),
-                'type'  => Yii::t('Default', 'Chart Type'),
+                'title' => Zurmo::t('ZurmoModule', 'Title'),
+                'type'  => Zurmo::t('ZurmoModule', 'Chart Type'),
             );
         }
 

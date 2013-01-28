@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'User');
+            return Zurmo::t('UsersModule', 'User');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A user field');
+            return Zurmo::t('UsersModule', 'A user field');
         }
 
         public function getAttributeTypeName()

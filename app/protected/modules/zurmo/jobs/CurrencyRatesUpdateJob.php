@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Currency Rates Update Job');
+           return Zurmo::t('ZurmoModule', 'Currency Rates Update Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a day, early in the morning.');
+            return Zurmo::t('ZurmoModule', 'Once a day, early in the morning.');
         }
 
         public function run()

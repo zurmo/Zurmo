@@ -59,7 +59,7 @@
                 assert('is_int($this->precision)');
                 if (($value - round($value, $this->precision)) != 0)
                 {
-                    $message = $this->tooPrecise !== null ? $this->tooPrecise : Yii::t('Default', '{attribute} is too precise (maximum decimal places is {precision}).');
+                    $message = $this->tooPrecise !== null ? $this->tooPrecise : Zurmo::t('Core', '{attribute} is too precise (maximum decimal places is {precision}).');
                     $this->addError($model, $attributeName, $message, array('{precision}' => $this->precision));
                 }
             }

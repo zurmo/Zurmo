@@ -39,37 +39,37 @@
 
         public static function getDefaultDraftName()
         {
-            return Yii::t('Default', 'Draft');
+            return Zurmo::t('EmailMessagesModule', 'Draft');
         }
 
         public static function getDefaultInboxName()
         {
-            return Yii::t('Default', 'Inbox');
+            return Zurmo::t('EmailMessagesModule', 'Inbox');
         }
 
         public static function getDefaultSentName()
         {
-            return Yii::t('Default', 'Sent');
+            return Zurmo::t('EmailMessagesModule', 'Sent');
         }
 
         public static function getDefaultOutboxName()
         {
-            return Yii::t('Default', 'Outbox');
+            return Zurmo::t('EmailMessagesModule', 'Outbox');
         }
 
         public static function getDefaultOutboxErrorName()
         {
-            return Yii::t('Default', 'Outbox Error');
+            return Zurmo::t('EmailMessagesModule', 'Outbox Error');
         }
 
         public static function getDefaultArchivedName()
         {
-            return Yii::t('Default', 'Archived');
+            return Zurmo::t('EmailMessagesModule', 'Archived');
         }
 
         public static function getDefaultArchivedUnmatchedName()
         {
-            return Yii::t('Default', 'Archived Unmatched');
+            return Zurmo::t('EmailMessagesModule', 'Archived Unmatched');
         }
 
         public static function getTranslatedFolderNameByType($type)
@@ -149,7 +149,7 @@
         {
             if (trim($this->name) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('EmailMessagesModule', '(Unnamed)');
             }
             return $this->name;
         }

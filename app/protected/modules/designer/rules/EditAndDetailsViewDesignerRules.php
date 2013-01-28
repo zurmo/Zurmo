@@ -35,7 +35,7 @@
 
         public function getDisplayName()
         {
-            return Yii::t('Default', 'Detail and Edit View');
+            return Zurmo::t('DesignerModule', 'Detail and Edit View');
         }
 
         public function getNonPlaceableLayoutAttributeNames()

@@ -70,7 +70,7 @@
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
                     ),
-                'hintText' => Yii::t('Default', 'Type name or email'),
+                'hintText' => Zurmo::t('EmailMessagesModule', 'Type name or email'),
                 'onAdd'    => $this->getOnAddContent(),
                 'onDelete' => $this->getOnDeleteContent(),
             ));
@@ -112,7 +112,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Recipients');
+            return Zurmo::t('EmailMessagesModule', 'Recipients');
         }
 
         public static function getModelAttributeNames()

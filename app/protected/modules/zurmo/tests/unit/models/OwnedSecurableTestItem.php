@@ -30,7 +30,7 @@
         {
             if (trim($this->member) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('ZurmoModule', '(Unnamed)');
             }
             return $this->member;
         }

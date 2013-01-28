@@ -62,7 +62,8 @@
             $content .= $this->renderTitleContent();
             $content .= '<div class="process-container-view">';
             $content .= "<h3>" . $this->allStepsMessage . '</h3>';
-            //$content .= $this->renderProgressBarContent();
+            $content .= '<div class="progressbar-wrapper"><span id="progress-percent">0&#37;</span>' .
+                        $this->renderProgressBarContent() . '</div>';
             $content .= '</div>';
             $content .= '<div id="' . $this->containerViewId . '" class="process-container-view">';
             $content .= $this->containedView->render();
@@ -77,9 +78,6 @@
             $cClipWidget->widget('zii.widgets.jui.CJuiProgressBar', array(
                 'id'         => $this->getProgressBarId(),
                 'value'      => 0,
-                'htmlOptions' => array(
-                    'style'   => 'height:20px;'
-                ),
             ));
             $cClipWidget->endClip();
             return  $cClipWidget->getController()->clips['ProgressBar'];

@@ -28,7 +28,7 @@
     {
         protected function getAfterFormLayoutTranslatedTitleContent()
         {
-            return Yii::t('Default', 'Tag Cloud Values');
+            return Zurmo::t('DesignerModule', 'Tag Cloud Values');
         }
     }
 ?>

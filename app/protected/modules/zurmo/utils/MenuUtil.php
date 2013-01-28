@@ -161,7 +161,7 @@
             $user            = Yii::app()->user->userModel;
             $modules         = Module::getModuleObjects();
             $createMenuItems = array(
-                        'label' => Yii::t('Default', 'Create'),
+                        'label' => Zurmo::t('ZurmoModule', 'Create'),
                         'url'   => null,
                         'items' => array());
             foreach ($modules as $module)
@@ -446,7 +446,7 @@
             {
                 foreach ($labelElements as $labelElement)
                 {
-                    $menuItems[$itemKey][$labelElement] = Yii::t( 'Default', $item[$labelElement], $translationParams);
+                    $menuItems[$itemKey][$labelElement] = Yii::t('Default', $item[$labelElement], $translationParams);
                 }
                 if (isset($item['items']))
                 {

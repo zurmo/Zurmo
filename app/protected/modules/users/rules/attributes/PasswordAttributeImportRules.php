@@ -36,7 +36,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Password');
+            return Zurmo::t('UsersModule', 'Password');
         }
 
         public function getRealModelAttributeNames()

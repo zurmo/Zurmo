@@ -75,13 +75,13 @@ EOD;
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
-            $messageStreamer->add(Yii::t('Default', 'Starting schema update process.'));
+            $messageStreamer->add(Zurmo::t('Commands', 'Starting schema update process.'));
             $messageLogger = new MessageLogger($messageStreamer);
             InstallUtil::runAutoBuildFromUpdateSchemaCommand($messageLogger);
             ReadPermissionsOptimizationUtil::rebuild();
             $endTime = microtime(true);
-            $messageStreamer->add(Yii::t('Default', 'Schema update complete.'));
-            $messageStreamer->add(Yii::t('Default', 'Total run time: {formattedTime} seconds.',
+            $messageStreamer->add(Zurmo::t('Commands', 'Schema update complete.'));
+            $messageStreamer->add(Zurmo::t('Commands', 'Total run time: {formattedTime} seconds.',
                                          array('{formattedTime}' => number_format(($endTime - $startTime), 3))));
         }
     }

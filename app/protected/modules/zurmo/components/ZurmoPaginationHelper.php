@@ -215,7 +215,6 @@
          * Also sets value as active state value by key.
          * @param $type - pagination type
          * @param $moduleName - optional. Module class name.
-         * @return $pageSize - integer.
          */
         public function setForCurrentUserByType($type, $value, $moduleName = null)
         {

@@ -61,8 +61,8 @@
         public function attributeLabels()
         {
             return array(
-                'avatarType'               => Yii::t('Default', 'Type'),
-                'customAvatarEmailAddress' => Yii::t('Default', 'Email Address'),
+                'avatarType'               => Zurmo::t('UsersModule', 'Type'),
+                'customAvatarEmailAddress' => Zurmo::t('UsersModule', 'Email Address'),
             );
         }
 
@@ -71,7 +71,7 @@
             if ($this->avatarType == User::AVATAR_TYPE_CUSTOM_EMAIL && $this->customAvatarEmailAddress == null)
             {
                  $this->addError('customAvatarEmailAddress',
-                    Yii::t('Default', 'You need to choose an email address.'));
+                    Zurmo::t('UsersModule', 'You need to choose an email address.'));
             }
         }
 

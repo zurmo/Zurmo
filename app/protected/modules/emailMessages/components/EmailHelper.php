@@ -271,7 +271,7 @@
                 $acceptedRecipients = $mailer->send();
                 if ($acceptedRecipients != $emailMessage->recipients->count())
                 {
-                    $content = Yii::t('Default', 'Response from Server') . "\n";
+                    $content = Zurmo::t('EmailMessagesModule', 'Response from Server') . "\n";
                     foreach ($mailer->getSendResponseLog() as $logMessage)
                     {
                         $content .= $logMessage . "\n";

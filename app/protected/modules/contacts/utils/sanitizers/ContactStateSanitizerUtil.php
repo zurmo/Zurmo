@@ -71,7 +71,7 @@
                     $states = ContactState::getByName($value);
                     if (count($states) > 1)
                     {
-                        throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is not unique and is invalid.'));
+                        throw new InvalidValueToSanitizeException(Zurmo::t('ContactsModule', 'The status specified is not unique and is invalid.'));
                     }
                     elseif (count($states) == 0)
                     {
@@ -86,13 +86,13 @@
                 $startingState = ContactsUtil::getStartingState();
                 if (!static::resolvesValidStateByOrder($state->order, $startingState->order))
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is invalid.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ContactsModule', 'The status specified is invalid.'));
                 }
                 return $state;
             }
             catch (NotFoundException $e)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified does not exist.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ContactsModule', 'The status specified does not exist.'));
             }
         }
 

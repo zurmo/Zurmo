@@ -63,7 +63,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processRead((int)$params['id']);
@@ -89,7 +89,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['data']))
             {
-                $message = Yii::t('Default', 'Please provide data.');
+                $message = Zurmo::t('ZurmoModule', 'Please provide data.');
                 throw new ApiException($message);
             }
             $result    =  $this->processCreate($params['data']);
@@ -105,7 +105,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processUpdate((int)$params['id'], $params['data']);
@@ -121,7 +121,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processDelete((int)$params['id']);
@@ -173,7 +173,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 
@@ -364,13 +364,13 @@
                     }
                     else
                     {
-                        $message = Yii::t('Default', 'Could not save relation.');
+                        $message = Zurmo::t('ZurmoModule', 'Could not save relation.');
                         throw new ApiException($message);
                     }
                 }
                 else
                 {
-                    $message = Yii::t('Default', 'Could not use this API call for HAS_ONE relationships.');
+                    $message = Zurmo::t('ZurmoModule', 'Could not use this API call for HAS_ONE relationships.');
                     throw new ApiException($message);
                 }
             }
@@ -415,13 +415,13 @@
                     }
                     else
                     {
-                        $message = Yii::t('Default', 'Could not remove relation.');
+                        $message = Zurmo::t('ZurmoModule', 'Could not remove relation.');
                         throw new ApiException($message);
                     }
                 }
                 else
                 {
-                    $message = Yii::t('Default', 'Could not use this API call for HAS_ONE relationships.');
+                    $message = Zurmo::t('ZurmoModule', 'Could not use this API call for HAS_ONE relationships.');
                     throw new ApiException($message);
                 }
             }
@@ -475,7 +475,7 @@
                 else
                 {
                     $errors = $model->getErrors();
-                    $message = Yii::t('Default', 'Model was not created.');
+                    $message = Zurmo::t('ZurmoModule', 'Model was not created.');
                     $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, $errors);
                 }
             }
@@ -511,7 +511,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 
@@ -540,7 +540,7 @@
                         }
                         catch (Exception $e)
                         {
-                            $message = Yii::t('Default', 'Model was updated, but there were issues with relations.');
+                            $message = Zurmo::t('ZurmoModule', 'Model was updated, but there were issues with relations.');
                             $message .= ' ' . $e->getMessage();
                             throw new ApiException($message);
                         }
@@ -554,7 +554,7 @@
                 else
                 {
                     $errors = $model->getErrors();
-                    $message = Yii::t('Default', 'Model was not updated.');
+                    $message = Zurmo::t('ZurmoModule', 'Model was not updated.');
                     // To-Do: How to pass $errors and $message to exception
                     //throw new ApiException($message);
                     $result = new ApiResult(ApiResponse::STATUS_FAILURE, null, $message, $errors);
@@ -597,7 +597,7 @@
                                 }
                                 catch (Exception $e)
                                 {
-                                    $message = Yii::t('Default', 'The related model ID specified was invalid.');
+                                    $message = Zurmo::t('ZurmoModule', 'The related model ID specified was invalid.');
                                     throw new NotFoundException($message);
                                 }
 
@@ -611,14 +611,14 @@
                                 }
                                 else
                                 {
-                                    $message = Yii::t('Default', 'Unsupported action.');
+                                    $message = Zurmo::t('ZurmoModule', 'Unsupported action.');
                                     throw new NotSupportedException($message);
                                 }
                             }
                         }
                         else
                         {
-                            $message = Yii::t('Default', 'You can add relations only for HAS_MANY and MANY_MANY relations.');
+                            $message = Zurmo::t('ZurmoModule', 'You can add relations only for HAS_MANY and MANY_MANY relations.');
                             throw new NotSupportedException($message);
                         }
                     }
@@ -649,7 +649,7 @@
             }
             catch (NotFoundException $e)
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
 

@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Overall');
+            return Zurmo::t('GamificationModule', 'Overall');
         }
 
         protected function getDefaultRoute()

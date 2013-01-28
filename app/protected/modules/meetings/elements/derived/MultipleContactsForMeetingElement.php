@@ -59,7 +59,7 @@
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
                     ),
-                'hintText' => Yii::t('Default', 'Type a ContactsModuleSingularLowerCaseLabel ' .
+                'hintText' => Zurmo::t('MeetingsModule', 'Type a ContactsModuleSingularLowerCaseLabel ' .
                                                 'or LeadsModuleSingularLowerCaseLabel: name or email address',
                                 LabelUtil::getTranslationParamsForAllModules())
             ));
@@ -79,12 +79,12 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Attendees'));
+            return Yii::app()->format->text(Zurmo::t('MeetingsModule', 'Attendees'));
         }
 
          public static function getDisplayName()
         {
-            return Yii::t('Default', 'Related ContactsModulePluralLabel and LeadsModulePluralLabel',
+            return Zurmo::t('MeetingsModule', 'Related ContactsModulePluralLabel and LeadsModulePluralLabel',
                        LabelUtil::getTranslationParamsForAllModules());
         }
 

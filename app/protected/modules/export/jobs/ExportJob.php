@@ -36,7 +36,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Export Job');
+           return Zurmo::t('ExportModule', 'Export Job');
         }
 
         /**
@@ -49,7 +49,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 2 minutes.');
+            return Zurmo::t('ExportModule', 'Every 2 minutes.');
         }
 
         /**
@@ -117,7 +117,7 @@
                             $exportItem->exportFileModel = $exportFileModel;
                             $exportItem->save();
                             $message                    = new NotificationMessage();
-                            $message->htmlContent       = Yii::t('Default', 'Export of {fileName} requested on {dateTime} is completed. <a href="{url}">Click here</a> to download file!',
+                            $message->htmlContent       = Zurmo::t('ExportModule', 'Export of {fileName} requested on {dateTime} is completed. <a href="{url}">Click here</a> to download file!',
                                 array(
                                     '{fileName}' => $exportItem->exportFileName,
                                     '{url}'      => Yii::app()->createUrl('export/default/download', array('id' => $exportItem->id)),

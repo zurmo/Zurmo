@@ -70,7 +70,7 @@
                         'elements' => array(
                             array('type'           => 'EditLink',
                                 'resolveToDisplay' => 'canModifyName',
-                                'label'            => "eval:Yii::t('Default', 'Edit')", //was GENERAL..
+                                'label'            => "eval:Zurmo::t('ZurmoModule', 'Edit')", //was GENERAL..
                                 'htmlOptions' => array('class' => 'icon-edit')
                             ),
                             array(

@@ -71,7 +71,7 @@
          */
         protected function renderContent()
         {
-            return $this->renderTreeMenu('group', 'groups', Yii::t('Default', 'Group'));
+            return $this->renderTreeMenu('group', 'groups', Zurmo::t('ZurmoModule', 'Group'));
         }
 
         protected function makeTreeMenuNodeLink($label, $action, $groupId)

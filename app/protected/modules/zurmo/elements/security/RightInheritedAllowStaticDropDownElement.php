@@ -29,9 +29,9 @@
         protected function getDropDownArray()
         {
             return array(
-                Right::DENY  => Yii::t('Default', 'Deny'),
-                ''           => Yii::t('Default', 'Inherited - Allow'),
-                Right::ALLOW => Yii::t('Default', 'Allow'),
+                Right::DENY  => Zurmo::t('ZurmoModule', 'Deny'),
+                ''           => Zurmo::t('ZurmoModule', 'Inherited - Allow'),
+                Right::ALLOW => Zurmo::t('ZurmoModule', 'Allow'),
             );
         }
     }

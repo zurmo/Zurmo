@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Tag Cloud');
+            return Zurmo::t('DesignerModule', 'Tag Cloud');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A tag cloud');
+            return Zurmo::t('DesignerModule', 'A tag cloud');
         }
 
         public function getAttributeTypeName()

@@ -39,11 +39,11 @@
             $value = $this->model->{$this->attribute};
             if ($value == Right::DENY || $value == Right::NONE)
             {
-                return Yii::app()->format->text(Yii::t('Default', 'Deny'));
+                return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Deny'));
             }
             elseif ($value == Right::ALLOW)
             {
-                return Yii::app()->format->text(Yii::t('Default', 'Allow'));
+                return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Allow'));
             }
             throw new NotSupportedException();
         }

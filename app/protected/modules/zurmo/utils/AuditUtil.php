@@ -177,7 +177,7 @@
             {
                 if ($value === null || $value == '')
                 {
-                    $value = Yii::t('Default', '(None)');
+                    $value = Zurmo::t('ZurmoModule', '(None)');
                 }
                 $s = $value;
             }
@@ -190,7 +190,7 @@
                 assert('is_array($value)');
                 if ($value[1] < 0)
                 {
-                    $s = Yii::t('Default', '(None)');
+                    $s = Zurmo::t('ZurmoModule', '(None)');
                 }
                 else
                 {
@@ -206,7 +206,7 @@
                     }
                     if ($value[2] === null || $value == '')
                     {
-                        $s .= Yii::t('Default', '(None)');
+                        $s .= Zurmo::t('ZurmoModule', '(None)');
                     }
                     else
                     {

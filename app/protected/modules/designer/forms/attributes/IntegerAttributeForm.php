@@ -34,12 +34,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Integer');
+            return Zurmo::t('DesignerModule', 'Integer');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'An integer field');
+            return Zurmo::t('DesignerModule', 'An integer field');
         }
 
         public function getAttributeTypeName()

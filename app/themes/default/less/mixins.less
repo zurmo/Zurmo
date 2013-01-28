@@ -54,6 +54,7 @@
     #gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );
 }
 
+
 .box-sizing(){
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -220,6 +221,20 @@ a.z-button {
 .zLink:hover, .z-link:hover{
     color:#fff !important;
     text-decoration:underline;
+}
+
+.z-action-link{
+   .smaller();
+   .opacity(50);
+   text-decoration: none;
+   &:hover{
+       .opacity(100);
+       text-decoration: none;
+   }
+}
+.z-action-link-active{
+    .opacity(100);
+    
 }
 
 // Gradients

@@ -593,7 +593,10 @@
             $this->assertFalse(strpos($content, 'Conversion is set to require an account.  Currently you do not have access to the accounts module.') === false);
         }
 
-        public function testRegularUserMassDelete()
+         /**
+         * @deletes selected leads.
+         */
+        public function testRegularMassDeleteActionsForSelectedIds()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $confused = User::getByUsername('confused');
@@ -603,32 +606,90 @@
             //Load MassDelete view for the 3 leads.
             $leads = Contact::getAll();
             $this->assertEquals(8, count($leads));
+
             $lead1 = LeadTestHelper::createLeadbyNameForOwner('leadDelete1', $confused);
             $lead2 = LeadTestHelper::createLeadbyNameForOwner('leadDelete2', $confused);
             $lead3 = LeadTestHelper::createLeadbyNameForOwner('leadDelete3', $nobody);
+            $lead4 = LeadTestHelper::createLeadbyNameForOwner('leadDelete4', $confused);
+            $lead5 = LeadTestHelper::createLeadbyNameForOwner('leadDelete5', $confused);
+            $lead6 = LeadTestHelper::createLeadbyNameForOwner('leadDelete6', $nobody);
+
             $selectedIds = $lead1->id . ',' . $lead2->id . ',' . $lead3->id ;    // Not Coding Standard
             $this->setGetArray(array('selectedIds' => $selectedIds, 'selectAll' => ''));  // Not Coding Standard
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDelete');
             $this->assertFalse(strpos($content, '<strong>3</strong>&#160;Leads selected for removal') === false);
 
-            //Deleting 3 leads
+            //calculating leads after adding 4 new records
+            $leads = Contact::getAll();
+            $this->assertEquals(14, count($leads));
+            //Deleting 6 leads for pagination scenario
+            //Run Mass Delete using progress save for page1
+            $selectedIds = $lead1->id . ',' . $lead2->id . ',' . // Not Coding Standard
+                           $lead3->id . ',' . $lead4->id . ',' . // Not Coding Standard
+                           $lead5->id . ',' . $lead6->id;        // Not Coding Standard
             $this->setGetArray(array(
-                'selectedIds' => $selectedIds, // Not Coding Standard
+                'selectedIds' => $selectedIds,
                 'selectAll' => '',
                 'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => $lead3->id));
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('leads/default/massDelete');
-            //Deleting all contacts
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $content = $this->runControllerWithExitExceptionAndGetContent('leads/default/massDelete');
+            $leads = Contact::getAll();
+            $this->assertEquals(9, count($leads));
+
+            //Run Mass Delete using progress save for page2
+            $selectedIds = $lead1->id . ',' . $lead2->id . ',' . // Not Coding Standard
+                           $lead3->id . ',' . $lead4->id . ',' . // Not Coding Standard
+                           $lead5->id . ',' . $lead6->id;        // Not Coding Standard
+            $this->setGetArray(array(
+                'selectedIds' => $selectedIds,
+                'selectAll' => '',
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
+            $leads = Contact::getAll();
+            $this->assertEquals(8, count($leads));
+        }
+
+         /**
+         *Test Bug with mass delete and multiple pages when using select all
+         */
+        public function testRegularMassDeletePagesProperlyAndRemovesAllSelected()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $confused = User::getByUsername('confused');
+            $nobody = User::getByUsername('nobody');
+
+            //Load MassDelete view for the 8 leads.
+            $leads = Contact::getAll();
+            $this->assertEquals(8, count($leads));
+             //Deleting all leads
+
+            //mass Delete pagination scenario
+            //Run Mass Delete using progress save for page1
             $this->setGetArray(array(
                 'selectAll' => '1',
                 'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => $lead1->id));
+            $this->setPostArray(array('selectedRecordCount' => 8));
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('leads/default/massDelete');
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            $content = $this->runControllerWithExitExceptionAndGetContent('leads/default/massDelete');
+            $leads = Contact::getAll();
+            $this->assertEquals(3, count($leads));
+
+           //Run Mass Delete using progress save for page2
+            $this->setGetArray(array(
+                'selectAll' => '1',
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 8));
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
+
+            $leads = Contact::getAll();
+            //BelinaLead1 was converted to a contact, so she is not removed
+            $this->assertFalse(strpos(serialize($leads), 'BelinaLead1') === false);
+            $this->assertEquals(1, count($leads));
         }
     }
 ?>

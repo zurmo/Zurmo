@@ -90,10 +90,10 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} value(s) are too short for this field. ';
-                $label  .= 'These rows will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label,
-                                  array('{count}' => $invalid, '{length}' => $this->minLength)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) are too short for this field. ' .
+                                             'These rows will be skipped upon import.',
+                                             array('{count}' => $invalid, '{length}' => $this->minLength));
+                $this->addMessage($label);
             }
         }
     }

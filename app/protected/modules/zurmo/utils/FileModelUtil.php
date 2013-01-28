@@ -75,7 +75,7 @@
             $file->size           = $uploadedFile->getSize();
             if (!$file->save())
             {
-                throw new FailedFileUploadException(Yii::t('Default', 'File failed to upload. The file is empty.'));
+                throw new FailedFileUploadException(Zurmo::t('ZurmoModule', 'File failed to upload. The file is empty.'));
             }
             return $file;
         }

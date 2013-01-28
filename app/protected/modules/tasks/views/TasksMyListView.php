@@ -38,7 +38,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('TasksModule', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true, 'completed' => false),
                 ),
                 'global' => array(
@@ -94,7 +94,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('TasksModule', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()

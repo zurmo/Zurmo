@@ -33,7 +33,7 @@
             if ($currencyValue->id > 0)
             {
                 $data[$this->model->getAttributeLabel($this->attribute)] = $currencyValue->value;
-                $data[$this->model->getAttributeLabel($this->attribute) . ' ' . Yii::t('Default', 'Currency')] = $currencyValue->currency->code;
+                $data[$this->model->getAttributeLabel($this->attribute) . ' ' . Zurmo::t('ExportModule', 'Currency')] = $currencyValue->currency->code;
             }
             else
             {

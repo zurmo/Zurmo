@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Conversation');
+            return Zurmo::t('ConversationsModule', 'Conversation');
         }
 
         protected function getDefaultRoute()

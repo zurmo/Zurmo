@@ -32,7 +32,7 @@
         public static function renderHighlightBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
-            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-info'), '&#160' ) . $message;
+            $content   = ZurmoHtml::wrapLabel('&#160', 'ui-icon ui-icon-info') . $message;
             $innerContent = ZurmoHtml::tag('p', array(), $content );
             $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-highlight ui-corner-all'), $innerContent );
             return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
@@ -41,8 +41,8 @@
         public static function renderAlertBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
-            $alertMessage = '<strong>' . Yii::t('Default', 'Alert') . ':</strong> ' . $message ;
-            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-alert'), '&#160' ) . $alertMessage;
+            $alertMessage = '<strong>' . Zurmo::t('ZurmoModule', 'Alert') . ':</strong> ' . $message ;
+            $content   = ZurmoHtml::wrapLabel('&#160', 'ui-icon ui-icon-alert') . $alertMessage;
             $innerContent = ZurmoHtml::tag('p', array(), $content );
             $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-highlight ui-corner-all'), $innerContent );
             return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
@@ -51,7 +51,7 @@
         public static function renderWarningBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
-            $content   = ZurmoHtml::tag('span', array('class' => 'ui-icon ui-icon-info'), '&#160' ) . $message;
+            $content   = ZurmoHtml::wrapLabel('&#160', 'ui-icon ui-icon-info') . $message;
             $innerContent = ZurmoHtml::tag('p', array(), $content );
             $innerDiv  = ZurmoHtml::tag('div', array('class' => 'ui-state-warning ui-corner-all'), $innerContent );
             return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );

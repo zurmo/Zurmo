@@ -151,7 +151,7 @@
                                                                          'latitude'      => $addressModel->latitude,
                                                                          'longitude'     => $addressModel->longitude));
             $id           = $this->getEditableInputId($this->attribute, 'MapLink');
-            $content      = ZurmoHtml::ajaxLink(Yii::t('Default', 'map'), $mapRenderUrl,
+            $content      = ZurmoHtml::ajaxLink(Zurmo::t('ZurmoModule', 'map'), $mapRenderUrl,
                                 $this->resolveAjaxOptionsForMapLink(),
                                 array('id' => $id, 'class' => 'map-link')
             );

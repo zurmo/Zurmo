@@ -36,6 +36,7 @@
          */
         protected static function makeMetadataFromData($data)
         {
+            $data            = static::resolveModuleLabelAndSort($data);
             $calledClassName = get_called_class();
             $panelCount      = 0;
             $metadata = array(
@@ -48,10 +49,10 @@
                     ),
                 )
             );
-            foreach ($data as $moduleClassName => $moduleItems)
+            foreach ($data as $moduleClassName => $moduleLabelAndItems)
             {
                 $elements = array();
-                foreach ($moduleItems as $item => $itemInformation)
+                foreach ($moduleLabelAndItems['items'] as $item => $itemInformation)
                 {
                     $element = $calledClassName::getElementInformation(
                         $moduleClassName,
@@ -64,8 +65,7 @@
                 }
                 if (count($elements) > 0)
                 {
-                    $metadata['global']['panels'][$panelCount]['title']      =
-                        $moduleClassName::getModuleLabelByTypeAndLanguage('Plural');
+                    $metadata['global']['panels'][$panelCount]['title']      = $moduleLabelAndItems['label'];
                     foreach ($elements as $element)
                     {
                         $metadata['global']['panels'][$panelCount]['rows'][] = $calledClassName::getRowByElement($element);
@@ -74,6 +74,22 @@
                 }
             }
             return $metadata;
+        }
+
+        protected static function resolveModuleLabelAndSort($data)
+        {
+            $classAndLabels = array();
+            foreach ($data as $moduleClassName => $moduleItems)
+            {
+                $classAndLabels[$moduleClassName] = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural');
+            }
+            asort($classAndLabels);
+            $sortedData = array();
+            foreach ($classAndLabels as $moduleClassName => $label)
+            {
+                $sortedData[$moduleClassName] = array('label' => $label, 'items' => $data[$moduleClassName]);
+            }
+            return $sortedData;
         }
     }
 ?>

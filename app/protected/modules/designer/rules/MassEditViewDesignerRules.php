@@ -58,7 +58,7 @@
 
         public function getDisplayName()
         {
-            return Yii::t('Default', 'Mass Edit View');
+            return Zurmo::t('DesignerModule', 'Mass Edit View');
         }
 
         public function getSavableMetadataRules()

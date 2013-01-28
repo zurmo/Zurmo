@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Notifications', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('NotificationsModule', 'Notifications', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

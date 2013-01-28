@@ -77,7 +77,7 @@
 
         protected function getArray()
         {
-            $data = array(LatestActivitiesConfigurationForm::FILTERED_BY_ALL => Yii::t('Default', 'All Activities'));
+            $data = array(LatestActivitiesConfigurationForm::FILTERED_BY_ALL => Zurmo::t('ActivitiesModule', 'All Activities'));
             foreach ($this->model->mashableModelClassNamesAndDisplayLabels as $modelClassName => $displayLabel)
             {
                 $data[$modelClassName] = $displayLabel;

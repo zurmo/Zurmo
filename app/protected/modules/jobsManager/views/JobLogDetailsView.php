@@ -33,7 +33,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type' => 'CancelToListLink',
-                                  'label' => "eval:Yii::t('Default', 'Return to Job Manager')"),
+                                  'label' => "eval:Zurmo::t('JobsManagerModule', 'Return to Job Manager')"),
                         ),
                     ),
                     'derivedAttributeTypes' => array(

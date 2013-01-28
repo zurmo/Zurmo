@@ -29,8 +29,8 @@
         protected function getDropDownArray()
         {
             return array(
-                0 => Yii::t('Default', 'No'),
-                1 => Yii::t('Default', 'Yes'),
+                0 => Zurmo::t('Core', 'No'),
+                1 => Zurmo::t('Core', 'Yes'),
             );
         }
     }

@@ -95,14 +95,14 @@
         {
             $emailMessage              = new EmailMessage();
             $emailMessage->owner       = Yii::app()->user->userModel;
-            $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
+            $emailMessage->subject     = Zurmo::t('EmailMessagesModule', 'A test email from Zurmo');
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = EmailNotificationUtil::
                                             resolveNotificationTextTemplate(
-                                            Yii::t('Default', 'A test text message from Zurmo.'));
+                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.'));
             $emailContent->htmlContent = EmailNotificationUtil::
                                             resolveNotificationHtmlTemplate(
-                                            Yii::t('Default', 'A test text message from Zurmo.'));
+                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.'));
             $emailMessage->content     = $emailContent;
             $sender                    = new EmailMessageSender();
             $sender->fromAddress       = $emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);

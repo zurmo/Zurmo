@@ -63,7 +63,7 @@
                     'compareAttribute' => 'minValue',
                     'operator' => '>',
                     'allowEmpty' => true,
-                    'message' => Yii::t('Default', 'Maximum Value must be larger than the minimum value')
+                    'message' => Zurmo::t('DesignerModule', 'Maximum Value must be larger than the minimum value')
                 ),
             ));
         }
@@ -71,8 +71,8 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'minValue' => Yii::t('Default', 'Minimum Value'),
-                'maxValue' => Yii::t('Default', 'Maximum Value'),
+                'minValue' => Zurmo::t('DesignerModule', 'Minimum Value'),
+                'maxValue' => Zurmo::t('DesignerModule', 'Maximum Value'),
             ));
         }
     }

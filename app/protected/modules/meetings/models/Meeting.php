@@ -32,7 +32,7 @@
             {
                 if (trim($this->name) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('MeetingsModule', '(Unnamed)');
                 }
                 return $this->name;
             }

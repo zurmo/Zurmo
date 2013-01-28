@@ -50,7 +50,7 @@
                 {
                     $dataMaker = new $defaultDataMakerClassName();
                     $dataMaker->make();
-                    $messageLogger->addInfoMessage(Yii::t('Default', 'Default data loaded for {moduleName}',
+                    $messageLogger->addInfoMessage(Zurmo::t('Core', 'Default data loaded for {moduleName}',
                                                    array('{moduleName}' =>
                                                    $module::getModuleLabelByTypeAndLanguage('Plural'))));
                 }

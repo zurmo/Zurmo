@@ -64,20 +64,20 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'contactStatesData'      => Yii::t('Default', 'Contact Statuses'),
-                'startingStateOrder'     => Yii::t('Default', 'Starting Status'),
-                'contactStatesLablsa'    => Yii::t('Default', 'Contact Status Translated Labels'),
+                'contactStatesData'      => Zurmo::t('ContactsModule', 'Contact Statuses'),
+                'startingStateOrder'     => Zurmo::t('ContactsModule', 'Starting Status'),
+                'contactStatesLablsa'    => Zurmo::t('ContactsModule', 'Contact Status Translated Labels'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Contact Stage');
+            return Zurmo::t('ContactsModule', 'Contact Stage');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'The contact stage field');
+            return Zurmo::t('ContactsModule', 'The contact stage field');
         }
 
         public function getAttributeTypeName()
@@ -115,7 +115,7 @@
             if (array_diff_key( $data , array_unique( $data )) )
             {
                 $this->addError('contactStatesData',
-                    Yii::t('Default', 'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named',
+                    Zurmo::t('ContactsModule', 'Each ContactsModuleSingularLowerCaseLabel state must be uniquely named',
                                                         LabelUtil::getTranslationParamsForAllModules()));
             }
             foreach ($data as $order => $name)

@@ -60,7 +60,7 @@
         {
             if (!Yii::app()->isApplicationInMaintenanceMode())
             {
-                $message = Yii::t('Default', 'Please set $maintenanceMode = true in perInstance.php config file.');
+                $message = Zurmo::t('InstallModule', 'Please set $maintenanceMode = true in perInstance.php config file.');
                 $messageView = new AccessFailureView($message);
                 $view        = new AccessFailurePageView($messageView);
                 echo $view->render();
@@ -93,7 +93,7 @@
             $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(4096);
-            $messageStreamer->add(Yii::t('Default', 'Starting upgrade process.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Starting upgrade process.'));
             UpgradeUtil::runPart1($messageStreamer);
             ForgetAllCacheUtil::forgetAllCaches();
             echo ZurmoHtml::script('$("#progress-table").hide(); $("#upgrade-step-two").show();');
@@ -116,7 +116,7 @@
             $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(4096);
-            $messageStreamer->add(Yii::t('Default', 'Starting upgrade process.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Starting upgrade process.'));
 
             UpgradeUtil::runPart2($messageStreamer);
             ForgetAllCacheUtil::forgetAllCaches();

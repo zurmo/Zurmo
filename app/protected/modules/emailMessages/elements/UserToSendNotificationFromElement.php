@@ -55,7 +55,7 @@
 
         protected static function renderTooltipContent()
         {
-            $title       = Yii::t('Default', 'Zurmo sends out system notifications.  The notifications must appear ' .
+            $title       = Zurmo::t('EmailMessagesModule', 'Zurmo sends out system notifications.  The notifications must appear ' .
                                              'as coming from a super administrative user.');
             $content     = '<span id="send-notifications-from-user-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= '?</span>';

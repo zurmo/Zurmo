@@ -38,7 +38,7 @@
             assert('is_array($leaderboardData)');
             assert('is_string($activeActionElementType)');
             parent::__construct(2, 1);
-            $this->setView(new TitleBarView(Yii::t('Default', 'Leaderboard'), null, 1), 0, 0);
+            $this->setView(new TitleBarView(Zurmo::t('GamificationModule', 'Leaderboard'), null, 1), 0, 0);
             $this->setView(new LeaderboardView($controllerId, $moduleId, $leaderboardData, $activeActionElementType), 1, 0);
         }
 

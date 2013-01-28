@@ -38,7 +38,7 @@
 
         public function attributeLabels()
         {
-            return array('format'   => Yii::t('Default', 'Format'));
+            return array('format'   => Zurmo::t('ImportModule', 'Format'));
         }
 
         public static function getAttributeName()

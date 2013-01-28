@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
      * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
@@ -73,6 +73,7 @@
          */
         protected function renderContent()
         {
+            $this->renderScriptsContent();
             $content = '<div class="wide form">';
             $clipWidget = new ClipWidget();
             $afterValidateAjax = $this->renderConfigSaveAjax($this->getFormId());
@@ -125,6 +126,13 @@
             $content .= '</tbody>';
             $content .= '</table>';
             $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
+            $cancelElement  =   new CancelLinkForEmailsMatchingListActionElement($this->controllerId, $this->moduleId,
+                                                      null,
+                                                      array('htmlOptions' =>
+                                                          array('name'   => 'anyContactCancel-' . $this->uniqueId,
+                                                                'id'     => 'anyContactCancel-' . $this->uniqueId,
+                                                                 'class' => 'anyContactCancel')));
+            $content .= $cancelElement->render();
             $element  =   new SaveButtonActionElement($this->controllerId, $this->moduleId,
                                                       null,
                                                       array('htmlOptions' =>
@@ -133,6 +141,20 @@
             $content .= $element->render();
             $content .= '</div></div>';
             return $content;
+        }
+
+        protected function renderScriptsContent()
+        {
+            Yii::app()->clientScript->registerScript('anyContactSelectFormCollapseActions', "
+                        $('.anyContactCancel').each(function()
+                        {
+                            $('.anyContactCancel').live('click', function()
+                            {
+                                $(this).parentsUntil('.email-archive-item').find('.AnyContactSelectForEmailMatchingView').hide();
+                                $(this).closest('.email-archive-item').closest('td').removeClass('active-panel')
+                                .find('.z-action-link-active').removeClass('z-action-link-active');
+                            });
+                        });");
         }
 
         protected function getFormId()
@@ -153,7 +175,13 @@
                     'data' => 'js:$("#' . $formName . '").serialize()',
                     'url'  =>  $this->getValidateAndSaveUrl(),
                     'complete' => "function(XMLHttpRequest, textStatus){
-                    $('#wrapper-" . $this->uniqueId . "').parent().parent().parent().remove();}"
+                    $('#wrapper-" . $this->uniqueId . "').parent().parent().parent().remove();
+                    $('#" . self::getNotificationBarId() . "').jnotifyAddMessage(
+                                       {
+                                          text: '" . Zurmo::t('ContactsModule', 'Selected successfully') . "',
+                                          permanent: false,
+                                          showIcon: true,
+                                       })}",
                 ));
             // End Not Coding Standard
         }
@@ -161,6 +189,16 @@
         public function isUniqueToAPage()
         {
             return false;
+        }
+
+        protected function getViewStyle()
+        {
+            return " style=' display:none;'";
+        }
+
+        protected static function getNotificationBarId()
+        {
+            return 'FlashMessageBar';
         }
     }
 ?>

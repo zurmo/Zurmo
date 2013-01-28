@@ -33,7 +33,7 @@
         {
             if (!YII_DEBUG)
             {
-                echo Yii::t('Default', 'This action is only available in debug mode.');
+                echo Zurmo::t('ZurmoModule', 'This action is only available in debug mode.');
                 Yii::app()->end(0, false);
             }
         }

@@ -40,12 +40,12 @@
             $minifyPath = dirname(__FILE__) . '../../../extensions/minscript/vendors/minify/min/lib';
             if (set_include_path($minifyPath . PATH_SEPARATOR . get_include_path()))
             {
-                $this->message .= Yii::t('Default', 'Minify library is included.');
+                $this->message .= Zurmo::t('InstallModule', 'Minify library is included.');
                 $passed = true;
             }
             else
             {
-                $this->message .= Yii::t('Default', 'There is a problem with php set_include_path command. ' .
+                $this->message .= Zurmo::t('InstallModule', 'There is a problem with php set_include_path command. ' .
                     'Command can fail if "php_admin_value include_path" directive is set in Apache configuration.');
             }
             set_include_path($originalPath);

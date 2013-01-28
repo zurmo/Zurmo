@@ -35,21 +35,21 @@
             $debugWritable =  InstallUtil::isDebugConfigWritable(INSTANCE_ROOT);
             if ($debugWritable)
             {
-                $this->message  = Yii::t('Default', 'The debug.php config file is writable.');
+                $this->message  = Zurmo::t('InstallModule', 'The debug.php config file is writable.');
             }
             else
             {
-                $this->message  = Yii::t('Default', 'The debug.php config file is not writable.');
+                $this->message  = Zurmo::t('InstallModule', 'The debug.php config file is not writable.');
                 $passed = false;
             }
             $perInstanceWritable = InstallUtil::isPerInstanceConfigWritable(INSTANCE_ROOT);
             if ($perInstanceWritable)
             {
-                $this->message  .= "\n" . Yii::t('Default', 'The perInstance.php config file is writable.');
+                $this->message  .= "\n" . Zurmo::t('InstallModule', 'The perInstance.php config file is writable.');
             }
             else
             {
-                $this->message  .= "\n" . Yii::t('Default', 'The perInstance.php config file is not writable.');
+                $this->message  .= "\n" . Zurmo::t('InstallModule', 'The perInstance.php config file is not writable.');
                 $passed = false;
             }
             return $passed;

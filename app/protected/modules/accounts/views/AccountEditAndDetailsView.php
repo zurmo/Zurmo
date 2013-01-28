@@ -155,7 +155,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create AccountsModuleSingularLabel',
+            return Zurmo::t('AccountsModule', 'Create AccountsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

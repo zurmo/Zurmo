@@ -32,7 +32,7 @@
         {
             parent::__construct(2, 1);
             $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $userForm->getModel(), 'ChangePasswordLink'), 0, 0);
-            $title = strval($userForm) . ': ' . Yii::t('Default', 'Change Password');
+            $title = strval($userForm) . ': ' . Zurmo::t('UsersModule', 'Change Password');
             $this->setView(new UserChangePasswordView($controllerId, $moduleId, $userForm, $title), 1, 0);
         }
     }

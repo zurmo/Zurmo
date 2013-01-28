@@ -119,7 +119,7 @@
                 {
                     ZurmoConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
                     Yii::app()->user->setFlash('notification',
-                        Yii::t('Default', 'Global configuration saved successfully.')
+                        Zurmo::t('ZurmoModule', 'Global configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }

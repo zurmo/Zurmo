@@ -120,7 +120,7 @@
             }
             if (!in_array(strtolower($value), $acceptableValues))
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid check box format.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid check box format.'));
             }
             else
             {

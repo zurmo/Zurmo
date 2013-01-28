@@ -66,7 +66,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Achievements')",
+                    'title' => "eval:Zurmo::t('GamificationModule', 'Achievements')",
                 ),
             );
             return $metadata;
@@ -74,7 +74,7 @@
 
         public function getTitle()
         {
-            $title  = Yii::t('Default', 'Achievements');
+            $title  = Zurmo::t('GamificationModule', 'Achievements');
             return $title;
         }
 
@@ -104,7 +104,7 @@
             }
             else
             {
-                $content .= '<span class="empty">' . Yii::t('Default', 'No achievements earned.') . '</span>';
+                $content .= '<span class="empty">' . Zurmo::t('GamificationModule', 'No achievements earned.') . '</span>';
             }
             return $content;
         }

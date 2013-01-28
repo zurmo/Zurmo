@@ -36,7 +36,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Full Name');
+            return Zurmo::t('ImportModule', 'Full Name');
         }
 
         public function getRealModelAttributeNames()

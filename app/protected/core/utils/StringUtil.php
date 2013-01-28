@@ -77,9 +77,9 @@
                         $('.truncated-title').ThreeDots({ max_rows:1 });
                     });");
                 // End Not Coding Standard
-                $innerContent = ZurmoHtml::tag('span', array('class' => 'ellipsis-content'), strip_tags($title));
-                $content      = ZurmoHtml::tag('span', array('class' => 'truncated-title'), $innerContent);
-                return          ZurmoHtml::tag('h1',   array(), $content);
+                $innerContent = ZurmoHtml::wrapLabel(strip_tags($title), 'ellipsis-content');
+                $content      = ZurmoHtml::wrapLabel($innerContent, 'truncated-title');
+                return          ZurmoHtml::tag('h1', array(), $content);
             }
         }
     }

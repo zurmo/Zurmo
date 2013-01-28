@@ -57,13 +57,13 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'defaultValueCalculationType' => Yii::t('Default', 'Default Value'),
+                'defaultValueCalculationType' => Zurmo::t('DesignerModule', 'Default Value'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Date');
+            return Zurmo::t('DesignerModule', 'Date');
         }
 
         public function getAttributeTypeName()
@@ -73,7 +73,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A date field');
+            return Zurmo::t('DesignerModule', 'A date field');
         }
 
         public function getModelAttributePartialRule()

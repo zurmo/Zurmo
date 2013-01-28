@@ -31,7 +31,7 @@
     {
         protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Designer Home');
+            return Zurmo::t('DesignerModule', 'Designer Home');
         }
     }
 ?>

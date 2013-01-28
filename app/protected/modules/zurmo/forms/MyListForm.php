@@ -42,7 +42,7 @@
         public function attributeLabels()
         {
             return array(
-                'title' => Yii::t('Default', 'Title'),
+                'title' => Zurmo::t('ZurmoModule', 'Title'),
             );
         }
 

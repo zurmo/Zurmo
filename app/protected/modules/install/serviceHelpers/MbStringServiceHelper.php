@@ -34,11 +34,11 @@
             $passed = InstallUtil::isMbStringInstalled();
             if ($passed)
             {
-                $this->message = Yii::t('Default', 'Mbstring is installed.');
+                $this->message = Zurmo::t('InstallModule', 'Mbstring is installed.');
             }
             else
             {
-                $this->message = Yii::t('Default', 'Mbstring is not installed.');
+                $this->message = Zurmo::t('InstallModule', 'Mbstring is not installed.');
             }
             return $passed;
         }

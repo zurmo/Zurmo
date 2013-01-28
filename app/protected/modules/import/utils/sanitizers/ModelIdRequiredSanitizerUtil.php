@@ -65,7 +65,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'The id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The id specified did not match any existing records.'));
                 }
                 return $relationModel;
             }
@@ -75,7 +75,7 @@
                 {
                     return $value;
                 }
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'This id is required and was not specified.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'This id is required and was not specified.'));
             }
         }
     }

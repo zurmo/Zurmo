@@ -62,7 +62,7 @@
 
         public function getAllStepsMessage()
         {
-            return Yii::t('Default', 'Importing data...');
+            return Zurmo::t('ImportModule', 'Importing data...');
         }
 
         protected function steps()
@@ -72,7 +72,7 @@
 
         protected function stepMessages()
         {
-            return array('processRows' => Yii::t('Default', 'Processing'));
+            return array('processRows' => Zurmo::t('ImportModule', 'Processing'));
         }
 
         protected function processRows($params)
@@ -126,7 +126,7 @@
                 $labelParams = array('{startItemCount}' => $startItemCount,
                                      '{endItemCount}'   => $endItemCount,
                                      '{totalItemCount}' => $totalItemCount);
-                $nextMessage = ' ' . Yii::t('Default', 'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}',
+                $nextMessage = ' ' . Zurmo::t('ImportModule', 'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}',
                                      $labelParams);
                 $this->nextMessage .= $nextMessage;
                 return $params;

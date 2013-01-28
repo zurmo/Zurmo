@@ -31,11 +31,13 @@
      * model, whether it came out of the memcache or not, to reference the same
      * php object.
      */
-    class RedBeanModelsCache
+    class RedBeanModelsCache extends ZurmoCache
     {
         const MAX_MODELS_CACHED_IN_MEMORY = 100;
 
         private static $modelIdentifiersToModels = array();
+
+        public static $cacheType = 'M:';
 
         /**
          * Get a cached model.
@@ -50,7 +52,8 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                $cachedData = Yii::app()->cache->get('M:' . $modelIdentifier);
+                $prefix = self::getCachePrefix($modelIdentifier, self::$cacheType);
+                $cachedData = Yii::app()->cache->get($prefix . $modelIdentifier);
                 if ($cachedData === false)
                 {
                     throw new NotFoundException();
@@ -101,10 +104,12 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
+                $prefix = self::getCachePrefix($modelIdentifier, self::$cacheType);
+
                 $serializedModel = serialize($model);
                 $checksum  = YII_DEBUG ? crc32($serializedModel) : 0;
                 $cachedData = serialize(array($serializedModel, $checksum));
-                Yii::app()->cache->set('M:' . $modelIdentifier, $cachedData);
+                Yii::app()->cache->set($prefix . $modelIdentifier, $cachedData);
             }
         }
 
@@ -120,7 +125,8 @@
             }
             if (MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                Yii::app()->cache->delete('M:' . $modelIdentifier, 0);
+                $prefix = self::getCachePrefix($modelIdentifier, self::$cacheType);
+                Yii::app()->cache->delete($prefix . $modelIdentifier);
             }
         }
 
@@ -138,7 +144,8 @@
             }
             if (!$onlyForgetPhpCache && MEMCACHE_ON && Yii::app()->cache !== null)
             {
-                Yii::app()->cache->flush();
+                self::incrementCacheIncrementValue(static::$cacheType);
+                //@Yii::app()->cache->flush();
             }
         }
 

@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Emails');
+            return Zurmo::t('EmailMessagesModule', 'Emails');
         }
     }
 ?>

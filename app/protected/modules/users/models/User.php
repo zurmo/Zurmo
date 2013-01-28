@@ -160,7 +160,7 @@
             $fullName = $this->getFullName();
             if ($fullName == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('UsersModule', '(Unnamed)');
             }
             return $fullName;
         }

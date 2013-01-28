@@ -45,7 +45,7 @@
                     {
                         if ($('#" . $gridId . "-selectedIds').val() == '')
                         {
-                            alert('" . Yii::t('Default', 'You must select at least one record') . "');
+                            alert('" . Zurmo::t('Core', 'You must select at least one record') . "');
                             $(this).val('');
                             return false;
                         }
@@ -96,10 +96,10 @@
             ");
             $menuItems = array('label' => $this->getLabel(), 'url' => null,
                                     'items' => array(
-                                        array(  'label'   => Yii::t('Default', 'Selected'),
+                                        array(  'label'   => Zurmo::t('Core', 'Selected'),
                                                 'url'     => '#',
                                                 'itemOptions' => array( 'id'   => $selectedName)),
-                                        array(  'label'   => Yii::t('Default', 'All Results'),
+                                        array(  'label'   => Zurmo::t('Core', 'All Results'),
                                                 'url'     => '#',
                                                 'itemOptions' => array( 'id'   => $allName))));
             $cClipWidget = new CClipWidget();
@@ -114,7 +114,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Update');
+            return Zurmo::t('Core', 'Update');
         }
 
         protected function getListViewGridId()

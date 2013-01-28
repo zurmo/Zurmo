@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Designer');
+            return Zurmo::t('DesignerModule', 'Designer');
         }
     }
 ?>

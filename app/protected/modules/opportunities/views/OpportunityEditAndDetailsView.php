@@ -130,7 +130,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create OpportunitiesModuleSingularLabel',
+            return Zurmo::t('OpportunitiesModule', 'Create OpportunitiesModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

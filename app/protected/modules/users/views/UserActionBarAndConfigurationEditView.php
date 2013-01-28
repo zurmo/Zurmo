@@ -35,7 +35,7 @@
         {
             parent::__construct(2, 1);
             $this->setView(new ActionBarForUserEditAndDetailsView ($controllerId, $moduleId, $user, 'UserConfigurationEditLink'), 0, 0);
-            $title = strval($user) . ': ' . Yii::t('Default', 'Configuration');
+            $title = strval($user) . ': ' . Zurmo::t('UsersModule', 'Configuration');
             $this->setView(new UserConfigurationEditView($controllerId, $moduleId, $formModel, $title), 1, 0);
         }
     }

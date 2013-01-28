@@ -36,7 +36,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Username');
+            return Zurmo::t('UsersModule', 'Username');
         }
     }
 ?>

@@ -50,12 +50,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'Delete Notification');
+            return Zurmo::t('NotificationsModule', 'Delete Notification');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Delete Notification');
+            return Zurmo::t('NotificationsModule', 'Delete Notification');
         }
 
         /**

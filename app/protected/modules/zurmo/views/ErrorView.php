@@ -37,9 +37,9 @@
 
         protected function renderContent()
         {
-            $errorExplanation1 = Yii::t('Default', 'An error has occurred. Please click');
-            $errorExplanation2 = Yii::t('Default', 'here');
-            $errorExplanation3 = Yii::t('Default', 'to continue to the home page. If the error persists please contact your administrator.');
+            $errorExplanation1 = Zurmo::t('ZurmoModule', 'An error has occurred. Please click');
+            $errorExplanation2 = Zurmo::t('ZurmoModule', 'here');
+            $errorExplanation3 = Zurmo::t('ZurmoModule', 'to continue to the home page. If the error persists please contact your administrator.');
             $error = Yii::app()->format->text($this->message);
             $homeUrl = Yii::app()->request->hostInfo . "/" . ltrim(Yii::app()->request->scriptUrl, '/');
 

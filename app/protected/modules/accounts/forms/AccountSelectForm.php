@@ -59,9 +59,9 @@
         public function attributeLabels()
         {
             return array(
-                'accountId'          => Yii::t('Default', 'AccountsModuleSingularLabel Id',
+                'accountId'          => Zurmo::t('AccountsModule', 'AccountsModuleSingularLabel Id',
                                             LabelUtil::getTranslationParamsForAllModules()),
-                'accountName'        => Yii::t('Default', 'AccountsModuleSingularLabel Name',
+                'accountName'        => Zurmo::t('AccountsModule', 'AccountsModuleSingularLabel Name',
                                             LabelUtil::getTranslationParamsForAllModules()),
             );
         }

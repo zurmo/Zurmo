@@ -66,10 +66,10 @@
                                                               null,
                                                               array('htmlOptions' => array('name'   => 'Login',
                                                                                            'id'     => 'Login'),
-                                                                      'label'     => Yii::t('Default', 'Sign in')));
+                                                                      'label'     => Zurmo::t('ZurmoModule', 'Sign in')));
             $submitButton        = $element->render();
-            $fieldsRequiredLabel = Yii::t('Default', 'Fields with') . ' <span class="required">*</span> ' .
-                                   Yii::t('Default', 'are required.');
+            $fieldsRequiredLabel = Zurmo::t('ZurmoModule', 'Fields with') . ' <span class="required">*</span> ' .
+                                   Zurmo::t('ZurmoModule', 'are required.');
             $formEnd             = $this->controller->renderEndWidget();
 
             $content  = $this->extraHeaderContent;

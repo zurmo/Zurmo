@@ -133,12 +133,12 @@
 
         protected function getCellSettingsDisplay($detailViewOnly, $cellIdName)
         {
-            $content  = '<div class="cell-settings modal-settings" title="'. Yii::t('Default', 'Cell Settings') .'">';
+            $content  = '<div class="cell-settings modal-settings" title="'. Zurmo::t('Core', 'Cell Settings') .'">';
             $content .= '<div class="wide form">';
             $content .= '<table>';
             $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
-            $content .= '<th><label>' . Yii::t('Default', 'Detail View Only') . '</label></th>';
+            $content .= '<th><label>' . Zurmo::t('Core', 'Detail View Only') . '</label></th>';
             $content .= '<td>' . ZurmoHtml::checkBox( 'detailViewOnly_' . $cellIdName, $detailViewOnly,
             array('class' => 'settings-form-field')
             ) . '</td>';
@@ -156,19 +156,19 @@
         protected function getPanelSettingsDisplay($title, $detailViewOnly, $locked, $panelIdName)
         {
             assert('is_bool($locked) || $locked == null');
-            $content  = '<div class="panel-settings modal-settings" title="'. Yii::t('Default', 'Panel Settings') .'">';
+            $content  = '<div class="panel-settings modal-settings" title="'. Zurmo::t('Core', 'Panel Settings') .'">';
             $content .= '<div class="wide form">';
             $content .= '<table>';
             $content .= TableUtil::getColGroupContent(1);
             $content .= '<tr>';
-            $content .= '<th><label>' . Yii::t('Default', 'Panel Title') . '</label></th>';
+            $content .= '<th><label>' . Zurmo::t('Core', 'Panel Title') . '</label></th>';
             $content .= '<td>' . ZurmoHtml::textField( 'title_' . $panelIdName,
                                  $title, array('class' => 'panel-title settings-form-field')) .
                                  ZurmoHtml::hiddenField( 'locked_' . $panelIdName,
                                  $locked, array('class' => 'panel-title settings-form-field')) . '</td>';
             $content .= '</tr>';
             $content .= '<tr>';
-            $content .= '<th><label>' . Yii::t('Default', 'Detail View Only') . '</label></th>';
+            $content .= '<th><label>' . Zurmo::t('Core', 'Detail View Only') . '</label></th>';
             $content .= '<td>' . ZurmoHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
             array('class' => 'panel-title settings-form-field')
             ) . '</td>';
@@ -185,7 +185,7 @@
 
         protected function renderSaveModalSettingsButton()
         {
-            return ZurmoHtml::button(Yii::t('Default', 'Save and Close'), array('class' => 'z-button green-button attachLoading', 'onclick' => '$(this).closest(".modal-settings").dialog("close");'));
+            return ZurmoHtml::button(Zurmo::t('Core', 'Save and Close'), array('class' => 'z-button green-button attachLoading', 'onclick' => '$(this).closest(".modal-settings").dialog("close");'));
         }
 
         /**
@@ -401,13 +401,13 @@
             if ($this->canAddRows)
             {
                 $content .= '<ul>';
-                $content .= '<li class = "rowToPlace ui-state-default">' . Yii::t('Default', 'Row') . '</li>';
+                $content .= '<li class = "rowToPlace ui-state-default">' . Zurmo::t('Core', 'Row') . '</li>';
                 $content .= '</ul>';
             }
             if ($this->canAddPanels)
             {
                 $content .= '<ul>';
-                $content .= '<li class = "panelToPlace ui-state-default">' . Yii::t('Default', 'Panel') . '</li>';
+                $content .= '<li class = "panelToPlace ui-state-default">' . Zurmo::t('Core', 'Panel') . '</li>';
                 $content .= '</ul>';
             }
             $content .= '</div>';

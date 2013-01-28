@@ -39,7 +39,7 @@
 
         public function attributeLabels()
         {
-            return array('type'   => Yii::t('Default', 'Type of Value'));
+            return array('type'   => Zurmo::t('ImportModule', 'Type of Value'));
         }
 
         public static function getAttributeName()

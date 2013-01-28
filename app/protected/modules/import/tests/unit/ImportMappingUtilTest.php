@@ -32,6 +32,30 @@
             SecurityTestHelper::createSuperAdmin();
         }
 
+        public function testResolveImportInstructionsDataIntoMappingData()
+        {
+            //test when import instructions are null and there are existing instructions
+            $mappingData        = array('aColumn' => array('importInstructionsData' => 'abc'));
+            $mappingData        = ImportMappingUtil::resolveImportInstructionsDataIntoMappingData($mappingData, null);
+            $compareMappingData = array('aColumn' => array('importInstructionsData' => 'abc'));
+            $this->assertEquals($compareMappingData, $mappingData);
+
+            //Test adding instructions to a column that doesn't exist yet
+            $importInstructionsData = array('someColumn' => 'someInstructions');
+            $mappingData            = ImportMappingUtil::resolveImportInstructionsDataIntoMappingData(
+                                      $mappingData, $importInstructionsData);
+            $compareMappingData     = array('aColumn' => array('importInstructionsData' => 'abc'));
+            $this->assertEquals($compareMappingData, $mappingData);
+
+            //Test adding instructions to a column that does exist
+            $mappingData['someColumn'] = array('someThings');
+            $mappingData            = ImportMappingUtil::resolveImportInstructionsDataIntoMappingData(
+                $mappingData, $importInstructionsData);
+            $compareMappingData     = array('aColumn' => array('importInstructionsData' => 'abc'),
+                                            'someColumn' => array('someThings', 'importInstructionsData' => 'someInstructions'));
+            $this->assertEquals($compareMappingData, $mappingData);
+        }
+
         public function testMakeMappingDataByTableName()
         {
             $testTableName = 'testimporttable';

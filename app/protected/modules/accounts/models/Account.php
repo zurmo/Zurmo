@@ -28,8 +28,7 @@
     {
         public static function getByName($name)
         {
-            assert('is_string($name) && $name != ""');
-            return self::getSubset(null, null, null, "name = '$name'");
+            return self::getByNameOrEquivalent('name', $name);
         }
 
         protected function untranslatedAttributeLabels()
@@ -49,7 +48,7 @@
             {
                 if (trim($this->name) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('AccountsModule', '(Unnamed)');
                 }
                 return $this->name;
             }

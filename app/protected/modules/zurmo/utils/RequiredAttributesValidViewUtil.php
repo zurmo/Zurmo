@@ -128,7 +128,7 @@
             $designerRules          = DesignerRulesFactory::createDesignerRulesByView($viewClassName);
             $viewDisplayName        = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural');
             $viewDisplayName       .= ' ' .  $designerRules->resolveDisplayNameByView($viewClassName);
-            return                    Yii::t('Default', 'There are required fields missing from the following' .
+            return                    Zurmo::t('ZurmoModule', 'There are required fields missing from the following' .
                                                         ' layout: {view}.  Please contact your administrator.',
                                                         array('{view}' => $viewDisplayName));
         }

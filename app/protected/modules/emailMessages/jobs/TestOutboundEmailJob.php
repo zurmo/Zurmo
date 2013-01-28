@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Testing Outbound Email Connection Job');
+           return Zurmo::t('EmailMessagesModule', 'Testing Outbound Email Connection Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a day, early in the morning.');
+            return Zurmo::t('EmailMessagesModule', 'Once a day, early in the morning.');
         }
 
         /**
@@ -61,10 +61,10 @@
             $userToSendMessagesFrom    = Yii::app()->emailHelper->getUserToSendNotificationsAs();
             $emailMessage              = new EmailMessage();
             $emailMessage->owner       = Yii::app()->user->userModel;
-            $emailMessage->subject     = Yii::t('Default', 'A test email from Zurmo');
+            $emailMessage->subject     = Zurmo::t('EmailMessagesModule', 'A test email from Zurmo');
             $emailContent              = new EmailMessageContent();
-            $emailContent->textContent = Yii::t('Default', 'A test text message from Zurmo.');
-            $emailContent->htmlContent = Yii::t('Default', 'A test text message from Zurmo.');
+            $emailContent->textContent = Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.');
+            $emailContent->htmlContent = Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.');
             $emailMessage->content     = $emailContent;
             $sender                    = new EmailMessageSender();
             $sender->fromAddress       = Yii::app()->emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
@@ -85,12 +85,12 @@
             Yii::app()->emailHelper->sendImmediately($emailMessage);
             if (!$emailMessage->hasSendError())
             {
-                $messageContent .= Yii::t('Default', 'Message successfully sent') . "\n";
+                $messageContent .= Zurmo::t('EmailMessagesModule', 'Message successfully sent') . "\n";
                 return true;
             }
             else
             {
-                $messageContent .= Yii::t('Default', 'Message failed to send') . "\n";
+                $messageContent .= Zurmo::t('EmailMessagesModule', 'Message failed to send') . "\n";
                 $messageContent .= $emailMessage->error     . "\n";
                 $this->errorMessage = $messageContent;
                 return false;

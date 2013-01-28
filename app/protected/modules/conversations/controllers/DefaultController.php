@@ -114,7 +114,7 @@
         {
             $editView = new ConversationEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost(new Conversation()),
-                                                 Yii::t('Default', 'Create Conversation'));
+                                                 Zurmo::t('ConversationsModule', 'Create Conversation'));
             $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
                                                   makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
@@ -200,7 +200,7 @@
         {
             $editView = new ConversationEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost($conversation, $redirectUrl),
-                                                 Yii::t('Default', 'Create Conversation'));
+                                                 Zurmo::t('ConversationsModule', 'Create Conversation'));
             $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
                                              makeStandardViewForCurrentUser($this, $editView));
             echo $view->render();
@@ -242,7 +242,7 @@
                                    'relatedModelRelationName' => 'comments',
                                    'redirectUrl'              => $redirectUrl); //After save, the url to go to.
             $uniquePageId  = 'CommentInlineEditForModelView';
-            echo             ZurmoHtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
+            echo             ZurmoHtml::tag('h2', array(), Zurmo::t('ConversationsModule', 'Add Comment'));
             $inlineView    = new CommentInlineEditView($comment, 'default', 'comments', 'inlineCreateSave',
                                                        $urlParameters, $uniquePageId);
             $view          = new AjaxPageView($inlineView);

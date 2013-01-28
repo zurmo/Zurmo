@@ -52,11 +52,11 @@
             {
                 if ($optimizerSearchDepth == null)
                 {
-                    $this->message = Yii::t('Default', 'Could not get value of database optimizer_search_depth.');
+                    $this->message = Zurmo::t('InstallModule', 'Could not get value of database optimizer_search_depth.');
                 }
                 else
                 {
-                    $this->message  = Yii::t('Default', 'Database optimizer_search_depth value is {searchDepth}. ' .
+                    $this->message  = Zurmo::t('InstallModule', 'Database optimizer_search_depth value is {searchDepth}. ' .
                                                         'It is required to be set to 0.',
                                                         array('{searchDepth}' => $optimizerSearchDepth));
                 }
@@ -64,7 +64,7 @@
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database optimizer_search_depth size meets requirement.');
+                $this->message = Zurmo::t('InstallModule', 'Database optimizer_search_depth size meets requirement.');
             }
             return $passed;
         }

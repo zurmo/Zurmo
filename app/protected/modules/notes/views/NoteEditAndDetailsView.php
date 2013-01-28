@@ -99,7 +99,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create NotesModuleSingularLabel',
+            return Zurmo::t('NotesModule', 'Create NotesModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

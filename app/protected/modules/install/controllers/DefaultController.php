@@ -134,7 +134,7 @@
             }
             else
             {
-                $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+                $messageStreamer->add(Zurmo::t('InstallModule', 'Locking Installation.'));
                 InstallUtil::writeInstallComplete(INSTANCE_ROOT);
                 ForgetAllCacheUtil::forgetAllCaches();
                 echo ZurmoHtml::script('$("#progress-table").hide(); $("#complete-table").show();');
@@ -157,11 +157,11 @@
             echo $view->render();
             $template = ZurmoHtml::script("$('#logging-table').prepend('{message}<br/>');");
             $messageStreamer = new MessageStreamer($template);
-            $messageStreamer->add(Yii::t('Default', 'Starting to load demo data.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Starting to load demo data.'));
             $messageLogger = new MessageLogger($messageStreamer);
             DemoDataUtil::load($messageLogger, 6);
-            $messageStreamer->add(Yii::t('Default', 'Finished loading demo data.'));
-            $messageStreamer->add(Yii::t('Default', 'Locking Installation.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Finished loading demo data.'));
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Locking Installation.'));
             InstallUtil::writeInstallComplete(INSTANCE_ROOT);
             ForgetAllCacheUtil::forgetAllCaches();
             echo ZurmoHtml::script('$("#progress-table").hide(); $("#complete-table").show();');

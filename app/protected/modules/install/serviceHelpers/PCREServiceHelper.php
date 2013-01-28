@@ -35,12 +35,12 @@
             $PCREInstalled =  InstallUtil::checkPCRE();
             if ($PCREInstalled)
             {
-                $this->message  = Yii::t('Default', 'PCRE extension is loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'PCRE extension is loaded.');
                 return true;
             }
             else
             {
-                $this->message  = Yii::t('Default', 'PCRE extension is not loaded.');
+                $this->message  = Zurmo::t('InstallModule', 'PCRE extension is not loaded.');
                 return false;
             }
         }

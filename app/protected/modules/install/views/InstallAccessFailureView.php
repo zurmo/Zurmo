@@ -28,7 +28,7 @@
     {
         protected function renderContent()
         {
-            $message = Yii::t('Default', 'You cannot access the installation area because the ' .
+            $message = Zurmo::t('InstallModule', 'You cannot access the installation area because the ' .
                                          'application is already installed.');
             $content = "<div>$message</div>";
             return $content;

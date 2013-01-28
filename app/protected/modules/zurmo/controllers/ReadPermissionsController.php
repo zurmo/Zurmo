@@ -44,7 +44,7 @@
         public function actionRebuildMunge()
         {
            ReadPermissionsOptimizationUtil::rebuild();
-           echo Yii::t('Default', 'Read permissions rebuild complete.');
+           echo Zurmo::t('ZurmoModule', 'Read permissions rebuild complete.');
         }
     }
 ?>

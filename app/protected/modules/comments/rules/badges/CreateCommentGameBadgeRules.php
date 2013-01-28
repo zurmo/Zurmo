@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} Comment created|{n} Comments created', array($value));
+            return Zurmo::t('CommentsModule', '{n} Comment created|{n} Comments created', array($value));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

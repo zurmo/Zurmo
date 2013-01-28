@@ -55,7 +55,7 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'maxLength' => Yii::t('Default', 'Maximum Length'),
+                'maxLength' => Zurmo::t('DesignerModule', 'Maximum Length'),
             ));
         }
     }

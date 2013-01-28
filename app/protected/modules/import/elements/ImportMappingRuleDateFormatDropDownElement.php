@@ -50,7 +50,7 @@
             {
                 $firstDate  = Yii::app()->dateFormatter->format($format, strtotime('30 May 1950'));
                 $secondDate = Yii::app()->dateFormatter->format($format, strtotime('15 December 2011'));
-                $label = Yii::t('Default', '{firstDate} or {secondDate}', array('{firstDate}' =>  $firstDate,
+                $label = Zurmo::t('ImportModule', '{firstDate} or {secondDate}', array('{firstDate}' =>  $firstDate,
                                                                                 '{secondDate}' => $secondDate));
                 $dropDownData[$format] = $label;
             }

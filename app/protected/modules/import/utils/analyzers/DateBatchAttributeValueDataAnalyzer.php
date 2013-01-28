@@ -63,9 +63,10 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} value(s) have invalid date formats. ';
-                $label  .= 'These values will be cleared during import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) have invalid date formats. ' .
+                                             'These values will be cleared during import.',
+                                              array('{count}' => $invalid));
+                $this->addMessage($label);
             }
         }
     }

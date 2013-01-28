@@ -36,12 +36,100 @@
 
         public function testCanSetNullValueToCache()
         {
-            //if memcache is off this test will fail because memcache will not cache null values.
+            // If memcache is off this test will fail because memcache will not cache null values.
             if (MEMCACHE_ON)
             {
                 GeneralCache::cacheEntry('somethingForTesting', null);
                 $value = GeneralCache::getEntry('somethingForTesting');
                 $this->assertNull($value);
+            }
+        }
+
+        /**
+         * @depends testCanSetNullValueToCache
+         */
+        public function testCanSetValueToCache()
+        {
+            if (MEMCACHE_ON)
+            {
+                GeneralCache::cacheEntry('somethingForTesting2', 5);
+                $value = GeneralCache::getEntry('somethingForTesting2');
+                $this->assertEquals(5, $value);
+            }
+        }
+
+        /**
+         * @depends testCanSetValueToCache
+         */
+        public function testForgetEntry()
+        {
+            if (MEMCACHE_ON)
+            {
+                GeneralCache::cacheEntry('somethingForTesting3', 10);
+                $value = GeneralCache::getEntry('somethingForTesting3');
+                $this->assertEquals(10, $value);
+
+                GeneralCache::forgetEntry('somethingForTesting3');
+                try
+                {
+                    GeneralCache::getEntry('somethingForTesting3');
+                    $this->fail('NotFoundException exception is not thrown.');
+                }
+                catch (NotFoundException $e)
+                {
+                    $this->assertTrue(true);
+                }
+            }
+        }
+
+        /**
+         * @depends testCanSetValueToCache
+         */
+        public function testForgetAll()
+        {
+            if (MEMCACHE_ON)
+            {
+                GeneralCache::forgetAll();
+                try
+                {
+                    GeneralCache::getEntry('somethingForTesting2');
+                    $this->fail('NotFoundException exception is not thrown.');
+                }
+                catch (NotFoundException $e)
+                {
+                    $this->assertTrue(true);
+                }
+            }
+        }
+
+        public function testForgetAllNotDeleteOtherDataFromCache()
+        {
+            if (MEMCACHE_ON && !PHP_CACHING_ON)
+            {
+                GeneralCache::cacheEntry('somethingForTesting4', 34);
+                $value = GeneralCache::getEntry('somethingForTesting4');
+                $this->assertEquals(34, $value);
+
+                $originalAdditionalStringForCachePrefix = GeneralCache::getAdditionalStringForCachePrefix();
+                GeneralCache::setAdditionalStringForCachePrefix('ATEST');
+                GeneralCache::cacheEntry('somethingForTesting4', 43);
+                $value = GeneralCache::getEntry('somethingForTesting4');
+                $this->assertEquals(43, $value);
+
+                GeneralCache::forgetAll();
+                try
+                {
+                    GeneralCache::getEntry('somethingForTesting4');
+                    $this->fail('NotFoundException exception is not thrown.');
+                }
+                catch (NotFoundException $e)
+                {
+                    $this->assertTrue(true);
+                }
+
+                GeneralCache::setAdditionalStringForCachePrefix($originalAdditionalStringForCachePrefix);
+                $value = GeneralCache::getEntry('somethingForTesting4');
+                $this->assertEquals(34, $value);
             }
         }
     }

@@ -80,7 +80,7 @@
 
         public function getTitle()
         {
-            return Yii::t('Default', 'Languages');
+            return Zurmo::t('ZurmoModule', 'Languages');
         }
 
         /**
@@ -97,7 +97,7 @@
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
-            $content .= '<th>' . Yii::t('Default', 'Language') . '</th>';
+            $content .= '<th>' . Zurmo::t('ZurmoModule', 'Language') . '</th>';
             $content .= '</tr>';
             foreach ($this->languagesData as $language => $languageData)
             {
@@ -124,7 +124,7 @@
                     'toolbar' => array(
                         'elements' => array(
                             array('type'  => 'ConfigurationLink',
-                                  'label' => "eval:Yii::t('Default', 'Cancel')"),
+                                  'label' => "eval:Zurmo::t('ZurmoModule', 'Cancel')"),
                             array('type'  => 'SaveButton',
                                   'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
                         ),
@@ -158,8 +158,8 @@
 
         protected static function renderActiveHeaderContent()
         {
-            $title      = Yii::t('Default', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
-            $content    = Yii::t('Default', 'Active');
+            $title      = Zurmo::t('ZurmoModule', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
+            $content    = Zurmo::t('ZurmoModule', 'Active');
             $content   .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">?</span>';
             $qtip = new ZurmoTip();
             $qtip->addQTip("#active-languages-tooltip");

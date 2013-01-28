@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Address Geocode Update Job');
+           return Zurmo::t('MapsModule', 'Address Geocode Update Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 30 minutes.');
+            return Zurmo::t('MapsModule', 'Every 30 minutes.');
         }
 
         public function run()

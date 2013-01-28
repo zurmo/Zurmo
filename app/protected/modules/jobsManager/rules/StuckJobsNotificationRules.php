@@ -34,7 +34,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Scheduled jobs are stuck');
+            return Zurmo::t('JobsManagerModule', 'Scheduled jobs are stuck');
         }
 
         public static function getType()

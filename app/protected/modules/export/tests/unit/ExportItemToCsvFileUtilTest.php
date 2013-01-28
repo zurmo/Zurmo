@@ -24,6 +24,8 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    Yii::import('ext.csvparser.CsvParser');
+
     /**
     * Test ExportItemToCsvFileUtil functions.
     */
@@ -155,7 +157,7 @@
 
             // Export data to csv, and then revert csv back to array, so we compare data
             $csvData = ExportItemToCsvFileUtil::export($data, '', false);
-            $revertedData = ExportItemToCsvFileUtil::csvToArray($csvData);
+            $revertedData = CsvParser::parseFromString($csvData);
 
             // We are testing ModelToExportAdapter in details in another test
             // so in this test we suppose that ModelToExportAdapter::getData
@@ -164,6 +166,69 @@
             $compareData        = $adapter->getData();
 
             $this->assertEquals($compareData, $revertedData[0]);
+        }
+
+        public function testExportItemToCsvWorksWithNormalData()
+        {
+            $this->assertTrue($this->isValidCsvConversion('Data without linebreaks or commas'));
+        }
+
+        public function testExportItemToCsvWorksWithDataContainingComma()
+        {
+            $this->assertTrue($this->isValidCsvConversion('Data, with, multiple, comma, occurances'));
+        }
+
+        public function testExportItemToCsvWorksWithDataContainingLineBreaks()
+        {
+            $this->assertTrue($this->isValidCsvConversion("Data \n with \n linebreaks \n"));
+        }
+
+        public function testExportItemToCsvWorksWithDataContainingCommaAndLineBreaks()
+        {
+            $this->assertTrue($this->isValidCsvConversion("Data, \n with, \n ,linebreaks, \n")); // Not Coding Standard
+        }
+
+        protected function isValidCsvConversion($textAreaContent)
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $testItem = new ExportTestModelItem();
+            $testItem->firstName    = 'Bob3';
+            $testItem->lastName     = 'Bob3';
+            $testItem->boolean      = true;
+            $testItem->date         = '2002-04-03';
+            $testItem->dateTime     = '2002-04-03 02:00:43';
+            $testItem->float        = 54.22;
+            $testItem->integer      = 10;
+            $testItem->phone        = '21313213';
+            $testItem->string       = 'aString';
+            $testItem->textArea     = $textAreaContent;
+            $testItem->url          = 'http://www.asite.com';
+            $testItem->email        = 'a@a.com';
+
+            $testItem->save();
+            $id = $testItem->id;
+            $testItem->forget();
+            unset($testItem);
+
+            $data = array();
+            $testItem = ExportTestModelItem::getById($id);
+            $adapter = new ModelToExportAdapter($testItem);
+            $data[] = $adapter->getData();
+
+            // Export data to csv, and then revert csv back to array, so we compare data
+            $csvData = ExportItemToCsvFileUtil::export($data, '', false);
+            $revertedData = CsvParser::parseFromString($csvData);
+
+            // We are testing ModelToExportAdapter in details in another test
+            // so in this test we suppose that ModelToExportAdapter::getData
+            // return correct results
+            $adapter = new ModelToExportAdapter($testItem);
+            $compareData = $adapter->getData();
+
+            // Using === here would fail as we are not setting all keys part of getData()'s return array
+            return $compareData == $revertedData[0];
         }
     }
 ?>

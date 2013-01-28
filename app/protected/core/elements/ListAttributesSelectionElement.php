@@ -70,12 +70,12 @@
                 'leftSideName'           => $this->getEditableInputName(SearchForm::SELECTED_LIST_ATTRIBUTES) . '_hidden',
                 'leftSideValue'          => array(),
                 'leftSideData'           => $this->model->getListAttributesSelector()->getUnselectedListAttributesNamesAndLabelsAndAll(),
-                'leftSideDisplayLabel'   => Yii::t('Default', 'Hidden Columns'),
+                'leftSideDisplayLabel'   => Zurmo::t('Core', 'Hidden Columns'),
                 'rightSideId'            => $this->getEditableInputId(SearchForm::SELECTED_LIST_ATTRIBUTES),
                 'rightSideName'          => $this->getEditableInputName(SearchForm::SELECTED_LIST_ATTRIBUTES),
                 'rightSideValue'         => $this->model->getListAttributesSelector()->getSelected(),
                 'rightSideData'          => $this->model->getListAttributesSelector()->getSelectedListAttributesNamesAndLabelsAndAll(),
-                'rightSideDisplayLabel'  => Yii::t('Default', 'Visible Columns'),
+                'rightSideDisplayLabel'  => Zurmo::t('Core', 'Visible Columns'),
                 'formId'                 => $this->form->getId(),
                 'allowSorting'           => true,
                 'multiselectNavigationClasses' => 'multiselect-nav-updown',
@@ -114,7 +114,7 @@
         protected function renderApplyLinkContent()
         {
             $params = array();
-            $params['label']       = Yii::t('Default', 'Apply');
+            $params['label']       = Zurmo::t('Core', 'Apply');
             $params['htmlOptions'] = array('id'  => 'list-attributes-apply',
                                            'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $searchElement = new SaveButtonActionElement(null, null, null, $params);
@@ -124,7 +124,7 @@
         protected function renderApplyResetContent()
         {
             $params = array();
-            $params['label']       = Yii::t('Default', 'Reset');
+            $params['label']       = Zurmo::t('Core', 'Reset');
             $params['htmlOptions'] = array('id'  => 'list-attributes-reset',
                                            'class' => 'default-btn',
                                            'onclick' => 'js:$(this).addClass("attachLoadingTarget");');

@@ -62,7 +62,7 @@
                 return null;
             }
             $content                 = $this->renderGlobalSearchScopingInputContent();
-            $hintMessage             = Yii::t('Default', 'Search by name, phone, or e-mail');
+            $hintMessage             = Zurmo::t('ZurmoModule', 'Search by name, phone, or e-mail');
             $htmlOptions             = array('class'   => 'global-search global-search-hint',
                                              'onfocus' => '$(this).removeClass("global-search-hint"); $(this).val("");',
                                              'onblur'  => '$(this).val("")');
@@ -74,10 +74,10 @@
                 'value'       => $hintMessage,
                 'source'      => $this->sourceUrl,
                 'htmlOptions' => $htmlOptions,
-                'options'     => array('select' => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
-                                                   '{window.location = ui.item.href;} return false;}',
-                                       'search' => 'js: function(event, ui) { makeGlobalSearchSpinner("app-search", true) }',
-                                       'open' => 'js: function(event, ui) { makeGlobalSearchSpinner("app-search", false) }',
+                'options'     => array('select'   => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
+                                                     '{window.location = ui.item.href;} return false;}',
+                                       'search'   => 'js: function(event, ui) { makeToggableSpinner("#app-search", true) }',
+                                       'open'     => 'js: function(event, ui) { makeToggableSpinner("#app-search", false) }',
                                        'position' => array('my' =>  'right top', 'at' => 'right bottom')
             )));
             $cClipWidget->endClip();

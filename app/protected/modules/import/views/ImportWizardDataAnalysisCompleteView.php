@@ -55,14 +55,12 @@
             $content .= '<tr><td><h3>' . "\n";
             if (count($this->model->dataAnalyzerMessagesData) == 0)
             {
-                $content .= Yii::t('Default',
-                                'Data Analysis is complete. Click "Next" to import your data.');
+                $content .= Zurmo::t('ImportModule', 'Data Analysis is complete. Click "Next" to import your data.');
             }
             else
             {
-                $content .= Yii::t('Default',
-                                'Data Analysis is complete. There are some issues with your data, please review them below. ' .
-                                'When you are ready, click "Next" to import your data.');
+                $content .= Zurmo::t('ImportModule', 'Data Analysis is complete. There are some issues with your data, please review them below. ' .
+                                              'When you are ready, click "Next" to import your data.');
             }
             $content .= '</h3></td></tr>'   . "\n";
             foreach ($this->model->dataAnalyzerMessagesData as $columnName => $messagesData)
@@ -88,7 +86,7 @@
         {
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step6/',
                                            array('id' => $this->model->id));
-            return ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Next')), $route);
+            return ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ImportModule', 'Next')), $route);
         }
 
         protected function renderPreviousPageLinkContent()

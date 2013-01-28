@@ -80,6 +80,7 @@
                 $this->messageCountData[static::INVALID] ++;
                 return;
             }
+
             if (strlen($validatedUrl) > $this->maxLength)
             {
                 $this->messageCountData[static::URL_TOO_LONG] ++;
@@ -95,16 +96,17 @@
             $tooLarge = $this->messageCountData[static::URL_TOO_LONG];
             if ($invalid > 0)
             {
-                $label   = '{count} value(s) have urls that are invalid. ';
-                $label  .= 'These values will be cleared during import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) have urls that are invalid. ' .
+                                             'These values will be cleared during import.',
+                                             array('{count}' => $invalid));
+                $this->addMessage($label);
             }
             if ($tooLarge > 0)
             {
-                $label   = '{count} value(s) are too large for this field. ';
-                $label  .= 'These values will be cleared during import.';
-                $this->addMessage(Yii::t('Default', $label,
-                                  array('{count}' => $tooLarge, '{length}' => $this->maxLength)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) are too large for this field. ' .
+                                             'These values will be cleared during import.',
+                                             array('{count}' => $tooLarge, '{length}' => $this->maxLength));
+                $this->addMessage($label);
             }
         }
     }

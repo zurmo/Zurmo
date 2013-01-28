@@ -160,12 +160,12 @@
 
         protected function getMorePanelsLinkLabel()
         {
-            return Yii::t('Default', 'More Options');
+            return Zurmo::t('Core', 'More Options');
         }
 
         protected function getLessPanelsLinkLabel()
         {
-            return Yii::t('Default', 'Fewer Options');
+            return Zurmo::t('Core', 'Fewer Options');
         }
 
         public static function getDisplayDescription()

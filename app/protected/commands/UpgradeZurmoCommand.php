@@ -106,19 +106,19 @@ EOD;
 
                 if ($upgradeStep == 'runPart1')
                 {
-                    $messageStreamer->add(Yii::t('Default', 'Starting Zurmo upgrade process.'));
+                    $messageStreamer->add(Zurmo::t('Commands', 'Starting Zurmo upgrade process.'));
                     $this->runPart1($messageStreamer, $doNotlAlterFiles);
-                    $messageStreamer->add(Yii::t('Default', 'Zurmo upgrade phase 1 completed.'));
-                    $messageStreamer->add(Yii::t('Default', 'Please execute next command: "{command}" to complete upgrade process.',
+                    $messageStreamer->add(Zurmo::t('Commands', 'Zurmo upgrade phase 1 completed.'));
+                    $messageStreamer->add(Zurmo::t('Commands', 'Please execute next command: "{command}" to complete upgrade process.',
                             array('{command}' => './zurmoc upgradeZurmo super runPart2')));
                 }
                 elseif ($upgradeStep == 'runPart2')
                 {
                     if (UpgradeUtil::isUpgradeStateValid())
                     {
-                        $messageStreamer->add(Yii::t('Default', 'Starting Zurmo upgrade process - phase 2.'));
+                        $messageStreamer->add(Zurmo::t('Commands', 'Starting Zurmo upgrade process - phase 2.'));
                         $this->runPart2($messageStreamer);
-                        $messageStreamer->add(Yii::t('Default', 'Zurmo upgrade completed.'));
+                        $messageStreamer->add(Zurmo::t('Commands', 'Zurmo upgrade completed.'));
                     }
                     else
                     {
@@ -133,7 +133,8 @@ EOD;
             }
             catch (Exception $e)
             {
-                $messageStreamer->add(Yii::t('Default', 'An error occur during upgrade: ') . $e->getMessage());
+                $messageStreamer->add(Zurmo::t('Commands', 'An error occur during upgrade: {message}',
+                                               array('{message}' => $e->getMessage())));
                 UpgradeUtil::unsetUpgradeState();
             }
         }
@@ -141,9 +142,9 @@ EOD;
         protected function runPart1($messageStreamer, $doNotlAlterFiles = false)
         {
             set_time_limit(3600);
-            $messageStreamer->add(Yii::t('Default', 'This is the Zurmo upgrade process. Please backup files/database before you continue.'));
+            $messageStreamer->add(Zurmo::t('Commands', 'This is the Zurmo upgrade process. Please backup files/database before you continue.'));
 
-            $message = Yii::t('Default', 'Are you sure you want to upgrade Zurmo? [yes|no]');
+            $message = Zurmo::t('Commands', 'Are you sure you want to upgrade Zurmo? [yes|no]');
 
             if ($this->interactive)
             {
@@ -160,7 +161,7 @@ EOD;
             }
             else
             {
-                $messageStreamer->add(Yii::t('Default', 'Upgrade process halted.'));
+                $messageStreamer->add(Zurmo::t('Commands', 'Upgrade process halted.'));
             }
         }
 

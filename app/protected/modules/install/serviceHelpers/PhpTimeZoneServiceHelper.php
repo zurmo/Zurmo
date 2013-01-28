@@ -34,12 +34,12 @@
             $allPassed = false;
             if (InstallUtil::checkPhpTimezoneSetting())
             {
-                $this->message = Yii::t('Default', 'PHP date.timezone is set.');
+                $this->message = Zurmo::t('InstallModule', 'PHP date.timezone is set.');
                 return true;
             }
             else
             {
-                $this->message = Yii::t('Default', 'PHP date.timezone is not set.');
+                $this->message = Zurmo::t('InstallModule', 'PHP date.timezone is not set.');
                 return true;
             }
         }

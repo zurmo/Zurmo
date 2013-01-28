@@ -93,23 +93,23 @@
             $stringContent = self::getActivityItemsStringContentByModelClassName($model, 'Account');
             if ($stringContent != null)
             {
-                return Yii::t('Default', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
+                return Zurmo::t('ActivitiesModule', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
             }
             $stringContent = self::getActivityItemsStringContentByModelClassName($model, 'Contact');
             if ($stringContent != null)
             {
-                return Yii::t('Default', 'with {relatedContactsStringContent}', array('{relatedContactsStringContent}' => $stringContent));
+                return Zurmo::t('ActivitiesModule', 'with {relatedContactsStringContent}', array('{relatedContactsStringContent}' => $stringContent));
             }
             $stringContent = self::getActivityItemsStringContentByModelClassName($model, 'Opportunity');
             if ($stringContent != null)
             {
-                return Yii::t('Default', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
+                return Zurmo::t('ActivitiesModule', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
             }
             $metadata      = Activity::getMetadata();
             $stringContent =  self::getFirstActivityItemStringContent($metadata['Activity']['activityItemsModelClassNames'], $model);
             if ($stringContent != null)
             {
-                return Yii::t('Default', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
+                return Zurmo::t('ActivitiesModule', 'for {relatedModelsStringContent}', array('{relatedModelsStringContent}' => $stringContent));
             }
         }
 

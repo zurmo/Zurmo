@@ -90,18 +90,18 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'mappingData'   => Yii::t('Default', 'Dependency Mapping'),
+                'mappingData'   => Zurmo::t('DesignerModule', 'Dependency Mapping'),
             ));
         }
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Dependent Pick Lists');
+            return Zurmo::t('DesignerModule', 'Dependent Pick Lists');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A set of dependent pick lists');
+            return Zurmo::t('DesignerModule', 'A set of dependent pick lists');
         }
 
         public function getAttributeTypeName()
@@ -120,7 +120,7 @@
             {
                 $models = DropDownDependencyDerivedAttributeMetadata::
                           getByNameAndModelClassName($this->attributeName, $this->modelClassName);
-                $this->addError('attributeName', Yii::t('Default', 'A field with this name is already used.'));
+                $this->addError('attributeName', Zurmo::t('DesignerModule', 'A field with this name is already used.'));
             }
             catch (NotFoundException $e)
             {
@@ -152,11 +152,11 @@
             }
             if (count($mappingData) < 2  || $selectedAttributeNames < 2)
             {
-                $this->addError('mappingData',  Yii::t('Default', 'You must select at least 2 pick-lists.'));
+                $this->addError('mappingData',  Zurmo::t('DesignerModule', 'You must select at least 2 pick-lists.'));
             }
             if (count($mappingData) > 4 || $selectedAttributeNames > 4)
             {
-                $this->addError('mappingData',  Yii::t('Default', 'You can only have at most 4 pick-lists selected.'));
+                $this->addError('mappingData',  Zurmo::t('DesignerModule', 'You can only have at most 4 pick-lists selected.'));
             }
             foreach ($mappingData as $position => $attributeNameAndData)
             {
@@ -166,7 +166,7 @@
                     if (!isset($attributeNameAndData['valuesToParentValues']) ||
                        self::getValuesToParentValuesMappedCount($attributeNameAndData['valuesToParentValues']) == 0)
                     {
-                        $this->addError('mappingData', Yii::t('Default', 'At least one pick-list value must be mapped for each used level.'));
+                        $this->addError('mappingData', Zurmo::t('DesignerModule', 'At least one pick-list value must be mapped for each used level.'));
                     }
                     else
                     {
@@ -187,7 +187,7 @@
                                !in_array($parentCustomFieldDataValue, $parentDataValues))
                             {
                                 $this->addError('mappingData',
-                                                Yii::t('Default',
+                                                Zurmo::t('DesignerModule',
                                                 'Each pick-list value must map correctly to a parent pick-list value. ' .
                                                 'This value does map correctly: {value} - {parentValue}',
                                                 array('{value}'       => $customFieldDataValue,

@@ -55,9 +55,10 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} value(s) have invalid check box values. ';
-                $label  .= 'These values will be set to false upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $label   = Zurmo::t('ImportModule', '{count} value(s) have invalid check box values. '.
+                                             'These values will be set to false upon import.',
+                                              array('{count}' => $invalid));
+                $this->addMessage($label);
             }
         }
     }

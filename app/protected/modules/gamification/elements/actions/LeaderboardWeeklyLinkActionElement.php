@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Weekly');
+            return Zurmo::t('GamificationModule', 'Weekly');
         }
 
         protected function getDefaultRoute()

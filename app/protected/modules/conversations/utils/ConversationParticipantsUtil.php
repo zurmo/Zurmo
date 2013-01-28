@@ -165,7 +165,7 @@
                 $userToSendMessagesFrom     = $conversation->owner;
                 $emailMessage               = new EmailMessage();
                 $emailMessage->owner        = Yii::app()->user->userModel;
-                $emailMessage->subject      = Yii::t('Default', 'You have been invited to participate in a conversation');
+                $emailMessage->subject      = Zurmo::t('ConversationsModule', 'You have been invited to participate in a conversation');
                 $emailContent               = new EmailMessageContent();
                 $emailContent->textContent  = EmailNotificationUtil::
                                                 resolveNotificationTextTemplate(
@@ -201,7 +201,7 @@
         protected static function getParticipantInviteEmailTextContent(Conversation $conversation)
         {
             $url     = static::getUrlToConversationDetailAndRelationsView($conversation->id);
-            $content = Yii::t('Default', '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
+            $content = Zurmo::t('ConversationsModule', '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
                                          'would like you to join a conversation {strongStartTag}"{conversationSubject}"{strongEndTag}',
                                array('{headerStartTag}'      => null,
                                      '{headerEndTag}'        => null,
@@ -218,7 +218,7 @@
         protected static function getParticipantInviteEmailHtmlContent(Conversation $conversation)
         {
             $url     = static::getUrlToConversationDetailAndRelationsView($conversation->id);
-            $content = Yii::t('Default', '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
+            $content = Zurmo::t('ConversationsModule', '{headerStartTag}Join the Conversation{headerEndTag}{headerLineBreak}{ownerName} ' .
                                          'would like you to join a conversation {strongStartTag}"{conversationSubject}"{strongEndTag}',
                                array('{headerStartTag}'      => '<h2 class="h2">',
                                      '{headerEndTag}'        => '</h2>',
@@ -228,7 +228,7 @@
                                      '{ownerName}'           => $conversation->owner,
                                      '{conversationSubject}' => $conversation->subject));
             $content .= "<br/>";
-            $content .= ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
+            $content .= ZurmoHtml::link(Zurmo::t('ConversationsModule', 'Click Here'), $url);
             return $content;
         }
 

@@ -238,7 +238,7 @@
             {
                 $content .= '<div class="horizontal-line latest-activity-toolbar">';
                 $content .= $innerContent;
-                $content .= ZurmoHtml::link(Yii::t('Default', 'All Activities'), '#', array('id' => 'filter-latest-activities-link'));
+                $content .= ZurmoHtml::link(Zurmo::t('ActivitiesModule', 'Filters'), '#', array('id' => 'filter-latest-activities-link'));
                 $content .= '</div>' . "\n";
             }
             if ($innerContent != null &&
@@ -271,7 +271,11 @@
                     'url'        =>  $urlScript,
                     'update'     => '#' . $this->uniquePageId,
                     'beforeSend' => 'js:function(){makeSmallLoadingSpinner("' . $this->getGridViewId() . '"); $("#' . $form->getId() . '").parent().children(".cgrid-view").addClass("loading");}',
-                    'complete'   => 'js:function(){$("#' . $form->getId() . '").parent().children(".cgrid-view").removeClass("loading");}'
+                    'complete'   => 'js:function()
+                    {
+                                        $("#' . $form->getId() . '").parent().children(".cgrid-view").removeClass("loading");
+                                        $("#filter-portlet-model-bar-' . $this->uniquePageId . '").show();
+                    }'
             ));
             Yii::app()->clientScript->registerScript($this->uniquePageId, "
             $('#LatestActivitiesConfigurationForm_rollup_area').buttonset();

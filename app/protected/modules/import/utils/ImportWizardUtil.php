@@ -170,7 +170,7 @@
             }
             catch (NoRowsInTableException $e)
             {
-                throw new FailedFileUploadException(Yii::t('Default', 'Import file has no rows to use.'));
+                throw new FailedFileUploadException(Zurmo::t('ImportModule', 'Import file has no rows to use.'));
             }
         }
 

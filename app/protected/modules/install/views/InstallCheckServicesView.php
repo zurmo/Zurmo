@@ -58,11 +58,11 @@
             $content  = '<div class="MetadataView">';
             $content .= '<table>';
             $content .= '<tr><td>';
-            $content .= Yii::t('Default', 'Below you will find the results of the system check. If any required ' .
+            $content .= Zurmo::t('InstallModule', 'Below you will find the results of the system check. If any required ' .
                                           'services are not setup correctly, you will need to make sure they are ' .
                                           'installed correctly before you can continue.');
             $content .= '<br/><br/>';
-            $content .= Yii::t('Default', 'It is highly recommended that all optional services are installed and ' .
+            $content .= Zurmo::t('InstallModule', 'It is highly recommended that all optional services are installed and ' .
                                           'working before continuing.');
             $content .= '<br/><br/>';
             if (count($this->checkResultsDisplayData[$failedIndexId]) > 0)
@@ -70,43 +70,43 @@
                 if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) > 0)
                 {
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                            Yii::t('Default', 'Failed Required Services'),
+                                            Zurmo::t('InstallModule', 'Failed Required Services'),
                                             $this->checkResultsDisplayData[$failedIndexId][$requiredIndexId],
-                                            '<span class="fail">' . Yii::t('Default', 'FAIL') . '</span>');
+                                            '<span class="fail">' . Zurmo::t('InstallModule', 'FAIL') . '</span>');
                     $content .= '<br/><br/>';
                 }
                 if (count($this->checkResultsDisplayData[$failedIndexId][$optionalIndexId]) > 0)
                 {
                     $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                            Yii::t('Default', 'Failed Optional Services'),
+                                            Zurmo::t('InstallModule', 'Failed Optional Services'),
                                             $this->checkResultsDisplayData[$failedIndexId][$optionalIndexId],
-                                            '<span class="fail">' . Yii::t('Default', 'FAIL') . '</span>');
+                                            '<span class="fail">' . Zurmo::t('InstallModule', 'FAIL') . '</span>');
                     $content .= '<br/>';
                 }
             }
             if (count($this->checkResultsDisplayData[$warningIndexId]) > 0)
             {
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                        Yii::t('Default', 'Service Status Partially Known'),
+                                        Zurmo::t('InstallModule', 'Service Status Partially Known'),
                                         $this->checkResultsDisplayData[$warningIndexId],
-                                        '<span class="warning">' . Yii::t('Default', 'WARNING') . '</span>');
+                                        '<span class="warning">' . Zurmo::t('InstallModule', 'WARNING') . '</span>');
                 $content .= '<br/>';
             }
 
             if (count($this->checkResultsDisplayData[$passedIndexId]) > 0)
             {
                 $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                        Yii::t('Default', 'Correctly Installed Services'),
+                                        Zurmo::t('InstallModule', 'Correctly Installed Services'),
                                         $this->checkResultsDisplayData[$passedIndexId],
-                                        '<span class="pass">' . Yii::t('Default', 'PASS') . '</span>');
+                                        '<span class="pass">' . Zurmo::t('InstallModule', 'PASS') . '</span>');
             }
             $content .= '<br/><br/>';
-            $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Recheck System')),
+            $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('InstallModule', 'Recheck System')),
                                         $currentPageUrl, array('class' => 'z-button'));
             if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
             {
-                $content .= ' <span class="install-or">' . Yii::t('Default', 'or') . '</span> ';
-                $content .= ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Continue')),
+                $content .= ' <span class="install-or">' . Zurmo::t('InstallModule', 'or') . '</span> ';
+                $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('InstallModule', 'Continue')),
                                         $nextPageUrl, array('class' => 'z-button'));
             }
             $content .= '</td></tr></table>';

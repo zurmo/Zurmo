@@ -28,7 +28,7 @@
     {
         protected function getSubtitle()
         {
-            return Yii::t('Default', 'Users');
+            return Zurmo::t('UsersModule', 'Users');
         }
     }
 ?>

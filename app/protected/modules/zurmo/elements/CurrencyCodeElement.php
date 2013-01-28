@@ -51,7 +51,7 @@
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['CurrencyCodeElement'];
-            $content.= '<span class="field-description">' . Yii::t('Default', 'Type a currency code or name to search.') . '</span>';
+            $content.= '<span class="field-description">' . Zurmo::t('ZurmoModule', 'Type a currency code or name to search.') . '</span>';
             return $content;
         }
 

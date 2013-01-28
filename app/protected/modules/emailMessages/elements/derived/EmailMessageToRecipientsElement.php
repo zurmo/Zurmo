@@ -48,12 +48,12 @@
 
         protected function renderLabel()
         {
-            return Yii::t('Default', 'To');
+            return Zurmo::t('EmailMessagesModule', 'To');
         }
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'To Recipients');
+            return Zurmo::t('EmailMessagesModule', 'To Recipients');
         }
 
         public static function getModelAttributeNames()

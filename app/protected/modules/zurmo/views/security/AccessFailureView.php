@@ -33,7 +33,7 @@
             assert('$failureMessageContent == null || is_string($failureMessageContent)');
             if ($failureMessageContent == null)
             {
-                $failureMessageContent = Yii::t('Default', 'You have tried to access a page you do not have access to.');
+                $failureMessageContent = Zurmo::t('ZurmoModule', 'You have tried to access a page you do not have access to.');
             }
             $this->failureMessageContent = $failureMessageContent;
         }

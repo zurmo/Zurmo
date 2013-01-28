@@ -34,7 +34,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Zurmo::t('ApiModule', 'The id specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processRead((int)$params['id']);
@@ -53,7 +53,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['data']))
             {
-                $message = Yii::t('Default', 'Please provide data.');
+                $message = Zurmo::t('ApiModule', 'Please provide data.');
                 throw new ApiException($message);
             }
             $result    =  $this->processCreate($params['data']);
@@ -65,7 +65,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Zurmo::t('ApiModule', 'The id specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processUpdate((int)$params['id'], $params['data']);
@@ -77,7 +77,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The id specified was invalid.');
+                $message = Zurmo::t('ApiModule', 'The id specified was invalid.');
                 throw new ApiException($message);
             }
             $result    =  $this->processDelete((int)$params['id']);

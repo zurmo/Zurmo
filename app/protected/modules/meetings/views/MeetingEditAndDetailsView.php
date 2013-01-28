@@ -134,7 +134,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create MeetingsModuleSingularLabel',
+            return Zurmo::t('MeetingsModule', 'Create MeetingsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

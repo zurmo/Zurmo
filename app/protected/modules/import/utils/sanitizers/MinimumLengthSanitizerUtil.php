@@ -62,7 +62,7 @@
             {
                 return $value;
             }
-            throw new InvalidValueToSanitizeException(Yii::t('Default', 'Value is too short.'));
+            throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Value is too short.'));
         }
     }
 ?>

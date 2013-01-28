@@ -79,7 +79,7 @@
             {
                 if (trim($this->name) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('HomeModule', '(Unnamed)');
                 }
                 return $this->name;
             }
@@ -124,7 +124,7 @@
         {
             assert('$user instanceof User && $user->id > 0');
             $dashboard             = new Dashboard();
-            $dashboard->name       = Yii::t('Default', 'Dashboard');
+            $dashboard->name       = Zurmo::t('HomeModule', 'Dashboard');
             $dashboard->layoutId   = Dashboard::DEFAULT_USER_LAYOUT_ID;
             $dashboard->owner      = $user;
             $dashboard->layoutType = '50,50'; // Not Coding Standard
@@ -150,9 +150,9 @@
         public static function getLayoutTypesData()
         {
             return array(
-                '100'   => Yii::t('Default', '1 Column'),
-                '50,50' => Yii::t('Default', '2 Columns'), // Not Coding Standard
-                '75,25' => Yii::t('Default', '2 Columns Left Strong'), // Not Coding Standard
+                '100'   => Zurmo::t('HomeModule', '1 Column'),
+                '50,50' => Zurmo::t('HomeModule', '2 Columns'), // Not Coding Standard
+                '75,25' => Zurmo::t('HomeModule', '2 Columns Left Strong'), // Not Coding Standard
             );
         }
     }

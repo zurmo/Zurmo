@@ -47,7 +47,7 @@
 
         public function attributeLabels()
         {
-            return array('defaultValue' => Yii::t('Default', 'Default Value'));
+            return array('defaultValue' => Zurmo::t('UsersModule', 'Default Value'));
         }
 
         public static function getAttributeName()

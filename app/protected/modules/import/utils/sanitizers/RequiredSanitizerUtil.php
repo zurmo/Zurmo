@@ -80,7 +80,7 @@
                 {
                     return $value;
                 }
-                throw new InvalidValueToSanitizeException(Yii::t('Default',
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule',
                 'This field is required and neither a value nor a default value was specified.'));
             }
         }

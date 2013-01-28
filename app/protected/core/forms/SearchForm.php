@@ -469,7 +469,7 @@
         {
             if ($this->supportsMixedSearch())
             {
-                return array('anyMixedAttributes' => Yii::t('Default', 'Basic Search Fields'));
+                return array('anyMixedAttributes' => Zurmo::t('Core', 'Basic Search Fields'));
             }
             return array();
         }
@@ -555,7 +555,7 @@
             {
                 throw new NotSupportedException();
             }
-            return array_merge(array('All' => Yii::t('Default', 'All')), $namesAndLabels);
+            return array_merge(array('All' => Zurmo::t('Core', 'All')), $namesAndLabels);
         }
 
         /**

@@ -63,6 +63,7 @@
      * port: optional port setting. Otherwise system setting will be used.
      * outboundUsername: optional outbound username setting. Otherwise system setting will be used.
      * outboundPassword: optional outbound password setting. Otherwise system setting will be used.
+     * outboundSecurity: optional outbound mail server security. Options: null, 'ssl', 'tls'.
 
 EOD;
     // End Not Coding Standard
@@ -80,7 +81,8 @@ EOD;
                                $host             = null,
                                $port             = null,
                                $outboundUsername = null,
-                               $outboundPassword = null)
+                               $outboundPassword = null,
+                               $outboundSecurity = null)
     {
         if (!isset($username))
         {
@@ -114,12 +116,29 @@ EOD;
         {
             Yii::app()->emailHelper->outboundPassword = $outboundPassword;
         }
+        if ($outboundSecurity != null && $outboundSecurity != '' && $outboundSecurity != 'false')
+        {
+            Yii::app()->emailHelper->outboundSecurity = $outboundSecurity;
+        }
+        else
+        {
+            Yii::app()->emailHelper->outboundSecurity = null;
+        }
+
         echo "\n";
         echo 'Using type:' . Yii::app()->emailHelper->outboundType . "\n";
         echo 'Using host:' . Yii::app()->emailHelper->outboundHost . "\n";
         echo 'Using port:' . Yii::app()->emailHelper->outboundPort . "\n";
         echo 'Using username:' . Yii::app()->emailHelper->outboundUsername . "\n";
-        echo 'Using password:' . Yii::app()->emailHelper->outboundPassword . "\n\n";
+        echo 'Using password:' . Yii::app()->emailHelper->outboundPassword . "\n";
+        if (isset(Yii::app()->emailHelper->outboundSecurity))
+        {
+            echo 'Using outbound security:' . Yii::app()->emailHelper->outboundSecurity . "\n\n";
+        }
+        else
+        {
+            echo 'Using outbound security: none' . "\n\n";
+        }
         echo 'Sending Email Message' . "\n";
 
         $emailMessage = new EmailMessage();
@@ -150,11 +169,11 @@ EOD;
 
         if (!$emailMessage->hasSendError())
         {
-            echo Yii::t('Default', 'Message successfully sent') . "\n";
+            echo Zurmo::t('Commands', 'Message successfully sent') . "\n";
         }
         else
         {
-            echo Yii::t('Default', 'Message failed to send') . "\n";
+            echo Zurmo::t('Commands', 'Message failed to send') . "\n";
             echo $emailMessage->error     . "\n";
         }
         $saved = $emailMessage->save();

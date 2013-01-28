@@ -69,14 +69,33 @@
 
             $this->createDateCustomFieldByModule                ('AccountsModule', 'datetest');
             $this->createDateTimeCustomFieldByModule            ('AccountsModule', 'datetimetest');
-
-            //Test All custom created types since their rules could vary
+            $this->createCheckBoxCustomFieldByModule            ('AccountsModule', 'checkboxtest');
+            $this->createCurrencyValueCustomFieldByModule       ('AccountsModule', 'currencytest');
+            $this->createDecimalCustomFieldByModule             ('AccountsModule', 'decimaltest');
+            $this->createIntegerCustomFieldByModule             ('AccountsModule', 'integertest');
+            $this->createPhoneCustomFieldByModule               ('AccountsModule', 'phonetest');
+            $this->createTextCustomFieldByModule                ('AccountsModule', 'stringtest');
+            $this->createTextAreaCustomFieldByModule            ('AccountsModule', 'textareatest');
+            $this->createUrlCustomFieldByModule                 ('AccountsModule', 'urltest');
+            $this->createDropDownCustomFieldByModule            ('AccountsModule', 'dropdowntest');
+            $this->createRadioDropDownCustomFieldByModule       ('AccountsModule', 'radiotest');
+            //Test all custom created types since their rules could vary
             $import = new Import();
             $import->serializedData = serialize(array('importRulesType' => 'Accounts'));
             $this->assertTrue($import->save());
             $this->runMappingRulesEditAction($import->id, 'datetestCstm');
             $this->runMappingRulesEditAction($import->id, 'datetimetestCstm');
-            //todo: add the rest of the custom field types that are importable
+            $this->runMappingRulesEditAction($import->id, 'checkboxtestCstm');
+            $this->runMappingRulesEditAction($import->id, 'currencytestCstm');
+            $this->runMappingRulesEditAction($import->id, 'decimaltestCstm');
+            $this->runMappingRulesEditAction($import->id, 'integertestCstm');
+            $this->runMappingRulesEditAction($import->id, 'phonetestCstm');
+            $this->runMappingRulesEditAction($import->id, 'stringtestCstm');
+            $this->runMappingRulesEditAction($import->id, 'textareatestCstm');
+            $this->runMappingRulesEditAction($import->id, 'urltestCstm');
+            $this->runMappingRulesEditAction($import->id, 'dropdowntestCstm');
+            $this->runMappingRulesEditAction($import->id, 'radiotestCstm');
+            //added the rest of the custom field types that are importable
         }
     }
 ?>

@@ -29,9 +29,9 @@
         protected function getDropDownArray()
         {
             return array(
-                Policy::NO  => Yii::t('Default', 'No'),
-                ''          => Yii::t('Default', 'Not Set'),
-                Policy::YES => Yii::t('Default', 'Yes'),
+                Policy::NO  => Zurmo::t('ZurmoModule', 'No'),
+                ''          => Zurmo::t('ZurmoModule', 'Not Set'),
+                Policy::YES => Zurmo::t('ZurmoModule', 'Yes'),
             );
         }
     }

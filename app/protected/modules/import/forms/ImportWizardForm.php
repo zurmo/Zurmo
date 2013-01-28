@@ -98,12 +98,12 @@
                 array('importRulesType',     'required'),
                 array('rowColumnDelimiter',  'required'),
                 array('rowColumnEnclosure',  'required'),
-                array('fileUploadData',      'type', 'type' => 'string'),
+                array('fileUploadData',      'type', 'type' => 'array'),
                 array('rowColumnDelimiter',  'type', 'type' => 'string'),
                 array('rowColumnEnclosure',  'type', 'type' => 'string'),
 
                 array('firstRowIsHeaderRow', 'boolean'),
-                array('mappingData',         'type', 'type' => 'string'),
+                array('mappingData',         'type', 'type' => 'array'),
                 array('newPassword',         'validateMappingData', 'on'   => 'saveMappingData'),
             );
         }
@@ -111,13 +111,13 @@
         public function attributeLabels()
         {
             return array(
-                'importRulesType'                   => Yii::t('Default', 'Module To Import To'),
-                'fileUploadData'                    => Yii::t('Default', 'File Upload Data'),
-                'rowColumnDelimiter'                => Yii::t('Default', 'Delimiter'),
-                'rowColumnEnclosure'                => Yii::t('Default', 'Qualifier'),
-                'firstRowIsHeaderRow'               => Yii::t('Default', 'First Row is Header Row'),
-                'explicitReadWriteModelPermissions' => Yii::t('Default', 'Model Permissions'),
-                'mappingData'                       => Yii::t('Default', 'Mapping Data'),
+                'importRulesType'                   => Zurmo::t('ImportModule', 'Module To Import To'),
+                'fileUploadData'                    => Zurmo::t('ImportModule', 'File Upload Data'),
+                'rowColumnDelimiter'                => Zurmo::t('ImportModule', 'Delimiter'),
+                'rowColumnEnclosure'                => Zurmo::t('ImportModule', 'Qualifier'),
+                'firstRowIsHeaderRow'               => Zurmo::t('ImportModule', 'First Row is Header Row'),
+                'explicitReadWriteModelPermissions' => Zurmo::t('ImportModule', 'Model Permissions'),
+                'mappingData'                       => Zurmo::t('ImportModule', 'Mapping Data'),
             );
         }
 
@@ -166,11 +166,11 @@
             }
             if ($attributeMappedOrHasRulesMoreThanOnce)
             {
-                $this->addError('mappingData', Yii::t('Default', 'You can only map each field once.'));
+                $this->addError('mappingData', Zurmo::t('ImportModule', 'You can only map each field once.'));
             }
             if (!$atLeastOneAttributeMappedOrHasRules)
             {
-                $this->addError('mappingData', Yii::t('Default', 'You must map at least one of your import columns.'));
+                $this->addError('mappingData', Zurmo::t('ImportModule', 'You must map at least one of your import columns.'));
             }
             $mappedAttributeIndicesOrDerivedAttributeTypes = ImportMappingUtil::
                                                              getMappedAttributeIndicesOrDerivedAttributeTypesByMappingData(
@@ -192,7 +192,7 @@
                     }
                     $attributesLabelContent .= $attributeData['attributeLabel'];
                 }
-                $this->addError('mappingData', Yii::t('Default', 'All required fields must be mapped or added: {attributesLabelContent}',
+                $this->addError('mappingData', Zurmo::t('ImportModule', 'All required fields must be mapped or added: {attributesLabelContent}',
                                                       array('{attributesLabelContent}' => $attributesLabelContent)));
             }
             try
@@ -201,7 +201,7 @@
             }
             catch (ImportAttributeMappedMoreThanOnceException $e)
             {
-                $this->addError('mappingData', Yii::t('Default', 'The following field is mapped more than once. {message}',
+                $this->addError('mappingData', Zurmo::t('ImportModule', 'The following field is mapped more than once. {message}',
                                                array('{message}' => $e->getMessage())));
             }
         }

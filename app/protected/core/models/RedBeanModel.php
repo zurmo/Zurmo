@@ -765,7 +765,7 @@
                                 {
                                     unset($hints[$columnName]);
                                 }
-                                if (in_array($validator->type, array('date', 'datetime', 'blob', 'longblob', 'string')))
+                                if (in_array($validator->type, array('date', 'datetime', 'blob', 'longblob', 'string', 'text', 'longtext')))
                                 {
                                     $hints[$columnName] = $validator->type;
                                 }
@@ -802,44 +802,51 @@
                             foreach ($metadata[$modelClassName]['members'] as $memberName)
                             {
                                 $allValidators = $this->getValidators($memberName);
-                                foreach ($allValidators as $validator)
+                                if (!empty($allValidators))
                                 {
-                                    if ((get_class($validator) == 'RedBeanModelTypeValidator' ||
-                                        get_class($validator) == 'TypeValidator') &&
-                                        $validator->type == 'string')
+                                    foreach ($allValidators as $validator)
                                     {
-                                        $columnName = strtolower($validator->attributes[0]);
-                                        if (count($allValidators) > 1)
+                                        if ((get_class($validator) == 'RedBeanModelTypeValidator' ||
+                                            get_class($validator) == 'TypeValidator') &&
+                                            $validator->type == 'string')
                                         {
-                                            $haveCStringValidator = false;
-                                            foreach ($allValidators as $innerValidator)
+                                            $columnName = strtolower($validator->attributes[0]);
+                                            if (count($allValidators) > 1)
                                             {
-                                                if (get_class($innerValidator) == 'CStringValidator' &&
-                                                    isset($innerValidator->max) &&
-                                                    $innerValidator->max > 255)
+                                                $haveCStringValidator = false;
+                                                foreach ($allValidators as $innerValidator)
                                                 {
-                                                    if ($innerValidator->max > 65535)
+                                                    if (get_class($innerValidator) == 'CStringValidator' &&
+                                                        isset($innerValidator->max) &&
+                                                        $innerValidator->max > 0)
                                                     {
-                                                        $hints[$columnName] = 'longtext';
+                                                        if ($innerValidator->max > 65535)
+                                                        {
+                                                            $hints[$columnName] = 'longtext';
+                                                        }
+                                                        elseif ($innerValidator->max < 255)
+                                                        {
+                                                            $hints[$columnName] = "string({$innerValidator->max})";
+                                                        }
+                                                        else
+                                                        {
+                                                            $hints[$columnName] = 'text';
+                                                        }
                                                     }
-                                                    else
+                                                    if (get_class($innerValidator) == 'CStringValidator')
                                                     {
-                                                        $hints[$columnName] = 'text';
+                                                        $haveCStringValidator = true;
                                                     }
                                                 }
-                                                if (get_class($innerValidator) == 'CStringValidator')
+                                                if (!$haveCStringValidator)
                                                 {
-                                                    $haveCStringValidator = true;
+                                                    $hints[$columnName] = 'text';
                                                 }
                                             }
-                                            if (!$haveCStringValidator)
+                                            else
                                             {
                                                 $hints[$columnName] = 'text';
                                             }
-                                        }
-                                        else
-                                        {
-                                            $hints[$columnName] = 'text';
                                         }
                                     }
                                 }
@@ -1166,7 +1173,7 @@
          */
         public function __toString()
         {
-            return Yii::t('Default', '(None)');
+            return Zurmo::t('Core', '(None)');
         }
 
         /**

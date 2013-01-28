@@ -49,7 +49,7 @@
 
         public static function getDisplayLabel()
         {
-            return Yii::t('Default', 'Time Management');
+            return Zurmo::t('GamificationModule', 'Time Management');
         }
     }
 ?>

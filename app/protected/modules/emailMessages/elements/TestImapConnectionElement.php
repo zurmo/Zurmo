@@ -61,7 +61,7 @@
             $id       = 'testImapConnection';
             $content  = '<span>';
             $content .= ZurmoHtml::ajaxLink(
-                ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Test Connection')),
+                ZurmoHtml::wrapLabel(Zurmo::t('EmailMessagesModule', 'Test Connection')),
                 Yii::app()->createUrl('emailMessages/default/testImapConnection/', array()),
                 static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
                 array('id' => $id, 'class' => 'EmailTestingButton z-button')
@@ -73,7 +73,7 @@
         protected static function resolveAjaxOptionsForTestEmailSettings($formId)
         {
             assert('is_string($formId)');
-            $title               = Yii::t('Default', 'Test Message Results');
+            $title               = Zurmo::t('EmailMessagesModule', 'Test Message Results');
             $ajaxOptions         = ModalView::getAjaxOptionsForModalLink($title);
             $ajaxOptions['type'] = 'POST';
             $ajaxOptions['data'] = 'js:$("#' . $formId . '").serialize()';

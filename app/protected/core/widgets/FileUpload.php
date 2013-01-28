@@ -144,12 +144,12 @@
             if ($this->allowMultipleUpload)
             {
                 $sendAction = null;
-                $addLabel   = ZurmoHtml::tag('strong', array('class' => 'add-label'), Yii::t('Default', 'Add Files'));
+                $addLabel   = ZurmoHtml::tag('strong', array('class' => 'add-label'), Zurmo::t('Core', 'Add Files'));
             }
             else
             {
                 $sendAction = "\$('#{$this->formName}').find('.files > tbody').children().remove();";
-                $addLabel   = ZurmoHtml::tag('strong', array('class' => 'add-label'), Yii::t('Default', 'Add Files'));
+                $addLabel   = ZurmoHtml::tag('strong', array('class' => 'add-label'), Zurmo::t('Core', 'Add Files'));
             }
             // Begin Not Coding Standard
             $javaScript = <<<EOD
@@ -174,7 +174,7 @@ $(function () {
                 .appendTo($(this).find('.files')).fadeIn(function () {
                     // Fix for IE7 and lower:
                     $(this).show();
-                    makeGlobalSearchSpinner('fileUpload{$id}', true);
+                    makeToggableSpinner('#'+'fileUpload{$id}', true);
                 }).data('data', data);
             if ((that.options.autoUpload || data.autoUpload) &&
                     data.isValidated) {
@@ -237,16 +237,17 @@ EOD;
         private function makeDownloadRowScriptContent()
         {
             $deleteLabel = 'Delete';
+            $removeLabel = Zurmo::t('Core', 'Remove');
 $scriptContent = <<<EOD
 <script id="template-download" type="text/x-jquery-tmpl">
     <tr class="template-download{{if error}} ui-state-error{{/if}}">
         {{if error}}
             <td class="error" colspan="4">\${error}</td>
         {{else}}
-            <td class="name" title="\${size}">
-                \${name} <span class="file-size">(\${size})</span>
+            <td class="name">
+                \${name} <span class="file-size">(\${sizef})</span>
                 <span class="upload-actions delete">
-                    <button class="icon-delete" data-url="{$this->deleteUrl}?id=\${id}"><span><!--{$deleteLabel}--><span></button>
+                    <button class="icon-delete" title="{$removeLabel}" data-url="{$this->deleteUrl}?id=\${id}"><span><!--{$deleteLabel}--><span></button>
                 </span>
                 <input name="{$this->hiddenInputName}[]" type="hidden" value="\${id}"/>
             </td>
@@ -260,19 +261,19 @@ EOD;
 
         private function makeUploadRowScriptContent()
         {
-            $startLabel  = Yii::t('Default', 'Start');
-            $cancelLabel = Yii::t('Default', 'Cancel');
+            $startLabel  = Zurmo::t('Core', 'Start');
+            $cancelLabel = Zurmo::t('Core', 'Cancel');
 $scriptContent = <<<EOD
 <script id="template-upload" type="text/x-jquery-tmpl">
     <tr class="template-upload{{if error}} ui-state-error{{/if}}">
-        <td class="name" title="\${size}">
+        <td class="name">
             <span class="z-spinner"></span>
-            \${name} <span class="file-size">(\${size})</span>
+            \${name} <span class="file-size">(\${sizef})</span>
             {{if error}}
                 <span class="upload-error">\${error}</span>
             {{else}}
                 <span class="upload-actions cancel">
-                    <button class="cancel"><span>{$cancelLabel}</span></button>
+                    <button class="cancel" title="{$cancelLabel}"><span>{$cancelLabel}</span></button>
                 </span>
             {{/if}}
         </td>
@@ -290,7 +291,7 @@ EOD;
             {
                 return;
             }
-            $content = '<span class="max-upload-size">' . Yii::t('Default', 'Max upload size: {maxSize}',
+            $content = '<span class="max-upload-size">' . Zurmo::t('Core', 'Max upload size: {maxSize}',
                        array('{maxSize}' => FileModelDisplayUtil::convertSizeToHumanReadableAndGet($maxSize))) . '</span>';
             return $content;
         }

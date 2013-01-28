@@ -28,22 +28,22 @@
     {
         public function getTitle()
         {
-            return '<h1>' . Yii::t('Default', 'Developer Tools') . '</h1>';
+            return '<h1>' . Zurmo::t('ZurmoModule', 'Developer Tools') . '</h1>';
         }
 
         protected function getCategoryData()
         {
             $categories = array();
-            $categories['clearCache'][] = array('titleLabel'          => Yii::t('Default', 'Clear Cache'),
-                                                'descriptionLabel'    => Yii::t('Default', 'In the case where you have reloaded the database, some cached items ' .
+            $categories['clearCache'][] = array('titleLabel'          => Zurmo::t('ZurmoModule', 'Clear Cache'),
+                                                'descriptionLabel'    => Zurmo::t('ZurmoModule', 'In the case where you have reloaded the database, some cached items ' .
                                                                          'might still exist. This is a way to clear that cache.'),
                                                 'route'               => 'zurmo/development?clearCache=1' // Not Coding Standard
                                             );
-            $categories['clearCache'][] = array('titleLabel'          => Yii::t('Default', 'Update Custom Data'),
-                                                'descriptionLabel'    => Yii::t('Default', 'If there is new metadata to load using CustomManagement, use this option.'),
+            $categories['clearCache'][] = array('titleLabel'          => Zurmo::t('ZurmoModule', 'Update Custom Data'),
+                                                'descriptionLabel'    => Zurmo::t('ZurmoModule', 'If there is new metadata to load using CustomManagement, use this option.'),
                                                 'route'               => 'zurmo/development?resolveCustomData=1' // Not Coding Standard
                                             );
-            $this->setLinkText(Yii::t('Default', 'Run'));
+            $this->setLinkText(Zurmo::t('ZurmoModule', 'Run'));
             return $categories;
         }
     }

@@ -88,7 +88,7 @@
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
                     throw new InvalidValueToSanitizeException(
-                    Yii::t('Default', '{modelLabel} id specified did not match any existing records.',
+                    Zurmo::t('ImportModule', '{modelLabel} id specified did not match any existing records.',
                     array('{modelLabel}' => $modelLabel)));
                 }
             }
@@ -103,7 +103,7 @@
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
                     throw new InvalidValueToSanitizeException(
-                    Yii::t('Default', '{modelLabel} other id specified did not match any existing records.',
+                    Zurmo::t('ImportModule', '{modelLabel} other id specified did not match any existing records.',
                     array('{modelLabel}' => $modelLabel)));
                 }
             }

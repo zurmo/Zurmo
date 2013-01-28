@@ -94,7 +94,7 @@
             assert('count($headerColumns) > 0');
 
             $content  = $form->errorSummary($this->model);
-            $content .= '<h3>' . Yii::t('Default', 'Please map the fields you would like to import.') . '</h3>';
+            $content .= '<h3>' . Zurmo::t('ImportModule', 'Please map the fields you would like to import.') . '</h3>';
             $content .= $this->renderRequiredAttributesLabelsDataContent();
             $content .= '<table>';
             $content .= '<colgroup>';
@@ -136,7 +136,7 @@
             $content = '<div class="required-fields">';
             if (count($this->requiredAttributesLabelsData) > 0)
             {
-                $content .= '<strong>' . Yii::t('Default', 'Required Fields') . ':</strong>' . '<br/>';
+                $content .= '<strong>' . Zurmo::t('ImportModule', 'Required Fields') . ':</strong>' . '<br/>';
                 foreach ($this->requiredAttributesLabelsData as $label)
                 {
                     $content .= $label. '<br/>';
@@ -150,14 +150,14 @@
         protected function getFormLayoutHeaderColumnsContent()
         {
             $headerColumns = array();
-            $headerColumns[] = Yii::t('Default', 'Zurmo Field');
+            $headerColumns[] = Zurmo::t('ImportModule', 'Zurmo Field');
             if ($this->model->firstRowIsHeaderRow)
             {
-                $headerColumns[] = Yii::t('Default', 'Header');
+                $headerColumns[] = Zurmo::t('ImportModule', 'Header');
             }
             $headerColumns[] = '<div id="' . MappingFormLayoutUtil::getSampleColumnHeaderId() . '">' .
                                $this->sampleColumnPagerContent . '</div>';
-            $headerColumns[] = Yii::t('Default', 'Rules');
+            $headerColumns[] = Zurmo::t('ImportModule', 'Rules');
             return $headerColumns;
         }
 
@@ -207,15 +207,21 @@
                                    array('id' => $this->model->id));
             $content             = ZurmoHtml::hiddenField($hiddenInputName, $columnCount, $idInputHtmlOptions);
             // Begin Not Coding Standard
-            $content            .= ZurmoHtml::ajaxLink(ZurmoHtml::tag('span', array('class' => 'z-label'), Yii::t('Default', 'Add Field')),
+            $aContent            = ZurmoHtml::wrapLink(Zurmo::t('ImportModule', 'Add Field'));
+            $content            .= ZurmoHtml::ajaxLink($aContent,
                                     $ajaxOnChangeUrl,
                                     array('type' => 'GET',
                                           'data' => 'js:\'columnCount=\' + $(\'#columnCounter\').val()',
+                                          'complete'   => 'js:function(){$("#addExtraColumnButton").removeClass("loading");
+                                                                         $("#addExtraColumnButton").removeClass("loading-ajax-submit");}',
                                           'success' => 'js:function(data){
                                             $(\'#columnCounter\').val(parseInt($(\'#columnCounter\').val()) + 1)
                                             $(\'#addExtraColumnButton\').parent().parent().prev().after(data);
                                           }'),
-                                    array('id' => 'addExtraColumnButton', 'class' => 'z-button'));
+                                    array('id'      => 'addExtraColumnButton', 'class' => 'attachLoading z-button',
+                                          'onclick' => 'js:if($(this).hasClass("loading")) {return false;}
+                                                        $(this).addClass("loading").addClass("loading-ajax-submit");
+                                                        attachLoadingSpinner($(this).attr("id"), true);'));
             // End Not Coding Standard
             return $content;
         }

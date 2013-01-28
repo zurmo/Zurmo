@@ -43,7 +43,7 @@
         {
             assert('is_string($name)');
             assert('$name != ""');
-            $bean = R::findOne('_group', "name = '$name'");
+            $bean = R::findOne('_group', "name = :name ", array(':name' => $name));            
             assert('$bean === false || $bean instanceof RedBean_OODBBean');
             if ($bean === false)
             {
@@ -151,7 +151,11 @@
             assert('$this->name === null || is_string($this->name)');
             if ($this->name === null)
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('ZurmoModule', '(Unnamed)');
+            }
+            if ($this->name == self::EVERYONE_GROUP_NAME || $this->name == self::SUPER_ADMINISTRATORS_GROUP_NAME)
+            {
+                return Yii::t('Default', $this->name);
             }
             return $this->name;
         }
@@ -172,10 +176,6 @@
         {
             if ($this->isEveryone)
             {
-                if ($attributeName == 'name')
-                {
-                    return Yii::t('Default', self::EVERYONE_GROUP_NAME);
-                }
                 if ($attributeName == 'group')
                 {
                     return null;
@@ -187,10 +187,6 @@
             }
             if ($this->isSuperAdministrators)
             {
-                if ($attributeName == 'name')
-                {
-                    return Yii::t('Default', self::SUPER_ADMINISTRATORS_GROUP_NAME);
-                }
                 if ($attributeName == 'rights')
                 {
                     throw new NotSupportedException();
@@ -380,7 +376,7 @@
                 ($name == strtolower(Group::SUPER_ADMINISTRATORS_GROUP_NAME) && $this->id != $group2->id)
             )
             {
-                $this->addError('name', Yii::t('Default', 'This name is reserved. Please pick a different name.'));
+                $this->addError('name', Zurmo::t('ZurmoModule', 'This name is reserved. Please pick a different name.'));
                 return false;
             }
             return true;

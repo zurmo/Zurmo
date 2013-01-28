@@ -44,9 +44,9 @@
         public function attributeLabels()
         {
             return array(
-                'username'   => Yii::t('Default', 'Username'),
-                'password'   => Yii::t('Default', 'Password'),
-                'rememberMe' => Yii::t('Default', 'Remember me next time'),
+                'username'   => Zurmo::t('ZurmoModule', 'Username'),
+                'password'   => Zurmo::t('ZurmoModule', 'Password'),
+                'rememberMe' => Zurmo::t('ZurmoModule', 'Remember me next time'),
             );
         }
 
@@ -55,7 +55,7 @@
             $this->_identity = new UserIdentity($this->username, $this->password);
             if (!$this->_identity->authenticate())
             {
-                $this->addError('password', Yii::t('Default', 'Incorrect username or password.'));
+                $this->addError('password', Zurmo::t('ZurmoModule', 'Incorrect username or password.'));
             }
         }
 

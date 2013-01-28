@@ -54,20 +54,20 @@
             {
                 if ($threadStackValue == null)
                 {
-                    $this->message = Yii::t('Default', 'Could not get value of database thread_stack.');
+                    $this->message = Zurmo::t('InstallModule', 'Could not get value of database thread_stack.');
                 }
                 else
                 {
-                    $this->message  = Yii::t('Default', 'Database thread_stack value is:') . ' ';
+                    $this->message  = Zurmo::t('InstallModule', 'Database thread_stack value is:') . ' ';
                     $this->message .= $threadStackValue . ' ';
-                    $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                    $this->message .= Zurmo::t('InstallModule', 'minimum requirement is:') . ' ';
                     $this->message .= $this->minimumRequiredThreadStackValue;
                 }
                 $passed = false;
             }
             else
             {
-                $this->message = Yii::t('Default', 'Database thread_stack value meets minimum requirement.');
+                $this->message = Zurmo::t('InstallModule', 'Database thread_stack value meets minimum requirement.');
             }
             return $passed;
         }

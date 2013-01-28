@@ -32,9 +32,9 @@
         public function attributeLabels()
         {
             return array(
-                'contactId'          => Yii::t('Default', 'LeadsModuleSingularLabel ID',
+                'contactId'          => Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel ID',
                                             LabelUtil::getTranslationParamsForAllModules()),
-                'contactName'        => Yii::t('Default', 'LeadsModuleSingularLabel Name',
+                'contactName'        => Zurmo::t('LeadsModule', 'LeadsModuleSingularLabel Name',
                                             LabelUtil::getTranslationParamsForAllModules()),
             );
         }

@@ -73,7 +73,7 @@
             }
             catch (NotFoundException $e)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'The status specified is invalid.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('UsersModule', 'The status specified is invalid.'));
             }
         }
     }

@@ -102,7 +102,7 @@
             {
                 throw new NotImplementedException();
             }
-            return ZurmoHtml::label(Yii::t('Default', 'Who can read and write'), false);
+            return ZurmoHtml::label(Zurmo::t('ZurmoModule', 'Who can read and write'), false);
         }
 
         /**
@@ -200,9 +200,9 @@
         protected function getPermissionTypes()
         {
             return array(
-                null                                                                 => Yii::t('Default', 'Owner'),
-                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP  => Yii::t('Default', 'Owner and users in'),
-                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP     => Yii::t('Default', 'Everyone'));
+                null                                                                 => Zurmo::t('ZurmoModule', 'Owner'),
+                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP  => Zurmo::t('ZurmoModule', 'Owner and users in'),
+                ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP     => Zurmo::t('ZurmoModule', 'Everyone'));
         }
 
         protected function renderSelectableGroupsContent()

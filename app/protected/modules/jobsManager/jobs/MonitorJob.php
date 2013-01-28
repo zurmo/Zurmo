@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Monitor Job');
+           return Zurmo::t('JobsManagerModule', 'Monitor Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Every 5 minutes');
+            return Zurmo::t('JobsManagerModule', 'Every 5 minutes');
         }
 
         /**
@@ -55,7 +55,7 @@
          */
         public static function getStuckStringContent()
         {
-            return Yii::t('Default', 'The monitor job is stuck.');
+            return Zurmo::t('JobsManagerModule', 'The monitor job is stuck.');
         }
 
         public function run()
@@ -74,10 +74,10 @@
                 if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
                 {
                     $message                      = new NotificationMessage();
-                    $message->htmlContent         = Yii::t('Default', 'Job completed with errors.');
+                    $message->htmlContent         = Zurmo::t('JobsManagerModule', 'Job completed with errors.');
                     $url                          = Yii::app()->createAbsoluteUrl('jobsManager/default/jobLogDetails/',
                                                                         array('id' => $jobLog->id));
-                    $message->htmlContent        .= "<br/>" . ZurmoHtml::link(Yii::t('Default', 'Click Here'), $url);
+                    $message->htmlContent        .= "<br/>" . ZurmoHtml::link(Zurmo::t('JobsManagerModule', 'Click Here'), $url);
                     $rules                        = new JobCompletedWithErrorsNotificationRules();
                     NotificationsUtil::submit($message, $rules);
                 }
@@ -127,8 +127,8 @@
         public static function makeJobStuckNotification()
         {
             $message                    = new NotificationMessage();
-            $message->textContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
-            $message->htmlContent       = Yii::t('Default', 'The system has detected there are jobs that are stuck.');
+            $message->textContent       = Zurmo::t('JobsManagerModule', 'The system has detected there are jobs that are stuck.');
+            $message->htmlContent       = Zurmo::t('JobsManagerModule', 'The system has detected there are jobs that are stuck.');
             $rules                      = new StuckJobsNotificationRules();
             NotificationsUtil::submit($message, $rules);
         }

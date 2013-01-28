@@ -38,9 +38,9 @@
             assert('is_int($count)');
             if ($count > 1 || $count == 0)
             {
-                return Yii::t('Default', 'records');
+                return Zurmo::t('Core', 'records');
             }
-            return Yii::t('Default', 'record');
+            return Zurmo::t('Core', 'record');
         }
 
         /**

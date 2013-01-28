@@ -116,7 +116,7 @@
                 {
                     if ($this->memcachePortNumber == null)
                     {
-                        $this->addError('memcachePortNumber', Yii::t( 'Default', 'Since you specified a memcache ' .
+                        $this->addError('memcachePortNumber', Zurmo::t('InstallModule', 'Since you specified a memcache ' .
                         'hostname, you must specify a port.'));
                         return;
                     }
@@ -124,7 +124,7 @@
                                                                            (int)$this->memcachePortNumber);
                     if ($memcacheResult !== true)
                     {
-                        $this->addError('memcacheHostname', Yii::t('Default', 'Error code:') . " " .
+                        $this->addError('memcacheHostname', Zurmo::t('InstallModule', 'Error code:') . " " .
                         $memcacheResult[0] . '<br/>Message: ' . $memcacheResult[1]);
                         return;
                     }
@@ -132,14 +132,14 @@
 
                 if (!$this->hostInfo)
                 {
-                    $this->addError('hostInfo', Yii::t( 'Default', 'Please enter server ip or url.'));
+                    $this->addError('hostInfo', Zurmo::t('InstallModule', 'Please enter server ip or url.'));
                     return;
                 }
                 else
                 {
                     if ((strpos($this->hostInfo, 'http://') === false) && (strpos($this->hostInfo, 'https://') === false))
                     {
-                        $this->addError('hostInfo', Yii::t( 'Default', 'Host Info must start with "http://" or "https://".'));
+                        $this->addError('hostInfo', Zurmo::t('InstallModule', 'Host Info must start with "http://" or "https://".'));
                         return;
                     }
                 }
@@ -148,7 +148,7 @@
                 {
                     if ($this->databaseAdminPassword == null)
                     {
-                        $this->addError('databaseAdminPassword', Yii::t( 'Default', 'Since you specified a database ' .
+                        $this->addError('databaseAdminPassword', Zurmo::t('InstallModule', 'Since you specified a database ' .
                         'admin username, you must enter a password'));
                         return;
                     }
@@ -159,7 +159,7 @@
                                                                       (int)$this->databasePort);
                     if ($connectionResult !== true)
                     {
-                        $this->addError('databaseAdminUsername', Yii::t('Default', 'Error code:') . " " .
+                        $this->addError('databaseAdminUsername', Zurmo::t('InstallModule', 'Error code:') . " " .
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
@@ -171,7 +171,7 @@
                                                                              $this->databaseUsername);
                     if ($userExistsResult === true)
                     {
-                        $this->addError('databaseUsername', Yii::t('Default', 'You have specified an existing user. ' .
+                        $this->addError('databaseUsername', Zurmo::t('InstallModule', 'You have specified an existing user. ' .
                         'If you would like to use this user, then do not specify the database admin username and ' .
                         'password. Otherwise pick a database username that does not exist.'));
                         return;
@@ -184,7 +184,7 @@
                                                                              $this->databaseName);
                     if ($databaseExistsResult === true)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'You have specified an existing database. ' .
+                        $this->addError('databaseName', Zurmo::t('InstallModule', 'You have specified an existing database. ' .
                         'If you would like to use this database, then do not specify the database admin username and ' .
                         'password. Otherwise pick a database name that does not exist.'));
                         return;
@@ -197,7 +197,7 @@
                                                                              $this->databaseName);
                     if ($createDatabaseResult === false)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'There was a problem creating the database ' .
+                        $this->addError('databaseName', Zurmo::t('InstallModule', 'There was a problem creating the database ' .
                         'Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
@@ -211,7 +211,7 @@
                                                                              $this->databasePassword);
                     if ($createUserResult === false)
                     {
-                        $this->addError('databaseUsername', Yii::t('Default', 'There was a problem creating the user ' .
+                        $this->addError('databaseUsername', Zurmo::t('InstallModule', 'There was a problem creating the user ' .
                         'Error code:') . " " . $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
@@ -225,7 +225,7 @@
                                                                              (int)$this->databasePort);
                     if ($connectionResult !== true)
                     {
-                        $this->addError('databaseUsername', Yii::t('Default', 'Error code:') . " " .
+                        $this->addError('databaseUsername', Zurmo::t('InstallModule', 'Error code:') . " " .
                         $connectionResult[0] . '<br/>Message: ' . $connectionResult[1]);
                         return;
                     }
@@ -237,9 +237,9 @@
                                                                              $this->databaseName);
                     if ($databaseExistsResult !== true)
                     {
-                        $this->addError('databaseName', Yii::t('Default', 'The database name specified does not ' .
+                        $this->addError('databaseName', Zurmo::t('InstallModule', 'The database name specified does not ' .
                         'exist or the user specified does not have access.') . '<br/>' .
-                        Yii::t('Default', 'Error code:') . " " . $databaseExistsResult[0] .
+                        Zurmo::t('InstallModule', 'Error code:') . " " . $databaseExistsResult[0] .
                         '<br/>Message: ' . $databaseExistsResult[1]);
                         return;
                     }
@@ -247,7 +247,7 @@
                     {
                         if ($this->removeExistingData == false)
                         {
-                        $this->addError('removeExistingData', Yii::t('Default', 'Since you specified an existing database ' .
+                        $this->addError('removeExistingData', Zurmo::t('InstallModule', 'Since you specified an existing database ' .
                         'you must check this box in order to proceed. THIS WILL REMOVE ALL EXISTING DATA.'));
                         return;
                         }

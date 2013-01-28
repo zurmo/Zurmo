@@ -31,7 +31,7 @@
     {
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'A simple notification');
+            return Zurmo::t('NotificationsModule', 'A simple notification');
         }
 
         public static function getType()

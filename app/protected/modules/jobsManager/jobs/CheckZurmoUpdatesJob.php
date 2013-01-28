@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Check if there is newer Zurmo version available Job');
+           return Zurmo::t('JobsManagerModule', 'Check if there is newer Zurmo version available Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a week, early in the morning.');
+            return Zurmo::t('JobsManagerModule', 'Once a week, early in the morning.');
         }
 
         /**

@@ -41,7 +41,7 @@
 
         public function getDisplayLabel()
         {
-            return Yii::t('Default', 'Created By User');
+            return Zurmo::t('ImportModule', 'Created By User');
         }
     }
 ?>

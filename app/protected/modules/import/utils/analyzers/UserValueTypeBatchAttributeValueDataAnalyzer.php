@@ -99,9 +99,10 @@
             $invalid  = $this->messageCountData[static::INVALID];
             if ($invalid > 0)
             {
-                $label   = '{count} value(s) have invalid user values. ';
-                $label  .= 'These values will not be used during the import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $label   = Zurmo::t('ImportModule',  '{count} value(s) have invalid user values. ' .
+                                              'These values will not be used during the import.',
+                                              array('{count}' => $invalid));
+                $this->addMessage($label);
             }
         }
     }

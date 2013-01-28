@@ -47,10 +47,10 @@
             $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
-            $messageStreamer->add(Yii::t('Default', 'Script will run at most for {seconds} seconds.',
+            $messageStreamer->add(Zurmo::t('JobsManagerModule', 'Script will run at most for {seconds} seconds.',
                                   array('{seconds}' => $timeLimit)));
             echo "\n";
-            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Starting job type: {type}',
+            $messageStreamer->add(Zurmo::t('JobsManagerModule', '{dateTimeString} Starting job type: {type}',
                                   array('{type}' => $type,
                                          '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
             $messageLogger = new $messageLoggerClassName($messageStreamer);
@@ -62,7 +62,7 @@
             {
                 static::runNonMonitorJob($type, $messageLogger);
             }
-            $messageStreamer->add(Yii::t('Default', '{dateTimeString} Ending job type: {type}',
+            $messageStreamer->add(Zurmo::t('JobsManagerModule', '{dateTimeString} Ending job type: {type}',
                                   array('{type}' => $type,
                                          '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
         }

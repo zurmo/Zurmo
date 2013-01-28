@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Text Area');
+            return Zurmo::t('DesignerModule', 'Text Area');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A description box');
+            return Zurmo::t('DesignerModule', 'A description box');
         }
 
         public function getModelAttributePartialRule()

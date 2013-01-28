@@ -35,7 +35,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Export process is completed.');
+            return Zurmo::t('ExportModule', 'Export process is completed.');
         }
 
         public static function getType()

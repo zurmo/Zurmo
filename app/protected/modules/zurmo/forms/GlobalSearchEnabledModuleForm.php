@@ -42,7 +42,7 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'globalSearchAttributeNames'  => Yii::t('Default', 'Global and Basic Search Fields'),
+                'globalSearchAttributeNames'  => Zurmo::t('ZurmoModule', 'Global and Basic Search Fields'),
             ));
         }
     }

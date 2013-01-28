@@ -37,7 +37,7 @@
                 $string = '';
                 if (isset($data['code']))
                 {
-                    $string .= Yii::t('Default', 'Error Code:') . ' ' . $data['code'];
+                    $string .= Zurmo::t('EmailMessagesModule', 'Error Code:') . ' ' . $data['code'];
                 }
                 if (isset($data['message']))
                 {
@@ -45,13 +45,13 @@
                     {
                         $string .= "\n";
                     }
-                    $string .= Yii::t('Default', 'Error Message:') . ' ' . $data['message'];
+                    $string .= Zurmo::t('EmailMessagesModule', 'Error Message:') . ' ' . $data['message'];
                 }
                 return $string;
             }
             else
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('EmailMessagesModule', '(Unnamed)');
             }
         }
 

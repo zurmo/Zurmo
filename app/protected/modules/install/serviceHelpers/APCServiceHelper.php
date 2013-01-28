@@ -35,7 +35,7 @@
 
         protected function checkService()
         {
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkAPC', Yii::t('Default', 'APC'));
+            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkAPC', Zurmo::t('InstallModule', 'APC'));
         }
     }
 ?>

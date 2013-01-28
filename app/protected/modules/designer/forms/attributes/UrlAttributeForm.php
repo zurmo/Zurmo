@@ -28,7 +28,7 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'URL');
+            return Zurmo::t('DesignerModule', 'URL');
         }
 
         public function getAttributeTypeName()
@@ -38,7 +38,7 @@
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A field that contains a URL');
+            return Zurmo::t('DesignerModule', 'A field that contains a URL');
         }
 
         public function getModelAttributePartialRule()

@@ -42,7 +42,7 @@
         {
             if (trim($this->description) == '')
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('SocialItemsModule', '(Unnamed)');
             }
             return $this->description;
         }

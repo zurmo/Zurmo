@@ -430,13 +430,18 @@
                                                                    Yii::app()->createUrl('contacts/default/details', array('id' => $contact->id)), true);
         }
 
-        public function testMassDeleteActions()
+        /**
+         * @deletes selected leads.
+         */
+        public function testMassDeleteActionsForSelectedIds()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $leads = Contact::getAll();
+            $this->assertEquals(15, count($leads));
             $superLeadId   = self::getModelIdByModelNameAndName('Contact', 'superLead');
             $superLeadId2  = self::getModelIdByModelNameAndName('Contact', 'superLead2 superLead2son');
             $superLeadId3  = self::getModelIdByModelNameAndName('Contact', 'superLead3 superLead3son');
+            $superLeadId4  = self::getModelIdByModelNameAndName('Contact', 'myNewLead myNewLeadson');
             $superLeadId5  = self::getModelIdByModelNameAndName('Contact', 'superLead5 superLead5son');
             $superLeadId6  = self::getModelIdByModelNameAndName('Contact', 'superLead6 superLead6son');
             $superLeadId7  = self::getModelIdByModelNameAndName('Contact', 'superLead7 superLead7son');
@@ -446,6 +451,7 @@
             $superLeadId11 = self::getModelIdByModelNameAndName('Contact', 'superLead11 superLead11son');
             $superLeadId12 = self::getModelIdByModelNameAndName('Contact', 'superLead12 superLead12son');
             //Load Model MassDelete Views.
+
             //MassDelete view for single selected ids
             $this->setGetArray(array('selectedIds' => '5,6,7,8,9', 'selectAll' => '', ));  // Not Coding Standard
             $this->resetPostArray();
@@ -457,36 +463,94 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDelete');
             $this->assertFalse(strpos($content, '<strong>11</strong>&#160;Leads selected for removal') === false);
-            //MassDelete for selected ids
-            $lead2Id = Contact::getById($superLeadId2);
-            $lead3Id = Contact::getById($superLeadId3);
-            $this->setGetArray(array(
-                'selectedIds' => $superLeadId2 . ',' . $superLeadId3, // Not Coding Standard
-                'selectAll' => '',
-                'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => '5'));
-            $this->runControllerWithRedirectExceptionAndGetContent('leads/default/massDelete');
+            //MassDelete for selected Record Count
+            $leads = Contact::getAll();
+            $this->assertEquals(15, count($leads));
 
-            //Run Mass Delete using progress save.
+            //MassDelete for selected ids for paged scenario
+            $lead1 = Contact::getById($superLeadId);
+            $lead2 = Contact::getById($superLeadId2);
+            $lead3 = Contact::getById($superLeadId3);
+            $lead4 = Contact::getById($superLeadId4);
+            $lead5 = Contact::getById($superLeadId5);
+            $lead6 = Contact::getById($superLeadId6);
+
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            //save Modal MassDelete using progress load for page 2.
-            $this->setGetArray(array('selectAll' => '1', 'Contact_page' => 2));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
-            $this->assertFalse(strpos($content, '"value":100') === false);
+            //MassDelete for selected ids for page 1
+            $this->setGetArray(array(
+                'selectedIds'  => $superLeadId . ',' . $superLeadId2 . ',' .  // Not Coding Standard
+                                  $superLeadId3 . ',' . $superLeadId4 . ',' . // Not Coding Standard
+                                  $superLeadId5 . ',' . $superLeadId6,        // Not Coding Standard
+                'selectAll'    => '',
+                'massDelete'   => '',
+                'Contact_page' => 1));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $this->runControllerWithExitExceptionAndGetContent('leads/default/massDelete');
 
-            //Set page size back to old value.
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            //MassDelete for selected Record Count
+            $leads = Contact::getAll();
+            $this->assertEquals(10, count($leads));
+
+            //MassDelete for selected ids for page 2
+            $this->setGetArray(array(
+                'selectedIds'  => $superLeadId . ',' . $superLeadId2 . ',' .  // Not Coding Standard
+                                  $superLeadId3 . ',' . $superLeadId4 . ',' . // Not Coding Standard
+                                  $superLeadId5 . ',' . $superLeadId6,        // Not Coding Standard
+                'selectAll'    => '',
+                'massDelete'   => '',
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
+
+           //MassDelete for selected Record Count
+            $leads = Contact::getAll();
+            $this->assertEquals(9, count($leads));
+        }
+
+         /**
+         *Test Bug with mass delete and multiple pages when using select all
+         */
+        public function testMassDeletePagesProperlyAndRemovesAllSelected()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            //MassDelete for selected Record Count
+            $leads = Contact::getAll();
+            $this->assertEquals(9, count($leads));
+
             //save Model MassDelete for entire search result
             $this->setGetArray(array(
-                'selectAll' => '1',
+                'selectAll' => '1',           // Not Coding Standard
                 'Contact_page' => 1));
-            $this->setPostArray(array('selectedIds' => '5'));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            //Run Mass Delete using progress save for page1.
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
             $this->assertEquals(5, $pageSize);
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', 20);
-            $this->runControllerWithRedirectExceptionAndGetContent('leads/default/massDelete');
-            Yii::app()->pagination->setForCurrentUserByType('massDeleteProgressPageSize', $pageSize);
+            $this->runControllerWithExitExceptionAndGetContent('leads/default/massDelete');
+
+            //check for previous mass delete progress
+            $leads = Contact::getAll();
+            $this->assertEquals(4, count($leads));
+
+            $this->setGetArray(array(
+                'selectAll' => '1',           // Not Coding Standard
+                'Contact_page' => 2));
+            $this->setPostArray(array('selectedRecordCount' => 6));
+            //Run Mass Delete using progress save for page2.
+            $pageSize = Yii::app()->pagination->getForCurrentUserByType('massDeleteProgressPageSize');
+            $this->assertEquals(5, $pageSize);
+            $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
+
+            //calculating lead's count
+            $leads = Contact::getAll();
+            /* ContactNotLead, superLead5, superLead6 was converted to a contact.
+            *  so this leads are not removed
+            */
+            $this->assertFalse(strpos(serialize($leads), 'ContactNotLead') === false);
+            $this->assertFalse(strpos(serialize($leads), 'superLead5') === false);
+            $this->assertFalse(strpos(serialize($leads), 'superLead6') === false);
+            $this->assertEquals(3, count($leads));
         }
     }
 ?>

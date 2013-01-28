@@ -28,8 +28,7 @@
     {
         public static function getByName($name)
         {
-            assert('is_string($name) && $name != ""');
-            return self::getSubset(null, null, null, "name = '$name'");
+            return self::getByNameOrEquivalent('name', $name);
         }
 
         /**
@@ -47,7 +46,7 @@
             {
                 if (trim($this->name) == '')
                 {
-                    return Yii::t('Default', '(Unnamed)');
+                    return Zurmo::t('OpportunitiesModule', '(Unnamed)');
                 }
                 return $this->name;
             }

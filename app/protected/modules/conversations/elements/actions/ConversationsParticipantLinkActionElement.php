@@ -28,7 +28,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Participating In');
+            return Zurmo::t('ConversationsModule', 'Participating In');
         }
 
         protected function getDefaultRoute()

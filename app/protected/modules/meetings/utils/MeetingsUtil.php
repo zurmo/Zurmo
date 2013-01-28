@@ -55,7 +55,7 @@
             if ($meeting->description != null)
             {
                 $content .= '<br/>';
-                $content .= Yii::t('Default', 'Description') . ':<br/>';
+                $content .= Zurmo::t('MeetingsModule', 'Description') . ':<br/>';
                 $content .= $meeting->description;
             }
             return $content;

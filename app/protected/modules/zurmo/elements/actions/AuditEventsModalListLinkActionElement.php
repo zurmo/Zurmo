@@ -53,13 +53,13 @@
 
         protected function getAjaxLinkOptions()
         {
-            $title = Yii::t('Default', 'Audit Trail');
+            $title = Zurmo::t('ZurmoModule', 'Audit Trail');
             return ModalView::getAjaxOptionsForModalLink($title);
         }
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Audit Trail');
+            return Zurmo::t('ZurmoModule', 'Audit Trail');
         }
 
         protected function getDefaultRoute()

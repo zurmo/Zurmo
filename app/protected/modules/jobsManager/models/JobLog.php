@@ -101,7 +101,7 @@
         {
             if ($this->isProcessed == null)
             {
-                $this->addError('isProcessed', Yii::t('Default', 'Is Processed must be set as true or false, not null.'));
+                $this->addError('isProcessed', Zurmo::t('JobsManagerModule', 'Is Processed must be set as true or false, not null.'));
             }
         }
 

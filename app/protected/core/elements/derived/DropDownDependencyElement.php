@@ -112,7 +112,7 @@
             $dependencyData['valueToAlwaysShow']    = $existingValue;
             if ($parentAttributeLabel != null)
             {
-                $dependencyData['notReadyToSelectText'] = Yii::t('Default', 'First select the {attributeLabel}',
+                $dependencyData['notReadyToSelectText'] = Zurmo::t('Core', 'First select the {attributeLabel}',
                                                                  array('{attributeLabel}' => $parentAttributeLabel));
             }
             else

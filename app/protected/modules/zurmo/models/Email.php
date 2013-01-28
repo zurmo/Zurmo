@@ -30,7 +30,7 @@
         {
             if (trim($this->emailAddress) == '')
             {
-                return Yii::t('Default', '(None)');
+                return Zurmo::t('ZurmoModule', '(None)');
             }
             return $this->emailAddress;
         }

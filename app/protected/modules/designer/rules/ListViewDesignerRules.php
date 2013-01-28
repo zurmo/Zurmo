@@ -58,7 +58,7 @@
 
         public function getDisplayName()
         {
-            return Yii::t('Default', 'List View');
+            return Zurmo::t('DesignerModule', 'List View');
         }
 
         public function getNonPlaceableLayoutAttributeTypes()

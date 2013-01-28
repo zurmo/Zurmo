@@ -35,6 +35,9 @@
     $config = INSTANCE_ROOT . "/protected/config/test.php";
 
     require_once(COMMON_ROOT   . "/version.php");
+    require_once(COMMON_ROOT   . "/protected/modules/install/utils/InstallUtil.php");
+    InstallUtil::setZurmoTokenAndWriteToPerInstanceFile(INSTANCE_ROOT, 'perInstanceTest.php');
+
     require_once($debug);
     require_once($yiit);
     require_once(COMMON_ROOT . '/protected/core/components/WebApplication.php');

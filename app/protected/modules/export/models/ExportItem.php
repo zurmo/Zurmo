@@ -38,7 +38,7 @@
 
         public function __toString()
         {
-            return Yii::t('Default', '(Unnamed)');
+            return Zurmo::t('ExportModule', '(Unnamed)');
         }
 
         public static function getModuleClassName()

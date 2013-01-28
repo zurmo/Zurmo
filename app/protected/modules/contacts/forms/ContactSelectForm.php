@@ -59,9 +59,9 @@
         public function attributeLabels()
         {
             return array(
-                'contactId'          => Yii::t('Default', 'ContactsModuleSingularLabel ID',
+                'contactId'          => Zurmo::t('ContactsModule', 'ContactsModuleSingularLabel ID',
                                             LabelUtil::getTranslationParamsForAllModules()),
-                'contactName'        => Yii::t('Default', 'ContactsModuleSingularLabel Name',
+                'contactName'        => Zurmo::t('ContactsModule', 'ContactsModuleSingularLabel Name',
                                             LabelUtil::getTranslationParamsForAllModules()),
             );
         }

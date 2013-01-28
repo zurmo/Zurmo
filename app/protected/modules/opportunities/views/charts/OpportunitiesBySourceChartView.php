@@ -66,7 +66,7 @@
         {
             return array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'Opportunities By Lead Source', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('OpportunitiesModule', 'Opportunities By Lead Source', LabelUtil::getTranslationParamsForAllModules())",
                     'type'  => 'Pie3D',
                 ),
                 'global' => array(

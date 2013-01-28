@@ -55,25 +55,27 @@
             return $this->view->render();
         }
 
-        public static function getAjaxOptionsForModalLink($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center')
+        public static function getAjaxOptionsForModalLink($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center', $class = null)
         {
             assert('is_string($containerId)');
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
             assert('is_string($position) || is_array($position)');
+            assert('is_string($class) || $class == null');
             return array(
-                    'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width, $position),
+                    'beforeSend' => static::getAjaxBeforeSendOptionForModalLinkContent($title, $containerId, $height, $width, $position, $class),
                     'update'     => '#' . $containerId);
         }
 
-        public static function getAjaxBeforeSendOptionForModalLinkContent($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center')
+        public static function getAjaxBeforeSendOptionForModalLinkContent($title, $containerId = 'modalContainer', $height = 'auto', $width = 600, $position = 'center', $class = null)
         {
             assert('is_string($containerId)');
             assert('is_string($title)');
             assert('$height == "auto" || is_int($height)');
             assert('is_int($width)');
             assert('is_string($position) || is_array($position)');
+            assert('is_string($class) || $class == null');
             if ($height == 'auto')
             {
                 $heightContent = "'auto'";
@@ -90,12 +92,18 @@
             {
                 $position = '" . $position . "';
             }
+            $dialogClassContent = null;
+            if ($class != null)
+            {
+                $dialogClassContent = ", 'dialogClass':'" . $class . "'";
+            }
             // Begin Not Coding Standard
             return "js:function(){jQuery('#" . $containerId . "').html('');" .
                                     "makeLargeLoadingSpinner('" . $containerId . "');" .
                                     "window.scrollTo(0, 0);" .
                                     "jQuery('#" . $containerId . "').dialog({'title':\"" . CJavaScript::quote($title) . "\",'autoOpen':true," .
-                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width . ", 'position':" . $position . "}); return true;}";
+                                    "'modal':true,'height':" . $heightContent . ",'width':" . $width .
+                                    ", 'position':" . $position . $dialogClassContent . "}); return true;}";
             // End Not Coding Standard
         }
     }

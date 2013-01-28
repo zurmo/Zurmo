@@ -117,7 +117,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create Group');
+            return Zurmo::t('ZurmoModule', 'Create Group');
         }
     }
 ?>

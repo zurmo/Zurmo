@@ -55,7 +55,7 @@
         {
             assert('$form == null');
             $content  = '<div id="right-side-edit-view-panel"><div class="buffer"><div>';
-            $content .= "<h3>".Yii::t('Default', 'Participants') . '</h3>';
+            $content .= "<h3>".Zurmo::t('ConversationsModule', 'Participants') . '</h3>';
             $content .= $this->renderConversationParticipantsContent();
             $content .= '</div></div></div>';
             return $content;
@@ -115,7 +115,7 @@
             {
                 $element  = new FilesElement($this->model, 'null');
                 $element->nonEditableTemplate = '<div>{content}</div>';
-                $content .= '<div><strong>' . Yii::t('Default', 'Attachments'). '</strong></div>';
+                $content .= '<div><strong>' . Zurmo::t('ConversationsModule', 'Attachments'). '</strong></div>';
                 $content .= $element->render();
             }
             $element  = new ConversationItemsElement($this->model, 'null');
@@ -140,7 +140,7 @@
 
         protected function renderConversationCreateCommentContent()
         {
-            $content       = ZurmoHtml::tag('h2', array(), Yii::t('Default', 'Add Comment'));
+            $content       = ZurmoHtml::tag('h2', array(), Zurmo::t('ConversationsModule', 'Add Comment'));
             $comment       = new Comment();
             $uniquePageId  = 'CommentInlineEditForModelView';
             $redirectUrl   = Yii::app()->createUrl('/conversations/default/inlineCreateCommentFromAjax',

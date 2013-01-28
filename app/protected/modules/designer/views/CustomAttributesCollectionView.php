@@ -38,7 +38,7 @@
                 {
                     if ($('#attributeTypeName').val() == '')
                     {
-                        alert('" . CJavaScript::quote(Yii::t('Default', 'You must first select a field type')) . "');
+                        alert('" . CJavaScript::quote(Zurmo::t('DesignerModule', 'You must first select a field type')) . "');
                     }
                     else
                     {
@@ -49,7 +49,7 @@
             DropDownUtil::registerScripts();
             $content = null;
             $content .= '<div class="add-custom-field">';
-            $content .= '<h1>' . Yii::t('Default', 'Create Field') . '</h1>';
+            $content .= '<h1>' . Zurmo::t('DesignerModule', 'Create Field') . '</h1>';
             $content .= '<div class="panel-buffer"><div>' . $dropDownContent . '</div>' . $linkContent . '</div>';
             $content .= '</div>';
             return $content;
@@ -57,7 +57,7 @@
 
         protected static function getValueTypeDropDownArray()
         {
-            $data           = array('' => Yii::t('Default', 'Select a field type'));
+            $data           = array('' => Zurmo::t('DesignerModule', 'Select a field type'));
             $attributeTypes = ModelAttributeToDesignerTypeUtil::getAvailableCustomAttributeTypes();
             foreach ($attributeTypes as $attributeType)
             {

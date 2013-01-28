@@ -76,7 +76,7 @@
 
         protected static function renderToolTipContent()
         {
-            $title       = Yii::t('Default', 'If unchecked, will use system SMTP settings.');
+            $title       = Zurmo::t('UsersModule', 'If unchecked, will use system SMTP settings.');
             $content     = '<span id="custom-outbound-settings-tooltip" class="tooltip"  title="' . $title . '">?</span>';
             $qtip = new ZurmoTip(array('options' => array('position' => array('my' => 'bottom right', 'at' => 'top left'))));
             $qtip->addQTip("#custom-outbound-settings-tooltip");
@@ -85,7 +85,7 @@
 
         protected function renderLabel()
         {
-            $label = Yii::t('Default', 'Custom Outbound Email Settings');
+            $label = Zurmo::t('UsersModule', 'Custom Outbound Email Settings');
             if ($this->form === null)
             {
                 return $this->getFormattedAttributeLabel();

@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} TasksModuleSingularLabel created|{n} TasksModulePluralLabel created',
+            return Zurmo::t('TasksModule', '{n} TasksModuleSingularLabel created|{n} TasksModulePluralLabel created',
                           array_merge(array($value), LabelUtil::getTranslationParamsForAllModules()));
         }
 

@@ -32,12 +32,12 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Yii::t('Default', 'Create Conversation');
+            return Zurmo::t('ConversationsModule', 'Create Conversation');
         }
 
         protected function getMessageContent()
         {
-            return Yii::t('Default', '<h2>"A single conversation with a wise man is better than ten years of study."' .
+            return Zurmo::t('ConversationsModule', '<h2>"A single conversation with a wise man is better than ten years of study."' .
                                      '</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>' .
                                      'Start a conversation with someone "wise" in your organization about a record ' .
                                      'in the CRM or perhaps something unrelated.  When you are conversing within the ' .

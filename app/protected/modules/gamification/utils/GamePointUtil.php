@@ -150,7 +150,7 @@
             {
                 $rankLabel = '--';
             }
-            $rankingData[] = array('typeLabel' => Yii::t('Default', 'Weekly'), 'rank' => $rankLabel);
+            $rankingData[] = array('typeLabel' => Zurmo::t('GamificationModule', 'Weekly'), 'rank' => $rankLabel);
             if (isset($monthlyData[$user->id]))
             {
                 $rankLabel = $monthlyData[$user->id]['rank'];
@@ -159,7 +159,7 @@
             {
                 $rankLabel = '--';
             }
-            $rankingData[] = array('typeLabel' => Yii::t('Default', 'Monthly'), 'rank' => $rankLabel);
+            $rankingData[] = array('typeLabel' => Zurmo::t('GamificationModule', 'Monthly'), 'rank' => $rankLabel);
             if (isset($overallData[$user->id]))
             {
                 $rankLabel = $overallData[$user->id]['rank'];
@@ -168,7 +168,7 @@
             {
                 $rankLabel = '--';
             }
-            $rankingData[] = array('typeLabel' => Yii::t('Default', 'Overall'), 'rank' => $rankLabel);
+            $rankingData[] = array('typeLabel' => Zurmo::t('GamificationModule', 'Overall'), 'rank' => $rankLabel);
             return $rankingData;
         }
     }

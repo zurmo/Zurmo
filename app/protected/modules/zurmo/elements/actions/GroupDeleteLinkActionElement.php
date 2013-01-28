@@ -28,12 +28,12 @@
     {
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Delete Group');
+            return Zurmo::t('ZurmoModule', 'Delete Group');
         }
 
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)
         {
-            $htmlOptions['confirm'] = Yii::t('Default', 'Are you sure you want to delete this group?');
+            $htmlOptions['confirm'] = Zurmo::t('ZurmoModule', 'Are you sure you want to delete this group?');
             return $htmlOptions;
         }
     }

@@ -35,12 +35,12 @@
 
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Check Box');
+            return Zurmo::t('DesignerModule', 'Check Box');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'A check box');
+            return Zurmo::t('DesignerModule', 'A check box');
         }
 
         public function getAttributeTypeName()

@@ -41,13 +41,13 @@
                                                                             $actualPostSizeBytes);
             if ($postSizeBytesPassed)
             {
-                $this->message  = Yii::t('Default', 'PHP post_max_size meets minimum requirement.');
+                $this->message  = Zurmo::t('InstallModule', 'PHP post_max_size meets minimum requirement.');
             }
             else
             {
-                $this->message  = Yii::t('Default', 'PHP post_max_size setting is:') . ' ';
+                $this->message  = Zurmo::t('InstallModule', 'PHP post_max_size setting is:') . ' ';
                 $this->message .= round($actualPostSizeBytes / 1024000) . 'M ';
-                $this->message .= Yii::t('Default', 'minimum requirement is:') . ' ';
+                $this->message .= Zurmo::t('InstallModule', 'minimum requirement is:') . ' ';
                 $this->message .= round($this->minimumUploadRequireBytes / 1024000) . 'M';
                 $passed = false;
             }

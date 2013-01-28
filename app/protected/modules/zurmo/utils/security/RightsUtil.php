@@ -46,6 +46,7 @@
                     $reflectionClass = new ReflectionClass($moduleClassName);
                     if (!empty($rights))
                     {
+                        $rightsData = array();
                         foreach ($rights as $right)
                         {
                             if (!isset($rightLabels[$right]))
@@ -57,13 +58,14 @@
                             $effective = $permitable->getEffectiveRight      ($moduleClassName, $right);
                             $constants = $reflectionClass->getConstants();
                             $constantId = array_search($right, $constants);
-                            $data[$moduleClassName][$constantId] = array(
+                            $rightsData[$constantId] = array(
                                 'displayName' => $rightLabels[$right],
                                 'explicit'    => RightsUtil::getRightStringFromRight($explicit),
                                 'inherited'   => RightsUtil::getRightStringFromRight($inherited),
                                 'effective'   => RightsUtil::getRightStringFromRight($effective),
                             );
                         }
+                        $data[$moduleClassName] = ArrayUtil::subValueSort($rightsData, 'displayName', 'asort');
                     }
                 }
             }

@@ -49,7 +49,7 @@
 
         public static function getDisplayLabel()
         {
-            return Yii::t('Default', 'Sales');
+            return Zurmo::t('GamificationModule', 'Sales');
         }
     }
 ?>

@@ -33,7 +33,7 @@
         {
             $metadata = array(
                 'perUser' => array(
-                    'title' => "eval:Yii::t('Default', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
+                    'title' => "eval:Zurmo::t('LeadsModule', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules())",
                     'searchAttributes' => array('ownedItemsOnly' => true),
                 ),
                 'global' => array(
@@ -76,7 +76,7 @@
 
         public static function getDisplayDescription()
         {
-            return Yii::t('Default', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('LeadsModule', 'My LeadsModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getSearchModel()

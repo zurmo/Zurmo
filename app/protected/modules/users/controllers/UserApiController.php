@@ -43,7 +43,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['data']))
             {
-                $message = Yii::t('Default', 'Please provide data.');
+                $message = Zurmo::t('UsersModule', 'Please provide data.');
                 throw new ApiException($message);
             }
             $this->resolvePasswordParameter($params);
@@ -60,7 +60,7 @@
             $params = Yii::app()->apiHelper->getRequestParams();
             if (!isset($params['id']))
             {
-                $message = Yii::t('Default', 'The ID specified was invalid.');
+                $message = Zurmo::t('UsersModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $this->resolvePasswordParameter($params);

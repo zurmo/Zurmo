@@ -52,14 +52,14 @@
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
-                'anyCity'            => Yii::t('Default', 'Any City'),
-                'anyStreet'          => Yii::t('Default', 'Any Street'),
-                'anyState'           => Yii::t('Default', 'Any State'),
-                'anyPostalCode'      => Yii::t('Default', 'Any Postal Code'),
-                'anyCountry'         => Yii::t('Default', 'Any Country'),
-                'anyEmail'           => Yii::t('Default', 'Any Email Address'),
-                'anyInvalidEmail'    => Yii::t('Default', 'Any Invalid Email'),
-                'anyOptOutEmail'     => Yii::t('Default', 'Any Opted Out Email'),
+                'anyCity'            => Zurmo::t('AccountsModule', 'Any City'),
+                'anyStreet'          => Zurmo::t('AccountsModule', 'Any Street'),
+                'anyState'           => Zurmo::t('AccountsModule', 'Any State'),
+                'anyPostalCode'      => Zurmo::t('AccountsModule', 'Any Postal Code'),
+                'anyCountry'         => Zurmo::t('AccountsModule', 'Any Country'),
+                'anyEmail'           => Zurmo::t('AccountsModule', 'Any Email Address'),
+                'anyInvalidEmail'    => Zurmo::t('AccountsModule', 'Any Invalid Email'),
+                'anyOptOutEmail'     => Zurmo::t('AccountsModule', 'Any Opted Out Email'),
             ));
         }
 

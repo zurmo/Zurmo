@@ -167,7 +167,7 @@
             );
             if (!$renderOnClickEvent)
             {
-                return ZurmoHtml::link(Yii::t('Default', 'Edit') . '<span class="icon"></span>', '#', $htmlOptions);
+                return ZurmoHtml::link(Zurmo::t('Core', 'Edit') . '<span class="icon"></span>', '#', $htmlOptions);
             }
             else
             {
@@ -178,7 +178,7 @@
                 'uniqueLayoutId' => $uniqueLayoutId,
                 'portletId'      => $portletId,
             ));
-            return ZurmoHtml::ajaxLink(Yii::t('Default', 'Edit') . '<span class="icon"></span>', $url,
+            return ZurmoHtml::ajaxLink(Zurmo::t('Core', 'Edit') . '<span class="icon"></span>', $url,
                 static::resolveAjaxOptionsForEditLink(),
                 $htmlOptions
             );
@@ -186,7 +186,7 @@
 
         protected static function resolveAjaxOptionsForEditLink()
         {
-            $title = Yii::t('Default', 'Edit Portlet');
+            $title = Zurmo::t('Core', 'Edit Portlet');
             return ModalView::getAjaxOptionsForModalLink($title);
         }
 
@@ -211,7 +211,7 @@
                 $script .= "null, null, ";
             }
             $script .= "'" .  $columnsClass . "', '" . $this->collapsible . "', '" . $this->movable . "', ";
-            $script .= "'" . Yii::t('Default', 'This portlet will be removed, ok?') . "');";
+            $script .= "'" . Zurmo::t('Core', 'This portlet will be removed, ok?') . "');";
             Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, $script);
             $content = "";
             $content .= "<div class=\"juiportlet-columns\"> \n";

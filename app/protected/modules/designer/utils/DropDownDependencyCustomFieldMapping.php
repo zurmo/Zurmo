@@ -106,7 +106,7 @@
 
         public function getTitle()
         {
-            return Yii::t('Default', 'Level: {number}', array('{number}' => ($this->position + 1)));
+            return Zurmo::t('DesignerModule', 'Level: {number}', array('{number}' => ($this->position + 1)));
         }
 
         public function getPosition()
@@ -134,7 +134,7 @@
             {
                 throw new NotSupportedException();
             }
-            return Yii::t('Default', 'First select level {number}', array('{number}' => ($this->position)));
+            return Zurmo::t('DesignerModule', 'First select level {number}', array('{number}' => ($this->position)));
         }
 
         public function getCustomFieldData()

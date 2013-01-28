@@ -47,7 +47,7 @@
 
         public static function getPassiveDisplayLabel($value)
         {
-            return Yii::t('Default', '{n} Post created|{n} Posts created', array($value));
+            return Zurmo::t('SocialItemsModule', '{n} Post created|{n} Posts created', array($value));
         }
 
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)

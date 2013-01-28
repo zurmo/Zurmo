@@ -63,7 +63,7 @@
 
         protected static function renderTooltipContent()
         {
-            $title       = Yii::t('Default', 'Inactive users cannot log in using the web, mobile or web API. Login for' .
+            $title       = Zurmo::t('UsersModule', 'Inactive users cannot log in using the web, mobile or web API. Login for' .
                                              ' active users is controlled by group rights.');
             $content     = '<span id="user-status-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= '?</span>';
@@ -96,7 +96,7 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Status'));
+            return Yii::app()->format->text(Zurmo::t('UsersModule', 'Status'));
         }
 
         /**
@@ -110,7 +110,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Status');
+            return Zurmo::t('UsersModule', 'Status');
         }
 
         protected function getUserModel()

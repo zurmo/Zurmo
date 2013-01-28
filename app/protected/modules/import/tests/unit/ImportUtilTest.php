@@ -53,6 +53,77 @@
             assert($saved);    // Not Coding Standard
         }
 
+        public function testImportNameAndRelatedNameWithApostrophes()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            //Unfreeze since the test model is not part of the standard schema.
+            $freezeWhenComplete = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freezeWhenComplete = true;
+            }
+
+            $testModels                        = ImportModelTestItem::getAll();
+            $this->assertEquals(0, count($testModels));
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ImportModelTestItem';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::createTempTableByFileNameAndTableName('importApostropheTest.csv', $import->getTempTableName());
+
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $mappingData = array(
+                'column_0'   => ImportMappingUtil::makeStringColumnMappingData      ('string'),
+                'column_1'   => ImportMappingUtil::makeStringColumnMappingData      ('lastName'),
+                'column_2' => array('attributeIndexOrDerivedType' => 'hasOne', 'type' => 'importColumn',
+                    'mappingRulesData' => array(
+                        'RelatedModelValueTypeMappingRuleForm' =>
+                        array('type' => RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME))),
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $importResultsUtil = new ImportResultsUtil($import);
+            $messageLogger     = new ImportMessageLogger();
+            ImportUtil::importByDataProvider($dataProvider,
+                $importRules,
+                $mappingData,
+                $importResultsUtil,
+                new ExplicitReadWriteModelPermissions(),
+                $messageLogger);
+            $importResultsUtil->processStatusAndMessagesForEachRow();
+
+            //Confirm that 2 ImportModelTestItem models were created and 2 ImportModelTestItem2 were created
+            $testModels = ImportModelTestItem::getAll();
+            $this->assertEquals(2, count($testModels));
+            $this->assertEquals("Barrel'o Fun", $testModels[0]->lastName);
+            $this->assertEquals('bLastName', $testModels[1]->lastName);
+            $testModels = ImportModelTestItem2::getAll();
+            $this->assertEquals(2, count($testModels));
+            $this->assertEquals("D'Angelo Inc", $testModels[0]->name);
+            $this->assertEquals('Dartmouth Financial Services', $testModels[1]->name);
+
+            //Clear out data in table
+            R::exec("delete from " . ImportModelTestItem::getTableName('ImportModelTestItem'));
+
+            //Re-freeze if needed.
+            if ($freezeWhenComplete)
+            {
+                RedBeanDatabase::freeze();
+            }
+        }
+
+        /**
+         * @depends testImportNameAndRelatedNameWithApostrophes
+         */
         public function testSetDataAnalyzerMessagesDataToImport()
         {
             $import = new Import();

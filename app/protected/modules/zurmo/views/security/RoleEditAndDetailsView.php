@@ -78,7 +78,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create Role');
+            return Zurmo::t('ZurmoModule', 'Create Role');
         }
     }
 ?>

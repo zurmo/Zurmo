@@ -43,7 +43,7 @@
                 $this->getArray(),
                 $this->getEditableHtmlOptions()
             );
-            return Yii::t('Default', 'View') . ':' . $content;
+            return Zurmo::t('ActivitiesModule', 'View') . ':' . $content;
         }
 
         protected function renderControlNonEditable()
@@ -79,8 +79,8 @@
         protected function getArray()
         {
             $data = array(
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER => Yii::t('Default', 'Mine'),
-                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Yii::t('Default', 'Everyone')
+                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_USER => Zurmo::t('ActivitiesModule', 'Mine'),
+                        LatestActivitiesConfigurationForm::OWNED_BY_FILTER_ALL  => Zurmo::t('ActivitiesModule', 'Everyone')
                     );
 
             return $data;

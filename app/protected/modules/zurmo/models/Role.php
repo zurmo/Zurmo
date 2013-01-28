@@ -30,7 +30,7 @@
         {
             assert('is_string($name)');
             assert('$name != ""');
-            $bean = R::findOne('role', "name = '$name'");
+            $bean = R::findOne('role', "name = :name ", array(':name' => $name)); 
             assert('$bean === false || $bean instanceof RedBean_OODBBean');
             if ($bean === false)
             {
@@ -44,7 +44,7 @@
             assert('$this->name === null || is_string($this->name)');
             if ($this->name === null)
             {
-                return Yii::t('Default', '(Unnamed)');
+                return Zurmo::t('ZurmoModule', '(Unnamed)');
             }
             return $this->name;
         }

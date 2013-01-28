@@ -34,7 +34,7 @@
             $this->assertEquals('PolicyEffectiveYesNo', $rules->getEffectiveElementAttributeType());
             $this->assertFalse($rules->isElementTypeDerived());
             $compareValidationRules = array(
-                array('SomeModule__B_POLICY', 'type', 'type' => 'string'),
+                array('SomeModule__B_POLICY', 'type', 'type' => 'integer'),
             );
             $validationRules = $rules->getFormRules();
             $this->assertEquals($compareValidationRules, $validationRules);

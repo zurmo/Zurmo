@@ -31,7 +31,7 @@
     {
             protected function getHomeLinkLabel()
         {
-            return Yii::t('Default', 'Users Home');
+            return Zurmo::t('UsersModule', 'Users Home');
         }
     }
 ?>

@@ -31,7 +31,7 @@
             assert('$this->attribute == "serializedmessages"');
             return array(
                 'name'  => $this->attribute,
-                'header' => Yii::t('Default', 'Messages'),
+                'header' => Zurmo::t('ImportModule', 'Messages'),
                 'value' => 'ImportResultsUtil::convertSerializedMessagesToDisplayReadyString($data->' . $this->attribute . ')',
                 'type'  => 'raw',
 

@@ -62,13 +62,13 @@
         public function attributeLabels()
         {
             return array(
-                'imapHost'                             => Yii::t('Default', 'Host'),
-                'imapUsername'                         => Yii::t('Default', 'Username'),
-                'imapPassword'                         => Yii::t('Default', 'Password'),
-                'imapPort'                             => Yii::t('Default', 'Port'),
-                'imapSSL'                              => Yii::t('Default', 'SSL connection'),
-                'imapFolder'                           => Yii::t('Default', 'Folder'),
-                'testImapConnection'                   => Yii::t('Default', 'Test IMAP connection'),
+                'imapHost'                             => Zurmo::t('EmailMessagesModule', 'Host'),
+                'imapUsername'                         => Zurmo::t('EmailMessagesModule', 'Username'),
+                'imapPassword'                         => Zurmo::t('EmailMessagesModule', 'Password'),
+                'imapPort'                             => Zurmo::t('EmailMessagesModule', 'Port'),
+                'imapSSL'                              => Zurmo::t('EmailMessagesModule', 'SSL connection'),
+                'imapFolder'                           => Zurmo::t('EmailMessagesModule', 'Folder'),
+                'testImapConnection'                   => Zurmo::t('EmailMessagesModule', 'Test IMAP connection'),
             );
         }
     }

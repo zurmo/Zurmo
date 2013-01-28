@@ -50,7 +50,7 @@
 
         public function attributeLabels()
         {
-            return array('id'   => Yii::t('Default', 'Currency'));
+            return array('id'   => Zurmo::t('ImportModule', 'Currency'));
         }
 
         public static function getAttributeName()

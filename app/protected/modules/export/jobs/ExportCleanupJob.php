@@ -34,7 +34,7 @@
          */
         public static function getDisplayName()
         {
-           return Yii::t('Default', 'Export Cleanup Job');
+           return Zurmo::t('ExportModule', 'Export Cleanup Job');
         }
 
         /**
@@ -47,7 +47,7 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Yii::t('Default', 'Once a week, early in the morning.');
+            return Zurmo::t('ExportModule', 'Once a week, early in the morning.');
         }
 
         /**

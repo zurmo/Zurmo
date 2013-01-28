@@ -60,7 +60,7 @@
             }
             else
             {
-                $content .= Yii::t('Default', 'There are no recently viewed items.');
+                $content .= Zurmo::t('ZurmoModule', 'There are no recently viewed items.');
             }
             return $content;
         }

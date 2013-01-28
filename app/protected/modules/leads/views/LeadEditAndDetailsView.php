@@ -210,7 +210,7 @@
 
         protected function getNewModelTitleLabel()
         {
-            return Yii::t('Default', 'Create LeadsModuleSingularLabel',
+            return Zurmo::t('LeadsModule', 'Create LeadsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
         }
     }

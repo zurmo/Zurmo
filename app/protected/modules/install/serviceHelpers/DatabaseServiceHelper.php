@@ -41,7 +41,7 @@
 
         protected function checkService()
         {
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkDatabase', Yii::t('Default', 'Mysql'));
+            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkDatabase', Zurmo::t('InstallModule', 'Mysql'));
         }
 
         protected function callCheckServiceMethod($methodName, & $actualVersion)

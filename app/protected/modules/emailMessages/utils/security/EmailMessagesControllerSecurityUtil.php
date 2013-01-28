@@ -43,7 +43,7 @@
             if (!$userCanAccessContacts && !$userCanAccessLeads)
             {
                 $scenarioSpecificContent = // Not Coding Standard
-                Yii::t('Default', 'Matching archived emails requires access to either ContactsModulePluralLowerCaseLabel' .
+                Zurmo::t('EmailMessagesModule', 'Matching archived emails requires access to either ContactsModulePluralLowerCaseLabel' .
                                   ' or LeadsModulePluralLowerCaseLabel both of which you do not have. Please contact your administrator.',
                        LabelUtil::getTranslationParamsForAllModules());
                 static::processAccessFailure(false, $scenarioSpecificContent);

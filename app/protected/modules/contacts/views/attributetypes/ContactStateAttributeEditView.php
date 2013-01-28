@@ -106,7 +106,7 @@
 
         protected function renderAfterFormLayout($form)
         {
-            $titleBar = new TitleBarView (Yii::t('Default', 'Contact Statuses'));
+            $titleBar = new TitleBarView (Zurmo::t('ContactsModule', 'Contact Statuses'));
             $content  = $titleBar->render();
             $content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= '<div>' . "\n";

@@ -127,9 +127,9 @@
         public static function getPermissionLabelsForView()
         {
             return array(
-                'READ'   => Yii::t('Default', 'Read'),
-                'WRITE'  => Yii::t('Default', 'Write'),
-                'DELETE' => Yii::t('Default', 'Delete'),
+                'READ'   => Zurmo::t('ZurmoModule', 'Read'),
+                'WRITE'  => Zurmo::t('ZurmoModule', 'Write'),
+                'DELETE' => Zurmo::t('ZurmoModule', 'Delete'),
             );
         }
     }

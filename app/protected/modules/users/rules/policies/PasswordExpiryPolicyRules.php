@@ -61,7 +61,7 @@
             $attributeName1 = FormModelUtil::getDerivedAttributeNameFromTwoStrings($this->moduleName, 'POLICY_PASSWORD_EXPIRES');
             $attributeName2 = FormModelUtil::getDerivedAttributeNameFromTwoStrings($this->moduleName, $this->policy);
             $rules = array(
-                array($attributeName1, 'type', 'type' => 'string'),
+                array($attributeName1, 'type', 'type' => 'integer'),
                 array($attributeName2, 'type',    'type' => 'integer'),
                 array($attributeName2, 'length',  'max'  => 3),
                 array($attributeName2, 'validateIsRequiredByComparingHelper',

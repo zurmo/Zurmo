@@ -202,7 +202,7 @@ class Raven_Client
         }
 
         $data = array_merge($data, array(
-            'server_name' => $this->name,
+            'server_name' => $this->name . ' [Zurmo Version: ' . $data['sentry.interfaces.Message']['params']['zurmoVersion'] . ']',
             'event_id' => $event_id,
             'project' => $this->project,
             'site' => $this->site,

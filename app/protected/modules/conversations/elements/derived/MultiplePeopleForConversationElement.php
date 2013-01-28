@@ -50,7 +50,7 @@
                 'htmlOptions' => array(
                     'disabled' => $this->getDisabledValue(),
                     ),
-                'hintText' => Yii::t('Default', 'Type a User\'s name'),
+                'hintText' => Zurmo::t('ConversationsModule', 'Type a User\'s name'),
                 'onAdd'    => $this->getOnAddContent(),
                 'onDelete' => $this->getOnDeleteContent(),
             ));
@@ -78,12 +78,12 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Participants'));
+            return Yii::app()->format->text(Zurmo::t('ConversationsModule', 'Participants'));
         }
 
          public static function getDisplayName()
         {
-            return Yii::t('Default', 'Participants');
+            return Zurmo::t('ConversationsModule', 'Participants');
         }
 
         /**

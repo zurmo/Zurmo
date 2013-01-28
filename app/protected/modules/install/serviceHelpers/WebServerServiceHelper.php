@@ -36,15 +36,15 @@
             $serverName = $_SERVER['SERVER_SOFTWARE'];
             if (strrpos($serverName, 'Apache') !== false && strrpos($serverName, 'Apache') >= 0)
             {
-                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Apache'));
+                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Zurmo::t('InstallModule', 'Apache'));
             }
             elseif (strrpos($serverName, 'Microsoft-IIS') !== false && strrpos($serverName, 'Microsoft-IIS') >= 0)
             {
-                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Yii::t('Default', 'Microsoft-IIS'));
+                return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkWebServer', Zurmo::t('InstallModule', 'Microsoft-IIS'));
             }
             else
             {
-                $this->message  = Yii::t('Default', 'Zurmo runs only on Apache {apacheMinVersion} and higher or Microsoft-IIS {iisMinVersion} or higher web servers.',
+                $this->message  = Zurmo::t('InstallModule', 'Zurmo runs only on Apache {apacheMinVersion} and higher or Microsoft-IIS {iisMinVersion} or higher web servers.',
                         array(
                               '{apacheMinVersion}' => $this->minimumVersion['apache'],
                               '{iisMinVersion}'    => $this->minimumVersion['microsoft-iis'])
@@ -69,8 +69,8 @@
             $passed                  = $this->callCheckServiceMethod($methodName, $actualVersion);
             if ($passed)
             {
-                $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
-                $this->message .= ' ' .Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                $this->message  = $displayLabel . ' ' . Zurmo::t('InstallModule', 'version installed:') . ' ' . $actualVersion;
+                $this->message .= ' ' .Zurmo::t('InstallModule', 'Minimum version required:') . ' ' . $minimumVersionLabel;
                 return true;
             }
             else
@@ -81,19 +81,19 @@
                     {
                         $this->checkResultedInWarning = true;
                         $this->message  = $displayLabel . ' ' .
-                                          Yii::t('Default', 'is installed, but the version is unknown.');
+                                          Zurmo::t('InstallModule', 'is installed, but the version is unknown.');
                     }
                     else
                     {
-                        $this->message  = $displayLabel . ' ' . Yii::t('Default', 'is not installed.');
+                        $this->message  = $displayLabel . ' ' . Zurmo::t('InstallModule', 'is not installed.');
                     }
                 }
                 else
                 {
-                    $this->message  = $displayLabel . ' ' . Yii::t('Default', 'version installed:') . ' ' . $actualVersion;
+                    $this->message  = $displayLabel . ' ' . Zurmo::t('InstallModule', 'version installed:') . ' ' . $actualVersion;
                 }
                 $this->message .= "\n";
-                $this->message .= Yii::t('Default', 'Minimum version required:') . ' ' . $minimumVersionLabel;
+                $this->message .= Zurmo::t('InstallModule', 'Minimum version required:') . ' ' . $minimumVersionLabel;
                 return false;
             }
         }

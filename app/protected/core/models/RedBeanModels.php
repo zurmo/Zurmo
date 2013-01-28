@@ -115,7 +115,7 @@
          */
         public function __toString()
         {
-            return $this->count(). ' ' . Yii::t('Default', 'records') . '.';
+            return $this->count(). ' ' . Zurmo::t('Core', 'records') . '.';
         }
 
         /**

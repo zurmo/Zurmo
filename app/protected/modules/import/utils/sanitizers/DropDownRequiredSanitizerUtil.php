@@ -65,7 +65,7 @@
                 }
                 catch (NotSupportedException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list is missing corresponding custom field data.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Pick list is missing corresponding custom field data.'));
                 }
                 return $customField;
             }
@@ -76,7 +76,7 @@
                 {
                     return $value;
                 }
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Pick list value required, but missing.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Pick list value required, but missing.'));
             }
             return $value;
         }

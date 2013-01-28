@@ -100,24 +100,24 @@
 
         public function getThemeColorNamesAndLabels()
         {
-            $data = array('blue'       => Yii::t('Default', 'Blue'),
-                          'brown'      => Yii::t('Default', 'Brown'),
-                          'cherry'     => Yii::t('Default', 'Cherry'),
-                          'honey'      => Yii::t('Default', 'Honey'),
-                          'lime'       => Yii::t('Default', 'Lime'),
-                          'turquoise'  => Yii::t('Default', 'Turquoise'),
-                          'violet'     => Yii::t('Default', 'Violet'));
+            $data = array('blue'       => Zurmo::t('Core', 'Blue'),
+                          'brown'      => Zurmo::t('Core', 'Brown'),
+                          'cherry'     => Zurmo::t('Core', 'Cherry'),
+                          'honey'      => Zurmo::t('Core', 'Honey'),
+                          'lime'       => Zurmo::t('Core', 'Lime'),
+                          'turquoise'  => Zurmo::t('Core', 'Turquoise'),
+                          'violet'     => Zurmo::t('Core', 'Violet'));
             return $data;
         }
 
         public function getBackgroundTextureNamesAndLabels()
         {
-            $data = array('exclusive-paper'       => Yii::t('Default', 'Exclusive Paper'),
-                          'french-stucco'         => Yii::t('Default', 'French Stucco'),
-                          'light-noise-diagonal'  => Yii::t('Default', 'Light Noise'),
-                          'light-toast'           => Yii::t('Default', 'Light Toast'),
-                          'diagonal-noise'        => Yii::t('Default', 'Noise'),
-                          'paper'                 => Yii::t('Default', 'Paper'));
+            $data = array('exclusive-paper'       => Zurmo::t('Core', 'Exclusive Paper'),
+                          'french-stucco'         => Zurmo::t('Core', 'French Stucco'),
+                          'light-noise-diagonal'  => Zurmo::t('Core', 'Light Noise'),
+                          'light-toast'           => Zurmo::t('Core', 'Light Toast'),
+                          'diagonal-noise'        => Zurmo::t('Core', 'Noise'),
+                          'paper'                 => Zurmo::t('Core', 'Paper'));
             return $data;
         }
     }

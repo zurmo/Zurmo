@@ -98,6 +98,13 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        protected static function getByNameOrEquivalent($attributeName, $value)
+        {
+            assert('is_string($attributeName)');
+            assert('is_string($value) && $value != ""');
+            return static::getSubset(null, null, null, $attributeName . " = '" . DatabaseCompatibilityUtil::escape($value) . "'");
+        }
+
         /**
          * Special handling of the import scenario. When you are importing a model, you can potentially set the
          * created/modified user/datetime which is normally not allowed since they are read-only attributes.  This

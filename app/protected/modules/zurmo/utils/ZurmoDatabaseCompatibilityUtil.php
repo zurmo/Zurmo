@@ -1685,7 +1685,10 @@
                 }
                 catch (Exception $e)
                 {
-                    echo "Failed to drop {$row['routine_type']} {$row['routine_name']}.\n";
+                    if (isset($row))
+                    {
+                        echo "Failed to drop {$row['routine_type']} {$row['routine_name']}.\n";
+                    }
                     throw $e;
                 }
                 if (YII_DEBUG)
@@ -1701,9 +1704,6 @@
 
         public static function createIndexes()
         {
-            // To-Do: Uncoment those lines, once we fix issue with RedBean string optimizer
-            // PT: https://www.pivotaltracker.com/story/show/40694789
-            /*
             self::createUniqueIndex(
                                     'messagesource',
                                     'source_category_Index',
@@ -1721,7 +1721,6 @@
                                           'translation(767)'
                                           )
                                     );
-          */
         }
 
         protected static function createUniqueIndex($tableName, $indexName, $columns = array())

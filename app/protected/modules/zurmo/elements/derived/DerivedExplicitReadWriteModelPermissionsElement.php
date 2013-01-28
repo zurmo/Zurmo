@@ -72,7 +72,7 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', 'Who can read and write'));
+            return Yii::app()->format->text(Zurmo::t('ZurmoModule', 'Who can read and write'));
         }
 
         /**
@@ -86,7 +86,7 @@
 
         public static function getDisplayName()
         {
-            return Yii::t('Default', 'Who can read and write');
+            return Zurmo::t('ZurmoModule', 'Who can read and write');
         }
     }
 ?>

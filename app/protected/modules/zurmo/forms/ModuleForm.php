@@ -48,8 +48,8 @@
         public function attributeLabels()
         {
             return array(
-                'singularModuleLabels'  => Yii::t('Default', 'Module Name - Singular (lowercase)'),
-                'pluralModuleLabels'    => Yii::t('Default', 'Module Name - Plural (lowercase)'),
+                'singularModuleLabels'  => Zurmo::t('ZurmoModule', 'Module Name - Singular (lowercase)'),
+                'pluralModuleLabels'    => Zurmo::t('ZurmoModule', 'Module Name - Plural (lowercase)'),
             );
         }
 
@@ -60,17 +60,17 @@
             {
                 if ( empty($data[$language]))
                 {
-                    $this->addError($attribute . '[' . $language . ']', Yii::t('Default', 'Label must not be empty.'));
+                    $this->addError($attribute . '[' . $language . ']', Zurmo::t('ZurmoModule', 'Label must not be empty.'));
                 }
                 if ($data[$language] != TextUtil::strToLowerWithDefaultEncoding($data[$language]))
                 {
                     $this->addError($attribute . '[' . $language . ']',
-                                Yii::t('Default', 'Label must be all lowercase.'));
+                                Zurmo::t('ZurmoModule', 'Label must be all lowercase.'));
                 }
                 if (!preg_match('/^[\p{L}A-Za-z0-9_ ]+$/u', $data[$language])) // Not Coding Standard
                 {
                     $this->addError($attribute . '[' . $language . ']',
-                        Yii::t('Default', 'Label must not contain any special characters.'));
+                        Zurmo::t('ZurmoModule', 'Label must not contain any special characters.'));
                 }
             }
         }

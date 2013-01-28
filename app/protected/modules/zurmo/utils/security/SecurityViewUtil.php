@@ -84,6 +84,11 @@
             return $metadata;
         }
 
+        protected static function sortCategoryItems($categoryItems)
+        {
+            return ArrayUtil::subValueSort($categoryItems, 'titleLabel', 'asort');
+        }
+
         protected static function getRowByElement($element, $rowTitle = null)
         {
             assert('is_array($element)');

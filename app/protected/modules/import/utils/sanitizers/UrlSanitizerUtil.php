@@ -62,11 +62,11 @@
             $validatedUrl = $validator->validateValue($value);
             if ($validatedUrl === false)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'Invalid url format.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid url format.'));
             }
             if (strlen($validatedUrl) > $maxLength)
             {
-                throw new InvalidValueToSanitizeException(Yii::t('Default', 'URL was too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'URL was too long.'));
             }
             return $validatedUrl;
         }

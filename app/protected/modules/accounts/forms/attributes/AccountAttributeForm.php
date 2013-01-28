@@ -28,12 +28,12 @@
     {
         public static function getAttributeTypeDisplayName()
         {
-            return Yii::t('Default', 'Account');
+            return Zurmo::t('AccountsModule', 'Account');
         }
 
         public static function getAttributeTypeDisplayDescription()
         {
-            return Yii::t('Default', 'An account field');
+            return Zurmo::t('AccountsModule', 'An account field');
         }
 
         public function getAttributeTypeName()

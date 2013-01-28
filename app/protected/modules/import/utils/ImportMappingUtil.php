@@ -166,11 +166,7 @@
             assert('is_array($importInstructionsData) || $importInstructionsData == null');
             foreach ($mappingData as $columnName => $columnMappingData)
             {
-                if ($importInstructionsData == null && isset($columnMappingData['importInstructionsData']))
-                {
-                    unset($mappingData[$columnName]['importInstructionsData']);
-                }
-                elseif ($importInstructionsData != null && isset($importInstructionsData[$columnName]))
+                if ($importInstructionsData != null && isset($importInstructionsData[$columnName]))
                 {
                     $mappingData[$columnName]['importInstructionsData'] = $importInstructionsData[$columnName];
                 }

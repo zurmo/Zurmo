@@ -33,7 +33,7 @@
 
         protected function checkService()
         {
-            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkCurl', Yii::t('Default', 'Curl'));
+            return $this->checkServiceAndSetMessagesByMethodNameAndDisplayLabel('checkCurl', Zurmo::t('InstallModule', 'Curl'));
         }
     }
 ?>

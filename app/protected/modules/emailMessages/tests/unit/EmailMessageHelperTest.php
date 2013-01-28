@@ -66,7 +66,7 @@
         {
             if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
             {
-                $this->markTestSkipped(Yii::t('Default', 'Test email settings are not configured in perInstanceTest.php file.'));
+                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
             }
 
             $super = User::getByUsername('super');

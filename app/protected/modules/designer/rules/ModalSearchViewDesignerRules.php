@@ -28,7 +28,7 @@
     {
         public function getDisplayName()
         {
-            return Yii::t('Default', 'Popup Search View');
+            return Zurmo::t('DesignerModule', 'Popup Search View');
         }
 
         /**

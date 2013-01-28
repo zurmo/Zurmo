@@ -33,7 +33,7 @@
 
         protected function getDefaultLabel()
         {
-            return Yii::t('Default', 'Create Dashboard');
+            return Zurmo::t('HomeModule', 'Create Dashboard');
         }
 
         protected function getDefaultRoute()

@@ -26,6 +26,13 @@
 
     class CustomFieldsModel extends RedBeanModel
     {
+        /**
+         * In the case of CustomFieldsModels, there is no need to create a bean.  The class hierarchy can end here for
+         * bean creation.
+         * @var string
+         */
+        protected static $lastClassInBeanHeirarchy = 'CustomFieldsModel';
+
         protected function constructDerived($bean, $setDefaults)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');
