@@ -45,7 +45,7 @@
          */
         public static function getNonImportableAttributeNames()
         {
-            return array_merge(parent::getNonImportableAttributeNames(), array('currency', 'language', 'timeZone',
+            return array_merge(parent::getNonImportableAttributeNames(), array('currency', 'isActive', 'language', 'timeZone',
                                'manager', 'hash', 'createdByUser', 'modifiedByUser',
                                'createdDateTime', 'modifiedDateTime'));
         }

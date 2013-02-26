@@ -91,14 +91,21 @@
 
         protected function makeDataProviderBySearchAttributeData($searchAttributeData)
         {
+            $sortAttribute            = SearchUtil::resolveSortAttributeFromGetArray($this->modelClassName);
+            $sortDescending           = SearchUtil::resolveSortDescendingFromGetArray($this->modelClassName);
             assert('is_array($searchAttributeData)');
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType('dashboardListPageSize');
-            return new RedBeanModelDataProvider($this->modelClassName, $this->getSortAttributeForDataProvider(), false,
+            $pageSize                 = Yii::app()->pagination->resolveActiveForCurrentUserByType('dashboardListPageSize');
+            $redBeanModelDataProvider = new RedBeanModelDataProvider($this->modelClassName, $sortAttribute, $sortDescending,
                                                                 $searchAttributeData, array(
                                                                     'pagination' => array(
                                                                         'pageSize' => $pageSize,
                                                                     )
                                                                 ));
+            $sort                     = new RedBeanSort($redBeanModelDataProvider->modelClassName);
+            $sort->sortVar            = $redBeanModelDataProvider->getId().'_sort';
+            $sort->route              = 'default/index';
+            $redBeanModelDataProvider->setSort($sort);
+            return $redBeanModelDataProvider;
         }
 
         protected function getSortAttributeForDataProvider()

@@ -72,6 +72,8 @@
                 array('databasePassword',      'required'),
                 array('databasePort',          'required'),
                 array('superUserPassword',     'required'),
+                array('hostInfo',              'required'),
+                array('scriptUrl',             'required'),
                 array('databaseHostname',      'type', 'type' => 'string'),
                 array('databaseAdminUsername', 'type', 'type' => 'string'),
                 array('databaseAdminPassword', 'type', 'type' => 'string'),
@@ -125,7 +127,7 @@
                     if ($memcacheResult !== true)
                     {
                         $this->addError('memcacheHostname', Zurmo::t('InstallModule', 'Error code:') . " " .
-                        $memcacheResult[0] . '<br/>Message: ' . $memcacheResult[1]);
+                        $memcacheResult[0] . '<br/>Message(Memcached): ' . $memcacheResult[1]);
                         return;
                     }
                 }

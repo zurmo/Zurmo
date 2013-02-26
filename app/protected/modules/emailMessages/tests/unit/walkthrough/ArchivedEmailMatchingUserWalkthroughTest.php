@@ -33,6 +33,7 @@
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
+            ReadPermissionsOptimizationUtil::rebuild();
             $super->primaryEmail->emailAddress = 'super@supertest.com';
             if (!$super->save())
             {
@@ -147,7 +148,12 @@
             $message3 = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($nobody);
 
             //First check accessing where nobody can access
-            $this->runControllerWithExitExceptionAndGetContent('emailMessages/default/matchingList');
+            $content = $this->runControllerWithExitExceptionAndGetContent('emailMessages/default/matchingList');
+            $failureMessage = Zurmo::t('EmailMessagesModule', 'Matching archived emails requires access to either ContactsModulePluralLowerCaseLabel' .
+                ' or LeadsModulePluralLowerCaseLabel both of which you do not have. Please contact your administrator.',
+                LabelUtil::getTranslationParamsForAllModules());
+            $this->assertContains($failureMessage, $content);
+
             $this->setGetArray(array('id' => $message1->id));
             $this->runControllerWithNotSupportedExceptionAndGetContent ('emailMessages/default/completeMatch');
 

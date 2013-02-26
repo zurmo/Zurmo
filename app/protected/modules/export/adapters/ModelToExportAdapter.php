@@ -44,7 +44,7 @@
         public function getData()
         {
             $data       = array();
-            $data[$this->model->getAttributeLabel('id')] = $this->model->id;
+            $data[$this->resolveIdLabelToTitleCaseForExport($this->model->getAttributeLabel('id'))] = $this->model->id;
             $retrievableAttributes = static::resolveRetrievableAttributesByModel($this->model);
             foreach ($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
             {
@@ -152,6 +152,11 @@
                 $data[$exportAttributeName] = null;
             }
             return $data;
+        }
+
+        protected function resolveIdLabelToTitleCaseForExport($id)
+        {
+            return mb_convert_case($id, MB_CASE_TITLE, "UTF-8");
         }
     }
 ?>

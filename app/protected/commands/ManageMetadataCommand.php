@@ -87,7 +87,7 @@ EOD;
                 }
                 elseif ($action == 'getAllMetadata')
                 {
-                        $this->getAllMetadata();
+                    $this->getAllMetadata();
                 }
                 else
                 {
@@ -154,6 +154,7 @@ EOD;
 
         protected function getAllMetadata()
         {
+            throw new NotImplementedException();
         }
     }
 ?>

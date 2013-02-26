@@ -47,7 +47,7 @@
             $super->primaryEmail = $email;
             $saved               = $super->save();
             assert('$saved');
-            UserConfigurationFormAdapter::setTurnOffEmailNotificationsValue($super, true);
+            UserConfigurationFormAdapter::setValue($super, true, 'turnOffEmailNotifications');
 
             $userAvatarForm             = new UserAvatarForm($super);
             $userAvatarForm->avatarType = User::AVATAR_TYPE_PRIMARY_EMAIL;
@@ -66,7 +66,7 @@
             $user->setPassword($user->username);
             $saved                    = $user->save();
             assert('$saved');
-            UserConfigurationFormAdapter::setTurnOffEmailNotificationsValue($user, true);
+            UserConfigurationFormAdapter::setValue($user, true, 'turnOffEmailNotifications');
 
             $userAvatarForm             = new UserAvatarForm($user);
             $userAvatarForm->avatarType = User::AVATAR_TYPE_PRIMARY_EMAIL;
@@ -101,7 +101,7 @@
                 $user->primaryEmail       = $email;
                 $saved                    = $user->save();
                 assert('$saved');
-                UserConfigurationFormAdapter::setTurnOffEmailNotificationsValue($user, true);
+                UserConfigurationFormAdapter::setValue($user, true, 'turnOffEmailNotifications');
 
                 $userAvatarForm             = new UserAvatarForm($user);
                 $userAvatarForm->avatarType = User::AVATAR_TYPE_PRIMARY_EMAIL;

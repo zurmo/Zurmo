@@ -150,7 +150,7 @@
                 $content = '<div id="' . $tabId . '">';
                 if (!empty($panel['title']))
                 {
-                    $tabTitle = Yii::t('Default', $panel['title']); //Attempt a final translation if available.
+                    $tabTitle = Zurmo::t('Core', $panel['title']); //Attempt a final translation if available.
                 }
                 else
                 {
@@ -163,7 +163,7 @@
             {
                 if (!empty($panel['title']))
                 {
-                    return '<div class="panelTitle">' . Yii::t('Default', $panel['title']) . '</div>'; //Attempt a final translation if available.
+                    return '<div class="panelTitle">' . Zurmo::t('Core', $panel['title']) . '</div>'; //Attempt a final translation if available.
                 }
             }
         }

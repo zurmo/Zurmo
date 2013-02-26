@@ -112,7 +112,7 @@
                 foreach ($panel['rows'] as $row)
                 {
                     assert('!empty($row["title"])');
-                    $cellsContent = '<th>' . Yii::t('Default', $row['title']) . '</th>';
+                    $cellsContent = '<th>' . Zurmo::t('ZurmoModule', $row['title']) . '</th>';
                     foreach ($row['cells'] as $cell)
                     {
                         if (is_array($cell['elements']) && $this->shouldDisplayCell(ArrayUtil::getArrayValue($cell, 'detailViewOnly')))

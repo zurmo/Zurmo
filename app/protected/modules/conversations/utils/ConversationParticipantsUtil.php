@@ -159,7 +159,7 @@
             assert('$person instanceof User || $person instanceof Contact');
             if ($person->primaryEmail->emailAddress !== null &&
                 (($person instanceof User &&
-                !UserConfigurationFormAdapter::resolveAndGetTurnOffEmailNotificationsValue($person)) ||
+                !UserConfigurationFormAdapter::resolveAndGetValue($person, 'turnOffEmailNotifications')) ||
                  $person instanceof Contact))
             {
                 $userToSendMessagesFrom     = $conversation->owner;
@@ -232,10 +232,20 @@
             return $content;
         }
 
-        protected static function getUrlToConversationDetailAndRelationsView($id)
+        public static function getUrlToConversationDetailAndRelationsView($id)
         {
             assert('is_int($id)');
             return Yii::app()->createAbsoluteUrl('conversations/default/details/', array('id' => $id));
+        }
+
+        public static function getConversationParticipants(Conversation $conversation)
+        {
+            $participants = array();
+            foreach ($conversation->conversationParticipants as $participant)
+            {
+                $participants[] = static::castDownItem($participant->person);
+            }
+            return $participants;
         }
     }
 ?>

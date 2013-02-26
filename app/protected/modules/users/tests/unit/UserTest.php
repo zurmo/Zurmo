@@ -38,6 +38,46 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        public function testEmailUniquenessValidation()
+        {
+            $user = User::getByUsername('super');
+            Yii::app()->user->userModel = $user;
+
+            $user = new User();
+            $user->username = 'usera';
+            $user->lastName = 'UserA';
+            $user->setPassword('myuser');
+            $emailAddress = 'userA@example.com';
+            $user->primaryEmail->emailAddress = $emailAddress;
+            $saved = $user->save();
+            $this->assertTrue($saved);
+
+            $user2 = new User();
+            $user2->username = 'userb';
+            $user2->lastName = 'UserB';
+            $user2->setPassword('myuser');
+            $emailAddress = 'userA@example.com';
+            $user2->primaryEmail->emailAddress = $emailAddress;
+            $saved = $user2->save();
+            $this->assertFalse($saved);
+
+            $validationErrors = $user2->getErrors();
+            $this->assertTrue(count($validationErrors) > 0);
+
+            // Todo: fix array keys below
+            $this->assertTrue(isset($validationErrors['primaryEmail']));
+            $this->assertTrue(isset($validationErrors['primaryEmail']['emailAddress']));
+            $this->assertEquals('Email address already exist in system.', $validationErrors['primaryEmail']['emailAddress'][0]);
+
+            // Try to save user without email address
+            $user3 = new User();
+            $user3->username = 'userc';
+            $user3->lastName = 'UserC';
+            $user3->setPassword('myuser');
+            $saved = $user3->save();
+            $this->assertTrue($saved);
+        }
+
         public function testSetTitleValuesAndRetrieveTitleValuesFromUser()
         {
             $titles = array('Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Swami');
@@ -552,6 +592,7 @@
             $user->manager                    = User::getByUsername('bill');
             $user->setPassword('Senhor');
             $user->groups->add($group);
+            $user->save();
             $this->assertTrue($user->save());
 
             $titleId          = $user->title->id;
@@ -1006,6 +1047,39 @@
                     md5(strtolower(trim($emailAddress))) .
                     "?s=250&amp;d=identicon&amp;r=g"; // Not Coding Standard
             $this->assertContains($avatarUrl, $user->getAvatarImage(2500));
+            unset($user);
+        }
+
+        /*
+        * test for checking isActive attribute
+        */
+        public function testIsActiveOnUserSave()
+        {
+            $user = new User();
+            $user->username           = 'activeuser';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'activeuserson';
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('activeuser');
+            $this->assertEquals(1, $user->isActive);
+            unset($user);
+
+            //Change the user's status to inactive and confirm the changes in rights and isActive attribute.
+            $user = User::getByUsername('activeuser');
+            $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB, RIGHT::DENY);
+            $this->assertTrue($user->save());
+            $this->assertEquals(0, $user->isActive);
+            unset($user);
+
+            //Now change the user's status back to active.
+            $user = User::getByUsername('activeuser');
+            $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB, RIGHT::ALLOW);
+            $this->assertTrue($user->save());
+            $this->assertEquals(1, $user->isActive);
             unset($user);
         }
     }

@@ -165,14 +165,14 @@
             switch ($type)
             {
                 case 'Singular':
-                    return Yii::t('Default', static::getSingularModuleLabel());
+                    return Zurmo::t('Core', static::getSingularModuleLabel());
                 case 'SingularLowerCase':
-                    $string  = Yii::t('Default', static::getSingularModuleLabel(), array(), null, $language);
+                    $string  = Zurmo::t('Core', static::getSingularModuleLabel(), array(), null, $language);
                     return TextUtil::strToLowerWithDefaultEncoding($string);
                 case 'Plural':
-                    return Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
+                    return Zurmo::t('Core', static::getPluralModuleLabel(), array(), null, $language);
                 case 'PluralLowerCase':
-                    $string  = Yii::t('Default', static::getPluralModuleLabel(), array(), null, $language);
+                    $string  = Zurmo::t('Core', static::getPluralModuleLabel(), array(), null, $language);
                     return TextUtil::strToLowerWithDefaultEncoding($string);
             }
         }

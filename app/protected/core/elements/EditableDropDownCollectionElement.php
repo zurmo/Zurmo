@@ -104,7 +104,7 @@
                     }
                     else
                     {
-                        $items[$order]['{' . $language . 'Label}'] = Yii::t('Default', $name, array(), null, $language);
+                        $items[$order]['{' . $language . 'Label}'] = Zurmo::t('Core', $name, array(), null, $language);
                     }
                 }
             }

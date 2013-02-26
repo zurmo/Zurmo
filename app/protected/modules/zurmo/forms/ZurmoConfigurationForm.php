@@ -36,6 +36,7 @@
         public $modalListPageSize;
         public $dashboardListPageSize;
         public $gamificationModalNotificationsEnabled;
+        public $realtimeUpdatesEnabled;
 
         public function rules()
         {
@@ -56,6 +57,7 @@
                 array('dashboardListPageSize',                  'type',      'type' => 'integer'),
                 array('dashboardListPageSize',                  'numerical', 'min' => 1),
                 array('gamificationModalNotificationsEnabled',  'boolean'),
+                array('realtimeUpdatesEnabled',                 'boolean'),
             );
         }
 
@@ -69,6 +71,7 @@
                 'modalListPageSize'                     => Zurmo::t('ZurmoModule', 'Popup list page size'),
                 'dashboardListPageSize'                 => Zurmo::t('ZurmoModule', 'Dashboard portlet list page size'),
                 'gamificationModalNotificationsEnabled' => Zurmo::t('ZurmoModule', 'Enable game notification popup'),
+                'realtimeUpdatesEnabled'                => Zurmo::t('ZurmoModule', 'Enable real-time updates'),
             );
         }
     }

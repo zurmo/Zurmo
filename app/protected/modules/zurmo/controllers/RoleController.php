@@ -166,5 +166,15 @@
             }
             $this->redirect($redirectUrlParams);
         }
+
+        public function actionUsersInRoleModalList($id)
+        {
+            $model = Role::getById((int)$id);
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
+            $searchAttributeData = UsersByRoleModalListControllerUtil::makeModalSearchAttributeDataByRoleModel($model);
+            $dataProvider = UsersByRoleModalListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
+            Yii::app()->getClientScript()->setToAjaxMode();
+            echo UsersByRoleModalListControllerUtil::renderList($this, $dataProvider);
+        }
     }
 ?>

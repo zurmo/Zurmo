@@ -237,15 +237,7 @@
                                      'relatedModelRelationName'   => 'comments',
                                      'redirectUrl'                => 'someRedirect'));
             $this->setPostArray(array('Comment'          => array('description' => 'a ValidComment Name 2')));
-            try
-            {
-                $content = $this->runControllerWithRedirectExceptionAndGetContent('comments/default/inlineCreateSave');
-                $this->fail();
-            }
-            catch (AccessDeniedSecurityException $e)
-            {
-                //success.
-            }
+            $content = $this->runControllerWithAccessDeniedSecurityExceptionAndGetContent('comments/default/inlineCreateSave');
 
             //Add mary as a participant.
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -421,6 +413,10 @@
                 'type' => ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_PARTICIPANT));
             $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
             $this->assertfalse(strpos($content, 'Conversations') === false);
+            $this->setGetArray(array(
+                'type' => ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_CLOSED));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertfalse(strpos($content, 'Conversations') === false);
         }
 
         /**
@@ -481,6 +477,103 @@
                                      'relatedModelRelationName' => 'comments'));
             $super   = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $content = $this->runControllerWithNoExceptionsAndGetContent('comments/default/ajaxListForRelatedModel');
+        }
+
+        /**
+         * @depends testCommentsAjaxListForRelatedModel
+         */
+        public function testClosingConversations()
+        {
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            {
+                return;
+            }
+            $super                      = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $conversation               = new Conversation();
+            $conversation->owner        = $super;
+            $conversation->isClosed     = true;
+            $conversation->subject      = "Test closed";
+            $conversation->description  = "This is just to make the isClosed column in conversations table";
+            $conversation->save();
+            $conversations              = Conversation::getAll();
+            $this->assertEquals(2, count($conversations));
+            $this->assertEquals($super->id, $conversations[0]->owner->id);
+            //Conversation is opened
+            $this->setGetArray(array('type' => 1));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+            $this->setGetArray(array('type' => 3));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertNotContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+            $this->setGetArray(array('id' => $conversations[0]->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/changeIsClosed');
+            //Conversation is closed
+            $this->setGetArray(array('type' => 1));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertNotContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+            $this->setGetArray(array('type' => 3));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+            $this->setGetArray(array('id' => $conversations[0]->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/changeIsClosed');
+            //Conversation is Re-opened
+            $this->setGetArray(array('type' => 1));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+            $this->setGetArray(array('type' => 3));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('conversations/default/list');
+            $this->assertNotContains('details?id=' . $conversations[0]->id . '">' . $conversations[0]->subject . '</a>', $content);
+        }
+
+        /**
+         * @depends testClosingConversations
+         */
+        public function testSendEmailInNewComment()
+        {
+            if (!SECURITY_OPTIMIZED) //bug prevents this from running correctly
+            {
+                return;
+            }
+            $super                                  = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $steven                                 = User::getByUsername('steven');
+            $sally                                  = User::getByUsername('sally');
+            $mary                                   = User::getByUsername('mary');
+            $conversations                          = Conversation::getAll();
+            $this->assertEquals(2, count($conversations));
+            $this->assertEquals(0, $conversations[0]->comments->count());
+            foreach (EmailMessage::getAll() as $emailMessage)
+            {
+                $emailMessage->delete();
+            }
+            $initalQueued                           = 0;
+            $conversation                           = $conversations[0];
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $steven;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $sally;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $mary;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            UserConfigurationFormAdapter::setValue($mary, true, 'turnOffEmailNotifications');
+            //Save a new comment
+            $this->setGetArray(array('relatedModelId'             => $conversation->id,
+                                     'relatedModelClassName'      => 'Conversation',
+                                     'relatedModelRelationName'   => 'comments',
+                                     'redirectUrl'                => 'someRedirect'));
+            $this->setPostArray(array('Comment'          => array('description' => 'a ValidComment Name')));
+            $content = $this->runControllerWithRedirectExceptionAndGetContent('comments/default/inlineCreateSave');
+            $this->assertEquals(1, $conversation->comments->count());
+            $this->assertEquals($initalQueued + 1, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
+            $emailMessages                          = EmailMessage::getAll();
+            $emailMessage                           = $emailMessages[$initalQueued];
+            $this->assertEquals(2, count($emailMessage->recipients));
+            $this->assertContains('conversation', $emailMessage->subject);
+            $this->assertContains(strval($conversation), $emailMessage->subject);
+            $this->assertContains(strval($conversation->comments[0]), $emailMessage->content->htmlContent);
+            $this->assertContains(strval($conversation->comments[0]), $emailMessage->content->textContent);
         }
     }
 ?>

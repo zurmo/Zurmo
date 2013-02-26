@@ -39,6 +39,7 @@
 
         protected function renderContent()
         {
+            $this->setCssClasses(array_merge($this->getCssClasses(), array('connection-test-message')));
             return nl2br($this->message);
         }
     }

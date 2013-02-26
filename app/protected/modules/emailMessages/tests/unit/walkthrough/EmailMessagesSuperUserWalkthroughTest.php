@@ -80,6 +80,21 @@
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
 
+            //Test create email with invalid form
+            $createEmailMessageFormData = array('recipientsData' => array('to' => 'test@contact.com'),
+                                                'subject'        => '',
+                                                'content'        => '');
+            $this->setPostArray(array('ajax' => 'edit-form', 'CreateEmailMessageForm' => $createEmailMessageFormData));
+            $content = $this->runControllerWithExitExceptionAndGetContent('emailMessages/default/createEmailMessage');
+
+            //Confirm that error messages are displayed
+            $this->assertContains(Zurmo::t('emailMessagesModule', 'Subject cannot be blank.'), $content);
+
+            //Confirm that no email messages was sent
+            $this->assertEquals(0, count(EmailMessage::getAll()));
+            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+            $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
+
             //Validate form
             $createEmailMessageFormData = array('recipientsData' => array('to' => 'test@contact.com'),
                                                 'subject'        => 'test subject',

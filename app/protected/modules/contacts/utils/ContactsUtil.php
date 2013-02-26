@@ -270,15 +270,7 @@
         {
             assert('$state->id > 0');
             assert('is_string($language)');
-            if ($state->serializedLabels !== null)
-            {
-                $unserializedLabels = unserialize($state->serializedLabels);
-                if (isset($unserializedLabels[$language]))
-                {
-                    return $unserializedLabels[$language];
-                }
-            }
-            return Yii::t('Default', $state->name, array(), null, $language);
+            return $state->resolveTranslatedNameByLanguage($language);
         }
     }
 ?>

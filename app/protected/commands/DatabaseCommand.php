@@ -34,7 +34,7 @@
         {
             return <<<EOD
     USAGE
-      zurmoc database <action> <filePath>
+      zurmoc database <action> <filePath> <databaseType> <databaseHost> <databaseName> <databasePort> <databaseUsername> <databasePassword>
 
     DESCRIPTION
       This command is used to backup or restore the Zurmo database.
@@ -45,6 +45,14 @@
      * filePath: path to file
                    a. For backup, filepath where the database backup will be stored
                    b. For restore, path to file from which database will be restored
+
+     Optional Parameters(please note that if you want to use optional parameters, you must use all them):
+     * databaseType, for example mysql, oracle...
+     * databaseHost
+     * databaseName
+     * databasePort
+     * databaseUsername
+     * databasePassword
 
 EOD;
     }
@@ -75,6 +83,32 @@ EOD;
                 $filePath = $args[1];
             }
 
+            if (count($args) != 2 && count($args) != 8)
+            {
+                $this->usageError('Invalid number of arguments.');
+            }
+
+            if (count($args) == 8)
+            {
+                $databaseType     = $args[2];
+                $databaseHost     = $args[3];
+                $databaseName     = $args[4];
+                $databasePort     = $args[5];
+                $databaseUsername = $args[6];
+                $databasePassword = $args[7];
+            }
+            else
+            {
+                $databaseConnectionInfo = RedBeanDatabase::getDatabaseInfoFromDsnString(Yii::app()->db->connectionString);
+
+                $databaseType     = $databaseConnectionInfo['databaseType'];
+                $databaseHost     = $databaseConnectionInfo['databaseHost'];
+                $databaseName     = $databaseConnectionInfo['databaseName'];
+                $databasePort     = $databaseConnectionInfo['databasePort'];
+                $databaseUsername = Yii::app()->db->username;
+                $databasePassword = Yii::app()->db->password;
+            }
+
             if (!Yii::app()->isApplicationInMaintenanceMode())
             {
                 $this->usageError('Please set $maintenanceMode = true in the perInstance.php config file.');
@@ -90,15 +124,29 @@ EOD;
                 $template        = "{message}\n";
                 $messageStreamer = new MessageStreamer($template);
                 $messageStreamer->setExtraRenderBytes(0);
-                $messageStreamer->add('');
+                $messageStreamer->add(' ');
 
                 if ($action == 'backup')
                 {
-                    $this->backupDatabase($filePath, $messageStreamer);
+                    $this->backupDatabase($filePath,
+                                          $messageStreamer,
+                                          $databaseType,
+                                          $databaseHost,
+                                          $databaseName,
+                                          $databasePort,
+                                          $databaseUsername,
+                                          $databasePassword);
                 }
                 elseif ($action == 'restore')
                 {
-                    $this->restoreDatabase($filePath, $messageStreamer);
+                    $this->restoreDatabase($filePath,
+                                           $messageStreamer,
+                                           $databaseType,
+                                           $databaseHost,
+                                           $databaseName,
+                                           $databasePort,
+                                           $databaseUsername,
+                                           $databasePassword);
                 }
                 else
                 {
@@ -118,8 +166,21 @@ EOD;
          * Backup database
          * @param string $filePath
          * @param MessageStreamer $messageStreamer
+         * @param $databaseType
+         * @param $databaseHost
+         * @param $databaseName
+         * @param $databasePort
+         * @param $databaseUsername
+         * @param $databasePassword
          */
-        protected function backupDatabase($filePath, $messageStreamer)
+        protected function backupDatabase($filePath,
+                                          $messageStreamer,
+                                          $databaseType,
+                                          $databaseHost,
+                                          $databaseName,
+                                          $databasePort,
+                                          $databaseUsername,
+                                          $databasePassword)
         {
             // If file already exist, ask user to confirm that want to overwrite it.
             if (file_exists($filePath))
@@ -134,14 +195,13 @@ EOD;
             }
 
             $messageStreamer->add(Zurmo::t('Commands', 'Starting database backup process.'));
-            $databaseConnectionInfo = RedBeanDatabase::getDatabaseInfoFromDsnString(Yii::app()->db->connectionString);
 
-            $result = DatabaseCompatibilityUtil::backupDatabase($databaseConnectionInfo['databaseType'],
-                                                                $databaseConnectionInfo['databaseHost'],
-                                                                Yii::app()->db->username,
-                                                                Yii::app()->db->password,
-                                                                $databaseConnectionInfo['databasePort'],
-                                                                $databaseConnectionInfo['databaseName'],
+            $result = DatabaseCompatibilityUtil::backupDatabase($databaseType,
+                                                                $databaseHost,
+                                                                $databaseUsername,
+                                                                $databasePassword,
+                                                                $databasePort,
+                                                                $databaseName,
                                                                 $filePath);
             if ($result)
             {
@@ -165,25 +225,30 @@ EOD;
          * Database must be empty before restore starts.
          * @param string $filePath
          * @param MessageStreamer $messageStreamer
+         * @param $databaseType
+         * @param $databaseHost
+         * @param $databaseName
+         * @param $databasePort
+         * @param $databaseUsername
+         * @param $databasePassword
          */
-        protected function restoreDatabase($filePath, $messageStreamer)
+        protected function restoreDatabase($filePath,
+                                           $messageStreamer,
+                                           $databaseType,
+                                           $databaseHost,
+                                           $databaseName,
+                                           $databasePort,
+                                           $databaseUsername,
+                                           $databasePassword)
         {
             $messageStreamer->add(Zurmo::t('Commands', 'Starting database restore process.'));
-            $databaseConnectionInfo = RedBeanDatabase::getDatabaseInfoFromDsnString(Yii::app()->db->connectionString);
 
-            $tables = DatabaseCompatibilityUtil::getAllTableNames();
-            if (!empty($tables))
-            {
-                $messageStreamer->add(Zurmo::t('Commands', 'Database needs to be empty.'));
-                $messageStreamer->add(Zurmo::t('Commands', 'Database is not restored.'));
-                Yii::app()->end();
-            }
-            $result = DatabaseCompatibilityUtil::restoreDatabase($databaseConnectionInfo['databaseType'],
-                                                                 $databaseConnectionInfo['databaseHost'],
-                                                                 Yii::app()->db->username,
-                                                                 Yii::app()->db->password,
-                                                                 $databaseConnectionInfo['databasePort'],
-                                                                 $databaseConnectionInfo['databaseName'],
+            $result = DatabaseCompatibilityUtil::restoreDatabase($databaseType,
+                                                                 $databaseHost,
+                                                                 $databaseUsername,
+                                                                 $databasePassword,
+                                                                 $databasePort,
+                                                                 $databaseName,
                                                                  $filePath);
             if ($result)
             {

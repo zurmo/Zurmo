@@ -71,6 +71,9 @@
             'emailHelper' => array(
                 'class'       => 'application.modules.emailMessages.components.EmailHelper',
             ),
+            'authenticationHelper' => array(
+                'class'       => 'application.modules.zurmo.components.ZurmoAuthenticationHelper',
+            ),
             'errorHandler' => array(
                 'errorAction' => 'zurmo/default/error',
             ),
@@ -179,8 +182,7 @@
                 'importPageSize'             => 50,
                 'dashboardListPageSize'      => 5,
                 'apiListPageSize'            => 10,
-                'massDeleteProgressPageSize' => 5,
-                'unlimitedPageSize'          => 1000000000
+                'massDeleteProgressPageSize' => 5
             ),
             'performance' => array(
                 'class'          => 'application.core.components.PerformanceMeasurement',
@@ -233,6 +235,7 @@
                 'allowAutoLogin' => true,
                 'class'          => 'WebUser',
                 'loginUrl'       => array('zurmo/default/login'),
+                'loginRequiredAjaxResponse' => 'sessionTimeout',
                 'behaviors' => array(
                     'onAfterLogin' => array(
                         'class' => 'application.modules.gamification.behaviors.WebUserAfterLoginGamificationBehavior'

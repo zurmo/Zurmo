@@ -41,8 +41,7 @@
                                      '</h2><i>- Chinese proverb</i></i><div class="large-icon"></div><p>' .
                                      'Start a conversation with someone "wise" in your organization about a record ' .
                                      'in the CRM or perhaps something unrelated.  When you are conversing within the ' .
-                                     'CRM, it is better than "ten" replies in email.' .
-                                     'customer we interact with."</p>');
+                                     'CRM, it is better than "ten" replies in email.</p>');
         }
     }
 ?>

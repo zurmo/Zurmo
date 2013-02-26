@@ -28,7 +28,7 @@ function afterDynamicSearchValidateAjaxAction(form, data, hasError)
 {
     if(!afterValidateAction(form, data, hasError))
     {
-        $(form).find('.search-view-1').show();
+        $(this).closest('form').find('.search-view-1').show();       
         return false;
     }
     if(!hasError) {

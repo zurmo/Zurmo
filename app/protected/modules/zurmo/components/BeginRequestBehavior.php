@@ -98,7 +98,7 @@
                 Yii::import('application.extensions.sentrylog.RSentryLog');
                 $rSentryLog = Yii::createComponent(
                     array('class' => 'RSentryLog', 'dsn' => Yii::app()->params['sentryDsn']));
-                //Have to invoke component init(), because it is not caled automatically
+                // Have to invoke component init(), because it is not called automatically
                 $rSentryLog->init();
                 $component   = Yii::app()->getComponent('log');
                 $allRoutes   = $component->getRoutes();
@@ -254,6 +254,7 @@
                 $allowedTimeZoneConfirmBypassUrls = array (
                     Yii::app()->createUrl('users/default/confirmTimeZone'),
                     Yii::app()->createUrl('min/serve'),
+                    Yii::app()->createUrl('zurmo/default/logout'),
                 );
                 $reqestedUrl = Yii::app()->getRequest()->getUrl();
                 $isUrlAllowedToByPass = false;

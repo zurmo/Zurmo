@@ -41,7 +41,7 @@
         }
 
        /**
-         * Override to handle saving the comment against the conversation
+         * Override to handle saving the comment against the conversation/mission/social item
          * if it is not already connected.
          * (non-PHPdoc)
          * @see ModelHasRelatedItemsZurmoControllerUtil::afterSetAttributesDuringSave()
@@ -67,6 +67,26 @@
             {
                 //If a comment is connected only HAS_ONE from a related model, then add support for that here.
                 throw new NotImplementedException();
+            }
+        }
+
+        /**
+         * Override to handle sending email messages on new comment
+         */
+        protected function afterSuccessfulSave($model)
+        {
+            assert('$model instanceof Item');
+            parent::afterSuccessfulSave($model);
+            $user = Yii::app()->user->userModel;
+            if ($this->relatedModel instanceof Conversation)
+            {
+                $participants = ConversationsUtil::resolvePeopleToSendNotificationToOnNewComment($this->relatedModel, $user);
+                CommentsUtil::sendNotificationOnNewComment($this->relatedModel, $model, $user, $participants);
+            }
+            elseif ($this->relatedModel instanceof Mission)
+            {
+                $participants = MissionsUtil::resolvePeopleToSendNotificationToOnNewComment($this->relatedModel, $user);
+                CommentsUtil::sendNotificationOnNewComment($this->relatedModel, $model, $user, $participants);
             }
         }
     }

@@ -222,20 +222,60 @@
         {
             Yii::app()->user->userModel = User::getByUsername('super');
             $mappingData = array(
-                           'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'string',
+                           'column_0' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'date',
                            'mappingRulesData' =>
-                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'abc'))),
-                           'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'lastName',
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => '2012-01-12'))),
+                           'column_1' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'dateTime',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => '2012-01-12 00:45'))),
+                           'column_2' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'lastName',
                            'mappingRulesData' =>
                            array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'def'))),
+                           'column_3' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'decimal',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => '1.45'))),
+                           'column_4' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'integer',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 1))),
+                           'column_5' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'phone',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => '7844121541'))),
+                           'column_6' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'textArea',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'testTextArea'))),
+                           'column_7' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'url',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'http://www.test.com'))),
+                           'column_8' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'string',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'testString'))),
+                           'column_9' => array('type' => 'importColumn', 'attributeIndexOrDerivedType' => 'firstName',
+                           'mappingRulesData' =>
+                           array('DefaultValueModelAttributeMappingRuleForm' => array('defaultValue' => 'testfirstName'))),
             );
             $data = MappingRuleFormAndElementTypeUtil::
                     makeFormsAndElementTypesByMappingDataAndImportRulesType($mappingData, 'ImportModelTestItem');
-            $this->assertEquals(2, count($data));
-            $this->assertEquals('abc',  $data['column_0'][0]['mappingRuleForm']->defaultValue);
-            $this->assertEquals('Text', $data['column_0'][0]['elementType']);
-            $this->assertEquals('def',  $data['column_1'][0]['mappingRuleForm']->defaultValue);
-            $this->assertEquals('Text', $data['column_1'][0]['elementType']);
+            $this->assertEquals(10, count($data));
+            $this->assertEquals('2012-01-12',          $data['column_0'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Date',                $data['column_0'][0]['elementType']);
+            $this->assertEquals('2012-01-12 00:45',    $data['column_1'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('DateTime',            $data['column_1'][0]['elementType']);
+            $this->assertEquals('def',                 $data['column_2'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Text',                $data['column_2'][0]['elementType']);
+            $this->assertEquals('1.45',                $data['column_3'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Decimal',             $data['column_3'][0]['elementType']);
+            $this->assertEquals(1,                     $data['column_4'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Integer',             $data['column_4'][0]['elementType']);
+            $this->assertEquals('7844121541',          $data['column_5'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Phone',               $data['column_5'][0]['elementType']);
+            $this->assertEquals('testTextArea',        $data['column_6'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('TextArea',            $data['column_6'][0]['elementType']);
+            $this->assertEquals('http://www.test.com', $data['column_7'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Url',                 $data['column_7'][0]['elementType']);
+            $this->assertEquals('testString',          $data['column_8'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Text',                $data['column_8'][0]['elementType']);
+            $this->assertEquals('testfirstName',       $data['column_9'][0]['mappingRuleForm']->defaultValue);
+            $this->assertEquals('Text',                $data['column_9'][0]['elementType']);
         }
 
         public function testValidateMappingRuleForms()

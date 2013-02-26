@@ -42,7 +42,7 @@
          */
         protected function renderLabel()
         {
-            return Yii::t('Default', UsersModule::POLICY_PASSWORD_EXPIRES);
+            return Zurmo::t('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRES);
         }
 
         /**

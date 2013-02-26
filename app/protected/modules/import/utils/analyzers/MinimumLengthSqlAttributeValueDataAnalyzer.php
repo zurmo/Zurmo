@@ -49,7 +49,7 @@
             {
                 $label   = '{count} value(s) are too short for this field. ';
                 $label  .= 'These rows will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count, '{length}' => $minLength)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count, '{length}' => $minLength)));
             }
         }
 

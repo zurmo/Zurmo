@@ -302,6 +302,31 @@
             Yii::app()->user->userModel = $jane;
             $this->assertEquals(1, $jane->emailBoxes->count());
             $this->assertEquals($jane->emailBoxes->offsetGet(0), $boxes[1]);
+
+            // Check if only one default email box is created for user
+            $super                      = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $jimmy = UserTestHelper::createBasicUser('jimmy');
+            $saved = $jimmy->save();
+            $this->assertTrue($saved);
+            Yii::app()->user->userModel = $jimmy;
+
+            $jimmysId = $jimmy->id;
+            $this->assertTrue($jimmysId > 0);
+            $this->assertTrue($jimmy->emailBoxes->count() == 0);
+            EmailBoxUtil::getDefaultEmailBoxByUser($jimmy);
+            //still doesn't show from the user side, because it was added via the other side.
+            $this->assertTrue($jimmy->emailBoxes->count() == 0);
+            $jimmysId = $jimmy->id;
+            $jimmy->forget();
+            $jimmy    = User::getById($jimmysId);
+            //now we forgot and re-retrieved so it should still show
+            $this->assertTrue($jimmy->emailBoxes->count() == 1);
+            EmailBoxUtil::getDefaultEmailBoxByUser($jimmy); // This command shouldn't create new box
+            $boxes = EmailBox::getAll();
+            // Note that two new boxes are created for use jimmy instead one.
+            // Probably because $jimmy->emailBoxes->count() return 0
+            $this->assertEquals(3, count($boxes));
         }
     }
 ?>

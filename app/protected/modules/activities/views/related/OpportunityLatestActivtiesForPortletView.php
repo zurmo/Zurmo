@@ -53,5 +53,10 @@
         {
             return 'LatestActivitiesForOpportunityListView';
         }
+
+        public static function hasRollupSwitch()
+        {
+            return true;
+        }
     }
 ?>

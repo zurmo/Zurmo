@@ -59,7 +59,7 @@
             {
                 $label   = '{count} user status value(s) are not valid. ';
                 $label  .= 'Users that have these values will be set to active upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $invalid)));
+                $this->addMessage(Zurmo::t('UsersModule', $label, array('{count}' => $invalid)));
             }
         }
     }

@@ -49,7 +49,7 @@
             {
                 $label   = '{count} value(s) are too large for this field. ';
                 $label  .= 'These values will be truncated to a length of {length} upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count, '{length}' => $maxLength)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count, '{length}' => $maxLength)));
             }
         }
 

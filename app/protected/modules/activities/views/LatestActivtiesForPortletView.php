@@ -28,7 +28,8 @@
      * Base class used for wrapping a latest activity view.
      */
     abstract class LatestActivtiesForPortletView extends ConfigurableMetadataView
-                                                                  implements PortletViewInterface
+                                                                  implements PortletViewInterface,
+                                                                        UserPersistentSettingsCleanupForPortletInterface
     {
         /**
          * Portlet parameters passed in from the portlet.
@@ -45,6 +46,12 @@
         protected $uniqueLayoutId;
 
         protected $viewData;
+
+        protected static $persistantUserPortletConfigs = array(
+            'rollup',
+            'ownedByFilter',
+            'filteredByModelName'
+        );
 
         abstract protected function getLatestActivitiesViewClassName();
 
@@ -98,10 +105,7 @@
                 $latestActivitiesConfigurationForm = $this->makeLatestActivitiesConfigurationForm();
                 $latestActivitiesConfigurationForm->mashableModelClassNamesAndDisplayLabels =
                     $mashableModelClassNamesAndDisplayLabels;
-                if (isset($_GET[get_class($latestActivitiesConfigurationForm)]))
-                {
-                    $latestActivitiesConfigurationForm->setAttributes($_GET[get_class($latestActivitiesConfigurationForm)]);
-                }
+                $this->resolveLatestActivitiesConfigFormFromRequest($latestActivitiesConfigurationForm);
                 $latestActivitiesViewClassName = $this->getLatestActivitiesViewClassName();
                 $dataProvider = $this->getDataProvider($uniquePageId, $latestActivitiesConfigurationForm);
                 $latestView = new $latestActivitiesViewClassName($dataProvider,
@@ -114,6 +118,55 @@
                                                                  get_class(Yii::app()->findModule($this->moduleId)));
                 return $latestView->render();
             }
+        }
+
+        protected function resolveLatestActivitiesConfigFormFromRequest(&$latestActivitiesConfigurationForm)
+        {
+            $excludeFromRestore = array();
+            if (isset($_GET[get_class($latestActivitiesConfigurationForm)]))
+            {
+                $latestActivitiesConfigurationForm->setAttributes($_GET[get_class($latestActivitiesConfigurationForm)]);
+                $excludeFromRestore = $this->saveUserSettingsFromConfigForm($latestActivitiesConfigurationForm);
+            }
+            $this->restoreUserSettingsToConfigFrom($latestActivitiesConfigurationForm, $excludeFromRestore);
+        }
+
+        protected function saveUserSettingsFromConfigForm(&$latestActivitiesConfigurationForm)
+        {
+            $savedConfigs = array();
+            foreach (static::$persistantUserPortletConfigs as $persistantUserConfigItem)
+            {
+                if ($latestActivitiesConfigurationForm->$persistantUserConfigItem !==
+                    LatestActivitiesUtil::getPersistentConfigForCurrentUserByPortletIdAndKey($this->params['portletId'],
+                        $persistantUserConfigItem))
+                {
+                    LatestActivitiesUtil::setPersistentConfigForCurrentUserByPortletIdAndKey($this->params['portletId'],
+                        $persistantUserConfigItem,
+                        $latestActivitiesConfigurationForm->$persistantUserConfigItem
+                    );
+                    $savedConfigs[] = $persistantUserConfigItem;
+                }
+            }
+            return $savedConfigs;
+        }
+
+        protected function restoreUserSettingsToConfigFrom(&$latestActivitiesConfigurationForm, $excludeFromRestore)
+        {
+            foreach (static::$persistantUserPortletConfigs as $persistantUserConfigItem)
+            {
+                if (in_array($persistantUserConfigItem, $excludeFromRestore))
+                {
+                    continue;
+                }
+                $persistantUserConfigItemValue = LatestActivitiesUtil::getPersistentConfigForCurrentUserByPortletIdAndKey(
+                    $this->params['portletId'],
+                    $persistantUserConfigItem);
+                if (isset($persistantUserConfigItemValue))
+                {
+                    $latestActivitiesConfigurationForm->$persistantUserConfigItem = $persistantUserConfigItemValue;
+                }
+            }
+            return $latestActivitiesConfigurationForm;
         }
 
         protected static function includeHavingRelatedItemsWhenRenderingMashableModels()
@@ -234,6 +287,40 @@
                                                                         new $modelClassName(false));
             }
             return true;
+        }
+
+        protected static function resolvePropertyName($attribute)
+        {
+            return 'has' . ucfirst($attribute) . 'Switch';
+        }
+
+        public static function hasRollupSwitch()
+        {
+            return false;
+        }
+
+        ///*
+        public static function hasOwnedByFilterSwitch()
+        {
+            return true;
+        }
+
+        public static function hasFilteredByModelNameSwitch()
+        {
+            return true;
+        }
+
+        public static function processBeforeDelete($portletId)
+        {
+            foreach (static::$persistantUserPortletConfigs as $persistantUserConfigItem)
+            {
+                $property = static::resolvePropertyName($persistantUserConfigItem);
+                if (method_exists(get_called_class(), $property) && static::$property())
+                {
+                    LatestActivitiesUtil::setPersistentConfigForCurrentUserByPortletIdAndKey(
+                        $portletId, $persistantUserConfigItem, null);
+                }
+            }
         }
     }
 ?>

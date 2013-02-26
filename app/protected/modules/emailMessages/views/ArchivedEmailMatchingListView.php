@@ -80,5 +80,29 @@
         {
             return array();
         }
+
+        /**
+         * Override so the pagination link works properly.
+         * (non-PHPdoc)
+         * @see ListView::getCGridViewPagerParams()
+         */
+        protected function getCGridViewPagerParams()
+        {
+            $defaultGridViewPagerParams = array(
+                        'prevPageLabel'    => '<span>previous</span>',
+                        'nextPageLabel'    => '<span>next</span>',
+                        'class'            => 'EndlessListLinkPager',
+                        'paginationParams' => GetUtil::getData(),
+                        'route'            => $this->getGridViewActionRoute('matchingList', $this->moduleId),
+                    );
+            if (empty($this->gridViewPagerParams))
+            {
+                return $defaultGridViewPagerParams;
+            }
+            else
+            {
+                return array_merge($defaultGridViewPagerParams, $this->gridViewPagerParams);
+            }
+        }
     }
 ?>

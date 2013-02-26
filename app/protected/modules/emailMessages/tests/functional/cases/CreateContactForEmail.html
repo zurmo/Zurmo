@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+    <td>setSpeed</td>
+    <td>3000</td>
+    <td></td>
+</tr>
+<tr>
 	<td>setTimeout</td>
 	<td>45000</td>
 	<td></td>
@@ -55,6 +60,36 @@
 	<td>type</td>
 	<td>//div[@id='list-view']/table/tbody/tr/td/div/div/div/div[3]/div/form/div[2]/table/tbody/tr/td/div/div[3]/input</td>
 	<td>${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[3]//div/form/div[2]/table/tbody/tr[5]/td/div/div/input</td>
+	<td>bob.message.zurmotest.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[3]/div/form/div[3]/div/a[2]/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Email Address is not a valid email address.</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[3]//div/form/div[2]/table/tbody/tr[5]/td/div/div/input</td>
+    <td>bob.message@zurmotest.com</td>
+</tr>
+<tr>
+    <td>setSpeed</td>
+    <td>0</td>
+    <td></td>
 </tr>
 <tr>
 	<td>click</td>

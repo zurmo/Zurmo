@@ -115,6 +115,20 @@
         }
 
         /**
+         * For related models such as Email, Address, and CurrencyValue, a scoped error id is required.  This is because
+         * we treat those related attributes effectively on the base model for showing validation errors.
+         * @param string $inputNameIdPrefix
+         * @param string $attribute
+         * @return string
+         */
+        protected function renderScopedErrorId($inputNameIdPrefix, $attribute)
+        {
+            assert('is_string($inputNameIdPrefix)');
+            assert('is_string($attribute)');
+            return get_class($this->model) . '_' . $inputNameIdPrefix . '_' . $attribute;
+        }
+
+        /**
          * Generate editable version of the element
          * includes the lable, control, and error content
          * @return A string containing the element's content.

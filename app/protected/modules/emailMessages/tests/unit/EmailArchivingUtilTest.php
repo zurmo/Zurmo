@@ -300,52 +300,56 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
 
             $emailAddress = 'sameone234@example.com';
 
-            // User can access users, but there are no users in system with the email.
+            // There are no users in system with the email.
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        false,
-                                                                                        true);
+                                                                                        false);
             $this->assertNull($personOrAccount);
 
-            // User can access users, and there is user is system with the email.
+            // There is user is system with the email.
             Yii::app()->user->userModel = $super;
             $anotherUser->primaryEmail->emailAddress = $emailAddress;
             $this->assertTrue($anotherUser->save());
 
-            Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        false,
-                                                                                        true);
+                                                                                        false);
             $this->assertEquals($anotherUser->id, $personOrAccount->id);
             $this->assertTrue($personOrAccount instanceof User);
 
-            // Now test email with accounts, we will left user email there.
+            // Now test email with accounts.
             // User can access accounts, but there are no accounts in system with the email.
+            $anotherUser->primaryEmail->emailAddress = 'sample45@example.com';
+            $this->assertTrue($anotherUser->save());
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        true,
-                                                                                        false);
+                                                                                        true);
             $this->assertNull($personOrAccount);
 
             // User can access accounts, but there are no accounts in system with the email.
             // But there is user is system with the email
+            Yii::app()->user->userModel = $super;
+            $anotherUser->primaryEmail->emailAddress = $emailAddress;
+            $this->assertTrue($anotherUser->save());
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        true,
                                                                                         true);
             $this->assertEquals($anotherUser->id, $personOrAccount->id);
             $this->assertTrue($personOrAccount instanceof User);
 
             // User can access accounts, and there is account in system with the email.
             // But owner of email is super users, so it shouldn't return account
+            Yii::app()->user->userModel = $super;
+            $anotherUser->primaryEmail->emailAddress = 'sample45@example.com';
+            $this->assertTrue($anotherUser->save());
+
             Yii::app()->user->userModel = $super;
             $email = new Email();
             $email->emailAddress = $emailAddress;
@@ -362,8 +366,7 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        true,
-                                                                                        false);
+                                                                                        true);
             $this->assertNull($personOrAccount);
             Yii::app()->user->userModel = $super;
             $account->owner       = $user;
@@ -372,8 +375,7 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        true,
-                                                                                        false);
+                                                                                        true);
 
             $this->assertEquals($account->id, $personOrAccount->id);
             $this->assertTrue($personOrAccount instanceof Account);
@@ -384,17 +386,18 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         true,
                                                                                         true,
-                                                                                        false,
                                                                                         false);
             $this->assertNull($personOrAccount);
 
             // User can access contacts, but there are no contact in system with the email.
             // But there is user and account is system with the email
+            Yii::app()->user->userModel = $super;
+            $anotherUser->primaryEmail->emailAddress = $emailAddress;
+            $this->assertTrue($anotherUser->save());
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         false,
                                                                                         false,
-                                                                                        true,
                                                                                         true);
             $this->assertEquals($account->id, $personOrAccount->id);
             $this->assertTrue($personOrAccount instanceof Account);
@@ -418,20 +421,25 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $contact->secondaryEmail = $email;
             $this->assertTrue($account->save());
 
+            $anotherUser->primaryEmail->emailAddress = 'sample45@example.com';
+            $this->assertTrue($anotherUser->save());
+
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
                                                                                         true,
                                                                                         true,
-                                                                                        false,
                                                                                         false);
             $this->assertNull($personOrAccount);
 
             Yii::app()->user->userModel = $super;
             $contact->owner       = $user;
             $this->assertTrue($contact->save());
+
+            $anotherUser->primaryEmail->emailAddress = $emailAddress;
+            $this->assertTrue($anotherUser->save());
+
             Yii::app()->user->userModel = $user;
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress($emailAddress,
-                                                                                        true,
                                                                                         true,
                                                                                         true,
                                                                                         true);
@@ -446,17 +454,16 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $account = AccountTestHelper::createAccountByNameForOwner('newAccount', $user);
             $lead    = LeadTestHelper::createLeadbyNameForOwner('newLead', $user);
             $contact = ContactTestHelper::createContactWithAccountByNameForOwner('newContact', $user, $account);
-            $user->primaryEmail->emailAddress      = 'useremail@zurmoland.com';
             $lead->primaryEmail->emailAddress      = 'leademail@zurmoland.com';
             $lead->secondaryEmail->emailAddress    = 'leademail2@zurmoland.com';
             $account->primaryEmail->emailAddress   = 'accountemail@zurmoland.com';
             $account->secondaryEmail->emailAddress = 'accountemail2@zurmoland.com';
             $contact->primaryEmail->emailAddress   = 'contactemail@zurmoland.com';
             $contact->secondaryEmail->emailAddress = 'contactemail2@zurmoland.com';
-            $user->save();
-            $lead->save();
-            $account->save();
-            $contact->save();
+            $this->assertTrue($user->save());
+            $this->assertTrue($lead->save());
+            $this->assertTrue($account->save());
+            $this->assertTrue($contact->save());
 
             //Test with defaults
             $emailAddress    = 'useremail@zurmoland.com';
@@ -491,8 +498,10 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $this->assertEquals($personOrAccount[0], $account);
 
             //Test user can access users
+            $user->primaryEmail->emailAddress      = 'useremail@zurmoland.com';
+            $this->assertTrue($user->save());
             $emailAddress    = 'useremail@zurmoland.com';
-            $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddress($emailAddress, false, false, false, true);
+            $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddress($emailAddress, false, false, false);
             $this->assertNotEmpty($personOrAccount);
             $this->assertEquals($personOrAccount[0], $user);
         }
@@ -503,10 +512,6 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
         public function testGetPersonsAndAccountsByEmailAddressForUser()
         {
             $user = User::getByUsername('newUser');
-            //Test user with no access
-            $emailAddress    = 'useremail@zurmoland.com';
-            $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddressForUser($emailAddress, $user);
-            $this->assertEmpty($personOrAccount);
             $emailAddress    = 'leademail@zurmoland.com';
             $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddressForUser($emailAddress, $user);
             $this->assertEmpty($personOrAccount);
@@ -516,6 +521,10 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $emailAddress    = 'contactemail@zurmoland.com';
             $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddressForUser($emailAddress, $user);
             $this->assertEmpty($personOrAccount);
+            $emailAddress    = 'useremail@zurmoland.com';
+            $personOrAccount = EmailArchivingUtil::getPersonsAndAccountsByEmailAddressForUser($emailAddress, $user);
+            $this->assertEquals(1, count($personOrAccount));
+            $this->assertTrue($personOrAccount[0] instanceof User);
         }
     }
 ?>

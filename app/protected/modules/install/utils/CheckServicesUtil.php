@@ -65,7 +65,8 @@
                          'SetIncludePath',
                          'IMAP',
                          'Pdo',
-                         'PdoMysql'
+                         'PdoMysql',
+                         'Ldap'
             );
         }
 

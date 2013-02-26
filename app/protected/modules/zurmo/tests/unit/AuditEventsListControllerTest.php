@@ -57,7 +57,7 @@
             $account->owner = $user;
             $this->assertTrue($account->save());
 
-            $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
+            $searchAttributeData = AuditEventsListControllerUtil::makeModalSearchAttributeDataByAuditedModel($account);
 
             $this->assertTrue    (is_array($searchAttributeData)                  );
             $this->assertTrue    (is_array($searchAttributeData['clauses'])       );
@@ -93,7 +93,7 @@
             $account->owner = $user;
             $this->assertTrue($account->save());
 
-            $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($account);
+            $searchAttributeData = AuditEventsListControllerUtil::makeModalSearchAttributeDataByAuditedModel($account);
 
             $dataProvider = AuditEventsListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
 

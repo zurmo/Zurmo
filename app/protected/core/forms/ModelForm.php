@@ -84,6 +84,19 @@
          * If the attribute exists on the form, then assume it is not a relation since the form
          * does not support relational attributes.
          */
+        public function isOwnedRelation($attributeName)
+        {
+            if (property_exists($this, $attributeName))
+            {
+                return false;
+            }
+            return $this->model->isOwnedRelation($attributeName);
+        }
+
+        /**
+         * If the attribute exists on the form, then assume it is not a relation since the form
+         * does not support relational attributes.
+         */
         public function isRelation($attributeName)
         {
             if (property_exists($this, $attributeName))

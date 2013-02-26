@@ -591,7 +591,8 @@ table.configuration-list td:last-child a.loading .z-icon,
   color: #fff !important;
   text-decoration: underline;
 }
-.z-action-link {
+.z-action-link,
+.showAllCommentsLink {
   font-size: 11px;
   filter: alpha(opacity=50);
   -khtml-opacity: 0.5;
@@ -599,7 +600,8 @@ table.configuration-list td:last-child a.loading .z-icon,
   opacity: 0.5;
   text-decoration: none;
 }
-.z-action-link:hover {
+.z-action-link:hover,
+.showAllCommentsLink:hover {
   filter: alpha(opacity=100);
   -khtml-opacity: 1;
   -moz-opacity: 1;
@@ -723,7 +725,8 @@ body.blue .after-form-details-content a,
 body.blue .ui-dialog-title,
 body.blue .show-file-upload-box,
 body.blue #clear-search-linkmodal,
-body.blue .z-action-link {
+body.blue .z-action-link,
+body.blue .showAllCommentsLink {
   color: #282a76;
 }
 body.blue #notifications-flyout .single-notification h4,
@@ -1253,7 +1256,8 @@ body.brown .after-form-details-content a,
 body.brown .ui-dialog-title,
 body.brown .show-file-upload-box,
 body.brown #clear-search-linkmodal,
-body.brown .z-action-link {
+body.brown .z-action-link,
+body.brown .showAllCommentsLink {
   color: #547980;
 }
 body.brown #notifications-flyout .single-notification h4,
@@ -1783,7 +1787,8 @@ body.lime .after-form-details-content a,
 body.lime .ui-dialog-title,
 body.lime .show-file-upload-box,
 body.lime #clear-search-linkmodal,
-body.lime .z-action-link {
+body.lime .z-action-link,
+body.lime .showAllCommentsLink {
   color: #2b434f;
 }
 body.lime #notifications-flyout .single-notification h4,
@@ -2313,7 +2318,8 @@ body.cherry .after-form-details-content a,
 body.cherry .ui-dialog-title,
 body.cherry .show-file-upload-box,
 body.cherry #clear-search-linkmodal,
-body.cherry .z-action-link {
+body.cherry .z-action-link,
+body.cherry .showAllCommentsLink {
   color: #6c8092;
 }
 body.cherry #notifications-flyout .single-notification h4,
@@ -2843,7 +2849,8 @@ body.turquoise .after-form-details-content a,
 body.turquoise .ui-dialog-title,
 body.turquoise .show-file-upload-box,
 body.turquoise #clear-search-linkmodal,
-body.turquoise .z-action-link {
+body.turquoise .z-action-link,
+body.turquoise .showAllCommentsLink {
   color: #447799;
 }
 body.turquoise #notifications-flyout .single-notification h4,
@@ -3373,7 +3380,8 @@ body.violet .after-form-details-content a,
 body.violet .ui-dialog-title,
 body.violet .show-file-upload-box,
 body.violet #clear-search-linkmodal,
-body.violet .z-action-link {
+body.violet .z-action-link,
+body.violet .showAllCommentsLink {
   color: #4a3970;
 }
 body.violet #notifications-flyout .single-notification h4,
@@ -3903,7 +3911,8 @@ body.honey .after-form-details-content a,
 body.honey .ui-dialog-title,
 body.honey .show-file-upload-box,
 body.honey #clear-search-linkmodal,
-body.honey .z-action-link {
+body.honey .z-action-link,
+body.honey .showAllCommentsLink {
   color: #46201c;
 }
 body.honey #notifications-flyout .single-notification h4,
@@ -4378,6 +4387,7 @@ body.light-toast,
 .strong {
   font-weight: bold;
 }
+.ui-helper-hidden-accessible,
 .hidden-element {
   display: none !important;
   visibility: hidden !important;
@@ -6858,9 +6868,9 @@ div.wide.form label.hasCheckBox {
 .splash-view .EmailMessage .large-icon:after {
   content: "g";
   font-weight: normal;
-  font-size: 250px;
+  font-size: 325px;
   font-family: "ZurmoGamificationSymblyReguRg";
-  line-height: 60%;
+  line-height: 52%;
 }
 #NoUserEmailConfigurationYetView .z-label {
   z-index: auto;
@@ -7575,13 +7585,7 @@ div.wide.form label.hasCheckBox {
   vertical-align: middle;
 }
 #right-side-edit-view-panel .radio-input .hasDropDown {
-  float: left;
-  margin-top: 8px;
   padding-left: 40px;
-  margin-bottom: 0;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
 }
 #right-side-edit-view-panel input[type="text"] {
   margin-top: 6px;
@@ -8286,13 +8290,19 @@ div.wide.form label.hasCheckBox {
   vertical-align: middle;
 }
 #inline-edit-form .permissions-box div.radio-input .hasDropDown {
-  float: left;
-  margin-top: 8px;
   padding-left: 30px;
-  margin-bottom: 0;
 }
 #inline-edit-form .permissions-box input[type="text"] {
   margin-top: 6px;
+}
+div.radio-input .hasDropDown {
+  float: left;
+  margin-top: 8px;
+  padding-left: 24px;
+  margin-bottom: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .post-to-profile {
   float: right;
@@ -10609,6 +10619,11 @@ table.configuration-list td:last-child a .z-label:before {
 #LanguagesCollectionView .checkbox-column {
   padding-left: 15px !important;
 }
+/*Roles*/
+#RolesTreeListView .z-action-link {
+  font-size: 12px;
+  text-decoration: underline !important;
+}
 /*Jobs*/
 #JobsCollectionView .form form {
   padding: 0;
@@ -10823,6 +10838,10 @@ table.configuration-list td:last-child a .z-label:before {
 #UserConfigurationEditView #edit-form table {
   width: 100%;
 }
+#UserConfigurationEditView .radio-input {
+  margin-bottom: 10px;
+  display: block;
+}
 #UsersSearchView .search-view-1 table {
   border-bottom: none;
 }
@@ -10890,8 +10909,7 @@ table.configuration-list td:last-child a .z-label:before {
 #testImapConnection {
   margin: 0;
 }
-#TestImapConnectionMessageView,
-#TestEmailMessageView {
+.connection-test-message {
   min-height: 60px;
   padding: 15px;
   line-height: 150%;
@@ -12137,10 +12155,21 @@ li.token-input-token p {
   font-style: normal;
 }
 li.token-input-token span {
+  line-height: 1;
+  padding: 0 3px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
   color: #545454 !important;
-  margin-left: 5px;
+  margin-left: 2px;
   font-weight: normal;
   cursor: pointer;
+}
+li.token-input-token span:hover {
+  color: #fff !important;
+  background: #648c32;
 }
 li.token-input-token b,
 li.token-input-token p {
@@ -14532,6 +14561,210 @@ a.close-ModalGameNotification.simple-link {
 #ConversationDetailsAndRelationsView #right-side-edit-view-panel {
   top: 55px;
 }
+/*Sidebar*/
+.thred-details {
+  margin: 0 0 0 0 !important;
+  width: 100%;
+}
+.thred-details td + th {
+  padding-left: 0 !important;
+}
+.thred-details th,
+.thred-details td {
+  text-align: left;
+  padding: 5px 0;
+}
+.thred-details th {
+  color: #545454;
+}
+.thred-details .attachments {
+  margin: 0;
+  font-weight: normal;
+}
+.conversation-related-Account {
+  -webkit-text-shadow: 0 1px #ffffff;
+  -moz-text-shadow: 0 1px #ffffff;
+  -o-text-shadow: 0 1px #ffffff;
+  -ms-text-shadow: 0 1px #ffffff;
+  text-shadow: 0 1px #ffffff;
+}
+.conversation-related-Account > div {
+  position: relative;
+}
+.conversation-related-Account > div:before {
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  content: "P";
+  font-weight: normal !important;
+  position: absolute;
+  top: -3px;
+  line-height: 1;
+}
+.conversation-related-Account a {
+  position: relative;
+  left: 15px;
+}
+.conversation-related-Opportunity {
+  -webkit-text-shadow: 0 1px #ffffff;
+  -moz-text-shadow: 0 1px #ffffff;
+  -o-text-shadow: 0 1px #ffffff;
+  -ms-text-shadow: 0 1px #ffffff;
+  text-shadow: 0 1px #ffffff;
+}
+.conversation-related-Opportunity > div {
+  position: relative;
+}
+.conversation-related-Opportunity > div:before {
+  font-weight: normal;
+  font-size: 21px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  content: "9";
+  font-weight: normal !important;
+  position: absolute;
+  top: -2px;
+  line-height: 1;
+}
+.conversation-related-Opportunity a {
+  position: relative;
+  left: 15px;
+}
+.conversationStatusChangeArea {
+  margin: 15px 0;
+  padding: 0;
+}
+.conversationStatusChangeArea > span {
+  float: left;
+  line-height: 1;
+  margin: 10px 10px 0 0;
+  padding: 0 0;
+  font-weight: bold;
+}
+.conversationStatusChangeArea label {
+  display: inline !important;
+  margin-right: 10px;
+}
+.conversationStatusChangeArea label input {
+  margin-right: 5px;
+}
+.switch {
+  border: 1px solid rgba(170, 170, 170, 0.3);
+  background-color: #999999;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#777777), to(#999999));
+  background-image: -moz-linear-gradient(top, #777777, #999999);
+  background-image: -ms-linear-gradient(top, #777777, #999999);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #777777), color-stop(100%, #999999));
+  background-image: -webkit-linear-gradient(top, #777777, #999999);
+  background-image: -o-linear-gradient(top, #777777, #999999);
+  background-image: linear-gradient(top, #777777, #999999);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#777777', endColorstr='#999999', GradientType=0);
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  display: inline-block;
+  padding: 8px 2px 7px 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  float: right;
+}
+.switch-state {
+  display: inline-block;
+  position: relative;
+  width: auto;
+}
+.switch-state label {
+  position: relative;
+  z-index: 0;
+  padding: 5px 7px 5px 7px !important;
+  margin: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  color: #fff;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+}
+.switch-state input {
+  position: absolute;
+  z-index: 1;
+  left: 7px;
+  filter: alpha(opacity=0);
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.switch-state input:after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  border-radius: 50px;
+  display: block;
+  position: absolute;
+  left: -3px;
+  top: -2px;
+}
+.switch-state input:checked + label {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
+.switch-state:first-child input:checked + label {
+  background-color: #6fa82d !important;
+  background-repeat: repeat-x !important;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#97c43d), to(#6fa82d)) !important;
+  background-image: -moz-linear-gradient(top, #97c43d, #6fa82d) !important;
+  background-image: -ms-linear-gradient(top, #97c43d, #6fa82d) !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #97c43d), color-stop(100%, #6fa82d)) !important;
+  background-image: -webkit-linear-gradient(top, #97c43d, #6fa82d) !important;
+  background-image: -o-linear-gradient(top, #97c43d, #6fa82d) !important;
+  background-image: linear-gradient(top, #97c43d, #6fa82d) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97c43d', endColorstr='#6fa82d', GradientType=0) !important;
+  border: 1px solid #97c43d;
+}
+.switch-state:last-child input:checked + label {
+  background-color: #a82d31 !important;
+  background-repeat: repeat-x !important;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#c43d53), to(#a82d31)) !important;
+  background-image: -moz-linear-gradient(top, #c43d53, #a82d31) !important;
+  background-image: -ms-linear-gradient(top, #c43d53, #a82d31) !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c43d53), color-stop(100%, #a82d31)) !important;
+  background-image: -webkit-linear-gradient(top, #c43d53, #a82d31) !important;
+  background-image: -o-linear-gradient(top, #c43d53, #a82d31) !important;
+  background-image: linear-gradient(top, #c43d53, #a82d31) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c43d53', endColorstr='#a82d31', GradientType=0) !important;
+  border: 1px solid #c43d53;
+}
+.switch-state:first-child input:checked:after {
+  border: 2px solid #6fa82d;
+  box-shadow: 0 0 10px #6fa82d;
+}
+.switch-state:last-child input:checked:after {
+  border: 2px solid #a82d31;
+  box-shadow: 0 0 10px #a82d31;
+}
+.switch-state + .switch-state {
+  margin-left: 0;
+}
+/*End sidebar*/
 #ModelDetailsSummaryView h2,
 #CommentList h2,
 .CommentList h2 {
@@ -14555,7 +14788,7 @@ a.close-ModalGameNotification.simple-link {
 }
 #CommentList:last-child,
 .CommentList:last-child {
-  margin-bottom: 8px;
+  margin-bottom: 25px;
 }
 .comment {
   line-height: 140%;
@@ -14614,7 +14847,8 @@ a.close-ModalGameNotification.simple-link {
 }
 .showAllCommentsLink {
   margin-left: 130px;
-  margin-bottom: 10px;
+  position: relative;
+  top: 5px;
   display: block;
 }
 #ModelDetailsSummaryView,
@@ -14648,7 +14882,7 @@ a.close-ModalGameNotification.simple-link {
   font-size: 15px;
 }
 #CommentInlineEditForModelView {
-  margin-top: 15px;
+  margin-top: 0;
   padding-left: 120px;
 }
 #CommentInlineEditForModelView td {
@@ -14682,15 +14916,18 @@ a.close-ModalGameNotification.simple-link {
 .attachments {
   margin-top: 5px;
   list-style: none;
+  line-height: 140%;
 }
 .attachments li {
   margin-bottom: 2px;
+  padding-left: 15px;
 }
 .icon-attachment {
   font-weight: normal;
   font-size: 18px;
   font-family: "ZurmoGamificationSymblyReguRg";
-  margin-right: 4px;
+  float: left;
+  margin-left: -15px;
 }
 .icon-attachment:before {
   content: "H";
@@ -15147,7 +15384,7 @@ a.user-link {
 .outbound-settings label {
   margin-bottom: 5px;
 }
-@media screen and (min-width: 1600px) {
+@media screen and (min-width: 1601px) {
   .AppContainer {
     margin: 0 auto !important;
   }

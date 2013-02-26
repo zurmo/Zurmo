@@ -77,5 +77,18 @@
            }
            return Yii::app()->currencyHelper->getActiveCurrenciesOrSelectedCurrenciesData((int)$selectedCurrencyId);
         }
+
+        /**
+         * Override to properly handle scoping the error id for the currency id.  Without this method, the currency_id
+         * would not be appending to the error id and then a validation error would never render correctly from the
+         * yiiactiveform.
+         * @return string error
+         */
+        protected function renderError()
+        {
+            return $this->form->error($this->model, $this->attribute,
+                                      array('inputID' => $this->getEditableInputId($this->attribute, 'currency_id')), true, true,
+                                      $this->renderScopedErrorId($this->attribute, 'currency_id'));
+        }
     }
 ?>

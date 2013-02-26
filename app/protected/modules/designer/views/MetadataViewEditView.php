@@ -117,7 +117,7 @@
             $htmlOptions['name']     = 'saveLayout';
             $htmlOptions['class']    = 'attachLoading z-button';
             $aContent                = ZurmoHtml::wrapLink(Zurmo::t('DesignerModule', 'Save Layout'));
-            return ZurmoHtml::ajaxLink($aContent, '#', array(
+            return ZurmoHtml::ajaxLink($aContent, '', array(
                     'data' => 'js:designer.prepareSaveLayout("edit-form")',
                     'dataType' => 'json',
                     'type' => 'POST',

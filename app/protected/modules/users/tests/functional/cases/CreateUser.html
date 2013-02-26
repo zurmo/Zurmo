@@ -12,12 +12,17 @@
 <tr><td rowspan="1" colspan="3">CreateUser</td></tr>
 </thead><tbody>
 <tr>
+    <td>setSpeed</td>
+    <td>3000</td>
+    <td></td>
+</tr>
+<tr>
     <td>setTimeout</td>
     <td>45000</td>
     <td></td>
 </tr>
 <tr>
-    <td>store</td>
+    <td>storeGlobal</td>
     <td>javascript{Math.floor(Math.random()*11000)}</td>
     <td>randomSuffix</td>
 </tr>
@@ -124,7 +129,7 @@
 <tr>
     <td>type</td>
     <td>UserPasswordForm_primaryEmail_emailAddress</td>
-    <td>janny@jingo.com</td>
+    <td>janny${randomSuffix}.jingo.com</td>
 </tr>
 <tr>
     <td>type</td>
@@ -150,6 +155,26 @@
     <td>type</td>
     <td>UserPasswordForm_primaryAddress_country</td>
     <td>USA</td>
+</tr>
+<tr>
+    <td>click</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Email Address is not a valid email address.</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>UserPasswordForm_primaryEmail_emailAddress</td>
+    <td>janny${randomSuffix}@jingo.com</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -188,8 +213,8 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>link=janny@jingo.com</td>
-    <td>janny@jingo.com</td>
+    <td>link=janny${randomSuffix}@jingo.com</td>
+    <td>janny${randomSuffix}@jingo.com</td>
 </tr>
 <tr>
     <td>compareText</td>

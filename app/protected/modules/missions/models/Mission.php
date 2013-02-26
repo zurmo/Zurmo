@@ -24,6 +24,10 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
+    /**
+     * Class for creating Mission models.  A mission is similar to a task except a user can only have one mission at
+     * a time and a mission cannot be assigned.  A user must take a mission.
+     */
     class Mission extends OwnedSecurableItem implements MashableActivityInterface
     {
         const STATUS_AVAILABLE = 1;
@@ -197,8 +201,18 @@
             }
         }
 
+        /**
+         * After a mission is saved, if it is new, then a notification should go out to all users alerting them
+         * of a new mission.  Depending on the status change of the mission, a notification can go out as well to
+         * the owner or user who has taken the mission.
+         */
         protected function afterSave()
         {
+            if ($this->isNewModel && $this->getScenario() != 'autoBuildDatabase' &&
+                $this->getScenario() != 'importModel')
+            {
+                MissionsUtil::makeAndSubmitNewMissionNotificationMessage($this);
+            }
             if (((isset($this->originalAttributeValues['status'])) && !$this->isNewModel) &&
                 $this->originalAttributeValues['status'] != $this->status)
             {

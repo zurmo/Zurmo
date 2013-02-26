@@ -29,7 +29,7 @@
      */
     class DatabaseMaxSpRecursionDepthServiceHelper extends ServiceHelper
     {
-        protected $required = true;
+        protected $required = false;
         protected $form;
 
         protected $minimumRequiredMaxSpRecursionDepth = 20;

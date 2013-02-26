@@ -109,7 +109,7 @@
                     {
                         $message = 'Pick list value specified is missing from existing pick list and no valid instructions' .
                                    ' were provided on how to resolve this.';
-                        throw new InvalidValueToSanitizeException(Yii::t('Default', $message));
+                        throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', $message));
                     }
                     $resolvedValuesToUse[] = $resolvedValueToUse;
                 }
@@ -151,7 +151,7 @@
                 {
                     $message = 'Pick list value specified is missing from existing pick list, has a specified mapping value' .
                        ', but the mapping value is not a valid value.';
-                    throw new InvalidValueToSanitizeException(Yii::t('Default', $message));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', $message));
                 }
                 else
                 {

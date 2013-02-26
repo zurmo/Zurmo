@@ -53,9 +53,10 @@
         protected function renderControlEditable()
         {
             $this->assertModelIsValid();
+            list($attributeName, $relationAttributeName) = $this->resolveAttributeNameAndRelatedAttributes();
             list($data, $dataSelectOption)  = $this->resolveData();
             $content                        = ZurmoHtml::radioButtonList(
-                                                        $this->getEditableInputName($this->getAttributeName(), 'type'),
+                                                        $this->getEditableInputName($attributeName, $relationAttributeName),
                                                         $this->resolveSelectedType(),
                                                         $data,
                                                         $this->getEditableHtmlOptions(),
@@ -116,8 +117,9 @@
 
         public function getEditableHtmlOptions()
         {
+            list($attributeName, $relationAttributeName) = $this->resolveAttributeNameAndRelatedAttributes();
             $htmlOptions = array(
-                'id'   => $this->getEditableInputId($this->getAttributeName(), 'type'),
+                'id'   => $this->getEditableInputId($attributeName, $relationAttributeName),
             );
             $htmlOptions['template']  = '<div class="radio-input">{input}{label}</div>';
             $htmlOptions['separator'] = '';
@@ -207,11 +209,12 @@
 
         protected function renderSelectableGroupsContent()
         {
+            list($selectableAttributeName, $selectableRelationAttributeName) = $this->resolveSelectableAttributeNameAndRelatedAttributes();
             $htmlOptions = array(
-                'id'        => $this->getEditableInputId   ($this->getAttributeName(), 'nonEveryoneGroup'),
+                'id'        => $this->getEditableInputId   ($selectableAttributeName, $selectableRelationAttributeName),
                 'onclick'   => 'document.getElementById("{bindId}").checked="checked";',
             );
-            $name        = $this->getEditableInputName($this->getAttributeName(), 'nonEveryoneGroup');
+            $name        = $this->getEditableInputName($selectableAttributeName, $selectableRelationAttributeName);
             $dropDownArray = $this->getSelectableGroupsData();
             if ($dropDownArray == null)
             {
@@ -232,6 +235,21 @@
                 }
             }
             return $groupsData;
+        }
+
+        protected function resolveAttributeNameAndRelatedAttributes()
+        {
+            return array($this->getAttributeName(), 'type');
+        }
+
+        protected function resolveSelectableAttributeNameAndRelatedAttributes()
+        {
+            return array($this->getSelectableAttributeName(), 'nonEveryoneGroup');
+        }
+
+        protected function getSelectableAttributeName()
+        {
+            return $this->getAttributeName();
         }
     }
 ?>

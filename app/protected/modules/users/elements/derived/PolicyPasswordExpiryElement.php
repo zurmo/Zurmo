@@ -89,7 +89,7 @@
 
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Yii::t('Default', UsersModule::POLICY_PASSWORD_EXPIRES));
+            return Yii::app()->format->text(Zurmo::t('UsersModule', UsersModule::POLICY_PASSWORD_EXPIRES));
         }
 
         /**

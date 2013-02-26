@@ -60,7 +60,8 @@
                 'id'   => $id,
             );
             $textField = $form->textField($model, $attribute, $htmlOptions);
-            $error     = $form->error    ($model, $attribute, array('inputID' => $id));
+            $error     = $form->error    ($model, $attribute, array('inputID' => $id), true, true,
+                                          $this->renderScopedErrorId($inputNameIdPrefix, $attribute));
             return $textField . $error;
         }
 
@@ -73,7 +74,8 @@
             );
             $label         = $form->labelEx ($model, $attribute, array('for'   => $id));
             $checkBoxField = $form->checkBox($model, $attribute, $htmlOptions);
-            $error         = $form->error   ($model, $attribute, array('inputID' => $id));
+            $error         = $form->error   ($model, $attribute, array('inputID' => $id), true, true,
+                                             $this->renderScopedErrorId($inputNameIdPrefix, $attribute));
             return '<div class="hasCheckBox">' . $checkBoxField . $label . $error . '</div>';
         }
 

@@ -563,7 +563,7 @@
             => 'Sekundäre E-Mail',
         'Securable Item'
             => 'Sicherbare Artikel',
-        'Security'
+        'Security Overview'
             => 'Sicherheit',
         'See more search results by clicking the down arrow at the bottom of the screen.'
             => 'Klickst du auf den Pfeil am unteren Rand des Bildschirms, um mehr Ergebnisse zu sehen.',
@@ -687,6 +687,8 @@
             => 'Benutzer Mitgliedschaft erfolgreich gespeichert',
         'Username'
             => 'Benutzername',
+        'Users'
+            => 'Users',
         'Value'
             => 'Wert',
         'Values'
@@ -704,6 +706,8 @@
         'What is this?'
             => 'Was ist das?',
         'Who can read and write'
+            => 'Wer darf lesen und schreiben?',
+        'Who can read and write - Default'
             => 'Wer darf lesen und schreiben?',
         'Word of Mouth'
             => 'Mund zu Mund Propaganda',

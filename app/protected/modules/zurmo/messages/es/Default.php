@@ -563,7 +563,7 @@
             => 'Email secundaria',
         'Securable Item'
             => 'Artículo asegurable',
-        'Security'
+        'Security Overview'
             => 'Seguridad',
         'See more search results by clicking the down arrow at the bottom of the screen.'
             => 'Haga clic en la flecha hacia abajo para mostrar más resultados de búsqueda.',
@@ -687,6 +687,8 @@
             => 'Miembros del grupo guardado con éxito.',
         'Username'
             => 'Usuario',
+        'Users'
+            => 'Users',
         'Value'
             => 'Valor',
         'Values'
@@ -704,6 +706,8 @@
         'What is this?'
             => '¿Qué es esto?',
         'Who can read and write'
+            => 'Permiso de lectura / escritura',
+        'Who can read and write - Default'
             => 'Permiso de lectura / escritura',
         'Word of Mouth'
             => 'Boca en boca',

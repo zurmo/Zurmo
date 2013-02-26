@@ -43,6 +43,10 @@
                                 'type'            => 'ConversationsParticipantLink',
                                 'htmlOptions'     => array( 'class' => 'icon-conversations-participant' )
                             ),
+                            array(
+                                'type'            => 'ConversationsClosedLink',
+                                'htmlOptions'     => array( 'class' => 'icon-conversations-closed' )
+                            ),
                         ),
                     ),
                 ),

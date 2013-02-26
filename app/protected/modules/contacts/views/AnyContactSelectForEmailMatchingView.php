@@ -181,7 +181,12 @@
                                           text: '" . Zurmo::t('ContactsModule', 'Selected successfully') . "',
                                           permanent: false,
                                           showIcon: true,
-                                       })}",
+                                       });
+                    if($('.email-archive-item').length==0)
+                    {                                     
+                        window.location.reload();                                  
+                    }                    
+                    }",
                 ));
             // End Not Coding Standard
         }

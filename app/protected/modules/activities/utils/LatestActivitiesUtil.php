@@ -29,6 +29,8 @@
      */
     class LatestActivitiesUtil
     {
+        const CONFIG_MODULE_NAME = 'ActivitiesModule';
+
         /**
          * Based on the current user, return model class names and thier display labels.  Only include models
          * that the user has a right to access its corresponding module, as well as only models that implement the
@@ -153,6 +155,41 @@
                 }
             }
             return array_values($mashableModelClassNames);
+        }
+
+        /**
+         * Set a persistent config value for current user against portletId and keyName.
+         * @param $portletId integer Id of the portlet to set value against
+         * @param $keyName string Name of the key that should be set
+         * @param $value string|integer|boolean Value that should be assigned to keyName config
+         */
+        public static function setPersistentConfigForCurrentUserByPortletIdAndKey($portletId, $keyName, $value)
+        {
+            assert('is_int($portletId)');
+            $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
+            ZurmoConfigurationUtil::setForCurrentUserByModuleName(static::CONFIG_MODULE_NAME, $keyName, $value);
+            Yii::app()->user->setState($keyName, $value);
+        }
+
+        /**
+         * Get a persistent config value for current user against portletId and keyName.
+         * @param $portletId integer  Id of the portlet to get value against
+         * @param $keyName string Name of the key that should be returned
+         * @param bool $returnBoolean bool Force return value to be boolean (explicit type casting)
+         * @return bool|null|string
+         */
+        public static function getPersistentConfigForCurrentUserByPortletIdAndKey($portletId, $keyName, $returnBoolean = false)
+        {
+            assert('is_int($portletId)');
+            $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
+            $value = ZurmoConfigurationUtil::getForCurrentUserByModuleName(static::CONFIG_MODULE_NAME, $keyName);
+            $value = ($returnBoolean)? (boolean) $value: $value;
+            return $value;
+        }
+
+        protected static function resolveKeyNameByPortletId($portletId, $keyName)
+        {
+            return $portletId . '_' . $keyName;
         }
     }
 ?>

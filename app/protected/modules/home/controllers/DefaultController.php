@@ -74,7 +74,7 @@
             {
                 $hasDashboardAccess = false;
             }
-            if (UserConfigurationFormAdapter::resolveAndGetHideWelcomeViewValue(Yii::app()->user->userModel))
+            if (UserConfigurationFormAdapter::resolveAndGetValue(Yii::app()->user->userModel, 'hideWelcomeView'))
             {
                 //If you can see dashboards, then go there, otherwise stay here since the user has limited access.
                 if ($hasDashboardAccess)

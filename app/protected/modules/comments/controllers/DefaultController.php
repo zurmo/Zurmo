@@ -102,11 +102,7 @@
                                              sanitizePostByDesignerTypeForSavingModel($model, $postFormData);
             $model->setAttributes($sanitizedPostData);
             $model->validate();
-            $errorData = array();
-            foreach ($model->getErrors() as $attribute => $errors)
-            {
-                    $errorData[ZurmoHtml::activeId($model, $attribute)] = $errors;
-            }
+            $errorData = ZurmoActiveForm::makeErrorsDataAndResolveForOwnedModelAttributes($model);
             echo CJSON::encode($errorData);
             Yii::app()->end(0, false);
         }

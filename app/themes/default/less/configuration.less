@@ -399,6 +399,13 @@ table.configuration-list{
     }
 }
 
+/*Roles*/
+#RolesTreeListView{
+    .z-action-link{
+        font-size:12px;
+        text-decoration: underline !important;
+    }
+}
 /*Jobs*/
 #JobsCollectionView{
     .form form{
@@ -629,6 +636,10 @@ table.configuration-list{
             width:100%;
         }
     }
+    .radio-input {
+        margin-bottom: 10px;
+        display: block;
+    }
 }
 
 #UsersSearchView{
@@ -711,9 +722,7 @@ table.configuration-list{
     margin:0;
 }
 
-
-#TestImapConnectionMessageView,
-#TestEmailMessageView{
+.connection-test-message{
     min-height:60px;
     padding:15px;
     line-height:150%;

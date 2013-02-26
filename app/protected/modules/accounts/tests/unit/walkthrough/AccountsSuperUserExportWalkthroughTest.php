@@ -29,7 +29,7 @@
      */
     class AccountsSuperUserExportWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
-        protected static $asynchronusTreshold;
+        protected static $asynchronusThreshold;
 
         public static function setUpBeforeClass()
         {
@@ -41,13 +41,13 @@
             //Setup test data owned by the super user.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
 
-            self::$asynchronusTreshold = ExportModule::$asynchronusTreshold;
-            ExportModule::$asynchronusTreshold = 3;
+            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
+            ExportModule::$asynchronusThreshold = 3;
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusTreshold = self::$asynchronusTreshold;
+            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
             parent::tearDownAfterClass();
         }
 
@@ -146,7 +146,7 @@
                 }
             }
             $accounts = array();
-            for ($i = 0; $i <= (ExportModule::$asynchronusTreshold + 1); $i++)
+            for ($i = 0; $i <= (ExportModule::$asynchronusThreshold + 1); $i++)
             {
                 $accounts[] = AccountTestHelper::createAccountByNameForOwner('superAccount' . $i, $super);
             }

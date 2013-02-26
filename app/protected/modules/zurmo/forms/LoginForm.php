@@ -52,7 +52,7 @@
 
         public function authenticate($attribute, $params)
         {
-            $this->_identity = new UserIdentity($this->username, $this->password);
+            $this->_identity = Yii::app()->authenticationHelper->makeIdentity($this->username, $this->password);
             if (!$this->_identity->authenticate())
             {
                 $this->addError('password', Zurmo::t('ZurmoModule', 'Incorrect username or password.'));
@@ -63,7 +63,7 @@
         {
             if ($this->_identity === null)
             {
-                $this->_identity = new UserIdentity($this->username, $this->password);
+                $this->_identity = Yii::app()->authenticationHelper->makeIdentity($this->username, $this->password);
                 $this->_identity->authenticate();
             }
             if ($this->_identity->errorCode == UserIdentity::ERROR_NONE)

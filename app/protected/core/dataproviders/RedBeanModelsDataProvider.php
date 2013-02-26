@@ -215,7 +215,8 @@
 
         /**
          * This function is made public for unit testing. Calculates the total for each of the select statements
-         * and adds them up.
+         * and adds them up.  Setting $selectDistinct to true when calling getCount since this is always true
+         * when counting ids.
          * @return integer - total count across select statements.
          */
         public function calculateTotalItemCount()
@@ -227,8 +228,7 @@
                 {
                     $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
                     $where = ModelDataProviderUtil::makeWhere($modelClassName, $searchAttributeData, $joinTablesAdapter);
-                    $totalCount = $totalCount + RedBeanModel::getCount($joinTablesAdapter, $where, $modelClassName,
-                                                                       $joinTablesAdapter->getSelectDistinct());
+                    $totalCount = $totalCount + RedBeanModel::getCount($joinTablesAdapter, $where, $modelClassName, true);
                 }
             }
             return $totalCount;

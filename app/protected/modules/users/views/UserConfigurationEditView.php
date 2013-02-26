@@ -97,6 +97,28 @@
                                         ),
                                     )
                                 ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'enableDesktopNotifications', 'type' => 'DesktopNotification'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            ),
+                        ),
+                        array(
+                            'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'null', 'type' => 'DerivedExplicitReadWritePermissionsUserConfig'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                             ),
                         ),
                     ),

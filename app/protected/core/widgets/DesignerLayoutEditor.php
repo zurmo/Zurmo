@@ -185,7 +185,8 @@
 
         protected function renderSaveModalSettingsButton()
         {
-            return ZurmoHtml::button(Zurmo::t('Core', 'Save and Close'), array('class' => 'z-button green-button attachLoading', 'onclick' => '$(this).closest(".modal-settings").dialog("close");'));
+            return ZurmoHtml::link(ZurmoHtml::wrapLink(Zurmo::t('Core', 'Save and Close')), '#',
+                                   array('class' => 'green-button', 'onclick' => '$(this).closest(".modal-settings").dialog("close");')); // Not Coding Standard
         }
 
         /**
@@ -242,7 +243,7 @@
             {
                 $content .= '<li id="panel_' . $panelNumber . '" class="ui-state-default sortable-panel">';
                 $content .= '<span class="panel-title-display">' .
-                            Yii::t('Default', ArrayUtil::getArrayValue($panel, 'title')) . '&#160;</span>';
+                            Zurmo::t('Core', ArrayUtil::getArrayValue($panel, 'title')) . '&#160;</span>';
                 if ($this->canMovePanels)
                 {
                     if (!ArrayUtil::getArrayValue($panel, 'locked'))

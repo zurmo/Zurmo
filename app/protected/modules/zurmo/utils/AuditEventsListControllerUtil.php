@@ -51,7 +51,7 @@
          * @param object $model AuditEvent
          * @return array $searchAttributeData
          */
-        public static function makeSearchAttributeDataByAuditedModel($model)
+        public static function makeModalSearchAttributeDataByAuditedModel($model)
         {
             assert('$model instanceof Item');
             $searchAttributeData = array();

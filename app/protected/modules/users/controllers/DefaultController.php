@@ -70,6 +70,8 @@
                                               'listPageSize', get_class($this->getModule()));
             $user                           = new User(false);
             $searchForm                     = new UsersSearchForm($user);
+            $listAttributesSelector         = new ListAttributesSelector('UsersListView', get_class($this->getModule()));
+            $searchForm->setListAttributesSelector($listAttributesSelector);
             $dataProvider = $this->resolveSearchDataProvider(
                 $searchForm,
                 $pageSize,
@@ -390,7 +392,7 @@
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user = User::getById(intval($id));
-            $title           = Zurmo::t('UsersModule', 'Security');
+            $title           = Zurmo::t('UsersModule', 'Security Overview');
             $breadcrumbLinks = array(strval($user) => array('default/details',  'id' => $id), $title);
             $modulePermissionsData =  PermissionsUtil::getAllModulePermissionsDataByPermitable($user);
             $modulePermissionsForm = ModulePermissionsFormUtil::makeFormFromPermissionsData($modulePermissionsData);

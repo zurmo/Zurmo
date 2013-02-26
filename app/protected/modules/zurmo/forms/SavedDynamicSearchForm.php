@@ -65,7 +65,7 @@
         {
             if ($this->$attribute == null)
             {
-                $this->addError('savedSearchName', Yii::t('yii', '{attribute} cannot be blank.',
+                $this->addError('savedSearchName', Zurmo::t('ZurmoModule', '{attribute} cannot be blank.',
                                                         array('{attribute}' => Zurmo::t('ZurmoModule', 'Name'))));
             }
         }

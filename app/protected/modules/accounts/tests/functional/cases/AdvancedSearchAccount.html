@@ -12,6 +12,11 @@
 <tr><td rowspan="1" colspan="3">Advanced Search Account</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>setTimeout</td>
 	<td>45000</td>
 	<td></td>
@@ -270,6 +275,21 @@
 	<td></td>
 </tr>
 <!--Test saving a search with no name-->
+<tr>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
 <tr>
 	<td>click</td>
 	<td>id=more-search-link</td>

@@ -190,10 +190,15 @@
             unset($this->originalAttributeValues['hash']);
             assert('!isset($this->originalAttributeValues["hash"])');
             $saved = parent::save($runValidation, $attributeNames);
+
             if ($saved && $passwordChanged)
             {
                 AuditEvent::
                 logAuditEvent('UsersModule', UsersModule::AUDIT_EVENT_USER_PASSWORD_CHANGED, $this->username, $this);
+            }
+            if ($saved)
+            {
+                $this->setIsActive();
             }
             return $saved;
         }
@@ -619,7 +624,8 @@
                     'language',
                     'timeZone',
                     'username',
-                    'serializedAvatarData'
+                    'serializedAvatarData',
+                    'isActive'
                 ),
                 'relations' => array(
                     'currency'         => array(RedBeanModel::HAS_ONE,             'Currency'),
@@ -650,7 +656,9 @@
                     array('username', 'match',   'pattern' => '/^[^A-Z]+$/', // Not Coding Standard
                                                'message' => 'Username must be lowercase.'),
                     array('username', 'length',  'max'   => 64),
-                    array('serializedAvatarData',   'type',  'type' => 'string')
+                    array('serializedAvatarData',   'type',  'type' => 'string'),
+                    array('isActive', 'readOnly'),
+                    array('isActive', 'boolean')
                 ),
                 'elements' => array(
                 ),
@@ -666,6 +674,74 @@
                 ),
             );
             return $metadata;
+        }
+
+        /**
+         * Check if user's email is unique.
+         * @return boolean
+         */
+        public function beforeValidate()
+        {
+            if (!parent::beforeValidate())
+            {
+                return false;
+            }
+
+            if (isset($this->primaryEmail) &&
+                isset($this->primaryEmail->emailAddress) &&
+                !$this->isUserEmailUnique($this->primaryEmail->emailAddress))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * Check if user email is unique in system. Two users can't share same email address.
+         * @param string $email
+         * @return bool
+         */
+        public function isUserEmailUnique($email)
+        {
+            if (!$email)
+            {
+                return true;
+            }
+
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'emailAddress',
+                    'operatorType'         => 'equals',
+                    'value'                => $email,
+                )
+            );
+
+            if ($this->id > 0)
+            {
+                $searchAttributeData['clauses'][2] = array(
+                    'attributeName'        => 'id',
+                    'operatorType'         => 'doesNotEqual',
+                    'value'                => $this->id,
+                );
+                $searchAttributeData['structure'] = '(1 AND 2)';
+            }
+            else
+            {
+                $searchAttributeData['structure'] = '1';
+            }
+
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('User');
+            $where = RedBeanModelDataProvider::makeWhere('User', $searchAttributeData, $joinTablesAdapter);
+            $models = User::getSubset($joinTablesAdapter, null, null, $where, null);
+
+            if (count($models) > 0 && is_array($models))
+            {
+                // Todo: fix form element name below
+                $this->primaryEmail->addError('emailAddress', Zurmo::t('UsersModule', 'Email address already exist in system.'));
+                return false;
+            }
+            return true;
         }
 
         public static function isTypeDeletable()
@@ -692,6 +768,28 @@
                 $emailSignature = $this->emailSignatures[0];
             }
             return $emailSignature;
+        }
+
+        /**
+        * to change isActive attribute  properly during save
+        */
+        protected function setIsActive()
+        {
+            if ( Right::DENY == $this->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB) ||
+                Right::DENY == $this->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE) ||
+                Right::DENY == $this->getExplicitActualRight ('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API))
+            {
+                $isActive = false;
+            }
+            else
+            {
+                $isActive = true;
+            }
+            if ($this->isActive != $isActive)
+            {
+               $this->unrestrictedSet('isActive', $isActive);
+               $this->save();
+            }
         }
     }
 ?>

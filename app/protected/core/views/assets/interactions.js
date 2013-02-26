@@ -77,11 +77,11 @@ $(window).ready(function(){
         }
     }
 
-    resizeWhiteArea();
     $(window).resize(function(){
-      //console.log('resizing');
       resizeWhiteArea();
     });
+    
+    resizeWhiteArea();
 
     /*Autogrow text areas*/
     $('textarea').autogrow();
@@ -138,7 +138,7 @@ $(window).ready(function(){
         speed : 2, // Rounds per second
         trail : 100, // Afterglow percentage
         shadow : false, // Whether to render a shadow
-        hwaccel : false, // Whether to use hardware acceleration
+        hwaccel : true, // Whether to use hardware acceleration
         className : 'spinner', // The CSS class to assign to the spinner
         zIndsex : 2e9, // The z-index (defaults to 2000000000)
         top : 0, // Top position relative to parent in px
@@ -229,7 +229,7 @@ function attachLoadingSpinner( id, state, color ){
         color = '#fff';
     }
     if ( state === true ){
-        $( '.z-spinner', '#' + id ).spin({
+        $( '.form-toolbar .z-spinner, #Login .z-spinner', '#' + id ).spin({
             lines : 9, // The number of lines to draw
             length : 2.3, // The length of each line
             width : 1.7, // The line thickness
@@ -239,14 +239,14 @@ function attachLoadingSpinner( id, state, color ){
             speed : 2.5, // Rounds per second
             trail : 37, // Afterglow percentage
             shadow : false, // Whether to render a shadow
-            hwaccel : false, // Whether to use hardware acceleration
+            hwaccel : true, // Whether to use hardware acceleration
             className : 'spinner', // The CSS class to assign to the spinner
             zIndex : 2e9, // The z-index (defaults to 2000000000)
             top : 4, // Top position relative to parent in px
             left : 0 // Left position relative to parent in px
         });
     } else {
-        $( '.z-spinner', '#' + id ).spin(false);
+        $( '.form-toolbar .z-spinner, #Login .z-spinner', '#' + id ).spin(false);
     }
 }
 
@@ -267,7 +267,7 @@ function makeSmallLoadingSpinner(id, color){
         speed : 1.5, // Rounds per second
         trail : 35, // Afterglow percentage
         shadow : false, // Whether to render a shadow
-        hwaccel : false, // Whether to use hardware acceleration
+        hwaccel : true, // Whether to use hardware acceleration
         className : 'spinner', // The CSS class to assign to the spinner
         zIndsex : 2e9, // The z-index (defaults to 2000000000)
         top : 0, // Top position relative to parent in px
@@ -287,7 +287,7 @@ function makeLargeLoadingSpinner(id){
         speed : 2.5, // Rounds per second
         trail : 37, // Afterglow percentage
         shadow : false, // Whether to render a shadow
-        hwaccel : false, // Whether to use hardware acceleration
+        hwaccel : true, // Whether to use hardware acceleration
         className : 'spinner', // The CSS class to assign to the spinner
         zIndex : 2e9, // The z-index (defaults to 2000000000)
         top : 0, // Top position relative to parent in px
@@ -307,7 +307,7 @@ function makeToggableSpinner(context, state){
             speed : 2.5, // Rounds per second
             trail : 100, // Afterglow percentage
             shadow : false, // Whether to render a shadow
-            hwaccel : false, // Whether to use hardware acceleration
+            hwaccel : true, // Whether to use hardware acceleration
             className : 'spinner', // The CSS class to assign to the spinner
             zIndsex : 2e9, // The z-index (defaults to 2000000000)
             top : 0, // Top position relative to parent in px

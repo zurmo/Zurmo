@@ -99,7 +99,7 @@
             {
                 $msg  = 'You cannot view this chart because you do not have access ';
                 $msg .= 'to the ' . $modulePluralLabelName . ' module.';
-                return Yii::t('Default', $msg, LabelUtil::getTranslationParamsForAllModules());
+                return Zurmo::t('ZurmoModule', $msg, LabelUtil::getTranslationParamsForAllModules());
             }
             return null;
         }

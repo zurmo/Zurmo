@@ -133,7 +133,7 @@
             $highlight = ZurmoHtml::tag('em', array(), Zurmo::t('Core', 'Mass Delete is not reversable.'));
             $message  = ZurmoHtml::tag('strong', array(), $highlight) .
                         '<br />' . '<strong>' . $this->selectedRecordCount . '</strong>&#160;' .
-                        Yii::t('Default', $this->moduleClassName . 'SingularLabel|' . $this->moduleClassName . 'PluralLabel',
+                        Zurmo::t('Core', $this->moduleClassName . 'SingularLabel|' . $this->moduleClassName . 'PluralLabel',
                         array_merge(array($this->selectedRecordCount), LabelUtil::getTranslationParamsForAllModules())) .
                         ' ' . Zurmo::t('Core', 'selected for removal.');
             return ZurmoHtml::wrapLabel($message, 'operation-description');

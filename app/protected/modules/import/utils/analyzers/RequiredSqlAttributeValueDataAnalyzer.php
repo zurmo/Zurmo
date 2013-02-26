@@ -58,7 +58,7 @@
             {
                 $label   = '{count} value(s) are missing and are required. ';
                 $label  .= 'These rows will be skipped on import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count)));
             }
         }
     }

@@ -70,7 +70,7 @@
             {
                 $label   = '{count} dropdown value(s) are missing from the field. ';
                 $label  .= 'These values will be added upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count)));
             }
 
             if ($missingDropDowns != null)

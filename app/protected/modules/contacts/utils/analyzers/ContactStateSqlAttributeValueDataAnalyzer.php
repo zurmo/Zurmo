@@ -52,7 +52,7 @@
             {
                 $label   = '{count} value(s) are not valid. ';
                 $label  .= 'Rows that have these values will be skipped upon import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->addMessage(Zurmo::t('ContactsModule', $label, array('{count}' => $count)));
             }
         }
 

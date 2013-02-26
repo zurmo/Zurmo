@@ -46,7 +46,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'sentDateTime', 'type' => 'EmailMessageSentDateTime'),
+                                                array('attributeName' => 'sentDateTime', 'type' => 'DateTime'),
                                             ),
                                         ),
                                     )

@@ -211,5 +211,19 @@
             $className = get_class($this->getView());
             return $className::canUserConfigure();
         }
+
+        public function beforeDelete()
+        {
+            $className = $this->viewType . 'View';
+            if (@class_exists($className))
+            {
+                $class = new ReflectionClass($className);
+                if ($class->implementsInterface('UserPersistentSettingsCleanupForPortletInterface'))
+                {
+                    $className::processBeforeDelete($this->id);
+                }
+            }
+            return parent::beforeDelete();
+        }
     }
 ?>

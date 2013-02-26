@@ -51,7 +51,12 @@
                 $user->lastName     = "Uuuuuu{$i}son";
                 $user->setPassword("uuuuu$i");
                 $this->assertTrue($user->save());
-                $u[] = $user;
+                // Clear cache of user so the groups properly get accounted for later.
+                // This was needed after we added isActive which calls save twice when a user is
+                // created
+                $id = $user->id;
+                $user->forget();
+                $u[] = User::getById($id);
             }
 
             $a = new Group();
@@ -213,11 +218,14 @@
             $this->assertTrue($a->contains($c));
             $this->assertTrue($a->contains($d));
 
-            $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[0]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[1]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[2]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[3]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[4]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[0]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[1]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[2]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[3]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('AAA', $u[4]->id));
+            }
 
             $this->assertTrue($b->contains($u[1]));
             $this->assertTrue($b->contains($u[2]));
@@ -226,40 +234,55 @@
             $this->assertTrue($b->contains($c));
             $this->assertTrue($b->contains($d));
 
-            $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[1]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[2]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[3]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[4]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[1]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[2]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[3]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('BBB', $u[4]->id));
+            }
 
             $this->assertTrue($c->contains($u[3]));
             $this->assertTrue($d->contains($u[4]));
 
-            $this->assertTrue(self::fastContainsUserByGroupName('CCC', $u[3]->id));
-            $this->assertTrue(self::fastContainsUserByGroupName('DDD', $u[4]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertTrue(self::fastContainsUserByGroupName('CCC', $u[3]->id));
+                $this->assertTrue(self::fastContainsUserByGroupName('DDD', $u[4]->id));
+            }
 
             $this->assertFalse($b->contains($u[0]));
 
-            $this->assertFalse(self::fastContainsUserByGroupName('BBB', $u[0]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertFalse(self::fastContainsUserByGroupName('BBB', $u[0]->id));
+            }
 
             $this->assertFalse($c->contains($u[0]));
             $this->assertFalse($c->contains($u[1]));
             $this->assertFalse($c->contains($u[2]));
             $this->assertFalse($c->contains($u[4]));
 
-            $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[0]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[1]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[2]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[4]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[0]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[1]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[2]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('CCC', $u[4]->id));
+            }
 
             $this->assertFalse($d->contains($u[0]));
             $this->assertFalse($d->contains($u[1]));
             $this->assertFalse($d->contains($u[2]));
             $this->assertFalse($d->contains($u[3]));
 
-            $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[0]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[1]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[2]->id));
-            $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[3]->id));
+            if (SECURITY_OPTIMIZED)
+            {
+                $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[0]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[1]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[2]->id));
+                $this->assertFalse(self::fastContainsUserByGroupName('DDD', $u[3]->id));
+            }
 
             $this->assertFalse($b->contains($a));
             $this->assertFalse($c->contains($a));

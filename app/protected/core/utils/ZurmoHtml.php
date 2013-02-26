@@ -553,7 +553,7 @@ EOD;
                     $htmlOptions['name'] .= '[]';
                 }
             }
-            $content  = static::span('select-arrow');
+            $content  = static::tag('span', array('class' => 'select-arrow'), '');
             $content .= static::tag('select', $htmlOptions, $options);
             return static::tag('div', array('class' => 'hasDropDown'), $content);
         }
@@ -576,7 +576,7 @@ EOD;
             }
             static::clientChange('change', $htmlOptions);
             $options  = "\n" . static::listOptions($select, $data, $htmlOptions);
-            $content  = static::span('select-arrow');
+            $content  = static::tag('span', array('class' => 'select-arrow'), '');
             $content .= static::tag('select', $htmlOptions, $options);
             return static::tag('div', array('class' => 'hasDropDown'), $content);
         }

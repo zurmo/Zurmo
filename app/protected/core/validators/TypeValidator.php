@@ -86,7 +86,7 @@
                 }
                 else
                 {
-                    $message = Yii::t('yii', '{attribute} must be {type}.');
+                    $message = Zurmo::t('Core', '{attribute} must be {type}.');
                 }
                 $this->addError($object, $attribute, $message, array('{type}' => $this->type));
             }

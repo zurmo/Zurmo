@@ -118,7 +118,7 @@
         }
 
         /**
-         * Module translation parameters are used by Yii::t as the third parameter to define the module labels.  These
+         * Module translation parameters are used by Zurmo::t as the third parameter to define the module labels.  These
          * parameter values resolve any custom module label names that have been specified in the module metadata.
          * @return array of key/value module label pairings.
          * Caches results to improve performance.

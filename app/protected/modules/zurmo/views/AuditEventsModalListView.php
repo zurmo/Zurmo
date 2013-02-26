@@ -24,52 +24,15 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class AuditEventsModalListView extends ListView
+    class AuditEventsModalListView extends ModalListView
     {
+        const AUDIT_EVENTS_MODAL_LIST_ACTION_ID = 'auditEventsModalList';
+
         public function __construct($controllerId, $moduleId, $modelClassName, $dataProvider, $gridIdSuffix = null)
         {
-            parent::__construct($controllerId, $moduleId, $modelClassName, $dataProvider, array(), $gridIdSuffix);
-            $this->rowsAreSelectable = false;
-        }
-
-        /**
-         * Override to remove action buttons.
-         */
-        protected function getCGridViewLastColumn()
-        {
-            return array();
-        }
-
-        protected static function getPagerCssClass()
-        {
-            return 'pager horizontal';
-        }
-
-        protected function getCGridViewPagerParams()
-        {
-            return array(
-                    'firstPageLabel'   => '<span>first</span>',
-                    'prevPageLabel'    => '<span>previous</span>',
-                    'nextPageLabel'    => '<span>next</span>',
-                    'lastPageLabel'    => '<span>last</span>',
-                    'paginationParams' => GetUtil::getData(),
-                    'route'            => $this->getGridViewActionRoute('auditEventsModalList', $this->moduleId),
-                    'class'            => 'SimpleListLinkPager',
-                );
-        }
-
-        /**
-         * Override to not run global eval, since it causes doubling up of ajax requests on the pager.
-         * (non-PHPdoc)
-         * @see ListView::getCGridViewAfterAjaxUpdate()
-         */
-        protected function getCGridViewAfterAjaxUpdate()
-        {
-            // Begin Not Coding Standard
-            return 'js:function(id, data) {
-                        processAjaxSuccessError(id, data);
-                    }';
-            // End Not Coding Standard
+            parent::__construct($controllerId, $moduleId, self::AUDIT_EVENTS_MODAL_LIST_ACTION_ID,
+                                                $modelClassName, new NullModalListLinkProvider(),
+                                                $dataProvider, $gridIdSuffix);
         }
 
         public static function getDefaultMetadata()

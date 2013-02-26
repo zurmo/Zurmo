@@ -118,7 +118,7 @@
             Yii::app()->user->userModel = $super;
             $user = User::getByUsername('steve');
             Yii::app()->imap->connect();
-            $this->assertEquals(0, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(0, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', Yii::app()->user->userModel));
 
             $messages = EmailMessage::getAll();
             foreach ($messages as $message)
@@ -179,7 +179,7 @@
                 $this->assertTrue($attachment->size > 0);
             }
             $this->assertEquals(EmailFolder::TYPE_ARCHIVED_UNMATCHED, $emailMessage->folder->type);
-            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
 
         /**
@@ -220,7 +220,7 @@
             $filePath_2    = $pathToFiles . DIRECTORY_SEPARATOR . 'image.png';
             $filePath_3    = $pathToFiles . DIRECTORY_SEPARATOR . 'text.txt';
 
-            Yii::app()->emailHelper->sendRawEmail("Email from Steve",
+            Yii::app()->emailHelper->sendRawEmail("Email from Steve 2",
                                                   $user->primaryEmail->emailAddress,
                                                   Yii::app()->params['emailTestAccounts']['testEmailAddress'],
                                                   'Email from Steve',
@@ -242,7 +242,7 @@
             $emailMessages = EmailMessage::getAll();
             $emailMessage = $emailMessages[0];
 
-            $this->assertEquals('Email from Steve', $emailMessage->subject);
+            $this->assertEquals('Email from Steve 2', $emailMessage->subject);
             $this->assertEquals('Email from Steve', trim($emailMessage->content->textContent));
             $this->assertEquals('<strong>Email</strong> from Steve', trim($emailMessage->content->htmlContent));
             $this->assertEquals($user->primaryEmail->emailAddress, $emailMessage->sender->fromAddress);
@@ -261,7 +261,7 @@
                 $this->assertTrue($attachment->size > 0);
             }
             $this->assertEquals(EmailFolder::TYPE_ARCHIVED_UNMATCHED, $emailMessage->folder->type);
-            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
 
         /**
@@ -355,7 +355,7 @@ To: Steve <steve@example.com>
                 $this->assertTrue($attachment->size > 0);
             }
             $this->assertEquals(EmailFolder::TYPE_ARCHIVED_UNMATCHED, $emailMessage->folder->type);
-            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
 
         /**
@@ -415,11 +415,12 @@ To: Steve <steve@example.com>
             $this->assertTrue(strpos($emailMessages[0]->content->textContent, 'Email address does not exist in system') !== false);
             $this->assertTrue(strpos($emailMessages[0]->content->htmlContent, 'Email address does not exist in system') !== false);
             $this->assertEquals($originalUserAddress, $emailMessages[0]->recipients[0]->toAddress);
-            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
 
         /**
         * Check if only new messages are pulled from dropdown
+        * Also check case if message will be matched with user primary email
         *
         * @depends testRunCaseFour
         */
@@ -454,7 +455,7 @@ To: Steve <steve@example.com>
             //Now user send email to another user, and to dropbox
             $pathToFiles = Yii::getPathOfAlias('application.modules.emailMessages.tests.unit.files');
 
-            Yii::app()->emailHelper->sendRawEmail("Email from Steve",
+            Yii::app()->emailHelper->sendRawEmail("Email from Steve 3",
                                                    $user->primaryEmail->emailAddress,
                                                   array(Yii::app()->params['emailTestAccounts']['testEmailAddress']),
                                                   'Email from Steve',
@@ -476,7 +477,7 @@ To: Steve <steve@example.com>
             $emailMessages = EmailMessage::getAll();
             $emailMessage = $emailMessages[0];
 
-            $this->assertEquals('Email from Steve', $emailMessage->subject);
+            $this->assertEquals('Email from Steve 3', $emailMessage->subject);
             $this->assertEquals('Email from Steve', trim($emailMessage->content->textContent));
             $this->assertEquals('<strong>Email</strong> from Steve', trim($emailMessage->content->htmlContent));
             $this->assertEquals($user->primaryEmail->emailAddress, $emailMessage->sender->fromAddress);
@@ -487,7 +488,7 @@ To: Steve <steve@example.com>
                 $this->assertEquals($recipient->toAddress, Yii::app()->params['emailTestAccounts']['testEmailAddress']);
                 $this->assertEquals(EmailMessageRecipient::TYPE_TO, $recipient->type);
             }
-            $this->assertEquals(EmailFolder::TYPE_ARCHIVED_UNMATCHED, $emailMessage->folder->type);
+            $this->assertEquals(EmailFolder::TYPE_ARCHIVED, $emailMessage->folder->type);
 
             $job = new EmailArchivingJob();
             $this->assertTrue($job->run());
@@ -495,7 +496,7 @@ To: Steve <steve@example.com>
             $imapStats = Yii::app()->imap->getMessageBoxStatsDetailed();
             $this->assertEquals(0, $imapStats->Nmsgs);
             $this->assertEquals(1, count(EmailMessage::getAll()));
-            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMaching', Yii::app()->user->userModel));
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
     }
 ?>

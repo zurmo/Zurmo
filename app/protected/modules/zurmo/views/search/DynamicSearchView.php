@@ -73,7 +73,7 @@
                     });
                     $('#" . $this->getRowCounterInputId() . "').val(0);
                     $('#" . $this->getStructureInputId() . "').val('');
-                    $('.search-view-1').hide();
+                    $(this).closest('form').find('.search-view-1').hide();
                     $('.select-list-attributes-view').hide();
                     resolveClearLinkPrefixLabelAndVisibility('" . $this->getSearchFormId() . "');
                     rebuildDynamicSearchRowNumbersAndStructureInput('" . $this->getSearchFormId() . "')
@@ -105,7 +105,7 @@
 
         protected function renderConfigSaveAjax($formName)
         {
-            return     "$('.search-view-1').hide();
+            return     "$(this).closest('form').find('.search-view-1').hide();
                         $('.select-list-attributes-view').hide();
                         $('#" . $formName . "').find('.attachLoading:first').removeClass('loading');
                         $('#" . $formName . "').find('.attachLoading:first').removeClass('loading-ajax-submit');

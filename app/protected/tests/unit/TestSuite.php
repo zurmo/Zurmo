@@ -78,6 +78,12 @@
             $reuse                =  self::customOptionSet('--reuse-schema',          $argv);
             $freeze               = !self::customOptionSet('--no-freeze',             $argv);
 
+            if ($freeze == true && FORCE_NO_FREEZE == true)
+            {
+                echo "\n\nBecause forceNoFreeze is set to TRUE in debugTest, you cannot run unit tests in frozen mode\n\n"; // Not Coding Standard
+                exit;
+            }
+
             if ($argv[count($argv) - 2] != 'TestSuite.php')
             {
                 echo $usage;
@@ -151,15 +157,13 @@
             if (!$freeze)
             {
                 self::buildAndAddSuiteFromDirectory($suite, 'Misc',            COMMON_ROOT . '/protected/tests/unit',                     $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
+                self::buildAndAddSuiteFromDirectory($suite, 'Commands',        COMMON_ROOT . '/protected/commands/tests/unit',             $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
 ////////////////////////////////////////////////////////////////////////////////
 // Temporary - See Readme.txt in the notSupposedToBeHere directory.
                 self::buildAndAddSuiteFromDirectory($suite, 'BadDependencies', COMMON_ROOT . '/protected/tests/unit/notSupposedToBeHere', $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
 ////////////////////////////////////////////////////////////////////////////////
             }
-            else
-            {
-                self::buildAndAddSuiteFromDirectory($suite, 'Commands',        COMMON_ROOT . '/protected/commands/tests/unit',             $whatToTest, $includeUnitTests, $includeWalkthroughs, $includeBenchmarks);
-            }
+
             if ($suite->count() == 0)
             {
                 echo $usage;

@@ -563,7 +563,7 @@
             => 'Altro Email',
         'Securable Item'
             => 'Elemento securable',
-        'Security'
+        'Security Overview'
             => 'Sicurezza',
         'See more search results by clicking the down arrow at the bottom of the screen.'
             => 'Clicca la freccia verso il basso per visualizzare più risultati di una ricerca.',
@@ -687,6 +687,8 @@
             => 'Membri modificati con successo.',
         'Username'
             => 'Nome utente',
+        'Users'
+            => 'Users',
         'Value'
             => 'Valore',
         'Values'
@@ -704,6 +706,8 @@
         'What is this?'
             => 'Che cos\'è?',
         'Who can read and write'
+            => 'Autorizzazione di leggere/scrivere',
+        'Who can read and write - Default'
             => 'Autorizzazione di leggere/scrivere',
         'Word of Mouth'
             => 'Passaparola',

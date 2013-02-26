@@ -69,7 +69,7 @@
         {
             return Zurmo::t('Core', 'Updating') . "&#160;" . $this->start . "-" . $this->getEndSize() . "&#160;" . Zurmo::t('Core', 'of') . "&#160;" .
             $this->totalRecordCount . "&#160;" . Zurmo::t('Core', 'total') . "&#160;" .
-            Yii::t('Default', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
+            Zurmo::t('Core', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
         }
 
         protected function getCompleteMessage()

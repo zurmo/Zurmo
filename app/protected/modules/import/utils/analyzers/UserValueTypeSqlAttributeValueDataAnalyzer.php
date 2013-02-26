@@ -85,7 +85,7 @@
             {
                 $label   = '{count} zurmo user id(s) across {rowCount} row(s) were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count, '{rowCount}' => $rowCount)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count, '{rowCount}' => $rowCount)));
             }
         }
 
@@ -115,7 +115,7 @@
             {
                 $label   = '{count} external system user id(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count)));
             }
         }
 
@@ -146,7 +146,7 @@
             {
                 $label   = '{count} username(s) specified were not found. ';
                 $label  .= 'These values will not be used during the import.';
-                $this->addMessage(Yii::t('Default', $label, array('{count}' => $count)));
+                $this->addMessage(Zurmo::t('ImportModule', $label, array('{count}' => $count)));
             }
         }
     }

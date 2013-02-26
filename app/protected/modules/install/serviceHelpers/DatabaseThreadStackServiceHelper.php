@@ -29,7 +29,7 @@
      */
     class DatabaseThreadStackServiceHelper extends ServiceHelper
     {
-        protected $required = true;
+        protected $required = false;
         protected $form;
 
         protected $minimumRequiredThreadStackValue = 524288;

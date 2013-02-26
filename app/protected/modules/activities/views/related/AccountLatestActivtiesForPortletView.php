@@ -54,5 +54,10 @@
         {
             return 'LatestActivitiesForAccountListView';
         }
+
+        public static function hasRollupSwitch()
+        {
+            return true;
+        }
     }
 ?>

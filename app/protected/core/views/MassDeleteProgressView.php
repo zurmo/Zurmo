@@ -69,7 +69,7 @@
         {
             return Zurmo::t('Core', 'Deleting') . " " . $this->start . " - " . $this->getEndSize() . " " . Zurmo::t('Core', 'of') . " " .
                 $this->totalRecordCount . " " . Zurmo::t('Core', 'total') . " " .
-                Yii::t('Default', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
+                Zurmo::t('Core', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
         }
 
         protected function getCompleteMessage()

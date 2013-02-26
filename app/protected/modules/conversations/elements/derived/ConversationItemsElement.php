@@ -64,5 +64,14 @@
             assert('!isset($this->params["inputPrefix"])'); //Not supported at this time.
             return parent::renderControlEditable();
         }
+
+        protected function getRelatedItemNonEditableTemplate()
+        {
+            $template  = "<tr>";
+            $template .= "<td colspan=\"" . $this->getColumnSpan() . "\" class=conversation-related-{label} ><div>"; // Not Coding Standard
+            $template .= '{content}';
+            $template .= "</div></td></tr>";
+            return $template;
+        }
     }
 ?>

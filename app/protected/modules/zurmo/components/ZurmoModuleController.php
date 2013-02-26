@@ -134,7 +134,7 @@
             $modelClassName = $this->getModule()->getPrimaryModelName();
             $model = $modelClassName::getById((int)$id);
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-            $searchAttributeData = AuditEventsListControllerUtil::makeSearchAttributeDataByAuditedModel($model);
+            $searchAttributeData = AuditEventsListControllerUtil::makeModalSearchAttributeDataByAuditedModel($model);
             $dataProvider = AuditEventsListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
             Yii::app()->getClientScript()->setToAjaxMode();
             echo AuditEventsListControllerUtil::renderList($this, $dataProvider);
@@ -155,9 +155,8 @@
             assert('$stickySearchKey == null || is_string($stickySearchKey)');
             $modelClassName        = $this->getModelName();
             $searchFormClassName   = static::getSearchFormClassName();
-            // Set $pageSize to unlimited, because we don't want pagination
-            $pageSize = Yii::app()->pagination->getGlobalValueByType('unlimitedPageSize');
-            $model = new $modelClassName(false);
+            $pageSize              = null;
+            $model                 = new $modelClassName(false);
 
             if ($searchFormClassName != null)
             {
@@ -186,7 +185,7 @@
             $data = array();
             if ($totalItems > 0)
             {
-                if ($totalItems <= ExportModule::$asynchronusTreshold)
+                if ($totalItems <= ExportModule::$asynchronusThreshold)
                 {
                     // Output csv file directly to user browser
                     if ($dataProvider)

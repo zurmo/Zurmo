@@ -446,7 +446,7 @@
             {
                 foreach ($labelElements as $labelElement)
                 {
-                    $menuItems[$itemKey][$labelElement] = Yii::t('Default', $item[$labelElement], $translationParams);
+                    $menuItems[$itemKey][$labelElement] = Zurmo::t('ZurmoModule', $item[$labelElement], $translationParams);
                 }
                 if (isset($item['items']))
                 {

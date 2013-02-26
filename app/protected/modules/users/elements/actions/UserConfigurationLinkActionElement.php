@@ -44,7 +44,7 @@
                                        'url'     => $this->route . '/configurationEdit?id=' . $this->modelId),
                                    array('label'   => Zurmo::t('UsersModule', 'Email'),
                                        'url'     => $this->route . '/emailConfiguration?id=' . $this->modelId),
-                                   array('label'   => Zurmo::t('UsersModule', 'Security'),
+                                   array('label'   => Zurmo::t('UsersModule', 'Security Overview'),
                                        'url'     => $this->route . '/securityDetails?id=' . $this->modelId)));
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("ActionMenu");

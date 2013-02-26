@@ -1,11 +1,11 @@
 @import 'mixins.less';
 
 /*START COLOR SCHEME/THEME*/
-    @textColor         : #545454;
-    a:link, a:active, a:visited{
-        color:@textColor;
-        cursor: pointer;
-    }
+@textColor         : #545454;
+a:link, a:active, a:visited{
+    color:@textColor;
+    cursor: pointer;
+}
 
 .AppColors(){
     .textColor{ color: @textColor; }
@@ -69,7 +69,8 @@
     .ui-dialog-title,
     .show-file-upload-box,
     #clear-search-linkmodal,
-    .z-action-link
+    .z-action-link,
+    .showAllCommentsLink
     {
         color: @themeColor;
     }
@@ -561,7 +562,4 @@ body.light-toast,
 .texture-swatch.light-toast .background-texture-1{
     background: url(../patterns/light-toast/light-toast.png) left top repeat;
 }
-
-
-
 /*END COLOR SCHEME/THEME*/

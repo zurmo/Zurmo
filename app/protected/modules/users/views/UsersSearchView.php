@@ -24,7 +24,7 @@
      * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
      ********************************************************************************/
 
-    class UsersSearchView extends SearchView
+    class UsersSearchView extends SavedDynamicSearchView
     {
         public static function getDefaultMetadata()
         {
@@ -32,8 +32,12 @@
                 'global' => array(
                     'nonPlaceableAttributeNames' => array(
                         'hash',
+                        'currency',
+                        'timeZone',
+                        'language',
                         'newPassword',
                         'newPassword_repeat',
+                        'serializedAvatarData',
                     ),
                     'panels' => array(
                         array(
@@ -53,27 +57,8 @@
                             ),
                         ),
                         array(
-                            'title' => 'Advanced Search',
-                            'rows' => array(
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'department', 'type' => 'Text'), // Not Coding Standard
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'mobilePhone', 'type' => 'Phone'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
+                            'advancedSearchType' => static::ADVANCED_SEARCH_TYPE_DYNAMIC,
+                            'rows'   => array(),
                         ),
                     ),
                 ),

@@ -184,13 +184,13 @@
                 $('#more-search-link" . $this->gridIdSuffix . "').unbind('click.more');
                 $('#more-search-link" . $this->gridIdSuffix . "').bind('click.more',  function(event){
                         $('.select-list-attributes-view').hide();
-                        $('.search-view-1').toggle();
+                        $(this).closest('form').find('.search-view-1').toggle();                        
                         return false;
                     }
                 );
                 $('#cancel-advanced-search').unbind('click');
                 $('#cancel-advanced-search').live('click', function(event){
-                    $('.search-view-1').hide();
+                    $(this).closest('form').find('.search-view-1').hide();
                 });
             " . $this->getExtraRenderFormBottomPanelScriptPart());
             $this->renderAdvancedSearchScripts();
@@ -203,7 +203,7 @@
                 $('#" . $this->getSearchFormId() . "').unbind('submit');
                 $('#" . $this->getSearchFormId() . "').bind('submit', function(event)
                     {
-                        $('.search-view-1').hide();
+                        $(this).closest('form').find('.search-view-1').hide();
                         $('.select-list-attributes-view').hide();
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
                         $.fn.yiiGridView.update('" . $this->gridId . $this->gridIdSuffix . "',
@@ -305,7 +305,7 @@
                 $('#select-list-attributes-link" . $this->gridIdSuffix . "').unbind('click.more');
                 $('#select-list-attributes-link" . $this->gridIdSuffix . "').bind('click.more',  function(event)
                     {
-                        $('.search-view-1').hide();
+                        $(this).closest('form').find('.search-view-1').hide();
                         $('.select-list-attributes-view').toggle();
                         return false;
                     }

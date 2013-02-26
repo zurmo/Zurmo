@@ -115,5 +115,56 @@
             $this->assertEquals(1, $conversation->ownerHasReadLatest);
             $this->assertEquals(1, $conversation->conversationParticipants->offsetGet(0)->hasReadLatest);
         }
+
+        public function testResolvePeopleOnConversation()
+        {
+            $super                                  = Yii::app()->user->userModel;
+            $jack                                   = UserTestHelper::createBasicUser('jack');
+            $steven                                 = User::getByUsername('steven');
+            $conversation                           = new Conversation();
+            $conversation->owner                    = Yii::app()->user->userModel;
+            $conversation->subject                  = 'Test People On Conversation';
+            $conversation->description              = 'This is a test conversation';
+            $people                                 = ConversationsUtil::
+                                                        resolvePeopleOnConversation($conversation);
+            $this->assertEquals(1, count($people));
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $jack;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $people                                 = ConversationsUtil::
+                                                        resolvePeopleOnConversation($conversation);
+            $this->assertEquals(2, count($people));
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $steven;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $people                                 = ConversationsUtil::
+                                                        resolvePeopleOnConversation($conversation);
+            $this->assertEquals(3, count($people));
+            $this->assertTrue($conversation->save());
+        }
+
+        /**
+         * @depends testResolvePeopleOnConversation
+         */
+        public function testResolvePeopleToSendNotificationToOnNewComment()
+        {
+            $super                                  = Yii::app()->user->userModel;
+            $jack                                   = User::getByUsername('jack');
+            $steven                                 = User::getByUsername('steven');
+            $conversation                           = new Conversation();
+            $conversation->owner                    = Yii::app()->user->userModel;
+            $conversation->subject                  = 'Test People To Send Notification';
+            $conversation->description              = 'This is a test conversation';
+            $peopleToSendNotification               = ConversationsUtil::
+                                                        resolvePeopleToSendNotificationToOnNewComment($conversation, $super);
+            $this->assertEquals(0, count($peopleToSendNotification));
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $jack;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $peopleToSendNotification               = ConversationsUtil::
+                                                        resolvePeopleToSendNotificationToOnNewComment($conversation, $super);
+            $this->assertEquals(1, count($peopleToSendNotification));
+            $this->assertEquals($jack, $peopleToSendNotification[0]);
+        }
     }
 ?>

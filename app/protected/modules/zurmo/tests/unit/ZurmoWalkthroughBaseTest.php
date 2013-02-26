@@ -182,6 +182,27 @@
 
         /**
          * Helper method to run a controller action that is
+         * expected produce a AccessDeniedSecurityException exception.
+         */
+        protected function runControllerWithAccessDeniedSecurityExceptionAndGetContent($route)
+        {
+            $_SERVER['REQUEST_URI'] = '/index.php';
+            $this->startOutputBuffer();
+            try
+            {
+                Yii::app()->runController($route);
+                $this->endPrintOutputBufferAndFail();
+            }
+            catch (AccessDeniedSecurityException $e)
+            {
+                $content = $this->endAndGetOutputBuffer();
+                $this->doApplicationScriptPathsAllExist();
+                return $content;
+            }
+        }
+
+        /**
+         * Helper method to run a controller action that is
          * expected produce a redirect exception.
          */
         protected function runControllerWithNotSupportedExceptionAndGetContent($route)

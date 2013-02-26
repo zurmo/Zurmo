@@ -399,7 +399,7 @@
                                                                                              $this->temporaryDatabaseUsername,
                                                                                              $this->temporaryDatabasePassword,
                                                                                              $this->temporaryDatabasePort);
-            $this->assertGreaterThan(0, $maxSpRecursionDepth);
+            $this->assertGreaterThanOrEqual(0, $maxSpRecursionDepth);
         }
 
         public function testGetDatabaseThreadStackValue()
@@ -575,9 +575,15 @@
 
         public function testGetTableRowsCountTotal()
         {
-            R::exec("create table temptesttable (temptable_id int(11) unsigned not null)");
-            $tableRowsCountTotal = DatabaseCompatibilityUtil::getTableRowsCountTotal();
-            $this->assertGreaterThan(0, $tableRowsCountTotal);
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                $tableRowsCountTotal = DatabaseCompatibilityUtil::getTableRowsCountTotal();
+                R::exec("create table temptesttable (temptable_id int(11) unsigned not null)");
+                R::exec("insert into temptesttable (temptable_id) values (2)");
+                R::exec("insert into temptesttable (temptable_id) values (9)");
+                $tableRowsCountTotalAfterQuery = DatabaseCompatibilityUtil::getTableRowsCountTotal();
+                $this->assertEquals(2, $tableRowsCountTotalAfterQuery - $tableRowsCountTotal);
+            }
         }
 
         /**

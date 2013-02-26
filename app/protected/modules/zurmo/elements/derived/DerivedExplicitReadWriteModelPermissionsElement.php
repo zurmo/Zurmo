@@ -88,5 +88,70 @@
         {
             return Zurmo::t('ZurmoModule', 'Who can read and write');
         }
+
+        /**
+         * Based on the model's attribute value being a explicitReadWriteModelPermissions object,
+         * resolves the selected type value.
+         * @return string
+         */
+        protected function resolveSelectedType()
+        {
+            if (!$this->isModelCreateAction())
+            {
+                return parent::resolveSelectedType();
+            }
+            $selectedType = UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting(
+                                                                                        Yii::app()->user->userModel);
+            if (null == $selectedType)
+            {
+                return parent::resolveSelectedType();
+            }
+            else
+            {
+                return $this->resolveUserPermissionConfigurationToPermissionType($selectedType);
+            }
+        }
+
+        /**
+         * Based on the model's attribute value being a explicitReadWriteModelPermissions object,
+         * resolves the selected group value if available.
+         * @return string
+         */
+        protected function resolveSelectedGroup()
+        {
+            if (!$this->isModelCreateAction())
+            {
+                return parent::resolveSelectedGroup();
+            }
+            if (null != $selectedGroup = UserConfigurationFormAdapter::resolveAndGetValue(Yii::app()->user->userModel,
+                'defaultPermissionGroupSetting', false))
+            {
+                return $selectedGroup;
+            }
+            else
+            {
+                return parent::resolveSelectedGroup();
+            }
+        }
+
+        /**
+         * Converts User's configuration of selected type to ExplicitReadWriteModelPermissionsElement's compatible
+         * @param $selectedType Selected Type index from User's Configuration
+         * @return $selectedTypeIndex Selected Type Index converted to ExplicitReadWriteModelPermissionsElement::getPermissionTypes() compatible format
+         */
+        protected function resolveUserPermissionConfigurationToPermissionType($selectedType)
+        {
+            assert('is_int($selectedType)');
+            assert('$selectedType >= UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_OWNER');
+            assert('$selectedType <= UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_EVERYONE');
+            $userConfigPermissionTypes          = UserConfigurationForm::getAllDefaultPermissionTypes();
+            $explicitReadWritePermissionTypes   = parent::getPermissionTypes();
+            return array_search($userConfigPermissionTypes[$selectedType], $explicitReadWritePermissionTypes);
+        }
+
+        protected function isModelCreateAction()
+        {
+            return ($this->model->id <= 0);
+        }
     }
 ?>

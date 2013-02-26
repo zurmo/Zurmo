@@ -30,7 +30,7 @@
      */
     class DatabaseOptimizerSearchDepthServiceHelper extends ServiceHelper
     {
-        protected $required = true;
+        protected $required = false;
         protected $form;
 
         public function __construct($form)

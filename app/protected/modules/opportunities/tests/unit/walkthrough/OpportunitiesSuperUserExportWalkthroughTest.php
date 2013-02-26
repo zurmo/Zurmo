@@ -29,7 +29,7 @@
      */
     class OpportunitiesSuperUserExportWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
-        protected static $asynchronusTreshold;
+        protected static $asynchronusThreshold;
 
         public static function setUpBeforeClass()
         {
@@ -38,13 +38,13 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            self::$asynchronusTreshold = ExportModule::$asynchronusTreshold;
-            ExportModule::$asynchronusTreshold = 3;
+            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
+            ExportModule::$asynchronusThreshold = 3;
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusTreshold = self::$asynchronusTreshold;
+            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
             parent::tearDownAfterClass();
         }
 
@@ -142,7 +142,7 @@
                 }
             }
             $opportunities = array();
-            for ($i = 0; $i <= (ExportModule::$asynchronusTreshold + 1); $i++)
+            for ($i = 0; $i <= (ExportModule::$asynchronusThreshold + 1); $i++)
             {
                 $opportunities[] = OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('opportunity' . $i, $super, $account);
             }

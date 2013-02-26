@@ -27,6 +27,7 @@
     font-weight: bold;
 }
 
+.ui-helper-hidden-accessible,
 .hidden-element{
     display:none !important;
     visibility:hidden !important;
@@ -53,7 +54,6 @@ body{
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:12px;
     color: #545454;
-
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
     -o-font-smoothing: antialiased;
@@ -1980,8 +1980,7 @@ div.wide.form{
 #NoUserEmailConfigurationYetView,
 #NoGlobalEmailConfigurationYetView,
 .ZeroModelsYetView*/
-.splash-view
-{
+.splash-view{
     h2{
         font-family:"Times New Roman", Times, serif;
         font-style:italic;
@@ -2063,8 +2062,8 @@ div.wide.form{
     }
     .EmailMessage .large-icon:after{
         content:"g";
-        .symbly(250px);
-        line-height: 60%;
+        .symbly(325px);
+        line-height: 52%;
     }
 }
 
@@ -2668,11 +2667,7 @@ div.wide.form{
             vertical-align: middle;
         }
         .hasDropDown{
-            float: left;
-            margin-top:8px;
             padding-left:40px;
-            margin-bottom:0;
-            .box-sizing();
         }
     }
     input[type="text"]{
@@ -2765,12 +2760,12 @@ div.wide.form{
             text-align:center;
             vertical-align:center;
              &:before{
-	            content:"U";
-	            .symbly(24px);
-	            color:#8b8b8b;
-	            text-align:center;
+                content:"U";
+                .symbly(24px);
+                color:#8b8b8b;
+                text-align:center;
             	vertical-align:bottom;
-	        }
+	    }
         }
     }
 }
@@ -3247,7 +3242,6 @@ div.wide.form{
     input[type="text"]{
         margin-bottom: 4px;
     }
-
     #owner-box + label{
         margin-bottom:15px;
     }
@@ -3269,14 +3263,21 @@ div.wide.form{
             vertical-align: middle;
         }
         .hasDropDown{
-            float: left;
-            margin-top:8px;
             padding-left:30px;
-            margin-bottom:0;
         }
     }
     input[type="text"]{
         margin-top:6px;
+    }
+}
+
+div.radio-input{
+    .hasDropDown{
+        float: left;
+        margin-top:8px;
+        padding-left:24px;
+        margin-bottom:0;
+        .box-sizing();
     }
 }
 
@@ -4294,21 +4295,27 @@ div.hasHalfs{
     text-indent: -9999px;
     margin-right: 5px;
 }
+
 .facebook span{
     background-position: -88px bottom !important;
 }
+
 .twitter span{
     background-position: -22px bottom !important;
 }
+
 .linkedin span{
     background-position: -66px bottom !important;
 }
+
 .rss span{
     background-position: 0 bottom !important;
 }
+
 .bitbucket span{
     background-position: -132px bottom !important;
 }
+
 .pivotal span{
     background-position: 100% bottom !important;
 }
@@ -4316,16 +4323,16 @@ div.hasHalfs{
 /*=RSS Widget*/
 .rssBody{
     line-height: 140%;
-	ul{
-		list-style: none;
-	}
-	li{
-		padding:10px 15px;
-		border-bottom:1px solid #dfdfdf;
-		&:last-child{
-			border-bottom:none;
-		}
-	}
+    ul{
+        list-style: none;
+    }
+    li{
+        padding:10px 15px;
+        border-bottom:1px solid #dfdfdf;
+        &:last-child{
+            border-bottom:none;
+        }
+    }
 }
 
 /*=Search Results - Mixed Search Results*/
@@ -4392,7 +4399,7 @@ div.hasHalfs{
         margin-right:15px;
         position: relative;
         top:1px;
-    } 
+    }
 }
 
 @import 'widget-juiportlets.less';

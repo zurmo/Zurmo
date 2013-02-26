@@ -226,7 +226,12 @@ $.widget("ech.multiselect", {
         var self = this, button = this.button;
 
         function clickHandler(){
-            self[ self._isOpen ? 'close' : 'open' ]();
+            if(self._isOpen){
+            self.close();
+          } else {
+            self.open();
+          }
+            //self[ self._isOpen ? 'close' : 'open' ]();
             return false;
         }
 
@@ -533,6 +538,9 @@ $.widget("ech.multiselect", {
         if( $.isArray(o.show) ){
             effect = o.show[0];
             speed = o.show[1] || self.speed;
+        } else {
+            effect = null;
+            speed = 0;
         }
 
         // set the scroll of the checkbox container
@@ -541,7 +549,7 @@ $.widget("ech.multiselect", {
         // position and show menu
         if( $.ui.position && !$.isEmptyObject(o.position) ){
             o.position.of = o.position.of || button;
-
+            
             menu
                 .show()
                 .position( o.position )
@@ -564,6 +572,7 @@ $.widget("ech.multiselect", {
         button.addClass('ui-state-active');
         this._isOpen = true;
         this._trigger('open');
+        
     },
 
     // close the menu
@@ -578,6 +587,9 @@ $.widget("ech.multiselect", {
         if( $.isArray(o.hide) ){
             effect = o.hide[0];
             speed = o.hide[1] || this.speed;
+        } else {
+            effect = null;
+            speed = 0;
         }
 
         this.menu.hide(effect, speed);

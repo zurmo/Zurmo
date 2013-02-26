@@ -112,6 +112,11 @@
             return extension_loaded("pdo_mysql");
         }
 
+        public static function isLdapInstalled()
+        {
+            return extension_loaded("ldap");
+        }
+
         public static function isMbStringInstalled()
         {
             return function_exists('mb_strlen');
@@ -562,7 +567,6 @@
         {
             $user = new User();
             $user->username     = $username;
-            $user->title->value = 'Mr.';
             $user->firstName    = 'Super';
             $user->lastName     = 'User';
             $user->setPassword($password);
@@ -692,6 +696,26 @@
                                              $contents);
                 }
             }
+
+            $installSettingsForm = new InstallSettingsForm();
+            $installSettingsForm->databaseHostname = $databaseHost;
+            $installSettingsForm->databaseUsername = $username;
+            $installSettingsForm->databasePassword = $password;
+            $installSettingsForm->databasePort     = $port;
+            $maxSpRecursionDepthServiceHelper = new DatabaseMaxSpRecursionDepthServiceHelper($installSettingsForm);
+            if ($maxSpRecursionDepthServiceHelper->runCheckAndGetIfSuccessful())
+            {
+                $contents = preg_replace('/\$securityOptimized\s*=\s*false;/',
+                    '$securityOptimized = true;',
+                    $contents);
+            }
+            else
+            {
+                $contents = preg_replace('/\$securityOptimized\s*=\s*true;/',
+                    '$securityOptimized = false;',
+                    $contents);
+            }
+
             file_put_contents($debugConfigFile, $contents);
 
             $contents = file_get_contents($perInstanceConfigFile);
@@ -726,7 +750,7 @@
         }
 
         /**
-         * Generate zurmo token and write it to version.php file.
+         * Generate zurmo token and write it to perInstance file.
          * @param $instanceRoot
          * @return string
          */
@@ -950,7 +974,7 @@
          * Method to run installation from command line. Use @InstallCommand.
          * @param array $args
          */
-        public static function runFromInstallCommand($args)
+        public static function runFromInstallCommand($args, $validateForm = false)
         {
             assert('is_array($args)');
             $form            = new InstallSettingsForm();
@@ -965,47 +989,70 @@
             $form->databasePassword  = $args[3];
             $form->databasePort      = $args[4];
             $form->superUserPassword = $args[5];
+            $form->removeExistingData = 1;
 
             if (!empty($args[6]))
             {
                 $form->hostInfo = $args[6];
+                Yii::app()->getRequest()->setHostInfo($form->hostInfo);
             }
             if (!empty($args[7]))
             {
                 $form->scriptUrl = $args[7];
             }
 
-            InstallUtil::runInstallation($form, $messageStreamer);
-            if (isset($args[8]))
+            $formHasErrors = false;
+            if ($validateForm)
             {
-                $messageStreamer->add(Zurmo::t('InstallModule', 'Starting to load demo data.'));
-                $messageLogger = new MessageLogger($messageStreamer);
-
-                if (isset($args[9]))
+                $form->validate();
+                if ($form->hasErrors())
                 {
-                    DemoDataUtil::load($messageLogger, intval($args[9]));
+                    $errors = $form->getErrors();
+                    foreach ($errors as $fieldErrors)
+                    {
+                        foreach ($fieldErrors as $fieldError)
+                        {
+                            $messageStreamer->add($fieldError);
+                        }
+                    }
+                    $formHasErrors = true;
                 }
-                else
-                {
-                    DemoDataUtil::load($messageLogger, 6);
-                }
-                $messageStreamer->add(Zurmo::t('InstallModule', 'Finished loading demo data.'));
             }
 
-            if (empty($args[6]) || empty($args[7]))
+            if (!$formHasErrors)
             {
-                // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
-                $message                    = new NotificationMessage();
-                $message->textContent       = Zurmo::t('InstallModule', 'The system has detected that the hostInfo and/or scriptUrl are ' .
-                                                                'not set up. Please open the perInstance.php config file and ' .
-                                                                'set up these parameters.');
-                $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
-                NotificationsUtil::submit($message, $rules);
-            }
+                InstallUtil::runInstallation($form, $messageStreamer);
+                if (isset($args[8]))
+                {
+                    $messageStreamer->add(Zurmo::t('InstallModule', 'Starting to load demo data.'));
+                    $messageLogger = new MessageLogger($messageStreamer);
 
-            $messageStreamer->add(Zurmo::t('InstallModule', 'Locking Installation.'));
-            InstallUtil::writeInstallComplete(INSTANCE_ROOT);
-            $messageStreamer->add(Zurmo::t('InstallModule', 'Installation Complete.'));
+                    if (isset($args[9]))
+                    {
+                        DemoDataUtil::load($messageLogger, intval($args[9]));
+                    }
+                    else
+                    {
+                        DemoDataUtil::load($messageLogger, 6);
+                    }
+                    $messageStreamer->add(Zurmo::t('InstallModule', 'Finished loading demo data.'));
+                }
+
+                if (empty($args[6]) || empty($args[7]))
+                {
+                    // Send notification to super admin that need to setup hostInfo and scriptUrl params in perInstance.php
+                    $message                    = new NotificationMessage();
+                    $message->textContent       = Zurmo::t('InstallModule', 'The system has detected that the hostInfo and/or scriptUrl are ' .
+                        'not set up. Please open the perInstance.php config file and ' .
+                        'set up these parameters.');
+                    $rules                      = new HostInfoAndScriptUrlNotSetupNotificationRules();
+                    NotificationsUtil::submit($message, $rules);
+                }
+
+                $messageStreamer->add(Zurmo::t('InstallModule', 'Locking Installation.'));
+                InstallUtil::writeInstallComplete(INSTANCE_ROOT);
+                $messageStreamer->add(Zurmo::t('InstallModule', 'Installation Complete.'));
+            }
         }
 
         /**
@@ -1016,7 +1063,7 @@
         {
             assert('$messageLogger instanceof MessageLogger');
             ForgetAllCacheUtil::forgetAllCaches();
-            $unfreezeWhenDone     = false;
+            $freezeWhenDone     = false;
             if (RedBeanDatabase::isFrozen())
             {
                 RedBeanDatabase::unfreeze();

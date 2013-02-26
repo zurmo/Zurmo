@@ -119,7 +119,8 @@
             );
             $label       = $form->labelEx  ($model, $attribute, array('for'   => $id));
             $textField   = $form->textField($model, $attribute, $htmlOptions);
-            $error       = $form->error    ($model, $attribute);
+            $error       = $form->error    ($model, $attribute, array('inputID' => $id), true, true,
+                                            $this->renderScopedErrorId($inputNameIdPrefix, $attribute));
             if ($model->$attribute != null)
             {
                  $label = null;

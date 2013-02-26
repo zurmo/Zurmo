@@ -47,10 +47,10 @@
      * database-password  : The database user password.
      * database-port      : The database port.
      * superuser-password : The password for the super administrator that is created.  The username will be 'super'
+     * hostInfo           : Set hostInfo in perInstance.php file.
+     * scriptUrl          : Set scriptUrl in perInstance.php file.
 
      Optional Parameters:
-     * hostInfo: If you want to set the hostInfo for the perInstance.php specify it in this parameter. Can be an empty value ''.
-     * scriptUrl: If you want to set the scriptUrl for the perInstance.php specify it in this parameter. Can be an empty value ''.
      * demodata: If you want demodata to load just specify 'demodata' otherwise leave blank.
      * load-magnitude: Conditional, used only if demodata parameter specified, and it specify load magnitude for demodata (demodata volume).
 
@@ -66,7 +66,11 @@ EOD;
         set_time_limit('7200');
         if (!isset($args[0]) || !isset($args[1]) || !isset($args[2]) || !isset($args[3]) || !isset($args[4]) || !isset($args[5]))
         {
-            $this->usageError('The database user, database name, password, host and port must be specified.');
+            $this->usageError('The database user, database name, password, host, port and super user password must be specified.');
+        }
+        if (!isset($args[6]) || !isset($args[7]))
+        {
+            $this->usageError('the hostInfo and scriptUrl parameters must be specified.');
         }
         if (isset($args[8]) && $args[8] != 'demodata')
         {
@@ -81,7 +85,7 @@ EOD;
             $this->usageError('The installation is marked as being already completed.  Cannot run the installer.');
         }
         echo "\n";
-        InstallUtil::runFromInstallCommand($args);
+        InstallUtil::runFromInstallCommand($args, true);
     }
 }
 ?>

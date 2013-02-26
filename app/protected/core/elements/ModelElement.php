@@ -144,9 +144,9 @@
                     'appendTo' => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()',
                     'search'   => 'js: function(event, ui)
                                   {
-                                      var context = $("#' . $this->getIdForTextField() . '").parent();
-                                      $(".model-select-icon", context).fadeOut(100);
-                                      makeToggableSpinner(context, true);
+                                       var context = $("#' . $this->getIdForTextField() . '").parent();
+                                       $(".model-select-icon", context).fadeOut(100);
+                                       makeToggableSpinner(context, true);
                                   }',
                     'open'     => 'js: function(event, ui)
                                   {
@@ -156,9 +156,18 @@
                                   }',
                     'close'    => 'js: function(event, ui)
                                   {
-                                      var context = $("#' . $this->getIdForTextField() . '").parent();
-                                      $(".model-select-icon", context).fadeIn(250);
-                                      makeToggableSpinner(context, false);
+                                       var context = $("#' . $this->getIdForTextField() . '").parent();
+                                       $(".model-select-icon", context).fadeIn(250);
+                                       makeToggableSpinner(context, false);
+                                  }',
+                    'response' => 'js: function(event, ui)
+                                  {
+                                       if (ui.content.length < 1)
+                                       {
+                                           var context = $("#' . $this->getIdForTextField() . '").parent();
+                                           $(".model-select-icon", context).fadeIn(250);
+                                           makeToggableSpinner(context, false);
+                                       }
                                   }'
                 ),
                 'htmlOptions' => array(

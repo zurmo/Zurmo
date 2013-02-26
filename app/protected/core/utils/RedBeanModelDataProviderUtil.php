@@ -46,21 +46,41 @@
         {
             assert('$stateMetadataAdapterClassName == null || is_string($stateMetadataAdapterClassName)');
             assert('is_string($dataProviderClassName)');
+            assert('is_int($pageSize) || $pageSize == null');
             if ($stateMetadataAdapterClassName != null)
             {
                 $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
                 $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
             }
+            $pageSize = self::resolveConfigForPageSize($pageSize);
             return new $dataProviderClassName(
                 $listModelClassName,
                 $sortAttribute,
                 $sortDescending,
                 $metadata,
-                array(
-                'pagination' => array(
-                    'pageSize' => $pageSize
-                )
-            ));
+                $pageSize
+            );
+        }
+
+        /*
+        *resolves the configArray for pageSize param,if not set then by default
+        *pageSize set to unlimited
+        */
+        protected static function resolveConfigForPageSize($pageSize)
+        {
+            assert('is_int($pageSize) || $pageSize == null');
+            if ($pageSize != null)
+            {
+                return  array(
+                        'pagination' => array(
+                             'pageSize' => $pageSize
+                        )
+                );
+            }
+            else
+            {
+                return array();
+            }
         }
     }
 ?>

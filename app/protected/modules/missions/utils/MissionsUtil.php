@@ -181,5 +181,91 @@
             $rules->addUser($userToReceiveMessage);
             NotificationsUtil::submit($message, $rules);
         }
+
+        public static function makeAndSubmitNewMissionNotificationMessage(Mission $mission)
+        {
+            $recipients = array();
+            $peopleToSendNotification = static::resolvePeopleToSendNotificationToOnNewMission($mission);
+            foreach ($peopleToSendNotification as $person)
+            {
+                if ($person->primaryEmail->emailAddress !== null &&
+                    !UserConfigurationFormAdapter::resolveAndGetValue($person, 'turnOffEmailNotifications'))
+                {
+                    $recipients[] = $person;
+                }
+            }
+            EmailNotificationUtil::resolveAndSendEmail($mission->owner,
+                                                 $recipients,
+                                                 static::getEmailSubject($mission),
+                                                 static::getEmailContent($mission));
+        }
+
+        public static function getEmailContent(Mission $mission)
+        {
+            $emailContent  = new EmailMessageContent();
+            $url           = CommentsUtil::getUrlToEmail($mission);
+            $textContent   = Zurmo::t('MissionsModule', "Hello, {lineBreak}There is a new mission. " .
+                                    "Be the first one to start it and get this great reward: {reward}." .
+                                    "{lineBreak}{lineBreak} {url}",
+                                    array('{lineBreak}' => "\n",
+                                          '{reward}'    => $mission->reward,
+                                          '{url}'       => ZurmoHtml::link($url, $url)
+                                        ));
+            $emailContent->textContent  = $emailContent->htmlContent  = EmailNotificationUtil::
+                                                resolveNotificationTextTemplate($textContent);
+            $htmlContent = Zurmo::t('MissionsModule', "Hello, {lineBreak}There is a new {url}. " .
+                                    "Be the first one to start it and get this great reward: {reward}.",
+                               array('{lineBreak}'      => "<br/>",
+                                     '{strongStartTag}' => '<strong>',
+                                     '{strongEndTag}'   => '</strong>',
+                                     '{reward}'         => $mission->reward,
+                                     '{url}'            => ZurmoHtml::link($mission->getModelLabelByTypeAndLanguage(
+                                                                'SingularLowerCase'), $url)
+                                   ));
+            $emailContent->htmlContent  = EmailNotificationUtil::resolveNotificationHtmlTemplate($htmlContent);
+            return $emailContent;
+        }
+
+        public static function getEmailSubject(Mission $mission)
+        {
+            return Zurmo::t('MissionsModule', 'New mission');
+        }
+
+        public static function resolvePeopleToSendNotificationToOnNewMission(Mission $mission)
+        {
+            assert('$mission->id > 0');
+            $users = User::getAll();
+            $people = array();
+            foreach ($users as $user)
+            {
+                if ($user->getClassId('Item') != $mission->owner->getClassId('Item'))
+                {
+                    $people[] = $user;
+                }
+            }
+            return $people;
+        }
+
+        /**
+         * Given a Mission and the User that created the new comment
+         * return the people on the mission to send new notification to
+         * @param Mission $mission
+         * @param User $user
+         * @return Array $peopleToSendNotification
+         */
+        public static function resolvePeopleToSendNotificationToOnNewComment(Mission $mission, User $user)
+        {
+            assert('$mission->id > 0');
+            $peopleToSendNotification = array();
+            if ($user->getClassId('Item') != $mission->owner->getClassId('Item'))
+            {
+                $peopleToSendNotification[] = $mission->owner;
+            }
+            if ($user->getClassId('Item') != $mission->takenByUser->getClassId('Item'))
+            {
+                $peopleToSendNotification[] = $mission->takenByUser;
+            }
+            return $peopleToSendNotification;
+        }
     }
 ?>

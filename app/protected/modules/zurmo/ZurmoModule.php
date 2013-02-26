@@ -94,6 +94,13 @@
                         'route'            => '/zurmo/development/',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
+                    array(
+                        'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Authentication Configuration',
+                        'descriptionLabel' => 'Manage Authentication Configuration',
+                        'route'            => '/zurmo/authentication/configurationEdit',
+                        'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
+                    ),
                 ),
                 'headerMenuItems' => array(
                     array(
@@ -111,6 +118,15 @@
                         'label' => 'About Zurmo',
                         'url' => array('/zurmo/default/about'),
                         'order' => 9,
+                    ),
+                ),
+                'configureSubMenuItems' => array(
+                    array(
+                        'category'         => self::ADMINISTRATION_CATEGORY_GENERAL,
+                        'titleLabel'       => 'Ldap Configuration',
+                        'descriptionLabel' => 'Manage Ldap Authentication',
+                        'route'            => '/zurmo/ldap/configurationEditLdap',
+                        'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                 ),
                 'adminTabMenuItemsModuleOrdering' => array(
@@ -144,7 +160,7 @@
                 case self::AUDIT_EVENT_ITEM_DELETED:
                     if ($format == 'short')
                     {
-                        return Yii::t('Default', $auditEvent->eventName);
+                        return Zurmo::t('ZurmoModule', $auditEvent->eventName);
                     }
                     $s   .= strval($auditEvent);
                     $name = unserialize($auditEvent->serializedData);

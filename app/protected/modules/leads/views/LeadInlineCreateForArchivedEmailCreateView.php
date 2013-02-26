@@ -169,7 +169,12 @@
                                           text: '" . Zurmo::t('LeadsModule', 'Created LeadsModuleSingularLabel successfully', LabelUtil::getTranslationParamsForAllModules()) . "',
                                           permanent: false,
                                           showIcon: true,
-                                       })}"
+                                       });
+                    if($('.email-archive-item').length==0)
+                    {                                     
+                        window.location.reload()                                     
+                    }                     
+                    }",                                    
                 ));
             // End Not Coding Standard
         }

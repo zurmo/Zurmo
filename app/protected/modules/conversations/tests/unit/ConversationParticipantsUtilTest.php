@@ -135,5 +135,36 @@
             $this->assertEquals(0, count($readWritePermitables));
             $this->assertEquals(0, $conversation->conversationParticipants->count());
         }
+
+        /**
+         * @depends testIsUserAParticipant
+         */
+        public function testResolveConversationParticipants()
+        {
+            $super                                  = Yii::app()->user->userModel;
+            $jack                                   = UserTestHelper::createBasicUser('jack');
+            $steven                                 = User::getByUsername('steven');
+            $conversation                           = new Conversation();
+            $conversation->owner                    = Yii::app()->user->userModel;
+            $conversation->subject                  = 'Test Resolve Conversation Participants';
+            $conversation->description              = 'This is for testing conversation participants.';
+            $this->assertTrue($conversation->save());
+            $participants                           = ConversationParticipantsUtil::
+                                                        getConversationParticipants($conversation);
+            $this->assertEquals(0, count($participants));
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $jack;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $this->assertEquals(0, count($participants));
+            $participants                           = ConversationParticipantsUtil::
+                                                        getConversationParticipants($conversation);
+            $this->assertEquals(1, count($participants));
+            $conversationParticipant                = new ConversationParticipant();
+            $conversationParticipant->person        = $steven;
+            $conversation->conversationParticipants->add($conversationParticipant);
+            $participants                           = ConversationParticipantsUtil::
+                                                        getConversationParticipants($conversation);
+            $this->assertEquals(2, count($participants));
+        }
     }
 ?>

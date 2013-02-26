@@ -19,7 +19,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/users/default</td>
+	<td>index.php/users/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,34 +48,64 @@
     <td>30000</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>id=more-search-link</td>
+	<td></td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>id=more-search-link</td>
 	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>click</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>UsersSearchForm_department</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td>label=Department</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_department</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=UsersSearchForm_department</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_department</td>
 	<td>marketing</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=search-advanced-search</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
 	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>1 Criteria Selected</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
@@ -99,50 +129,9 @@
 	<td></td>
 </tr>
 <!--Test many clauses-->
-<tr>
-	<td>click</td>
+<<tr>
+	<td>waitForElementPresent</td>
 	<td>id=more-search-link</td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=UsersSearchForm_department</td>
-	<td>mail</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=search-advanced-search</td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>result(s)</td>
-	<td></td>
-</tr>
-<!--Test for mobile phone-->
-<tr>
-	<td>click</td>
-	<td>id=clear-search-link</td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>result(s)</td>
 	<td></td>
 </tr>
 <tr>
@@ -151,45 +140,130 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>click</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_attributeIndexOrDerivedType</td>
+	<td>label=Name</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_fullName</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=UsersSearchForm_mobilePhone</td>
-	<td>123455555</td>
+	<td>id=UsersSearchForm_dynamicClauses_0_fullName</td>
+	<td>Janny${randomSuffix} Jingo${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=search-advanced-search</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=UsersSearchForm_dynamicClauses_1_attributeIndexOrDerivedType</td>
+	<td>label=Office Phone</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=UsersSearchForm_dynamicClauses_1_officePhone</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=UsersSearchForm_dynamicClauses_1_officePhone</td>
+	<td>123456789</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addExtraAdvancedSearchRowButton-search-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=UsersSearchForm_dynamicClauses_2_attributeIndexOrDerivedType</td>
+	<td>label=Any Email Address</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=UsersSearchForm_dynamicClauses_2_anyEmail</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=UsersSearchForm_dynamicClauses_2_anyEmail</td>
+	<td>janny@jingo.com</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#search-advanced-search &gt; span.z-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Janny${randomSuffix} Jingo${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>3 Criteria Selected</td>
+	<td></td>
+</tr>
+<!--Test saving a search with no name-->
+<tr>
+	<td>open</td>
+	<td>index.php/users/default</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
 </tr>
 <tr>
     <td>waitForCondition</td>
     <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
     <td>30000</td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>result(s)</td>
-	<td></td>
-</tr>
-<!-- Test for department and mobile phone both-->
-<tr>
-	<td>click</td>
-	<td>id=clear-search-link</td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-	<td>waitForTextPresent</td>
-	<td>result(s)</td>
-	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -197,19 +271,35 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>click</td>
+	<td>id=save-as-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save-advanced-search</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Name cannot be blank.</td>
+	<td></td>
+</tr>
+<!--Test invalid structure-->
+<tr>
+	<td>click</td>
+	<td>id=show-dynamic-search-structure-div-link-search-form</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=UsersSearchForm_department</td>
-	<td>mail</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=UsersSearchForm_mobilePhone</td>
-	<td>123455555</td>
+	<td>id=UsersSearchForm_dynamicStructure</td>
+	<td>1 or or 2 AND 3 AND 4</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -217,13 +307,13 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>result(s)</td>
+	<td>The structure is invalid.</td>
 	<td></td>
 </tr>
 </tbody></table>

@@ -39,8 +39,8 @@
                 $owner->attachEventHandler('onEndRequest', array($this, 'handleGamification'));
             }
             $owner->attachEventHandler('onEndRequest', array($this, 'handleSaveGlobalStateCheck'));
-            // Uncomment next line after fix issues with API
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndLogRouteEvents'));
+            $owner->attachEventHandler('onEndRequest', array($this, 'handleResolveRedBeanQueriesToFile'));
             $owner->attachEventHandler('onEndRequest', array($this, 'handleEndRequest'));
         }
 
@@ -63,7 +63,7 @@
             }
         }
 
-        public static function handleEndLogRouteEvents($event)
+        public function handleEndLogRouteEvents($event)
         {
             $allEventHandlers = Yii::app()->getEventHandlers('onEndRequest');
 
@@ -75,6 +75,17 @@
                     {
                         Yii::app()->log->processLogs($event);
                     }
+                }
+            }
+        }
+
+        public function handleResolveRedBeanQueriesToFile($event)
+        {
+            if (defined('REDBEAN_DEBUG_TO_FILE') && REDBEAN_DEBUG_TO_FILE)
+            {
+                if (isset(Yii::app()->queryFileLogger))
+                {
+                    Yii::app()->queryFileLogger->processLogs();
                 }
             }
         }

@@ -236,6 +236,51 @@
             $this->resetGetArray();
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('home/default');
+
+            //task sorting issue
+            //check whether tasks portlet render or not
+            $this->assertTrue($portlets[1][4]->id > 0);
+            $this->assertEquals('TasksMyList', $portlets[1][4]->viewType);
+
+            //to sort task list
+            $this->setGetArray(array(
+                'Task_sort'      => 'name',
+                'portletId'      => $portlets[1][4]->id,
+                'uniqueLayoutId' => $uniqueLayoutId,
+            ));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('home/default');
+
+            //to sort task list after portlet has been edited
+            $this->resetGetArray();
+            $this->setGetArray(array(
+                'Task_sort'      => 'dueDateTime',
+                'portletId'      => $portlets[1][4]->id,
+                'uniqueLayoutId' => $uniqueLayoutId,
+                'ajax'           => 'list-view' . $uniqueLayoutId . '_' . $portlets[1][4]->id
+            ));
+            $this->runControllerWithNoExceptionsAndGetContent('home/default');
+        }
+
+        /**
+         * Strange it fails in ui but passes in the test. It should fail in both ways.
+         */
+        public function testSuperUserDateSorting()
+        {
+/**
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $superDashboard = Dashboard::getByLayoutIdAndUser(Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
+            $uniqueLayoutId = 'HomeDashboard' . $superDashboard->layoutId;
+            $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($uniqueLayoutId, $super->id, array());
+
+            $this->setGetArray(array(
+                'Task_sort'      => 'date',
+                'portletId'      => $portlets[1][4]->id,
+                'uniqueLayoutId' => $uniqueLayoutId,
+                'ajax'           => 'list-view' . $uniqueLayoutId . '_' . $portlets[1][4]->id
+            ));
+            $this->runControllerWithNoExceptionsAndGetContent('home/default');
+*/
         }
     }
 ?>

@@ -56,6 +56,7 @@
             curl_setopt($ch, CURLOPT_REFERER, '');
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP CURL');
 
             $xml = curl_exec($ch);
             if (curl_errno($ch))

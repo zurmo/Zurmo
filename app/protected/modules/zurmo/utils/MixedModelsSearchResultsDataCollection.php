@@ -100,8 +100,12 @@
                     GetUtil::resolveSelectedIdsFromGet(),
                     '-' . $moduleName,
                     array(
-                        'route' => '',
-                        'class' => 'SimpleListLinkPager'
+                        'route'            => '',
+                        'class'            => 'SimpleListLinkPager',
+                        'firstPageLabel'   => '<span>first</span>',
+                        'prevPageLabel'    => '<span>previous</span>',
+                        'nextPageLabel'    => '<span>next</span>',
+                        'lastPageLabel'    => '<span>last</span>',
                       )
                  );
             $listView->setRowsAreSelectable(false);

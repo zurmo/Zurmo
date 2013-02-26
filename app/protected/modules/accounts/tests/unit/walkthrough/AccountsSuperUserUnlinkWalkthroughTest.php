@@ -67,9 +67,6 @@
             $this->assertTrue($contact->account->id < 0);
         }
 
-         /**
-         * @expectedException NotSupportedException
-         */
         public function testActionUnlinkWithNoRelationModelClassName()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -83,12 +80,9 @@
                                         'relationModelClassName'       => null,
                                         'relationModelId'              => $superAccountId,
                                         'relationModelRelationName'    => 'contacts'));
-             $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/unlink', true);
+             $content = $this->runControllerWithNotSupportedExceptionAndGetContent('contacts/default/unlink');
         }
 
-         /**
-         * @expectedException NotSupportedException
-         */
         public function testActionUnlinkWithNoHasManyAndManyManyRelation()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -102,7 +96,7 @@
                                         'relationModelClassName'       => 'Account',
                                         'relationModelId'              => $superAccountId,
                                         'relationModelRelationName'    => 'billingAddress'));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('contacts/default/unlink', true);
+            $content = $this->runControllerWithNotSupportedExceptionAndGetContent('contacts/default/unlink');
         }
     }
 ?>

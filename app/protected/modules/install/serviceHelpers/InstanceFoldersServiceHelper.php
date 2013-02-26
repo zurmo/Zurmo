@@ -40,8 +40,7 @@
             $pathsToTest = array(
                 INSTANCE_ROOT . '/assets',
                 INSTANCE_ROOT . '/protected/data',
-                INSTANCE_ROOT . '/protected/runtime',
-                INSTANCE_ROOT . '/version.php'
+                INSTANCE_ROOT . '/protected/runtime'
             );
             foreach ($pathsToTest as $pathToTest)
             {
