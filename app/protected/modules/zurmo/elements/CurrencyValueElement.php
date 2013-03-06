@@ -46,7 +46,7 @@
             //need to somehow override to pass not to default to currency
             $activeCurrenciesElement   = new CurrencyIdForAModelsRelatedCurrencyValueDropDownElement(
                                                                 $this->model, $this->attribute, $this->form, $params);
-            $activeCurrenciesElement->editableTemplate = '{content}{error}';
+            $activeCurrenciesElement->editableTemplate = '{content}';
             $content  = '<div class="hasParallelFields">';
             $content .= ZurmoHtml::tag('div', array('class' => 'quarter'), $activeCurrenciesElement->render());
             $content .= ZurmoHtml::tag('div', array('class' => 'threeQuarters'),

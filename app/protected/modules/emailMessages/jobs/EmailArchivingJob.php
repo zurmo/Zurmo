@@ -67,7 +67,6 @@
          */
         public function run()
         {
-            $jobOwnerUserModel = Yii::app()->user->userModel;
             if (Yii::app()->imap->connect())
             {
                 $lastImapCheckTime     = EmailMessagesModule::getLastImapDropboxCheckTime();
@@ -88,15 +87,13 @@
                 {
                    foreach ($messages as $message)
                    {
-                       Yii::app()->user->userModel = $jobOwnerUserModel;
                        $lastMessageCreatedTime = strtotime($message->createdDate);
                        if (strtotime($message->createdDate) > strtotime($lastCheckTime))
                        {
                            $lastCheckTime = $message->createdDate;
                        }
-                       $this->saveEmailMessage($message, $jobOwnerUserModel);
+                       $this->saveEmailMessage($message);
                    }
-                   Yii::app()->user->userModel = $jobOwnerUserModel;
                    Yii::app()->imap->expungeMessages();
                    if ($lastCheckTime != '')
                    {
@@ -195,7 +192,7 @@
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = $recipientInfo['email'];
             $recipient->toName         = $recipientInfo['name'];
-            $recipient->type           = EmailMessageRecipient::TYPE_TO;
+            $recipient->type           = $recipientInfo['type'];
 
             $personOrAccount = EmailArchivingUtil::resolvePersonOrAccountByEmailAddress(
                     $recipientInfo['email'],
@@ -233,7 +230,14 @@
             }
         }
 
-        protected function saveEmailMessage($message, $jobOwnerUserModel)
+        /**
+         * Save email message
+         * This method should be protected, but we made it public for unit testing, so don't call it outside this class.
+         * @param ImapMessage $message
+         * @throws NotSupportedException
+         * @return boolean
+         */
+        public function saveEmailMessage($message)
         {
             // Get owner for message
             try
@@ -247,10 +251,9 @@
                 return false;
             }
             $emailSenderOrRecipientEmailNotFoundInSystem = false;
-            Yii::app()->user->userModel = $emailOwner;
-            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', Yii::app()->user->userModel);
-            $userCanAccessLeads    = RightsUtil::canUserAccessModule('LeadsModule',    Yii::app()->user->userModel);
-            $userCanAccessAccounts = RightsUtil::canUserAccessModule('AccountsModule', Yii::app()->user->userModel);
+            $userCanAccessContacts = RightsUtil::canUserAccessModule('ContactsModule', $emailOwner);
+            $userCanAccessLeads    = RightsUtil::canUserAccessModule('LeadsModule',    $emailOwner);
+            $userCanAccessAccounts = RightsUtil::canUserAccessModule('AccountsModule', $emailOwner);
 
             $senderInfo = EmailArchivingUtil::resolveEmailSenderFromEmailMessage($message);
             if (!$senderInfo)
@@ -269,7 +272,6 @@
                 }
             }
 
-            Yii::app()->user->userModel = $jobOwnerUserModel;
             $recipientsInfo = EmailArchivingUtil::resolveEmailRecipientsFromEmailMessage($message);
             if (!$recipientsInfo)
             {
@@ -299,7 +301,6 @@
                 if (!(empty($recipient->personOrAccount) || $recipient->personOrAccount->id <= 0))
                 {
                     $emailRecipientNotFoundInSystem = false;
-                    break;
                 }
             }
 
@@ -308,7 +309,6 @@
             {
                 $emailSenderOrRecipientEmailNotFoundInSystem = $emailRecipientNotFoundInSystem;
             }
-
             $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             if ($emailSenderOrRecipientEmailNotFoundInSystem)
             {
@@ -353,6 +353,7 @@
             {
                 // Email message couldn't be validated(some related models can't be validated). Email user.
                 $this->resolveMessageSubjectAndContentAndSendSystemMessage('EmailMessageNotValidated', $message);
+                return false;
             }
 
             $saved = $emailMessage->save();
@@ -362,7 +363,10 @@
                 {
                     throw new NotSupportedException();
                 }
-                Yii::app()->imap->deleteMessage($message->uid);
+                if (isset($message->uid)) // For tests uid will not be setup
+                {
+                    Yii::app()->imap->deleteMessage($message->uid);
+                }
             }
             catch (NotSupportedException $e)
             {

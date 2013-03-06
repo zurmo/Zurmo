@@ -165,6 +165,7 @@
             }
             echo 'Running Test Suites using Selenium RC v2:' . "\n";
             $browsersToRun = self::resolveBrowserFromParameter();
+
             foreach ($browsersToRun as $browserId => $browserDisplayName)
             {
                 self::clearPreviousTestResultsByServerAndBrowser(self::getServerByServerControlUrl(self::resolveHostFromParameterAndConstant()),
@@ -173,25 +174,25 @@
                 {
                     if (!self::isInstallationTest($pathToSuite))
                     {
-                        echo 'Restoring test db';
+                        echo "Restoring test db\n";
                         self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'restore'));
-                        echo "Restored test db";
+                        echo "Restored test db\n";
                         if (!self::isInstallationTest($pathToSuite))
                         {
-                            echo 'Set user default time zone.';
+                            echo "Set user default time zone.\n";
                             self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'setUserDefaultTimezone'));
-                            echo "User default time zone set.";
+                            echo "User default time zone set.\n";
                         }
-                        echo 'Clear cache on remote server';
+                        echo "Clear cache on remote server\n";
                         self::remoteAction(self::resolveHostFromParameterAndConstant(), array('clearCache'         => '1',
                                                                 'ignoreBrowserCheck' => '1'));
                     }
                     else
                     {
-                        echo 'Uninstall zurmo';
+                        echo "Uninstall zurmo\n";
                         self::remoteAction(self::resolveServerControlUrlFromParameterAndConstant(), array('action' => 'backupRemovePerInstance'));
                     }
-                    echo "Cache cleared";
+                    echo "Cache cleared\n";
 
                     echo 'Running test suite: ';
                     echo $pathToSuite . "\n";

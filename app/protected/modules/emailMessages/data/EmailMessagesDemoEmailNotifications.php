@@ -28,7 +28,7 @@
     {
         public function run(User $userToSendTo, $messageLogger)
         {
-            $emailMessage = EmailMessageHelper::sendTestEmail(Yii::app()->emailHelper, Yii::app()->user->userModel,
+            $emailMessage = EmailMessageHelper::sendTestEmailFromUser(Yii::app()->emailHelper, Yii::app()->user->userModel,
                                                               Yii::app()->user->userModel->primaryEmail->emailAddress);
             $messageLogger->addInfoMessage('Sending test SMTP setup message');
         }

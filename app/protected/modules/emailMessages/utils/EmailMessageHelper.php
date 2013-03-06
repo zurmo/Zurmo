@@ -86,13 +86,32 @@
         }
 
         /**
-         * Send a test email.  Can use to determine if the SMTP settings are configured correctly.
+         * Send a test email from user.  Can use to determine if the SMTP settings are configured correctly.
          * @param EmailHelper $emailHelper
          * @param User $userToSendMessagesFrom
          * @param string $toAddress
          */
-        public static function sendTestEmail(EmailHelper $emailHelper, User $userToSendMessagesFrom, $toAddress)
+        public static function sendTestEmailFromUser(EmailHelper $emailHelper, User $userToSendMessagesFrom, $toAddress)
         {
+            $from = array(
+                'address'   => $emailHelper->resolveFromAddressByUser($userToSendMessagesFrom),
+                'name'      => strval($userToSendMessagesFrom),
+            );
+            $emailMessage = static::sendTestEmail($emailHelper, $from, $toAddress);
+            return $emailMessage;
+        }
+
+        /**
+         * Send a test email.
+         * $from('name' => 'fromName', 'address' => 'fromAddress')
+         * @param EmailHelper $emailHelper
+         * @param Array $from
+         * @param string $toAddress
+         */
+        public static function sendTestEmail(EmailHelper $emailHelper, Array $from, $toAddress)
+        {
+            assert('is_string($from["name"])');
+            assert('is_string($from["address"])');
             $emailMessage              = new EmailMessage();
             $emailMessage->owner       = Yii::app()->user->userModel;
             $emailMessage->subject     = Zurmo::t('EmailMessagesModule', 'A test email from Zurmo');
@@ -105,8 +124,8 @@
                                             Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.'));
             $emailMessage->content     = $emailContent;
             $sender                    = new EmailMessageSender();
-            $sender->fromAddress       = $emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
-            $sender->fromName          = strval($userToSendMessagesFrom);
+            $sender->fromAddress       = $from['address'];
+            $sender->fromName          = $from['name'];
             $emailMessage->sender      = $sender;
             $recipient                 = new EmailMessageRecipient();
             $recipient->toAddress      = $toAddress;

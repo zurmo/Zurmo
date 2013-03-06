@@ -76,8 +76,8 @@
                 'htmlOptions' => $htmlOptions,
                 'options'     => array('select'   => 'js: function(event, ui) {if (ui.item.href.length > 0)' .
                                                      '{window.location = ui.item.href;} return false;}',
-                                       'search'   => 'js: function(event, ui) { makeToggableSpinner("#app-search", true) }',
-                                       'open'     => 'js: function(event, ui) { makeToggableSpinner("#app-search", false) }',
+                                       'search'   => 'js: function(event, ui) { makeOrRemoveTogglableSpinner(true, "#app-search") }',
+                                       'open'     => 'js: function(event, ui) { makeOrRemoveTogglableSpinner(false, "#app-search") }',
                                        'position' => array('my' =>  'right top', 'at' => 'right bottom')
             )));
             $cClipWidget->endClip();

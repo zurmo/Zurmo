@@ -223,7 +223,8 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $compareData = array(
                                array(
                                    'email' => $imapMessage->fromEmail,
-                                   'name' => ''
+                                   'name'  => '',
+                                   'type'  => EmailMessageRecipient::TYPE_TO
                                )
                            );
             $this->assertEquals($compareData, $recipients);

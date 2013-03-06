@@ -498,6 +498,26 @@
     {
         $labels   = array();
         $metadata = $moduleClassName::getMetadata();
+        if (isset($metadata['global']['adminTabMenuItems']))
+        {
+            foreach ($metadata['global']['adminTabMenuItems'] as $menuItem)
+            {
+                if (isset($menuItem['items']))
+                {
+                    foreach ($menuItem['items'] as $subMenuItem)
+                    {
+                        if (!in_array($subMenuItem['label'], $labels))
+                        {
+                            $labels[] = $subMenuItem['label'];
+                        }
+                    }
+                }
+                if (!in_array($menuItem['label'], $labels))
+                {
+                    $labels[] = $menuItem['label'];
+                }
+            }
+        }
         if (isset($metadata['global']['tabMenuItems']))
         {
             foreach ($metadata['global']['tabMenuItems'] as $menuItem)

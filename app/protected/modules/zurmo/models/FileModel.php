@@ -42,7 +42,7 @@
                     array('fileContent', 'required'),
                     array('name',        'required'),
                     array('name', 'type', 'type' => 'string'),
-                    array('name', 'length',  'min'  => 3, 'max' => 64),
+                    array('name', 'length',  'min'  => 3, 'max' => 100),
                     array('size',        'required'),
                     array('size', 'type', 'type' => 'integer'),
                     array('type',        'required'),

@@ -213,7 +213,7 @@ function onAjaxSubmitRelatedListAction(confirmTitle, gridId){
         return false;
     }
     $('#' + gridId).addClass("loading");
-    makeSmallLoadingSpinner(gridId);
+    makeSmallLoadingSpinner(true, '#' + gridId);
     return true;
 }
 
@@ -221,7 +221,48 @@ function onAjaxSubmitRelatedListAction(confirmTitle, gridId){
 * Spinner Functions
 */
 
+function resolveSpinner(state, domObject, styleObject, spinnerClassName){
+    
+    if(spinnerClassName === undefined){
+        spinnerClassName = '.z-spinner';
+    }
+    
+    if(state === true){
+        $( spinnerClassName, domObject).spin({
+            lines     : styleObject.lines,  //9, // The number of lines to draw
+            length    : styleObject.length, //2.3, // The length of each line
+            width     : styleObject.width, //1.7, // The line thickness
+            radius    : styleObject.radius, // The radius of the inner circle
+            rotate    : 0, // The rotation offset
+            color     : styleObject.color, //color, // #rgb or #rrggbb
+            speed     : styleObject.speed,       //2.5, // Rounds per second
+            trail     : styleObject.trail,       //37, // Afterglow percentage
+            shadow    : false,                   // Whether to render a shadow
+            hwaccel   : true,                   // Whether to use hardware acceleration
+            className : 'spinner',            // The CSS class to assign to the spinner
+            zIndex    : 2e9,                     // The z-index (defaults to 2000000000)
+            top       : styleObject.top,         //4, // Top position relative to parent in px
+            left      : styleObject.left         //0 // Left position relative to parent in px
+        });
+    } else {
+        $( spinnerClassName, domObject).spin(false);
+    }
+}
+
 function attachLoadingSpinner( id, state, color ){
+    /*
+    var style = {
+        lines : 9,
+        length : 2.3,
+        width : 1.7,
+        color : '#999',
+        speed : 2.5,
+        trail : 37,
+        top : 4,
+        left : 0
+    };
+    resolveSpinner(true, this, style);*/
+    
     var color;
     if ( color === 'dark' ){
         color = '#999';
@@ -250,93 +291,66 @@ function attachLoadingSpinner( id, state, color ){
     }
 }
 
-function makeSmallLoadingSpinner(id, color){
-    var color;
-    if ( color === 'dark' ){
-        color = '#999';
-    } else {
-        color = '#fff';
-    }
-    $( '.z-spinner', '#' + id ).spin({
-        lines : 11, // The number of lines to draw
-        length : 4, // The length of each line
-        width : 2, // The line thickness
-        radius : 4, // The radius of the inner circle
-        rotate : 0, // The rotation offset
-        color : color, // #rgb or #rrggbb
-        speed : 1.5, // Rounds per second
-        trail : 35, // Afterglow percentage
-        shadow : false, // Whether to render a shadow
-        hwaccel : true, // Whether to use hardware acceleration
-        className : 'spinner', // The CSS class to assign to the spinner
-        zIndsex : 2e9, // The z-index (defaults to 2000000000)
-        top : 0, // Top position relative to parent in px
-        left : 0 // Left position relative to parent in px
-    });
+function makeSmallLoadingSpinner(state, context){
+    var style = {
+        lines  : 11,
+        length : 4,
+        width  : 2,
+        radius : 4,
+        color  : '#FFFFFF',
+        speed  : 1.5,
+        trail  : 35,
+        top    : 0,
+        left   : 0
+    };
+    resolveSpinner(true, context, style);
 }
 
-function makeLargeLoadingSpinner(id){
-    $('#' + id).append('<span class="big-spinner"></span>');
-    $('.big-spinner', '#' + id).spin({
-        lines : 10, // The number of lines to draw
-        length : 8, // The length of each line
-        width : 5, // The line thickness
-        radius : 8, // The radius of the inner circle
-        rotate : 0, // The rotation offset
-        color : '#CCCCCC', // #rgb or #rrggbb
-        speed : 2.5, // Rounds per second
-        trail : 37, // Afterglow percentage
-        shadow : false, // Whether to render a shadow
-        hwaccel : true, // Whether to use hardware acceleration
-        className : 'spinner', // The CSS class to assign to the spinner
-        zIndex : 2e9, // The z-index (defaults to 2000000000)
-        top : 0, // Top position relative to parent in px
-        left : 0 // Left position relative to parent in px
-    });
+function makeLargeLoadingSpinner(context){
+    $(context).append('<span class="big-spinner"></span>');
+    var style = {
+        lines  : 10,
+        length : 8,
+        width  : 5,
+        radius : 8,
+        color  : '#CCCCCC',
+        speed  : 2.5,
+        trail  : 37,
+        top    : 0,
+        left   : 0
+    };
+    resolveSpinner(true, context, style, '.big-spinner');
 }
 
-function makeToggableSpinner(context, state){
-    if ( state === true ){
-        $( '.z-spinner', context ).spin({
-            lines : 10, // The number of lines to draw
-            length : 3, // The length of each line
-            width : 2, // The line thickness
-            radius : 4, // The radius of the inner circle
-            rotate : 0, // The rotation offset
-            color : '#999', // #rgb or #rrggbb
-            speed : 2.5, // Rounds per second
-            trail : 100, // Afterglow percentage
-            shadow : false, // Whether to render a shadow
-            hwaccel : true, // Whether to use hardware acceleration
-            className : 'spinner', // The CSS class to assign to the spinner
-            zIndsex : 2e9, // The z-index (defaults to 2000000000)
-            top : 0, // Top position relative to parent in px
-            left : 0 // Left position relative to parent in px
-        });
-    } else {
-        $( '.z-spinner', context ).spin(false);
-    }
+function makeOrRemoveTogglableSpinner(state, context){
+    var style = {
+        lines  : 10,
+        length : 3,
+        width  : 2,
+        radius : 4,
+        color  : '#999999',
+        speed  : 2.5,
+        trail  : 100,
+        top    : 0,
+        left   : 0
+    };
+    resolveSpinner(state, context, style);
 }
 
 
 //Graceful handling of ajax processing. If there is a server generated error,
 //it can be displayed in an alert or dialog box
-function processAjaxSuccessUpdateHtmlOrShowDataOnFailure(dataOrHtml, updateId)
-{
-    try
-    {
+function processAjaxSuccessUpdateHtmlOrShowDataOnFailure(dataOrHtml, updateId){
+    try{
         jsonData = jQuery.parseJSON(dataOrHtml);
-        $('#FlashMessageBar').jnotifyAddMessage(
-            {
+        $('#FlashMessageBar').jnotifyAddMessage({
                  text: jsonData.message,
                  permanent: false,
                  showIcon: true,
                  type: jsonData.messageType
              }
         );
-    }
-    catch (e)
-    {
+    } catch (e){
         $('#' + updateId).html(dataOrHtml);
     }
 }

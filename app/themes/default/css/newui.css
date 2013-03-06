@@ -7656,7 +7656,7 @@ div.wide.form label.hasCheckBox {
   height: 24px;
   display: block;
   float: right;
-  z-index: 10009;
+  z-index: 1;
   position: absolute;
   right: 1px;
   bottom: 1px;
@@ -9283,14 +9283,13 @@ div.hasHalfs .twoThirds {
   position: absolute;
   top: 1px;
   right: 1px;
-  z-index: 1;
   pointer-events: none;
   background: url(../images/dropdown-arrow.png) 100% 0 no-repeat;
   padding-left: 6px;
   display: block !important;
   font-weight: normal !important;
   color: #666 !important;
-  z-index: 3;
+  z-index: 1;
   cursor: pointer;
 }
 .hasDropDown span:hover,
@@ -9298,6 +9297,7 @@ div.hasHalfs .twoThirds {
   background-position: 100% 100%;
 }
 .hasDropDown select {
+  z-index: 0;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -12511,6 +12511,8 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   padding: 0;
   clear: both;
   min-height: 60px;
+  float: left;
+  width: 100%;
 }
 .panel-list > li {
   min-height: 60px;
@@ -12638,6 +12640,12 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   border: 1px solid #fcefa1;
   background: #fbf9ee;
   color: #363636 ;
+}
+#layout-container .ui-state-highlight {
+  width: 100%;
+  min-height: 60px;
+  float: left;
+  display: block;
 }
 #layout-container .ui-state-highlight a,
 #layout-container .ui-widget-content .ui-state-highlight a,

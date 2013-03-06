@@ -99,7 +99,7 @@
             }
             // Begin Not Coding Standard
             return "js:function(){jQuery('#" . $containerId . "').html('');" .
-                                    "makeLargeLoadingSpinner('" . $containerId . "');" .
+                                    "makeLargeLoadingSpinner('#" . $containerId . "');" .
                                     "window.scrollTo(0, 0);" .
                                     "jQuery('#" . $containerId . "').dialog({'title':\"" . CJavaScript::quote($title) . "\",'autoOpen':true," .
                                     "'modal':true,'height':" . $heightContent . ",'width':" . $width .

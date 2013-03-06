@@ -151,6 +151,8 @@
                     $configurationForm->password        = $_POST['UserEmailConfigurationForm']['outboundPassword'];
                     $configurationForm->security        = $_POST['UserEmailConfigurationForm']['outboundSecurity'];
                     $configurationForm->aTestToAddress  = $_POST['UserEmailConfigurationForm']['aTestToAddress'];
+                    $fromNameToSendMessagesFrom         = $_POST['UserEmailConfigurationForm']['fromName'];
+                    $fromAddressToSendMessagesFrom      = $_POST['UserEmailConfigurationForm']['fromAddress'];
                 }
                 if ($configurationForm->aTestToAddress != null)
                 {
@@ -160,10 +162,21 @@
                     $emailHelper->outboundUsername = $configurationForm->username;
                     $emailHelper->outboundPassword = $configurationForm->password;
                     $emailHelper->outboundSecurity = $configurationForm->security;
-                    $userToSendMessagesFrom        = User::getById((int)$configurationForm->userIdOfUserToSendNotificationsAs);
-
-                    $emailMessage = EmailMessageHelper::sendTestEmail($emailHelper, $userToSendMessagesFrom,
+                    if (isset($fromNameToSendMessagesFrom) && isset($fromAddressToSendMessagesFrom))
+                    {
+                        $from = array(
+                            'name'      => $fromNameToSendMessagesFrom,
+                            'address'   => $fromAddressToSendMessagesFrom
+                        );
+                        $emailMessage = EmailMessageHelper::sendTestEmail($emailHelper, $from,
                                                                       $configurationForm->aTestToAddress);
+                    }
+                    else
+                    {
+                        $userToSendMessagesFrom        = User::getById((int)$configurationForm->userIdOfUserToSendNotificationsAs);
+                        $emailMessage = EmailMessageHelper::sendTestEmailFromUser($emailHelper, $userToSendMessagesFrom,
+                                                                      $configurationForm->aTestToAddress);
+                    }
                     $messageContent  = null;
                     if (!$emailMessage->hasSendError())
                     {

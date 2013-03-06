@@ -116,26 +116,28 @@
                 $emailRecipients = array(
                     array(
                         'email' => $emailMessage->fromEmail,
-                        'name'  => $emailMessage->fromName
+                        'name'  => $emailMessage->fromName,
+                        'type'  => EmailMessageRecipient::TYPE_TO
                     )
                 );
             }
             else
             {
                 // Zurmo user sent email, so recipients are in 'To' and 'CC' fields
-                $emailRecipients = $emailMessage->to;
-
                 foreach ($emailMessage->to as $key => $value)
                 {
+                    $emailMessage->to[$key]['type'] = EmailMessageRecipient::TYPE_TO;
                     if ($value['email'] == Yii::app()->imap->imapUsername)
                     {
                         unset($emailMessage->to[$key]);
                     }
                 }
+                $emailRecipients = $emailMessage->to;
                 if (!empty($emailMessage->cc))
                 {
                     foreach ($emailMessage->cc as $key => $value)
                     {
+                        $emailMessage->cc[$key]['type'] = EmailMessageRecipient::TYPE_CC;
                         if ($value['email'] == Yii::app()->imap->imapUsername)
                         {
                             unset($emailMessage->cc[$key]);
