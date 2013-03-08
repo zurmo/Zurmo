@@ -221,7 +221,7 @@
                                     array('id'      => 'addExtraColumnButton', 'class' => 'attachLoading z-button',
                                           'onclick' => 'js:if($(this).hasClass("loading")) {return false;}
                                                         $(this).addClass("loading").addClass("loading-ajax-submit");
-                                                        attachLoadingSpinner($(this).attr("id"), true);'));
+                                                        makeOrRemoveLoadingSpinner(true, "#" + $(this).attr("id"));'));
             // End Not Coding Standard
             return $content;
         }

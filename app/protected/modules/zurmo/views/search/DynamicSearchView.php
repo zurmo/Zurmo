@@ -228,14 +228,14 @@
                                     array('type' => 'GET',
                                           'data' => 'js:\'rowNumber=\' + $(\'#rowCounter-' . $this->getSearchFormId(). '\').val()',
                                           'beforeSend' => 'js:function(){
-                                            attachLoadingSpinner("' . $this->getSearchFormId() . '", true, "dark");
+                                            makeOrRemoveLoadingSpinner(true, "#' . $this->getSearchFormId() . '", "dark");
                                             }',
                                           'success' => 'js:function(data){
                                             $(\'#' . $this->getRowCounterInputId(). '\').val(parseInt($(\'#' . $this->getRowCounterInputId() . '\').val()) + 1)
                                             $(\'#addExtraAdvancedSearchRowButton-' . $this->getSearchFormId() . '\').parent().before(data);
                                             rebuildDynamicSearchRowNumbersAndStructureInput("' . $this->getSearchFormId() . '");
                                             resolveClearLinkPrefixLabelAndVisibility("' . $this->getSearchFormId() . '");
-                                            attachLoadingSpinner("' . $this->getSearchFormId() . '", false);
+                                            makeOrRemoveLoadingSpinner(false, "#' . $this->getSearchFormId() . '");
                                           }'),
                                     array('id' => 'addExtraAdvancedSearchRowButton-' . $this->getSearchFormId(), 'namespace' => 'add'));
             // End Not Coding Standard

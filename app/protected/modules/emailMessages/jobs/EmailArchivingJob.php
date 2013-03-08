@@ -348,6 +348,7 @@
                     }
                 }
             }
+            $emailMessage->sentDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
             $validated                 = $emailMessage->validate();
             if (!$validated)
             {

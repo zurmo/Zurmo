@@ -7057,3 +7057,12 @@ data/app/protected/modules/workflows/tests/unit/rules/WorkflowsTest2WorkflowRule
 data/app/protected/modules/workflows/views/ActionRowForWorkflowComponentView.php.i
 data/app/protected/modules/workflows/views/WorkflowsZeroModelsYetView.php.i
 data/app/protected/modules/zurmo/tests/unit/models/CurrencyValueTestItemSavedDynamicSearchFormTestModel.php.i
+data/app/protected/modules/contacts/adapters/ContactStateRedBeanModelAttributeValueToExportValueAdapter.php.i
+data/app/protected/modules/contacts/tests/unit/ContactStateRedBeanModelAttributeValueToExportValueAdapterTest.php.i
+data/app/protected/modules/reports/adapters/CalculatedCurrencyValueForReportToExportValueAdapter.php.i
+data/app/protected/modules/reports/adapters/CurrencyValueForReportToExportValueAdapter.php.i
+data/app/protected/modules/reports/adapters/ForReportToExportValueAdapter.php.i
+data/app/protected/modules/reports/adapters/FullNameForReportToExportValueAdapter.php.i
+data/app/protected/modules/users/adapters/UserRedBeanModelAttributeValueToExportValueAdapter.php.i
+data/app/protected/modules/users/tests/unit/UserRedBeanModelAttributeValueToExportValueAdapterTest.php.i
+data/app/protected/modules/zurmo/elements/CurrencyCodeStaticDropDownFormElement.php.i

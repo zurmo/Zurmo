@@ -28,14 +28,14 @@
     {
         public function __construct(RedBeanModel $model = null, $attributeName = null)
         {
-            $this->maxLength = 20;
+            $this->maxLength = 24;
             parent::__construct($model, $attributeName);
         }
 
         public function rules()
         {
             return array_merge(parent::rules(), array(
-                array('maxLength', 'numerical', 'min' => 1, 'max' => 20),
+                array('maxLength', 'numerical', 'min' => 1, 'max' => 24),
             ));
         }
 

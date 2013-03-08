@@ -118,7 +118,7 @@
                 $('#notifications-link').live('click', function()
                 {
                         if ( $('#notifications').hasClass('nav-open') === true ){
-                            attachLoadingSpinner('notifications-flyout', true);
+                            makeOrRemoveLoadingSpinner(true, '#notifications-flyout');
                             $.ajax({
                                 url 	 : '" . $this->notificationsUrl . "',
                                 type     : 'GET',
