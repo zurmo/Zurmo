@@ -68,36 +68,36 @@
             // Load the XML, making sure it is all valid utf8
             $xml = @simplexml_load_string( utf8_encode($xml) );
             if ($xml === false)
-            {
+            {  
                 // Construct and throw the exception
                 $status = GeoCode_Driver_Google::ERROR_BAD_RESPONSE;
                 $errMsg = GeoCode_Driver_Google::getErrorMessage($status);
                 throw new GeoCode_Exception($errMsg, $status);
             }
-
             // Get the success status
             $response = $xml->Response;
-            $status = (int)$response->Status->code;
-
+            $status = $xml->status;
+           
             // If the goecoding was not successfull, error out
             if ($status != GeoCode_Driver_Google::STATUS_SUCCESS)
-            {
-                throw new GeoCode_Exception("GeoCode Query Failed", $status);
+            {                
+                throw new GeoCode_Exception($status);
             }
 
             # Process the data #
 
-            // Get the coordinates (always returned)
-            $placemark = $response->Placemark;
-            list($lon,$lat,$altitude) = explode(',', (string)$placemark->Point->coordinates);
+            // Get the location (always returned)            
+            $lng  = $xml->result->geometry->location->lng;
+            $lat  = $xml->result->geometry->location->lat;
+            //list($lon,$lat) = explode(',', (string)$result->geometry->location->coordinates);
 
             // Initialize the return array
             $data = array(
                 'accuracy' => GeoCode_Driver_Google::ACCURACY_UNKNOWN,
                 'latitude' => (float)$lat,
-                'longitude' => (float)$lon,
-                'query' => (string)$response->name,
-                'clean_query' => (string)$placemark->address,
+                'longitude' => (float)$lng,
+                'query' => (string)$xml->result->formatted_address,
+                'clean_query' => (string)$xml->result->formatted_address,
                 'state' => '',
                 'city' => '',
                 'zip' => '',
@@ -105,145 +105,58 @@
                 'country' => ''
             );
 
-            // Parse the placemarker
-            $this->parsePlacemark($placemark, $data);
+            // Parse the addressComponent
+            $this->parseAddressComponent($xml->result->address_component, $data);
+
+            // Set the accuracy
+            if(isset($xml->result->geometry->location_type))
+            $data['accuracy'] = (string)$xml->result->geometry->location_type;
 
             // Return our data
             return $data;
         }
 
         /**
-         * Parse the xAL placemark as returned by google
+         * Parse the address_component as returned by google
          *
-         * @param SimpleXMLObject $placemark
-         * @param array& $data
+         * @param SimpleXMLObject $addressComponents
+         * @param array  &$data
          * @return void
          */
-        protected function parsePlacemark($placemark, &$data)
-        {
-            // Get the accuracy of the geocoding
-            $details = $placemark->AddressDetails;
-            $accuracy = (int)$details->attributes()->Accuracy;
-
-            // If we have no accuracy, just return
-            if ($accuracy == GeoCode_Driver_Google::ACCURACY_UNKNOWN)
-                return;
-
-            // Set the accuracy
-            $data['accuracy'] = $accuracy;
-
-            // Get the country name
-            $data['country'] = (string)$details->Country->CountryNameCode;
-
-            // If we have an administrative area, parse it
-            if (isset($details->Country->AdministrativeArea))
+        protected function parseAddressComponent($addressComponents, &$data)
+        {        
+            $addressParts = array( 'route','locality','administrative_area_level_2','administrative_area_level_1',
+                            'country','postal_code');    
+            foreach($addressComponents as $addressComponent)
             {
-                $this->parseAdministrativeArea($details->Country->AdministrativeArea, $data, $accuracy);
+               if(in_array($addressComponent->type,$addressParts))
+               {
+                    $type = (string)$addressComponent->type;
+                    $addressResolved[$type] =   $addressComponent->short_name;
+               }
             }
-        }
 
-        /**
-         * Parse the xAL administrative area as returned by google
-         *
-         * @param SimpleXMLObject $aa
-         * @param array& $data
-         * @param int $accuracy
-         * @return void
-         */
-        protected function parseAdministrativeArea($aa, &$data, $accuracy)
-        {
+            // Get the country name 
+            if(isset($addressResolved['country']))            
+            $data['country'] = (string)$addressResolved['country'];           
+
+            // Get the city name
+            if(isset($addressResolved['locality']))            
+            $data['city'] = (string)$addressResolved['locality']; 
+            
+            
             // Get the state name
-            $data['state'] = (string)$aa->AdministrativeAreaName;
-
-            // If we have a locality, parse it
-            if (isset($aa->Locality))
-            {
-                $this->parseLocality($aa->Locality, $data, $accuracy);
-            }
-            // If we have a subadministrative area
-            elseif (isset($aa->SubAdministrativeArea))
-            {
-                $this->parseSubAdministrativeArea($aa->SubAdministrativeArea, $data, $accuracy);
-            }
-            elseif (isset($aa->DependentLocality))
-            {
-                $data['city'] = (string)$aa->DependentLocality->DependentLocalityName;
-            }
-            // If we just have an address line
-            else
-            {
-                $data['city'] = (string)$aa->AddressLine;
-            }
-        }
-
-        /**
-         * Parse the xAL locality as returned by google
-         *
-         * @param SimpleXMLObject $loc
-         * @param array& $data
-         * @param int $accuracy
-         * @return void
-         */
-        protected function parseLocality($loc, &$data, $accuracy)
-        {
-            $data['city'] = (string)$loc->LocalityName;
-
-            // If we have a street, use it
-            if (isset($loc->Thoroughfare))
-            {
-                $data['street'] = (string)$loc->Thoroughfare->ThoroughfareName;
-            }
-
-            // If we have a postal region, use it
-            if (isset($loc->PostalCode))
-            {
-                $data['zip'] = (string)$loc->PostalCode->PostalCodeNumber;
-            }
-        }
-
-        /**
-         * Parse the xAL SubAdministrative Area as returned by google
-         *
-         * @param SimpleXMLObject $sub
-         * @param array& $data
-         * @param int $accuracy
-         * @return void
-         */
-        protected function parseSubAdministrativeArea($sub, &$data, $accuracy)
-        {
-            // Get the county/region name
-            // Note: we don't use this, so just ignore it
-            $data['county'] = (string)$sub->SubAdministrativeAreaName;
-
-            // If we have a locality, parse it
-            if (isset($sub->Locality))
-            {
-                $this->parseLocality($sub->Locality, $data, $accuracy);
-            }
-            // If we have a dependent locality
-            elseif (isset($sub->DependentLocality))
-            {
-                $data['city'] = (string)$sub->DependentLocality->DependentLocalityName;
-            }
-            elseif (isset($sub->AddressLine))
-            {
-                $data['city'] = (string)$sub->AddressLine;
-            }
-            // If we just have data
-            else
-            {
-                // If we have a street, use it
-                if (isset($sub->Thoroughfare))
-                {
-                    $data['street'] = (string)$sub->Thoroughfare->ThoroughfareName;
-                }
-
-                // If we have a postal region, use it
-                if (isset($sub->PostalCode))
-                {
-                    $data['zip'] = (string)$sub->PostalCode->PostalCodeNumber;
-                }
-            }
+            if(isset($addressResolved['administrative_area_level_1']))            
+            $data['state'] = (string)$addressResolved['administrative_area_level_1']; 
+            
+            // Get the zip
+            if(isset($addressResolved['postal_code']))            
+            $data['zip'] = (string)$addressResolved['postal_code']; 
+            
+            // Get the street name 
+            if(isset($addressResolved['route']))            
+            $data['street'] = (string)$addressResolved['route'];
+ 
         }
     }
 ?>

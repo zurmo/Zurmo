@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -29,8 +39,6 @@
      */
     class LatestActivitiesUtil
     {
-        const CONFIG_MODULE_NAME = 'ActivitiesModule';
-
         /**
          * Based on the current user, return model class names and thier display labels.  Only include models
          * that the user has a right to access its corresponding module, as well as only models that implement the
@@ -42,31 +50,7 @@
          */
         public static function getMashableModelDataForCurrentUser($includeHavingRelatedItems = true)
         {
-            //todo: cache results to improve performance if needed.
-            $mashableModelClassNames = array();
-            $modules = Module::getModuleObjects();
-            foreach ($modules as $module)
-            {
-                $modelClassNames = $module::getModelClassNames();
-                foreach ($modelClassNames as $modelClassName)
-                {
-                    $classToEvaluate     = new ReflectionClass($modelClassName);
-                    if ($classToEvaluate->implementsInterface('MashableActivityInterface') &&
-                    !$classToEvaluate->isAbstract())
-                    {
-                        if (RightsUtil::canUserAccessModule(get_class($module), Yii::app()->user->userModel))
-                        {
-                            if (!$includeHavingRelatedItems && !$modelClassName::hasRelatedItems())
-                            {
-                                continue;
-                            }
-                            $mashableModelClassNames[$modelClassName] =
-                            $modelClassName::getModelLabelByTypeAndLanguage('Plural');
-                        }
-                    }
-                }
-            }
-            return $mashableModelClassNames;
+            return MashableUtil::getModelDataForCurrentUserByInterfaceName('MashableActivityInterface', $includeHavingRelatedItems);
         }
 
         /**
@@ -155,41 +139,6 @@
                 }
             }
             return array_values($mashableModelClassNames);
-        }
-
-        /**
-         * Set a persistent config value for current user against portletId and keyName.
-         * @param $portletId integer Id of the portlet to set value against
-         * @param $keyName string Name of the key that should be set
-         * @param $value string|integer|boolean Value that should be assigned to keyName config
-         */
-        public static function setPersistentConfigForCurrentUserByPortletIdAndKey($portletId, $keyName, $value)
-        {
-            assert('is_int($portletId)');
-            $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
-            ZurmoConfigurationUtil::setForCurrentUserByModuleName(static::CONFIG_MODULE_NAME, $keyName, $value);
-            Yii::app()->user->setState($keyName, $value);
-        }
-
-        /**
-         * Get a persistent config value for current user against portletId and keyName.
-         * @param $portletId integer  Id of the portlet to get value against
-         * @param $keyName string Name of the key that should be returned
-         * @param bool $returnBoolean bool Force return value to be boolean (explicit type casting)
-         * @return bool|null|string
-         */
-        public static function getPersistentConfigForCurrentUserByPortletIdAndKey($portletId, $keyName, $returnBoolean = false)
-        {
-            assert('is_int($portletId)');
-            $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
-            $value = ZurmoConfigurationUtil::getForCurrentUserByModuleName(static::CONFIG_MODULE_NAME, $keyName);
-            $value = ($returnBoolean)? (boolean) $value: $value;
-            return $value;
-        }
-
-        protected static function resolveKeyNameByPortletId($portletId, $keyName)
-        {
-            return $portletId . '_' . $keyName;
         }
     }
 ?>

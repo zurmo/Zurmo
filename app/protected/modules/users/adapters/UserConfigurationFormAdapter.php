@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -46,6 +56,8 @@
             $form->enableDesktopNotifications       = static::resolveAndGetValue($user, 'enableDesktopNotifications');
             $form->defaultPermissionGroupSetting    = static::resolveAndGetValue($user, 'defaultPermissionGroupSetting', false);
             $form->defaultPermissionSetting         = static::resolveAndGetDefaultPermissionSetting($user);
+            $form->visibleAndOrderedTabMenuItems    = static::getVisibleAndOrderedTabMenuItemsByUser($user);
+            $form->selectedVisibleAndOrderedTabMenuItems = static::getVisibleAndOrderedTabMenuItemsByUser($user, true);
             return $form;
         }
 
@@ -64,7 +76,10 @@
             static::setValue($user, (bool)$form->enableDesktopNotifications, 'enableDesktopNotifications');
             static::setValue($user, (int)$form->defaultPermissionSetting, 'defaultPermissionSetting', false);
             static::setDefaultPermissionGroupSetting($user, (int)$form->defaultPermissionGroupSetting,
-                (int)$form->defaultPermissionSetting);
+                                                    (int)$form->defaultPermissionSetting);
+            ZurmoConfigurationUtil::setByUserAndModuleName($user, 'ZurmoModule', 'VisibleAndOrderedTabMenuItems',
+                                                           serialize($form->selectedVisibleAndOrderedTabMenuItems));
+            MenuUtil::forgetCacheEntryForTabMenuByUser($user);
         }
 
         /**
@@ -73,16 +88,10 @@
          */
         public static function setConfigurationFromFormForCurrentUser(UserConfigurationForm $form)
         {
-            Yii::app()->pagination->setForCurrentUserByType('listPageSize', (int)$form->listPageSize);
-            Yii::app()->pagination->setForCurrentUserByType('subListPageSize', (int)$form->subListPageSize);
-            Yii::app()->themeManager->setThemeColorValue(Yii::app()->user->userModel, $form->themeColor);
-            Yii::app()->themeManager->setBackgroundTextureValue (Yii::app()->user->userModel, $form->backgroundTexture);
-            static::setValue(Yii::app()->user->userModel, (bool)$form->hideWelcomeView, 'hideWelcomeView');
-            static::setValue(Yii::app()->user->userModel, (bool)$form->turnOffEmailNotifications, 'turnOffEmailNotifications');
-            static::setValue(Yii::app()->user->userModel, (bool)$form->enableDesktopNotifications, 'enableDesktopNotifications');
-            static::setValue(Yii::app()->user->userModel, (int)$form->defaultPermissionSetting, 'defaultPermissionSetting', false);
-            static::setDefaultPermissionGroupSetting(Yii::app()->user->userModel,
-                (int)$form->defaultPermissionGroupSetting, (int)$form->defaultPermissionSetting);
+            $user = Yii::app()->user->userModel;
+            static::setConfigurationFromForm($form, $user);
+            Yii::app()->user->setState('listPageSize', (int)$form->listPageSize);
+            Yii::app()->user->setState('subListPageSize', (int)$form->subListPageSize);
         }
 
         public static function resolveAndGetValue(User $user, $key, $returnBoolean = true)
@@ -130,6 +139,25 @@
                 ZurmoConfigurationUtil::setByUserAndModuleName($user, 'ZurmoModule', 'defaultPermissionGroupSetting',
                     null);
             }
+        }
+
+        public static function getVisibleAndOrderedTabMenuItemsByUser($user, $selected = false)
+        {
+            $visibleAndOrderedTabMenuItems = array();
+            $tabMenuItems = MenuUtil::getVisibleAndOrderedTabMenuByUser($user);
+            foreach ($tabMenuItems as $menuItem)
+            {
+                if ($selected === true)
+                {
+                    $visibleAndOrderedTabMenuItems[] = $menuItem['moduleId'];
+                }
+                else
+                {
+                    $moduleId = $menuItem['moduleId'];
+                    $visibleAndOrderedTabMenuItems[$moduleId] = $menuItem['label'];
+                }
+            }
+            return $visibleAndOrderedTabMenuItems;
         }
     }
 ?>

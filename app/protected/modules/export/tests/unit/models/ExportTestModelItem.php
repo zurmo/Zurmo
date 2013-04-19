@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -34,9 +44,9 @@
             return self::getByNameOrEquivalent('firstName', $name);
         }
 
-        protected function untranslatedAttributeLabels()
+        protected static function translatedAttributeLabels($language)
         {
-            return array_merge(parent::untranslatedAttributeLabels(),
+            return array_merge(parent::translatedAttributeLabels($language),
                 array(
                     'fullName' => 'Name',
                 )
@@ -59,15 +69,17 @@
                     'string',
                     'textArea',
                     'url',
-                    'email', // Used for testing EmailAdapter, without CustomFiled
+                    'email',
                 ),
                 'relations' => array(
                     'currency'         => array(RedBeanModel::HAS_ONE,   'Currency'),
                     'currencyValue'    => array(RedBeanModel::HAS_ONE,   'CurrencyValue',    RedBeanModel::OWNED),
                     'dropDown'         => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
                     'radioDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedCustomField', RedBeanModel::OWNED),
-                    'multiDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED),
-                    'tagCloud'         => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED),
+                    'multiDropDown'    => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED,
+                                                RedBeanModel::LINK_TYPE_SPECIFIC, 'multiDropDown'),
+                    'tagCloud'         => array(RedBeanModel::HAS_ONE,   'OwnedMultipleValuesCustomField', RedBeanModel::OWNED,
+                                                RedBeanModel::LINK_TYPE_SPECIFIC, 'tagCloud'),
                     'hasOne'           => array(RedBeanModel::HAS_ONE,   'ExportTestModelItem2'),
                     'hasMany'          => array(RedBeanModel::MANY_MANY, 'ExportTestModelItem3'),
                     'hasOneAlso'       => array(RedBeanModel::HAS_ONE,   'ExportTestModelItem4'),
@@ -94,7 +106,7 @@
                     array('string',    'length',  'min'  => 3, 'max' => 64),
                     array('textArea',  'type',    'type' => 'string'),
                     array('url',       'url'),
-                    array('email',      'email'),
+                    array('email',     'email'),
                 ),
                 'elements' => array(
                     'currency'         => 'Currency',

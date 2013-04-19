@@ -1,3 +1,36 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
 #LeaderboardView{
 	.items{
 		td:first-child, th:first-child{
@@ -44,7 +77,6 @@
 .points{
 	display:block;
 	float:left;
-	//++.themeBackgroundColor2;
 	color:#fff;
 	.b-shadow(~"0 0 8px 0 #666, inset 0 0 0 1px #fff");
 	padding:3px 6px;
@@ -57,7 +89,6 @@
     float: right;
     margin-right: 5px;
 	display:block;
-	//++.themeBackgroundColor;
 	color:#fff;
 	.b-shadow(~"0 0 8px 0 #666");
 	width:26px;
@@ -108,9 +139,6 @@
 	margin:0 0 15px 15px;
 	.b-shadow( ~"0px 4px 6px rgba(0, 0, 0, 0.5)" );
 	#gradient > .vertical-three-colors( #f5f5f5, #eeeeee, 80%, #eeeeee );
-	&:first-child{
-		//margin-left:0;
-	}
 	&:after{
 		content: ' ';
 		width: 100%;
@@ -126,7 +154,6 @@
 	    .symbly(50px);
 	    display:block;
 	    text-align:center;
-	    //++.themeColor;
 	    .t-shadow( ~"0 1px 0 rgba(255, 255, 255, 0.9)");
 	    line-height:1;
 	    vertical-align: middle;
@@ -145,7 +172,6 @@
 		top:-8px;
 		right:-8px;
 		display:block;
-		//++.themeBackgroundColor2;
 		color:#fff;
 		.b-shadow(~"0 0 8px 0 #666, inset 0 0 0 1px #fff");
 		width:18px;
@@ -164,32 +190,32 @@
 	    top:-1px;
 	    border-bottom:1px solid rgba(0, 0,0, 0.1);
 	    .b-shadow(~"inset 0px 2px 1px  rgba(255, 255, 255, 0.5)");
-	    
+
 	    -webkit-border-top-right-radius: 27px;
 	    -webkit-border-top-left-radius: 27px;
 	    -webkit-border-bottom-right-radius: 120px 20px;
 	    -webkit-border-bottom-left-radius: 100px 20px;
-	    
+
 	    -moz-border-top-right-radius: 27px;
 	    -moz-border-top-left-radius: 27px;
 	    -moz-border-bottom-right-radius: 120px 20px;
 	    -moz-border-bottom-left-radius: 100px 20px;
-	    
+
 	    -o-border-top-right-radius: 27px;
 	    -o-border-top-left-radius: 27px;
 	    -o-border-bottom-right-radius: 120px 20px;
 	    -o-border-bottom-left-radius: 100px 20px;
-	    
+
 	    -ms-border-top-right-radius: 27px;
 	    -ms-border-top-left-radius: 27px;
 	    -ms-border-bottom-right-radius: 120px 20px;
 	    -ms-border-bottom-left-radius: 100px 20px;
-	    
+
 	    -khtml-border-top-right-radius: 27px;
 	    -khtml-border-top-left-radius: 27px;
 	    -khtml-border-bottom-right-radius: 120px 20px;
 	    -khtml-border-bottom-left-radius: 100px 20px;
-	    
+
 	    border-top-right-radius: 27px;
 	    border-top-left-radius: 27px;
 	    border-bottom-right-radius: 120px 20px;
@@ -228,7 +254,6 @@
     }
 }
 
-
 .game-badge-CreateContact,
 .CreateContact{
 	.badge-icon:before{
@@ -256,6 +281,7 @@
 		content:"]";
 	}
 }
+
 .game-badge-SearchAccounts,
 .SearchAccounts{
 	.badge-icon:before{
@@ -269,90 +295,105 @@
 		content:"%";
 	}
 }
+
 .game-badge-SearchOpportunities,
 .SearchOpportunities{
 	.badge-icon:before{
 		content:"+";
 	}
 }
+
 .game-badge-LoginUser,
 .LoginUser{
 	.badge-icon:before{
 		content:"E";
 	}
 }
+
 .game-badge-CreateLead,
 .CreateLead{
 	.badge-icon:before{
 		content:".";
 	}
 }
+
 .game-badge-CreateCall,
 .CreateCall{
 	.badge-icon:before{
 		content:"W";
 	}
 }
+
 .game-badge-CreateMeeting,
 .CreateMeeting{
 	.badge-icon:before{
 		content:"U";
 	}
 }
+
 .game-badge-CreateNote,
 .CreateNote{
 	.badge-icon:before{
 		content:"3";
 	}
 }
+
 .game-badge-CreateOpportunity,
 .CreateOpportunity{
 	.badge-icon:before{
 		content:"9";
 	}
 }
+
 .game-badge-MassEditOpportunities,
 .MassEditOpportunities{
 	.badge-icon:before{
 		content:"[";
 	}
 }
+
 .game-badge-SearchOpportunity,
 .SearchOpportunity{
 	.badge-icon:before{
 		content:"+";
 	}
 }
+
 .game-badge-WinOpportunity,
 .WinOpportunity{
 	.badge-icon:before{
 		content:";";
 	}
 }
+
 .game-badge-CreateTask,
 .CreateTask{
 	.badge-icon:before{
 		content: "4";
 	}
 }
+
 .game-badge-CreateComment,
 .CreateComment{
 	.badge-icon:before{
 		content: "b";
 	}
 }
+
 .game-badge-CreateConversation,
 .CreateConversation{
 	.badge-icon:before{
 		content: "O";
 	}
 }
+
 .game-badge-CreateMission,
 .CreateMission{
 	.badge-icon:before{
 		content: "Q";
 	}
 }
+
 .game-badge-CreateSocialItem,
 .CreateSocialItem{
 	.badge-icon:before{
@@ -360,10 +401,41 @@
 	}
 }
 
+.game-badge-CreateEmailTemplate,
+.CreateEmailTemplate,
+.game-badge-EditEmailTemplate,
+.EditEmailTemplate {
+	.badge-icon:before {
+		content: '\00B6';
+	}
+}
 
+.game-badge-CreateMarketingList,
+.CreateMarketingList,
+.game-badge-EditMarketingList,
+.EditMarketingList {
+	.badge-icon:before {
+		content: '\0022';
+	}
+}
 
+.game-badge-CreateReport,
+.CreateReport,
+.game-badge-EditReport,
+.EditEmailReport {
+	.badge-icon:before {
+		content: "V";
+	}
+}
 
-
+.game-badge-CreateWorkflow,
+.CreateWorkflow,
+.game-badge-EditWorkflow,
+.EditWorkflow {
+	.badge-icon:before {
+		content: '\20AC';
+	}
+}
 
 /*Night Icons*/
 .game-badge-NightOwl,
@@ -372,13 +444,13 @@
 		content: "$";
 	}
 }
+
 .game-badge-EarlyBird,
 .EarlyBird{
 	.badge-icon:before{
 		content: "#";
 	}
 }
-
 
 /*Big Icons for popup badges*/
 .game-level-change{
@@ -434,11 +506,8 @@
 	line-height:16px;
 	.box-sizing();
 	height:100%;
-	//++.themeColor;
 	padding:2px 0;
 	display:inline-block;
-	//border:1px solid #f5f5f5;
-	//.b-shadow(0 0 8px 0 rgba(153, 153, 153, 0.5));
 	background-color: #f5f5f5;
 	background-image: -webkit-repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.8) 5px, rgba(255,255,255,.8) 4px);
 	background-image: -moz-repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.8) 5px, rgba(255,255,255,.8) 4px);
@@ -447,6 +516,7 @@
 	background-image: -khtml-repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.8) 5px, rgba(255,255,255,.8) 4px);
 	background-image: repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.8) 5px, rgba(255,255,255,.8) 4px);
 }
+
 .z_0{ width: 0%; }
 .z_1{ width: 1%; }
 .z_2{ width: 2%; }
@@ -551,32 +621,27 @@
 
 /*Modals*/
 .ModalGameNotification{
-	padding:10px 20px 20px 20px;
+	padding:10px 20px 60px 20px;
 	text-align:center;
 	.b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
     #gradient > .vertical-three-colors( #ffffff, #f5f5f5, 80%, #f5f5f5 );
 	a{
 		++.z-button;
 		&:focus{
-			outline:none;	
+			outline:none;
 		}
 	}
 }
 
 .ModalGameNotificationParent{
-	position:fixed;
-	display:block;
-	top:50%;
-	left:50%;
-	margin:-175px 0 0 -175px;
-	width:310px;
-	height:310px;
+	min-width: 310px !important;
+	width:310px !important;
 }
 
 a.close-ModalGameNotification.simple-link{
     background: none !important;
     margin-right: 10px;
-    margin-left:-5px;
+    margin-left:-35px;
     top:-10px;
     .smaller();
 }
@@ -588,23 +653,8 @@ a.close-ModalGameNotification.simple-link{
         border:none;
         border-bottom: 1px solid #fff;
         .b-shadow(none);
+	    float: none;
     }
-    /*#social-item-inline-edit-form{
-        border: none !important;
-        background: none !important;
-        .b-shadow(none);
-        .panel > table{
-            border-bottom: none !important;
-            padding-bottom: 10px;
-        }
-        .files{
-            border-bottom: none;
-        }
-        .view-toolbar-container{
-            border-top:1px solid #ccc
-        }
-    }
-    */
 }
 
 #UserDetailsView{
@@ -617,12 +667,11 @@ a.close-ModalGameNotification.simple-link{
 .gravatar-container{
     float: right;
     margin: 15px 15px 15px 0;
-    a{  
+    a{
         display: block;
         float: left;
         position: relative;
     }
-    img{}
     span{
         text-align: center;
         padding: 10px;
@@ -639,6 +688,9 @@ a.close-ModalGameNotification.simple-link{
             display: block;
         }
     }
+	+ .panel{
+		float: left;
+	}
 }
 
 #UserChangeAvatarView{
@@ -666,6 +718,7 @@ a.close-ModalGameNotification.simple-link{
         margin-top: 0 !important;
     }
 }
+
 #customAvatarEmailAddressInput{
     float: left;
     width:100%;
@@ -678,6 +731,7 @@ a.close-ModalGameNotification.simple-link{
         width:70%;
     }
 }
+
 #user-gravatar-tooltip{
     margin-top:4px;
     margin-left:10px;

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,14 +20,24 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
      * The base View for a module's list view.
      */
-    abstract class ListView extends ModelView
+    abstract class ListView extends ModelView implements ListViewInterface
     {
         protected $controllerId;
 
@@ -72,7 +82,7 @@
 
         /**
          * Constructs a list view specifying the controller as
-         * well as the model that will have its details displayed.
+         * well as the model that will have its details displayed.isDisplayAttributeACalculationOrModifier
          */
         public function __construct(
             $controllerId,
@@ -125,7 +135,15 @@
 
         protected function getGridViewWidgetPath()
         {
-            return 'application.core.widgets.ExtendedGridView';
+            if (Yii::app()->userInterface->isMobile())
+            {
+                $widget = 'application.core.widgets.StackedExtendedGridView';
+            }
+            else
+            {
+                $widget = 'application.core.widgets.ExtendedGridView';
+            }
+            return $widget;
         }
 
         public function getRowsAreSelectable()
@@ -193,7 +211,7 @@
                         'nextPageLabel'    => '<span>next</span>',
                         'class'            => 'EndlessListLinkPager',
                         'paginationParams' => GetUtil::getData(),
-                        'route'            => $this->getGridViewActionRoute('list', $this->moduleId),
+                        'route'            => $this->getGridViewActionRoute($this->getListActionId(), $this->moduleId),
                     );
             if (empty($this->gridViewPagerParams))
             {
@@ -225,6 +243,19 @@
             return $this->gridId . $this->gridIdSuffix;
         }
 
+        protected function getCGridViewFirstColumn()
+        {
+            $checked = 'in_array($data->id, array(' . implode(',', $this->selectedIds) . '))'; // Not Coding Standard
+            $checkBoxHtmlOptions = array();
+            $firstColumn = array(
+                    'class'               => 'CheckBoxColumn',
+                    'checked'             => $checked,
+                    'id'                  => $this->gridId . $this->gridIdSuffix . '-rowSelector', // Always specify this as -rowSelector.
+                    'checkBoxHtmlOptions' => $checkBoxHtmlOptions,
+                );
+            return $firstColumn;
+        }
+
         /**
          * Get the meta data and merge with standard CGridView column elements
          * to create a column array that fits the CGridView columns API
@@ -234,14 +265,7 @@
             $columns = array();
             if ($this->rowsAreSelectable)
             {
-                $checked = 'in_array($data->id, array(' . implode(',', $this->selectedIds) . '))'; // Not Coding Standard
-                $checkBoxHtmlOptions = array();
-                $firstColumn = array(
-                    'class'               => 'CheckBoxColumn',
-                    'checked'             => $checked,
-                    'id'                  => $this->gridId . $this->gridIdSuffix . '-rowSelector', // Always specify this as -rowSelector.
-                    'checkBoxHtmlOptions' => $checkBoxHtmlOptions,
-                );
+                $firstColumn = $this->getCGridViewFirstColumn();
                 array_push($columns, $firstColumn);
             }
 
@@ -411,7 +435,12 @@
             return '/' . $moduleId . '/' . $this->controllerId . '/' . $action;
         }
 
-        public function getLinkString($attributeString)
+        protected function getListActionId()
+        {
+            return 'list';
+        }
+
+        public function getLinkString($attributeString, $attribute)
         {
             $string  = 'ZurmoHtml::link(';
             $string .=  $attributeString . ', ';

@@ -1,3 +1,36 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
 .tableTreeView(){
     table{
         width: 100%;
@@ -135,6 +168,12 @@
     }
 }
 
+.creation-list{
+	.z-label:before{
+		content: "Y" !important;
+	}
+}
+
 table.configuration-list{
     .clearfix();
     h4{
@@ -201,6 +240,15 @@ table.configuration-list{
     .view-toolbar{
         margin-top:0;
     }
+	.panel{
+		width:100% !important;
+	}
+}
+
+#EmailTemplateEditAndDetailsView{
+	.panel{
+		width: 70% !important;
+	}
 }
 
 #ModulePermissionsEditAndDetailsView{
@@ -388,17 +436,6 @@ table.configuration-list{
     }
 }
 
-#LanguagesCollectionView{
-    tr:last-child{
-        td{
-            border-bottom: none !important;
-        }
-    }
-    .checkbox-column{
-        padding-left:15px !important;
-    }
-}
-
 /*Roles*/
 #RolesTreeListView{
     .z-action-link{
@@ -406,6 +443,7 @@ table.configuration-list{
         text-decoration: underline !important;
     }
 }
+
 /*Jobs*/
 #JobsCollectionView{
     .form form{
@@ -484,6 +522,14 @@ table.configuration-list{
 
 /*Languages*/
 #LanguagesCollectionView{
+    padding-bottom: 0 !important;
+    h1 + div{
+        padding: 15px;
+        a{
+            float: none;
+            margin: 0 !important;
+        }
+    }
     form{
         padding:0;
     }
@@ -497,12 +543,39 @@ table.configuration-list{
     form td > label:first-child{
         margin-top:0 !important;
     }
+    tr:last-child{
+        td{
+            border-bottom: none !important;
+        }
+    }
+    .checkbox-column{
+        padding-left:15px !important;
+    }
+    a{
+        position: relative;
+        float: right;
+        right:0;
+        top:0;
+        margin:-6px 0 0 10px;
+    }
+    .configuration-list{
+        border-top: 1px solid #ccc;
+        li:first-child{
+            border-top: 1px solid #fff;
+        }
+    }
+    .z-label{
+        padding: 0 25px;
+    }
+    .z-label:before{
+        display: none !important;
+    }
 }
 
 /*Currency*/
 
 #currency-collection-form{
-    padding-bottom: 10px !important;
+    padding-bottom: 5px !important;
     .portlet-toolbar{
         position: relative;
         top:auto;
@@ -537,9 +610,6 @@ table.configuration-list{
     border:none;
     .b-shadow(none);
     background:none;
-    #edit-form:after{
-        display:none !important;
-    }
 }
 
 /*Breadcrumbs*/
@@ -761,7 +831,7 @@ table.configuration-list{
     h3{
         margin-bottom:15px;
     }
-    #right-side-edit-view-panel {
+    .right-side-edit-view-panel {
         width: 60% !important;
         float: none !important;
     }
@@ -792,7 +862,7 @@ table.configuration-list{
 
 /*= Step 3*/
 #ImportWizardSetModelPermissionsView{
-    #right-side-edit-view-panel{
+    .right-side-edit-view-panel{
         position:relative !important;
         top:0 !important;
         right:0 !important;
@@ -931,6 +1001,7 @@ table.configuration-list{
     > div{
         float: left;
         width: 100%;
+        padding-bottom: 15px;
     }
     #edit-form{
         padding:0 0 15px 0 !important;
@@ -1044,4 +1115,38 @@ table.configuration-list{
     label{
         top:-6px;
     }
+}
+
+/*Menu Prefernces*/
+.user-menu-preferences{
+	td{
+		padding-left: 0 !important;
+	}
+	.multiselect-holder{
+		max-width: 100%;
+		margin: 0;
+	}
+	.multiselect-right{
+		float: none;
+	}
+	.multiselect-nav{
+		margin-left: 0;
+	}
+}
+
+/*Logo Uplaod*/
+.uploaded-logo-template{
+	td.name{
+		padding-top: 10px !important;
+	}
+}
+.uploaded-logo{
+	display: inline-block;
+	padding: 5px;
+	margin-right: 5px;
+	line-height: 1;
+	background: url(../images/transparency-grid.gif) left top repeat;
+	~ .file-size{
+		vertical-align:top;
+	}
 }

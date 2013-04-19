@@ -1,0 +1,1184 @@
+/*********************************************************************************
+ * Zurmo is a customer relationship management program developed by
+ * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+ *
+ * Zurmo is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * Zurmo is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+ * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+ *
+ * The interactive user interfaces in original and modified versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the Zurmo
+ * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display the words
+ * "Copyright Zurmo Inc. 2013. All rights reserved".
+ ********************************************************************************/
+.border-box,
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"],
+.zButton,
+.z-button,
+a.zButton,
+a.z-button,
+.white-button,
+.default-btn .modal-view-toolbar a,
+.default-btn .modal-view-toolbar input[type="submit"],
+.default-btn .modal-view-toolbar input[type="button"],
+.default-btn .form-toolbar a,
+.default-btn .form-toolbar input[type="submit"],
+.default-btn .form-toolbar input[type="button"],
+.default-btn .zButton,
+.default-btn .z-button,
+.default-btn a.zButton,
+.default-btn a.z-button,
+.default-btn .white-button,
+.default-btn,
+.z-label,
+.AppNavigation,
+#MenuView {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.cf:before,
+.cf:after {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.cf {
+  zoom: 1;
+}
+.clearfix,
+.filter-portlet-model-bar {
+  zoom: 1;
+}
+.clearfix:before,
+.filter-portlet-model-bar:before {
+  content: "";
+  display: table;
+}
+.clearfix:after,
+.filter-portlet-model-bar:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.flyout,
+#search > div {
+  border: 1px solid #b6b6b6;
+  background-color: #ebebeb;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #ebebeb));
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -o-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: linear-gradient(top, #f5f5f5, #ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ebebeb', GradientType=0);
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+}
+.modal-view-toolbar a,
+.modal-view-toolbar input[type="submit"],
+.modal-view-toolbar input[type="button"],
+.form-toolbar a,
+.form-toolbar input[type="submit"],
+.form-toolbar input[type="button"],
+.zButton,
+.z-button,
+a.zButton,
+a.z-button,
+.white-button {
+  border-top: 1px solid rgba(200, 200, 200, 0.4);
+  border-left: 1px solid rgba(185, 185, 185, 0.4);
+  border-right: 1px solid rgba(185, 185, 185, 0.4);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+  color: #666 !important;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+  text-indent: 0;
+  display: inline-block;
+  zoom: 1;
+}
+.modal-view-toolbar a:before,
+.modal-view-toolbar input[type="submit"]:before,
+.modal-view-toolbar input[type="button"]:before,
+.form-toolbar a:before,
+.form-toolbar input[type="submit"]:before,
+.form-toolbar input[type="button"]:before,
+.zButton:before,
+.z-button:before,
+a.zButton:before,
+a.z-button:before,
+.white-button:before {
+  content: "";
+  display: table;
+}
+.modal-view-toolbar a:after,
+.modal-view-toolbar input[type="submit"]:after,
+.modal-view-toolbar input[type="button"]:after,
+.form-toolbar a:after,
+.form-toolbar input[type="submit"]:after,
+.form-toolbar input[type="button"]:after,
+.zButton:after,
+.z-button:after,
+a.zButton:after,
+a.z-button:after,
+.white-button:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.modal-view-toolbar a.attachLoading.z-button,
+.modal-view-toolbar input[type="submit"].attachLoading.z-button,
+.modal-view-toolbar input[type="button"].attachLoading.z-button,
+.form-toolbar a.attachLoading.z-button,
+.form-toolbar input[type="submit"].attachLoading.z-button,
+.form-toolbar input[type="button"].attachLoading.z-button,
+.zButton.attachLoading.z-button,
+.z-button.attachLoading.z-button,
+a.zButton.attachLoading.z-button,
+a.z-button.attachLoading.z-button,
+.white-button.attachLoading.z-button {
+  color: #fff;
+}
+.modal-view-toolbar a:not(.attachLoading) .z-label,
+.modal-view-toolbar input[type="submit"]:not(.attachLoading) .z-label,
+.modal-view-toolbar input[type="button"]:not(.attachLoading) .z-label,
+.form-toolbar a:not(.attachLoading) .z-label,
+.form-toolbar input[type="submit"]:not(.attachLoading) .z-label,
+.form-toolbar input[type="button"]:not(.attachLoading) .z-label,
+.zButton:not(.attachLoading) .z-label,
+.z-button:not(.attachLoading) .z-label,
+a.zButton:not(.attachLoading) .z-label,
+a.z-button:not(.attachLoading) .z-label,
+.white-button:not(.attachLoading) .z-label {
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+.white-button .z-label {
+  color: #666 !important;
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+.default-btn {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(200, 200, 200, 0.4);
+  border-left: 1px solid rgba(185, 185, 185, 0.4);
+  border-right: 1px solid rgba(185, 185, 185, 0.4);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.4);
+  color: #666 !important;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.15);
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin: 0 10px;
+  text-indent: 0;
+  display: inline-block;
+  zoom: 1;
+}
+.default-btn:before {
+  content: "";
+  display: table;
+}
+.default-btn:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.default-btn.attachLoading.z-button {
+  color: #fff;
+}
+.default-btn:not(.attachLoading) .z-label {
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+/*
+.zButton:not(.attacheLoading),
+.z-button:not(.attachLoading){
+     background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+*/
+.green-button,
+.attachLoading {
+  color: #FFF;
+  cursor: pointer;
+}
+.z-label {
+  float: left;
+  font-weight: bold;
+  padding: 0 25px;
+  line-height: 25px;
+  display: inline-block;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+.z-label-smaller {
+  padding: 0 15px;
+}
+.zButton.loading .z-spinner,
+.z-button.loading .z-spinner {
+  display: inline-block;
+  position: absolute;
+  margin: 1px 0 0 4px;
+}
+.zButton.loading .z-icon,
+.z-button.loading .z-icon {
+  display: none;
+}
+.z-spinner {
+  z-index: 10;
+  width: 23px;
+  height: 23px;
+  display: none;
+  position: absolute;
+  left: 0px;
+}
+.z-spinner.loading {
+  display: block !important;
+}
+.zLink,
+.z-link {
+  padding: 2px 4px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: #fff !important;
+  font-size: 11px;
+}
+.zLink:hover,
+.z-link:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+.z-action-link {
+  font-size: 11px;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.z-action-link:hover {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  text-decoration: none;
+}
+.z-action-link-active {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
+.unstyle-panel {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+html,
+body {
+  margin: 0;
+  width: 100%;
+}
+body {
+  height: 100%;
+}
+body > div {
+  height: 100%;
+}
+#LoginPageView {
+  padding-top: 0;
+}
+#LoginPageView > div {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  display: -ms-flex;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: column;
+  -ms-flex-wrap: wrap;
+  -moz-flex-flow: column wrap;
+  -webkit-flex-flow: column wrap;
+  flex-flow: column wrap;
+  -ms-flex-pack: start;
+  -moz-justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+#LoginPageView #FooterView {
+  -ms-flex: 1 0 auto;
+  -moz-flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+  flex: 1 0 auto;
+  margin: 10px 10px 5px 10px;
+}
+#LoginPageView #credit-link {
+  margin-left: 0;
+}
+#LoginView {
+  min-width: 0 !important;
+  margin: 0;
+  background-image: none;
+  height: auto;
+  -ms-flex: 1 0 auto;
+  -moz-flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+  flex: 1 0 auto;
+}
+#login-box {
+  width: 100%;
+  height: auto;
+  float: none;
+  margin: 10px 0 0 0;
+  top: 0;
+  left: 0;
+}
+#login-box .form {
+  float: none;
+  width: 100%;
+}
+#login-box .form form {
+  border: none;
+  padding: 0 10px 10px 10px;
+}
+#login-box #LoginLogo {
+  float: none;
+  width: 100%;
+  height: 80px;
+  padding: 0;
+  background-position: 50% 50%;
+}
+#login-form {
+  padding: 0 20px !important;
+}
+#nav-trigger {
+  display: block;
+}
+#corp-logo span {
+  display: none;
+}
+#corp-logo img {
+  max-width: 50px;
+  margin-top: 10px;
+}
+#HeaderView {
+  width: 100%;
+  min-width: 0 !important;
+}
+#HeaderLinksView {
+  max-width: 100%;
+  margin: 0 auto;
+}
+#HeaderLinksView + div {
+  height: 0;
+}
+#HeaderLinksView > div {
+  margin: 0 10px;
+}
+#GlobalSearchAndShortcutsCreateMenuView {
+  display: none;
+}
+#FooterView {
+  margin: 10px 10px 5px 10px;
+  padding-bottom: 5px;
+}
+#credit-link {
+  margin-left: 0;
+}
+#credit-link span {
+  margin-left: 65px;
+}
+.performance-info {
+  margin: 0 10px 10px 10px;
+}
+.social-links {
+  display: none;
+}
+#MobileWelcomeView h1 {
+  font-size: 30px;
+  text-align: center;
+}
+#welcome-gallery {
+  display: block;
+  margin-bottom: 15px;
+  margin-right: 0;
+  width: 100%;
+}
+#welcome-gallery img {
+  width: 100%;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+#welcome-gallery span {
+  display: none;
+}
+.dashboard-link {
+  margin: 30px 0 0 0 !important;
+}
+#instructions {
+  padding-bottom: 30px;
+  text-align: center;
+}
+#instructions p {
+  padding: 0;
+}
+.help-section {
+  width: 100%;
+  float: none;
+}
+.hide-welcome {
+  top: 10px;
+}
+#AboutView #rightCol,
+#AboutView #leftCol {
+  width: 100%;
+  float: none;
+  padding: 15px 15px 0 15px;
+}
+#AboutView #rightCol > div,
+#AboutView #leftCol > div {
+  float: none;
+}
+.view-toolbar {
+  border: none;
+  -webkit-border-radius: none;
+  -moz-border-radius: none;
+  -ms-border-radius: none;
+  -o-border-radius: none;
+  border-radius: none;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  width: 100%;
+}
+.view-toolbar .icon-create {
+  margin-right: 10px;
+  float: left;
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left: 1px solid #d7d7d7 !important;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+}
+.view-toolbar .mobile-view-toolbar-container {
+  float: left;
+  margin: 1px 0 0 0;
+}
+.mobile-view-toolbar-container .hasDropDown span.select-arrow {
+  z-index: 0;
+  background: none;
+}
+.mobile-view-toolbar-container .hasDropDown span.select-arrow:before {
+  content: "n";
+  font-weight: normal;
+  font-size: 30px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 26px;
+  margin-left: -1px;
+  background: none;
+}
+.mobile-view-toolbar-container select {
+  -ms-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none !important;
+  appearance: none;
+  background: transparent;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+}
+.AppContainer {
+  min-width: 0 !important;
+  /* should be 100% but i need to put box-sizing on top level nodes */
+
+  margin: 0 10px;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+@media screen and (min-width: 1601px) {
+  .AppContainer {
+    margin: 0 10px !important;
+  }
+  #HeaderLinksView > div {
+    margin: 0 !important;
+  }
+}
+.AppContent {
+  position: relative;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 0;
+  margin-bottom: 0;
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+  -webkit-transition: all 0.22s ease-in 0;
+  -moz-transition: all 0.22s ease-in 0;
+  -ms-transition: all 0.22s ease-in 0;
+  -o-transition: all 0.22s ease-in 0;
+  transition: all 0.22s ease-in 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#HomePageView .AppContent {
+  padding-right: 10px !important;
+}
+.AppContent.nav-open {
+  -webkit-transform: translate3d(45px, 0, 0);
+  -moz-transform: translate3d(45px, 0, 0);
+  -ms-transform: translate3d(45px, 0, 0);
+  -o-transform: translate3d(45px, 0, 0);
+  transform: translate3d(45px, 0, 0);
+}
+.AppNavigation {
+  left: 10px;
+  top: 45px;
+  width: 45px;
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  position: fixed;
+  padding: 0 0 0 0;
+  margin: 0;
+  z-index: 0;
+  float: none;
+}
+.high-z-index {
+  z-index: 10;
+}
+.AppNavigation.nav-open #MenuView {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
+#MenuView {
+  position: static;
+  margin: 0 !important;
+  padding: 0 0 0 10px !important;
+  top: 0 !important;
+  filter: alpha(opacity=0);
+  -khtml-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  border: none;
+  background: none;
+  -webkit-border-radius: 0 0 0 5px;
+  -moz-border-radius: 0 0 0 5px;
+  -ms-border-radius: 0 0 0 5px;
+  -o-border-radius: 0 0 0 5px;
+  border-radius: 0 0 0 5px;
+}
+#MenuView > ul > li {
+  zoom: 1;
+}
+#MenuView > ul > li:before {
+  content: "";
+  display: table;
+}
+#MenuView > ul > li:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#MenuView > ul > li > a em {
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  width: 25px;
+  height: 25px;
+  line-height: 22px;
+  vertical-align: top;
+  background: #FFF;
+  z-index: 9999;
+  text-align: center;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  font-style: normal;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  -webkit-text-shadow: none !important;
+  -moz-text-shadow: none !important;
+  -o-text-shadow: none !important;
+  -ms-text-shadow: none !important;
+  text-shadow: none !important;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#MenuView > ul > li > a em:before {
+  content: "z";
+}
+#MenuView > ul > li > a em + span {
+  text-indent: -9999px !important;
+}
+#MenuView > ul > li > a span {
+  width: 33px !important;
+  display: block;
+  margin-left: -4px;
+}
+#MenuView #search > a > em:before {
+  content: "k";
+}
+#MenuView #shortcuts > a > em:before {
+  content: "Y";
+}
+#MenuView #home > a > em:before {
+  content: "A";
+}
+#MenuView #accounts > a > em:before {
+  content: "P";
+}
+#MenuView #leads > a > em:before {
+  content: ".";
+}
+#MenuView #contacts > a > em:before {
+  content: "y";
+}
+#MenuView #opportunities > a > em:before {
+  content: "9";
+}
+#MenuView #conversations > a > em:before {
+  content: "b";
+}
+#MenuView #recently-viewed > a > em:before {
+  content: "{";
+}
+#MenuView #mashableInbox > a > em:before {
+  content: "g";
+}
+#MenuView #marketing > a > em:before {
+  content: '\00B6';
+}
+#MenuView #reports > a > em:before {
+  content: "V";
+}
+.toggle-hidden-nav-items {
+  display: none;
+}
+.hidden-nav-item {
+  display: block;
+}
+#search {
+  position: relative;
+}
+#search > div {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 10px;
+  left: 35px;
+  top: -7px;
+  width: auto;
+}
+#search > div input {
+  margin: 0;
+  border-left: 1px solid #D5D4D4;
+}
+#search .global-search-loopa {
+  display: none;
+}
+#MenuView #shortcuts,
+#MenuView #recently-viewed {
+  position: relative;
+}
+#MenuView #shortcuts > ul,
+#MenuView #recently-viewed > ul {
+  width: auto;
+  border: 1px solid #b6b6b6;
+  background-color: #ebebeb;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #ebebeb));
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: -o-linear-gradient(top, #f5f5f5, #ebebeb);
+  background-image: linear-gradient(top, #f5f5f5, #ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ebebeb', GradientType=0);
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  z-index: 9999;
+  min-width: 110px;
+  display: none;
+  position: absolute;
+  left: 43px !important;
+  top: -75px !important;
+  padding: 3px 0 !important;
+}
+#MenuView #shortcuts > ul li,
+#MenuView #recently-viewed > ul li {
+  line-height: 100%;
+}
+#MenuView #shortcuts > ul a,
+#MenuView #recently-viewed > ul a {
+  color: #666;
+  font-size: 11px !important;
+  display: block;
+  margin: 0 2px;
+  padding: 3px 0 !important;
+  height: auto !important;
+  float: none !important;
+  width: auto !important;
+}
+#MenuView #shortcuts > ul a em,
+#MenuView #recently-viewed > ul a em {
+  display: none !important;
+}
+#MenuView #shortcuts > ul a em + span,
+#MenuView #recently-viewed > ul a em + span {
+  display: block !important;
+}
+#MenuView #shortcuts > ul a > span,
+#MenuView #recently-viewed > ul a > span {
+  height: auto !important;
+  margin: 0;
+  padding: 5px 10px 5px 10px;
+  line-height: 1;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  background: none !important;
+  position: relative;
+  text-indent: 0;
+  font-weight: normal !important;
+}
+#MenuView #shortcuts > ul a:hover,
+#MenuView #recently-viewed > ul a:hover,
+#MenuView #shortcuts > ul a:hover span,
+#MenuView #recently-viewed > ul a:hover span {
+  color: #fff !important;
+}
+#RecentlyViewedView {
+  display: none;
+}
+#HomeDashboardView {
+  padding-right: 0;
+}
+#HomeDashboardView .juiportlet-column {
+  width: 100%;
+  float: none;
+}
+#HomeDashboardView .juiportlet-widget {
+  min-width: auto;
+  margin-right: 10px;
+}
+#credit-link {
+  line-height: 17px;
+  font-size: 10px;
+}
+.DetailsAndRelationsView > div {
+  float: none;
+  width: 100% !important;
+}
+.breadcrumbs {
+  padding-bottom: 10px;
+}
+.details-table {
+  margin-right: 0;
+}
+.juiportlet-widget {
+  margin-right: 0 !important;
+}
+.latest-activity-toolbar {
+  padding: 10px 5px !important;
+}
+#filter-latest-activities-link {
+  margin-left: 5px !important;
+}
+.filter-portlet-model-bar {
+  padding-left: 3px;
+  padding-bottom: 10px;
+  height: auto;
+}
+.filter-portlet-model-bar label {
+  line-height: 1;
+  float: left;
+  margin: 10px 0 0 2px;
+}
+#more-search-link,
+#select-list-attributes-link,
+.list-view-items-summary-clone,
+.button-column {
+  display: none;
+}
+.SearchView {
+  width: 100%;
+}
+.search-form-tools {
+  left: auto;
+  right: 10px;
+}
+#modal-edit-form .panel,
+#edit-form .panel,
+#delete-form .panel {
+  float: none;
+  width: 100%;
+}
+#modal-edit-form .panel th > label,
+#edit-form .panel th > label,
+#delete-form .panel th > label {
+  position: relative;
+  top: 6px;
+}
+.right-side-edit-view-panel {
+  float: none;
+  width: 100%;
+  position: relative;
+  right: 0;
+  top: 0;
+}
+.right-side-edit-view-panel .buffer {
+  padding-left: 0;
+}
+.right-side-edit-view-panel .buffer > div {
+  padding: 0;
+  background: none;
+}
+.hasParallelFields > div {
+  width: 100% !important;
+  display: block;
+  float: none;
+}
+#ModelDetailsSummaryView,
+#CommentInlineEditForModelView,
+#CommentsForRelatedModelView {
+  width: 100%;
+  margin-right: 0;
+  float: none;
+  padding: 0 10px;
+}
+#ConversationDetailsView .right-side-edit-view-panel {
+  display: none;
+}
+.model-details-summary {
+  padding-left: 65px;
+  padding-top: 10px;
+}
+.model-details-summary .gravatar {
+  margin-left: -65px;
+  max-width: 50px;
+  max-height: 50px;
+}
+#CommentList,
+.CommentList {
+  margin-left: 0;
+}
+#CommentInlineEditForModelView {
+  padding: 0 10px 0 0;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu {
+  right: 10px;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu .view-toolbar,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .view-toolbar {
+  position: relative;
+  clear: both;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu .options-menu > li > a,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .options-menu > li > a {
+  text-indent: -9999px;
+  width: auto;
+  padding: 0;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu .options-menu > li > a:after,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .options-menu > li > a:after {
+  content: "n";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  left: -5px;
+  top: -1px;
+  margin-left: 10px;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu .options-menu > li > a span,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .options-menu > li > a span {
+  display: none;
+}
+div:not(#LeaderboardView) .toolbar-mbmenu .options-menu ul,
+div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .options-menu ul {
+  right: 0;
+  margin-top: -8px;
+}
+#NoUserEmailConfigurationYetView > div,
+#NoGlobalEmailConfigurationYetView > div,
+.ZeroModelsYetView > div,
+.splash-view > div {
+  padding: 0 10%;
+  text-align: center;
+}
+#NoUserEmailConfigurationYetView h2,
+#NoGlobalEmailConfigurationYetView h2,
+.ZeroModelsYetView h2,
+.splash-view h2 {
+  font-size: 20px;
+  line-height: 28px;
+  padding: 0 0 15px 0;
+  text-align: center;
+}
+#NoUserEmailConfigurationYetView i,
+#NoGlobalEmailConfigurationYetView i,
+.ZeroModelsYetView i,
+.splash-view i {
+  margin-left: 0;
+  text-align: center;
+}
+#NoUserEmailConfigurationYetView .large-icon,
+#NoGlobalEmailConfigurationYetView .large-icon,
+.ZeroModelsYetView .large-icon,
+.splash-view .large-icon {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border-right: none;
+  float: none;
+}
+#NoUserEmailConfigurationYetView p,
+#NoGlobalEmailConfigurationYetView p,
+.ZeroModelsYetView p,
+.splash-view p {
+  width: 100%;
+  font-size: 12px;
+  line-height: 19px;
+  margin-left: 0;
+  margin-top: 15px;
+  float: none;
+}
+#NoUserEmailConfigurationYetView a,
+#NoGlobalEmailConfigurationYetView a,
+.ZeroModelsYetView a,
+.splash-view a {
+  margin: 15px auto;
+  padding: 0;
+  float: none;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  right: 5px;
+  top: 5px;
+}
+.ui-dialog {
+  width: 98%;
+  min-width: 98%;
+  max-width: 98%;
+}
+.ModalGameNotification {
+  padding-bottom: 60px;
+}
+.model-tag {
+  float: none;
+  margin: 0 0 5px 0 !important;
+  position: relative;
+  top: -2px;
+}
+div#MashableInboxActionBarForViews .view-toolbar-container,
+div#LeaderboardView .view-toolbar-container {
+  width: auto;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar {
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  float: left;
+  margin: 0 0 15px 0;
+  -webkit-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .unread-count,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .unread-count {
+  display: none;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .z-label,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .z-label {
+  display: none;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar > a,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar > a,
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .parent > a,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .parent > a {
+  padding: 0 0 0 0;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar > a:before,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar > a:before,
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .parent > a:before,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .parent > a:before {
+  display: inline-block;
+  margin: 0 5px 0 5px;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar > a:after,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar > a:after,
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .parent > a:after,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .parent > a:after {
+  margin-left: 5px;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .parent > a,
+div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar .parent > a {
+  padding: 0 5px 0 0;
+}
+div#LeaderboardView > .view-toolbar-container > .view-toolbar .z-label {
+  display: inline-block;
+  margin-right: 8px;
+}
+#LeaderboardView .items {
+  margin-bottom: 10px;
+}
+#MashableInboxActionBarForViews .filters-bar {
+  position: relative;
+  top: -5px;
+  left: 0;
+}
+.gravatar-container {
+  float: left;
+  margin: 15px;
+  width: 100%;
+}
+#FlashMessageView {
+  width: 100%;
+  top: 50px;
+  right: 0;
+}

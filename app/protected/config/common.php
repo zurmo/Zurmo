@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     $common_config = array(
@@ -55,6 +65,18 @@
             ),
             'clientScript' => array(
                 'class' => 'ClientScript',
+                'packages' => array(
+                    'treeview' => array(
+                        'basePath' => 'application.core.widgets.assets',
+                        'js' => array(
+                            '/treeView/jquery.treeview.async.js'),
+                        'depends'  => array('baseTreeView')),
+                    'baseTreeView' => array(
+                        'js' => array(
+                            'jquery.treeview.js',
+                            'jquery.treeview.edit.js'),
+                        'depends'  => array('jquery', 'cookie')),
+                ),
             ),
             'currencyHelper' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoCurrencyHelper',
@@ -89,25 +111,26 @@
             'gamificationObserver' => array(
                 'class' => 'application.modules.gamification.observers.GamificationObserver',
             ),
-            /* Will be enabled later
             'messages' => array(
                 'class' => 'application.core.components.ZurmoMessageSource',
             ),
-            */
             'minScript' => array(
                 'class' => 'application.core.components.ZurmoExtMinScript',
                 'groupMap' => array(
                     'css' => array(
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'themes/THEME_NAME/css/newui.css',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/timepicker/assets/jquery-ui-timepicker-addon.css'
+                        //INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/timepicker/assets/jquery-ui-timepicker-addon.css',
                     ),
 
                     'js' => array(
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '../yii/framework/web/js/source/jquery.min.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '../yii/framework/web/js/source/jquery.yii.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '../yii/framework/web/js/source/jquery.ba-bbq.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '../yii/framework/web/js/source/jui/js/jquery-ui.min.js',
-                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '../yii/framework/web/js/source/jquery.yiiactiveform.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.min.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.yii.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.ba-bbq.min.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jui/js/jquery-ui.min.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.yiiactiveform.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.cookie.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.treeview.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . '/../yii/framework/web/js/source/jquery.treeview.edit.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/qtip/assets/jquery.qtip-2.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/extendedGridView/jquery.yiigridview.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/elements/assets/Modal.js',
@@ -125,6 +148,7 @@
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/fileUpload/jquery.fileupload-ui.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/fileUpload/jquery.tmpl.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/fileUpload/jquery.iframe-transport.js',
+                        INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/treeView/jquery.treeview.async.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/extensions/timepicker/assets/jquery-ui-timepicker-addon.min.js',
                         INSTANCE_ROOT . DIRECTORY_SEPARATOR . 'protected/core/widgets/assets/calendar/Calendar.js'
                     )
@@ -137,6 +161,9 @@
                     array('system.web.js.source',                                       '/jquery.ba-bbq.js'),
                     array('system.web.js.source',                                       '/jui/js/jquery-ui.min.js'),
                     array('system.web.js.source',                                       '/jquery.yiiactiveform.js'),
+                    array('system.web.js.source',                                       '/jquery.jquery.cookie.js'),
+                    array('system.web.js.source',                                       '/jquery.jquery.treeview.js'),
+                    array('system.web.js.source',                                       '/jquery.treeview.edit.js'),
                     array('application.extensions.qtip.assets',                         '/jquery.qtip-2.min.js'),
                     array('application.core.widgets.assets',   '/extendedGridView/jquery.yiigridview.js'),
                     array('application.core.elements.assets',  '/Modal.js'),
@@ -153,6 +180,7 @@
                     array('application.core.widgets.assets',   '/fileUpload/jquery.fileupload-ui.js'),
                     array('application.core.widgets.assets',   '/fileUpload/jquery.tmpl.min.js'),
                     array('application.core.widgets.assets',   '/fileUpload/jquery.iframe-transport.js'),
+                    array('application.core.widgets.assets',   '/treeView/jquery.treeview.async.js'),
                     array('application.extensions.timepicker.assets',                   '/jquery-ui-timepicker-addon.min.js'),
                     array('application.core.widgets.assets',   '/calendar/Calendar.js')
                 ),
@@ -174,15 +202,17 @@
             ),
             'pagination' => array(
                 'class' => 'application.modules.zurmo.components.ZurmoPaginationHelper',
-                'listPageSize'               => 10,
-                'subListPageSize'            => 5,
-                'modalListPageSize'          => 5,
-                'massEditProgressPageSize'   => 5,
-                'autoCompleteListPageSize'   => 5,
-                'importPageSize'             => 50,
-                'dashboardListPageSize'      => 5,
-                'apiListPageSize'            => 10,
-                'massDeleteProgressPageSize' => 5
+                'listPageSize'                 => 10,
+                'subListPageSize'              => 5,
+                'modalListPageSize'            => 5,
+                'massEditProgressPageSize'     => 5,
+                'autoCompleteListPageSize'     => 5,
+                'importPageSize'               => 50,
+                'dashboardListPageSize'        => 5,
+                'apiListPageSize'              => 10,
+                'massDeleteProgressPageSize'   => 5,
+                'reportResultsListPageSize'    => 20,
+                'reportResultsSubListPageSize' => 5,
             ),
             'performance' => array(
                 'class'          => 'application.core.components.PerformanceMeasurement',
@@ -242,8 +272,17 @@
                     ),
                 ),
             ),
+            'userInterface' => array(
+                'class' => 'application.extensions.userinterface.UserInterface',
+            ),
             'widgetFactory' => array(
                 'widgets' => array(
+                    'ZurmoJuiDateTimePicker' => array(
+                        'cssFile' => false,
+                    ),
+                    'ZurmoJuiDatePicker' => array(
+                        'cssFile' => false,
+                    ),
                     'EJuiDateTimePicker' => array(
                         'cssFile' => false,
                     ),
@@ -264,6 +303,9 @@
                     ),
                 ),
             ),
+            'workflowsObserver' => array(
+                'class' => 'application.modules.workflow.observers.WorkflowsObserver',
+            ),
         ),
         'controllerMap' => array(
             'min' => 'application.extensions.minscript.controllers.ExtMinScriptController',
@@ -283,18 +325,22 @@
             'application.modules.install.serviceHelpers.ServiceHelper',
             'application.modules.install.serviceHelpers.SetIncludePathServiceHelper',
             'application.modules.install.utils.InstallUtil',
+            'application.modules.api.components.ApiRequest',
+            'application.extensions.wideImage.WideImage',
         ),
 
         'modules' => array(
             'accounts',
             'activities',
             'api',
+           // 'campaigns',
             'comments',
             'configuration',
             'contacts',
             'conversations',
             'designer',
             'emailMessages',
+            'emailTemplates',
             'export',
             'gamification',
             'home',
@@ -302,12 +348,17 @@
             'install',
             'jobsManager',
             'leads',
+            'marketing',
+            'marketingLists',
+            'mashableInbox',
             'meetings',
             'missions',
             'notes',
             'notifications',
             'opportunities',
+            'reports',
             'rssReader',
+            'workflows',
             'socialItems',
             'tasks',
             'zurmo' => array(

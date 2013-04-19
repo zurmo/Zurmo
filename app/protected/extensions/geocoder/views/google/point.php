@@ -27,6 +27,9 @@
  * is displayed in the info window.
  */
 ?>
-var marker = new GMarker(latlng);
+var marker = new google.maps.Marker(latlng);
 map.addOverlay(marker);
-GEvent.addListener(marker, "click", function() {marker.openInfoWindowHtml(address+'<br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + latlng.toUrlValue() + '" target ="_blank">Get Directions<\/a>');});
+var infowindow = new google.maps.InfoWindow({
+                 content: address+'<br /><br /><a href="http://maps.google.com/maps?saddr=&daddr=' + latlng.toUrlValue() + '" target ="_blank">Get Directions<\/a>'
+});
+google.maps.Event.addListener(marker, "click", function() {infowindow.open(map, marker);});

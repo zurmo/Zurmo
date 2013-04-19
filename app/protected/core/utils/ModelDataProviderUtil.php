@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -30,34 +40,104 @@
      */
     class ModelDataProviderUtil
     {
+        /**
+         * If the $onTableAliasName is used (not null):
+         * Special use of sort attribute resolution. If you are resolving a sort attribute against a relation then
+         * the joins must utilize a left join in the case of casting up.  Does not support when the attribute is a
+         * relation itself as this expects any relation processing to be done before this is called.
+         *
+         * @param RedBeanModelAttributeToDataProviderAdapter $modelAttributeToDataProviderAdapter
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null | string $onTableAliasName
+         * @return string
+         * @throws NotSupportedException
+         */
         public static function resolveSortAttributeColumnName(RedBeanModelAttributeToDataProviderAdapter
                                                               $modelAttributeToDataProviderAdapter,
                                                               RedBeanModelJoinTablesQueryAdapter
-                                                              $joinTablesAdapter)
+                                                              $joinTablesAdapter,
+                                                              $onTableAliasName = null)
         {
-            if ($modelAttributeToDataProviderAdapter->isRelation())
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            $builder               = new ModelJoinBuilder($modelAttributeToDataProviderAdapter,
+                                                          $joinTablesAdapter);
+            $tableAliasName        = $builder->resolveJoins($onTableAliasName,
+                                                            self::resolveCanUseFromJoins($onTableAliasName));
+            $shouldConcatenate     = false;
+            if ($modelAttributeToDataProviderAdapter->hasRelatedAttribute())
             {
-                if (!$modelAttributeToDataProviderAdapter->hasRelatedAttribute())
+                if ($modelAttributeToDataProviderAdapter->relatedAttributesSortUsesTwoAttributes())
                 {
-                    throw new NotSupportedException();
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnNameByPosition(0);
+                    $sortColumnsNameString  = self::resolveSortColumnNameString($tableAliasName, $resolvedSortColumnName);
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnNameByPosition(1);
+                    $shouldConcatenate      = true;
                 }
-                assert('$modelAttributeToDataProviderAdapter->getRelationType() != RedBeanModel::MANY_MANY');
-                $onTableAliasName           = self::resolveShouldAddFromTableAndGetAliasName(
-                                                        $modelAttributeToDataProviderAdapter,
-                                                        $joinTablesAdapter);
-                $tableAliasName             = self::resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(
-                                                        $modelAttributeToDataProviderAdapter,
-                                                        $joinTablesAdapter,
-                                                        $onTableAliasName);
-                $resolvedSortColumnName     = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName();
+                else
+                {
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName();
+                }
             }
             else
             {
-                $tableAliasName             = self::resolveShouldAddFromTableAndGetAliasName(
-                                                        $modelAttributeToDataProviderAdapter,
-                                                        $joinTablesAdapter);
-                $resolvedSortColumnName     = $modelAttributeToDataProviderAdapter->getColumnName();
+                if ($modelAttributeToDataProviderAdapter->sortUsesTwoAttributes())
+                {
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getColumnNameByPosition(0);
+                    $sortColumnsNameString  =  self::resolveSortColumnNameString($tableAliasName, $resolvedSortColumnName);
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getColumnNameByPosition(1);
+                    $shouldConcatenate      = true;
+                }
+                else
+                {
+                    $resolvedSortColumnName = $modelAttributeToDataProviderAdapter->getColumnName();
+                }
             }
+            if ($shouldConcatenate)
+            {
+                $sortColumnsNameString = DatabaseCompatibilityUtil::concat(
+                        array($sortColumnsNameString,
+                              self::resolveSortColumnNameString($tableAliasName, $resolvedSortColumnName)));
+            }
+            else
+            {
+                $sortColumnsNameString = self::resolveSortColumnNameString($tableAliasName, $resolvedSortColumnName);
+            }
+            return $sortColumnsNameString;
+        }
+
+        /**
+         * Wraps a string by concat to be used in queries
+         * @param string $string
+         * @return string
+         */
+        protected static function resolveConcatenation($string)
+        {
+            return "CONCAT(" . $string . ")";
+        }
+
+        /**
+         * @param $onTableAliasName
+         * @return bool
+         */
+        public static function resolveCanUseFromJoins($onTableAliasName)
+        {
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            if ($onTableAliasName != null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * @param $tableAliasName
+         * @param $resolvedSortColumnName
+         * @return string
+         */
+        public static function resolveSortColumnNameString($tableAliasName, $resolvedSortColumnName)
+        {
+            assert('is_string($tableAliasName)');
+            assert('is_string($resolvedSortColumnName)');
             $sort  = DatabaseCompatibilityUtil::quoteString($tableAliasName);
             $sort .= '.';
             $sort .= DatabaseCompatibilityUtil::quoteString($resolvedSortColumnName);
@@ -65,17 +145,51 @@
         }
 
         /**
+         * If the $onTableAliasName is used (not null):
+         * Special use of group by attribute resolution. If you are resolving a group by attribute against a relation then
+         * the joins must utilize a left join in the case of casting up.  Does not support when the attribute is a
+         * relation itself as this expects any relation processing to be done before this is called.
+         *
+         * @param RedBeanModelAttributeToDataProviderAdapter $modelAttributeToDataProviderAdapter
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null | string $onTableAliasName
+         * @return string
+         * @throws NotSupportedException
+         */
+        public static function resolveGroupByAttributeColumnName(RedBeanModelAttributeToDataProviderAdapter
+                                                                 $modelAttributeToDataProviderAdapter,
+                                                                 RedBeanModelJoinTablesQueryAdapter
+                                                                 $joinTablesAdapter,
+                                                                 $onTableAliasName = null)
+        {
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            $builder        = new ModelJoinBuilder($modelAttributeToDataProviderAdapter, $joinTablesAdapter);
+            $tableAliasName = $builder->resolveJoins($onTableAliasName, self::resolveCanUseFromJoins($onTableAliasName));
+            if ($modelAttributeToDataProviderAdapter->hasRelatedAttribute())
+            {
+                $resolvedGroupByColumnName = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName();
+            }
+            else
+            {
+                $resolvedGroupByColumnName = $modelAttributeToDataProviderAdapter->getColumnName();
+            }
+            return self::resolveGroupByColumnNameString($tableAliasName, $resolvedGroupByColumnName);
+        }
+
+        /**
          * Override from RedBeanModelDataProvider to support multiple
          * where clauses for the same attribute and operatorTypes
-         * @param metadata - array expected to have clauses and structure elements
+         * @param $modelClassName
+         * @param array $metadata - array expected to have clauses and structure elements
          * @param $joinTablesAdapter
-         * @see DataProviderMetadataAdapter
+         * @param null | string $onTableAliasName
          * @return string
          */
-        public static function makeWhere($modelClassName, array $metadata, & $joinTablesAdapter)
+        public static function makeWhere($modelClassName, array $metadata, $joinTablesAdapter, $onTableAliasName = null)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
             assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
             if (empty($metadata))
             {
                 return;
@@ -83,7 +197,7 @@
             $where = array();
             foreach ($metadata['clauses'] as $key => $clauseInformation)
             {
-                static::processMetadataClause($modelClassName, $key, $clauseInformation, $where, $joinTablesAdapter);
+                static::processMetadataClause($modelClassName, $key, $clauseInformation, $where, $joinTablesAdapter, $onTableAliasName);
             }
             if (count($where)> 0)
             {
@@ -92,677 +206,164 @@
             return;
         }
 
-        protected static function processMetadataClause($modelClassName, $clausePosition, $clauseInformation, & $where, & $joinTablesAdapter)
+        /**
+         * @param $tableAliasName
+         * @param $resolvedSortColumnName
+         * @return string
+         */
+        protected static function resolveGroupByColumnNameString($tableAliasName, $resolvedSortColumnName)
+        {
+            assert('is_string($tableAliasName)');
+            assert('is_string($resolvedSortColumnName)');
+            $groupBy  = DatabaseCompatibilityUtil::quoteString($tableAliasName);
+            $groupBy .= '.';
+            $groupBy .= DatabaseCompatibilityUtil::quoteString($resolvedSortColumnName);
+            return $groupBy;
+        }
+
+        /**
+         * @param string $modelClassName
+         * @param integer $clausePosition
+         * @param array $clauseInformation
+         * @param array $where
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null | string $onTableAliasName
+         * @throws NotSupportedException
+         */
+        protected static function processMetadataClause($modelClassName, $clausePosition, $clauseInformation, & $where,
+                                                        & $joinTablesAdapter, $onTableAliasName = null)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
             assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
             assert('is_int($clausePosition)');
-            if (isset($clauseInformation['concatedAttributeNames']))
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            if (isset($clauseInformation['relatedModelData']))
+            {
+                static::processMetadataContainingRelatedModelDataClause($modelClassName,
+                    $clausePosition,
+                    $clauseInformation,
+                    $where,
+                    $joinTablesAdapter,
+                    $onTableAliasName);
+            }
+            elseif (isset($clauseInformation['concatedAttributeNames']))
             {
                 if (isset($clauseInformation['relatedAttributeName']) &&
                    $clauseInformation['relatedAttributeName'] != null)
                 {
                     throw new NotSupportedException();
                 }
-                self::buildJoinAndWhereForNonRelatedConcatedAttributes(
-                    $modelClassName,
-                    $clauseInformation['concatedAttributeNames'],
-                    $clauseInformation['operatorType'],
-                    $clauseInformation['value'],
-                    $clausePosition,
-                    $joinTablesAdapter,
-                    $where);
-            }
-            elseif (isset($clauseInformation['relatedModelData']))
-            {
-                static::processMetadataContainingRelatedModelDataClause($modelClassName,
-                                                                        $clausePosition,
-                                                                        $clauseInformation,
-                                                                        $where,
-                                                                        $joinTablesAdapter);
-            }
-            elseif (!isset($clauseInformation['relatedAttributeName']))
-            {
-                $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName']);
-                self::buildJoinAndWhereForNonRelatedAttribute($modelAttributeToDataProviderAdapter,
-                                                              $clauseInformation['operatorType'],
-                                                              $clauseInformation['value'],
-                                                              $clausePosition,
-                                                              $joinTablesAdapter,
-                                                              $where);
+                $tableAliasAndColumnNames = self::makeTableAliasAndColumnNamesForNonRelatedConcatedAttributes(
+                                            $modelClassName, $clauseInformation['concatedAttributeNames'],
+                                            $joinTablesAdapter);
+                self::addWherePartByClauseInformationForConcatedAttributes($clauseInformation['operatorType'],
+                                            $clauseInformation['value'], $where, $clausePosition,
+                                            $tableAliasAndColumnNames);
             }
             else
             {
-                $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName'],
-                                                               $clauseInformation["relatedAttributeName"]);
-                if ($clauseInformation['relatedAttributeName'] == 'id')
-                {
-                    self::buildJoinAndWhereForRelatedId(       $modelAttributeToDataProviderAdapter,
-                                                               $clauseInformation['operatorType'],
-                                                               $clauseInformation['value'],
-                                                               $clausePosition,
-                                                               $joinTablesAdapter,
-                                                               $where);
-                }
-                else
-                {
-                    self::buildJoinAndWhereForRelatedAttribute($modelAttributeToDataProviderAdapter,
-                                                               $clauseInformation['operatorType'],
-                                                               $clauseInformation['value'],
-                                                               $clausePosition,
-                                                               $joinTablesAdapter,
-                                                               $where);
-                }
+                $modelAttributeToDataProviderAdapter =  new RedBeanModelAttributeToDataProviderAdapter(
+                                                        $modelClassName,
+                                                        $clauseInformation['attributeName'],
+                                                        ArrayUtil::getArrayValue($clauseInformation, 'relatedAttributeName'));
+                $builder = new ModelWhereAndJoinBuilder($modelAttributeToDataProviderAdapter, $joinTablesAdapter, true,
+                                                        ArrayUtil::getArrayValue($clauseInformation, 'modifierType'));
+                $builder->resolveJoinsAndBuildWhere(    $clauseInformation['operatorType'],
+                                                        $clauseInformation['value'], $clausePosition,
+                                                        $where, $onTableAliasName);
             }
         }
 
+        /**
+         * @param string $modelClassName
+         * @param integer $clausePosition
+         * @param array $clauseInformation
+         * @param array $where
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null | string $onTableAliasName
+         */
         protected static function processMetadataContainingRelatedModelDataClause($modelClassName,
                                                                                   $clausePosition,
                                                                                   $clauseInformation,
                                                                                   & $where,
-                                                                                  & $joinTablesAdapter)
+                                                                                  $joinTablesAdapter,
+                                                                                  $onTableAliasName = null)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
             assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
             assert('is_int($clausePosition)');
-            if (is_array($clauseInformation['relatedModelData']) && count($clauseInformation['relatedModelData']) > 0)
-            {
-                //if there is no more relatedModelData then we know this is the end of the nested information.
-                if (isset($clauseInformation['relatedModelData']['relatedModelData']))
-                {
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName'],
-                                                               $clauseInformation['relatedModelData']['attributeName']);
-                    if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
-                    {
-                        static::buildJoinForManyToManyRelatedAttributeAndGetWhereClauseData($modelAttributeToDataProviderAdapter,
-                                                                                            $joinTablesAdapter);
-                    }
-                    else
-                    {
-                         $onTableAliasName = self::resolveShouldAddFromTableAndGetAliasName($modelAttributeToDataProviderAdapter,
-                                                                                            $joinTablesAdapter);
-                        self::resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(
-                                                                    $modelAttributeToDataProviderAdapter,
-                                                                    $joinTablesAdapter,
-                                                                    $onTableAliasName);
-                    }
-                   //After Joins are added, continue with processing
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName']);
-                    static::processMetadataClause($modelAttributeToDataProviderAdapter->getRelationModelClassName(),
-                                                  $clausePosition,
-                                                  $clauseInformation['relatedModelData'],
-                                                  $where,
-                                                  $joinTablesAdapter);
-                }
-                elseif (!isset($clauseInformation['relatedModelData']['relatedAttributeName']))
-                {
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                                   $modelClassName,
-                                                                   $clauseInformation['attributeName'],
-                                                                   $clauseInformation['relatedModelData']['attributeName']);
-                    if ($clauseInformation['relatedModelData']['attributeName'] == 'id')
-                    {
-                        self::buildJoinAndWhereForRelatedId(       $modelAttributeToDataProviderAdapter,
-                                                                   $clauseInformation['relatedModelData']['operatorType'],
-                                                                   $clauseInformation['relatedModelData']['value'],
-                                                                   $clausePosition,
-                                                                   $joinTablesAdapter,
-                                                                   $where);
-                    }
-                    else
-                    {
-                        self::buildJoinAndWhereForRelatedAttribute($modelAttributeToDataProviderAdapter,
-                                                                   $clauseInformation['relatedModelData']['operatorType'],
-                                                                   $clauseInformation['relatedModelData']['value'],
-                                                                   $clausePosition,
-                                                                   $joinTablesAdapter,
-                                                                   $where);
-                    }
-                }
-                //Supporting the use of relatedAttributeName. Alternatively you can use relatedModelData to produce the same results.
-                else
-                {
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName'],
-                                                               $clauseInformation['relatedModelData']['attributeName']);
-                    if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
-                    {
-                        static::buildJoinForManyToManyRelatedAttributeAndGetWhereClauseData($modelAttributeToDataProviderAdapter,
-                                                                                            $joinTablesAdapter);
-                    }
-                    else
-                    {
-                        //Because a relatedAttributeName is in use, one of the joins gets skipped unless we manually process
-                        //it here.
-                        static::processJoinForRelatedModelDataWhenRelatedAttributeNameIsUsed($modelClassName,
-                                                                                             $clauseInformation,
-                                                                                             $joinTablesAdapter);
-                    }
-
-                    //Two adapters are created, because the first adapter gives us the proper modelClassName
-                    //to use when using relatedAttributeName
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName']);
-                    $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelAttributeToDataProviderAdapter->getRelationModelClassName(),
-                                                               $clauseInformation['relatedModelData']['attributeName'],
-                                                               $clauseInformation['relatedModelData']['relatedAttributeName']);
-                    if ($clauseInformation['relatedModelData']['relatedAttributeName'] == 'id')
-                    {
-                        self::buildJoinAndWhereForRelatedId(       $modelAttributeToDataProviderAdapter,
-                                                                   $clauseInformation['relatedModelData']['operatorType'],
-                                                                   $clauseInformation['relatedModelData']['value'],
-                                                                   $clausePosition,
-                                                                   $joinTablesAdapter,
-                                                                   $where);
-                    }
-                    else
-                    {
-                        self::buildJoinAndWhereForRelatedAttribute($modelAttributeToDataProviderAdapter,
-                                                                   $clauseInformation['relatedModelData']['operatorType'],
-                                                                   $clauseInformation['relatedModelData']['value'],
-                                                                   $clausePosition,
-                                                                   $joinTablesAdapter,
-                                                                   $where);
-                    }
-                }
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        protected static function processJoinForRelatedModelDataWhenRelatedAttributeNameIsUsed(
-                                                                                  $modelClassName,
-                                                                                  $clauseInformation,
-                                                                                  & $joinTablesAdapter)
-        {
-            assert('is_string($modelClassName) && $modelClassName != ""');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
+            assert('is_array($clauseInformation["relatedModelData"]) && count($clauseInformation["relatedModelData"]) > 0');
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
             $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                               $modelClassName,
-                                                               $clauseInformation['attributeName'],
-                                                               $clauseInformation['relatedModelData']['attributeName']);
-            $onTableAliasName                    = self::resolveShouldAddFromTableAndGetAliasName(
-                                                                $modelAttributeToDataProviderAdapter,
-                                                                $joinTablesAdapter);
-            self::resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(
-                                                                $modelAttributeToDataProviderAdapter,
-                                                                $joinTablesAdapter,
-                                                                $onTableAliasName);
+                                                   $modelClassName,
+                                                   $clauseInformation['attributeName'],
+                                                   $clauseInformation['relatedModelData']['attributeName']);
+            $builder                             = new ModelWhereAndJoinBuilder($modelAttributeToDataProviderAdapter,
+                                                   $joinTablesAdapter, true);
+                                                   $builder->resolveJoins($onTableAliasName,
+                                                   self::resolveCanUseFromJoins($onTableAliasName));
+            $relationModelClassName              = $modelAttributeToDataProviderAdapter->getRelationModelClassName();
+            //if there is no more relatedModelData then we know this is the end of the nested information.
+            if (isset($clauseInformation['relatedModelData']['relatedModelData']))
+            {
+                return static::processMetadataClause($relationModelClassName, $clausePosition,
+                                                     $clauseInformation['relatedModelData'],
+                                                     $where, $joinTablesAdapter, $onTableAliasName);
+            }
+            //Supporting the use of relatedAttributeName. Alternatively you can use relatedModelData to produce the same results.
+            if (isset($clauseInformation['relatedModelData']['relatedAttributeName']))
+            {
+                $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
+                                                           $relationModelClassName,
+                                                           $clauseInformation['relatedModelData']['attributeName'],
+                                                           $clauseInformation['relatedModelData']['relatedAttributeName']);
+                $builder = new ModelWhereAndJoinBuilder($modelAttributeToDataProviderAdapter, $joinTablesAdapter, true,
+                               ArrayUtil::getArrayValue($clauseInformation['relatedModelData'], 'modifierType'));
+            }
+            $builder->resolveJoinsAndBuildWhere(
+                        $clauseInformation['relatedModelData']['operatorType'],
+                        $clauseInformation['relatedModelData']['value'], $clausePosition, $where, $onTableAliasName);
         }
 
         /**
-         * Given a non-related attribute on a model, build the join and where sql string information.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see addWherePartByClauseInformation
+         * @param string $modelClassName
+         * @param array $concatedAttributeNames
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null | string $onTableAliasName
+         * @return array
          */
-        protected static function buildJoinAndWhereForNonRelatedAttribute(RedBeanModelAttributeToDataProviderAdapter
-                                                                          $modelAttributeToDataProviderAdapter,
-                                                                          $operatorType,
-                                                                          $value,
-                                                                          $whereKey,
-                                                                          $joinTablesAdapter,
-                                                                          &$where)
-        {
-            assert('is_string($operatorType)');
-            assert('is_int($whereKey)');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_array($where)');
-            $tableAliasName = self::resolveShouldAddFromTableAndGetAliasName($modelAttributeToDataProviderAdapter,
-                                                                             $joinTablesAdapter);
-            self::addWherePartByClauseInformation($operatorType, $value,
-                                                  $where, $whereKey, $tableAliasName,
-                                                  $modelAttributeToDataProviderAdapter->getColumnName());
-        }
-
-        /**
-         * Given a non-related array of attributes on a model, build the join and where sql string information. These
-         * attributes will be concated together.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see addWherePartByClauseInformation
-         */
-        protected static function buildJoinAndWhereForNonRelatedConcatedAttributes( $modelClassName,
-                                                                                    $concatedAttributeNames,
-                                                                                    $operatorType,
-                                                                                    $value,
-                                                                                    $whereKey,
-                                                                                    $joinTablesAdapter,
-                                                                                    &$where)
+        protected static function makeTableAliasAndColumnNamesForNonRelatedConcatedAttributes( $modelClassName,
+                                                                                               $concatedAttributeNames,
+                                                                                               $joinTablesAdapter,
+                                                                                               $onTableAliasName = null)
         {
             assert('is_string($modelClassName)');
-            assert('is_string($operatorType)');
             assert('is_array($concatedAttributeNames) && count($concatedAttributeNames) == 2');
-            assert('is_int($whereKey)');
             assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_array($where)');
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
             $tableAliasAndColumnNames = array();
-
             foreach ($concatedAttributeNames as $attributeName)
             {
                 $modelAttributeToDataProviderAdapter = new RedBeanModelAttributeToDataProviderAdapter(
-                                                           $modelClassName, $attributeName);
-                $tableAliasName                      = self::resolveShouldAddFromTableAndGetAliasName(
-                                                           $modelAttributeToDataProviderAdapter, $joinTablesAdapter);
+                                                       $modelClassName, $attributeName);
+                $builder                             = new ModelWhereAndJoinBuilder(
+                                                       $modelAttributeToDataProviderAdapter, $joinTablesAdapter, true);
+                $tableAliasName                      = $builder->resolveJoins($onTableAliasName,
+                                                       self::resolveCanUseFromJoins($onTableAliasName));
                 $tableAliasAndColumnNames[]          = array($tableAliasName,
-                                                             $modelAttributeToDataProviderAdapter->getColumnName());
+                                                       $modelAttributeToDataProviderAdapter->getColumnName());
             }
-            self::addWherePartByClauseInformationForConcatedAttributes( $operatorType,
-                                                    $value,
-                                                    $where, $whereKey, $tableAliasAndColumnNames);
-        }
-
-        /**
-         * Given a related attribute on a model, build the jion and where sql string information.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see addWherePartByClauseInformation
-         */
-        protected static function buildJoinAndWhereForRelatedAttribute(RedBeanModelAttributeToDataProviderAdapter
-                                                                       $modelAttributeToDataProviderAdapter,
-                                                                       $operatorType, $value, $whereKey,
-                                                                       $joinTablesAdapter, &$where)
-        {
-            assert('is_string($operatorType)');
-            assert('$modelAttributeToDataProviderAdapter->getRelatedAttribute() != null');
-            assert('is_int($whereKey)');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_array($where)');
-            $onTableAliasName = self::resolveShouldAddFromTableAndGetAliasName($modelAttributeToDataProviderAdapter,
-                                                                               $joinTablesAdapter);
-            if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
-            {
-                self::buildJoinAndWhereForManyToManyRelatedAttribute($modelAttributeToDataProviderAdapter,
-                                                                     $operatorType,
-                                                                     $value,
-                                                                     $whereKey,
-                                                                     $joinTablesAdapter,
-                                                                     $where);
-            }
-            else
-            {
-                $relationAttributeTableAliasName     = self::resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(
-                                                                $modelAttributeToDataProviderAdapter,
-                                                                $joinTablesAdapter,
-                                                                $onTableAliasName);
-                $relationWhere = array();
-                if ($modelAttributeToDataProviderAdapter->isRelatedAttributeRelation() &&
-                   $modelAttributeToDataProviderAdapter->getRelatedAttributeRelationType() == RedBeanModel::HAS_MANY)
-                {
-                   static::
-                   buildWhereForRelatedAttributeThatIsItselfAHasManyRelation($modelAttributeToDataProviderAdapter,
-                                                                             $joinTablesAdapter,
-                                                                             $relationAttributeTableAliasName,
-                                                                             $operatorType,
-                                                                             $value,
-                                                                             $relationWhere,
-                                                                             1);
-                }
-                else
-                {
-                    self::addWherePartByClauseInformation($operatorType,
-                                                          $value,
-                                                          $relationWhere,
-                                                          1,
-                                                          $relationAttributeTableAliasName,
-                                                          $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName());
-                }
-                $where[$whereKey] = strtr('1', $relationWhere);
-            }
-        }
-
-        protected static function buildWhereForRelatedAttributeThatIsItselfAHasManyRelation(RedBeanModelAttributeToDataProviderAdapter
-                                                                                            $modelAttributeToDataProviderAdapter,
-                                                                                            $joinTablesAdapter,
-                                                                                            $relationAttributeTableAliasName,
-                                                                                            $operatorType,
-                                                                                            $value,
-                                                                                            & $where,
-                                                                                            $whereKey
-                                                                                            )
-        {
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_string($relationAttributeTableAliasName)');
-            assert('is_string($operatorType)');
-            assert('is_array($value) && count($value) > 0');
-            assert('is_array($where)');
-            assert('is_int($whereKey)');
-            $relationAttributeName           = $modelAttributeToDataProviderAdapter->getRelatedAttribute();
-            $relationAttributeModelClassName = $modelAttributeToDataProviderAdapter-> getRelatedAttributeRelationModelClassName();
-            if ($relationAttributeModelClassName != 'CustomFieldValue')
-            {
-                //Until we can add a third parameter to the search adapter metadata, we have to assume we are only doing
-                //this for CustomFieldValue searches. Below we have $joinColumnName, since we don't have any other way
-                //of ascertaining this information for now.
-                throw new NotSupportedException();
-            }
-            if ($operatorType != 'oneOf')
-            {
-                //only support oneOf for the moment.  Once we add allOf, need to have an alternative sub-query
-                //below that uses if/else logic to compare count against how many possibles. then return 1 or 0.
-            }
-            $relationAttributeTableName      = RedBeanModel::getTableName($relationAttributeModelClassName);
-            $tableAliasName                  = $relationAttributeTableName;
-            $joinColumnName                  = 'value';
-            $relationColumnName              = RedBeanModel::getTableName($modelAttributeToDataProviderAdapter->getRelatedAttributeModelClassName()) . "_id";
-            $quote                           = DatabaseCompatibilityUtil::getQuote();
-            $where[$whereKey]   = "(1 = (select 1 from $quote$relationAttributeTableName$quote $tableAliasName " . // Not Coding Standard
-                                  "where $quote$tableAliasName$quote.$quote$relationColumnName$quote = " . // Not Coding Standard
-                                  "$quote$relationAttributeTableAliasName$quote.id " . // Not Coding Standard
-                                  "and $quote$tableAliasName$quote.$quote$joinColumnName$quote " . // Not Coding Standard
-                                  DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . " limit 1))";
-        }
-
-        protected static function resolveJoinsForRelatedAttributeAndGetRelationAttributeTableAliasName(
-                                  RedBeanModelAttributeToDataProviderAdapter
-                                  $modelAttributeToDataProviderAdapter,
-                                  RedBeanModelJoinTablesQueryAdapter
-                                  $joinTablesAdapter,
-                                  $onTableAliasName)
-        {
-            assert('$modelAttributeToDataProviderAdapter->getRelationType() != RedBeanModel::MANY_MANY');
-            assert('is_string($onTableAliasName)');
-            if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_MANY  ||
-                $modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_MANY_BELONGS_TO)
-            {
-                $onTableJoinIdName  = 'id';
-                $tableJoinIdName    = $onTableAliasName . '_id';
-                //HAS_MANY have the potential to produce more than one row per model, so we need
-                //to signal the query to be distinct.
-                if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_MANY)
-                {
-                    $joinTablesAdapter->setSelectDistinctToTrue();
-                }
-            }
-            elseif ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_ONE_BELONGS_TO)
-            {
-                $tableJoinIdName   = $onTableAliasName . '_id';
-                $onTableJoinIdName = 'id';
-            }
-            else
-            {
-                $onTableJoinIdName  = $modelAttributeToDataProviderAdapter->getColumnName();
-                $tableJoinIdName    = 'id';
-            }
-            if (!$modelAttributeToDataProviderAdapter->canRelationHaveTable())
-            {
-                $relationTableAliasName          = $onTableAliasName;
-            }
-            else
-            {
-                $relationTableAliasName          = $joinTablesAdapter->addLeftTableAndGetAliasName(
-                                                   $modelAttributeToDataProviderAdapter->getRelationTableName(),
-                                                   $onTableJoinIdName,
-                                                   $onTableAliasName,
-                                                   $tableJoinIdName);
-            }
-            $relationAttributeTableAliasName = $relationTableAliasName;
-            //the second left join check being performed is if you
-            //are in a contact filtering on related account email as an example.
-            if ($modelAttributeToDataProviderAdapter->getRelatedAttributeModelClassName() !=
-                $modelAttributeToDataProviderAdapter->getRelationModelClassName())
-            {
-                $relationAttributeTableName  = $modelAttributeToDataProviderAdapter->getRelatedAttributeTableName();
-                //Handling special scenario for casted down Person.  Todo: Automatically determine a
-                //casted down scenario instead of specifically looking for Person.
-                if ($modelAttributeToDataProviderAdapter->getRelatedAttributeModelClassName() == 'Person')
-                {
-                    $onTableJoinIdName = "{$relationAttributeTableName}_id";
-                }
-                //An example of this if if you are searching on an account's industry value.  Industry is related from
-                //account, but the value is actually on the parent class of OwnedCustomField which is CustomField.
-                //Therefore the JoinId is going to be structured like this.
-                elseif (get_parent_class($modelAttributeToDataProviderAdapter->getRelationModelClassName()) ==
-                        $modelAttributeToDataProviderAdapter->getRelatedAttributeModelClassName())
-                {
-                    $onTableJoinIdName = $modelAttributeToDataProviderAdapter->getColumnName();
-                }
-                else
-                {
-                    $onTableJoinIdName = "{$modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName()}" .
-                                         "_{$relationAttributeTableName}_id";
-                }
-                $relationAttributeTableAliasName = $joinTablesAdapter->addLeftTableAndGetAliasName(
-                                                            $relationAttributeTableName,
-                                                            $onTableJoinIdName,
-                                                            $relationTableAliasName);
-            }
-            return $relationAttributeTableAliasName;
-        }
-
-        /**
-         * For both non related and related attributes, this method resolves whether a from join is needed.  This occurs
-         * for example if a model attribute is castedUp. And that attribute is a relation that needs to be joined in
-         * order to search.  Since that attribute is castedUp, the castedUp model needs to be from joined first.  This
-         * also applies if the attribute is not a relation and just a member on the castedUp model. In that scenario,
-         * the castedUp model also needs to be joined.
-         *
-         * This methhod assumes if the attribute is not on the base model, that it is casted up not down from it.
-         */
-        public static function resolveShouldAddFromTableAndGetAliasName(RedBeanModelAttributeToDataProviderAdapter
-                                                                        $modelAttributeToDataProviderAdapter,
-                                                                        RedBeanModelJoinTablesQueryAdapter
-                                                                        $joinTablesAdapter)
-        {
-            $attributeTableName = $modelAttributeToDataProviderAdapter->getAttributeTableName();
-            $tableAliasName     = $attributeTableName;
-            if ($modelAttributeToDataProviderAdapter->getModelClassName() == 'User' &&
-                $modelAttributeToDataProviderAdapter->getAttributeModelClassName() == 'Person')
-            {
-                $modelTableName      = $modelAttributeToDataProviderAdapter->getModelTableName();
-                if (!$joinTablesAdapter->isTableInFromTables('person'))
-                {
-                    $personTableName = $attributeTableName;
-                    $joinTablesAdapter->addFromTableAndGetAliasName($personTableName, "{$personTableName}_id",
-                                                                    $modelTableName);
-                }
-            }
-            elseif ($modelAttributeToDataProviderAdapter->getAttributeModelClassName() !=
-                    $modelAttributeToDataProviderAdapter->getModelClassName())
-            {
-                $modelClassName             = $modelAttributeToDataProviderAdapter->getModelClassName();
-                $castedDownModelClassName   = $modelClassName; //In case the while loop is not used, this should be defined.
-                while (get_parent_class($modelClassName) !=
-                       $modelAttributeToDataProviderAdapter->getAttributeModelClassName())
-                {
-                    $castedDownFurtherModelClassName = $castedDownModelClassName;
-                    $castedDownModelClassName        = $modelClassName;
-                    $modelClassName                  = get_parent_class($modelClassName);
-                    if ($modelClassName::getCanHaveBean())
-                    {
-                        $castedUpAttributeTableName = $modelClassName::getTableName($modelClassName);
-                        if (!$joinTablesAdapter->isTableInFromTables($castedUpAttributeTableName))
-                        {
-                            if ($castedDownModelClassName::getCanHaveBean())
-                            {
-                                $resolvedTableJoinIdName = $castedDownModelClassName::getTableName($castedDownModelClassName);
-                            }
-                            elseif ($castedDownFurtherModelClassName::getCanHaveBean())
-                            {
-                                $resolvedTableJoinIdName = $castedDownModelClassName::getTableName($castedDownFurtherModelClassName);
-                            }
-                            else
-                            {
-                                throw new NotSupportedException();
-                            }
-                            $joinTablesAdapter->addFromTableAndGetAliasName(
-                                                                    $castedUpAttributeTableName,
-                                                                    "{$castedUpAttributeTableName}_id",
-                                                                    $resolvedTableJoinIdName);
-                        }
-                    }
-                }
-                if (!$joinTablesAdapter->isTableInFromTables($attributeTableName))
-                {
-                    if (!$modelClassName::getCanHaveBean())
-                    {
-                        if (!$castedDownModelClassName::getCanHaveBean())
-                        {
-                            throw new NotSupportedException();
-                        }
-                        $modelClassName = $castedDownModelClassName;
-                    }
-                    $tableAliasName             = $joinTablesAdapter->addFromTableAndGetAliasName(
-                                                  $attributeTableName,
-                                                  "{$attributeTableName}_id",
-                                                  $modelClassName::getTableName($modelClassName));
-                }
-            }
-            return $tableAliasName;
-        }
-
-        /**
-         * When the attributeName is 'id', this method determines if we need to join any tables or we can just
-         * add where clauses on the column in the base table that corresponds to the id.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see addWherePartByClauseInformation
-         *
-         */
-        protected static function buildJoinAndWhereForRelatedId(RedBeanModelAttributeToDataProviderAdapter
-                                                                $modelAttributeToDataProviderAdapter,
-                                                                $operatorType,
-                                                                $value,
-                                                                $whereKey,
-                                                                $joinTablesAdapter,
-                                                                &$where)
-        {
-            assert('is_string($operatorType)');
-            assert('$modelAttributeToDataProviderAdapter->getRelatedAttribute() == "id"');
-            assert('is_int($whereKey)');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_array($where)');
-            //Is the relation type HAS_ONE or HAS_MANY_BELONGS_TO
-            if ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_ONE ||
-                $modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::HAS_MANY_BELONGS_TO)
-            {
-                $tableAliasName = self::resolveShouldAddFromTableAndGetAliasName(
-                                                        $modelAttributeToDataProviderAdapter,
-                                                        $joinTablesAdapter);
-                self::addWherePartByClauseInformation(  $operatorType,
-                                                        $value,
-                                                        $where, $whereKey, $tableAliasName,
-                                                        $modelAttributeToDataProviderAdapter->getColumnName());
-            }
-            elseif ($modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
-            {
-                self::buildJoinAndWhereForManyToManyRelatedAttribute( $modelAttributeToDataProviderAdapter, $operatorType, $value,
-                                                            $whereKey, $joinTablesAdapter, $where);
-            }
-            else
-            {
-                self::buildJoinAndWhereForRelatedAttribute( $modelAttributeToDataProviderAdapter, $operatorType, $value,
-                                                            $whereKey, $joinTablesAdapter, $where);
-            }
-        }
-
-        /**
-         * Given a RedBeanModel::MANY_MANY related attribute on a model, build the join and where sql string information.
-         * In this scenario with a many-to-many relation, you only need to join the joining table, since this method
-         * currently only supports where the relatedAttributeName = 'id'.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see addWherePartByClauseInformation
-         */
-        protected static function buildJoinAndWhereForManyToManyRelatedAttribute(RedBeanModelAttributeToDataProviderAdapter
-                                                                                 $modelAttributeToDataProviderAdapter,
-                                                                                 $operatorType,
-                                                                                 $value,
-                                                                                 $whereKey,
-                                                                                 $joinTablesAdapter,
-                                                                                 &$where)
-        {
-            assert('is_string($operatorType)');
-            assert('$modelAttributeToDataProviderAdapter->getRelatedAttribute() != null');
-            assert('is_int($whereKey)');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('is_array($where)');
-            assert('$modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY');
-            $whereClauseData = static::buildJoinForManyToManyRelatedAttributeAndGetWhereClauseData($modelAttributeToDataProviderAdapter,
-                                                                                $joinTablesAdapter);
-            $relationWhere   = array();
-            self::addWherePartByClauseInformation($operatorType, $value,
-                        $relationWhere, 1, $whereClauseData[0], $whereClauseData[1]);
-                        $where[$whereKey] = strtr('1', $relationWhere);
-        }
-
-        protected static function buildJoinForManyToManyRelatedAttributeAndGetWhereClauseData(
-                                    RedBeanModelAttributeToDataProviderAdapter $modelAttributeToDataProviderAdapter,
-                                    $joinTablesAdapter)
-         {
-            assert('$modelAttributeToDataProviderAdapter->getRelatedAttribute() != null');
-            assert('$joinTablesAdapter instanceof RedBeanModelJoinTablesQueryAdapter');
-            assert('$modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY');
-            $relationTableName               = $modelAttributeToDataProviderAdapter->getRelationTableName();
-            $onTableAliasName                = self::resolveShouldAddFromTableAndGetAliasName(
-                                                        $modelAttributeToDataProviderAdapter,
-                                                        $joinTablesAdapter);
-            $manyToManyTables                = array($relationTableName, $onTableAliasName);
-            sort($manyToManyTables);
-            $relationJoiningTableAliasName   = $joinTablesAdapter->addLeftTableAndGetAliasName(
-                                               implode('_', $manyToManyTables),
-                                               "id",
-                                               $onTableAliasName,
-                                               $modelAttributeToDataProviderAdapter->getAttributeTableName() . '_id');
-            //if this is not the id column, then add an additional left join.
-            if ($modelAttributeToDataProviderAdapter->getRelatedAttribute() != 'id')
-            {
-                $joinTablesAdapter->setSelectDistinctToTrue();
-                $relationTableAliasName = $joinTablesAdapter->addLeftTableAndGetAliasName(
-                                                                            $relationTableName,
-                                                                            $relationTableName . '_id',
-                                                                            $relationJoiningTableAliasName,
-                                                                            'id');
-                $relationAttributeTableAliasName    = $relationTableAliasName;
-                $whereClauseRelationColumnNameToUse = $modelAttributeToDataProviderAdapter->getRelatedAttributeColumnName();
-            }
-            else
-            {
-                $whereClauseRelationColumnNameToUse = $relationTableName . '_id';
-                $relationAttributeTableAliasName = $relationJoiningTableAliasName;
-            }
-            return array($relationAttributeTableAliasName, $whereClauseRelationColumnNameToUse);
-         }
-
-        /**
-         * Add a sql string to the where array base on the $operatorType, $value, $tableAliasName, and $columnName
-         * parameters.  How the sql string is built depends on if the value is a string or not.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see buildJoinAndWhereForNonRelatedAttribute
-         * @see buildJoinAndWhereForRelatedAttribute
-         */
-        protected static function addWherePartByClauseInformation(  $operatorType, $value, &$where,
-                                                                    $whereKey, $tableAliasName, $columnName)
-        {
-            assert('is_string($operatorType)');
-            assert('is_array($where)');
-            assert('is_int($whereKey)');
-            assert('is_string($tableAliasName)');
-            assert('is_string($columnName)');
-            $quote = DatabaseCompatibilityUtil::getQuote();
-            if (is_string($value) || (is_array($value) && count($value) > 0) || $value !== null  ||
-                ($value === null && SQLOperatorUtil::doesOperatorTypeAllowNullValues($operatorType)))
-            {
-                $where[$whereKey] = "($quote$tableAliasName$quote.$quote$columnName$quote " . // Not Coding Standard
-                                DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType,
-                                $value) . ")";
-            }
+            return $tableAliasAndColumnNames;
         }
 
         /**
          * Add a sql string to the where array base on the $operatorType, $value and $tableAliasAndColumnNames concated
          * together.  How the sql string is built depends on if the value is a string or not.
-         * @see RedBeanModelDataProvider::makeWhere
-         * @see buildJoinAndWhereForNonRelatedAttribute
-         * @see buildJoinAndWhereForRelatedAttribute
+         * @param string $operatorType
+         * @param mixed $value
+         * @param array $where
+         * @param integer $whereKey
+         * @param array $tableAliasAndColumnNames
          */
         protected static function addWherePartByClauseInformationForConcatedAttributes($operatorType, $value, &$where,
                                                                     $whereKey, $tableAliasAndColumnNames)
@@ -774,12 +375,11 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
             if (is_string($value) || (is_array($value) && count($value) > 0) || $value !== null)
             {
-                $first  = $quote . $tableAliasAndColumnNames[0][0] . $quote . '.' . $quote .
-                          $tableAliasAndColumnNames[0][1] . $quote;
-                $second = $quote . $tableAliasAndColumnNames[1][0] . $quote . '.' . $quote .
-                          $tableAliasAndColumnNames[1][1] . $quote;
-                $concatedSqlPart = DatabaseCompatibilityUtil::concat(array($first, '\' \'', $second));
-
+                $first            = ModelJoinBuilder::makeColumnNameWithTableAlias(
+                                    $tableAliasAndColumnNames[0][0], $tableAliasAndColumnNames[0][1]);
+                $second           = ModelJoinBuilder::makeColumnNameWithTableAlias(
+                                    $tableAliasAndColumnNames[1][0], $tableAliasAndColumnNames[1][1]);
+                $concatedSqlPart  = DatabaseCompatibilityUtil::concat(array($first, '\' \'', $second));
                 $where[$whereKey] = "($concatedSqlPart " . // Not Coding Standard
                                     DatabaseCompatibilityUtil::getOperatorAndValueWherePart($operatorType, $value) . ")";
             }

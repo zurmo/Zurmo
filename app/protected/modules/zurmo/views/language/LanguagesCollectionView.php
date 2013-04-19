@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -34,48 +44,21 @@
 
         protected $moduleId;
 
-        protected $languagesData;
+        protected $languagesList;
 
-        public function __construct($controllerId, $moduleId, $languagesData, $messageBoxContent = null)
+        protected $messageBoxContent;
+
+        const LANGUAGE_STATUS_ACTIVE   = 1;
+        const LANGUAGE_STATUS_INACTIVE = 2;
+
+        public function __construct($controllerId, $moduleId, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
-            assert('is_array($languagesData)');
             assert('$messageBoxContent == null || is_string($messageBoxContent)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
-            $this->languagesData           = $languagesData;
             $this->messageBoxContent      = $messageBoxContent;
-        }
-
-        protected function renderContent()
-        {
-            $content = '<div>';
-            $content .= $this->renderTitleContent();
-            $content .= '<div class="wide form">';
-            $clipWidget = new ClipWidget();
-            list($form, $formStart) = $clipWidget->renderBeginWidget(
-                                                                'ZurmoActiveForm',
-                                                                array('id' => 'language-collection-form',
-                                                                        'htmlOptions' =>
-                                                                            array('onSubmit' =>
-                                                                                        'js:return attachLoadingOnSubmit("language-collection-form")')
-                                                                )
-                                                            );
-            $content .= $formStart;
-
-            if ($this->messageBoxContent != null)
-            {
-                $content .= $this->messageBoxContent;
-                $content .= '<br/>';
-            }
-            $content .= $this->renderFormLayout($form);
-            $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
-            $content .= $this->renderActionElementBar(true);
-            $content .= '</div></div>';
-            $content .= $clipWidget->renderEndWidget();
-            $content .= '</div></div>';
-            return $content;
         }
 
         public function getTitle()
@@ -83,87 +66,316 @@
             return Zurmo::t('ZurmoModule', 'Languages');
         }
 
-        /**
-         * Render a form layout.
-         * @param $form If the layout is editable, then pass a $form otherwise it can
-         * be null.
-         * @return A string containing the element's content.
-          */
-        protected function renderFormLayout(ZurmoActiveForm $form)
-        {
-            $content  = '<table>';
-            $content .= '<colgroup>';
-            $content .= '<col style="width:15%" /><col />';
-            $content .= '</colgroup>';
-            $content .= '<tbody>';
-            $content .= '<tr><th>' . $this->renderActiveHeaderContent() . '</th>';
-            $content .= '<th>' . Zurmo::t('ZurmoModule', 'Language') . '</th>';
-            $content .= '</tr>';
-            foreach ($this->languagesData as $language => $languageData)
-            {
-                assert('is_string($languageData["label"])');
-                assert('is_bool($languageData["active"])');
-                assert('is_bool($languageData["canInactivate"])');
-                $route = $this->moduleId . '/' . $this->controllerId . '/delete/';
-                $content .= '<tr>';
-                $content .= '<td class="checkbox-column">' . self::renderActiveCheckBoxContent($form, $language,
-                                                                       $languageData['active'],
-                                                                       $languageData['canInactivate']) . '</td>';
-                $content .= '<td>' . $languageData['label'] . '</td>';
-                $content .= '</tr>';
-            }
-            $content .= '</tbody>';
-            $content .= '</table>';
-            return $content;
-        }
-
-        public static function getDefaultMetadata()
-        {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
-                        'elements' => array(
-                            array('type'  => 'ConfigurationLink',
-                                  'label' => "eval:Zurmo::t('ZurmoModule', 'Cancel')"),
-                            array('type'  => 'SaveButton',
-                                  'htmlOptions' => array('id' => 'save-collection', 'name' => 'save-collection')),
-                        ),
-                     ),
-                ),
-            );
-            return $metadata;
-        }
-
         public function isUniqueToAPage()
         {
             return true;
         }
 
-        protected static function renderActiveCheckBoxContent(ZurmoActiveForm $form, $language, $active, $canInactivate)
+        protected function renderContent()
         {
-            assert('is_string($language)');
-            assert('is_bool($active)');
-            assert('is_bool($canInactivate)');
-            $name                = 'LanguageCollection[' . $language . '][active]';
-            $htmlOptions         = array();
-            $htmlOptions['id']   = 'LanguageCollection_' . $language . '_active';
-
-            if (!$canInactivate)
-            {
-                $htmlOptions['disabled'] = 'disabled';
-                $htmlOptions['uncheckValue'] = '1';
-            }
-            return ZurmoHtml::checkBox($name, $active, $htmlOptions);
+            $content  = ZurmoHtml::openTag('div');
+            $content .= $this->renderTitleContent();
+            $content .= $this->renderMessageBoxContent();
+            $content .= ZurmoHtml::openTag('ul', array('class' => 'configuration-list'));
+            $content .= $this->renderLanguagesList(self::LANGUAGE_STATUS_ACTIVE);
+            $content .= $this->renderLanguagesList(self::LANGUAGE_STATUS_INACTIVE);
+            $content .= ZurmoHtml::closeTag('ul');
+            $content .= ZurmoHtml::closeTag('div');
+            $this->registerJavaScript();
+            return $content;
         }
 
-        protected static function renderActiveHeaderContent()
+        protected function registerJavaScript()
         {
-            $title      = Zurmo::t('ZurmoModule', 'Active languages can be used by users. The system language and any language in use by a user cannot be inactivated');
-            $content    = Zurmo::t('ZurmoModule', 'Active');
-            $content   .= '<span id="active-languages-tooltip" class="tooltip" title="' . $title . '">?</span>';
-            $qtip = new ZurmoTip();
-            $qtip->addQTip("#active-languages-tooltip");
+            $commonErrorMessage = Zurmo::t('ZurmoModule', 'Unexpected error during the AJAX call');
+            // Begin Not Coding Standard
+            $script = <<<EOD
+$(document).on('click', ".action-button", function(event) {
+    var _parent = $(this).parent();
+    var _ajaxUrl = $(this).attr('ajaxurl');
+
+    if (_parent.hasClass('loading-ajax'))
+    {
+        return false;
+    }
+
+    _parent.addClass('loading-ajax');
+    $(this).addClass('loading');
+    attachLoadingSpinnerForLanguageActivation(this, true);
+
+    $.ajax({
+        'url':_ajaxUrl,
+        'cache':false,
+        'success':function(html) {
+            _parent.replaceWith(html);
+        },
+        'error':function(jqXHR, textStatus, errorThrown) {
+            $('#FlashMessageBar').jnotifyAddMessage({
+                text: '$commonErrorMessage',
+                permanent: false,
+                showIcon: true,
+            });
+            attachLoadingSpinnerForLanguageActivation(this);
+            $(this).removeClass('loading');
+            _parent.removeClass('loading-ajax');
+        }
+    });
+
+    return false;
+});
+EOD;
+            // End Not Coding Standard
+            $cs = Yii::app()->getClientScript();
+            $cs->registerScript(
+                'my-hello-world-1',
+                $script,
+                CClientScript::POS_END
+            );
+        }
+
+        protected function renderMessageBoxContent()
+        {
+            if (empty($this->messageBoxContent))
+            {
+                return;
+            }
+
+            return ZurmoHtml::tag('div', array(), $this->messageBoxContent);
+        }
+
+        protected function renderLanguagesList($languageStatus)
+        {
+            $languagesList = $this->getLanguagesList($languageStatus);
+
+            if (empty($languagesList))
+            {
+                return;
+            }
+
+            $content = '';
+            foreach ($languagesList as $languageCode => $languageData)
+            {
+                $content .= $this->renderLanguageRow($languageCode, $languageData);
+            }
+
             return $content;
+        }
+
+        public function renderLanguageRow($languageCode, $languageData = null)
+        {
+            if (!$languageData)
+            {
+                $languageData = $this->getLanguageDataByLanguageCode($languageCode);
+            }
+
+            $content = ZurmoHtml::openTag(
+                'li',
+                array('id' => 'language-row-' . $languageCode)
+            );
+            $content .= ZurmoHtml::tag('h4', array(), $languageData['label']);
+            if ($languageData['active'])
+            {
+                if (isset($languageData['lastUpdateDatetime']) && !empty($languageData['lastUpdateDatetime']))
+                {
+                    $content .= ' - ' . Zurmo::t(
+                        'ZurmoModule', 'Last updated on {date}',
+                        array('{date}' => $languageData['lastUpdateDatetime'])
+                    );
+                }
+
+                if ($languageCode != Yii::app()->sourceLanguage)
+                {
+                    $content .= $this->renderUpdateButton($languageCode, $languageData);
+                    $content .= $this->renderDeactivateButton($languageCode, $languageData);
+                }
+            }
+            else
+            {
+                $content .= $this->renderActivateButton($languageCode, $languageData);
+            }
+            $content .= ZurmoHtml::closeTag('li');
+
+            return $content;
+        }
+
+        protected function renderUpdateButton($languageCode, $languageData)
+        {
+            assert('is_string($languageCode)');
+            assert('is_array($languageData)');
+            return ZurmoHtml::link(
+                $this->renderButtonSpinnerSpans() .
+                ZurmoHtml::tag(
+                    'span',
+                    array('class' => 'z-label'),
+                    Zurmo::t('ZurmoModule', 'Update')
+                ),
+                '#',
+                $this->renderButtonHtml('update', $languageCode, $languageData)
+            );
+        }
+
+        protected function renderDeactivateButton($languageCode, $languageData)
+        {
+            assert('is_string($languageCode)');
+            assert('is_array($languageData)');
+            return ZurmoHtml::link(
+                $this->renderButtonSpinnerSpans() .
+                ZurmoHtml::tag(
+                    'span',
+                    array('class' => 'z-label'),
+                    Zurmo::t('ZurmoModule', 'Deactivate')
+                ),
+                '#',
+                $this->renderButtonHtml('deactivate', $languageCode, $languageData)
+            );
+        }
+
+        protected function renderActivateButton($languageCode, $languageData)
+        {
+            assert('is_string($languageCode)');
+            assert('is_array($languageData)');
+            return ZurmoHtml::link(
+                $this->renderButtonSpinnerSpans() .
+                ZurmoHtml::tag(
+                    'span',
+                    array('class' => 'z-label'),
+                    Zurmo::t('ZurmoModule', 'Activate')
+                ),
+                '#',
+                $this->renderButtonHtml('activate', $languageCode, $languageData)
+            );
+        }
+
+        protected function renderButtonHtml($action, $languageCode, $languageData)
+        {
+            assert('in_array($action, array("activate", "deactivate", "update"))');
+            $buttonHtml = array(
+                'ajaxurl' => Yii::app()->createUrl(
+                    sprintf(
+                        'zurmo/language/%s/languageCode/%s',
+                        $action,
+                        $languageCode
+                    )
+                ),
+                'class' => 'action-button attachLoading z-button green-button'
+            );
+            if ($action == 'deactivate' && !$languageData['canDeactivate'])
+            {
+                $buttonHtml['class'] .= ' disabled';
+            }
+
+            return $buttonHtml;
+        }
+
+        protected function renderButtonSpinnerSpans()
+        {
+            return ZurmoHtml::tag('span', array('class' => 'z-spinner'), '') .
+                    ZurmoHtml::tag('span', array('class' => 'z-icon'), '');
+        }
+
+        protected function getLanguagesList($languageStatus = null)
+        {
+            if (is_array($this->languagesList) && !empty($this->languagesList))
+            {
+                switch ($languageStatus)
+                {
+                    case self::LANGUAGE_STATUS_ACTIVE:
+                        return $this->languagesList[self::LANGUAGE_STATUS_ACTIVE];
+                        break;
+                    case self::LANGUAGE_STATUS_INACTIVE:
+                        return $this->languagesList[self::LANGUAGE_STATUS_INACTIVE];
+                        break;
+                    case null:
+                        return $this->languagesList;
+                        break;
+                }
+            }
+
+            $languagesList = array(
+                self::LANGUAGE_STATUS_ACTIVE   => array(),
+                self::LANGUAGE_STATUS_INACTIVE => array()
+            );
+            $languagesData = self::getLanguagesData();
+            foreach ($languagesData as $languageCode => $languageData)
+            {
+                if ($languageData['active'])
+                {
+                    $status = self::LANGUAGE_STATUS_ACTIVE;
+                }
+                else
+                {
+                    $status = self::LANGUAGE_STATUS_INACTIVE;
+                }
+
+                $languagesList[$status][$languageCode] = $languageData;
+            }
+
+            $languagesList[self::LANGUAGE_STATUS_ACTIVE] = ArrayUtil::subValueSort(
+                $languagesList[self::LANGUAGE_STATUS_ACTIVE],
+                'label',
+                'asort'
+            );
+            $languagesList[self::LANGUAGE_STATUS_INACTIVE] = ArrayUtil::subValueSort(
+                $languagesList[self::LANGUAGE_STATUS_INACTIVE],
+                'label',
+                'asort'
+            );
+
+            $this->languagesList = $languagesList;
+            return $this->getLanguagesList($languageStatus);
+        }
+
+        public static function getLanguageDataByLanguageCode($languageCode)
+        {
+            $languagesData = self::getLanguagesData();
+            if (isset($languagesData[$languageCode]))
+            {
+                return $languagesData[$languageCode];
+            }
+
+            return false;
+        }
+
+        public static function getLanguagesData()
+        {
+            $activeLanguagesData    = Yii::app()->languageHelper->getActiveLanguagesData();
+            $languagesData       = array();
+            foreach (Yii::app()->languageHelper->getSupportedLanguagesData() as $language)
+            {
+                $languagesData[$language['code']] = array(
+                    'label'  => Yii::app()->languageHelper->formatLanguageLabel($language),
+                    'active' => false
+                );
+
+                if (isset($activeLanguagesData[$language['code']]))
+                {
+                    $languagesData[$language['code']]['active'] = true;
+                    $languagesData[$language['code']] = array_merge(
+                        $languagesData[$language['code']],
+                        $activeLanguagesData[$language['code']]
+                    );
+                }
+            }
+            return $languagesData;
+        }
+
+        public static function renderFlashMessage($text, $permanent = false, $showIcon = true)
+        {
+            assert('is_string($text) && !empty($text)');
+            assert('is_bool($permanent)');
+            assert('is_bool($showIcon)');
+            $messageConfig = array(
+                'text' => $text,
+                'permanent' => $permanent,
+                'showIcon' => $showIcon
+            );
+
+            return sprintf(
+                "<script type=\"text/javascript\">" .
+                "$('#FlashMessageBar').jnotifyAddMessage(%s);" .
+                "</script>",
+                json_encode($messageConfig)
+            );
         }
     }
 ?>

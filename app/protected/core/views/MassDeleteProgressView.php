@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,90 +20,43 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
      * Mass delete progress view.
      */
-    class MassDeleteProgressView extends ProgressView
+    class MassDeleteProgressView extends MassProgressView
     {
-        /**
-         * Integer of how many records were skipped
-         * during the mass delete process.
-         */
-        protected $skipCount;
-
-        /**
-         * Constructs a mass delete progress view specifying the controller as
-         * well as the model that will have its mass edit displayed.
-         */
-        public function __construct(
-        $controllerId,
-        $moduleId,
-        $model,
-        $totalRecordCount,
-        $start,
-        $pageSize,
-        $page,
-        $refreshActionId,
-        $title,
-        $skipCount)
+        protected function getMessagePrefix()
         {
-            assert('$skipCount == null || is_int($skipCount)');
-            $this->skipCount = $skipCount;
-            parent::__construct(
-                        $controllerId,
-                        $moduleId,
-                        $model,
-                        $totalRecordCount,
-                        $start,
-                        $pageSize,
-                        $page,
-                        $refreshActionId,
-                        $title);
+            return Zurmo::t('Core', 'Deleting');
         }
 
-        protected function getMessage()
+        protected function getCompleteMessageSuffix()
         {
-            return Zurmo::t('Core', 'Deleting') . " " . $this->start . " - " . $this->getEndSize() . " " . Zurmo::t('Core', 'of') . " " .
-                $this->totalRecordCount . " " . Zurmo::t('Core', 'total') . " " .
-                Zurmo::t('Core', LabelUtil::getUncapitalizedRecordLabelByCount($this->totalRecordCount));
-        }
-
-        protected function getCompleteMessage()
-        {
-            $successfulCount = MassDeleteInsufficientPermissionSkipSavingUtil::resolveSuccessfulCountAgainstSkipCount(
-                               $this->totalRecordCount, $this->skipCount);
-            $content =         $successfulCount . ' ' . LabelUtil::getUncapitalizedRecordLabelByCount($successfulCount)
-                               . ' ' . Zurmo::t('Core', 'successfully deleted') . '.';
-            if ($this->skipCount > 0)
-            {
-                $content .= '<br/>' .
-                            MassDeleteInsufficientPermissionSkipSavingUtil::getSkipCountMessageContentByModelClassName(
-                                            $this->skipCount, get_class($this->model));
-            }
-            return $content;
-        }
-
-        protected function renderFormLinks()
-        {
-            $listButton = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Return to List')), Yii::app()->createUrl($this->moduleId));
-            $content = '<div id="' . $this->progressBarId . '-links" style="display:none;">';
-            $content .= $listButton;
-            $content .= '</div>';
-            return $content;
-        }
-
-        protected function onProgressComplete()
-        {
-            MassDeleteInsufficientPermissionSkipSavingUtil::clear(get_class($this->model));
+            return Zurmo::t('Core', 'successfully deleted');
         }
 
         protected function headerLabelPrefixContent()
         {
-            return Zurmo::t('Core', 'Mass Update');
+            return Zurmo::t('Core', 'Mass Delete');
+        }
+
+        protected function getInsufficientPermissionSkipSavingUtil()
+        {
+            return 'MassDeleteInsufficientPermissionSkipSavingUtil';
         }
     }
 ?>

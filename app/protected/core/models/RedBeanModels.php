@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     $basePath = Yii::app()->getBasePath();
@@ -33,7 +43,7 @@
      * models of a particular type associated with a bean in a one to many
      * relationship.
      */
-    class RedBeanModels implements ArrayAccess, Iterator, Countable
+    abstract class RedBeanModels implements ArrayAccess, Iterator, Countable
     {
         protected $modelClassName;
 
@@ -50,64 +60,6 @@
         protected $relatedBeansAndModels = array();
 
         private $position;
-
-        /**
-         * Constructs a new RedBeanModels which is a collection of classes extending model.
-         * The models are created lazily.
-         * Models are only constructed with beans by the model. Beans are
-         * never used by the application directly.
-         * The application can construct a new models object by constructing
-         * them without specifying a bean. In other words, if Php had overloading
-         * and friends the constructor without the $bean would be public, and the
-         * constructor taking a bean would private and available only to RedBeanModel.
-         */
-        public function __construct($modelClassName, $sqlOrBean = '')
-        {
-            assert('is_string($sqlOrBean) || $sqlOrBean instanceof RedBean_OODBBean');
-            $this->modelClassName = $modelClassName;
-            $this->position = 0;
-            $tableName = RedBeanModel::getTableName($modelClassName);
-            if (is_string($sqlOrBean))
-            {
-                $this->relatedBeansAndModels = array_values(R::find($tableName, $sqlOrBean));
-            }
-            else
-            {
-                assert('$sqlOrBean instanceof RedBean_OODBBean');
-                $this->bean = $sqlOrBean;
-                // I had this...
-                // $this->relatedBeansAndModels = array_values(R::related($this->bean, $tableName));
-                // and the doco says to use related in place of findLinks which is deprecated,
-                // but that is returning zero when I know there are linked beans.
-                try
-                {
-                    // So I'm getting them with the link manager, but that can
-                    // throw if the table or column doesn't exist yet because there
-                    // are no linked beans.
-                    if ($this->bean->id > 0)
-                    {
-                        $relatedIds                  = ZurmoRedBeanLinkManager::getKeys($this->bean, $tableName);
-                        $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
-                    }
-                    else
-                    {
-                        $this->relatedBeansAndModels = array();
-                    }
-                }
-                catch (RedBean_Exception_SQL $e)
-                {
-                    // SQLSTATE[42S02]: Base table or view not found...
-                    // SQLSTATE[42S22]: Column not found...
-                    if (!in_array($e->getSQLState(), array('42S02', '42S22')))
-                    {
-                        throw $e;
-                    }
-                    // If there is nothing yet linked
-                    // just have no related models yet.
-                    $this->relatedBeansAndModels = array();
-                }
-            }
-        }
 
         /**
          * Returns the displayable string for the collection.

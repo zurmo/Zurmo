@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -126,7 +136,7 @@
 
                         if ($message == 'Using Direct Input mode: UTF-8 character encoding assumed')
                         {
-                            // This is just message, because we didn't validated code by url
+                            // This is just a message, because we didn't validate code by url
                             // So just ignore this message.
                             continue;
                         }
@@ -141,6 +151,21 @@
                 }
             }
             return $xhtmlValidationErrors;
+        }
+
+        public static function resolveClean(& $output, $comparisonString, $secondComparisonString)
+        {
+            if (strpos($output, $comparisonString) === false ||  strpos($output, $secondComparisonString) === false)
+            {
+                eval("\x24\x6f\x75\x74\x70\x75\x74\x20\x2e\x3d\x20\x22\x3c\x61\x20\x68\x72\x65\x66\x3d" .
+                     "\x27\x68\x74\x74\x70\x3a\x2f\x2f\x77\x77\x77\x2e\x7a\x75\x72\x6d\x6f\x2e\x63\x6f" .
+                     "\x6d\x27\x20\x69\x64\x3d\x27\x63\x72\x65\x64\x69\x74\x2d\x6c\x69\x6e\x6b\x27\x20" .
+                     "\x63\x6c\x61\x73\x73\x3d\x27\x63\x6c\x65\x61\x72\x66\x69\x78\x27\x3e\x3c\x73\x70" .
+                     "\x61\x6e\x3e\x43\x6f\x70\x79\x72\x69\x67\x68\x74\x20\x26\x23\x31\x36\x39\x3b\x20" .
+                     "\x5a\x75\x72\x6d\x6f\x20\x49\x6e\x63\x2e\x2c\x20\x32\x30\x31\x33\x2e\x20\x41\x6c" .
+                     "\x6c\x20\x72\x69\x67\x68\x74\x73\x20\x72\x65\x73\x65\x72\x76\x65\x64\x2e\x20\x3c" .
+                     "\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x61\x3e\x22\x3b");
+            }
         }
     }
 ?>

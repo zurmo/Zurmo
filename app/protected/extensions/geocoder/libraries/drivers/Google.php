@@ -44,32 +44,25 @@
         const ERROR_BAD_RESPONSE = 10;
 
         // Constants for the status values
-        const STATUS_SUCCESS = 200;
-        const STATUS_BAD_REQUEST = 400;
-        const STATUS_SERVER_ERROR = 500;
-        const STATUS_MISSING_QUERY = 601; // same as MISSING_ADDRESS
-        const STATUS_UNKNOWN_ADDRESS = 602;
-        const STATUS_UNAVAILABLE_ADDRESS = 603;
-        const STATUS_BAD_KEY = 610;
-        const STATUS_TOO_MANY_QUERIES = 620;
+        const STATUS_SUCCESS = 'OK';
+        const STATUS_ZERO_RESULTS = 'ZERO_RESULTS';
+        const STATUS_REQUEST_DENIED = 'REQUEST_DENIED';
+        const STATUS_UNKNOWN_ERROR = 'UNKNOWN_ERROR '; // same as MISSING_ADDRESS
+        const STATUS_INVALID_REQUEST = 'INVALID_REQUEST';
+        const STATUS_OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
 
         // Constants for accuracy values
-        const ACCURACY_UNKNOWN = 0;
-        const ACCURACY_COUNTRY = 1;
-        const ACCURACY_REGION = 2;
-        const ACCURACY_SUB_REGION = 3;
-        const ACCURACY_TOWN = 4;
-        const ACCURACY_ZIP_CODE = 5;
-        const ACCURACY_STREET = 6;
-        const ACCURACY_INTERSECTION = 7;
-        const ACCURACY_ADDRESS = 8;
-        const ACCURACY_PREMISE = 9;
+        const ACCURACY_ROOFTOP = 'ROOFTOP';
+        const ACCURACY_RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
+        const ACCURACY_GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
+        const ACCURACY_APPROXIMATE = 'APPROXIMATE';
+        const ACCURACY_UNKNOWN = 'UNKNOWN';
 
         /**
          * The URL for the API calls
          * @var stromg
          */
-        protected $api_url = 'http://maps.google.com/maps/geo?&output=xml&key=';
+        protected $api_url = 'http://maps.googleapis.com/maps/api/geocode/xml';       
 
         /**
          * The Google GeoCoder Parser
@@ -142,8 +135,8 @@
          */
         protected function createUrl($query_str)
         {
-            // Construct the url, encoding the query string
-            return $this->api_url . $this->api_key . '&q=' . urlencode($query_str);
+            // Construct the url, encoding the query string          
+            return $this->api_url . '?address=' . urlencode($query_str) . '&sensor=false';;
         }
 
         /**
@@ -184,50 +177,7 @@
          * @return string
          */
         public function getStatusString($const)
-        {
-            $str = '';
-
-            switch ($const)
-            {
-                case self::STATUS_SUCCESS:
-                    $str = 'Success';
-                    break;
-
-                case self::STATUS_BAD_REQUEST:
-                    $str = 'Bad Request';
-                    break;
-
-                case self::STATUS_SERVER_ERROR:
-                    $str = 'Server Error';
-                    break;
-
-                // Same as MISSING_ADDRESS
-                case self::STATUS_MISSING_QUERY:
-                    $str = 'Missing Query';
-                    break;
-
-                case self::STATUS_UNKNOWN_ADDRESS:
-                    $str = 'Unknown Address';
-                    break;
-
-                case self::STATUS_UNAVAILABLE_ADDRESS:
-                    $str = 'Unavailable Address';
-                    break;
-
-                case self::STATUS_BAD_KEY:
-                    $str = 'Bad API Key';
-                    break;
-
-                case self::STATUS_TOO_MANY_QUERIES:
-                    $str = 'Too Many Queries';
-                    break;
-
-                default:
-                    $str = 'Unknown';
-                    break;
-            }
-
-            return $str;
+        { 
         }
 
         /**
@@ -239,56 +189,6 @@
          */
         public function getAccuracyString($const)
         {
-            $str = '';
-
-            switch ($const)
-            {
-                case self::ACCURACY_UNKNOWN:
-                    $str = 'Unknown';
-                    break;
-
-                case self::ACCURACY_COUNTRY:
-                    $str = 'Country';
-                    break;
-
-                case self::ACCURACY_REGION:
-                    $str = 'Region';
-                    break;
-
-                case self::ACCURACY_SUB_REGION:
-                    $str = 'Sub-Region';
-                    break;
-
-                case self::ACCURACY_TOWN:
-                    $str = 'Town';
-                    break;
-
-                case self::ACCURACY_ZIP_CODE:
-                    $str = 'Zip Code';
-                    break;
-
-                case self::ACCURACY_STREET:
-                    $str = 'Street';
-                    break;
-
-                case self::ACCURACY_INTERSECTION:
-                    $str = 'Intersection';
-                    break;
-
-                case self::ACCURACY_ADDRESS:
-                    $str = 'Address';
-                    break;
-
-                case self::ACCURACY_PREMISE:
-                    $str = 'Premise';
-                    break;
-
-                default:
-                    $str = 'Unknown';
-                    break;
-            }
-
-            return $str;
         }
 
         /**
@@ -301,48 +201,6 @@
          */
         public function getErrorMessage($const)
         {
-            $str = '';
-
-            switch ($const)
-            {
-                case self::ERROR_BAD_RESPONSE:
-                    $str = 'Bad Response from Server';
-                    break;
-
-                case self::STATUS_BAD_REQUEST:
-                    $str = 'Bad GeoCode Request';
-                    break;
-
-                case self::STATUS_SERVER_ERROR:
-                    $str = 'Server Error';
-                    break;
-
-                case self::STATUS_MISSING_QUERY:
-                    $str = 'Missing Address';
-                    break;
-
-                case self::STATUS_UNKNOWN_ADDRESS:
-                    $str = 'Unknown Address';
-                    break;
-
-                case self::STATUS_UNAVAILABLE_ADDRESS:
-                    $str = 'Unavailable Address';
-                    break;
-
-                case self::STATUS_BAD_KEY:
-                    $str = 'Bad GeoLocation Key';
-                    break;
-
-                case self::STATUS_TOO_MANY_QUERIES:
-                    $str = 'Too many queries';
-                    break;
-
-                default:
-                    $str = 'Unknown Error Code: '.$const;
-                    break;
-            }
-
-            return $str;
-        }
+        }           
     }
 ?>

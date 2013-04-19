@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -207,7 +217,7 @@
                     $messagesInMessageFile = require($messageFileName);
                     if (!is_array($messagesInMessageFile))
                     {
-                        $problems[] = "$shortFileName is not a valid message file.\n";
+                        $problems[] = "$messageFileName is not a valid message file.\n";
                         continue;
                     }
                     $messagesInMessageFile = array_keys($messagesInMessageFile);
@@ -333,17 +343,15 @@
                             $modelReflectionClass->isSubclassOf('OwnedModel') &&
                             !$modelReflectionClass->isAbstract())
                         {
-                           $model              = new $modelClassName(false);
-                           $modelAttributes    = $model->attributeNames();
-                           $untranslatedLabels = $model->getUntranslatedAttributeLabels();
+                           $modelAttributes    = $modelClassName::getAttributeNames();
+                           $translatedLabels = $modelClassName::getTranslatedAttributeLabels(Yii::app()->language);
                            foreach ($modelAttributes as $attributeName)
                            {
-                                $attributeLabel = $model->getAttributeLabel($attributeName);
-                                if (isset($untranslatedLabels[$attributeName]))
+                                $attributeLabel = $modelClassName::getAnAttributeLabel($attributeName);
+                                if (isset($translatedLabels[$attributeName]))
                                 {
-                                    $translatedLabel = Zurmo::t('Core', $untranslatedLabels[$attributeName],
-                                                                         LabelUtil::getTranslationParamsForAllModules());
-                                    if ($untranslatedLabels[$attributeName] == $attributeLabel ||
+                                    $translatedLabel = $translatedLabels[$attributeName];
+                                    if ($translatedLabels[$attributeName] == $attributeLabel ||
                                        $translatedLabel != $attributeLabel)
                                     {
                                         $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
@@ -351,7 +359,7 @@
                                     else
                                     {
                                         $fileNamesToCategoriesToMessages[$entry]['Default'][] =
-                                        $untranslatedLabels[$attributeName];
+                                        $translatedLabels[$attributeName];
                                     }
                                 }
                                 else
@@ -360,11 +368,11 @@
                                 }
                                //Find attributes that are a CustomField relation. This means there is drop down values
                                //that will need to be translated.
-                               if ($model->isRelation($attributeName) &&
-                                   ($model->getRelationModelClassName($attributeName) == 'OwnedCustomField' ||
-                                   $model->getRelationModelClassName($attributeName) == 'CustomField' ||
-                                   $model->getRelationModelClassName($attributeName) == 'MultipleValuesCustomField' ||
-                                   $model->getRelationModelClassName($attributeName) == 'OwnedMultipleValuesCustomField'))
+                               if ($modelClassName::isRelation($attributeName) &&
+                                   ($modelClassName::getRelationModelClassName($attributeName) == 'OwnedCustomField' ||
+                                    $modelClassName::getRelationModelClassName($attributeName) == 'CustomField' ||
+                                    $modelClassName::getRelationModelClassName($attributeName) == 'MultipleValuesCustomField' ||
+                                    $modelClassName::getRelationModelClassName($attributeName) == 'OwnedMultipleValuesCustomField'))
                                 {
                                     $customFieldData = CustomFieldDataModelUtil::
                                                        getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
@@ -487,8 +495,8 @@
     function getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName)
     {
         assert('is_string($moduleClassName)');
-        $rightsNames     = $moduleClassName::getUntranslatedRightsLabels();
-        $policiesNames   = $moduleClassName::getUntranslatedPolicyLabels();
+        $rightsNames     = $moduleClassName::getTranslatedRightsLabels();
+        $policiesNames   = $moduleClassName::getTranslatedPolicyLabels();
         $auditEventNames = $moduleClassName::getAuditEventNames();
         $labelsData      = array_merge($rightsNames, $policiesNames);
         return             array_merge($labelsData, $auditEventNames);

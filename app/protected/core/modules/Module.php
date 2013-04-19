@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -127,26 +137,30 @@
         }
 
         /**
+         * Override in all children modules to ensure proper availability of module labels in the translation system.
+         * If the override is not available, then it will generate a label as a last resort.
+         * @param string $language
          * @return string - singular module label.
          */
-        protected static function getSingularModuleLabel()
+        protected static function getSingularModuleLabel($language)
         {
-            $name = static::getPluralModuleLabel();
+            $name = static::getPluralModuleLabel($language);
             $name = substr($name, 0, strlen($name) - 1);
-            return $name;
+            return Zurmo::t('Core', $name, array(), null, $language);
         }
 
         /**
-         * Gets the modules display label which is its name
-         * with spaces in title case. Can be overridden
-         * if the automatically created name is not appropriate.
+         * Override in all children modules to ensure proper availability of module labels in the translation system
+         * If the override is not available, then it will generate a label as a last resort.
+         * @param string $language
+         * @return string - plural module label
          */
-        protected static function getPluralModuleLabel()
+        protected static function getPluralModuleLabel($language)
         {
             $calledClassName = get_called_class();
             $name = $calledClassName::getDirectoryName();
             $name = preg_replace('/([A-Z])/', ' \1', $name);
-            return ucfirst($name);
+            return Zurmo::t('Core', ucfirst($name), array(), null, $language);
         }
 
         public static function getModuleLabelByTypeAndLanguage($type, $language = null)
@@ -165,14 +179,14 @@
             switch ($type)
             {
                 case 'Singular':
-                    return Zurmo::t('Core', static::getSingularModuleLabel());
+                    return static::getSingularModuleLabel($language);
                 case 'SingularLowerCase':
-                    $string  = Zurmo::t('Core', static::getSingularModuleLabel(), array(), null, $language);
+                    $string  = static::getSingularModuleLabel($language);
                     return TextUtil::strToLowerWithDefaultEncoding($string);
                 case 'Plural':
-                    return Zurmo::t('Core', static::getPluralModuleLabel(), array(), null, $language);
+                    return static::getPluralModuleLabel($language);
                 case 'PluralLowerCase':
-                    $string  = Zurmo::t('Core', static::getPluralModuleLabel(), array(), null, $language);
+                    $string  = static::getPluralModuleLabel($language);
                     return TextUtil::strToLowerWithDefaultEncoding($string);
             }
         }
@@ -455,8 +469,6 @@
 
         /**
          * Returns metadata for the module.
-         * Does caching only if the user is not specified. This can potentially be changed to cache when the user is
-         * specified but must be investigated further before doing this.
          * @see getDefaultMetadata()
          * @param $user The current user.
          * @returns An array of metadata.
@@ -542,7 +554,10 @@
                 foreach ($directoryFiles as $filePath)
                 {
                     $filePathInfo = pathinfo($filePath);
-                    $classNames[] = $filePathInfo['filename'];
+                    if ($filePathInfo['extension'] == 'php')
+                    {
+                        $classNames[] = $filePathInfo['filename'];
+                    }
                 }
             }
             return $classNames;
@@ -563,8 +578,32 @@
         /**
          * Override in modules that create demo data during an installation.
          */
-        public static function getDemoDataMakerClassName()
+        public static function getDemoDataMakerClassNames()
         {
+        }
+
+        /**
+         * Override in modules that are reportable in the reporting module
+         */
+        public static function isReportable()
+        {
+            return false;
+        }
+
+        /**
+         * Override in modules that can have workflow rules in the workflow module
+         */
+        public static function canHaveWorkflow()
+        {
+            return false;
+        }
+
+        /**
+         * Override in modules that can be used in content templates
+         */
+        public static function canHaveContentTemplates()
+        {
+            return false;
         }
     }
 ?>

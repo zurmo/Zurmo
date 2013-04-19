@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -44,51 +54,143 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //Test all default controller actions that do not require any POST/GET variables to be passed.
-            //This does not include portlet controller actions.
+            // Test all default controller actions that do not require any POST/GET variables to be passed.
+            // This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/language');
             $this->runControllerWithNoExceptionsAndGetContent     ('zurmo/language/configurationList');
         }
 
-        public function testSuperUserModifyActiveLanguagesInCollection()
+        public function testSuperUserActivateLanguages()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
-            //Confirm only english is the active language.
-            $data = Yii::app()->languageHelper->getActiveLanguages();
+            // Confirm only english is the active language.
+            $data = Yii::app()->languageHelper->getActiveLanguagesDataForTesting();
+            $this->assertArrayHasKey('en', $data);
             $compareData = array(
-                'en',
+                'en' => array(
+                    'canDeactivate' => false,
+                    'label' => 'English (English)',
+                    'nativeName' => 'English',
+                    'name' => 'English'
+                ),
             );
             $this->assertEquals($compareData, $data);
 
-            //Make French and German language active.
+            // Activate German
             $this->resetGetArray();
-            $this->setPostArray(array('LanguageCollection' => array(
-                'fr' => array('active' => '1'), 'de' => array('active' => '1'))));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages saved successfully.') !== false);
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/activate/languageCode/de');
+            $this->assertTrue(strpos($content, 'activated successfully') !== false);
 
-            //Confirm the new languages are active
-            $data = Yii::app()->languageHelper->getActiveLanguages();
+            // Activate Italian
+            $this->resetGetArray();
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/activate/languageCode/it');
+            $this->assertTrue(strpos($content, 'activated successfully') !== false);
+
+            // Confirm the new languages are active
+            $data = Yii::app()->languageHelper->getActiveLanguagesDataForTesting();
             $compareData = array(
-                'fr',
-                'de',
-                'en',
+                'en' => array(
+                    'canDeactivate' => false,
+                    'label' => 'English (English)',
+                    'nativeName' => 'English',
+                    'name' => 'English'
+                ),
+                'de' => array(
+                    'canDeactivate' => true,
+                    'label' => 'German (Deutsch)',
+                    'nativeName' => 'Deutsch',
+                    'name' => 'German'
+                ),
+                'it' => array(
+                    'canDeactivate' => true,
+                    'label' => 'Italian (Italiano)',
+                    'nativeName' => 'Italiano',
+                    'name' => 'Italian'
+                ),
+            );
+            $this->assertEquals($compareData, $data);
+        }
+
+        /**
+         * @depends testSuperUserActivateLanguages
+         */
+        public function testSuperUserUpdateLanguages()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            // Confirm German is active
+            $data = Yii::app()->languageHelper->getActiveLanguagesDataForTesting();
+            $this->assertArrayHasKey('de', $data);
+            $compareData = array(
+                'canDeactivate' => true,
+                'label' => 'German (Deutsch)',
+                'nativeName' => 'Deutsch',
+                'name' => 'German'
+            );
+            $this->assertEquals($compareData, $data['de']);
+
+            // Update German
+            $this->resetGetArray();
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/update/languageCode/de');
+            $this->assertTrue(strpos($content, 'updated successfully') !== false);
+        }
+
+        /**
+         * @depends testSuperUserUpdateLanguages
+         */
+        public function testSuperUserDeactivateLanguages()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            // Confirm German and Italian are active
+            $data = Yii::app()->languageHelper->getActiveLanguagesDataForTesting();
+            $compareData = array(
+                'en' => array(
+                    'canDeactivate' => false,
+                    'label' => 'English (English)',
+                    'nativeName' => 'English',
+                    'name' => 'English'
+                ),
+                'de' => array(
+                    'canDeactivate' => true,
+                    'label' => 'German (Deutsch)',
+                    'nativeName' => 'Deutsch',
+                    'name' => 'German'
+                ),
+                'it' => array(
+                    'canDeactivate' => true,
+                    'label' => 'Italian (Italiano)',
+                    'nativeName' => 'Italiano',
+                    'name' => 'Italian'
+                ),
             );
             $this->assertEquals($compareData, $data);
 
-            //Now inactivate the German language.
+            // Deactivate German
             $this->resetGetArray();
-            $this->setPostArray(array('LanguageCollection' => array(
-                'fr' => array('active' => '1'), 'de' => array('active' => ''))));
-            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/configurationList');
-            $this->assertTrue(strpos($content, 'Changes to active languages saved successfully.') !== false);
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/language/deactivate/languageCode/de');
+            $this->assertTrue(strpos($content, 'deactivated successfully') !== false);
 
-            //Confirm the correct languages are active.
-            $data = Yii::app()->languageHelper->getActiveLanguages();
+            // Confirm the correct languages are active.
+            $data = Yii::app()->languageHelper->getActiveLanguagesDataForTesting();
             $compareData = array(
-                'fr',
-                'en',
+                'en' => array(
+                    'canDeactivate' => false,
+                    'label' => 'English (English)',
+                    'nativeName' => 'English',
+                    'name' => 'English'
+                ),
+                'it' => array(
+                    'canDeactivate' => true,
+                    'label' => 'Italian (Italiano)',
+                    'nativeName' => 'Italiano',
+                    'name' => 'Italian'
+                ),
             );
             $this->assertEquals($compareData, $data);
         }

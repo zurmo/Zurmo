@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -206,7 +216,13 @@
             }
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('application.core.views.assets')) . '/ZurmoDialog.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('application.core.views.assets')) . '/interactions.js');
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('application.core.views.assets')) . '/mobile-interactions.js');
             Yii::app()->clientScript->registerScriptFile(
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('application.core.views.assets')) . '/jquery.truncateText.js');
@@ -233,18 +249,28 @@
             $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
             //$cs->registerMetaTag('UTF-8', null, 'charset'); // Not Coding Standard
+            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/keyframes.css');
 
             $specialCssContent = null;
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
             {
-                $specialCssContent .= '<link rel="stylesheet/less" type="text/css" href="' .
+                $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="newui" href="' .
                                       Yii::app()->baseUrl . '/' . $theme . '/less/newui.less"/>';
+                if (Yii::app()->userInterface->isMobile())
+                {
+                    $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="mobile" href="' .
+                        Yii::app()->baseUrl . '/' . $theme . '/less/mobile.less"/>';
+                }
                 $specialCssContent .= '<!--[if lt IE 9]><link rel="stylesheet/less" type="text/css" href="' .
                                       Yii::app()->baseUrl . '/' . $theme . '/less/ie.less"/><![endif]-->';
             }
             else
             {
                 $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
+                if (Yii::app()->userInterface->isMobile())
+                {
+                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/mobile.css');
+                }
             }
             if (MINIFY_SCRIPTS)
             {
@@ -281,6 +307,9 @@
             return '<head>' .
                    '<meta charset="utf-8">' .
                    '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
+                   '<meta name="viewport"  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . // Not Coding Standard
+                   '<meta name="apple-mobile-web-app-capable" content="yes" />' . // Not Coding Standard
+                   '<link rel="apple-touch-icon" sizes="144x144" href="/themes/default/images/touch-icon-iphone4.png" />'  . //also add 57px, 72px, 144px // Not Coding Standard
                    $specialCssContent .
                    '<title>' . $title . '</title>'  .
                    '</head>';
@@ -316,6 +345,10 @@
             {
                 $classContent .= ' ' . $backgroundTexture;
             }
+            if (Yii::app()->userInterface->isMobile())
+            {
+                $classContent .= ' mobile-app';
+            }
             return '<body class="' . $classContent . '">';
         }
 
@@ -337,18 +370,35 @@
 
         public static function makeShowQueryDataContent()
         {
-            $performanceMessage  = 'Total/Duplicate Queries: ' . Yii::app()->performance->getRedBeanQueryLogger()->getQueriesCount();
-            $performanceMessage .= '/'   . Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesCount();
+            $performanceMessage  = static::getTotalAndDuplicateQueryCountContent();
             $duplicateData = Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesData();
             if (count($duplicateData) > 0)
             {
-                $performanceMessage .= '</br></br>Duplicate Queries:</br>';
+                $performanceMessage .= '</br></br>' . 'Duplicate Queries:' . '</br>';
             }
             foreach ($duplicateData as $query => $count)
             {
-                $performanceMessage .= 'Count: ' . $count . '&#160;&#160;&#160;Query: ' . $query . "</br>";
+                $performanceMessage .= 'Count: ' . $count . '&#160;&#160;&#160;Query: ' . $query . '</br>';
             }
             return $performanceMessage;
+        }
+
+        public static function getTotalAndDuplicateQueryCountContent()
+        {
+            $performanceMessage  = 'Total/Duplicate Queries: ' . Yii::app()->performance->getRedBeanQueryLogger()->getQueriesCount();
+            $performanceMessage .= '/'   . Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesCount();
+            return $performanceMessage;
+        }
+
+        public static function makeNonHtmlDuplicateCountAndQueryContent()
+        {
+            $content = null;
+            $duplicateData = Yii::app()->performance->getRedBeanQueryLogger()->getDuplicateQueriesData();
+            foreach ($duplicateData as $query => $count)
+            {
+                $content .= 'Count: ' . $count . '--Query: ' . $query . "\n";
+            }
+            return $content;
         }
 
         /**

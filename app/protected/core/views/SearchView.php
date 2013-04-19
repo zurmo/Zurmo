@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -32,6 +42,8 @@
         protected $gridIdSuffix;
 
         protected $hideAllSearchPanelsToStart;
+
+        protected $showAdvancedSearch = true;
 
         /**
          * Constructs a detail view specifying the controller as
@@ -110,7 +122,7 @@
          */
         protected function renderFormBottomPanel()
         {
-            $moreSearchOptionsLink        = ZurmoHtml::link(Zurmo::t('Core', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
+            $moreSearchOptionsLink        = $this->resolveMoreSearchOptionsLinkContent();
             $selectListAttributesLink     = $this->getSelectListAttributesLinkContent();
             $clearSearchLabelPrefix       = $this->getClearSearchLabelPrefixContent();
             $clearSearchLabel             = $this->getClearSearchLabelContent();
@@ -133,6 +145,14 @@
             return $content;
         }
 
+        protected function resolveMoreSearchOptionsLinkContent()
+        {
+            if ($this->showAdvancedSearch)
+            {
+                return ZurmoHtml::link(Zurmo::t('Core', 'Advanced'), '#', array('id' => 'more-search-link' . $this->gridIdSuffix));
+            }
+        }
+
         protected function getClearSearchLabelPrefixContent()
         {
         }
@@ -144,6 +164,10 @@
 
         protected function getClearSearchLinkStartingStyle()
         {
+            if ($this->model->anyMixedAttributes == null)
+            {
+                return "display:none;";
+            }
         }
 
         protected function getExtraRenderForClearSearchLinkScript()
@@ -175,6 +199,7 @@
                 $('#clear-search-link" . $this->gridIdSuffix . "').unbind('click.clear');
                 $('#clear-search-link" . $this->gridIdSuffix . "').bind('click.clear', function(){
                         $('#" . $this->getClearingSearchInputId() . "').val('1');
+                        $('#clear-search-link" . $this->gridIdSuffix . "').hide();
                         " . $this->getExtraRenderForClearSearchLinkScript() . "
                         $(this).closest('form').submit();
                         $('#" . $this->getClearingSearchInputId() . "').val('');
@@ -184,7 +209,7 @@
                 $('#more-search-link" . $this->gridIdSuffix . "').unbind('click.more');
                 $('#more-search-link" . $this->gridIdSuffix . "').bind('click.more',  function(event){
                         $('.select-list-attributes-view').hide();
-                        $(this).closest('form').find('.search-view-1').toggle();                        
+                        $(this).closest('form').find('.search-view-1').toggle();
                         return false;
                     }
                 );
@@ -204,6 +229,7 @@
                 $('#" . $this->getSearchFormId() . "').bind('submit', function(event)
                     {
                         $(this).closest('form').find('.search-view-1').hide();
+                        " . $this->getHideOrShowClearSearchLinkScript() . "
                         $('.select-list-attributes-view').hide();
                         $('#" . $this->gridId . $this->gridIdSuffix . "-selectedIds').val(null);
                         $.fn.yiiGridView.update('" . $this->gridId . $this->gridIdSuffix . "',
@@ -216,6 +242,34 @@
                         return false;
                     }
                 );");
+        }
+
+        /**
+         * Override as needed.
+         * @return string the script to show/hide the clear link if depending on if
+         * there is any search condition
+         */
+        protected function getHideOrShowClearSearchLinkScript()
+        {
+            $script = "
+                var empty = $('#" . $this->getSearchFormId(). "').find('.anyMixedAttributes-input').val() == '';
+                $(this).closest('form').find('.search-view-1').find(':input').each(function()
+                {
+                    if ($(this).val() != '')
+                    {
+                        empty = false;
+                    }
+                });
+                if (!empty)
+                {
+                    $('#clear-search-link" . $this->gridIdSuffix . "').show();
+                }
+                else
+                {
+                    $('#clear-search-link" . $this->gridIdSuffix . "').hide();
+                }
+            ";
+            return $script;
         }
 
         /**
@@ -239,7 +293,14 @@
          */
         protected function getExtraRenderFormBottomPanelScriptPart()
         {
-            return null;
+            $script = "
+                $('#" . $this->getSearchFormId(). "').find('.anyMixedAttributes-input').unbind('input.clear propertychange.clear keyup.clear');
+                $('#" . $this->getSearchFormId(). "').find('.anyMixedAttributes-input').bind('input.clear propertychange.clear keyup.clear', function(event)
+                {
+                    $('#clear-search-link" . $this->gridIdSuffix . "').show();
+                });
+            ";
+            return $script;
         }
 
         /**
@@ -253,7 +314,7 @@
             $maxCellsPerRow  = $this->getMaxCellsPerRow();
             $content         = "";
             $content        .= $this->renderSummaryCloneContent();
-            assert('count($metadata["global"]["panels"]) == 2');
+            assert('count($metadata["global"]["panels"]) == 2 || count($metadata["global"]["panels"]) == 1');
             foreach ($metadata['global']['panels'] as $key => $panel)
             {
                 $startingDivStyle = "";
@@ -341,13 +402,13 @@
 
         protected function renderViewToolBarLinksForAdvancedSearch($form)
         {
-            $params = array();
+            $params                = array();
             $params['label']       = Zurmo::t('Core', 'Search');
             $params['htmlOptions'] = array('id' => 'search-advanced-search', 'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
-            $searchElement = new SaveButtonActionElement(null, null, null, $params);
-            $content  = $searchElement->render();
-            $closeButton = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Close')),
-                            '#', array('id' => 'cancel-advanced-search', 'class' => 'z-button'));
+            $searchElement         = new SaveButtonActionElement(null, null, null, $params);
+            $content               = $searchElement->render();
+            $closeButton           = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('Core', 'Close')),
+                                     '#', array('id' => 'cancel-advanced-search', 'class' => 'z-button'));
             return $closeButton . $content;
         }
 

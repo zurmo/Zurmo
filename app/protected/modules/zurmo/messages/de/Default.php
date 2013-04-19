@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     // KEEP these in alphabetical order.
@@ -171,8 +181,8 @@
             => 'Konfigurieren',
         'Convert'
             => 'Konvertieren',
-        'Copyright &#169; Zurmo Inc., 2012. All Rights reserved.'
-            => 'Copyright © Zurmo Inc., 2012. Alle Rechte vorbehalten.',
+        'Copyright &#169; Zurmo Inc., 2013. All Rights reserved.'
+            => 'Copyright © Zurmo Inc., 2013. Alle Rechte vorbehalten.',
         'Could not remove relation.'
             => 'Unfähig, die Beziehung zu löschen.',
         'Could not save relation.'
@@ -309,6 +319,8 @@
             => 'hier',
         'Home'
             => 'Startseite',
+        'Host'
+            => 'Hostname',
         'If there is new metadata to load using CustomManagement, use this option.'
             => 'Diese Option verwenden, wenn es neue Metadaten mit CustomManagement zu laden gibt.',
         'In Progress'
@@ -499,6 +511,8 @@
             => 'Richtlinien erfolgreich gespeichert.',
         'Popup list page size'
             => 'Popup-Liste Seitengröße',
+        'Port'
+            => 'Port', // Same Word Translated
         'Post to Profile'
             => 'Teilen auf deinem Profil ',
         'Postal Code'
@@ -629,6 +643,8 @@
             => 'Mit Tag Cloud Felder kann man Datensätze mit Werten  markieren, so man sie leicht später finden kann.',
         'Technology'
             => 'Technologie',
+        'Test Connection'
+            => 'Verbindung prüfen',
         'The currency rate web service says this currency code is invalid even though zurmo says it is valid. The rate could not be automatically updated.'
             => 'Der Wechselkurs Web-Service behauptet dass dieser Währung ist ungültig, obwohl zurmo behauptet, es gültig ist. Der Wechselkurs war nicht automatisch aktualisiert.',
         'The currency rate web service was unavailable. The rate could not be automatically updated.'

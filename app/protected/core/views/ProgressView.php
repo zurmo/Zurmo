@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -87,7 +97,7 @@
             return CJSON::encode($this->renderRefreshScript());
         }
 
-        protected function renderRefreshScript()
+        public function renderRefreshScript()
         {
             $value = $this->getProgressValue();
             if ($value < 100)
@@ -137,7 +147,7 @@
             ));
             $cClipWidget->endClip();
             $progressBarContent =  $cClipWidget->getController()->clips['ProgressBar'];
-            $content  = "<div><h1>" . $this->headerLabelPrefixContent() . ' ' . $this->title . '</h1>';
+            $content  = "<div><h1>" . $this->headerLabelPrefixContent() . ' : ' . $this->title . '</h1>';
             $content .= '<div class="progress-counter">';
             $content .= '<h3><span id="' . $this->progressBarId . '-msg">' . $this->getMessage() . '</span></h3>';
             $content .= '<div class="progressbar-wrapper"><span id="progress-percent">0&#37;</span>' . $progressBarContent . '</div>';
@@ -152,8 +162,8 @@
             return ZurmoHtml::ajax(array(
                     'type' => 'POST',
                     'dataType' => 'json',
-                    'data' => yii::app()->getUrlManager()->createPathInfo($_POST, '=', '&'),
-                    'url'  => yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $this->refreshActionId,
+                    'data' => Yii::app()->getUrlManager()->createPathInfo($_POST, '=', '&'),
+                    'url'  => Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $this->refreshActionId,
                         array_merge($_GET, array( get_class($this->model) . '_page' => ($this->page + 1)))
                     ),
                     'success' => 'function(data)

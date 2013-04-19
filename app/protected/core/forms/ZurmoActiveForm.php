@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class ZurmoActiveForm extends CActiveForm
@@ -40,6 +50,12 @@
          */
         public $bindAsLive = false;
 
+        public static function makeErrorsSummaryId($id)
+        {
+            assert('is_string($id)');
+            return $id . '_es_';
+        }
+
         /**
          * Makes errorsData by getting errors from model.  Also resolves for owned related models such as Email. Prior
          * to having this method, things such as currencyValue, emailAddress, and street1 for example were not properly
@@ -56,8 +72,8 @@
             $errorData = array();
             foreach ($model->getErrors() as $attribute => $errors)
             {
-                if ($model->isRelation($attribute) && $model->isOwnedRelation($attribute) &&
-                   in_array($model->getRelationModelClassName($attribute), array('Address', 'Email', 'CurrencyValue')))
+                if ($model::isRelation($attribute) && $model::isOwnedRelation($attribute) &&
+                   in_array($model::getRelationModelClassName($attribute), array('Address', 'Email', 'CurrencyValue')))
                 {
                     foreach ($errors as $relatedAttribute => $relatedErrors)
                     {
@@ -70,6 +86,40 @@
                 }
             }
             return $errorData;
+        }
+
+        /**
+         * Use this method to register dynamically created attributes during an ajax call.  An example is if you
+         * add a filter or trigger, the inputs need to be added to the yiiactiveform so that validation handling can work
+         * properly.  This method replaces the id and model elements with the correctly needed values.
+         * Only adds inputs that have not been added already
+         */
+        public function renderAddAttributeErrorSettingsScript($formId)
+        {
+            assert('is_string($formId)');
+            $attributes             = $this->getAttributes();
+            $encodedErrorAttributes = CJSON::encode(array_values($attributes));
+            $script = "
+                var settings = $('#" . $formId . "').data('settings');
+                $.each(" . $encodedErrorAttributes . ", function(i)
+                {
+                    var newId = this.id;
+                    var alreadyInArray = false;
+                    $.each(settings.attributes, function (i)
+                    {
+                        if (newId == this.id)
+                        {
+                            alreadyInArray = true;
+                        }
+                    });
+                    if (alreadyInArray == false)
+                    {
+                        settings.attributes.push(this);
+                    }
+                });
+                $('#" . $formId . "').data('settings', settings);
+            ";
+            Yii::app()->getClientScript()->registerScript('AddAttributeErrorSettingsScript' . $formId, $script);
         }
 
         /**
@@ -193,7 +243,7 @@
             }
             if (!isset($htmlOptions['id']))
             {
-                $htmlOptions['id'] = $this->id . '_es_';
+                $htmlOptions['id'] = static::makeErrorsSummaryId($this->id);
             }
             $html = ZurmoHtml::errorSummary($models, $header, $footer, $htmlOptions);
             if ($html === '')
@@ -257,7 +307,6 @@
             }
 
             $options['attributes'] = array_values($this->attributes);
-
             if ($this->summaryID !== null)
             {
                 $options['summaryID'] = $this->summaryID;
@@ -298,6 +347,11 @@
             {
                 $cs->registerScript(__CLASS__. '#' . $id, "\$('#$id').yiiactiveform($options);");
             }
+        }
+
+        public function getAttributes()
+        {
+            return $this->attributes;
         }
 
         /**

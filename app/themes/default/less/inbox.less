@@ -1,0 +1,97 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
+#MashableInboxActionBarForViews{
+	.view-toolbar ul:first-child > li > a {
+		border-left: none;
+	}
+	.search-view-0{
+		padding:0 15px 15px 15px;
+		.box-sizing();
+	}
+	.list-view-items-summary-clone{
+		margin-top:5px;
+	}
+	.global-search-loopa{
+		width: 24px;
+	}
+	#MashableInboxForm_searchTerm{
+		width: 204px;
+	}
+}
+
+.inbox-item{
+	position: relative;
+	div + span{
+		display: block;
+		padding-right: 80px;
+		overflow:hidden;
+	}
+	.list-item-details{
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+}
+
+.model-tag{
+	display: inline-block;
+	font-weight:400;
+	.smaller() !important;
+	float: left;
+	margin:1px 5px 0 0 !important;
+	span{
+		.radius(3px);
+		color:#fff;
+		padding:2px 4px;
+		line-height: 1;
+	}
+	&.mission span{
+		#gradient > .vertical(#1ABC9C, #16A085 ); //green
+	}
+	&.conversation span{
+		#gradient > .vertical(#34495E, #2C3E50 ); //dark
+	}
+	&.notification span{
+		#gradient > .vertical(#9B59B6, #8E44AD ); //purple
+	}
+}
+
+.last-comment{
+	ul, li{
+		list-style: none;
+	}
+	li{
+		margin-top: 2px;
+	}
+}

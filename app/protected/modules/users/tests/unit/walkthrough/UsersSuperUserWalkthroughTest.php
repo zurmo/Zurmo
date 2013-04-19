@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -427,6 +437,46 @@
                                                                 'customAvatarEmailAddress' => ''))
                                 );
             $this->runControllerWithRedirectExceptionAndGetContent('users/default/changeAvatar');
+        }
+
+        public function testSuperUserChangeOtherUserEmailSignature()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser = User::getByUsername('auser');
+            $this->assertEquals(0, $aUser->emailSignatures->count());
+            $this->assertEquals($aUser, $aUser->getEmailSignature()->user);
+
+            //Change email settings
+            $this->setPostArray(array('EmailSmtpConfigurationForm' => array(
+                                    'host'                              => 'abc',
+                                    'port'                              => '565',
+                                    'username'                          => 'myuser',
+                                    'password'                          => 'apassword',
+                                    'security'                          => 'ssl',
+                                    'userIdOfUserToSendNotificationsAs' => $super->id)));
+            $this->runControllerWithRedirectExceptionAndGetContent('emailMessages/default/configurationEditOutbound');
+            $this->assertEquals('Email configuration saved successfully.',
+                                Yii::app()->user->getFlash('notification'));
+
+            //Change aUser email signature
+            $this->setGetArray(array('id' => $aUser->id));
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/emailConfiguration');
+            $this->assertNotContains('abc email signature', $content);
+            $this->setPostArray(array('UserEmailConfigurationForm' => array(
+                                    'fromName'                          => 'abc',
+                                    'fromAddress'                       => 'abc@zurmo.org',
+                                    'useCustomOutboundSettings'         => 0,
+                                    'emailSignatureHtmlContent'         => 'abc email signature')));
+            $this->runControllerWithRedirectExceptionAndGetContent('users/default/emailConfiguration');
+            $this->assertEquals('User email configuration saved successfully.',
+                                Yii::app()->user->getFlash('notification'));
+            $aUser = User::getByUsername('auser');
+            $this->assertEquals(1, $aUser->emailSignatures->count());
+            $this->assertEquals('abc email signature', $aUser->emailSignatures[0]->htmlContent);
+            $this->resetPostArray();
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/emailConfiguration');
+            $this->assertContains('abc email signature', $content);
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -130,7 +140,7 @@
         }
 
         /**
-        * Walkthrough test for synchronous download
+        * Walkthrough test for asynchronous download
         */
         public function testAsynchronousDownloadDefaultControllerActions()
         {
@@ -225,6 +235,52 @@
 
             $this->assertEquals($notificationsBeforeCount + 1, count(Notification::getAll()));
             $this->assertEquals($notificationMessagesBeforeCount + 1, count(NotificationMessage::getAll()));
+        }
+
+        public function testExportWithSelectAllForMoreThan10Records()
+        {
+            $super    = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $accounts = Account::getAll();
+            foreach ($accounts as $account)
+            {
+                $account->delete();
+            }
+            $exportItems = ExportItem::getAll();
+            foreach ($exportItems as $exportItem)
+            {
+                $exportItem->delete();
+            }
+            $numberOfRecords    = rand (12, 100);
+            ExportModule::$asynchronusThreshold = $numberOfRecords - 1;
+            for ($i = 1; $i <= $numberOfRecords; $i++)
+            {
+                $randomData = RandomDataUtil::getRandomDataByModuleAndModelClassNames('AccountsModule', 'Account');
+                AccountTestHelper::createAccountByNameForOwner($randomData['names'][$i], $super);
+            }
+            $this->setGetArray(array(
+                'Account_page' => '1',
+                'export' => '',
+                'selectAll' => '1',
+                'selectedIds' => '',
+                'ajax' => ''));
+
+            $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/export');
+
+            // Start background job
+            $job = new ExportJob();
+            $this->assertTrue($job->run());
+
+            $exportItems = ExportItem::getAll();
+            $this->assertEquals(1, count($exportItems));
+            $fileModel = $exportItems[0]->exportFileModel;
+            $this->assertEquals(1, $exportItems[0]->isCompleted);
+            $this->assertEquals('csv', $exportItems[0]->exportFileType);
+            $this->assertEquals('accounts', $exportItems[0]->exportFileName);
+            $this->assertTrue($fileModel instanceOf ExportFileModel);
+            for ($i = 1; $i <= $numberOfRecords; $i++)
+            {
+                $this->assertContains($randomData['names'][$i], $fileModel->fileContent->content);
+            }
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -56,21 +66,23 @@
         }
 
         /**
-         * Given a conversation and a user, mark that the user has either read the latest comment as a conversation
+         * Given a conversation and a user, mark that the user has read or not read the latest changes as a conversation
          * participant, or if the user is the owner, than as the owner.
          * @param Conversation $conversation
          * @param User $user
+         * @param Boolean $hasReadLatest
          */
-        public static function markUserHasReadLatest(Conversation $conversation, User $user)
+        public static function markUserHasReadLatest(Conversation $conversation, User $user, $hasReadLatest = true)
         {
             assert('$conversation->id > 0');
             assert('$user->id > 0');
+            assert('is_bool($hasReadLatest)');
             $save = false;
-            if ($user == $conversation->owner)
+            if ($user->getClassId('Item') == $conversation->owner->getClassId('Item'))
             {
-                if (!$conversation->ownerHasReadLatest)
+                if ($conversation->ownerHasReadLatest != $hasReadLatest)
                 {
-                    $conversation->ownerHasReadLatest = true;
+                    $conversation->ownerHasReadLatest = $hasReadLatest;
                     $save                             = true;
                 }
             }
@@ -78,9 +90,9 @@
             {
                 foreach ($conversation->conversationParticipants as $position => $participant)
                 {
-                    if ($participant->person->getClassId('Item') == $user->getClassId('Item') && !$participant->hasReadLatest)
+                    if ($participant->person->getClassId('Item') == $user->getClassId('Item') && $participant->hasReadLatest != $hasReadLatest)
                     {
-                        $conversation->conversationParticipants[$position]->hasReadLatest = true;
+                        $conversation->conversationParticipants[$position]->hasReadLatest = $hasReadLatest;
                         $save                                                             = true;
                     }
                 }

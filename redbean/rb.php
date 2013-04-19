@@ -5707,9 +5707,13 @@ class RedBean_AssociationManager extends RedBean_Observable {
    *
    * @param RedBean_OODBBean $bean1 bean1
    * @param RedBean_OODBBean $bean2 bean2
+   * @param string $table specific the table name if needed
    */
-  public function associate(RedBean_OODBBean $bean1, RedBean_OODBBean $bean2) {
-    $table = $this->getTable( array($bean1->getMeta('type') , $bean2->getMeta('type')) );
+  public function associate(RedBean_OODBBean $bean1, RedBean_OODBBean $bean2, $table = null) {
+    if($table == null)
+    {
+        $table = $this->getTable( array($bean1->getMeta('type') , $bean2->getMeta('type')) );
+    }
     $bean = $this->oodb->dispense($table);
     return $this->associateBeans( $bean1, $bean2, $bean );
   }
@@ -5777,12 +5781,13 @@ class RedBean_AssociationManager extends RedBean_Observable {
    *
    * @param RedBean_OODBBean|array $bean     reference bean
    * @param string				 $type     target type
-   * @param bool					 $getLinks whether you are interested in the assoc records
-   * @param bool					 $sql      room for additional SQL
+   * @param bool				 $getLinks whether you are interested in the assoc records
+   * @param bool				 $sql      room for additional SQL
+   * @param string 			     $table specific the table name if needed
    *
    * @return array $ids
    */
-  public function related( $bean, $type, $getLinks=false, $sql=false) {
+  public function related( $bean, $type, $getLinks=false, $sql=false, $table = null) {
     if (!is_array($bean) && !($bean instanceof RedBean_OODBBean)) throw new RedBean_Exception_Security('Expected array or RedBean_OODBBean but got:'.gettype($bean));
     $ids = array();
     if (is_array($bean)) {
@@ -5794,7 +5799,10 @@ class RedBean_AssociationManager extends RedBean_Observable {
       $bean = reset($beans);
     }
     else $ids[] = $bean->id;
-    $table = $this->getTable( array($bean->getMeta('type') , $type) );
+    if($table == null)
+    {
+        $table = $this->getTable( array($bean->getMeta('type') , $type) );
+    }
     if ($type==$bean->getMeta('type')) {
       $type .= '2';
       $cross = 1;
@@ -5852,11 +5860,15 @@ class RedBean_AssociationManager extends RedBean_Observable {
    * @param RedBean_OODBBean $bean1 first bean
    * @param RedBean_OODBBean $bean2 second bean
    * @param boolean          $fast  If TRUE, removes the entries by query without FUSE
+   * @param string 			 $table specific the table name if needed
    */
-  public function unassociate(RedBean_OODBBean $bean1, RedBean_OODBBean $bean2, $fast=null) {
+  public function unassociate(RedBean_OODBBean $bean1, RedBean_OODBBean $bean2, $fast=null, $table = null) {
     $this->oodb->store($bean1);
     $this->oodb->store($bean2);
-    $table = $this->getTable( array($bean1->getMeta('type') , $bean2->getMeta('type')) );
+    if($table == null)
+    {
+        $table = $this->getTable( array($bean1->getMeta('type') , $bean2->getMeta('type')) );
+    }
     $type = $bean1->getMeta('type');
     if ($type==$bean2->getMeta('type')) {
       $type .= '2';
@@ -7100,13 +7112,18 @@ class RedBean_Facade {
    * @param RedBean_OODBBean $bean1 bean that will be part of the association
    * @param RedBean_OODBBean $bean2 bean that will be part of the association
    * @param mixed $extra            bean, scalar, array or JSON providing extra data.
+   * @param string 			 $table specific the table name if needed
    *
    * @return mixed
    */
-  public static function associate( RedBean_OODBBean $bean1, RedBean_OODBBean $bean2, $extra = null ) {
+  public static function associate( RedBean_OODBBean $bean1, RedBean_OODBBean $bean2, $extra = null, $table = null) {
     //No extra? Just associate like always (default)
     if (!$extra) {
-      return self::$associationManager->associate( $bean1, $bean2 );
+      return self::$associationManager->associate( $bean1, $bean2, $table);
+    }
+    elseif($table != null)
+    {
+        throw new NotSupportedException();
     }
     else{
       if (!is_array($extra)) {
@@ -7123,7 +7140,6 @@ class RedBean_Facade {
 
   }
 
-
   /**
    * Breaks the association between two beans.
    * This functions breaks the association between a pair of beans. After
@@ -7133,11 +7149,12 @@ class RedBean_Facade {
    *
    * @param RedBean_OODBBean $bean1 bean
    * @param RedBean_OODBBean $bean2 bean
+   * @param string 			 $table specific the table name if needed
    *
    * @return mixed
    */
-  public static function unassociate( RedBean_OODBBean $bean1, RedBean_OODBBean $bean2 , $fast=false) {
-    return self::$associationManager->unassociate( $bean1, $bean2, $fast );
+  public static function unassociate( RedBean_OODBBean $bean1, RedBean_OODBBean $bean2 , $fast=false, $table = null) {
+    return self::$associationManager->unassociate( $bean1, $bean2, $fast, $table );
   }
 
   /**
@@ -7159,11 +7176,12 @@ class RedBean_Facade {
    * @param string				 $type the type of beans you want
    * @param string				 $sql  SQL snippet for extra filtering
    * @param array					 $val  values to be inserted in SQL slots
+   * @param string 				 $table specific the table name if needed
    *
    * @return array $beans	beans yielded by your query.
    */
-  public static function related( $bean, $type, $sql=null, $values=array()) {
-    $keys = self::$associationManager->related( $bean, $type );
+  public static function related( $bean, $type, $sql=null, $values=array(), $table = null) {
+    $keys = self::$associationManager->related( $bean, $type, false, false, $table );
     if (count($keys)==0) return array();
     if (!$sql) return self::batch($type, $keys);
     $rows = self::$writer->selectRecord( $type, array('id'=>$keys),array($sql,$values),false );

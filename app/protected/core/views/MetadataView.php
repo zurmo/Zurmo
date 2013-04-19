@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -106,15 +116,19 @@
             $metadata = $this::getMetadata();
             $content = null;
             $first = true;
+            $dropDownId = null;
+            $dropDownItems = array();
+            $dropDownItemHtmlOptions = array('prompt' => ''); // we need this so we have a default one to select at the end of operation.
             if (isset($metadata['global']['toolbar']) && is_array($metadata['global']['toolbar']['elements']))
             {
                 foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
                 {
+                    $renderedContent = null;
                     $this->resolveActionElementInformationDuringRender($elementInformation);
-                    $elementclassname = $elementInformation['type'] . 'ActionElement';
+                    array_walk($elementInformation, array($this, 'resolveEvaluateSubString'));
                     $params = array_slice($elementInformation, 1);
-                    array_walk($params, array($this, 'resolveEvaluateSubString'));
-                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+                    $elementClassName = $elementInformation['type'] . 'ActionElement';
+                    $element  = new $elementClassName($this->controllerId, $this->moduleId, $this->modelId, $params);
                     if (!$this->shouldRenderToolBarElement($element, $elementInformation))
                     {
                         continue;
@@ -123,7 +137,22 @@
                     {
                         throw new NotSupportedException();
                     }
-                    $renderedContent = $element->render();
+                    $continueRendering = $this->resolveMassActionLinkActionElementDuringRender($elementClassName,
+                                                                                            $element,
+                                                                                            $dropDownItems,
+                                                                                            $dropDownItemHtmlOptions
+                                                                                            );
+                    if ($continueRendering)
+                    {
+                        $renderedContent = $element->render();
+                    }
+                    else
+                    {
+                        if (! $dropDownId)
+                        {
+                            $dropDownId = $elementClassName::getDropdownId();
+                        }
+                    }
                     if (!$first && !empty($renderedContent))
                     {
                        // $content .= '&#160;|&#160;';
@@ -132,7 +161,72 @@
                     $content .= $renderedContent;
                 }
             }
+            if (!empty($dropDownItems))
+            {
+                $content .= ZurmoHtml::link('', '#', array('class' => 'mobile-actions'));
+                $content .= ZurmoHtml::tag('div', array( 'class' => 'mobile-view-toolbar-container'),
+                                ZurmoHtml::dropDownList(
+                                        $dropDownId,
+                                        '',
+                                        $dropDownItems,
+                                        $dropDownItemHtmlOptions
+                                    )
+                                );
+            }
             return $content;
+        }
+
+        /**
+         * Resolves how MassActionLinkElements should be rendered on Mobile Devices
+         * @param $elementClassName
+         * @param $element
+         * @param $dropDownItems
+         * @param $dropDownItemHtmlOptions
+         * @return bool whether or not to continue rendering this element
+         */
+        protected function resolveMassActionLinkActionElementDuringRender($elementClassName, & $element, & $dropDownItems, & $dropDownItemHtmlOptions)
+        {
+            $class = new ReflectionClass($elementClassName);
+            if ($class->implementsInterface('SupportsRenderingDropDownInterface') &&
+                $elementClassName::shouldRenderAsDropDownWhenRequired() &&
+                Yii::app()->userInterface->isMobile())
+            {
+                if (empty($dropDownItems))
+                {
+                    $element->registerDropDownScripts();
+                }
+                $items = $element->getOptions();
+                $items = (array_key_exists('label', $items))? array($items) : $items;
+                foreach ($items as $item)
+                {
+                    if($element::useItemUrlAsElementValue())
+                    {
+                        $value      = $item['url'];
+                    }
+                    else
+                    {
+                        $value      = $element->getElementValue();
+                    }
+
+                    if (!$value)
+                    {
+                        $value      = $element->getActionNameForCurrentElement() . '_' . $item['label'];
+
+                    }
+                    $optGroup   = $element->getOptGroup();
+                    if ($optGroup)
+                    {
+                        $dropDownItems[$optGroup][$value]   = $item['label'];
+                    }
+                    else
+                    {
+                        $dropDownItems[$value]              = $item['label'];
+                    }
+                    $dropDownItemHtmlOptions['options'][$value] = (isset($item['itemOptions'])) ? $item['itemOptions'] : array();
+                }
+                return false;
+            }
+            return true;
         }
 
         /**
@@ -210,10 +304,10 @@
             {
                 foreach ($metadata['global']['toolbar']['elements'] as $elementInformation)
                 {
-                    $elementclassname  = $elementInformation['type'] . 'ActionElement';
+                    $elementClassName  = $elementInformation['type'] . 'ActionElement';
                     $params            = array_slice($elementInformation, 1);
                     array_walk($params, array($this, 'resolveEvaluateSubString'));
-                    $element  = new $elementclassname($this->controllerId, $this->moduleId, $this->modelId, $params);
+                    $element  = new $elementClassName($this->controllerId, $this->moduleId, $this->modelId, $params);
                     if (!$this->shouldRenderToolBarElement($element, $elementInformation))
                     {
                         continue;

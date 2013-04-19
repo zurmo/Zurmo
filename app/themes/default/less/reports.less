@@ -1,0 +1,1070 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
+#ReportsSearchView{
+    .search-view-1{
+        table{
+            border-bottom: none;
+            margin-bottom: 15px;
+        }
+        td{
+            width:34%;
+            padding-right: 1%;
+        }
+        th{
+            width:15%;
+        }
+        td+th{
+            padding-left: 1%;
+        }
+        td:last-child{
+            padding-right: 0;
+        }
+    }
+}
+
+.ComponentForWorkflowWizardView,
+.ComponentForReportWizardView{
+    .view-toolbar-container{
+        margin-top:30px;
+    }
+	h3 + div{
+		position: relative;
+		//z-index: 15;
+	}
+    .treeview{
+        ul{
+            background: none;
+        }
+        li:hover{
+            cursor:pointer;
+        }
+        li:active{
+            cursor: move;
+        }
+        .ui-draggable-dragging{
+            background:none;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+            line-height:30px;
+            min-width: 120px;
+            height: 30px;
+            border:1px solid #ccc;
+            .b-shadow(inset 0 1px 0 0 #ffffff);
+            #gradient > .vertical( #f6f6f6, #ededed );
+        }
+    }
+    .radio-input {
+        margin-bottom: 10px !important;
+    }
+}
+
+#ModuleForWorkflowWizardView,
+#ModuleForReportWizardView {
+    table{
+        span{
+            text-align: left;
+            display: block;
+            margin-bottom: 20px;
+        }
+        td{
+            padding-left:0;
+        }
+    }
+}
+
+#GeneralDataForReportWizardView{
+    .panel{
+        width: 70%;
+        float: left;
+    }
+    .right-side-edit-view-panel{
+        width: 30%;
+        float: right;
+        position: relative;
+        top:-2px;
+        right:0;
+    }
+}
+
+.hasTree{
+    width:25%;
+    float: left;
+    ++.border-box;
+    padding: 8px 0;
+    min-height: 500px;
+    max-height:600px;
+    overflow: auto;
+    z-index: 10;
+    .animateAll(0.5s);
+	.big-spinner{
+		margin-left: 45%;
+		margin-top: 30%;
+	}
+}
+
+.dynamic-droppable-area{
+    ++.border-box;
+    width: 75%;
+    float: right;
+    padding-left: 15px;
+    margin-top:10px;
+    position: relative;
+    z-index: 5;
+    &.error{
+        
+    }
+}
+
+.droppable-dynamic-rows-container{
+    &.ui-droppable{
+        float: left;
+        width: 100%;
+        z-index: 0;
+        min-height: 600px;
+        position: relative;
+        margin-bottom: 15px;
+        &.ui-state-active{
+            .drop-zone{
+                .opacity(100);
+            }
+        }
+    }
+	&.EmailMessages,
+	&.Actions{
+		min-height: 0;
+	}
+}
+
+.activate-drop-zone{
+    .animateAll(0.75s);
+    .drop-zone{
+        .opacity(100);
+        z-index: 100;
+    }
+}
+
+.drop-zone{
+    .animateAll(0.25s);
+    ++.border-box;
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 5px;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    clear: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    .opacity(0);
+    z-index: 0;
+    background: rgba(255, 255, 255, 0.5);
+    div{
+        padding-top:35%;
+        ++.border-box;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.cloned{
+    border: 2px solid red !important;
+    z-index:10000;
+}
+
+.dynamic-rows{
+    float: left;
+    width:100%;
+    position: relative;
+    z-index: 5;
+    ul, li{
+        list-style: none;
+    }
+    li + li{
+        .dynamic-row{
+            //border-top: none;
+        }
+    }
+}
+
+.dynamic-row{
+    ++.cf;
+    position: relative;
+    width: 100%;
+    display: block;
+    margin:0 0 5px 0;
+    background: #f0f0f0;
+    .radius(3px);
+    padding:10px 30px 10px 10px;
+    ++.border-box;
+	.b-shadow(~'inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15)');
+	> div{
+        position: relative;
+        float: left;
+        width: 100%;
+        ++.cf;
+        > span:first-child + div{
+            margin-right: 0 !important;
+            width: 45%;
+            float: left;
+        }
+        .criteria-value-container{
+            margin-right: 30px !important;
+            width: 45%;
+            float: right;
+        }
+        .has-model-select{
+            float:left;
+        }
+    }
+    label.hasCheckBox{
+        margin-left:0 !important;
+    }
+    .edit-dynamic-row-link{
+        margin-left: 0;
+        cursor: pointer;
+    }
+    .remove-dynamic-row-link{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: block;
+        .symbly(24px);
+        color:#a7a7a7 !important;
+        .opacity(0);
+        .animateAll(0.2s);
+    }
+    .dynamic-row-number-label{
+        position: absolute;
+        width: 25px;
+        text-align: right;
+        left:-32px;
+        top:0;
+        float: left;
+        line-height: 26px;
+        margin-right:15px;
+        font-weight: bold;
+        .t-shadow(0 1px 0 rgba(255, 255, 255, 0.8));
+    }
+    .hasDropDown{
+        width: auto !important;
+    }
+    &:hover{
+        .remove-dynamic-row-link{
+            .opacity(100);
+        }
+    }
+    .z-button{
+        margin-left:0;
+    }
+}
+
+.dynamic-row.clone{
+    padding: 15px;
+    position: absolute;
+    z-index: 10000;
+}
+
+.glow{
+	background-color: #ffffe0;
+	border-color: #e6db55;
+}
+
+.dynamic-sub-row{
+    ++.cf;
+    ++.border-box;
+    position: relative;
+    width: 100%;
+    display: block;
+    margin:0 0 10px 0;
+    .dynamic-action-attribute-should-set-value{
+        padding: 0;
+        width: auto;
+        margin-right:10px;
+    }
+    .dynamic-row-label{
+        width: 25%;
+    }
+    .dynamic-action-attribute-type-and-value-wrapper{
+        width: 70%;
+    }
+    + h3{
+        margin-top: 15px;
+    }
+}
+
+.dynamic-action-attribute-type{
+    width: 35%;
+    float: left;
+    > span{
+        line-height: 26px;
+    }
+    + .value-data{
+        width: 65%;
+        padding-left: 15px;
+    }
+}
+
+.Filters,
+.Triggers,
+.Actions,
+.EmailMessages{
+    .dynamic-row{
+        padding:10px 30px;
+    }
+}
+
+.sortable{
+    .dynamic-row:hover{
+        .radius(0 3px 3px 0);
+        background: #f0f0f0 url(../images/drag-handle.png) left top repeat-y;
+    }
+    .dynamic-row:active{
+        cursor: move;
+        background-color: #f5f5f5;
+    }
+    .expanded-row{
+        .dynamic-row:hover{
+            background-image: none !important;
+        }
+    }
+}
+
+.dynamic-row-label{
+    float: left;
+    line-height: 26px;
+    width:25%;
+    ++.border-box;
+}
+
+.dynamic-action-attribute-should-set-value,
+.dynamic-row-operator{
+    float: left;
+    width:20%;
+    ++.border-box;
+    padding-left: 15px;
+}
+
+.dynamic-action-attribute-type-and-value-wrapper,
+.dynamic-row-field{
+    float: right;
+    width: 75%;
+    ++.border-box;
+}
+
+.value-data{
+    float: right;
+    width:80%;
+    ++.border-box;
+}
+
+.first-value-area + .second-value-area{
+    //margin-top:10px;
+}
+
+.report-runtime-availability{
+    ++.border-box;
+    min-width: 145px;
+    position: relative;
+    display: block;
+    float: right;
+    line-height: 26px;
+    .smaller();
+    label{
+        float: right !important;
+        margin-right:5px;
+    }
+    .hasCheckBox{
+        float: left !important;
+        margin-left:0;
+        margin-right:8px !important;
+    }
+    margin:0 0 0 -160px;
+}
+
+.hasFilter{
+    .dynamic-row-label{
+        width:100%;
+    }
+    .dynamic-row-operator{
+        padding-left:0;
+    }
+    .value-data{
+        float: left;
+        width: 100%;
+        padding-right: 160px;
+    }
+    .dynamic-row-operator + .value-data{
+        padding-left: 15px;
+        width:80%;
+    }    
+    .remove-dynamic-row-link{
+        //top:42px;
+    }
+}
+
+.dynamic-and-for-mixed{
+    display: inline-block;
+    padding:5px 0;
+    font-weight: bold;
+}
+
+#show-triggers-structure-wrapper,
+#show-filters-structure-wrapper{
+    position: relative;
+    z-index: 1;
+    width:100%;
+    float: left;
+    margin-top:15px;
+    span{
+        width:120px;
+    }
+    input{
+        text-indent: 50px;
+    }
+}
+
+#show-triggers-structure-div-link,
+#show-filters-structure-div-link{
+    ++.z-link;
+}
+
+#RuntimeFiltersForPortletView{
+    float: left;
+    width: 100%;
+    .wrapper,
+    #edit-form,
+    .dynamic-row{
+        ++.unstyle-panel;
+    }
+    .dynamic-row{
+        padding: 0 0 15px 0;
+    }
+    .value-data{
+        width: 55%;
+        padding-left: 15px;
+    }
+    .dynamic-rows{
+        float: none;
+        ul{
+            padding: 15px 15px 5px 15px;
+        }
+    }
+    .view-toolbar-container{
+        clear: left;
+        margin:0 15px 15px 15px;
+        .box-sizing();
+        width: auto;
+    }
+}
+
+.ReportResultsComponentForPortletView{
+    position: relative;
+    .big-spinner{
+        float: left;
+        position: relative;
+        left: 50%;
+        margin:30px 0 0 -21px;
+	    height: 65px;
+    }
+}
+
+.ReportResultsGridView{
+    #report-results-grid-view{
+        overflow-x: auto;
+        > .items{
+            th, td{
+                border-left:1px solid #DFDFDF !important;
+                //text-align: center !important;
+            }
+            th{
+                border-top:1px solid #DFDFDF !important;
+            }
+            thead th:first-child{
+                border-left:none !important;
+            }
+            thead tr:first-child{
+                th, td{
+                    border-top: none !important;
+                }
+            }
+            tbody th:first-child{
+                padding-left:5px !important;
+                border-left:none !important;
+            }
+            tbody td:first-child{
+                border-left:none !important;
+            }
+            .expanded-row{
+                td, th{
+                    #gradient > .vertical( #222, #333 );
+                    color: #EFEFEF;
+                    border: 1px solid #333;
+                    a{
+                        color: #EFEFEF;
+                        &:hover{
+                            color: #fff;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .items{
+        overflow-x: hidden;
+    }
+}
+
+#MatrixReportResultsGridView #report-results-grid-view{
+    > .items th, td{
+        text-align: center !important;
+    }
+}
+
+#UserCannotRenderReportProperlySplashView{
+    float: left;
+    margin-bottom: 30px;
+}
+
+#ChartForReportWizardView{
+    .panel > label{
+        text-align: left;
+        display: block;
+        margin-bottom: 20px;
+    }
+    .right-side-edit-view-panel{
+        label{
+            float: none;
+        }
+    }
+}
+
+.hasDrillDownContent{
+    padding:0 5px 5px 5px !important;
+    ++.border-box;
+    #gradient > .vertical( #333, #555 );
+    .big-spinner{
+        margin-top:10px;
+    }
+}
+
+.drillDownContent{
+    background: #fff;
+    min-height: 60px;
+    border-top: none;
+    tbody{
+        td, th{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    }
+}
+
+.hasDrillDownLink{
+    padding: 10px 0 !important;
+    width:20px !important;
+    text-align: center !important;
+}
+
+.drilldown-link{
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    .symbly(18px);
+    position: relative;
+    left: 5px;
+}
+
+.refreshPortletLink{
+    position: absolute;
+    top:-28px;
+    right:10px;
+}
+
+.first-series-and-range-area,
+.second-series-and-range-area{
+    > div{
+        margin-bottom: 15px;
+        width: 50%;
+        float: left;
+        ++.border-box;
+        padding-right: 5px;
+        + div{
+            padding-left: 5px;
+            padding-right: 0;
+        }
+    }
+}
+
+#series-and-range-areas{
+    width: auto;
+    float: none;
+    clear: left;
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-bottom: 15px;
+    .buffer{
+        padding-left: 22px;
+    }
+}
+
+#MarketingListDetailsView,
+#ReportDetailsView{
+    h1{
+        margin-bottom: 15px;
+    }
+    .view-toolbar ul:first-child{
+        > li > a{
+            border-left: none;
+        }
+    }
+}
+
+.hasCheckboxes{
+    display: inline-block;
+    border-left: 1px solid #bababa;
+    text-indent: 0 !important;
+    vertical-align: middle;
+    padding: 0 0 0 15px;
+    line-height: 30px;
+    &:before{
+        content: "";
+        margin: 0;
+        display: none;
+    }
+    .hasCheckBox{
+        display: inline-block;
+        width: auto;
+        padding-left: 20px;
+        margin-right: 0;
+        position: relative;
+        top:3px;
+    }
+}
+
+.label-for-marketing-list-widgets,
+.label-for-report-widgets{
+    padding-right: 15px;
+    margin: 0 !important;
+    .smaller() !important;
+    font-weight: bold !important;
+}
+
+#reset-runtime-filters{
+    .z-label{
+        color:#666 !important;
+        .t-shadow( 0px 1px 0 rgba(255, 255, 255, 0.75) ) !important;
+        background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+    }
+}
+
+.zero-components-view{
+    float: left;
+    position: absolute;
+    left: 0;
+    top:75px;
+    width: 100%;
+    .large-icon{
+        border-right:none;
+        margin-right: 0;
+        width: 100%;
+        text-align:center;
+    }
+    h2{
+        padding-top:10px;
+        text-align: center;
+        width: 55%;
+        margin: 0 auto;
+    }
+    .large-icon:after{
+        margin-right: 45px;
+    }
+}
+
+.zero-components-view{
+    &.Actions, &.EmailMessages, &.WorkflowRulesOrder, &.TimeTrigger{
+        position: relative;
+        top:0;
+        left: 0;
+        float: none;
+    }
+}
+
+.related-model-selector{
+    float: left;
+    width: 75%;
+    margin:10px 0 0 25%;
+}
+
+.missing-report:after,
+.Warning .large-icon:after{
+	content:"j";
+	.symbly(250px);
+	line-height: 60%;
+}
+
+.SavedReport{
+	.large-icon:after{
+		content:"V";
+		.symbly(320px);
+		line-height: 55%;
+	}
+}
+
+.SavedWorkflow{
+	.large-icon:after{
+		content:'\20AC'; //euro
+		.symbly(330px);
+		line-height: 55%;
+	}
+}
+
+.FilterIconOrSomethingElse,
+.ZeroFilters{
+    .large-icon:after{
+        content:'\00A9';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroGroupBys{
+    .large-icon:after{
+        content:'\002A';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroDisplayAttributes{
+    .large-icon:after{
+        content:'\00AB';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.WorkflowRulesOrder,
+.ZeroOrderBys{
+    .large-icon:after{
+        content:'\2039';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroDrillDownDisplayAttributes{
+    .large-icon:after{
+        content:'\00BB';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroTriggers{
+    .large-icon:after{
+        content:'\007E';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroActions{
+    .large-icon:after{
+        content:'\00A3';
+        .symbly(300px);
+        line-height: 30%;   
+    }
+}
+
+.ZeroEmailMessages{
+    .large-icon:after{
+        content:'\00A5';
+        .symbly(235px);
+        line-height: 30%;   
+    }
+}
+
+.NoTimeTrigger,
+.ZeroTimeTrigger{
+    .large-icon:after{
+        content:'q';
+        .symbly(235px);
+        line-height: 30%;   
+    }
+}
+
+#ReportResultsSQLView{
+    padding: 15px;
+    font-family: monospace, monaco, sans-serif;
+    line-height: 18px;
+    color: #333;
+    > div + div{
+        margin-top:15px;
+    }
+}
+
+.Triggers{
+    .value-data{
+        padding-right: 0;
+    }
+}
+
+.EmailMessages{
+    .col-0{
+        width:20% !important;
+    }
+    .col-1{
+        width: 80% !important;
+    }
+    .panel{
+        width:100% !important;
+    }
+}
+
+
+.email-message-recipient-rows{
+    ++.border-box;
+    .hasDropDown{
+        float: left;
+        min-width: 20%;
+    }
+    .dynamic-row-label{
+        width: 100%;
+    }
+    .value-data{
+        padding-left: 15px;
+        .hasDropDown{
+            width: 100% !important;
+        }
+    }
+    .dynamic-sub-row{
+        padding:0 20px;
+        > div{
+            position: relative;
+        }
+    }
+    &:hover{
+        .remove-dynamic-email-message-recipient-row-link{
+            .opacity(100);
+        }
+    }
+}
+
+.remove-dynamic-email-message-recipient-row-link{
+    position: absolute;
+    right: 0;
+    top: 26px;
+    display: block;
+    .symbly(24px);
+    color:#a7a7a7 !important;
+    .opacity(0);
+    .animateAll(0.2s);
+}
+
+.email-message-recipient-type-selector-container{
+    width: 22%;
+    margin-top: 20px;
+}
+
+.all-related-field{
+    ++.border-box;
+    float: left;
+    width: 80%;
+    padding-left: 15px;
+    .value-data{
+        width: 44.5%;
+    }
+    > span{
+        float: left;
+        line-height: 26px;
+        + .value-data{
+            float: left;
+        }
+    }
+}
+
+.static-address-field{
+    ++.border-box;
+    float: left;
+    width: 80%;
+    .value-data{
+        width: 100%;
+        //float: left;
+	    + .value-data{
+			margin-top: 10px;
+	    }
+        > span{
+            float: left;
+            line-height: 26px;
+            width:30%;
+        }
+        > input {
+            float: left;
+            width: 70%;
+        }
+    }
+}
+
+/*By Time Workflow*/
+.zero-components-view.TimeTrigger,
+#time-trigger-container{
+	float: right !important;
+	width: 80% !important;
+	padding-left: 15px;
+	++.cf;
+	++.border-box;
+	.value-data {
+		float: left;
+		width: 55%;
+	}
+	.first-value-area{
+		margin-left: 15px;
+	}
+}
+
+.time-trigger-attribute-selector-container{
+	width: 20%;
+	float: left;
+	++.border-box;
+	min-height: 300px;
+}
+
+.dynamic-row-duration{
+	float: left;
+	width: 75%;
+	margin-left: 25%;
+	margin-top: 10px;
+	++.border-box;
+	padding-left: 15px;
+}
+
+/*for actions in WORKFLOWS hide/show sequence*/
+.ComponentForWorkflowWizardView{
+	.add-email-message-button-container,
+	.action-type-selector-container{
+		width: 20%;
+		float: left !important;
+		++.cf;
+		++.border-box;
+	}
+	.droppable-dynamic-rows-container,
+	.zero-components-view{
+		float: left !important;
+		++.border-box;
+	}
+	.Actions,
+	.EmailMessages,
+	.TimeTrigger{
+		&.droppable-dynamic-rows-container,
+		&.zero-components-view{
+			width: 80% !important;
+			padding-left: 15px;
+		}
+	}
+	.edit-dynamic-row-link{
+		display:none;
+	}
+	.ui-sortable{
+		min-height: 300px;
+		position:relative;
+	}
+}
+
+.action-type-selector-container{
+	> .hasDropDown{
+		float: none;
+		width:100%;
+	}
+	.related-model-selector{
+		margin-left: 0;
+		margin-top:15px;
+		width: 100%;
+		float: none;
+	}
+}
+
+#AddEmailMessageLink{
+	margin-left: 0;
+}
+
+/*WorkFlow Rules Order*/
+.workflow-order-module-selector-container{
+	width: 20%;
+	float: left !important;
+	++.cf;
+	++.border-box;
+	min-height: 300px;
+}
+
+#workflow-order-container,
+.WorkflowRulesOrder,
+.no-workflows-to-order-view{
+	float: right !important;
+	++.border-box;
+	width: 80% !important;
+	padding-left: 15px;
+	+ .float-bar{
+		margin-top: 15px;
+	}
+}
+
+.workflow-order-container,
+.no-workflows-to-order-view{
+	position: relative;
+	top: 0;
+	left: 0;
+
+	text-align: center;
+	.large-icon:after{
+		content:"j";
+		.symbly(200px);
+		line-height: 60%;
+	}
+	p{
+		font-size:16px;
+		line-height:24px;
+		color:#555;
+		font-weight:bold;
+		margin:15px 0 0 0;
+	}
+}

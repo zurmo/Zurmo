@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -32,6 +42,20 @@
     {
         const DATETIME_FORMAT_DATE_WIDTH = 'short';
         const DATETIME_FORMAT_TIME_WIDTH = 'short';
+
+        /**
+         * Convert month to a display label. If the month is invalid then it just returns the month passed in.
+         * @param string $month
+         * @return mixed
+         */
+        public static function getMonthName($month)
+        {
+            if ($month != null)
+            {
+                return Yii::app()->locale->getMonthName((int)$month);
+            }
+            return $month;
+        }
 
         /**
          * For the DateTime formatted attributes, get the locale specific date time format string.
@@ -125,8 +149,12 @@
         public static function convertTimestampToDbFormatDate($timestamp)
         {
             assert('is_int($timestamp)');
-            return Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
+            $timeZone = date_default_timezone_get();
+            date_default_timezone_set('GMT');
+            $result   = Yii::app()->dateFormatter->format(DatabaseCompatibilityUtil::getDateFormat(),
                                                      $timestamp);
+            date_default_timezone_set($timeZone);
+            return $result;
         }
 
         public static function convertTimestampToDbFormatDateTime($timestamp)
@@ -265,14 +293,42 @@
                         $dateTime->getTimestamp());
         }
 
-        public static function isDateTimeValueNull(RedBeanModel $model, $attributeName)
+        public static function isDateValueNull(RedBeanModel $model, $attributeName)
         {
             assert('is_string($attributeName) || $attributeName == null');
-            if ($model->$attributeName != null && $model->$attributeName != '0000-00-00 00:00:00')
+            return self::isDateStringNull($model->$attributeName);
+        }
+
+        public static function isDateStringNull($date)
+        {
+            assert('is_string($date) || $date == null');
+            if ($date != null && $date != '0000-00-00')
             {
                 return false;
             }
             return true;
+        }
+
+        public static function isDateTimeValueNull(RedBeanModel $model, $attributeName)
+        {
+            assert('is_string($attributeName) || $attributeName == null');
+            return self::isDateTimeStringNull($model->$attributeName);
+        }
+
+        public static function isDateTimeStringNull($dateTime)
+        {
+            assert('is_string($dateTime) || $dateTime == null');
+            if ($dateTime != null && $dateTime != '0000-00-00 00:00:00')
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static function resolveDateAsDateTime($date)
+        {
+            assert('is_string($date)');
+            return $date . ' 00:00:00';
         }
     }
 ?>

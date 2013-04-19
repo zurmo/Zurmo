@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,54 +20,28 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
-     * The base View for a module's mass edit view.
+     * The base View for a module's mass delete view.
      */
-    class MassDeleteView extends EditView
+    class MassDeleteView extends MassActionRequiringConfirmationView
     {
-        /**
-         * Array of booleans indicating
-         * which attributes are currently trying to
-         * be mass updated
-         */
-        protected $activeAttributes;
-
-        protected $alertMessage;
-
-        protected $selectedRecordCount;
-
-        protected $title;
-
-        protected $moduleClassName;
-
-        /**
-         * Constructs a detail view specifying the controller as
-         * well as the model that will have its mass delete displayed.
-         */
-        public function __construct($controllerId, $moduleId, RedBeanModel $model, $activeAttributes, $selectedRecordCount, $title, $alertMessage = null, $moduleClassName)
+        public static function getDesignerRulesType()
         {
-            assert('is_array($activeAttributes)');
-            assert('is_string($title)');
-
-            $this->controllerId                       = $controllerId;
-            $this->moduleId                           = $moduleId;
-            $this->model                              = $model;
-            $this->modelClassName                     = get_class($model);
-            $this->modelId                            = $model->id;
-            $this->activeAttributes                   = $activeAttributes;
-            $this->selectedRecordCount                = $selectedRecordCount;
-            $this->title                              = $title;
-            $this->alertMessage                       = $alertMessage;
-            $this->moduleClassName                    = $moduleClassName;
-        }
-
-        protected function getSelectedRecordCount()
-        {
-            return $this->selectedRecordCount;
+            return 'MassDeleteView';
         }
 
         public static function getDefaultMetadata()
@@ -76,72 +50,24 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type' => 'CancelLink'),
                             array('type' => 'DeleteButton',
-                                  'htmlOptions' => array(
-                                                         'params' => array(
-                                                            'selectedRecordCount' => 'eval:$this->getselectedRecordCount()'),
-
-                                   ),
-                            ),
+                                  'htmlOptions' => 'eval:$this->getSubmitButtonHtmlOptions()',
+                                  ),
                         ),
-                    ),
-                    'nonPlaceableAttributeNames' => array(
-                        'name',
                     ),
                 ),
             );
-            return $metadata;
+            return CMap::mergeArray(parent::getDefaultMetadata(), $metadata);
         }
 
-        protected function renderContent()
+        protected static function getFormId()
         {
-            $content  = '<div class="wrapper">';
-            $content .= $this->renderTitleContent();
-            $content .= '<div class="wide form">';
-            $clipWidget = new ClipWidget();
-            list($form, $formStart) = $clipWidget->renderBeginWidget(
-                                                                'ZurmoActiveForm',
-                                                                array('id' => 'delete-form', 'enableAjaxValidation' => false)
-                                                            );
-            $content .= $formStart;
-            if (!empty($this->alertMessage))
-            {
-                $content .= HtmlNotifyUtil::renderAlertBoxByMessage($this->alertMessage);
-            }
-            $content .= $this->renderOperationDescriptionContent();
-            $actionElementContent = $this->renderActionElementBar(true);
-            if ($actionElementContent != null)
-            {
-                $content .= '<div class="view-toolbar-container clearfix"><div class="form-toolbar">';
-                $content .= $actionElementContent;
-                $content .= '</div></div>';
-            }
-            $formEnd = $clipWidget->renderEndWidget();
-            $content .= $formEnd;
-            $content .= '</div></div>';
-            return $content;
+            return 'delete-form';
         }
 
-        protected function renderTitleContent()
+        protected function renderItemOperationType()
         {
-            return '<h1>' . $this->title . '</h1>';
-        }
-
-        protected function renderOperationDescriptionContent()
-        {
-            $highlight = ZurmoHtml::tag('em', array(), Zurmo::t('Core', 'Mass Delete is not reversable.'));
-            $message  = ZurmoHtml::tag('strong', array(), $highlight) .
-                        '<br />' . '<strong>' . $this->selectedRecordCount . '</strong>&#160;' .
-                        Zurmo::t('Core', $this->moduleClassName . 'SingularLabel|' . $this->moduleClassName . 'PluralLabel',
-                        array_merge(array($this->selectedRecordCount), LabelUtil::getTranslationParamsForAllModules())) .
-                        ' ' . Zurmo::t('Core', 'selected for removal.');
-            return ZurmoHtml::wrapLabel($message, 'operation-description');
-        }
-
-        public static function getDesignerRulesType()
-        {
-            return 'MassDeleteView';
+            return 'removal';
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,15 +20,25 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
      * Class for creating Mission models.  A mission is similar to a task except a user can only have one mission at
      * a time and a mission cannot be assigned.  A user must take a mission.
      */
-    class Mission extends OwnedSecurableItem implements MashableActivityInterface
+    class Mission extends OwnedSecurableItem implements MashableActivityInterface, MashableInboxInterface
     {
         const STATUS_AVAILABLE = 1;
 
@@ -45,6 +55,11 @@
         private $sendTakenByUserUnreadCommentNotification = false;
 
         public static function getMashableActivityRulesType()
+        {
+            return 'Mission';
+        }
+
+        public static function getMashableInboxRulesType()
         {
             return 'Mission';
         }
@@ -89,15 +104,18 @@
                     'description',
                     'dueDateTime',
                     'latestDateTime',
-                    'ownerHasReadLatest',
                     'reward',
                     'status',
-                    'takenByUserHasReadLatest',
                 ),
                 'relations' => array(
-                    'comments'                 => array(RedBeanModel::HAS_MANY,  'Comment', RedBeanModel::OWNED, 'relatedModel'),
-                    'files'                    => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED, 'relatedModel'),
-                    'takenByUser'              => array(RedBeanModel::HAS_ONE,   'User'),
+                    'comments'                    => array(RedBeanModel::HAS_MANY,  'Comment', RedBeanModel::OWNED,
+                                                        RedBeanModel::LINK_TYPE_POLYMORPHIC, 'relatedModel'),
+                    'files'                       => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED,
+                                                        RedBeanModel::LINK_TYPE_POLYMORPHIC, 'relatedModel'),
+                    'takenByUser'                 => array(RedBeanModel::HAS_ONE,   'User', RedBeanModel::NOT_OWNED,
+                                                        RedBeanModel::LINK_TYPE_SPECIFIC, 'takenByUser'),
+                    'personsWhoHaveNotReadLatest' => array(RedBeanModel::HAS_MANY,  'PersonWhoHaveNotReadLatest',
+                                                        RedBeanModel::OWNED),
                 ),
                 'rules' => array(
                     array('description',              'required'),
@@ -108,9 +126,7 @@
                     array('latestDateTime',           'type', 'type' => 'datetime'),
                     array('status',                   'required'),
                     array('status',                   'type',    'type' => 'integer'),
-                    array('ownerHasReadLatest',       'boolean'),
                     array('reward',                   'type', 'type' => 'string'),
-                    array('takenByUserHasReadLatest', 'boolean'),
 
                 ),
                 'elements' => array(
@@ -120,24 +136,30 @@
                     'latestDateTime'    => 'DateTime',
                     'reward'            => 'TextArea',
                 ),
-                'defaultSortAttribute' => 'subject',
+                'defaultSortAttribute' => 'description',
                 'noAudit' => array(
                     'description',
                     'dueDateTime',
                     'latestDateTime',
-                    'ownerHasReadLatest',
                     'reward',
-                    'takenByUserHasReadLatest'
                 ),
             );
             return $metadata;
         }
 
-        protected function untranslatedAttributeLabels()
+        protected static function translatedAttributeLabels($language)
         {
-            return array_merge(parent::untranslatedAttributeLabels(),
+            return array_merge(parent::translatedAttributeLabels($language),
                 array(
-                    'dueDateTime'       => 'Due On',
+                    'comments'        => Zurmo::t('CommentsModule', 'Comments', array(), null, $language),
+                    'description'     => Zurmo::t('ZurmoModule',    'Description', array(), null, $language),
+                    'dueDateTime'     => Zurmo::t('TasksModule', 'Due On', array(), null, $language),
+                    'files'           => Zurmo::t('ZurmoModule', 'Files', array(), null, $language),
+                    'latestDateTime'  => Zurmo::t('ActivitiesModule', 'Latest Date Time', array(), null, $language),
+                    'personsWhoHaveNotReadLatest' => Zurmo::t('MissionsModule', 'Persons Who Have Not Read Latest', array(), null, $language),
+                    'reward'          => Zurmo::t('MissionsModule', 'Reward', array(), null, $language),
+                    'status'          => Zurmo::t('MissionsModule', 'Status', array(), null, $language),
+                    'takenByUser'     => Zurmo::t('MissionsModule', 'Taken By User', array(), null, $language),
                 )
             );
         }
@@ -164,34 +186,55 @@
          */
         protected function beforeSave()
         {
+            $missionRules = new MissionMashableInboxRules();
+            $personsToAddAsHaveNotReadLatest = array();
             if (parent::beforeSave())
             {
-                if ($this->comments->isModified() || $this->getIsNewModel())
+                if ($this->getIsNewModel())
                 {
                     $this->unrestrictedSet('latestDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
-                    if ($this->getIsNewModel())
-                    {
-                        $this->ownerHasReadLatest = true;
-                    }
+                    $personsToAddAsHaveNotReadLatest = MissionsUtil::resolvePeopleToSendNotificationToOnNewMission($this);
+                }
+                if (isset($this->originalAttributeValues['status']) &&
+                    $this->originalAttributeValues['status'] != $this->status &&
+                    $this->status == self::STATUS_TAKEN)
+                {
+                    MissionsUtil::markAllUserHasReadLatestExceptOwnerAndTakenBy($this);
                 }
                 if ($this->comments->isModified())
                 {
+                    $this->unrestrictedSet('latestDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
                     foreach ($this->comments as $comment)
                     {
                         if ($comment->id < 0)
                         {
                             if (Yii::app()->user->userModel != $this->owner)
                             {
-                                $this->ownerHasReadLatest                 = false;
                                 $this->sendOwnerUnreadCommentNotification = true;
                             }
                             if (Yii::app()->user->userModel != $this->takenByUser && $this->takenByUser->id > 0)
                             {
-                                $this->takenByUserHasReadLatest                 = false;
                                 $this->sendTakenByUserUnreadCommentNotification = true;
                             }
                         }
                     }
+                    $people = MissionsUtil::resolvePeopleToSendNotificationToOnNewComment($this, Yii::app()->user->userModel);
+                    foreach ($people as $person)
+                    {
+                        if ($missionRules->hasUserReadLatest($this, $person))
+                        {
+                            if (!in_array($person, $personsToAddAsHaveNotReadLatest))
+                            {
+                                $personsToAddAsHaveNotReadLatest[] = $person;
+                            }
+                        }
+                    }
+                }
+                foreach ($personsToAddAsHaveNotReadLatest as $person)
+                {
+                    $personWhoHaveNotReadLatest = $missionRules->makePersonWhoHasNotReadLatest($person);
+                    $personsToAddAsHaveNotReadLatest[] = $personWhoHaveNotReadLatest;
+                    $this->personsWhoHaveNotReadLatest->add($personWhoHaveNotReadLatest);
                 }
                 return true;
             }
@@ -237,15 +280,6 @@
                     $messageContent = Zurmo::t('MissionsModule', 'A mission you completed has been accepted');
                     MissionsUtil::makeAndSubmitStatusChangeNotificationMessage($this->takenByUser, $this->id, $messageContent);
                 }
-            }
-            if ($this->getScenario() != 'importModel' && $this->sendOwnerUnreadCommentNotification)
-            {
-                MissionsUtil::makeAndSubmitNewCommentNotificationMessage($this->owner);
-            }
-            elseif ($this->getScenario() != 'importModel' &&
-                   $this->sendTakenByUserUnreadCommentNotification && $this->takenByUser->id > 0)
-            {
-                MissionsUtil::makeAndSubmitNewCommentNotificationMessage($this->takenByUser);
             }
             parent::afterSave();
         }

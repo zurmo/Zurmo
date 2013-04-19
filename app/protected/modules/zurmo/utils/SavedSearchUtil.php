@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -91,9 +101,10 @@
             }
         }
 
-        public static function setDataByKeyAndDataCollection($key, SearchAttributesDataCollection $dataCollection)
+        public static function setDataByKeyAndDataCollection($key, SearchAttributesDataCollection $dataCollection, $stickyData)
         {
             assert('is_string($key)');
+            assert('is_array($stickyData)');
             $stickyData['dynamicClauses']          = $dataCollection->getSanitizedDynamicSearchAttributes();
             $stickyData['dynamicStructure']        = $dataCollection->getDynamicStructure();
             $anyMixedAttributes                    = $dataCollection->resolveSearchAttributesFromSourceData();
@@ -109,9 +120,28 @@
             $stickyData[SearchForm::SELECTED_LIST_ATTRIBUTES] = $dataCollection->getSelectedListAttributesFromModel();
             if ($dataCollection instanceof SavedSearchAttributesDataCollection)
             {
-                $stickyData['savedSearchId']           = $dataCollection->getSavedSearchId();
+                $stickyData['savedSearchId'] = $dataCollection->getSavedSearchId();
             }
-            Yii::app()->user->setState($key, serialize($stickyData));
+
+            // Resolve the sort and desc attribute from source data and set it in sticky array
+            $listSortModel = get_class($dataCollection->getModel()->getModel());
+
+            $sortAttribute = $dataCollection->resolveSortAttributeFromSourceData($listSortModel);
+
+            if (!empty($sortAttribute))
+            {
+                $stickyData['sortAttribute'] = $sortAttribute;
+                if ($dataCollection->resolveSortDescendingFromSourceData($listSortModel))
+                {
+                    $stickyData['sortDescending'] = true;
+                }
+                else
+                {
+                    $stickyData['sortDescending'] = false;
+                }
+            }
+
+            StickySearchUtil::setDataByKeyAndData($key, $stickyData);
         }
 
         public static function resolveSearchFormByStickyDataAndModel($stickyData, SavedDynamicSearchForm $model)
@@ -149,6 +179,24 @@
                $model->getListAttributesSelector() != null)
             {
                 $model->getListAttributesSelector()->setSelected($stickyData[SearchForm::SELECTED_LIST_ATTRIBUTES]);
+            }
+
+            // If the sort attribute is not in get request but in sticky data, set it into get array
+            $listModelClassName = get_class($model->getModel());
+            if (!isset($_GET[$listModelClassName . '_sort']) && isset($stickyData['sortAttribute']))
+            {
+                if ($stickyData['sortAttribute'] != '')
+                {
+                    $model->sortAttribute = $stickyData['sortAttribute'];
+                }
+
+                if (isset($stickyData['sortDescending']))
+                {
+                    if ($stickyData['sortDescending'] == true)
+                    {
+                        $model->sortDescending = ".desc";
+                    }
+                }
             }
         }
     }

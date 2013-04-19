@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class AccountsModule extends SecurableModule
@@ -43,12 +53,13 @@
             return array('Account');
         }
 
-        public static function getUntranslatedRightsLabels()
+        public static function getTranslatedRightsLabels()
         {
+            $params                              = LabelUtil::getTranslationParamsForAllModules();
             $labels                              = array();
-            $labels[self::RIGHT_CREATE_ACCOUNTS] = 'Create AccountsModulePluralLabel';
-            $labels[self::RIGHT_DELETE_ACCOUNTS] = 'Delete AccountsModulePluralLabel';
-            $labels[self::RIGHT_ACCESS_ACCOUNTS] = 'Access AccountsModulePluralLabel Tab';
+            $labels[self::RIGHT_CREATE_ACCOUNTS] = Zurmo::t('AccountsModule', 'Create AccountsModulePluralLabel',     $params);
+            $labels[self::RIGHT_DELETE_ACCOUNTS] = Zurmo::t('AccountsModule', 'Delete AccountsModulePluralLabel',     $params);
+            $labels[self::RIGHT_ACCESS_ACCOUNTS] = Zurmo::t('AccountsModule', 'Access AccountsModulePluralLabel Tab', $params);
             return $labels;
         }
 
@@ -69,16 +80,18 @@
                 ),
                 'tabMenuItems' => array(
                     array(
-                        'label' => 'AccountsModulePluralLabel',
-                        'url'   => array('/accounts/default'),
-                        'right' => self::RIGHT_ACCESS_ACCOUNTS,
+                        'label'  => "eval:Zurmo::t('AccountsModule', 'AccountsModulePluralLabel', \$translationParams)",
+                        'url'    => array('/accounts/default'),
+                        'right'  => self::RIGHT_ACCESS_ACCOUNTS,
+                        'mobile' => true,
                     ),
                 ),
                 'shortcutsCreateMenuItems' => array(
                     array(
-                        'label' => 'AccountsModuleSingularLabel',
-                        'url'   => array('/accounts/default/create'),
-                        'right' => self::RIGHT_CREATE_ACCOUNTS,
+                        'label'  => "eval:Zurmo::t('AccountsModule', 'AccountsModuleSingularLabel', \$translationParams)",
+                        'url'    => array('/accounts/default/create'),
+                        'right'  => self::RIGHT_CREATE_ACCOUNTS,
+                        'mobile' => true,
                     ),
                 )
             );
@@ -110,9 +123,9 @@
             return 'AccountsDefaultDataMaker';
         }
 
-        public static function getDemoDataMakerClassName()
+        public static function getDemoDataMakerClassNames()
         {
-            return 'AccountsDemoDataMaker';
+            return array('AccountsDemoDataMaker');
         }
 
         public static function getGlobalSearchFormClassName()
@@ -123,6 +136,31 @@
         public static function hasPermissions()
         {
             return true;
+        }
+
+        public static function isReportable()
+        {
+            return true;
+        }
+
+        public static function canHaveWorkflow()
+        {
+            return true;
+        }
+
+        public static function canHaveContentTemplates()
+        {
+            return true;
+        }
+
+        protected static function getSingularModuleLabel($language)
+        {
+            return Zurmo::t('AccountsModule', 'Account', array(), null, $language);
+        }
+
+        protected static function getPluralModuleLabel($language)
+        {
+            return Zurmo::t('AccountsModule', 'Accounts', array(), null, $language);
         }
     }
 ?>

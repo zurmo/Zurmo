@@ -116,7 +116,7 @@ class CsvParser
 
 
       // End of field
-      else if ( $ch == $delimiter && !$quoted )
+      elseif ( $ch == $delimiter && !$quoted )
       {
           $row[++$idx] = ""; //add an empty string for next field to start
       }

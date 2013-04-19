@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class SearchFormTest extends BaseTest
@@ -39,7 +49,7 @@
          */
         public function testGetSearchFormAttributeMappingRulesTypeByAttributeWithInvalidAttribute()
         {
-            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
             $searchForm::getSearchFormAttributeMappingRulesTypeByAttribute('AttributeDoesNotExist');
         }
 
@@ -48,7 +58,7 @@
          */
         public function testGetSearchFormAttributeMappingRulesTypeByAttributeWithValidAttribute()
         {
-            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
             $mappingRulesType = $searchForm::getSearchFormAttributeMappingRulesTypeByAttribute('differentOperatorA');
             $this->assertEquals('OwnedItemsOnly', $mappingRulesType);
         }
@@ -58,13 +68,13 @@
          */
         public function testInvalidDynamicDateAttributeOnForm()
         {
-            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
             $searchForm->something__NotReal;
         }
 
         public function testDynamicDateAttributeOnForm()
         {
-            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
 
             //Test get and set.
             $this->assertEquals(null, $searchForm->date__Date);
@@ -89,7 +99,7 @@
             $this->assertEquals($compareData, $searchForm->attributeNames());
 
             //Check some other methods to make sure they work ok.
-            $this->assertFalse ($searchForm->isRelation('date__Date'));
+            $this->assertFalse ($searchForm::isRelation('date__Date'));
             $this->assertTrue  ($searchForm->isAttribute('date__Date'));
             $this->assertFalse ($searchForm->isAttributeRequired('date__Date'));
 
@@ -128,7 +138,7 @@
 
         public function testDynamicDateTimeAttributeOnForm()
         {
-            $searchForm = new ASearchFormTestModel(new MixedRelationsModel());
+            $searchForm = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
 
             //Test get and set.
             $this->assertEquals(null, $searchForm->dateTime__DateTime);
@@ -136,7 +146,7 @@
             $this->assertEquals('aTest', $searchForm->dateTime__DateTime);
 
             //Check some other methods to make sure they work ok.
-            $this->assertFalse ($searchForm->isRelation('dateTime__DateTime'));
+            $this->assertFalse ($searchForm::isRelation('dateTime__DateTime'));
             $this->assertTrue  ($searchForm->isAttribute('dateTime__DateTime'));
             $this->assertFalse ($searchForm->isAttributeRequired('dateTime__DateTime'));
 

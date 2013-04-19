@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -143,8 +153,8 @@
             $quote = DatabaseCompatibilityUtil::getQuote();
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Account');
             $orderByColumnName = RedBeanModelDataProvider::resolveSortAttributeColumnName('Account', $joinTablesAdapter, 'owner');
-            $this->assertEquals("{$quote}person{$quote}.{$quote}lastname{$quote}", $orderByColumnName);
-
+            $this->assertEquals("concat({$quote}person{$quote}.{$quote}firstname{$quote}, {$quote}person{$quote}.{$quote}lastname{$quote})",
+                                $orderByColumnName);
             $leftTablesAndAliases = $joinTablesAdapter->getLeftTablesAndAliases();
             $this->assertEquals('person',    $leftTablesAndAliases[1]['tableName']);
             $this->assertEquals('person',    $leftTablesAndAliases[1]['tableAliasName']);
@@ -161,7 +171,8 @@
             $compareSubsetSql .= "{$quote}person$quote.{$quote}id{$quote} = {$quote}_user$quote.{$quote}person_id{$quote} ";
             $compareSubsetSql .= " where {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
             $compareSubsetSql .= "{$quote}account{$quote}.{$quote}ownedsecurableitem_id{$quote} ";
-            $compareSubsetSql .= "order by {$quote}person{$quote}.{$quote}lastname{$quote} limit 5 offset 1";
+            $compareSubsetSql .= "order by concat({$quote}person{$quote}.{$quote}firstname{$quote}, ";
+            $compareSubsetSql .= "{$quote}person{$quote}.{$quote}lastname{$quote}) limit 5 offset 1";
             $this->assertEquals($compareSubsetSql, $subsetSql);
         }
 

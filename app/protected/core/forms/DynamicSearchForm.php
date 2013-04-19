@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -70,13 +80,15 @@
         {
             if (count($this->dynamicClauses) > 0)
             {
-                $formula = strtolower($this->$attribute);
-                if (!$this->validateParenthesis($formula))
+                if (null != $errorMessage = SQLOperatorUtil::
+                           resolveValidationForATemplateSqlStatementAndReturnErrorMessage($this->$attribute,
+                          count($this->dynamicClauses)))
                 {
-                    $errorContent = Zurmo::t('Core', 'Please fix your parenthesis.');
+                    $this->addError('dynamicStructure', $errorMessage);
                 }
                 else
                 {
+                    $formula = strtolower($this->dynamicStructure);
                     $formula = str_replace("(", "", $formula);
                     $formula = str_replace(")", "", $formula);
                     $arguments = preg_split("/or|and/", $formula);
@@ -96,38 +108,6 @@
                 {
                     $this->addError('dynamicStructure', Zurmo::t('Core', 'The structure is invalid. {error}', array('{error}' => $errorContent)));
                 }
-            }
-        }
-
-        /*
-         * Function for validation of parenthesis in a formula
-         */
-        protected function  validateParenthesis($formula)
-        {
-            $val = 0;
-            for ($i = 0; $i <= strlen($formula); $i++)
-            {
-                $char = substr($formula, $i, 1);
-                if ($char === "(")
-                {
-                    $val += 1;
-                }
-                elseif ($char === ")")
-                {
-                    $val -= 1;
-                }
-                if ($val < 0)
-                {
-                    return false;
-                }
-            }
-            if ($val !== 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
 

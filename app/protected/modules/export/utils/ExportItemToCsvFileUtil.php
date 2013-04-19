@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class ExportItemToCsvFileUtil extends ExportItemToOutputUtil
@@ -30,21 +40,24 @@
          * Export data array into csv format and send generated file to web browser
          * or return csv string, depending on $download parameter.
          * @param array $data
+         * @param array $headerData
+         * @param string $exportFileName
          * @param boolean $download. Should send generated csv string to output or not.
+         * @return string output
          */
-        public static function export(& $data, $exportFilename = 'exports.csv', $download = false)
+        public static function export($data, $headerData = array(), $exportFileName = 'exports.csv', $download = false)
         {
+            assert('is_array($headerData)');
+            assert('is_string($exportFileName)');
+            assert('is_bool($download)');
             $output = '';
 
             if (count($data) > 0)
             {
-                $headerRow = array();
-                foreach ($data[0] as $key => $value)
+                if (count($headerData) > 0)
                 {
-                    $headerRow[] = $key;
+                    $output = self::arraytoCsv($headerData, true);
                 }
-                $output = self::arraytoCsv($headerRow, true);
-
                 foreach ($data as $row)
                 {
                     $output .= self::arraytoCsv($row);
@@ -52,8 +65,8 @@
             }
             if ($download)
             {
-                Yii::app()->request->sendFile($exportFilename, $output, self::$mimeType, false);
-                exit;
+                Yii::app()->request->sendFile($exportFileName, $output, self::$mimeType, false);
+                Yii::app()->end(0, false);
             }
             else
             {
@@ -67,6 +80,7 @@
          * @param boolean $isHeaderRow
          * @param string $delimiter
          * @param string $enclosure
+         * @return string
          */
         protected static function arrayToCsv($row, $isHeaderRow = false, $delimiter = ',', $enclosure = '"') // Not Coding Standard
         {

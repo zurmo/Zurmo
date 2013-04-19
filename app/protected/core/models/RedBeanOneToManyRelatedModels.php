@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     $basePath = Yii::app()->getBasePath();
@@ -34,27 +44,42 @@
     class RedBeanOneToManyRelatedModels extends RedBeanMutableRelatedModels
     {
         protected $relatedModelClassName;
+
         protected $owns;
-        protected $polyName;
+
+        /**
+         * @see RedBeanModel::LINK_TYPE_ASSUMPTIVE
+         * @see RedBeanModel::LINK_TYPE_SPECIFIC
+         * @see RedBeanModel::LINK_TYPE_POLYMORPHIC
+         * @var integer
+         */
+        protected $linkType;
+
+        protected $linkName;
 
         /**
          * Constructs a new RedBeanOneToManyRelatedModels. The models are retrieved lazily.
          * RedBeanOneToManyRelatedModels are only constructed with beans by the model.
          * Beans are never used by the application directly.
          */
-        public function __construct(RedBean_OODBBean $bean, $modelClassName, $relatedModelClassName, $owns, $polyName = null)
+        public function __construct(RedBean_OODBBean $bean, $modelClassName, $relatedModelClassName,
+                                    $owns, $linkType, $linkName = null)
         {
             assert('is_string($modelClassName)');
             assert('is_string($relatedModelClassName)');
             assert('$modelClassName        != ""');
             assert('$relatedModelClassName != ""');
             assert('is_bool($owns)');
-            assert('is_string($polyName) || $polyName == null');
+            assert('is_int($linkType)');
+            assert('is_string($linkName) || $linkName == null');
+            assert('($linkType == RedBeanModel::LINK_TYPE_ASSUMPTIVE && $linkName == null) ||
+                    ($linkType != RedBeanModel::LINK_TYPE_ASSUMPTIVE && $linkName != null)');
             $this->rewind();
             $this->modelClassName        = $modelClassName;
             $this->relatedModelClassName = $relatedModelClassName;
             $this->owns                  = $owns;
-            $this->polyName              = $polyName;
+            $this->linkType              = $linkType;
+            $this->linkName              = $linkName;
             $this->constructRelatedBeansAndModels($modelClassName, $bean);
         }
 
@@ -84,20 +109,21 @@
                 {
                     if ($this->bean->id > 0)
                     {
-                        if ($this->polyName != null)
+                        if ($this->linkType == RedBeanModel::LINK_TYPE_POLYMORPHIC)
                         {
                             $value           = array();
                             $values['id']    = $this->bean->id;
                             $values['type']  = $this->bean->getMeta('type');
 
                             $this->relatedBeansAndModels = array_values(R::find( $tableName,
-                                                                    strtolower($this->polyName) . '_id = :id AND ' .
-                                                                    strtolower($this->polyName) . '_type = :type',
+                                                                    strtolower($this->linkName) . '_id = :id AND ' .
+                                                                    strtolower($this->linkName) . '_type = :type',
                                                                     $values));
                         }
                         else
                         {
-                            $relatedIds                  = ZurmoRedBeanLinkManager::getKeys($this->bean, $tableName);
+                            $relatedIds                  = ZurmoRedBeanLinkManager::getKeys($this->bean, $tableName,
+                                                                                            $this->resolveLinkNameForCasing());
                             $this->relatedBeansAndModels = array_values(R::batch($tableName, $relatedIds));
                         }
                     }
@@ -127,14 +153,14 @@
             }
             foreach ($this->deferredRelateBeans as $bean)
             {
-                if ($this->polyName != null)
+                if ($this->linkType == RedBeanModel::LINK_TYPE_POLYMORPHIC)
                 {
                     if ($this->bean->id == null)
                     {
                         R::store($this->bean);
                     }
-                    $polyIdFieldName   = strtolower($this->polyName) . '_id';
-                    $polyTypeFieldName = strtolower($this->polyName) . '_type';
+                    $polyIdFieldName          = strtolower($this->linkName) . '_id';
+                    $polyTypeFieldName        = strtolower($this->linkName) . '_type';
                     $bean->$polyTypeFieldName = $this->bean->getMeta('type');
                     $bean->$polyIdFieldName   = $this->bean->id;
                     if (!RedBeanDatabase::isFrozen())
@@ -145,11 +171,13 @@
                 }
                 else
                 {
-                    ZurmoRedBeanLinkManager::link($bean, $this->bean);
+                    ZurmoRedBeanLinkManager::link($bean, $this->bean, $this->resolveLinkNameForCasing());
                     if (!RedBeanDatabase::isFrozen())
                     {
-                        $tableName  = RedBeanModel::getTableName($this->modelClassName);
-                        $columnName = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';
+                        $tableName        = RedBeanModel::getTableName($this->modelClassName);
+                        $columnName       = RedBeanModel::getTableName($this->relatedModelClassName) . '_id';
+                        $columnName       = ZurmoRedBeanLinkManager::
+                                            resolveColumnPrefix($this->resolveLinkNameForCasing()) . $columnName;
                         RedBeanColumnTypeOptimizer::optimize($tableName, $columnName, 'id');
                     }
                 }
@@ -161,7 +189,7 @@
             {
                 if (!$this->owns)
                 {
-                    ZurmoRedBeanLinkManager::breakLink($bean, $tableName);
+                    ZurmoRedBeanLinkManager::breakLink($bean, $tableName, $this->resolveLinkNameForCasing());
                     R::store($bean);
                 }
                 else
@@ -171,6 +199,14 @@
             }
             $this->deferredUnrelateBeans = array();
             return true;
+        }
+
+        protected function resolveLinkNameForCasing()
+        {
+            if ($this->linkName != null)
+            {
+                return strtolower($this->linkName);
+            }
         }
 
         /**

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class ModelAttributeRulesToDefaultValueMappingRuleUtilTest extends ImportBaseTest
@@ -46,6 +56,24 @@
 
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
                      getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem', 'dateTime', 'defaultValue');
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
+            $this->assertEquals($compareData, $rules);
+
+            //Test multiple variations of dateTime.  Required/Not-Required. Also when having a dependency
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem5', 'requiredDateTime', 'defaultValue', true);
+            $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'),
+                                 array('defaultValue',  'required'));
+            $this->assertEquals($compareData, $rules);
+
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem5', 'startDateTime', 'defaultValue', true);
+            $compareData = array(array('defaultValue',  'required'),
+                                 array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
+            $this->assertEquals($compareData, $rules);
+
+            $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
+                     getApplicableRulesByModelClassNameAndAttributeName('ImportModelTestItem5', 'endDateTime', 'defaultValue');
             $compareData = array(array('defaultValue',  'TypeValidator', 'type' => 'datetime'));
             $this->assertEquals($compareData, $rules);
 
@@ -168,7 +196,7 @@
             $rules = ModelAttributeRulesToDefaultValueMappingRuleUtil::
                      getApplicableRulesByModelClassNameAndAttributeName('Account', 'urlCstm', 'defaultValue');
             $compareData = array(array('defaultValue',  'length',  'max' => 50),
-                                array('defaultValue',  'url'));
+                                 array('defaultValue',  'url',     'defaultScheme' => 'http'));
             $this->assertEquals($compareData, $rules);
             //todo: add the rest of the custom field types that are importable
         }

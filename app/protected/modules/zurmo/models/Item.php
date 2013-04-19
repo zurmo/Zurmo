@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class Item extends CustomFieldsModel
@@ -35,6 +45,10 @@
         // value is not overwritten) so that on save the
         // changes can be written to the audit log.
         public $originalAttributeValues = array();
+
+        private $_workflowsToProcessAfterSave = array();
+
+        private $_processWorkflowOnSave = true;
 
         public function onCreated()
         {
@@ -98,6 +112,31 @@
             return parent::save($runValidation, $attributeNames);
         }
 
+        public function addWorkflowToProcessAfterSave(Workflow $workflow)
+        {
+            $this->_workflowsToProcessAfterSave[] = $workflow;
+        }
+
+        public function getWorkflowsToProcessAfterSave()
+        {
+            return $this->_workflowsToProcessAfterSave;
+        }
+
+        public function setDoNotProcessWorkflowOnSave()
+        {
+            $this->_processWorkflowOnSave = false;
+        }
+
+        public function setProcessWorkflowOnSave()
+        {
+            $this->_processWorkflowOnSave = true;
+        }
+
+        public function shouldProcessWorkflowOnSave()
+        {
+            return $this->_processWorkflowOnSave;
+        }
+
         protected static function getByNameOrEquivalent($attributeName, $value)
         {
             assert('is_string($attributeName)');
@@ -140,7 +179,8 @@
             parent::afterSave();
             $this->logAuditEventsListForCreatedAndModifed($this->isNewModel);
             AuditUtil::clearRelatedModelsOriginalAttributeValues($this);
-            $this->originalAttributeValues = array();
+            $this->originalAttributeValues      = array();
+            $this->_workflowsToProcessAfterSave = array();
             $this->isNewModel = false; //reset.
         }
 
@@ -170,8 +210,10 @@
                     'modifiedDateTime',
                 ),
                 'relations' => array(
-                    'createdByUser'  => array(RedBeanModel::HAS_ONE,  'User'),
-                    'modifiedByUser' => array(RedBeanModel::HAS_ONE,  'User'),
+                    'createdByUser'  => array(RedBeanModel::HAS_ONE,  'User', RedBeanModel::NOT_OWNED,
+                                     RedBeanModel::LINK_TYPE_SPECIFIC, 'createdByUser'),
+                    'modifiedByUser' => array(RedBeanModel::HAS_ONE,  'User', RedBeanModel::NOT_OWNED,
+                                     RedBeanModel::LINK_TYPE_SPECIFIC, 'modifiedByUser'),
                 ),
                 'rules' => array(
                     array('createdDateTime',  'required'),
@@ -212,7 +254,7 @@
         {
             assert("\$this->isAttribute('$attributeName')");
             assert('$attributeName != "id"');
-            $attributeModelClassName = $this->getAttributeModelClassName($attributeName);
+            $attributeModelClassName = static::getAttributeModelClassName($attributeName);
             $metadata = static::getMetadata();
             if (isset($metadata[$attributeModelClassName]['noAudit']) &&
                 in_array($attributeName, $metadata[$attributeModelClassName]['noAudit']))
@@ -254,6 +296,16 @@
         public static function getGamificationRulesType()
         {
             return null;
+        }
+
+        protected static function translatedAttributeLabels($language)
+        {
+            return array_merge(parent::translatedAttributeLabels($language), array(
+                'createdByUser'      => Zurmo::t('ZurmoModule', 'Created By User', array(), null, $language),
+                'createdDateTime'    => Zurmo::t('ZurmoModule', 'Created Date Time', array(), null, $language),
+                'modifiedByUser'     => Zurmo::t('ZurmoModule', 'Modified By User', array(), null, $language),
+                'modifiedDateTime'   => Zurmo::t('ZurmoModule', 'Modified Date Time', array(), null, $language),
+            ));
         }
     }
 ?>

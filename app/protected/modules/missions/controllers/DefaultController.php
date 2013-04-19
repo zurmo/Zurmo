@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class MissionsDefaultController extends ZurmoModuleController
@@ -45,24 +55,9 @@
 
         public function actionList($type = null)
         {
-            $pageSize         = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                                'listPageSize', get_class($this->getModule()));
-            $mission          = new Mission(false);
-            $activeActionElementType = MissionsUtil::makeActiveActionElementType((int)$type);
-            $dataProvider            = MissionsUtil::makeDataProviderByType($mission, $type, $pageSize);
-            $actionBarAndListView = new ActionBarAndListView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $mission,
-                'Missions',
-                $dataProvider,
-                array(),
-                'MissionsActionBarForListView',
-                $activeActionElementType
-            );
-            $view = new MissionsPageView(ZurmoDefaultViewUtil::
-                                              makeStandardViewForCurrentUser($this, $actionBarAndListView));
-            echo $view->render();
+            $missionsMashableInboxUrl = Yii::app()->createUrl('mashableInbox/default/list',
+                                             array('modelClassName' => 'Mission'));
+            $this->redirect($missionsMashableInboxUrl);
         }
 
         public function actionDetails($id)
@@ -73,7 +68,11 @@
                                       array(strval($mission), 'MissionsModule'), $mission);
             MissionsUtil::markUserHasReadLatest($mission, Yii::app()->user->userModel);
             $detailsView              = new MissionDetailsView($this->getId(), $this->getModule()->getId(), $mission);
-            $breadcrumbLinks = array(StringUtil::getChoppedStringContent(strval($mission), 25));
+            $missionsMashableInboxUrl = Yii::app()->createUrl('mashableInbox/default/list',
+                                             array('modelClassName' => 'Mission'));
+            $breadcrumbLinks = array(Zurmo::t('MissionsModule', 'Missions') =>
+                                            $missionsMashableInboxUrl,
+                                     StringUtil::getChoppedStringContent(strval($mission), 25));
             $view     = new MissionsPageView(ZurmoDefaultViewUtil::
                                              makeViewWithBreadcrumbsForCurrentUser($this, $detailsView, $breadcrumbLinks,
                                                                                     'MissionBreadCrumbView'));
@@ -92,7 +91,11 @@
             $editView = new MissionEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost($mission),
                                                  Zurmo::t('MissionsModule', 'Create Mission'));
-            $breadcrumbLinks = array(Zurmo::t('MissionsModule', 'Create'));
+            $missionsMashableInboxUrl = Yii::app()->createUrl('mashableInbox/default/list',
+                                             array('modelClassName' => 'Mission'));
+            $breadcrumbLinks = array(Zurmo::t('MissionsModule', 'Missions') =>
+                                            $missionsMashableInboxUrl,
+                                     Zurmo::t('MissionsModule', 'Create'));
             $view     = new MissionsPageView(ZurmoDefaultViewUtil::
                                              makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
                                                                                     'MissionBreadCrumbView'));
@@ -107,8 +110,12 @@
             $editView = new MissionEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost($mission),
                                                  strval($mission));
-            $breadcrumbLinks = array(StringUtil::getChoppedStringContent(strval($mission), 25) =>
-                                     array('default/details',  'id' => $id), Zurmo::t('MissionsModule', 'Edit'));
+            $missionsMashableInboxUrl = Yii::app()->createUrl('mashableInbox/default/list',
+                                             array('modelClassName' => 'Mission'));
+            $breadcrumbLinks = array(Zurmo::t('MissionsModule', 'Missions') =>
+                                        $missionsMashableInboxUrl,
+                                     StringUtil::getChoppedStringContent(strval($mission), 25) =>
+                                        array('default/details',  'id' => $id), Zurmo::t('MissionsModule', 'Edit'));
             $view     = new MissionsPageView(ZurmoDefaultViewUtil::
                                              makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
                                                                                     'MissionBreadCrumbView'));

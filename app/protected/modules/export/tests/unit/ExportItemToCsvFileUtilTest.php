@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     Yii::import('ext.csvparser.CsvParser');
@@ -150,22 +160,24 @@
             $testItem->forget();
             unset($testItem);
 
-            $data = array();
+            $data        = array();
             $testItem    = ExportTestModelItem::getById($id);
             $adapter     = new ModelToExportAdapter($testItem);
-            $data[]        = $adapter->getData();
-
+            $data[]      = $adapter->getData();
+            $headerData  = $adapter->getHeaderData();
             // Export data to csv, and then revert csv back to array, so we compare data
-            $csvData = ExportItemToCsvFileUtil::export($data, '', false);
+            $csvData = ExportItemToCsvFileUtil::export($data, $headerData, '', false);
             $revertedData = CsvParser::parseFromString($csvData);
 
             // We are testing ModelToExportAdapter in details in another test
             // so in this test we suppose that ModelToExportAdapter::getData
             // return correct results
-            $adapter     = new ModelToExportAdapter($testItem);
+            $adapter            = new ModelToExportAdapter($testItem);
             $compareData        = $adapter->getData();
+            $compareHeaderData  = $adapter->getHeaderData();
 
-            $this->assertEquals($compareData, $revertedData[0]);
+            $this->assertEquals($compareHeaderData, array_keys($revertedData[0]));
+            $this->assertEquals($compareData, array_values($revertedData[0]));
         }
 
         public function testExportItemToCsvWorksWithNormalData()
@@ -213,22 +225,28 @@
             unset($testItem);
 
             $data = array();
-            $testItem = ExportTestModelItem::getById($id);
-            $adapter = new ModelToExportAdapter($testItem);
-            $data[] = $adapter->getData();
+            $testItem   = ExportTestModelItem::getById($id);
+            $adapter    = new ModelToExportAdapter($testItem);
+            $data[]     = $adapter->getData();
+            $headerData = $adapter->getHeaderData();
 
             // Export data to csv, and then revert csv back to array, so we compare data
-            $csvData = ExportItemToCsvFileUtil::export($data, '', false);
+            $csvData      = ExportItemToCsvFileUtil::export($data, $headerData, 'exports.csv', false);
             $revertedData = CsvParser::parseFromString($csvData);
 
             // We are testing ModelToExportAdapter in details in another test
             // so in this test we suppose that ModelToExportAdapter::getData
             // return correct results
-            $adapter = new ModelToExportAdapter($testItem);
-            $compareData = $adapter->getData();
+            $adapter           = new ModelToExportAdapter($testItem);
+            $compareData       = $adapter->getData();
+            $compareHeaderData = $adapter->getHeaderData();
 
             // Using === here would fail as we are not setting all keys part of getData()'s return array
-            return $compareData == $revertedData[0];
+            if ($compareData == array_values($revertedData[0]) && $compareHeaderData == array_keys($revertedData[0]))
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,179 +20,68 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
-     * Displays a date and dateTime filtering input.  Allows for picking a type of filter and sometimes depending on
-     * the filter, entering a specific date value.
+     * Adds specific input id/name/value handling for SearchForm usage
      */
-    class MixedDateTypesForSearchElement extends Element
+    class MixedDateTypesForSearchElement extends MixedDateTypesElement
     {
-        /**
-         * Render a date JUI widget
-         * @return The element's content as a string.
-         */
-        protected function renderControlEditable()
+        protected function getValueTypeEditableInputId()
         {
-            $valueTypeid                        = $this->getEditableInputId($this->attribute,   'type');
-            $valueFirstDateId                   = $this->getEditableInputId($this->attribute,   'firstDate');
-            $firstDateSpanAreaId                = $valueTypeid . '-first-date-area';
-            $valueSecondDateId                  = $this->getEditableInputId($this->attribute,   'secondDate');
-            $secondDateSpanAreaId               = $valueTypeid . '-second-date-area';
-            $valueTypesRequiringFirstDateInput  = MixedDateTypesSearchFormAttributeMappingRules::
-                                                  getValueTypesRequiringFirstDateInput();
-            $valueTypesRequiringSecondDateInput = MixedDateTypesSearchFormAttributeMappingRules::
-                                                  getValueTypesRequiringSecondDateInput();
-            Yii::app()->clientScript->registerScript('mixedDateTypesForSearch' . $valueTypeid, "
-                $('#{$valueTypeid}').change( function()
-                    {
-                        arr  = " . CJSON::encode($valueTypesRequiringFirstDateInput) . ";
-                        arr2 = " . CJSON::encode($valueTypesRequiringSecondDateInput) . ";
-                        if ($.inArray($(this).val(), arr) != -1)
-                        {
-                               $('#{$firstDateSpanAreaId}').show();
-                            $('#{$valueFirstDateId}').prop('disabled', false);
-                        }
-                        else
-                        {
-                            $('#{$firstDateSpanAreaId}').hide();
-                            $('#{$valueFirstDateId}').prop('disabled', true);
-                        }
-                        if ($.inArray($(this).val(), arr2) != -1)
-                        {
-                            $('#{$secondDateSpanAreaId}').show();
-                            $('#{$valueSecondDateId}').prop('disabled', false);
-                        }
-                        else
-                        {
-                            $('#{$secondDateSpanAreaId}').hide();
-                            $('#{$valueSecondDateId}').prop('disabled', true);
-                        }
-                    }
-                );
-            ");
-            $startingDivStyleFirstDate   = null;
-            $startingDivStyleSecondDate  = null;
-            $valueType         = ArrayUtil::getArrayValue($this->model->{$this->attribute}, 'type');
-            if (!in_array($valueType, $valueTypesRequiringFirstDateInput))
-            {
-                $startingDivStyleFirstDate = "style='display:none;'";
-            }
-            if (!in_array($valueType, $valueTypesRequiringSecondDateInput))
-            {
-                $startingDivStyleSecondDate = "style='display:none;'";
-            }
-            $content  = $this->renderEditableValueTypeContent();
-            $content .= '<span id="' . $firstDateSpanAreaId . '" ' . $startingDivStyleFirstDate . '>';
-            $content .= '&#160;' . $this->renderEditableFirstDateContent();
-            $content .= '</span>';
-            $content .= '<span id="' . $secondDateSpanAreaId . '" ' . $startingDivStyleSecondDate . '>';
-            $content .= '&#160;' . Zurmo::t('Core', 'and') . $this->renderEditableSecondDateContent();
-            $content .= '</span>';
-            return $content;
+            return $this->getEditableInputId($this->attribute,   'type');
         }
 
-        protected function renderEditableValueTypeContent()
+        protected function getValueFirstDateEditableInputId()
         {
-            $value     = $this->model->{$this->attribute};
-            return       ZurmoHtml::dropDownList($this->getEditableInputName($this->attribute, 'type'),
-                                             ArrayUtil::getArrayValue($value, 'type'),
-                                             $this->getValueTypeDropDownArray(),
-                                             $this->getEditableValueTypeHtmlOptions());
+            return $this->getEditableInputId($this->attribute,   'firstDate');
         }
 
-        protected function renderEditableFirstDateContent()
+        protected function getValueSecondDateEditableInputId()
         {
-            $themePath = Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name;
-            $value     = $this->model->{$this->attribute};
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("EditableDateElement");
-            $cClipWidget->widget('application.core.widgets.JuiDatePicker', array(
-                'attribute'           => $this->attribute,
-                'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
-                                         ArrayUtil::getArrayValue($value, 'firstDate')),
-                'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
-                'htmlOptions'         => array(
-                    'id'              => $this->getEditableInputId($this->attribute, 'firstDate'),
-                    'name'            => $this->getEditableInputName($this->attribute, 'firstDate'),
-                ),
-                'options'             => array(
-                    'showOn'          => 'both',
-                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
-                    'showButtonPanel' => true,
-                    'buttonImageOnly' => false,
-                    'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
-                                            DateTimeUtil::getLocaleDateFormat()),
-                ),
-            ));
-            $cClipWidget->endClip();
-            $content = $cClipWidget->getController()->clips['EditableDateElement'];
-            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return $this->getEditableInputId($this->attribute,   'secondDate');
         }
 
-        protected function renderEditableSecondDateContent()
+        protected function getValueTypeEditableInputName()
         {
-            $themePath = Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name;
-            $value     = $this->model->{$this->attribute};
-            $cClipWidget = new CClipWidget();
-            $cClipWidget->beginClip("EditableDateElement");
-            $cClipWidget->widget('application.core.widgets.JuiDatePicker', array(
-                'attribute'           => $this->attribute,
-                'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
-                                         ArrayUtil::getArrayValue($value, 'secondDate')),
-                'language'            => YiiToJqueryUIDatePickerLocalization::getLanguage(),
-                'htmlOptions'         => array(
-                    'id'              => $this->getEditableInputId($this->attribute, 'secondDate'),
-                    'name'            => $this->getEditableInputName($this->attribute, 'secondDate'),
-                ),
-                'options'             => array(
-                    'showOn'          => 'both',
-                    'buttonText'      => ZurmoHtml::tag('span', array(), '<!--Date-->'),
-                    'showButtonPanel' => true,
-                    'buttonImageOnly' => false,
-                    'dateFormat'      => YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
-                                            DateTimeUtil::getLocaleDateFormat()),
-                ),
-            ));
-            $cClipWidget->endClip();
-            $content = $cClipWidget->getController()->clips['EditableDateElement'];
-            return ZurmoHtml::tag('div', array('class' => 'has-date-select'), $content);
+            return $this->getEditableInputName($this->attribute,   'type');
         }
 
-        protected function getEditableValueTypeHtmlOptions()
+        protected function getValueFirstDateEditableInputName()
         {
-            $htmlOptions = array(
-                'id'   => $this->getEditableInputId($this->attribute,   'type'),
-            );
-            $htmlOptions['empty']    = Zurmo::t('Core', '(None)');
-            $htmlOptions['disabled'] = $this->getDisabledValue();
-            return $htmlOptions;
+            return $this->getEditableInputName($this->attribute,   'firstDate');
         }
 
-        protected function getValueTypeDropDownArray()
+        protected function getValueSecondDateEditableInputName()
         {
-            return MixedDateTimeTypesSearchFormAttributeMappingRules::getValidValueTypesAndLabels();
+            return $this->getEditableInputName($this->attribute,   'secondDate');
         }
 
-        /**
-         * Renders the attribute from the model.
-         * @return The element's content.
-         */
-        protected function renderControlNonEditable()
+        protected function getValueFirstDate()
         {
-            throw new NotSupportedException();
+            return ArrayUtil::getArrayValue($this->model->{$this->attribute}, 'firstDate');
         }
 
-        protected function renderLabel()
+        protected function getValueSecondDate()
         {
-            $label = $this->getFormattedAttributeLabel();
-            if ($this->form === null)
-            {
-                return $label;
-            }
-            return ZurmoHtml::label($label, false);
+            return ArrayUtil::getArrayValue($this->model->{$this->attribute}, 'secondDate');
+        }
+
+        protected function getValueType()
+        {
+            return ArrayUtil::getArrayValue($this->model->{$this->attribute}, 'type');
         }
     }
 ?>

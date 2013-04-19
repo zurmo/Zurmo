@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class ZurmoModule extends SecurableModule
@@ -38,6 +48,17 @@
         const AUDIT_EVENT_ITEM_MODIFIED           = 'Item Modified';
         const AUDIT_EVENT_ITEM_DELETED            = 'Item Deleted';
         const AUDIT_EVENT_ITEM_VIEWED             = 'Item Viewed';
+
+        public static function getTranslatedRightsLabels()
+        {
+            $labels                                             = array();
+            $labels[self::RIGHT_ACCESS_ADMINISTRATION]          = Zurmo::t('ZurmoModule', 'Access Administration Tab');
+            $labels[self::RIGHT_BULK_WRITE]                     = Zurmo::t('ZurmoModule', 'Mass Update');
+            $labels[self::RIGHT_ACCESS_GLOBAL_CONFIGURATION]    = Zurmo::t('ZurmoModule', 'Access Global Configuration');
+            $labels[self::RIGHT_ACCESS_CURRENCY_CONFIGURATION]  = Zurmo::t('ZurmoModule', 'Access Currency Configuration');
+            $labels[self::RIGHT_BULK_DELETE]                    = Zurmo::t('ZurmoModule', 'Mass Delete');
+            return $labels;
+        }
 
         public function canDisable()
         {
@@ -56,9 +77,9 @@
             // modules, and because ZurmoModule is the root of the module
             // dependence hierarchy it needed concern itself, other than
             // with the models that are specific to itself.
-            return array('AuditEvent', 'NamedSecurableItem', 'GlobalMetadata', 'PerUserMetadata', 'Portlet', 'CustomFieldData',
-                         'CalculatedDerivedAttributeMetadata', 'DropDownDependencyDerivedAttributeMetadata', 'SavedSearch',
-                         'MessageSource', 'MessageTranslation');
+            return array('ActiveLanguage', 'AuditEvent', 'NamedSecurableItem', 'GlobalMetadata', 'PerUserMetadata', 'Portlet',
+                         'CustomFieldData', 'CalculatedDerivedAttributeMetadata', 'DropDownDependencyDerivedAttributeMetadata',
+                         'SavedSearch', 'MessageSource', 'MessageTranslation');
         }
 
         public static function getDefaultMetadata()
@@ -68,83 +89,89 @@
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Global Configuration',
-                        'descriptionLabel' => 'Manage Global Configuration',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Global Configuration')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Global Configuration')",
                         'route'            => '/zurmo/default/configurationEdit',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Currency Configuration',
-                        'descriptionLabel' => 'Manage Currency Configuration',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Currency Configuration')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Currency Configuration')",
                         'route'            => '/zurmo/currency/configurationList',
                         'right'            => self::RIGHT_ACCESS_CURRENCY_CONFIGURATION,
                     ),
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Languages',
-                        'descriptionLabel' => 'Manage Active Languages',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Languages')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Active Languages')",
                         'route'            => '/zurmo/language/configurationList',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Developer Tools',
-                        'descriptionLabel' => 'Access Developer Tools',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Developer Tools')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Access Developer Tools')",
                         'route'            => '/zurmo/development/',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Authentication Configuration',
-                        'descriptionLabel' => 'Manage Authentication Configuration',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Authentication Configuration')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Authentication Configuration')",
                         'route'            => '/zurmo/authentication/configurationEdit',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                 ),
                 'headerMenuItems' => array(
                     array(
-                        'label' => 'Settings',
-                        'url' => array('/configuration'),
-                        'right' => self::RIGHT_ACCESS_ADMINISTRATION,
-                        'order' => 6,
+                        'label'  => "eval:Zurmo::t('ZurmoModule', 'Settings')",
+                        'url'    => array('/configuration'),
+                        'right'  => self::RIGHT_ACCESS_ADMINISTRATION,
+                        'order'  => 6,
+                        'mobile' => false,
                     ),
                     array(
-                        'label' => 'Forums',
-                        'url' => 'http://zurmo.org/forums/',
-                        'order' => 8,
+                        'label'  => "eval:Zurmo::t('ZurmoModule', 'Need Support?')",
+                        'url'    => 'http://www.zurmo.com/needSupport.php',
+                        'order'  => 9,
+                        'mobile' => true,
                     ),
                     array(
-                        'label' => 'About Zurmo',
-                        'url' => array('/zurmo/default/about'),
-                        'order' => 9,
+                        'label'  => "eval:Zurmo::t('ZurmoModule', 'About Zurmo')",
+                        'url'    => array('/zurmo/default/about'),
+                        'order'  => 10,
+                        'mobile' => true,
                     ),
                 ),
                 'configureSubMenuItems' => array(
                     array(
                         'category'         => self::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Ldap Configuration',
-                        'descriptionLabel' => 'Manage Ldap Authentication',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'LDAP Configuration')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage LDAP Authentication')",
                         'route'            => '/zurmo/ldap/configurationEditLdap',
                         'right'            => self::RIGHT_ACCESS_GLOBAL_CONFIGURATION,
                     ),
                 ),
                 'adminTabMenuItemsModuleOrdering' => array(
                     'home',
+                    'configuration',
                     'designer',
                     'import',
                     'groups',
                     'users',
                     'roles',
-                    'configuration'
+                    'workflows',
                 ),
                 'tabMenuItemsModuleOrdering' => array(
                     'home',
+                    'mashableInbox',
                     'accounts',
                     'leads',
                     'contacts',
                     'opportunities',
-                    'conversations'
+                    'marketing',
+                    'reports',
                 )
             );
             return $metadata;
@@ -207,9 +234,9 @@
             return $s;
         }
 
-        public static function getDemoDataMakerClassName()
+        public static function getDemoDataMakerClassNames()
         {
-            return 'ZurmoDemoDataMaker';
+            return array('ZurmoDemoDataMaker');
         }
 
         public static function getDefaultDataMakerClassName()

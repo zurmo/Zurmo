@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class SecurableItem extends Item
@@ -135,7 +145,13 @@
         {
             if ($permitable instanceof User)
             {
-                return $this->recursiveGetPropagatedAllowPermissions($permitable);
+                $allowPermissions = Permission::NONE;
+                $descendentRoles = $this->getAllDescendentRoles($permitable->role);
+                foreach ($descendentRoles as $role)
+                {
+                    $allowPermissions |= $this->recursiveGetPropagatedAllowPermissions($role);
+                }
+                return $allowPermissions;
             }
             else
             {
@@ -143,20 +159,16 @@
             }
         }
 
-        protected function recursiveGetPropagatedAllowPermissions(User $user)
+        protected function recursiveGetPropagatedAllowPermissions($role)
         {
             if (!SECURITY_OPTIMIZED)
             {
                 // The slow way will remain here as documentation
                 // for what the optimized way is doing.
                 $propagatedPermissions = Permission::NONE;
-                foreach ($user->role->roles as $role)
+                foreach ($role->users as $userInRole)
                 {
-                    foreach ($role->users as $userInRole)
-                    {
-                        $propagatedPermissions |= $this->getEffectivePermissions($userInRole) |
-                                                  $this->recursiveGetPropagatedAllowPermissions($userInRole);
-                    }
+                    $propagatedPermissions |= $this->getEffectivePermissions($userInRole) ;
                 }
                 return $propagatedPermissions;
             }
@@ -167,6 +179,21 @@
                 // get_securableitem_propagated_allow_permissions_for_permitable.
                 throw new NotSupportedException();
             }
+        }
+
+        protected function getAllDescendentRoles($role)
+        {
+            $descendentRoles = array();
+            if (count($role->roles) > 0)
+            {
+                foreach ($role->roles as $childRole)
+                {
+                    $descendentRoles[] = $childRole;
+                    $descendentRoles = array_merge($descendentRoles,
+                                                   $this->getAllDescendentRoles($childRole));
+                }
+            }
+            return $descendentRoles;
         }
 
         public function getExplicitActualPermissions($permitable = null)

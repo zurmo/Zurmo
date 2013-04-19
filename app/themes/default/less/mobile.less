@@ -1,0 +1,861 @@
+/*********************************************************************************
+ * Zurmo is a customer relationship management program developed by
+ * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+ *
+ * Zurmo is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * Zurmo is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+ * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+ *
+ * The interactive user interfaces in original and modified versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the Zurmo
+ * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display the words
+ * "Copyright Zurmo Inc. 2013. All rights reserved".
+ ********************************************************************************/
+
+//min-width: … px Used when the viewport’s width is bigger or equal to width
+//max-width: … px Used when the viewport’s width is smaller or equal to width
+//min-device-width: … px  Used when the device’s width is bigger or equal to width
+//max-device-width: … px  Used when the device’s width is smaller or equal to width
+//orientation : portrait // orientation: landscape    Target orientation
+//-webkit-min-device-pixel-ratio : 1.5
+//http://bennettfeely.com/flexplorer/
+
+@import 'mixins.less';
+@recentlyViewedIconSize : 24px;
+
+//@media all and (max-width: 800px) {} not used finally since included when php refreshes teh app and loads mobile version.
+
+	html, body {
+		margin: 0;
+		width: 100%;
+		width: 100%;
+	}
+
+	body{
+		height: 100%;
+		> div{
+			height:100%;
+		}
+	}
+
+	#LoginPageView{
+		padding-top:0;
+		> div{
+			.box-sizing();
+			padding:10px;
+			display: -ms-flex;
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: flex;
+			-ms-flex-direction: column;
+			-ms-flex-wrap: wrap;
+			-moz-flex-flow: column wrap;
+			-webkit-flex-flow: column wrap;
+			flex-flow: column wrap;
+			-ms-flex-pack: start;
+			-moz-justify-content: flex-start;
+			-webkit-justify-content: flex-start;
+			justify-content: flex-start;
+			width:100% !important;
+			height:100% !important;
+			display:block;
+		}
+		#FooterView{
+			-ms-flex: 1 0 auto;
+			-moz-flex: 1 0 auto;
+			-webkit-flex: 1 0 auto;
+			flex: 1 0 auto;
+			margin:10px 10px 5px 10px;
+		}
+		#credit-link{
+			margin-left:0;
+		}
+	}
+
+	#LoginView{
+		min-width:0 !important;
+		margin:0;
+		background-image:none;
+		height:auto;
+		 -ms-flex: 1 0 auto;
+		-moz-flex: 1 0 auto;
+		-webkit-flex: 1 0 auto;
+		flex: 1 0 auto;
+	}
+
+	#login-box{
+		width:100%;
+		height:auto;
+		float:none;
+		margin:10px 0 0 0;
+		top:0;
+		left:0;
+		.form{
+			float:none;
+			width:100%;
+			form{
+				border:none;
+				padding:0 10px 10px 10px;
+			}
+		}
+		#LoginLogo{
+			float:none;
+			width:100%;
+			height:80px;
+			padding:0;
+			background-position:50% 50%;
+		}
+	}
+
+	#login-form{
+		padding:0 20px !important;
+	}
+
+	#nav-trigger{
+		display:block;
+	}
+
+	#corp-logo span{
+		display:none;
+	}
+
+	#corp-logo img{
+		max-width:50px;
+		margin-top:10px;
+	}
+
+	#HeaderView{
+		//position:fixed;
+		width:100%;
+		min-width:0 !important;
+	}
+
+	#HeaderLinksView{
+		max-width: 100%;
+		margin:0 auto;
+		+ div{
+			height:0;
+		}
+		> div {
+			margin: 0 10px;
+		}
+	}
+
+	#GlobalSearchAndShortcutsCreateMenuView{
+		display:none;
+	}
+
+	#FooterView {
+		margin:10px 10px 5px 10px;
+		padding-bottom: 5px;
+	}
+
+	#credit-link{
+		margin-left:0;
+		span{
+			margin-left:65px;
+		}
+	}
+
+	.performance-info {
+		margin: 0 10px 10px 10px;
+	}
+
+	.social-links{
+		display: none;
+	}
+
+	#MobileWelcomeView{
+		h1{
+			font-size: 30px;
+			text-align: center;
+		}
+	}
+
+	#welcome-gallery{
+		display: block;
+		margin-bottom: 15px;
+		margin-right: 0;
+		width: 100%;
+		img{
+			width: 100%;
+			.radius(6px);
+		}
+		span{
+			display: none;
+		}
+	}
+
+	.dashboard-link{
+		margin: 30px 0 0 0 !important;
+	}
+
+	#instructions{
+		padding-bottom: 30px;
+		text-align: center;
+		p{
+			padding: 0;
+		}
+	}
+
+	.help-section{
+		width: 100%;
+		float: none;
+	}
+
+	.hide-welcome {
+		top: 10px;
+	}
+
+	#AboutView{
+		#rightCol,
+		#leftCol{
+			width: 100%;
+			float: none;
+			padding: 15px 15px 0 15px;
+			> div{
+				float: none;
+			}
+		}
+	}
+
+	.view-toolbar{
+		border: none;
+		.radius(none);
+		background-image: none;
+		.b-shadow(none);
+		width: 100%;
+		.icon-create{
+			margin-right:10px;
+			float: left;
+			border:1px solid #b7b7b7;
+			border-top-color: #e7e7e7;
+			border-left:1px solid #d7d7d7 !important;
+			border-right-color:#d7d7d7;
+			border-radius:4px;
+			.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+			background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+		}
+		.mobile-view-toolbar-container{
+			float: left;
+			margin: 1px 0 0 0;
+		}
+	}
+
+	.mobile-view-toolbar-container{
+		.hasDropDown{
+			span.select-arrow{
+				z-index:0;
+				background: none;
+				&:before{
+					content: "n";
+					.symbly(30px);
+					line-height: 26px;
+					margin-left: -1px;
+					background: none;
+				}
+			}
+		}
+		select{
+			-ms-appearance:none;
+			-o-appearance:none;
+			-webkit-appearance:none;
+			-moz-appearance:none !important;
+			appearance: none;
+			background: transparent;
+			z-index:10;
+			top: 0;
+			left: 0;
+			width: 30px;
+			height: 30px;
+			border:1px solid #b7b7b7;
+			border-top-color: #e7e7e7;
+			border-left-color:#d7d7d7;
+			border-right-color:#d7d7d7;
+			border-radius:4px;
+			.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+		}
+	}
+
+	.AppContainer{
+		min-width:0 !important; /* should be 100% but i need to put box-sizing on top level nodes */
+		margin:0 10px;
+		//overflow-y: scroll;
+		overflow: hidden;
+		-webkit-overflow-scrolling: touch;
+		max-width: 100%;
+	}
+
+	@media screen and (min-width: 1601px) {
+		.AppContainer{
+			margin:0 10px !important;
+		}
+		#HeaderLinksView > div {
+			margin: 0 !important;
+		}
+	}
+
+	.AppContent{
+		position:relative;
+		//top:20px;           //add when position fixed for blue bar is possible
+		padding-top:10px;     //add when position fixed for blue bar is possible
+		padding-left:10px;
+		padding-right:10px;
+		margin-left:0;
+		margin-bottom: 0;
+		.radius(0 0 5px 5px);
+
+		-webkit-transition: all 0.22s ease-in 0;
+		-moz-transition: all 0.22s ease-in 0;
+		-ms-transition: all 0.22s ease-in 0;
+		-o-transition: all 0.22s ease-in 0;
+		transition: all 0.22s ease-in 0;
+
+		-webkit-transform: translate3d(0, 0, 0);
+		-moz-transform: translate3d(0, 0, 0);
+		-ms-transform: translate3d(0, 0, 0);
+		-o-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+
+	#HomePageView .AppContent {
+		padding-right: 10px !important;
+	}
+
+	.AppContent.nav-open{
+		-webkit-transform: translate3d(45px, 0, 0);
+		-moz-transform: translate3d(45px, 0, 0);
+		-ms-transform: translate3d(45px, 0, 0);
+		-o-transform: translate3d(45px, 0, 0);
+		transform: translate3d(45px, 0, 0);
+	}
+
+	.AppNavigation{
+		left: 10px;
+		top: 45px;
+		width: 45px;
+		.unstyle-panel();
+		position:fixed;
+		padding:0 0 0 0;
+		margin: 0;
+		z-index: 0;
+		++.border-box;
+		float:none;
+	}
+
+	.high-z-index{
+		z-index: 10;
+	}
+
+	.AppNavigation.nav-open{
+		#MenuView{
+			.opacity(100);
+		}
+	}
+
+	#MenuView{
+		position: static;
+		margin: 0 !important;
+		padding: 0 0 0 10px !important;
+		top: 0 !important;
+		.opacity(0);
+		++.border-box;
+		//padding:40px 9px 0 19px; //add padding-top:50px when position fixed for blue bar is possible
+		left: 0;
+		//position: fixed;
+		width:auto;
+		height: 100%;
+		border: none;
+		background: none;
+		.radius(0 0 0 5px);
+		> ul > li{
+			.clearfix();
+		}
+		> ul > li > a{
+			em{
+				display:inline-block;
+				position:relative;
+				top:4px;
+				width:25px;
+				height:25px;
+				line-height:22px;
+				vertical-align:top;
+				background:#FFF;
+				z-index:9999;
+				text-align:center;
+				margin:0 0 0 0;
+				padding:0 0 0 0;
+				font-style:normal;
+				.radius(4px);
+				.symbly(@recentlyViewedIconSize);
+				.t-shadow(~"none !important");
+				.box-sizing();
+			}
+			em:before{
+				content: "z";
+			}
+			em + span{
+				text-indent: -9999px !important;
+			}
+			span{
+				width: 33px !important;
+				display: block;
+				margin-left: -4px;
+			}
+		}
+		#search > a > em:before{
+			content:  "k";
+		}
+		#shortcuts > a > em:before{
+			content:  "Y";
+		}
+		#home > a > em:before{
+			content:  "A";
+		}
+		#accounts > a > em:before{
+			content:  "P";
+		}
+		#leads > a > em:before{
+			content:  ".";
+		}
+		#contacts > a > em:before{
+			content:  "y";
+		}
+		#opportunities > a > em:before{
+			content:  "9";
+		}
+		#conversations > a > em:before{
+			content:  "b";
+		}
+		#recently-viewed > a > em:before{
+			content:  "{";
+		}
+		#mashableInbox > a > em:before{
+			content:  "g";
+		}
+		#marketing > a > em:before{
+			content:  '\00B6';
+		}
+		#reports > a > em:before{
+			content:  "V";
+		}
+    }
+
+	.toggle-hidden-nav-items{
+		display: none;
+	}
+
+	.hidden-nav-item{
+		display: block;
+	}
+
+	#search{
+		position: relative;
+		> div{
+			++.flyout;
+			display:none;
+			position: absolute;
+			margin: 0;
+			padding: 10px;
+			left: 35px;
+			top:-7px;
+			width: auto;
+			input{
+				margin: 0;
+				border-left: 1px solid #D5D4D4;
+			}
+		}
+		.global-search-loopa{
+			display: none;
+		}
+	}
+
+	#MenuView #shortcuts,
+	#MenuView #recently-viewed{
+		position: relative;
+		> ul{
+			width: auto;
+			++.headerDropDown;
+			border:1px solid #b6b6b6;
+			#gradient > .vertical( #f5f5f5, #ebebeb );
+			.b-shadow(~"inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12)");
+			z-index:9999;
+			min-width:110px;
+			display:none;
+			position:absolute;
+			left:43px !important;
+			top:-75px !important;
+			padding:3px 0 !important;
+			li{
+				line-height: 100%;
+			}
+			a{
+				color:#666;
+				.smaller() !important;
+				display:block;
+				margin:0 2px;
+				padding:3px 0 !important;
+				height: auto !important;
+				float: none !important;
+				width: auto !important;
+				em{
+					display: none !important;
+				}
+				em + span{
+					display: block !important;
+				}
+				> span{
+					height: auto !important;
+					margin: 0;
+					padding:5px 10px 5px 10px;
+					line-height: 1;
+					.radius(0);
+					background: none !important;
+					position: relative;
+					text-indent: 0;
+					font-weight:normal !important;
+				}
+			}
+			a:hover, a:hover span{
+				color:#fff !important;
+			}
+		}
+	}
+
+	#RecentlyViewedView{
+		display: none;
+	}
+
+	#HomeDashboardView{
+		padding-right: 0;
+		.juiportlet-column{
+			width:100%;
+			float:none;
+		}
+		.juiportlet-widget{
+			min-width:auto;
+			margin-right:10px;
+		}
+	}
+
+	#credit-link {
+		line-height: 17px;
+		line-height: 17px;
+		font-size: 10px;
+	}
+
+	//Details View
+	.DetailsAndRelationsView{
+		> div{
+			float:none;
+			width:100% !important;
+		}
+	}
+
+	.breadcrumbs{
+		padding-bottom:10px;
+	}
+
+	.details-table{
+		margin-right:0;
+	}
+
+	.juiportlet-widget{
+		margin-right:0 !important;
+	}
+
+	.latest-activity-toolbar{
+		padding: 10px 5px !important;
+	}
+
+	#filter-latest-activities-link{
+		margin-left: 5px !important;
+	}
+
+	.filter-portlet-model-bar{
+		padding-left:3px;
+		padding-bottom: 10px;
+		height: auto;
+		++.clearfix;
+		label{
+			line-height: 1;
+			float: left;
+			margin: 10px 0 0 2px;
+		}
+	}
+
+	//List View
+    #more-search-link,
+    #select-list-attributes-link,
+    .list-view-items-summary-clone,
+    .button-column{
+	    display: none;
+    }
+
+    .SearchView{
+	    width: 100%;
+    }
+
+    .search-form-tools{
+	    left: auto;
+	    right: 10px;
+    }
+
+	//Edit View
+	#modal-edit-form .panel,
+	#edit-form .panel,
+	#delete-form .panel {
+		float: none;
+		width: 100%;
+		th > label{
+			position: relative;
+			top: 6px;
+		}
+	}
+
+	.right-side-edit-view-panel{
+		float:none;
+		width:100%;
+		position:relative;
+		right:0;
+		top:0;
+		.buffer{
+			padding-left:0;
+			> div{
+				padding:0;
+				background: none;
+			}
+		}
+	}
+
+    .hasParallelFields > div{
+	    width: 100% !important;
+	    display: block;
+	    float: none;
+    }
+
+	//Thread View
+	#ModelDetailsSummaryView,
+	#CommentInlineEditForModelView,
+	#CommentsForRelatedModelView{
+		width:100%;
+		margin-right:0;
+		float:none;
+		padding:0 10px;
+	}
+
+	#ConversationDetailsView{
+		.right-side-edit-view-panel{
+			display:none;
+		}
+	}
+
+	.model-details-summary {
+		padding-left: 65px;
+		padding-top: 10px;
+		.gravatar{
+			margin-left:-65px;
+			max-width:50px;
+			max-height:50px;
+		}
+	}
+
+	#CommentList, .CommentList{
+		margin-left:0;
+	}
+
+	#CommentInlineEditForModelView{
+		padding:0 10px 0 0;
+	}
+
+
+div:not(#LeaderboardView),
+div:not(#MashableInboxActionBarForViews){
+	.toolbar-mbmenu{
+		right:10px;
+		.view-toolbar{
+			position:relative;
+			clear:both;
+		}
+		.options-menu{
+			> li > a{
+				text-indent:-9999px;
+				width:auto;
+				padding:0;
+				&:after{
+					content: "n";
+					.symbly(24px);
+					left: -5px;
+					top: -1px;
+					margin-left:10px;
+				}
+				span{
+					display:none;
+				}
+			}
+			ul{
+				right:0;
+				margin-top:-8px;
+			}
+		}
+	}
+}
+
+	#NoUserEmailConfigurationYetView,
+	#NoGlobalEmailConfigurationYetView,
+	.ZeroModelsYetView,
+	.splash-view{
+		> div{
+			padding: 0 10%;
+			text-align: center;
+		}
+		h2{
+			font-size:20px;
+			line-height:28px;
+			padding:0 0 15px 0;
+			text-align:center;
+		}
+		i{
+			margin-left:0;
+			 text-align:center;
+		}
+		.large-icon{
+			width: 100%;
+			text-align: center;
+			margin-top: 10px;
+			border-right:none;
+			float: none;
+		}
+		p{
+			width:100%;
+			font-size:12px;
+			line-height:19px;
+			margin-left:0;
+			margin-top:15px;
+			float:none;
+		}
+		a{
+			margin:15px auto;
+			padding:0;
+			float: none;
+		}
+	}
+
+    //dialog
+	.ui-dialog .ui-dialog-titlebar-close {
+		right: 5px;
+		top: 5px;
+	}
+
+	.ui-dialog{
+		width: 98%;
+		min-width: 98%;
+		max-width: 98%;
+	}
+
+    .ModalGameNotification{
+	    padding-bottom: 60px;
+    }
+
+	//inbox + leaderboard toolbar
+	.model-tag{
+		float: none;
+		margin: 0 0 5px 0 !important;
+		position: relative;
+		top: -2px;
+	}
+
+	div#MashableInboxActionBarForViews,
+	div#LeaderboardView{
+		.view-toolbar-container{
+			width: auto;
+		}
+	}
+
+	div#LeaderboardView > .view-toolbar-container > .view-toolbar,
+	div#MashableInboxActionBarForViews > .view-toolbar-container > .view-toolbar{
+		border:1px solid #b7b7b7;
+		border-top-color: #e7e7e7;
+		border-left-color:#d7d7d7;
+		border-right-color:#d7d7d7;
+		border-radius:4px;
+		float:left;
+		margin:0 0 15px 0;
+		.b-shadow(0 0 9px 5px rgba(153, 153, 153, 0.12));
+		background:url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+		.unread-count{
+			display: none;
+		}
+		.z-label{
+			display: none;
+		}
+		> a,
+		.parent > a {
+			padding:0 0 0 0;
+			&:before{
+				display: inline-block;
+				margin: 0 5px 0 5px;
+			}
+			&:after{
+				margin-left: 5px;
+			}
+		}
+		.parent > a {
+			padding:0 5px 0 0;
+		}
+	}
+
+	div#LeaderboardView > .view-toolbar-container > .view-toolbar{
+		.z-label{
+			display: inline-block;
+			margin-right: 8px;
+		}
+	}
+
+	#LeaderboardView .items{
+		margin-bottom: 10px;
+	}
+
+	#MashableInboxActionBarForViews{
+		.filters-bar{
+			position: relative;
+			top: -5px;
+			left: 0;
+		}
+	}
+
+	//profile
+	.gravatar-container{
+		float: left;
+		margin: 15px;
+		width: 100%;
+	}
+
+
+	//Flash MSG
+	#FlashMessageView{
+		width: 100%;
+		top: 50px;
+		right: 0;
+	}

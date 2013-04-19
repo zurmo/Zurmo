@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class ConversationsDefaultController extends ZurmoModuleController
@@ -45,57 +55,9 @@
 
         public function actionList($type = null)
         {
-            $pageSize         = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                                'listPageSize', get_class($this->getModule()));
-            $conversation     = new Conversation(false);
-            if ($type == null)
-            {
-                $type = ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_CREATED;
-            }
-            if ($type == ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_CREATED)
-            {
-                $activeActionElementType = 'ConversationsCreatedLink';
-            }
-            elseif ($type == ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_PARTICIPANT)
-            {
-                $activeActionElementType = 'ConversationsParticipantLink';
-            }
-            elseif ($type == ConversationsSearchDataProviderMetadataAdapter::LIST_TYPE_CLOSED)
-            {
-                $activeActionElementType = 'ConversationsClosedLink';
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
-            $searchAttributes = array();
-            $metadataAdapter  = new ConversationsSearchDataProviderMetadataAdapter(
-                $conversation,
-                Yii::app()->user->userModel->id,
-                $searchAttributes,
-                $type
-            );
-            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider(
-                $metadataAdapter->getAdaptedMetadata(),
-                'Conversation',
-                'RedBeanModelDataProvider',
-                'latestDateTime',
-                true,
-                $pageSize
-            );
-            $actionBarAndListView = new ActionBarAndListView(
-                $this->getId(),
-                $this->getModule()->getId(),
-                $conversation,
-                'Conversations',
-                $dataProvider,
-                array(),
-                'ConversationsActionBarForListView',
-                $activeActionElementType
-            );
-            $view = new ConversationsPageView(ZurmoDefaultViewUtil::
-                                              makeStandardViewForCurrentUser($this, $actionBarAndListView));
-            echo $view->render();
+            $conversationsMashableInboxUrl  = Yii::app()->createUrl('mashableInbox/default/list',
+                                                                    array('modelClassName' => 'Conversation'));
+            $this->redirect($conversationsMashableInboxUrl);
         }
 
         public function actionDetails($id)
@@ -105,8 +67,12 @@
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED,
                                       array(strval($conversation), 'ConversationsModule'), $conversation);
             ConversationsUtil::markUserHasReadLatest($conversation, Yii::app()->user->userModel);
-            $detailsView              = new ConversationDetailsView($this->getId(), $this->getModule()->getId(), $conversation);
-            $breadcrumbLinks          = array(StringUtil::getChoppedStringContent(strval($conversation), 25));
+            $detailsView                    = new ConversationDetailsView($this->getId(), $this->getModule()->getId(), $conversation);
+            $conversationsMashableInboxUrl  = Yii::app()->createUrl('mashableInbox/default/list',
+                                                                    array('modelClassName' => 'Conversation'));
+            $breadcrumbLinks          = array(Zurmo::t('ConversationsModule', 'Conversations') =>
+                                                $conversationsMashableInboxUrl,
+                                              StringUtil::getChoppedStringContent(strval($conversation), 25));
             $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
                                                   makeViewWithBreadcrumbsForCurrentUser($this, $detailsView, $breadcrumbLinks,
                                                                                         'ConversationBreadCrumbView'));
@@ -116,23 +82,37 @@
 
         public function actionCreate()
         {
+            $conversationsMashableInboxUrl  = Yii::app()->createUrl('mashableInbox/default/list',
+                                                                    array('modelClassName' => 'Conversation'));
+            $breadcrumbLinks                = array(Zurmo::t('ConversationsModule', 'Conversations') =>
+                                                        $conversationsMashableInboxUrl,
+                                                    Zurmo::t('ConversationsModule', 'Create'));
             $editView = new ConversationEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost(new Conversation()),
                                                  Zurmo::t('ConversationsModule', 'Create Conversation'));
             $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
-                                                  makeStandardViewForCurrentUser($this, $editView));
+                                                  makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
+                                                                                        'ConversationBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionEdit($id, $redirectUrl = null)
         {
+            $conversation  = Conversation::getById(intval($id));
+            $conversationsMashableInboxUrl  = Yii::app()->createUrl('mashableInbox/default/list',
+                                                                    array('modelClassName' => 'Conversation'));
+            $breadcrumbLinks = array(Zurmo::t('ConversationsModule', 'Conversations') =>
+                                        $conversationsMashableInboxUrl,
+                                     StringUtil::getChoppedStringContent(strval($conversation), 25) =>
+                                        array('default/details',  'id' => $id), Zurmo::t('ConversationModule', 'Edit'));
             $conversation = Conversation::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($conversation);
             $editView = new ConversationEditView($this->getId(), $this->getModule()->getId(),
                                                  $this->attemptToSaveModelFromPost($conversation),
                                                  strval($conversation));
             $view     = new ConversationsPageView(ZurmoDefaultViewUtil::
-                                                  makeStandardViewForCurrentUser($this, $editView));
+                                                  makeViewWithBreadcrumbsForCurrentUser($this, $editView, $breadcrumbLinks,
+                                                                                        'ConversationBreadCrumbView'));
             echo $view->render();
         }
 

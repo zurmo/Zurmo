@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>Import</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Import</td></tr>
+</thead><tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[@id='accounts']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>css=div.list-view-items-summary-clone</td>
+	<td>countResultsString</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars['countResultsString'].split(' ')[0])</td>
+	<td>countResults</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${countResults}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/accounts/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Settings</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--tr>
+	<td>open</td>
+	<td>/demos/bleeding/app/index.php/import/default/step4?id=2</td>
+	<td></td>
+</tr-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Import</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ImportWizardForm_importRulesType_0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Next</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>click</td>
+        <td>id=ImportWizardForm_firstRowIsHeaderRow</td>
+        <td></td>
+</tr>
+<tr>
+        <td>type</td>
+        <td>id=ImportWizardForm_file</td>
+        <td>C:\Inetpub\selenium\zurmo_bleeding\app\protected\modules\accounts\tests\functional\files\accounts.csv</td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Next</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>verifyTextPresent</td>
+        <td>Step 3 of 6</td>
+        <td></td>
+</tr>
+<tr>
+        <td>click</td>
+        <td>id=ImportWizardForm_explicitReadWriteModelPermissions_type_2</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Next</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>waitForTextPresent</td>
+        <td>Please map the fields you would like to import.</td>
+        <td></td>
+</tr>
+
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_9_attributeIndexOrDerivedType</td>
+	<td>label=Name</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_5_attributeIndexOrDerivedType</td>
+	<td>label=Owner</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_5_mappingRulesData_UserValueTypeModelAttributeMappingRuleForm_type</td>
+	<td>label=Zurmo Username</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_6_attributeIndexOrDerivedType</td>
+	<td>label=Annual Revenue</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_7_attributeIndexOrDerivedType</td>
+	<td>label=Description</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_8_attributeIndexOrDerivedType</td>
+	<td>label=Employees</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_10_attributeIndexOrDerivedType</td>
+	<td>label=Office Phone</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_11_attributeIndexOrDerivedType</td>
+	<td>label=Office Fax</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_12_attributeIndexOrDerivedType</td>
+	<td>label=Website</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_13_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - City</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_14_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - Country</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_15_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - Postal Code</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_16_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - Street 1</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_17_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - Street 2</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_18_attributeIndexOrDerivedType</td>
+	<td>label=Billing Address - State</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_19_attributeIndexOrDerivedType</td>
+	<td>label=Industry</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ImportWizardForm_column_32_attributeIndexOrDerivedType</td>
+	<td>label=Type</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>//div[@class='float-bar']/div/div/a[2]/span</td>
+        <td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>waitForTextPresent</td>
+        <td>Data Analysis is complete.</td>
+        <td></td>
+</tr>
+<tr>
+        <td>clickAndWait</td>
+        <td>link=Next</td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForPageToLoad</td>
+        <td></td>
+        <td></td>
+</tr>
+<tr>
+        <td>waitForCondition</td>
+        <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+        <td>30000</td>
+</tr>
+<tr>
+        <td>verifyTextPresent</td>
+        <td>Congratulations!</td>
+        <td></td>
+</tr>
+<tr>
+        <td>assertTextPresent</td>
+        <td>Rows with errors: 0</td>
+        <td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Records created: 6</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MenuView']/ul/li/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[@id='accounts']/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>css=div.list-view-items-summary-clone</td>
+	<td>countResultsStringForTest</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars['countResultsStringForTest'].split(' ')[0])</td>
+	<td>countResultsForTest</td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertEval</td>
+	<td>storedVars['countResultsForTest'] == storedVars['countResults'] + 6</td>
+	<td>true</td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+</tbody></table>
+</body>
+</html>

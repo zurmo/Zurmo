@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -32,14 +42,15 @@
     {
         public static function getApplicableRulesByModelClassNameAndAttributeName($modelClassName, $attributeName,
                                                                                   $ruleAttributeName,
-                                                                                  $requiredRuleIsApplicable = false)
+                                                                                  $requiredRuleIsApplicable = false,
+                                                                                  $treatDateTimeAsDate = false,
+                                                                                  $readOnlyRuleIsApplicable = true)
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeName)');
             assert('is_string($ruleAttributeName)');
             assert('is_bool($requiredRuleIsApplicable)');
-            $model    = new $modelClassName(false);
-            assert('$model->isAttribute($attributeName)');
+            assert('$modelClassName::isAnAttribute($attributeName)');
             $metadata = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
             $applicableRules = array();
@@ -47,8 +58,7 @@
             {
                 return $applicableRules;
             }
-
-            $modelAttributeClassName = $model->getAttributeModelClassName($attributeName);
+            $modelAttributeClassName = $modelClassName::getAttributeModelClassName($attributeName);
             if (isset($metadata[$modelAttributeClassName]['rules']))
             {
                 $i = 0;
@@ -62,6 +72,10 @@
                             case 'type':
                                 if ($rule['type'] == 'date' || $rule['type'] == 'datetime')
                                 {
+                                    if ($treatDateTimeAsDate)
+                                    {
+                                        $rule['type'] = 'date';
+                                    }
                                     $rule[1] = 'TypeValidator';
                                 }
                                 $rule[0] = $ruleAttributeName;
@@ -85,9 +99,20 @@
                                    $applicableRules[] = $rule;
                                }
                                continue;
+                            case 'readOnly':
+                               if ($readOnlyRuleIsApplicable)
+                               {
+                                   $rule[0] = $ruleAttributeName;
+                                   $applicableRules[] = $rule;
+                               }
+                               continue;
                             case 'dateTimeDefault':
                                  //Ignore dateTimeDefault validator for this as it is not applicable to import
                                  //It would map to RedBeanModelDateTimeDefaultValueValidator and is unneeded
+                                continue;
+                            case 'RedBeanModelCompareDateTimeValidator':
+                                 //Ignore dateTimeDefault validator for this as it is not applicable to import
+                                 //We can't control if the user is mapping both the dates that are part of this
                                 continue;
                             default:
                                $rule[0] = $ruleAttributeName;

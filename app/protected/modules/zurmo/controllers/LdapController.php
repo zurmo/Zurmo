@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -41,7 +51,7 @@
                 {
                     LdapConfigurationFormAdapter::setConfigurationFromForm($configurationForm);
                     Yii::app()->user->setFlash('notification',
-                        Zurmo::t('Default', 'Ldap Configuration saved successfully.')
+                        Zurmo::t('ZurmoModule', 'LDAP Configuration saved successfully.')
                     );
                     $this->redirect(Yii::app()->createUrl('configuration/default/index'));
                 }
@@ -69,6 +79,7 @@
                 }
                 else
                 {
+                    $configurationForm->serverType            = $_POST['LdapConfigurationForm']['serverType'];
                     $configurationForm->host                  = $_POST['LdapConfigurationForm']['host'];
                     $configurationForm->port                  = $_POST['LdapConfigurationForm']['port'];
                     $configurationForm->bindRegisteredDomain  = $_POST['LdapConfigurationForm']['bindRegisteredDomain'];
@@ -78,9 +89,10 @@
                 }
                 if ($configurationForm->host != null && $configurationForm->port != null &&
                     $configurationForm->bindRegisteredDomain != null && $configurationForm->bindPassword != null &&
-                    $configurationForm->baseDomain != null)
+                    $configurationForm->baseDomain != null && $configurationForm->serverType != null)
                 {
                     $authenticationHelper = new ZurmoAuthenticationHelper;
+                    $authenticationHelper->ldapServerType           = $configurationForm->serverType;
                     $authenticationHelper->ldapHost                 = $configurationForm->host;
                     $authenticationHelper->ldapPort                 = $configurationForm->port;
                     $authenticationHelper->ldapBindRegisteredDomain = $configurationForm->bindRegisteredDomain;
@@ -88,25 +100,26 @@
                     $authenticationHelper->ldapBaseDomain           = $configurationForm->baseDomain;
                     $authenticationHelper->ldapEnabled              = $configurationForm->enabled;
 
+                    $serverType                = $configurationForm->serverType;
                     $host                      = $configurationForm->host;
                     $port                      = $configurationForm->port;
                     $bindRegisteredDomain      = $configurationForm->bindRegisteredDomain;
                     $bindPassword              = $configurationForm->bindPassword;
                     $baseDomain                = $configurationForm->baseDomain;
-                    $testConnectionResults     = LdapUtil::establishConnection($host, $port, $bindRegisteredDomain,
+                    $testConnectionResults     = LdapUtil::establishConnection($serverType, $host, $port, $bindRegisteredDomain,
                                                                                $bindPassword, $baseDomain);
                     if ($testConnectionResults)
                     {
-                       $messageContent = Zurmo::t('Default', 'Successfully Connected to Ldap Server') . "\n";
+                       $messageContent = Zurmo::t('ZurmoModule', 'Successfully Connected to Ldap Server') . "\n";
                     }
                     else
                     {
-                       $messageContent = Zurmo::t('Default', 'Unable to connect to Ldap server') . "\n";
+                       $messageContent = Zurmo::t('ZurmoModule', 'Unable to connect to Ldap server') . "\n";
                     }
                 }
                 else
                 {
-                    $messageContent = Zurmo::t('Default', 'All fields are required') . "\n";
+                    $messageContent = Zurmo::t('ZurmoModule', 'All fields are required') . "\n";
                 }
                 Yii::app()->getClientScript()->setToAjaxMode();
                 $messageView = new TestLdapConnectionView($messageContent);

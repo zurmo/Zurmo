@@ -1,0 +1,169 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
+//#marketing-list-member-select-contact-or-report-form,
+#marketing-list-member-configuration-form{
+	position: relative;
+	padding:15px;
+	border-bottom: 1px solid #DFDFDF;
+	.b-shadow(none);
+	//box-shadow:inset 0 1px 0 0 #ffffff;
+	.clearfix();
+	input[type="text"]{
+		.border-box();
+		position:relative;
+		left:-3px;
+		width:219px;
+		float:left;
+		margin:0 0 0 0;
+		.radius(0);
+		.b-shadow(none);
+		border-left:none;
+		font-style: italic;
+		color: #999;
+		text-indent: 5px;
+		line-height: 25px;
+		height: 25px !important;
+		border: 1px solid #d5d4d4;
+		background: url(../images/search-bar-gradient.png) left top repeat-x;
+		&:focus{
+			outline: none !important;
+			box-shadow:none !important;
+		}
+	}
+}
+
+.MarketingListMembersListView{
+	margin-bottom: 0;
+}
+
+#marketing-list-member-select-contact-or-report-form{
+	padding:15px;
+	.search-without-scope{
+		margin-top: 10px;
+		border:1px solid #d5d4d4;
+		position: relative;
+		background: url(../images/search-bar-loopa.png) left top no-repeat;
+		.z-spinner{
+			top: 2px;
+			right: 0;
+			left:auto;
+			display:block;
+		}
+	}
+	input[type="text"]{
+		.border-box();
+		width:300px;
+		margin:0 0 0 23px;
+		.radius(0);
+		.b-shadow(none);
+		font-style: italic;
+		color: #999;
+		text-indent: 5px;
+		line-height: 23px;
+		height: 23px !important;
+		//border: 1px solid #d5d4d4;
+		border: none;
+		background: url(../images/search-bar-gradient.png) left top repeat-x;
+		&:focus{
+			outline: none !important;
+			box-shadow:none !important;
+		}
+	}
+	input[type="radio"]{
+		margin-right: 5px;
+	}
+	label + input[type="radio"]{
+		margin-left: 15px;
+	}
+}
+
+#MarketingListMembersForPortletView{
+	//#gradient > .vertical(#f6f6f6, #ededed);
+	float:left;
+	width: 100%;
+	box-shadow:inset 0 1px 0 0 #ffffff;
+	background: #f6f6f6; /* Old browsers */
+	background: -moz-linear-gradient(top,     #f6f6f6 0, #ededed 110px, transparent 110px, transparent 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f6f6f6),
+																color-stop(110px, #ededed),
+																color-stop(110px, transparent),
+																color-stop(100%, transparent)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f6f6f6 0, #ededed 110px, transparent 110px, transparent 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,       #f6f6f6 0, #ededed 110px, transparent 110px, transparent 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,      #f6f6f6 0, #ededed 110px, transparent 110px, transparent 100%); /* IE10+ */
+	background: linear-gradient(to bottom,    #f6f6f6 0, #ededed 110px, transparent 110px, transparent 100%); /* W3C */
+}
+
+#MarketingListMembersConfigurationForm_filteredBySearchTerm_area{
+	margin-right: 15px;
+	float: left;
+	border:1px solid #d5d4d4;
+	background: url(../images/search-bar-loopa.png) left top no-repeat;
+
+	input[type="text"]{
+		.border-box();
+		margin:0 0 0 23px;
+		text-indent: 5px;
+		line-height: 23px;
+		height: 23px !important;
+		border: none;
+		left:0;
+		&:focus{
+			outline: none !important;
+			box-shadow:none !important;
+		}
+	}
+}
+
+#MarketingListMembersConfigurationForm_filteredBySubscriptionType_area{
+	margin-left: 15px;
+}
+
+.marketing-list-member-stats{
+	margin: 5px 0 0 0;
+	font-size: 12px;
+	strong{
+		display: block;
+		margin-bottom: 3px;
+	}
+}
+
+.portlet-with-toolbar{
+	.view-toolbar{
+		margin: 15px 0 0 15px;
+		.parent > ul{
+			top: auto;
+		}
+	}
+}

@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -575,6 +585,8 @@
                 declare allow_permissions, deny_permissions smallint default 0;
                 declare is_super_administrator, is_owner tinyint;
 
+                delete from __role_children_cache;
+
                 select named_group_contains_permitable(\'Super Administrators\', _permitable_id)
                 into is_super_administrator;
                 if is_super_administrator then
@@ -958,18 +970,46 @@
                               )
             begin
                 declare user_id int(11);
+                declare user_role_id int(11);
+                declare parent_role_id int(11);
                 declare exit handler for 1054, 1146 # Column, table doesn\'t exist.
                     begin                           # RedBean hasn\'t created it yet.
                         set allow_permissions = 0;
                     end;
 
+                select role_id into user_role_id from _user where permitable_id = _permitable_id;
                 set allow_permissions = 0;
                 select get_permitable_user_id(_permitable_id)
                 into   user_id;
                 if user_id is not null then
+                    call recursive_get_all_descendent_roles(_permitable_id, user_role_id);
                     call recursive_get_securableitem_propagated_allow_permissions_permit(_securableitem_id, _permitable_id, class_name, module_name, allow_permissions);
                 end if;
             end;',
+
+           //Transverse role tree to get all descendent roles
+            '
+            create procedure recursive_get_all_descendent_roles(in _permitable_id int(11), in parent_role_id int(11))
+            begin
+                declare child_role_id int(11);
+                declare no_more_records tinyint default 0;
+                declare child_role_ids cursor for
+                    select id
+                    from   role
+                    where  role_id = parent_role_id;
+                declare continue handler for not found
+                    set no_more_records = 1;
+
+                open child_role_ids;
+                fetch child_role_ids into child_role_id;
+                while no_more_records = 0 do
+                    INSERT IGNORE INTO __role_children_cache VALUES (_permitable_id, child_role_id);
+                    call recursive_get_all_descendent_roles(_permitable_id, child_role_id);
+                    fetch child_role_ids into child_role_id;
+                end while;
+                close child_role_ids;
+            end;
+            ',
 
             // Name abbreviated - max is 64. Should end '_for permitable'.
             'create procedure recursive_get_securableitem_propagated_allow_permissions_permit(
@@ -981,25 +1021,20 @@
                               )
             begin
                 declare user_allow_permissions, user_deny_permissions, user_propagated_allow_permissions tinyint;
-                declare user_role_id int(11);
                 declare exit handler for 1054, 1146 # Column, table doesn\'t exist.
                     begin                           # RedBean hasn\'t created it yet.
                         set allow_permissions = 0;
                     end;
 
                 set allow_permissions = 0;
-                select role_id
-                into   user_role_id
-                from   _user
-                where  permitable_id = _permitable_id;
 
                 begin
                     declare sub_role_id int(11);
                     declare no_more_records tinyint default 0;
                     declare sub_role_ids cursor for
-                        select id
-                        from   role
-                        where  role_id = user_role_id;
+                        select role_id
+                        from   __role_children_cache
+                        where  permitable_id = _permitable_id;
                     declare continue handler for not found
                         begin
                             set no_more_records = 1;
@@ -1580,6 +1615,9 @@
             if (RedBeanDatabase::getDatabaseType() == 'mysql')
             {
                 self::dropStoredFunctionsAndProcedures();
+                R::exec('CREATE TABLE IF NOT EXISTS __role_children_cache(permitable_id int(11),
+                         role_id int(11), PRIMARY KEY (permitable_id, role_id),
+                         UNIQUE KEY (permitable_id, role_id));');
                 try
                 {
                     foreach (self::$storedFunctions as $sql)

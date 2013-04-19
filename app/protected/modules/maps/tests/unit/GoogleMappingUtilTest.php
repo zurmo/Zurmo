@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class GoogleMappingUtilTest extends ZurmoBaseTest
@@ -97,8 +107,8 @@
             $this->assertEquals(0,             $account1->billingAddress->invalid);
 
             $account2 = Account::getById($accountId2);
-            $this->assertEquals('37.38926',    $account2->billingAddress->latitude);
-            $this->assertEquals('-121.873247', $account2->billingAddress->longitude);
+            $this->assertEquals(round('37.39680',   4), round($account2->billingAddress->latitude,  4));
+            $this->assertEquals(round('-121.87794', 4), round($account2->billingAddress->longitude, 4));
             $this->assertEquals(0,             $account2->billingAddress->invalid);
 
             $account3 = Account::getById($accountId3);
@@ -138,10 +148,10 @@
             $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData3);
             $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData4);
 
-            $this->assertEquals(round('42.1153153', 4),  round($geoCodeResultObj1->latitude, 4));
+            $this->assertEquals(round('42.1153153',  4), round($geoCodeResultObj1->latitude,  4));
             $this->assertEquals(round('-87.9763703', 4), round($geoCodeResultObj1->longitude, 4));
-            $this->assertEquals('37.38926',    $geoCodeResultObj2->latitude);
-            $this->assertEquals('-121.873247', $geoCodeResultObj2->longitude);
+            $this->assertEquals(round('37.39680',    4), round($geoCodeResultObj2->latitude,  4));
+            $this->assertEquals(round('-121.87794',  4), round($geoCodeResultObj2->longitude, 4));
             $this->assertEquals('41',  round($geoCodeResultObj3->latitude, 0));
             $this->assertEquals('-73', round($geoCodeResultObj3->longitude, 0));
             $this->assertEquals('43.06132',    round($geoCodeResultObj4->latitude, 5));

@@ -17,9 +17,14 @@
     <td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>id=notifications-link</td>
+    <td>open</td>
+    <td>index.php/mashableInbox/default</td>
     <td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
     <td>waitForCondition</td>
@@ -32,9 +37,14 @@
     <td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>css=span.icon</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>link=Click Here</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
     <td>waitForCondition</td>
@@ -42,8 +52,8 @@
     <td>30000</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>css=span.icon</td>
+    <td>assertTextPresent</td>
+    <td>New mission ${randomSuffix}</td>
     <td></td>
 </tr>
 <tr>
@@ -53,32 +63,7 @@
 </tr>
 <tr>
     <td>open</td>
-    <td>index.php/missions/default</td>
-    <td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-    <td>clickAndWait</td>
-    <td>css=a.icon-missions-taken-but-not-accepted</td>
-    <td></td>
-</tr>
-<tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
-</tr>
-<tr>
-    <td>clickAndWait</td>
-    <td>link=Created</td>
+    <td>index.php/mashableInbox/default/list?modelClassName=Mission</td>
     <td></td>
 </tr>
 <tr>
@@ -93,7 +78,7 @@
 </tr>
 <tr>
     <td>click</td>
-    <td>//div[@id='MissionsListView']/div/table/tbody/tr/td[2]/div/a/span[3]</td>
+	<td>//div[@id='MashableInboxForm_optionForModel_area']/label[1]</td>
     <td></td>
 </tr>
 <tr>
@@ -102,13 +87,8 @@
     <td>30000</td>
 </tr>
 <tr>
-    <td>waitForText</td>
-    <td>//div[@id='MissionsListView']/div/table/tbody/tr/td[2]/div/span</td>
-    <td>Accepted</td>
-</tr>
-<tr>
-    <td>clickAndWait</td>
-    <td>xpath=//div[@id='list-view']/table/tbody/tr/td/a</td>
+    <td>click</td>
+    <td>//div[@id='MissionsListView']/div/table/tbody/tr/td[3]/div/a/span[3]</td>
     <td></td>
 </tr>
 <tr>
@@ -122,13 +102,33 @@
     <td>30000</td>
 </tr>
 <tr>
-    <td>waitForText</td>
-    <td>//div[@id='ModelDetailsSummaryView']/div/div/div/span</td>
+    <td>clickAndWait</td>
+    <td>//div[@id='MissionsListView']/div/table/tbody/tr/td/a</td>
+    <td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
     <td>Accepted</td>
+    <td></td>
 </tr>
 <tr>
     <td>assertTextPresent</td>
     <td>New mission ${randomSuffix}</td>
+    <td></td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Accepted</td>
     <td></td>
 </tr>
 <tr>

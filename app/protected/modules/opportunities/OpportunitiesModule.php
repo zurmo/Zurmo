@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class OpportunitiesModule extends SecurableModule
@@ -43,12 +53,13 @@
             return array('Opportunity');
         }
 
-        public static function getUntranslatedRightsLabels()
+        public static function getTranslatedRightsLabels()
         {
+            $params                                   = LabelUtil::getTranslationParamsForAllModules();
             $labels                                   = array();
-            $labels[self::RIGHT_CREATE_OPPORTUNITIES] = 'Create OpportunitiesModulePluralLabel';
-            $labels[self::RIGHT_DELETE_OPPORTUNITIES] = 'Delete OpportunitiesModulePluralLabel';
-            $labels[self::RIGHT_ACCESS_OPPORTUNITIES] = 'Access OpportunitiesModulePluralLabel Tab';
+            $labels[self::RIGHT_CREATE_OPPORTUNITIES] = Zurmo::t('OpportunitiesModule', 'Create OpportunitiesModulePluralLabel',     $params);
+            $labels[self::RIGHT_DELETE_OPPORTUNITIES] = Zurmo::t('OpportunitiesModule', 'Delete OpportunitiesModulePluralLabel',     $params);
+            $labels[self::RIGHT_ACCESS_OPPORTUNITIES] = Zurmo::t('OpportunitiesModule', 'Access OpportunitiesModulePluralLabel Tab', $params);
             return $labels;
         }
 
@@ -67,16 +78,18 @@
                 ),
                 'tabMenuItems' => array(
                     array(
-                        'label' => 'OpportunitiesModulePluralLabel',
-                        'url'   => array('/opportunities/default'),
-                        'right' => self::RIGHT_ACCESS_OPPORTUNITIES,
+                        'label'  => "eval:Zurmo::t('OpportunitiesModule', 'OpportunitiesModulePluralLabel', \$translationParams)",
+                        'url'    => array('/opportunities/default'),
+                        'right'  => self::RIGHT_ACCESS_OPPORTUNITIES,
+                        'mobile' => true,
                     ),
                 ),
                 'shortcutsCreateMenuItems' => array(
                     array(
-                        'label' => 'OpportunitiesModuleSingularLabel',
-                        'url'   => array('/opportunities/default/create'),
-                        'right' => self::RIGHT_CREATE_OPPORTUNITIES,
+                        'label'  => "eval:Zurmo::t('OpportunitiesModule', 'OpportunitiesModuleSingularLabel', \$translationParams)",
+                        'url'    => array('/opportunities/default/create'),
+                        'right'  => self::RIGHT_CREATE_OPPORTUNITIES,
+                        'mobile' => true,
                     ),
                 ),
             );
@@ -93,9 +106,14 @@
             return 'Opportunity';
         }
 
-        protected static function getSingularModuleLabel()
+        protected static function getSingularModuleLabel($language)
         {
-            return 'Opportunity';
+            return Zurmo::t('OpportunitiesModule', 'Opportunity', array(), null, $language);
+        }
+
+        protected static function getPluralModuleLabel($language)
+        {
+            return Zurmo::t('OpportunitiesModule', 'Opportunities', array(), null, $language);
         }
 
         public static function getAccessRight()
@@ -118,9 +136,9 @@
             return 'OpportunitiesDefaultDataMaker';
         }
 
-        public static function getDemoDataMakerClassName()
+        public static function getDemoDataMakerClassNames()
         {
-            return 'OpportunitiesDemoDataMaker';
+            return array('OpportunitiesDemoDataMaker');
         }
 
         public static function getGlobalSearchFormClassName()
@@ -129,6 +147,21 @@
         }
 
         public static function hasPermissions()
+        {
+            return true;
+        }
+
+        public static function isReportable()
+        {
+            return true;
+        }
+
+        public static function canHaveWorkflow()
+        {
+            return true;
+        }
+
+        public static function canHaveContentTemplates()
         {
             return true;
         }

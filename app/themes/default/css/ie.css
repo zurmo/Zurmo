@@ -1,3 +1,37 @@
+/*********************************************************************************
+ * Zurmo is a customer relationship management program developed by
+ * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+ *
+ * Zurmo is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * Zurmo is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+ * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+ *
+ * The interactive user interfaces in original and modified versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the Zurmo
+ * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display the words
+ * Copyright Zurmo Inc. 2013. All rights reserved.
+ ********************************************************************************/
 .border-box,
 .modal-view-toolbar a,
 .modal-view-toolbar input[type="submit"],
@@ -9,6 +43,7 @@
 .z-button,
 a.zButton,
 a.z-button,
+.white-button,
 .default-btn .modal-view-toolbar a,
 .default-btn .modal-view-toolbar input[type="submit"],
 .default-btn .modal-view-toolbar input[type="button"],
@@ -19,6 +54,7 @@ a.z-button,
 .default-btn .z-button,
 .default-btn a.zButton,
 .default-btn a.z-button,
+.default-btn .white-button,
 .default-btn,
 .z-label {
   -moz-box-sizing: border-box;
@@ -52,7 +88,6 @@ a.z-button,
   border: 1px solid #b6b6b6;
   background-color: #ebebeb;
   background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#f5f5f5), to(#ebebeb));
   background-image: -moz-linear-gradient(top, #f5f5f5, #ebebeb);
   background-image: -ms-linear-gradient(top, #f5f5f5, #ebebeb);
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #ebebeb));
@@ -75,7 +110,8 @@ a.z-button,
 .zButton,
 .z-button,
 a.zButton,
-a.z-button {
+a.z-button,
+.white-button {
   border-top: 1px solid rgba(200, 200, 200, 0.4);
   border-left: 1px solid rgba(185, 185, 185, 0.4);
   border-right: 1px solid rgba(185, 185, 185, 0.4);
@@ -113,7 +149,8 @@ a.z-button {
 .zButton:before,
 .z-button:before,
 a.zButton:before,
-a.z-button:before {
+a.z-button:before,
+.white-button:before {
   content: "";
   display: table;
 }
@@ -126,7 +163,8 @@ a.z-button:before {
 .zButton:after,
 .z-button:after,
 a.zButton:after,
-a.z-button:after {
+a.z-button:after,
+.white-button:after {
   content: "";
   display: table;
   clear: both;
@@ -140,19 +178,30 @@ a.z-button:after {
 .zButton.attachLoading.z-button,
 .z-button.attachLoading.z-button,
 a.zButton.attachLoading.z-button,
-a.z-button.attachLoading.z-button {
+a.z-button.attachLoading.z-button,
+.white-button.attachLoading.z-button {
   color: #fff;
 }
-.modal-view-toolbar a:not(.attachLoading) span,
-.modal-view-toolbar input[type="submit"]:not(.attachLoading) span,
-.modal-view-toolbar input[type="button"]:not(.attachLoading) span,
-.form-toolbar a:not(.attachLoading) span,
-.form-toolbar input[type="submit"]:not(.attachLoading) span,
-.form-toolbar input[type="button"]:not(.attachLoading) span,
-.zButton:not(.attachLoading) span,
-.z-button:not(.attachLoading) span,
-a.zButton:not(.attachLoading) span,
-a.z-button:not(.attachLoading) span {
+.modal-view-toolbar a:not(.attachLoading) .z-label,
+.modal-view-toolbar input[type="submit"]:not(.attachLoading) .z-label,
+.modal-view-toolbar input[type="button"]:not(.attachLoading) .z-label,
+.form-toolbar a:not(.attachLoading) .z-label,
+.form-toolbar input[type="submit"]:not(.attachLoading) .z-label,
+.form-toolbar input[type="button"]:not(.attachLoading) .z-label,
+.zButton:not(.attachLoading) .z-label,
+.z-button:not(.attachLoading) .z-label,
+a.zButton:not(.attachLoading) .z-label,
+a.z-button:not(.attachLoading) .z-label,
+.white-button:not(.attachLoading) .z-label {
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
+}
+.white-button .z-label {
+  color: #666 !important;
+  -webkit-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -moz-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -o-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  -ms-text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
+  text-shadow: 0px 1px 0 rgba(255, 255, 255, 0.75) !important;
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
 .default-btn {
@@ -199,7 +248,7 @@ a.z-button:not(.attachLoading) span {
 .default-btn.attachLoading.z-button {
   color: #fff;
 }
-.default-btn:not(.attachLoading) span {
+.default-btn:not(.attachLoading) .z-label {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
 /*
@@ -226,6 +275,7 @@ a.z-button:not(.attachLoading) span {
   border-radius: 3px;
   position: relative;
   z-index: 1;
+  white-space: nowrap;
 }
 .z-label-smaller {
   padding: 0 15px;
@@ -267,6 +317,27 @@ a.z-button:not(.attachLoading) span {
   color: #fff !important;
   text-decoration: underline;
 }
+.z-action-link {
+  font-size: 11px;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.z-action-link:hover {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  text-decoration: none;
+}
+.z-action-link-active {
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+}
 .unstyle-panel {
   border: none;
   background: none;
@@ -280,17 +351,10 @@ a.z-button:not(.attachLoading) span {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
 /*Target only Explorer*/
-/*ALl input fields*/
 .form input[type="text"],
 .form input[type="password"] {
   height: 26px;
 }
-/*
-input[type="submit"],
-input[type="button"]{
-	height:26px;
-}
-*/
 /*Top Right Create New Menu*/
 #ShortcutsMenu > li > a {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);

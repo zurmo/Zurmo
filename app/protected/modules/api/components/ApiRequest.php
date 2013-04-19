@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,14 +20,24 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
     * Handle API requests.
     */
-    class ApiRequest
+    class ApiRequest extends CApplicationComponent
     {
         const REST           = 'REST';
         const SOAP           = 'SOAP';
@@ -41,20 +51,15 @@
         protected $paramsFormat;
 
         /**
-         * Store params from request.
-         * @var array
+         * Store real request class
+         * @var ApiRequest
          */
-        protected $params = array();
+        protected $requestClass;
+
+        protected $resultClassName;
 
         /**
-         * To be redeclard in children classes.
-         */
-        public function getServiceType()
-        {
-        }
-
-        /**
-         * To be redeclard in children classes.
+         * To be re-declared in children classes.
          */
         public static function getParamsFromRequest()
         {
@@ -65,17 +70,31 @@
          */
         public function init()
         {
-            $this->parseResponseFormat();
+            //$moduleId = static::callingSomeMethod();
+            $moduleId = $this->getModuleId();
+            $rulesClassName = ApiRulesFactory::getRulesClassNameByModuleId($moduleId);
+            $requestClassName   = $rulesClassName::getRequestClassName();
+
+            // Set request class
+            $this->requestClass = new $requestClassName;
+            $this->setResponseFormat($this->requestClass->getResponseFormat());
+            $this->resultClassName = $rulesClassName::getResultClassName();
+        }
+
+        public function getResultClassName()
+        {
+            return $this->resultClassName;
+        }
+
+        public function getResponseClassName()
+        {
+            return $this->requestClass->getResponseClassName();
         }
 
         public function getParams()
         {
-            return $this->params;
-        }
-
-        public function setParams($params)
-        {
-            $this->params = $params;
+            $params = $this->requestClass->getParamsFromRequest();
+            return $params;
         }
 
         public function getResponseFormat()
@@ -89,26 +108,11 @@
         }
 
         /**
-         * Get requested response format (json or xml)
-         */
-        protected function parseResponseFormat()
-        {
-            @$this->paramsFormat = (strpos($_SERVER['HTTP_ACCEPT'], self::JSON_FORMAT)) ? self::JSON_FORMAT : self::XML_FORMAT;
-        }
-
-        /**
          * Get sessionId from HTTP headers
          */
         public function getSessionId()
         {
-            if (isset($_SERVER['HTTP_ZURMO_SESSION_ID']))
-            {
-                return $_SERVER['HTTP_ZURMO_SESSION_ID'];
-            }
-            else
-            {
-                return false;
-            }
+            return $this->requestClass->getSessionId();
         }
 
         /**
@@ -116,14 +120,7 @@
         */
         public function getSessionToken()
         {
-            if (isset($_SERVER['HTTP_ZURMO_TOKEN']))
-            {
-                return $_SERVER['HTTP_ZURMO_TOKEN'];
-            }
-            else
-            {
-                return false;
-            }
+            return $this->requestClass->getSessionToken();
         }
 
         /**
@@ -131,14 +128,7 @@
         */
         public function getUsername()
         {
-            if (isset($_SERVER['HTTP_ZURMO_AUTH_USERNAME']))
-            {
-                return $_SERVER['HTTP_ZURMO_AUTH_USERNAME'];
-            }
-            else
-            {
-                return false;
-            }
+            return $this->requestClass->getUsername();
         }
 
         /**
@@ -146,14 +136,7 @@
         */
         public function getPassword()
         {
-            if (isset($_SERVER['HTTP_ZURMO_AUTH_PASSWORD']))
-            {
-                return $_SERVER['HTTP_ZURMO_AUTH_PASSWORD'];
-            }
-            else
-            {
-                return false;
-            }
+            return $this->requestClass->getPassword();
         }
 
         /**
@@ -161,64 +144,19 @@
         */
         public function getLanguage()
         {
-            if (isset($_SERVER['HTTP_ZURMO_LANG']))
-            {
-                return $_SERVER['HTTP_ZURMO_LANG'];
-            }
-            else
-            {
-                return false;
-            }
+            return $this->requestClass->getLanguage();
         }
 
-        /**
-        * Get request type from HTTP headers
-        */
-        public function getRequestType()
+        public function isSessionTokenRequired()
         {
-            if (isset($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']))
-            {
-                if (strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'rest')
-                {
-                    return self::REST;
-                }
-                elseif (strtolower($_SERVER['HTTP_ZURMO_API_REQUEST_TYPE']) == 'soap')
-                {
-                    return self::SOAP;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /**
-        * Parse params from request.
-        */
-        public function parseParams()
-        {
-            if ($this->getRequestType() == self::REST)
-            {
-                $params = ApiRestRequest::getParamsFromRequest();
-            }
-            elseif ($this->getRequestType() == self::SOAP)
-            {
-                $params = ApiSoapRequest::getParamsFromRequest();
-            }
-            else
-            {
-                echo Zurmo::t('ApiModule', "Invalid request");
-                Yii::app()->end();
-            }
-            $this->setParams($params);
+            return $this->requestClass->isSessionTokenRequired();
         }
 
         /**
          * Check if request is api request.
          * @return boolean
          */
-        public function isApiRequest()
+        public static function isApiRequest()
         {
             // We need to catch exception and return false in case that this method is called via ConsoleApplication.
             try
@@ -230,9 +168,27 @@
                 $url = '';
             }
 
+            //if (strpos($url, '/api/') !== false || strpos($url, '/riva/') !== false)
             if (strpos($url, '/api/') !== false)
             {
                 return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected function getModuleId()
+        {
+            $url = Yii::app()->getRequest()->getUrl();
+            if (strpos($url, '/api/') !== false)
+            {
+                return 'api';
+            }
+            elseif (strpos($url, '/riva/') !== false)
+            {
+                return 'riva';
             }
             else
             {

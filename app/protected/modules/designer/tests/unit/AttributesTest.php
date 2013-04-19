@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,12 +20,24 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class AttributesTest extends ZurmoBaseTest
     {
+        public static $activateDefaultLanguages = true;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -38,10 +50,41 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        public function testUsingReservedCharactersToMakeAnAttribute()
+        {
+            $attributeForm                    = new TextAreaAttributeForm();
+            $attributeForm->modelClassName    = 'Account';
+            $attributeForm->setScenario('createAttribute');
+            $attributeForm->attributeName     = 'test__wrong';
+            $attributeForm->attributeLabels   = array(
+                'de' => 'Test Text2 de',
+                'en' => 'Test Text2 en',
+                'es' => 'Test Text2 es',
+                'fr' => 'Test Text2 fr',
+                'it' => 'Test Text2 it',
+            );
+            $attributeForm->isAudited     = true;
+            $attributeForm->isRequired    = false;
+            $validated = $attributeForm->validate();
+            $this->assertFalse($validated);
+            $errors = array('attributeName' =>
+                        array('"test__wrong" field name contains reserved characters. Either __ or ___.'));
+            $this->assertEquals($errors, $attributeForm->getErrors());
+            $attributeForm->attributeName = 'test___still';
+            $validated = $attributeForm->validate();
+            $this->assertFalse($validated);
+            $errors = array('attributeName' =>
+                        array('"test___still" field name contains reserved characters. Either __ or ___.'));
+            $this->assertEquals($errors, $attributeForm->getErrors());
+            $attributeForm->attributeName = 'testRight';
+            $validated = $attributeForm->validate();
+            $this->assertTrue($validated);
+        }
+
         /**
          * Test if we don't receive error related to database rowsize limit
          */
-        public function testSetManyTextAreaFileds()
+        public function testSetManyTextAreaFields()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
@@ -1891,8 +1934,8 @@
             $account->testText3Cstm                         = 'some test stuff 3';
             $account->testTextArea2Cstm                     = 'some test text area stuff';
             $account->testTextArea3Cstm                     = 'some test text area stuff 3';
-            $account->testUrl2Cstm                          = 'http://www.zurmo.com';
-            $account->testUrl3Cstm                          = 'http://www.zurmo.org';
+            $account->testUrl2Cstm                          = 'https://www.zurmo.com';
+            $account->testUrl3Cstm                          = 'www.zurmo.org';
             $account->playMyFavoriteSongCstm->value         = 'song2'; // song 3
             $account->testCountryCstm->value                = 'bbbb';
             $account->testStateCstm->value                  = 'bbb2';
@@ -1939,7 +1982,8 @@
             $this->assertEquals('Seat',                      $account->testAirPlanePartsCstm->value);
             $this->assertEquals('some test stuff',           $account->testText2Cstm);
             $this->assertEquals('some test text area stuff', $account->testTextArea2Cstm);
-            $this->assertEquals('http://www.zurmo.com',      $account->testUrl2Cstm);
+            $this->assertEquals('https://www.zurmo.com',     $account->testUrl2Cstm);
+            $this->assertEquals('http://www.zurmo.org',      $account->testUrl3Cstm);
             $this->assertEquals('song2',                     $account->playMyFavoriteSongCstm->value);
             $this->assertContains('Writing',                 $account->testHobbies1Cstm->values);
             $this->assertContains('Reading',                 $account->testHobbies1Cstm->values);

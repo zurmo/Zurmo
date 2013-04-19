@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class Address extends OwnedModel
@@ -31,7 +41,7 @@
             $address = $this->makeAddress();
             if ($address == '')
             {
-                return Zurmo::t('ZurmoModule', '(None)');
+                return Zurmo::t('Core', '(None)');
             }
             return $address;
         }
@@ -81,9 +91,24 @@
             return $this->invalid;
         }
 
-        protected static function getPluralLabel()
+        /**
+         * Returns the display name for the model class.
+         * @param null | string $language
+         * @return dynamic label name based on module.
+         */
+        protected static function getLabel($language = null)
         {
-            return 'Addresses';
+            return Zurmo::t('ZurmoModule', 'Address', array(), null, $language);
+        }
+
+        /**
+         * Returns the display name for plural of the model class.
+         * @param null | string $language
+         * @return dynamic label name based on module.
+         */
+        protected static function getPluralLabel($language = null)
+        {
+            return Zurmo::t('ZurmoModule', 'Addresses', array(), null, $language);
         }
 
         public static function getDefaultMetadata()
@@ -100,7 +125,6 @@
                     'street1',
                     'street2',
                     'state',
-                    // Todo: make these relations.
                 ),
                 'rules' => array(
                     array('city',       'type',      'type'      => 'string'),
@@ -174,6 +198,28 @@
         public static function canSaveMetadata()
         {
             return true;
+        }
+
+        public static function getModuleClassName()
+        {
+            return 'ZurmoModule';
+        }
+
+        protected static function translatedAttributeLabels($language)
+        {
+            return array_merge(parent::translatedAttributeLabels($language),
+                array(
+                    'city'        => Zurmo::t('ZurmoModule', 'City',         array(), null, $language),
+                    'country'     => Zurmo::t('ZurmoModule', 'Country',      array(), null, $language),
+                    'invalid'     => Zurmo::t('ZurmoModule', 'Invalid',      array(), null, $language),
+                    'latitude'    => Zurmo::t('ZurmoModule', 'Latitude',     array(), null, $language),
+                    'longitude'   => Zurmo::t('ZurmoModule', 'Longitude',    array(), null, $language),
+                    'postalCode'  => Zurmo::t('ZurmoModule', 'Postal Code',  array(), null, $language),
+                    'street1'     => Zurmo::t('ZurmoModule', 'Street 1',     array(), null, $language),
+                    'street2'     => Zurmo::t('ZurmoModule', 'Street 2',     array(), null, $language),
+                    'state'       => Zurmo::t('ZurmoModule', 'State',        array(), null, $language),
+                )
+            );
         }
     }
 ?>

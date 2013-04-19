@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,64 +20,35 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
-     * Utilize this element to display a dropdown of available users that are super administrators.  The key is the
-     * user id and the value is the strval of the $user.
+     * When sending notifications from the system, the from 'user' must be a super administrator
      */
-    class UserToSendNotificationFromElement extends Element
+    class UserToSendNotificationFromElement extends SuperAdministratorToUseElement
     {
-        /**
-         * Renders the editable dropdown content.
-         * @return A string containing the element's content.
-         */
-        protected function renderControlEditable()
-        {
-            $dropDownArray = $this->getDropDownArray();
-            $value         = $this->model->{$this->attribute};
-            $htmlOptions   = array('id'   => $this->getEditableInputId($this->attribute));
-            $content       = ZurmoHtml::dropDownList($this->getEditableInputName($this->attribute),
-                                                 $value,
-                                                 $dropDownArray,
-                                                 $htmlOptions);
-            $content       = ZurmoHtml::tag('div', array('class' => 'beforeToolTip'), $content);
-            $content      .= self::renderTooltipContent();
-            return $content;
-        }
-
-        protected function renderControlNonEditable()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected static function renderTooltipContent()
+        protected function renderLabel()
         {
             $title       = Zurmo::t('EmailMessagesModule', 'Zurmo sends out system notifications.  The notifications must appear ' .
-                                             'as coming from a super administrative user.');
-            $content     = '<span id="send-notifications-from-user-tooltip" class="tooltip"  title="' . $title . '">';
+                                                           'as coming from a super administrative user.');
+            $content     = parent::renderLabel();
+            $content    .= '<span id="send-notifications-from-user-tooltip" class="tooltip"  title="' . $title . '">';
             $content    .= '?</span>';
             $qtip = new ZurmoTip(array('options' => array('position' => array('my' => 'bottom right', 'at' => 'top left'))));
             $qtip->addQTip("#send-notifications-from-user-tooltip");
             return $content;
-        }
-
-        protected function renderError()
-        {
-            return null;
-        }
-
-        protected function getDropDownArray()
-        {
-            $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            $data  = array();
-            foreach ($group->users as $user)
-            {
-                $data[$user->id] = strval($user);
-            }
-            return $data;
         }
     }
 ?>

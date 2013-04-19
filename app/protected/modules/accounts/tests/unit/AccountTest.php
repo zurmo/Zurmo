@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     class AccountTest extends ZurmoBaseTest
@@ -39,17 +49,51 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        public function testSavingNewParentAccountSavesCorrectly()
+        {
+            $oldMetadata          = Account::getMetadata();
+            $newMetadata          = $oldMetadata;
+            $newMetadata['Account']['rules'][] = array('type', 'default', 'value' => 'Customer');
+            Account::setMetadata($newMetadata);
+            $account              = new Account();
+            $account->name        = 'Account';
+            $account->type->value = 'Customer';
+            $account->account     = $account;
+            $saved                = $account->save();
+            $this->assertTrue($saved);
+            $account->account = null;
+            $saved = $account->save();
+            $this->assertTrue($saved);
+            $count = R::getCell('select count(*) from account');
+            $this->assertEquals(1, $count);
+            Account::setMetadata($oldMetadata);
+            $this->assertTrue($account->delete());
+        }
+
+        /**
+         * @depends testSavingNewParentAccountSavesCorrectly
+         */
         public function testConfirmAccountNameIdElementStillImplementsCorrectInterfaceFromParent()
         {
             $classToEvaluate        = new ReflectionClass('AccountNameIdElement');
             $this->assertTrue($classToEvaluate->implementsInterface('DerivedElementInterface'));
         }
 
+        /**
+         * @depends testConfirmAccountNameIdElementStillImplementsCorrectInterfaceFromParent
+         */
         public function testCreateAndGetAccountById()
         {
             $user = UserTestHelper::createBasicUser('Steven');
             $account = new Account();
             $account->owner       = $user;
+            $account->name        = DataUtil::purifyHtml("Tom & Jerry's Account");
+            $this->assertEquals("Tom & Jerry's Account", $account->name);
+            $this->assertTrue($account->save());
+            $id = $account->id;
+            unset($account);
+            $account = Account::getById($id);
+            $this->assertEquals("Tom & Jerry's Account", $account->name);
             $account->name        = 'Test Account';
             $account->officePhone = '1234567890';
             $this->assertTrue($account->save());
@@ -414,6 +458,9 @@
             $this->assertEquals(array(), $account->getErrors());
         }
 
+        /**
+         * @depends testValidatesWithoutOwnerWhenSpecifyingAttributesToValidate
+         */
         public function testSettingDefaultValueForType()
         {
             $values = array(
@@ -473,6 +520,9 @@
             $this->assertTrue($model->save());
         }
 
+        /**
+         * @depends testSettingDefaultValueForType
+         */
         public function testMemberOfMembersRelation()
         {
             $user = User::getByUsername('billy');
@@ -525,6 +575,7 @@
          * back as 0. But this is how redBean works to stay consistent with all dbs.
          * @see http://groups.google.com/group/redbeanorm/browse_thread/thread/e6a0a9d29838d973/90d12a0146544a0b
          * So for now, we will adjust the phone element in the user interface.
+         * @depends testMemberOfMembersRelation
          */
         public function testOfficePhoneSetsToZeroWhenClearingAndForgetting()
         {
@@ -547,6 +598,9 @@
             $this->assertEquals(null, $account->officePhone);
         }
 
+        /**
+         * @depends testOfficePhoneSetsToZeroWhenClearingAndForgetting
+         */
         public function testGetModelClassNames()
         {
             $modelClassNames = AccountsModule::getModelClassNames();
@@ -555,6 +609,9 @@
             $this->assertEquals('AccountSearch', $modelClassNames[1]);
         }
 
+        /**
+         * @depends testGetModelClassNames
+         */
         public function testCreatingACustomDropDownAfterAnAccountExists()
         {
             $super = User::getByUsername('super');
@@ -610,6 +667,30 @@
             //Now retrieve account again and make sure you can access the values in the dropdown.
             $account     = Account::getById($accountId);
             $this->assertEquals($compareData, unserialize($account->testAirPlaneCstm->data->serializedData));
+        }
+
+        /**
+         * @depends testCreatingACustomDropDownAfterAnAccountExists
+         */
+        public function testWebsiteCanBeSavedWithoutUrlScheme()
+        {
+            $user                 = User::getByUsername('steven');
+            $account              = new Account();
+            $account->owner       = $user;
+            $account->name        = 'AccountForURLSchemeTest';
+            $account->website     = 'www.zurmo.com';
+            $this->assertTrue($account->save());
+            $id = $account->id;
+            unset($account);
+            $account = Account::getById($id);
+            $this->assertEquals('AccountForURLSchemeTest', $account->name);
+            $this->assertEquals('http://www.zurmo.com',    $account->website);
+
+            $account->setAttributes(array('website' => 'https://www.zurmo.com'));
+            $this->assertTrue($account->save());
+            $account->forget();
+            $account = Account::getById($id);
+            $this->assertEquals('https://www.zurmo.com',  $account->website);
         }
     }
 ?>

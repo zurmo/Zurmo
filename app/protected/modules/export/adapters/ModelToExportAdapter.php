@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     /**
@@ -36,6 +46,11 @@
         */
         const DELIMITER = ' - ';
 
+        public static function getLabelFromTwoAttributeStrings($stringOne, $stringTwo)
+        {
+            return $stringOne . ModelToExportAdapter::DELIMITER . $stringTwo;
+        }
+
         /**
         *
         * Get model properties as array.
@@ -43,65 +58,52 @@
         */
         public function getData()
         {
-            $data       = array();
-            $data[$this->resolveIdLabelToTitleCaseForExport($this->model->getAttributeLabel('id'))] = $this->model->id;
-            $retrievableAttributes = static::resolveRetrievableAttributesByModel($this->model);
+            $data                  = array();
+            $data[]                = $this->model->id;
+            $retrievableAttributes = static::resolveExportableAttributesByModel($this->model);
             foreach ($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
             {
-                $type             = ModelAttributeToMixedArrayTypeUtil::getType($this->model, $attributeName);
-                $adapterClassName = $type . 'RedBeanModelAttributeValueToExportValueAdapter';
-                if ($type != null && @class_exists($adapterClassName) &&
+                if ((null !== $adapterClassName = $this->getRedBeanModelAttributeValueToExportValueAdapterClassName($attributeName)) &&
                     !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
                       RedBeanModel::HAS_ONE))
                 {
-                    // Normal attribute
+                    //Non-relation attribute
                     $adapter = new $adapterClassName($this->model, $attributeName);
                     $adapter->resolveData($data);
                 }
-                elseif ($this->model->isOwnedRelation($attributeName) &&
-                    ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
-                      $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
+                elseif ($this->isHasOneVariationOwnedRelation($attributeName))
                 {
-                    // Owned relationship
+                    //Owned relation attribute
                     if ($this->model->{$attributeName}->id > 0)
                     {
-                        $util = new ModelToExportAdapter($this->model->{$attributeName});
-                        $relatedData          = $util->getData();
+                        $util           = new ModelToExportAdapter($this->model->{$attributeName});
+                        $relatedData    = $util->getData();
                         foreach ($relatedData as $relatedDataAttribute => $relatedDataValue)
                         {
                             if (strtolower($relatedDataAttribute) != 'id')
                             {
-                                $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
-                                    $this->model->getAttributeLabel($attributeName),
-                                    $relatedDataAttribute);
-                                $data[$exportAttributeName] = $relatedDataValue;
+                                $data[] = $relatedDataValue;
                             }
                         }
                     }
                     else
                     {
-                        $data = array_merge($data, $this->getAtttributesForEmptyRelationships($attributeName));
+                        $data = array_merge($data, $this->getAllAttributesDataAsNull($attributeName));
                     }
                 }
-                //We don't want to list properties from CustomFieldData objects
-                //This is also case fo related models, not only for custom fields
+                //We do not want to list properties from CustomFieldData objects
+                //This is also the case for related models, not only for custom fields
                 elseif ($this->model->isRelation($attributeName) &&
-                    $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
+                        $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
                 {
-                    // Not owned relationship
+                    //Non-owned relation
                     if ($this->model->{$attributeName}->id > 0)
                     {
-                        $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
-                            $this->model->getAttributeLabel($attributeName),
-                            Zurmo::t('ExportModule', 'Name'));
-                        $data[$exportAttributeName] = strval($this->model->{$attributeName});
+                        $data[] = strval($this->model->{$attributeName});
                     }
                     else
                     {
-                        $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
-                            $this->model->getAttributeLabel($attributeName),
-                            Zurmo::t('ExportModule', 'Name'));
-                        $data[$this->model->getAttributeLabel($attributeName)] = null;
+                        $data[] = null;
                     }
                 }
             }
@@ -109,10 +111,73 @@
         }
 
         /**
-        * Return array of retrievable model attributes
-        * @return array
-        */
-        protected static function resolveRetrievableAttributesByModel($model)
+         * Get the header row data which includes a label for each column
+         * @return array $data
+         */
+        public function getHeaderData()
+        {
+            $data                  = array();
+            $data[]                = $this->resolveIdLabelToTitleCaseForExport($this->model->getAttributeLabel('id'));
+            $retrievableAttributes = static::resolveExportableAttributesByModel($this->model);
+            foreach ($this->model->getAttributes($retrievableAttributes) as $attributeName => $notUsed)
+            {
+                if ((null !== $adapterClassName = $this->getRedBeanModelAttributeValueToExportValueAdapterClassName($attributeName)) &&
+                    !($this->model->isRelation($attributeName) && $this->model->getRelationType($attributeName) !=
+                        RedBeanModel::HAS_ONE))
+                {
+                    //Non-relation attribute
+                    $adapter = new $adapterClassName($this->model, $attributeName);
+                    $adapter->resolveHeaderData($data);
+                }
+                elseif ($this->isHasOneVariationOwnedRelation($attributeName))
+                {
+                    //Owned relation attribute
+                    if ($this->model->{$attributeName}->id > 0)
+                    {
+                        $util           = new ModelToExportAdapter($this->model->{$attributeName});
+                        $relatedData    = $util->getData();
+                        foreach ($relatedData as $relatedDataAttribute => $notUsed)
+                        {
+                            if (strtolower($relatedDataAttribute) != 'id')
+                            {
+                                $exportAttributeName = static::getLabelFromTwoAttributeStrings(
+                                    $this->model->getAttributeLabel($attributeName), $relatedDataAttribute);
+                                $data[] = $exportAttributeName;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $data = array_merge($data, $this->getAllAtttributesDataAsLabels($attributeName));
+                    }
+                }
+                //We do not want to list properties from CustomFieldData objects
+                //This is also the case for related models, not only for custom fields
+                elseif ($this->model->isRelation($attributeName) &&
+                    $this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE)
+                {
+                    //Non-owned relation
+                    if ($this->model->{$attributeName}->id > 0)
+                    {
+                        $label  = static::getLabelFromTwoAttributeStrings(
+                                  $this->model->getAttributeLabel($attributeName), Zurmo::t('ExportModule', 'Name'));
+                        $data[] = $label;
+                    }
+                    else
+                    {
+                        $data[] = $this->model->getAttributeLabel($attributeName);
+                    }
+                }
+            }
+            return $data;
+        }
+
+        /**
+         * Return array of retrievable model attributes
+         * @param $model
+         * @return array
+         */
+        protected static function resolveExportableAttributesByModel($model)
         {
             $retrievableAttributeNames = array();
             $metadata = $model->getMetadata();
@@ -134,29 +199,57 @@
             return $retrievableAttributeNames;
         }
 
-        public static function getDerivedAttributeNameFromTwoStrings($string1, $string2)
+        protected function getRedBeanModelAttributeValueToExportValueAdapterClassName($attributeName)
         {
-            return $string1 . ModelToExportAdapter::DELIMITER . $string2;
+            assert('is_string($attributeName)');
+            $type = ModelAttributeToMixedArrayTypeUtil::getType($this->model, $attributeName);
+            $adapterClassName = $type . 'RedBeanModelAttributeValueToExportValueAdapter';
+            if ($type != null && @class_exists($adapterClassName))
+            {
+                return $adapterClassName;
+            }
         }
 
-        public function getAtttributesForEmptyRelationships($attributeName)
+        protected function isHasOneVariationOwnedRelation($attributeName)
         {
-            $data = array();
-            $metadata = $this->model->{$attributeName}->getMetadata();
-            foreach ($metadata[get_class($this->model->{$attributeName})]['members'] as $memberName)
+            assert('is_string($attributeName)');
+            if ($this->model->isOwnedRelation($attributeName) &&
+                ($this->model->getRelationType($attributeName) == RedBeanModel::HAS_ONE ||
+                 $this->model->getRelationType($attributeName) == RedBeanModel::HAS_MANY_BELONGS_TO))
             {
-                $exportAttributeName = $this->getDerivedAttributeNameFromTwoStrings(
-                    $this->model->getAttributeLabel($attributeName),
-                    $this->model->{$attributeName}->getAttributeLabel($memberName)
-                );
-                $data[$exportAttributeName] = null;
+                return true;
             }
-            return $data;
+            return false;
         }
 
         protected function resolveIdLabelToTitleCaseForExport($id)
         {
             return mb_convert_case($id, MB_CASE_TITLE, "UTF-8");
+        }
+
+        protected function getAllAttributesDataAsNull($attributeName)
+        {
+            $data = array();
+            $metadata = $this->model->{$attributeName}->getMetadata();
+            foreach ($metadata[get_class($this->model->{$attributeName})]['members'] as $memberName)
+            {
+                $data[] = null;
+            }
+            return $data;
+        }
+
+        protected function getAllAtttributesDataAsLabels($attributeName)
+        {
+            $data = array();
+            $metadata = $this->model->{$attributeName}->getMetadata();
+            foreach ($metadata[get_class($this->model->{$attributeName})]['members'] as $memberName)
+            {
+                $label  = static::getLabelFromTwoAttributeStrings(
+                          $this->model->getAttributeLabel($attributeName),
+                          $this->model->{$attributeName}->getAttributeLabel($memberName));
+                $data[] = $label;
+            }
+            return $data;
         }
     }
 ?>
