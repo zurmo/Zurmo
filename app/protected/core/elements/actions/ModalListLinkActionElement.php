@@ -41,6 +41,11 @@
             return false;
         }
 
+        public function getElementValue()
+        {
+            return null;
+        }
+
         public function getActionType()
         {
             return 'Details';
