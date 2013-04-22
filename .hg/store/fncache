@@ -7603,3 +7603,11 @@ data/app/themes/default/less/inbox.less.i
 data/app/themes/default/less/marketing.less.i
 data/app/themes/default/less/mobile.css.i
 data/app/themes/default/less/mobile.less.i
+data/app/protected/core/utils/NumberUtil.php.i
+data/app/protected/core/validators/RedBeanModelProbabilityValidator.php.i
+data/app/protected/modules/emailMessages/elements/EmailElement.php.i
+data/app/protected/modules/emailMessages/tests/unit/EmailMessageMashableActivityRulesTest.php.i
+data/app/protected/modules/emailTemplates/tests/unit/MergeTagsUtilFactoryTest.php.i
+data/app/protected/modules/opportunities/elements/StageToProbabilityMappingElement.php.i
+data/app/protected/modules/opportunities/tests/unit/OpportunitiesModuleFormTest.php.i
+data/app/protected/modules/reports/adapters/columns/IntegerForReportListViewColumnAdapter.php.i

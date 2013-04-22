@@ -115,7 +115,7 @@
                                             'elements' => array(
                                                 array(
                                                     'attributeName' => 'AccountsModule__' . Permission::WRITE,
-                                                    'type' => 'PermissionDenyText'),
+                                                    'type' => 'PermissionInheritedDenyText'),
                                             ),
                                         ),
                                         array(
@@ -140,7 +140,7 @@
                                             'elements' => array(
                                                 array(
                                                     'attributeName' => 'ContactsModule__' . Permission::WRITE,
-                                                    'type' => 'PermissionDenyText'),
+                                                    'type' => 'PermissionInheritedDenyText'),
                                             ),
                                         ),
                                         array(

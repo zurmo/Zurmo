@@ -201,6 +201,7 @@
          * that will open the user's configured email client.
          * @param EmailMessage $emailAddress
          * @param RedBeanModel $model
+         * @return string $content
          */
         public static function renderEmailAddressAsMailToOrModalLinkStringContent($emailAddress, RedBeanModel $model)
         {

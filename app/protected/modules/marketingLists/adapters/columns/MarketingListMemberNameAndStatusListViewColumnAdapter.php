@@ -34,6 +34,9 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
+    /**
+     * Helper class to show the marketing list's member name and status in a column in a list view
+     */
     class MarketingListMemberNameAndStatusListViewColumnAdapter extends TextListViewColumnAdapter
     {
         public function renderGridViewData()

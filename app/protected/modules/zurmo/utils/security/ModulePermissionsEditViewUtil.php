@@ -44,7 +44,7 @@
         {
             if ($permissionInformation['inherited']     == Permission::DENY)
             {
-                $type = 'PermissionDenyText';
+                $type = 'PermissionInheritedDenyText';
             }
             elseif ($permissionInformation['inherited'] == Permission::ALLOW &&
                     $permissionInformation['explicit']  == null)

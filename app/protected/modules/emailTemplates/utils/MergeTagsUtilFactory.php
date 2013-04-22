@@ -38,10 +38,18 @@
     {
         public static function make($emailTemplateType, $language, $content)
         {
-            $emailTemplateTypes = EmailTemplate::getTypeDropDownArray();
-            $classNamePrefix    = $emailTemplateTypes[$emailTemplateType];
-            $className          = $classNamePrefix . 'MergeTagsUtil';
-            return new $className($language, $content);
+            if($emailTemplateType == EmailTemplate::TYPE_WORKFLOW)
+            {
+                return new WorkflowMergeTagsUtil($language, $content);
+            }
+            elseif($emailTemplateType == EmailTemplate::TYPE_CONTACT)
+            {
+                return new ContactMergeTagsUtil($language, $content);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 ?>
