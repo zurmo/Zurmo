@@ -68,6 +68,8 @@ a.search-form-tools input[type="submit"],
 .default-btn .search-form-tools input[type="submit"],
 .default-btn a.search-form-tools input[type="submit"],
 .after-form-details-content,
+.LatestActivitiesListView .activity-item,
+.LatestActivitiesView .activity-item,
 #progressBar-links a,
 a#progressBar-links a,
 .default-btn #progressBar-links a,
@@ -10017,12 +10019,14 @@ div.hasHalfs .twoThirds {
 }
 .LatestActivitiesListView .activity-item,
 .LatestActivitiesView .activity-item {
+  width: 100%;
   padding-left: 40px;
   position: relative;
 }
 .LatestActivitiesListView .activity-item span,
 .LatestActivitiesView .activity-item span {
   line-height: 140%;
+  word-break: break-all;
 }
 .LatestActivitiesListView .items em,
 .LatestActivitiesView .items em {
@@ -11695,6 +11699,9 @@ table.configuration-list td:last-child a .z-label:before {
   text-decoration: underline !important;
 }
 /*Jobs*/
+#JobsCollectionView div.wide.form {
+  float: none;
+}
 #JobsCollectionView .form form {
   padding: 0;
 }

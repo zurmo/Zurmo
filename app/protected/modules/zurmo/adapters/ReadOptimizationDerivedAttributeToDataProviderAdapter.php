@@ -70,7 +70,7 @@
          */
         public function getColumnName()
         {
-            return 'securable_id';
+            return 'securableitem_id';
         }
 
         /**

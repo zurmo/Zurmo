@@ -103,6 +103,9 @@
             return $metadata;
         }
 
+        /**
+         * @return string
+         */
         public static function getPrimaryModelName()
         {
             return 'SavedReport';

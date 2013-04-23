@@ -70,7 +70,7 @@
             $mungeTableName      = ReadPermissionsOptimizationUtil::getMungeTableName($this->modelAttributeToDataProviderAdapter->getModelClassName());
             $mungeIds            = ReadPermissionsOptimizationUtil::getMungeIdsByUser(Yii::app()->user->userModel);
             $whereContent        = $columnWithTableAlias . " " . SQLOperatorUtil::getOperatorByType('equals'). " ";
-            $whereContent       .= "(select securable_id from {$q}$mungeTableName{$q} " .
+            $whereContent       .= "(select securableitem_id from {$q}$mungeTableName{$q} " .
                                    "where {$q}munge_id{$q} in ('" . join("', '", $mungeIds) . "') limit 1)";
             $where[$whereKey]    = $whereContent;
         }

@@ -248,7 +248,7 @@
         public static function makeClosedWonOpportunitiesByMonth()
         {
             $report                  = new Report();
-            $report->setDescription    ('A report showing closed won opportunties bymonth');
+            $report->setDescription    ('A report showing closed won opportunities by month');
             $report->setModuleClassName('OpportunitiesModule');
             $report->setName           ('Closed won opportunities by month');
             $report->setType           (Report::TYPE_SUMMATION);

@@ -66,6 +66,31 @@
         /**
          * @depends testCreateStateValues
          */
+        public function testContactStateIsAudited()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $contact = new Contact();
+            $contactStates = ContactState::GetAll();
+            $contact->state = $contactStates[0];
+            $contact->firstName = 'jason';
+            $contact->lastName  = 'green';
+            $saved = $contact->save();
+            $this->assertTrue($saved);
+
+            $contactId = $contact->id;
+            $contact->forget();
+
+            $contact        = Contact::getById($contactId);
+            $contact->state = $contactStates[1];
+            $compareData    = array('state' => array('ContactState', $contactStates[0]->id, 'New'));
+            $this->assertEquals($compareData, $contact->originalAttributeValues);
+            $deleted = $contact->delete();
+            $this->assertTrue($deleted);
+        }
+
+        /**
+         * @depends testContactStateIsAudited
+         */
         public function testCreateAndGetContactById()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
