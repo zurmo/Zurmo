@@ -93,7 +93,7 @@
             $marketingLists = MarketingList::getByName('Test Marketing List');
             $this->assertEquals(1, count($marketingLists));
             $this->assertEquals('Marketing List',  $marketingLists[0]::getModelLabelByTypeAndLanguage('Singular'));
-            $this->assertEquals('MarketingListsModulePluralLabel', $marketingLists[0]::getModelLabelByTypeAndLanguage('Plural'));
+            $this->assertEquals('Marketing Lists', $marketingLists[0]::getModelLabelByTypeAndLanguage('Plural'));
         }
 
         /**

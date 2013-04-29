@@ -135,7 +135,6 @@ a.z-button,
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;
@@ -231,7 +230,6 @@ a.z-button:not(.attachLoading) .z-label,
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;

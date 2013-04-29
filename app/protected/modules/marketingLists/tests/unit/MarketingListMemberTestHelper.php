@@ -49,12 +49,18 @@
             if (empty($marketingList))
             {
                 $marketingLists = MarketingList::getAll();
-                $marketingList  = RandomDataUtil::getRandomValueFromArray($marketingLists);
+                if (!empty($marketingLists))
+                {
+                    $marketingList  = RandomDataUtil::getRandomValueFromArray($marketingLists);
+                }
             }
             if (empty($contact))
             {
                 $contacts       = Contact::getAll();
-                $contact        = RandomDataUtil::getRandomValueFromArray($contacts);
+                if (!empty($contacts))
+                {
+                    $contact        = RandomDataUtil::getRandomValueFromArray($contacts);
+                }
             }
             $marketingListMember                = new MarketingListMember();
             $marketingListMember->unsubscribed  = $unsubscribed;

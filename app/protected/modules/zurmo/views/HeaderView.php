@@ -79,7 +79,7 @@
             if (Yii::app()->user->loginRequiredAjaxResponse)
             {
                 Yii::app()->clientScript->registerScript('ajaxLoginRequired', '
-                    jQuery("body").ajaxSuccess(
+                    jQuery("body").ajaxComplete(
                         function(event, request, options)
                         {
                             if (request.responseText == "' . Yii::app()->user->loginRequiredAjaxResponse . '")

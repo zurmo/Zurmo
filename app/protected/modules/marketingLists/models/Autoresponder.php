@@ -36,14 +36,43 @@
 
     class Autoresponder extends OwnedModel
     {
+        const OPERATION_SUBSCRIBE = 1;
+
+        const OPERATION_UNSUBSCRIBE = 2;
+
+        const OPERATION_REMOVE = 3;
+
         public static function getByName($name)
         {
-            return self::getByNameOrEquivalent('name', $name);
+            return static::getSubset(null, null, null, "name = '" . DatabaseCompatibilityUtil::escape($name) . "'");
         }
 
         public static function getModuleClassName()
         {
             return 'MarketingListsModule';
+        }
+
+        public static function getOperationTypeDropDownArray()
+        {
+            return array(
+                self::OPERATION_SUBSCRIBE       => Zurmo::t('MarketingListsModule', 'Subscription'),
+                self::OPERATION_UNSUBSCRIBE     => Zurmo::t('MarketingListsModule',  'Unsubscription'),
+                self::OPERATION_REMOVE          => Zurmo::t('MarketingListsModule', 'Removal'),
+            );
+        }
+
+        public static function getIntervalDropDownArray()
+        {
+            return array(
+                60*60           =>  Zurmo::t('MarketingListsModule', '{hourCount} Hour', array('{hourCount}' => 1)),
+                60*60*6         =>  Zurmo::t('MarketingListsModule', '{hourCount} Hours', array('{hourCount}' => 6)),
+                60*60*12        =>  Zurmo::t('MarketingListsModule', '{hourCount} Hours', array('{hourCount}' => 12)),
+                60*60*24        =>  Zurmo::t('MarketingListsModule', '{dayCount} day', array('{dayCount}' => 1)),
+                60*60*24*3      =>  Zurmo::t('MarketingListsModule', '{dayCount} days', array('{dayCount}' => 3)),
+                60*60*24*7      =>  Zurmo::t('MarketingListsModule', '{weekCount} week', array('{weekCount}' => 1)),
+                60*60*24*14     =>  Zurmo::t('MarketingListsModule', '{weekCount} weeks', array('{weekCount}' => 2)),
+                60*60*24*30     =>  Zurmo::t('MarketingListsModule', '{monthCount} month', array('{monthCount}' => 1)),
+            );
         }
 
         /**
@@ -52,7 +81,7 @@
          */
         protected static function getLabel($language = null)
         {
-            return 'MarketingListsModuleSingularLabel';
+            return Zurmo::t('MarketingListsModule', 'Autoresponder', array(), null, $language);
         }
 
         /**
@@ -61,7 +90,7 @@
          */
         protected static function getPluralLabel($language = null)
         {
-            return 'MarketingListsModulePluralLabel';
+            return Zurmo::t('MarketingListsModule', 'Autoresponders', array(), null, $language);
         }
 
         public static function getDefaultMetadata()
@@ -69,33 +98,41 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
-                    'type',
                     'name',
                     'subject',
                     'htmlContent',
                     'textContent',
-                    'secondsFromSubscribe'
+                    'secondsFromOperation',
+                    'operationType'
                 ),
                 'rules' => array(
-                    array('type',                 'required'),
-                    array('type',                 'type',    'type' => 'integer'),
-                    array('name',                 'required'),
-                    array('name',                 'type',    'type' => 'string'),
-                    array('name',                 'length',  'min'  => 3, 'max' => 64),
-                    array('subject',              'required'),
-                    array('subject',              'type',    'type' => 'string'),
-                    array('subject',              'length',  'min'  => 3, 'max' => 64),
-                    array('htmlContent',          'type',    'type' => 'string'),
-                    array('textContent',          'type',    'type' => 'string'),
-                    array('secondsFromSubscribe', 'type',    'type' => 'integer'),
+                    array('name',                   'required'),
+                    array('name',                   'type',    'type' => 'string'),
+                    array('name',                   'length',  'min'  => 3, 'max' => 64),
+                    array('subject',                'required'),
+                    array('subject',                'type',    'type' => 'string'),
+                    array('subject',                'length',  'min'  => 3, 'max' => 64),
+                    array('htmlContent',            'type',    'type' => 'string'),
+                    array('textContent',            'type',    'type' => 'string'),
+                    array('htmlContent',            'AtLeastOneContentAreaRequiredValidator'),
+                    array('textContent',            'AtLeastOneContentAreaRequiredValidator'),
+                    array('htmlContent',            'AutoresponderMergeTagsValidator', 'except' => 'autoBuildDatabase'),
+                    array('textContent',            'AutoresponderMergeTagsValidator', 'except' => 'autoBuildDatabase'),
+                    array('secondsFromOperation',   'required'),
+                    array('secondsFromOperation',   'type',    'type' => 'integer'),
+                    array('operationType',          'required'),
+                    array('operationType',          'type',    'type' => 'integer'),
                 ),
                 'relations' => array(
-                    'autoresponderItem'         => array(RedBeanModel::HAS_MANY,   'AutoresponderItem'),
+                    'autoresponderItems'            => array(RedBeanModel::HAS_MANY,   'AutoresponderItem'),
+                    'marketingList'                 => array(RedBeanModel::HAS_ONE,     'MarketingList'),
+                    // TODO: @Shoaibi: Critical: emailMessageUrl
                 ),
                 'elements' => array(
-                    'htmlContent'                  => 'TextArea',
-                    'textContent'                  => 'TextArea',
+                    'htmlContent'                   => 'TextArea',
+                    'textContent'                   => 'TextArea',
                 ),
+                'defaultSortAttribute' => 'name',
             );
             return $metadata;
         }
@@ -108,6 +145,47 @@
         public static function canSaveMetadata()
         {
             return true;
+        }
+
+        public static function getByOperationType($operationType, $pageSize = null)
+        {
+            assert('is_int($operationType)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'        => 'operationType',
+                    'operatorType'         => 'equals',
+                    'value'                => $operationType,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter                = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
+            $where = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
+            return self::getSubset($joinTablesAdapter, null, $pageSize, $where, 'name');
+        }
+
+        public static function getByOperationTypeAndMarketingListId($operationType, $marketingListId, $pageSize = null)
+        {
+            assert('is_int($operationType)');
+            assert('is_int($marketingListId)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'             => 'operationType',
+                    'operatorType'              => 'equals',
+                    'value'                     => $operationType,
+                ),
+                2 => array(
+                    'attributeName'             => 'marketingList',
+                    'relatedAttributeName'      => 'id',
+                    'operatorType'              => 'equals',
+                    'value'                     => $marketingListId,
+                ),
+            );
+            $searchAttributeData['structure'] = '(1 and 2)';
+            $joinTablesAdapter                = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
+            $where = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
+            return self::getSubset($joinTablesAdapter, null, $pageSize, $where, 'name');
         }
     }
 ?>

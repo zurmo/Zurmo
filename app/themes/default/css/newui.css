@@ -389,7 +389,6 @@ a.ModalGameNotification a {
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;
@@ -597,7 +596,6 @@ a.ModalGameNotification a:not(.attachLoading) .z-label {
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;
@@ -7092,7 +7090,7 @@ td {
   padding-left: 25px;
 }
 .stacked-list td > div {
-  margin: 0 0 3px 0;
+  margin: 0 0 2px 0;
 }
 .stacked-list td > div:last-child {
   margin-bottom: 0;
@@ -7105,7 +7103,7 @@ td {
 .stacked-list td:first-child div:first-child {
   font-size: 13px;
   font-weight: bold;
-  margin: 0 0 5px 0;
+  margin: 0 0 3px 0;
 }
 .sort-link:after {
   margin-left: 10px;
@@ -7799,6 +7797,14 @@ div.wide.form label.hasCheckBox {
   margin-top: 30px;
   border-right: 1px solid #ccc;
   float: left;
+}
+.zero-components-view .large-icon:after,
+.splash-view .large-icon:after {
+  content: 'j';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
 }
 .zero-components-view .Contact .large-icon:after,
 .splash-view .Contact .large-icon:after {
@@ -8537,12 +8543,14 @@ div.wide.form label.hasCheckBox {
 #delete-form table {
   border-bottom: none;
 }
-#modal-edit-form td,
-#edit-form td,
-#delete-form td,
 #modal-edit-form th,
 #edit-form th,
 #delete-form th {
+  vertical-align: text-top;
+}
+#modal-edit-form td,
+#edit-form td,
+#delete-form td {
   vertical-align: top;
 }
 #modal-edit-form td table,
@@ -12094,7 +12102,6 @@ table.configuration-list td:last-child a .z-label:before {
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;
@@ -12824,7 +12831,6 @@ div.wide.form .errorMessage {
   border-radius: 3px;
   overflow: hidden;
   cursor: pointer;
-  margin: 0 10px;
   text-indent: 0;
   display: inline-block;
   zoom: 1;

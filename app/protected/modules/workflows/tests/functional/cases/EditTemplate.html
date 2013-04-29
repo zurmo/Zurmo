@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/workflows/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='SecuredActionBarForWorkflowsSearchAndListView']/div/div/a[2]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailTemplatesSearchForm_anyMixedAttributes</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=EmailTemplatesSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-view']/table/tbody/tr/td[2]/a</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>EmailTemplatesSearchForm_anyMixedAttributes</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='list-view']/table/tbody/tr[1]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/h1/span/span</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=EmailTemplate_textContent</td>
+	<td>Test Edited </td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

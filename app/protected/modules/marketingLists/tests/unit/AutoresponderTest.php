@@ -35,7 +35,7 @@
      ********************************************************************************/
     class AutoresponderTest extends ZurmoBaseTest
     {
-        // TODO: @Shoaibi: Medium: Rewrite
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -51,24 +51,100 @@
 
         public function testCreateAndGetAutoresponderById()
         {
-            return; //todo:
-            $autoresponder = new Autoresponder();
-            $autoresponder->type                  = 1;
-            $autoresponder->name                  = 'Test Autoresponder name';
-            $autoresponder->subject               = 'Test Autoresponder subject';
-            $autoresponder->htmlContent           = 'Test HtmlContent';
-            $autoresponder->textContent           = 'Test TextContent';
-            $autoresponder->secondsFromSubscribe  = 20;
-            $this->assertTrue($autoresponder->save());
+            $intervalArray = array_flip(Autoresponder::getIntervalDropDownArray());
+            $autoresponder                          = new Autoresponder();
+            $autoresponder->name                    = 'Test Autoresponder name 01';
+            $autoresponder->subject                 = 'Test Autoresponder subject 01';
+            $autoresponder->htmlContent             = 'Test HtmlContent 01';
+            $autoresponder->textContent             = 'Test TextContent 01';
+            $autoresponder->secondsFromOperation    = $intervalArray['1 week'];
+            $autoresponder->operationType           = Autoresponder::OPERATION_SUBSCRIBE;
+            $this->assertTrue($autoresponder->unrestrictedSave());
             $id = $autoresponder->id;
             unset($autoresponder);
             $autoresponder = Autoresponder::getById($id);
-            $this->assertEquals(1                           , $autoresponder->type);
-            $this->assertEquals('Test Autoresponder name'   , $autoresponder->name);
-            $this->assertEquals('Test Autoresponder subject', $autoresponder->subject);
-            $this->assertEquals('Test HtmlContent'          , $autoresponder->htmlContent);
-            $this->assertEquals('Test TextContent'          , $autoresponder->textContent);
-            $this->assertEquals(20                          , $autoresponder->secondsFromSubscribe);
+            $this->assertEquals('Test Autoresponder name 01'        ,   $autoresponder->name);
+            $this->assertEquals('Test Autoresponder subject 01'     ,   $autoresponder->subject);
+            $this->assertEquals('Test HtmlContent 01'               ,   $autoresponder->htmlContent);
+            $this->assertEquals('Test TextContent 01'               ,   $autoresponder->textContent);
+            $this->assertEquals($intervalArray['1 week']            ,   $autoresponder->secondsFromOperation);
+            $this->assertEquals(Autoresponder::OPERATION_SUBSCRIBE  ,   $autoresponder->operationType);
+        }
+
+        /**
+         * @depends testCreateAndGetAutoresponderById
+         */
+        public function testRequiredAttributes()
+        {
+            $intervalArray = array_flip(Autoresponder::getIntervalDropDownArray());
+            $autoresponder                          = new Autoresponder();
+            $this->assertFalse($autoresponder->unrestrictedSave());
+            $errors = $autoresponder->getErrors();
+            $this->assertNotEmpty($errors);
+            $this->assertCount(5, $errors);
+            $this->assertArrayHasKey('name', $errors);
+            $this->assertEquals('Name cannot be blank.', $errors['name'][0]);
+            $this->assertArrayHasKey('subject', $errors);
+            $this->assertEquals('Subject cannot be blank.', $errors['subject'][0]);
+            $this->assertArrayHasKey('textContent', $errors);
+            $this->assertEquals('Please provide at least one of the contents field.', $errors['textContent'][0]);
+            $this->assertArrayHasKey('secondsFromOperation', $errors);
+            $this->assertEquals('Seconds From Operation cannot be blank.', $errors['secondsFromOperation'][0]);
+            $this->assertArrayHasKey('operationType', $errors);
+            $this->assertEquals('Operation Type cannot be blank.', $errors['operationType'][0]);
+
+            $autoresponder->name                    = 'Test Autoresponder name 02';
+            $autoresponder->subject                 = 'Test Autoresponder subject 02';
+            $autoresponder->htmlContent             = 'Test HtmlContent 02';
+            $autoresponder->textContent             = 'Test TextContent 02';
+            $autoresponder->secondsFromOperation    = $intervalArray['1 month'];
+            $autoresponder->operationType           = Autoresponder::OPERATION_UNSUBSCRIBE;
+            $this->assertTrue($autoresponder->unrestrictedSave());
+            $id = $autoresponder->id;
+            unset($autoresponder);
+            $autoresponder = Autoresponder::getById($id);
+            $this->assertEquals('Test Autoresponder name 02'           ,   $autoresponder->name);
+            $this->assertEquals('Test Autoresponder subject 02'        ,   $autoresponder->subject);
+            $this->assertEquals('Test HtmlContent 02'                  ,   $autoresponder->htmlContent);
+            $this->assertEquals('Test TextContent 02'                  ,   $autoresponder->textContent);
+            $this->assertEquals($intervalArray['1 month']              ,   $autoresponder->secondsFromOperation);
+            $this->assertEquals(Autoresponder::OPERATION_UNSUBSCRIBE   ,   $autoresponder->operationType);
+        }
+
+        /**
+         * @depends testCreateAndGetAutoresponderById
+         */
+        public function testGetByOperationType()
+        {
+            $autoresponders = Autoresponder::getByOperationType(Autoresponder::OPERATION_SUBSCRIBE);
+            $this->assertCount(1, $autoresponders);
+            $autoresponders = Autoresponder::getByOperationType(Autoresponder::OPERATION_UNSUBSCRIBE);
+            $this->assertCount(1, $autoresponders);
+            $autoresponders = Autoresponder::getByOperationType(Autoresponder::OPERATION_REMOVE);
+            $this->assertCount(0, $autoresponders);
+        }
+
+        /**
+         * @depends testCreateAndGetAutoresponderById
+         */
+        public function testGetByOperationTypeAndMarketingListId()
+        {
+            $marketingList = MarketingListTestHelper::createMarketingListByName('MarketingList Name 01');
+            AutoresponderTestHelper::createAutoresponder('Autoresponder 01', 'subject 01', 'text 01', null, 10,
+                                                                    Autoresponder::OPERATION_SUBSCRIBE, $marketingList);
+            AutoresponderTestHelper::createAutoresponder('Autoresponder 02', 'subject 02', 'text 02', null, 20,
+                                                                        Autoresponder::OPERATION_SUBSCRIBE, $marketingList);
+            AutoresponderTestHelper::createAutoresponder('Autoresponder 03', 'subject 03', 'text 03', null, 30,
+                                                                    Autoresponder::OPERATION_UNSUBSCRIBE, $marketingList);
+            AutoresponderTestHelper::createAutoresponder('Autoresponder 04', 'subject 04', 'text 04', null, 40,
+                                                                        Autoresponder::OPERATION_REMOVE, $marketingList);
+
+            $autoresponders = Autoresponder::getByOperationTypeAndMarketingListId(Autoresponder::OPERATION_SUBSCRIBE, $marketingList->id);
+            $this->assertCount(2, $autoresponders);
+            $autoresponders = Autoresponder::getByOperationTypeAndMarketingListId(Autoresponder::OPERATION_UNSUBSCRIBE, $marketingList->id);
+            $this->assertCount(1, $autoresponders);
+            $autoresponders = Autoresponder::getByOperationTypeAndMarketingListId(Autoresponder::OPERATION_REMOVE, $marketingList->id);
+            $this->assertCount(1, $autoresponders);
         }
 
         /**
@@ -76,10 +152,9 @@
          */
         public function testGetAutoresponderByName()
         {
-            return; //todo:
-            $autoresponder = Autoresponder::getByName('Test Autoresponder name');
+            $autoresponder = Autoresponder::getByName('Test Autoresponder name 01');
             $this->assertEquals(1, count($autoresponder));
-            $this->assertEquals('Test Autoresponder name', $autoresponder[0]->name);
+            $this->assertEquals('Test Autoresponder name 01', $autoresponder[0]->name);
         }
 
         /**
@@ -87,11 +162,10 @@
          */
         public function testGetLabel()
         {
-            return; //todo:
-            $autoresponder = Autoresponder::getByName('Test Autoresponder name');
-            $this->assertEquals(1, count($autoresponder));
-            $this->assertEquals('Autoresponder',  $autoresponder[0]::getModelLabelByTypeAndLanguage('Singular'));
-            $this->assertEquals('Autoresponders', $autoresponder[0]::getModelLabelByTypeAndLanguage('Plural'));
+            $autoresponder  = RandomDataUtil::getRandomValueFromArray(Autoresponder::getAll());
+            $this->assertNotNull($autoresponder);
+            $this->assertEquals('Autoresponder',  $autoresponder::getModelLabelByTypeAndLanguage('Singular'));
+            $this->assertEquals('Autoresponders', $autoresponder::getModelLabelByTypeAndLanguage('Plural'));
         }
 
         /**
@@ -99,20 +173,11 @@
          */
         public function testDeleteAutoresponder()
         {
-            return; //todo:
-            $autoresponder = new Autoresponder();
-            $autoresponder->type                  = 1;
-            $autoresponder->name                  = 'Test Autoresponder name1';
-            $autoresponder->subject               = 'Test Autoresponder subject1';
-            $autoresponder->htmlContent           = 'Test HtmlContent1';
-            $autoresponder->textContent           = 'Test TextContent1';
-            $autoresponder->secondsFromSubscribe  = 30;
-            $this->assertTrue($autoresponder->save());
-            $autoresponder = Autoresponder::getAll();
-            $this->assertEquals(2, count($autoresponder));
-            $autoresponder[0]->delete();
-            $autoresponder = Autoresponder::getAll();
-            $this->assertEquals(1, count($autoresponder));
+            $autoresponders = Autoresponder::getAll();
+            $this->assertCount(6, $autoresponders);
+            $autoresponders[0]->delete();
+            $autoresponders = Autoresponder::getAll();
+            $this->assertEquals(5, count($autoresponders));
         }
     }
 ?>

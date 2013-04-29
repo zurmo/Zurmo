@@ -50,6 +50,20 @@
             return 'EmailTemplatesModule';
         }
 
+        protected static function getLabel($language = null)
+        {
+            return Zurmo::t('EmailTemplatesModule', 'Email Template', array(), null, $language);
+        }
+
+        /**
+         * Returns the display name for plural of the model class.
+         * @return dynamic label name based on module.
+         */
+        protected static function getPluralLabel($language = null)
+        {
+            return Zurmo::t('EmailTemplatesModule', 'Email Templates', array(), null, $language);
+        }
+
         public static function getTypeDropDownArray()
         {
             return array(
@@ -111,7 +125,7 @@
                     array('type',                       'required'),
                     array('type',                       'type',    'type' => 'integer'),
                     array('type',                       'numerical', 'min' => self::TYPE_WORKFLOW,
-                        'max' => self::TYPE_CONTACT),
+                                                                                        'max' => self::TYPE_CONTACT),
                     array('modelClassName',             'required'),
                     array('modelClassName',             'type',   'type' => 'string'),
                     array('modelClassName',             'length', 'max' => 64),
@@ -127,10 +141,10 @@
                     array('language',                   'setToUserDefaultLanguage'),
                     array('htmlContent',                'type',    'type' => 'string'),
                     array('textContent',                'type',    'type' => 'string'),
-                    array('htmlContent',                'validateHtmlContentAndTextContent'),
-                    array('textContent',                'validateHtmlContentAndTextContent'),
-                    array('htmlContent',                'validateMergeTags', 'except' => 'autoBuildDatabase'),
-                    array('textContent',                'validateMergeTags', 'except' => 'autoBuildDatabase'),
+                    array('htmlContent',                'AtLeastOneContentAreaRequiredValidator'),
+                    array('textContent',                'AtLeastOneContentAreaRequiredValidator'),
+                    array('htmlContent',                'EmailTemplateMergeTagsValidator', 'except' => 'autoBuildDatabase'),
+                    array('textContent',                'EmailTemplateMergeTagsValidator', 'except' => 'autoBuildDatabase'),
                 ),
                 'elements' => array(
                     'htmlContent'                  => 'TextArea',
@@ -162,20 +176,6 @@
             return $passedValidation;
         }
 
-        public function validateHtmlContentAndTextContent($attribute, $params)
-        {
-            if ((empty($this->textContent) && empty($this->htmlContent)))
-            {
-                // ensure we don't add a duplicate error message.
-                if ($attribute == 'textContent' || !$this->hasErrors())
-                {
-                    $this->addError($attribute, Zurmo::t('EmailTemplatesModule', 'Please provide at least one of the contents field.'));
-                }
-                return false;
-            }
-            return true;
-        }
-
         public function setToUserDefaultLanguage($attribute, $params)
         {
             if (empty($this->$attribute))
@@ -183,37 +183,6 @@
                 $this->$attribute = Yii::app()->user->userModel->language;
             }
             return true;
-        }
-
-        public function validateMergeTags($attribute, $params)
-        {
-            $passedValidation = true;
-            if (!empty($this->$attribute) && @class_exists($this->modelClassName))
-            {
-                $model              = new $this->modelClassName(false);
-                $mergeTagsUtil      = MergeTagsUtilFactory::make($this->type, $this->language, $this->$attribute);
-                $invalidTags        = array();
-                $mergeTagCount      = $mergeTagsUtil->extractMergeTagsPlaceHolders();
-                if ($mergeTagCount && !$mergeTagsUtil->resolveMergeTagsArrayToAttributes($model, $invalidTags, null))
-                {
-                    $passedValidation = false;
-                    if (!empty($invalidTags))
-                    {
-                        foreach ($invalidTags as $tag)
-                        {
-                            $errorMessage = EmailTemplateHtmlAndTextContentElement::renderModelAttributeLabel($attribute) .
-                                ': Invalid MergeTag({mergeTag}) used.';
-                            $this->addError($attribute, Zurmo::t('EmailTemplatesModule', $errorMessage,
-                                array('{mergeTag}' => $tag)));
-                        }
-                    }
-                    else
-                    {
-                        $this->addError($attribute, Zurmo::t('EmailTemplatesModule', 'Provided content contains few invalid merge tags.'));
-                    }
-                }
-            }
-            return $passedValidation;
         }
 
         /**

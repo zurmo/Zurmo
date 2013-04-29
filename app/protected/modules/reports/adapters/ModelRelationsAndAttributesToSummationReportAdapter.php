@@ -94,13 +94,24 @@
                 if ($addAttribute)
                 {
                     $resolvedAttribute = $groupBy->getResolvedAttribute();
-                    $attributes[$resolvedAttribute] =
-                        array('label' => $this->model->getAttributeLabel($resolvedAttribute));
+                    if ($this->isAttributeACalculationOrModifier($resolvedAttribute))
+                    {
+                        $realAttributeName = static::resolveRealAttributeName($resolvedAttribute);
+                        $attributes[$resolvedAttribute] = array('label' =>
+                        $this->resolveDisplayCalculationLabel($realAttributeName,
+                            $this->getCalculationOrModifierType($resolvedAttribute)));
+                    }
+                    else
+                    {
+                        $realAttributeName = static::resolveRealAttributeName($resolvedAttribute);
+                        $attributes[$resolvedAttribute] = array('label' => $this->model->getAttributeLabel($realAttributeName));
+                    }
+
                 }
             }
             foreach ($existingDisplayAttributes as $displayAttribute)
             {
-                $resolvedAttribute    = $displayAttribute->getResolvedAttribute();
+                $resolvedAttribute = $displayAttribute->getResolvedAttribute();
                 if ($this->isAttributeACalculationOrModifier($resolvedAttribute))
                 {
                     //We don't have to check penultimate information like GroupBys, because all display calculations are
@@ -112,7 +123,7 @@
                     {
                         $realAttributeName = static::resolveRealAttributeName($resolvedAttribute);
                         $attributes[$resolvedAttribute] = array('label' =>
-                        $this->resolveDisplayCalculationLabel($realAttributeName,
+                            $this->resolveDisplayCalculationLabel($realAttributeName,
                                 $this->getCalculationOrModifierType($resolvedAttribute)));
                     }
                 }

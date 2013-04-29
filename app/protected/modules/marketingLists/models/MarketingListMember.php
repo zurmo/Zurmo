@@ -95,57 +95,6 @@
             return true;
         }
 
-        public static function addNewMember($marketingList, $contactId, $unsubscribed = false, $contact = null)
-        {
-            $member                     = new self;
-            if (empty($contact))
-            {
-                $contact = Contact::getById($contactId);
-            }
-            $member->contact            = $contact;
-            $member->unsubscribed       = $unsubscribed;
-            if (static::memberAlreadyExists($marketingList->id, $contact->id))
-            {
-                return false;
-            }
-            else
-            {
-                $marketingList->marketingListMembers->add($member);
-                $saved = $marketingList->save();
-                if ($saved)
-                {
-                    return true;
-                }
-                else
-                {
-                    throw new FailedToSaveModelException();
-                }
-            }
-        }
-
-        public static function memberAlreadyExists($marketingListId, $contactId)
-        {
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'             => 'marketingList',
-                    'relatedAttributeName'      => 'id',
-                    'operatorType'              => 'equals',
-                    'value'                     => $marketingListId,
-                ),
-                2 => array(
-                    'attributeName'             => 'contact',
-                    'relatedAttributeName'      => 'id',
-                    'operatorType'              => 'equals',
-                    'value'                     => $contactId
-                ),
-            );
-            $searchAttributeData['structure'] = '(1 and 2)';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
-            $where             = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
-            return self::getCount($joinTablesAdapter, $where, get_called_class(), true);
-        }
-
         public static function getCountByMarketingListIdAndUnsubscribed($marketingListId, $unsubscribed)
         {
             $searchAttributeData = array();
@@ -172,6 +121,28 @@
         {
             $this->unrestrictedSet('createdDateTime',  DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
             $this->unrestrictedSet('modifiedDateTime', DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+        }
+
+        public function beforeSave()
+        {
+            if ($this->id < 0 || (isset($this->originalAttributeValues['unsubscribed']) &&
+                                            $this->originalAttributeValues['unsubscribed'] != $this->unsubscribed))
+            {
+                $operation = Autoresponder::OPERATION_SUBSCRIBE;
+                if ($this->unsubscribed)
+                {
+                    $operation = Autoresponder::OPERATION_UNSUBSCRIBE;
+                }
+                AutoresponderItem::registerAutoresponderItemsByAutoresponderOperation($operation, $this->marketingList->id, $this->contact);
+            }
+            return true;
+        }
+
+        public function beforeDelete()
+        {
+            $operation = Autoresponder::OPERATION_REMOVE;
+            AutoresponderItem::registerAutoresponderItemsByAutoresponderOperation($operation, $this->marketingList->id, $this->contact);
+            return true;
         }
     }
 ?>

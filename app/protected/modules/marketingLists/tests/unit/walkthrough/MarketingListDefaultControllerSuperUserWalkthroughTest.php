@@ -36,6 +36,8 @@
 
     class MarketingListDefaultControllerSuperUserWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
+        protected $user;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -45,15 +47,22 @@
 
             MarketingListTestHelper::createMarketingListByName('MarketingListName', 'MarketingList Description');
             MarketingListTestHelper::createMarketingListByName('MarketingListName2', 'MarketingList Description2');
+            ReadPermissionsOptimizationUtil::rebuild();
+        }
+
+        public function setUp()
+        {
+            parent::setUp();
+            $this->user = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            Yii::app()->user->userModel = $this->user;
         }
 
         public function testSuperUserAllDefaultControllerActions()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-
             // Test all default controller actions that do not require any POST/GET variables to be passed.
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default');
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/create');
         }
 
@@ -62,7 +71,6 @@
          */
         public function testSuperUserListAction()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $content = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
             $this->assertTrue(strpos($content, 'anyMixedAttributes') !== false);
             $this->assertTrue(strpos($content, 'MarketingListName') !== false);
@@ -82,8 +90,6 @@
         public function testSuperUserCreateAction()
         {
             // TODO: @Shoaibi: Low: Add test with different permissions
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-
             $content = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/create');
             $this->assertTrue(strpos($content, 'Create Marketing List') !== false);
             $this->assertTrue(strpos($content, '<label for="MarketingList_name" class="required">Name ' .
@@ -121,7 +127,7 @@
             $this->assertEquals('sales@zurmo.com', $marketingList[0]->fromAddress);
             $this->assertEquals('Zurmo Sales', $marketingList[0]->fromName);
             $this->assertEquals('New MarketingList Description using Create', $marketingList[0]->description);
-            $this->assertTrue  ($marketingList[0]->owner == $super);
+            $this->assertTrue  ($marketingList[0]->owner == $this->user);
             $compareRedirectUrl = Yii::app()->createUrl('marketingLists/default/details', array('id' => $marketingList[0]->id));
             $this->assertEquals($compareRedirectUrl, $redirectUrl);
             $marketingList = MarketingList::getAll();
@@ -130,9 +136,8 @@
 
         public function testSuperUserDetailsAction()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $marketingListNameId = self::getModelIdByModelNameAndName ('MarketingList', 'MarketingListName2');
-            $this->setGetArray(array('id' => $marketingListNameId));
+            $marketingListId = self::getModelIdByModelNameAndName ('MarketingList', 'MarketingListName2');
+            $this->setGetArray(array('id' => $marketingListId));
             $content = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/details');
             $this->assertTrue(strpos($content, 'MarketingListName2') !== false);
             $this->assertEquals(3, substr_count($content, 'MarketingListName2'));
@@ -159,9 +164,8 @@
          */
         public function testSuperUserEditAction()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $marketingListNameId = self::getModelIdByModelNameAndName ('MarketingList', 'New MarketingListName using Create');
-            $this->setGetArray(array('id' => $marketingListNameId));
+            $marketingListId = self::getModelIdByModelNameAndName ('MarketingList', 'New MarketingListName using Create');
+            $this->setGetArray(array('id' => $marketingListId));
             $content = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/edit');
             $this->assertTrue(strpos($content, 'New MarketingListName using Create') !== false);
             $this->assertEquals(2, substr_count($content, 'New MarketingListName using Create'));
@@ -194,11 +198,10 @@
          */
         public function testSuperUserDeleteAction()
         {
-            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            $marketingListNameId = self::getModelIdByModelNameAndName ('MarketingList', 'New MarketingListName');
+            $marketingListId = self::getModelIdByModelNameAndName ('MarketingList', 'New MarketingListName');
 
             // Delete an marketingList.
-            $this->setGetArray(array('id' => $marketingListNameId));
+            $this->setGetArray(array('id' => $marketingListId));
             $this->resetPostArray();
             $redirectUrl = $this->runControllerWithRedirectExceptionAndGetUrl('marketingLists/default/delete');
             $compareRedirectUrl = Yii::app()->createUrl('marketingLists/default/index');

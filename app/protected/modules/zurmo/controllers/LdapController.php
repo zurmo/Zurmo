@@ -40,6 +40,18 @@
      */
     class ZurmoLdapController extends ZurmoModuleController
     {
+        const LDAP_CONFIGURATION_FILTER_PATH =
+              'application.modules.zurmo.controllers.filters.LdapExtensionCheckControllerFilter';
+              
+        public function filters()
+        {
+            return array(
+                array(self::LDAP_CONFIGURATION_FILTER_PATH,
+                     'controller' => $this,
+                )
+            );
+        }
+        
         public function actionConfigurationEditLdap()
         {
             $configurationForm = LdapConfigurationFormAdapter::makeFormFromGlobalConfiguration();

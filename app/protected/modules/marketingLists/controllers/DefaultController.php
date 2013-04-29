@@ -39,6 +39,9 @@
         const ZERO_MODELS_CHECK_FILTER_PATH =
             'application.modules.marketingLists.controllers.filters.MarketingListsZeroModelsCheckControllerFilter';
 
+        const USER_CONTACT_OR_LEAD_ACCESS_FILTER_PATH =
+            'application.modules.marketingLists.controllers.filters.UserCanAccessContactsOrLeadsForMarketingListControllerFilter';
+
         public static function getListBreadcrumbLinks()
         {
             $title = Zurmo::t('MarketingListsModule', 'Lists');
@@ -54,6 +57,10 @@
         {
             return array_merge(parent::filters(),
                 array(
+                    array(
+                        static::USER_CONTACT_OR_LEAD_ACCESS_FILTER_PATH . ' + create, details',
+                        'controller' => $this,
+                    ),
                     array(
                         static::ZERO_MODELS_CHECK_FILTER_PATH . ' + list',
                         'controller'                    => $this,

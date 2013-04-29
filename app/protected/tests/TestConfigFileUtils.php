@@ -106,6 +106,7 @@ EOD;
                 $authenticationTestSettings = <<<EOD
     \$authenticationTestSettings = array(
         'ldapSettings' => array(
+           'ldapServerType'           => '',
            'ldapHost'                 => '',
            'ldapPort'                 => '',
            'ldapBindRegisteredDomain' => '',

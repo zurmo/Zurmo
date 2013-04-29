@@ -62,13 +62,18 @@
             }
         }
 
+        protected static function getLabel($language = null)
+        {
+            return Zurmo::t('MarketingListsModule', 'Marketing List', array(), null, $language);
+        }
+
         /**
          * Returns the display name for plural of the model class.
          * @return dynamic label name based on module.
          */
         protected static function getPluralLabel($language = null)
         {
-            return 'MarketingListsModulePluralLabel';
+            return Zurmo::t('MarketingListsModule', 'Marketing Lists', array(), null, $language);
         }
 
         public static function canSaveMetadata()
@@ -126,6 +131,59 @@
         public static function hasPermissions()
         {
             return true;
+        }
+
+        public function addNewMember($contactId, $unsubscribed = false, $contact = null)
+        {
+            $member                     = new MarketingListMember();
+            if (empty($contact))
+            {
+                $contact = Contact::getById($contactId);
+            }
+            $member->contact            = $contact;
+            $member->unsubscribed       = $unsubscribed;
+            $member->marketingList      = $this;
+            if ($this->memberAlreadyExists($contact->id))
+            {
+                return false;
+            }
+            else
+            {
+                $saved = $member->unrestrictedSave();
+                if ($saved)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new FailedToSaveModelException();
+                }
+            }
+        }
+
+        public function memberAlreadyExists($contactId)
+        {
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'             => 'id',
+                    'operatorType'              => 'equals',
+                    'value'                     => $this->id,
+                ),
+                2 => array(
+                    'attributeName'             => 'marketingListMembers',
+                    'relatedModelData'          => array(
+                        'attributeName'             => 'contact',
+                        'relatedAttributeName'      => 'id',
+                        'operatorType'              => 'equals',
+                        'value'                     => $contactId
+                    ),
+                ),
+            );
+            $searchAttributeData['structure'] = '(1 and 2)';
+            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter(get_class($this));
+            $where             = RedBeanModelDataProvider::makeWhere(get_class($this), $searchAttributeData, $joinTablesAdapter);
+            return self::getCount($joinTablesAdapter, $where, get_class($this), true);
         }
     }
 ?>

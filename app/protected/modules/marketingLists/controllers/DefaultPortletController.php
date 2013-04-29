@@ -39,14 +39,12 @@
         public function actionDelete($id)
         {
             $member = MarketingListMember::GetById(intval($id));
-            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($member);
             $member->delete();
         }
 
         public function actionToggleUnsubscribed($id)
         {
             $member = MarketingListMember::GetById(intval($id));
-            ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($member);
             $member->unsubscribed = (bool)(!$member->unsubscribed);
             if (!$member->unrestrictedSave())
             {
@@ -89,7 +87,7 @@
             $marketingList         = MarketingList::getById($marketingListId);
             foreach ($contactIds as $contactId)
             {
-                if (MarketingListMember::addNewMember($marketingList, $contactId, false))
+                if ($marketingList->addNewMember($contactId, false))
                 {
                     $subscriberInformation['subscribedCount']++;
                 }

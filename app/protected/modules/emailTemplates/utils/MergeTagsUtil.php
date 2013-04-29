@@ -114,7 +114,7 @@
             return $matchesCounts;
         }
 
-        protected function resolveMergeTagsInTemplateToAttributes()
+        public function resolveMergeTagsInTemplateToAttributes()
         {
             $resolvedMergeTagsCount     = 0;
             $mergeTags                  = $this->mergeTags[0];
@@ -123,6 +123,11 @@
             $content                    = preg_replace($mergeTags, $attributes, $this->content, -1, $resolvedMergeTagsCount);
             $this->content              = (!empty($content))? $content : $this->content;
             return $resolvedMergeTagsCount;
+        }
+
+        public function getContent()
+        {
+            return $this->content;
         }
 
         protected function resolveFullyQualifiedMergeTagsRegularExpression(& $mergeTags)

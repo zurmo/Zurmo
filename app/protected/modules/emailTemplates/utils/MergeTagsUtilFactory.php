@@ -38,11 +38,11 @@
     {
         public static function make($emailTemplateType, $language, $content)
         {
-            if($emailTemplateType == EmailTemplate::TYPE_WORKFLOW)
+            if ($emailTemplateType == EmailTemplate::TYPE_WORKFLOW)
             {
                 return new WorkflowMergeTagsUtil($language, $content);
             }
-            elseif($emailTemplateType == EmailTemplate::TYPE_CONTACT)
+            elseif ($emailTemplateType == EmailTemplate::TYPE_CONTACT)
             {
                 return new ContactMergeTagsUtil($language, $content);
             }

@@ -36,6 +36,13 @@
 
     class MarketingListsMemberController extends ZurmoModuleController
     {
+        public function filters()
+        {
+            $filters = parent::filters();
+            unset($filters['RIGHT_BULK_DELETE']);
+            return $filters;
+        }
+
         public function actionMassDelete()
         {
             $this->triggerMarketingListMemberMassAction();

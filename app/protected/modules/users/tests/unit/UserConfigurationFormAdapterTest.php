@@ -143,5 +143,21 @@
             $form = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($billy);
             $this->assertEquals($form->selectedVisibleAndOrderedTabMenuItems, $customOrderedTabMenuItems);
         }
+
+        public function testGetVisibleAndOrderedTabMenuItemsByUser()
+        {
+            $sally = User::getByUsername('sally');
+            $sally->setRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $this->assertTrue($sally->save());
+            $form = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($sally);
+            $customOrderedTabMenuItems = UserConfigurationFormAdapter::getVisibleAndOrderedTabMenuItemsByUser($sally);
+            $this->assertEquals(3, count($customOrderedTabMenuItems));
+            $form->selectedVisibleAndOrderedTabMenuItems = $customOrderedTabMenuItems;
+            UserConfigurationFormAdapter::setConfigurationFromForm($form, $sally);
+            $sally->removeRight('AccountsModule', AccountsModule::RIGHT_ACCESS_ACCOUNTS);
+            $this->assertTrue($sally->save());
+            $customOrderedTabMenuItems = UserConfigurationFormAdapter::getVisibleAndOrderedTabMenuItemsByUser($sally);
+            $this->assertEquals(2, count($customOrderedTabMenuItems));
+        }
     }
 ?>

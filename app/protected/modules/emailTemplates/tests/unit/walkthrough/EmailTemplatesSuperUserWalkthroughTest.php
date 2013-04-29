@@ -56,6 +56,7 @@
                                                                     'Test Name', 'Test HtmlContent', 'Test TextContent');
             EmailTemplateTestHelper::createEmailTemplateByName(EmailTemplate::TYPE_CONTACT, 'Test Subject1', 'Contact',
                                                                     'Test Name1', 'Test HtmlContent1', 'Test TextContent1');
+            ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public function setUp()
@@ -346,13 +347,17 @@
             // Delete an emailTemplate.
             $this->setGetArray(array('id' => $emailTemplateId));
             $this->resetPostArray();
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('emailTemplates/default/delete');
+            $redirectUrl = $this->runControllerWithRedirectExceptionAndGetUrl('emailTemplates/default/delete');
+            $compareRedirectUrl = Yii::app()->createUrl('emailTemplates/default/listForMarketing');
+            $this->assertEquals($compareRedirectUrl, $redirectUrl);
             $emailTemplates = EmailTemplate::getAll();
             $this->assertEquals(3, count($emailTemplates));
             $emailTemplateId = self::getModelIdByModelNameAndName ('EmailTemplate', 'New Test Workflow Email Template 00');
             $this->setGetArray(array('id' => $emailTemplateId));
             $this->resetPostArray();
-            $content = $this->runControllerWithRedirectExceptionAndGetContent('emailTemplates/default/delete');
+            $redirectUrl = $this->runControllerWithRedirectExceptionAndGetUrl('emailTemplates/default/delete');
+            $compareRedirectUrl = Yii::app()->createUrl('emailTemplates/default/listForWorkflow');
+            $this->assertEquals($compareRedirectUrl, $redirectUrl);
             $emailTemplates = EmailTemplate::getAll();
             $this->assertEquals(2, count($emailTemplates));
         }

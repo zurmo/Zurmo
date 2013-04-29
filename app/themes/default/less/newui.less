@@ -1814,7 +1814,6 @@ caption, th, td {
 			white-space: nowrap;
 		}
 	}
-
 	tr:hover{
 		#gradient > .vertical(#efefef, #eeeeee);
 		.pencil{
@@ -1866,7 +1865,7 @@ caption, th, td {
 			 }
 		}
 		> div{
-			margin:0 0 3px 0;
+			margin:0 0 2px 0;
 		}
 		> div:last-child{
 			margin-bottom: 0;
@@ -1883,7 +1882,7 @@ caption, th, td {
 			&:first-child{
 				font-size: 13px;
 				font-weight: bold;
-				margin:0 0 5px 0;
+				margin:0 0 3px 0;
 			}
 		}
 	}
@@ -2482,6 +2481,11 @@ div.wide.form{
 		border-right:1px solid #ccc;
 		float:left;
 	}
+	.large-icon:after{
+		content: 'j';
+		.symbly(300px);
+		line-height: 52%;
+	}
 	.Contact .large-icon:after{
 		content:"y";
 		.symbly(300px);
@@ -2528,6 +2532,7 @@ div.wide.form{
 		line-height: 52%;
 	}
 }
+
 
 #NoUserEmailConfigurationYetView{
 	.z-label{
@@ -3039,7 +3044,10 @@ div.wide.form{
 	table{
 		border-bottom:none;
 	}
-	td, th{
+	th{
+		vertical-align: text-top;
+	}
+	td{
 		vertical-align: top;
 	}
 	td table{

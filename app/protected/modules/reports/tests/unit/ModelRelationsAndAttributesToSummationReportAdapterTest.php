@@ -71,19 +71,93 @@
             $groupBy->attributeIndexOrDerivedType = 'hasOne___name';
             $groupBy->axis                        = 'x';
             $report->addGroupBy($groupBy);
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'hasOne___createdDateTime__Day';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
 
             $displayAttribute   = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem2', $report->getType());
             $displayAttribute->attributeIndexOrDerivedType = 'Count';
             $report->addDisplayAttribute($displayAttribute);
+            $displayAttribute   = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem2', $report->getType());
+            $displayAttribute->attributeIndexOrDerivedType = 'modifiedDateTime__Day';
+            $report->addDisplayAttribute($displayAttribute);
             $adapter            = new ModelRelationsAndAttributesToSummationReportAdapter($model2, $rules, $report->getType());
             $attributes         = $adapter->getAttributesForOrderBys($report->getGroupBys(), $report->getDisplayAttributes(), $model, 'hasOne');
-            $this->assertEquals(2, count($attributes));
+            $this->assertEquals(4, count($attributes));
             $this->assertTrue(isset($attributes['name']));
             $this->assertTrue(isset($attributes['Count']));
+            $this->assertEquals('Name', $attributes['name']['label']);
+            $this->assertEquals('Created Date Time -(Day)', $attributes['createdDateTime__Day']['label']);
+            $this->assertEquals('Modified Date Time -(Day)', $attributes['modifiedDateTime__Day']['label']);
         }
 
         /**
          * @depends testGetAttributesForOrderBys
+         */
+        public function testGetAttributesForDisplayAttributes()
+        {
+            $model              = new ReportModelTestItem();
+            $model2             = new ReportModelTestItem2();
+            $rules              = new ReportsTestReportRules();
+            $report             = new Report();
+            $report->setType(Report::TYPE_SUMMATION);
+            $report->setModuleClassName('ReportsTestModule');
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'hasOne___name';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'hasOne___createdDateTime__Day';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'hasOne___owner__User';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+            $adapter            = new ModelRelationsAndAttributesToSummationReportAdapter($model2, $rules, $report->getType());
+            $attributes         = $adapter->getAttributesForDisplayAttributes($report->getGroupBys(), $model, 'hasOne');
+            $this->assertEquals(8, count($attributes));
+            $this->assertTrue(isset($attributes['name']));
+            $this->assertTrue(isset($attributes['Count']));
+            $this->assertTrue(isset($attributes['createdDateTime__Maximum']));
+            $this->assertEquals('Name', $attributes['name']['label']);
+            $this->assertEquals('Created Date Time -(Day)', $attributes['createdDateTime__Day']['label']);
+            $this->assertEquals('Owner', $attributes['owner__User']['label']);
+        }
+
+        /**
+         * @depends testGetAttributesForDisplayAttributes
+         */
+        public function testGetAttributesForOrderBysOnUser()
+        {
+            $model              = new ReportModelTestItem();
+            $rules              = new ReportsTestReportRules();
+            $report             = new Report();
+            $report->setType(Report::TYPE_SUMMATION);
+            $report->setModuleClassName('ReportsTestModule');
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'owner__User';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+            $groupBy            = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'createdDateTime__Day';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+
+            $displayAttribute   = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $displayAttribute->attributeIndexOrDerivedType = 'owner__User';
+            $report->addDisplayAttribute($displayAttribute);
+            $adapter            = new ModelRelationsAndAttributesToSummationReportAdapter($model, $rules, $report->getType());
+            $attributes         = $adapter->getAttributesForOrderBys($report->getGroupBys(), $report->getDisplayAttributes());
+            $this->assertEquals(2, count($attributes));
+            $this->assertTrue(isset($attributes['owner__User']));
+            $this->assertEquals('Owner', $attributes['owner__User']['label']);
+            $this->assertEquals('Created Date Time -(Day)', $attributes['createdDateTime__Day']['label']);
+        }
+
+        /**
+         * @depends testGetAttributesForOrderBysOnUser
          */
         public function testGetAttributesForChartSeries()
         {

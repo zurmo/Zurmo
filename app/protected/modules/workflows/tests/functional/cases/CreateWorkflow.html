@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/workflows/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//ul[@id='MashableInboxCreateDropdown']/li/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='MashableInboxCreateDropdown']/li/ul/li/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='WorkflowWizardTypeView']/h1/span/span</td>
+	<td>Workflow Wizard</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='WorkflowWizardTypeView']/ul/li[1]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='OnSaveWorkflowWizardView']/div/h1/span/span</td>
+	<td>Workflow Wizard - On-Save</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ModuleForWorkflowWizardView']/table/tbody/tr/td/div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='moduleNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='TriggersTreeArea']/div/ul/li[1]/span</td>
+	<td>Account</td>
+</tr>
+<tr>
+	<td>doubleClick</td>
+	<td>//div[@id='TriggersTreeArea']/div/ul/li[1]/ul/li[1]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='TriggersForWorkflowWizardView']/div[2]/div[1]/div[1]/ul/li/div/div/div[1]</td>
+	<td>Annual Revenue</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=OnSaveWorkflowWizardForm_Triggers_0_value</td>
+	<td>200000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=OnSaveWorkflowWizardForm_Triggers_0_operator</td>
+	<td>label=Less Than</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='OnSaveWorkflowWizardForm_Triggers_0_operator']/option[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='triggersNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='ActionsForWorkflowWizardView']/h3</td>
+	<td>Select Actions</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@id='ActionsForWorkflowWizardView']/div/div/div/select</td>
+	<td>label=Create</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='actionType']/option[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//div[@id='action-type-related-model-selector']/div/select</td>
+	<td>label=Accounts</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_name_value</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>focus</td>
+	<td>id=OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_owner__User_stringifiedModelForValue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_owner__User_users_SelectLink']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=UsersSearchForm_anyMixedAttributes</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=UsersSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr/td/a</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Sally Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>UsersSearchForm_anyMixedAttributes</td>
+	<td>Sally Smith</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='saveAction0']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='actionsNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='EmailMessagesForWorkflowWizardView']/h3</td>
+	<td>Select Messages</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='AddEmailMessageLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='EmailMessagesForWorkflowWizardView']/div[1]/div[3]/div/ul/li/div/div[2]/div[1]/div/table/tbody/tr[1]/th/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=addRecipientType_0</td>
+	<td>label=A person associated with the triggered record</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='addRecipientType_0']/option[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='emailMessagesNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='GeneralDataForWorkflowWizardView']/h3</td>
+	<td>Save Workflow</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>OnSaveWorkflowWizardForm_name</td>
+	<td>WorkflowTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='generalDataSaveAndRunLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='WorkflowDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
+	<td>WorkflowTest</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

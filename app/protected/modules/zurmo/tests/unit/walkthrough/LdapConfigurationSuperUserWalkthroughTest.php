@@ -121,5 +121,29 @@
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/ldap/testConnection');
             $this->assertTrue(strpos($content, "Successfully Connected to Ldap Server") > 0);
         }
+        
+        /*
+        *To show the fix for resolveBindRegisteredDomain with incorrect Base Domain
+        */
+        public function testSuperUserResolveBindRegisteredDomain()
+        {
+            if (!ZurmoTestHelper::isAuthenticationLdapTestConfigurationSet())
+            {
+                $this->markTestSkipped(Zurmo::t('ZurmoModule', 'Test Ldap settings are not configured in perInstanceTest.php file.'));
+            }
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            //check Ldap connection
+            $this->resetGetArray();
+            $this->setPostArray(array('LdapConfigurationForm' => array(
+                                      'serverType'                        => Yii::app()->authenticationHelper->ldapServerType,
+                                      'host'                              => Yii::app()->authenticationHelper->ldapHost,
+                                      'port'                              => Yii::app()->authenticationHelper->ldapPort,
+                                      'bindRegisteredDomain'              => Yii::app()->authenticationHelper->ldapBindRegisteredDomain,
+                                      'bindPassword'                      => Yii::app()->authenticationHelper->ldapBindPassword,
+                                      'baseDomain'                        => 'testBaseDomain',
+                                      'enabled'                           => Yii::app()->authenticationHelper->ldapEnabled)));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/ldap/testConnection');
+            $this->assertTrue(strpos($content, "Unable to connect to Ldap server") > 0);
+        }
     }
 ?>

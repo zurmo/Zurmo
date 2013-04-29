@@ -102,10 +102,13 @@
         {
             assert('is_string($bindRegisteredDomain)');
             assert('is_string($baseDomain)');
-            $baseDomain            = str_replace(',', '', $baseDomain); // Not Coding Standard
-            $domainControllers     = explode('dc=', $baseDomain);
-            $bindRegisteredDomain  = $bindRegisteredDomain . '@' . $domainControllers[1] . '.' .
+            $baseDomain        = str_replace(',', '', $baseDomain); // Not Coding Standard
+            $domainControllers = explode('dc=', $baseDomain);
+            if(count($domainControllers) == 3)
+            {
+                $bindRegisteredDomain  = $bindRegisteredDomain . '@' . $domainControllers[1] . '.' .
                                          $domainControllers[2];
+            }
             return $bindRegisteredDomain;
         }
     }
