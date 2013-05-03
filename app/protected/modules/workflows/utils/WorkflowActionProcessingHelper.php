@@ -122,10 +122,10 @@
             {
                 if ($actionAttribute->shouldSetValue)
                 {
-                    if (null == $relation = ActionForWorkflowForm::resolveFirstRelationName($attribute))
+                    if (null === $relation = ActionForWorkflowForm::resolveFirstRelationName($attribute))
                     {
                         $resolvedModel     = $model;
-                        $resolvedAttribute = $attribute;
+                        $resolvedAttribute = ActionForWorkflowForm::resolveRealAttributeName($attribute);
                     }
                     else
                     {

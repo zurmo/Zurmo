@@ -7650,3 +7650,6 @@ data/app/protected/modules/zurmo/controllers/filters/LDAPExtensionCheckControlle
 data/app/protected/modules/zurmo/controllers/filters/LdapExtensionCheckControllerFilter.php.i
 data/app/protected/modules/zurmo/tests/unit/LdapUtilTest.php.i
 data/app/protected/modules/zurmo/views/NoLdapExtensionLoadedView.php.i
+data/app/protected/modules/accounts/tests/functional/cases/CreateAccountForAutoPoppulationOfAddressInContacts.html.i
+data/app/themes/default/images/elbow.gif.i
+data/app/themes/default/less/kanban.less.i
