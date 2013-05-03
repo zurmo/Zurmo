@@ -68,21 +68,22 @@
          */
         protected function renderFormContent()
         {
-            $content           = '<div class="attributesContainer">';
+            $leftSideContent   = null;
             $element           = new TextElement($this->model, 'name', $this->form);
-            $leftSideContent   = '<table><colgroup><col class="col-0"><col class="col-1">' .
-                                 '</colgroup><tr>' . $element->render() . '</tr>';
-            $element           = new TextAreaElement(
-                                 $this->model, 'description', $this->form, array('rows' => 5));
+            $leftSideContent   = '<table><colgroup><col class="col-0"><col class="col-1">' . '</colgroup><tr>' . $element->render() . '</tr>';
+            $element           = new TextAreaElement($this->model, 'description', $this->form, array('rows' => 5));
             $leftSideContent  .= '<tr>' . $element->render() . '</tr>';
-            $element           = new TriggerOnStaticDropDownElement(
-                                 $this->model, 'triggerOn', $this->form);
+            $element           = new TriggerOnStaticDropDownElement($this->model, 'triggerOn', $this->form);
             $leftSideContent  .= '<tr>' . $element->render() . '</tr>';
             $element           = new CheckBoxElement($this->model, 'isActive', $this->form);
             $leftSideContent  .= '<tr>' . $element->render() . '</tr>';
             $leftSideContent  .= '</table>';
-            $content          .= ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
-            $content          .= '</div>';
+            $leftSideContent   = ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
+            $leftSideContent   = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $leftSideContent);
+
+            $content = '<div class="attributesContainer">';
+            $content .= $leftSideContent;
+            $content .= '</div>';
             return $content;
         }
 

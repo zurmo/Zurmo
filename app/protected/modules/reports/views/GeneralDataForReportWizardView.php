@@ -68,24 +68,25 @@
          */
         protected function renderFormContent()
         {
-            $content           = '<div class="attributesContainer">';
+            $leftSideContent   = null;
             $element           = new TextElement($this->model, 'name', $this->form);
-            $leftSideContent   = '<table><colgroup><col class="col-0"><col class="col-1">' .
-                                 '</colgroup><tr>' . $element->render() . '</tr>';
-            $element           = new TextAreaElement(
-                                 $this->model, 'description', $this->form, array('rows' => 5));
+            $leftSideContent   = '<table><colgroup><col class="col-0"><col class="col-1">' . '</colgroup><tr>' . $element->render() . '</tr>';
+            $element           = new TextAreaElement($this->model, 'description', $this->form, array('rows' => 5));
             $leftSideContent  .= '<tr>' . $element->render() . '</tr>';
-            $element           = new CurrencyConversionTypeStaticDropDownElement(
-                                 $this->model, 'currencyConversionType', $this->form);
+            $element           = new CurrencyConversionTypeStaticDropDownElement($this->model, 'currencyConversionType', $this->form);
             $leftSideContent  .= '<tr>' . $element->render() . '</tr>';
-            $element           = new CurrencyCodeStaticDropDownFormElement($this->model, 'spotConversionCurrencyCode',
-                                 $this->form, array('addBlank' => true));
+            $element           = new CurrencyCodeStaticDropDownFormElement($this->model, 'spotConversionCurrencyCode', $this->form, array('addBlank' => true));
             $leftSideContent  .= '<tr>' . $element->render() . '</tr></table>';
-            $content          .= ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
-            $rightSideContent  = ZurmoHtml::tag('div', array(), $this->renderRightSideFormLayout());
-            $rightSideContent  = ZurmoHtml::tag('div', array('class' => 'buffer'), $rightSideContent);
-            $content          .= ZurmoHtml::tag('div', array('class' => 'right-side-edit-view-panel'), $rightSideContent);
-            $content          .= '</div>';
+            $leftSideContent   = ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
+            $leftSideContent   = ZurmoHtml::tag('div', array('class' => 'left-column'), $leftSideContent);
+
+            $rightSideContent = ZurmoHtml::tag('div', array('class' => 'right-side-edit-view-panel'), $this->renderRightSideFormLayout());
+            $rightSideContent = ZurmoHtml::tag('div', array('class' => 'right-column'), $rightSideContent);
+
+            $content = '<div class="attributesContainer">';
+            $content .= $leftSideContent . $rightSideContent;
+            $content .= '</div>';
+
             return $content;
         }
 

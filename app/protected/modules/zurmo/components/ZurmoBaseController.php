@@ -54,7 +54,7 @@
                         'rightName' => $moduleClassName::getAccessRight(),
                 );
                 $filters[] = array(
-                        self::getRightsFilterPath() . ' + create, createFromRelation, inlineCreateSave',
+                        self::getRightsFilterPath() . ' + create, createFromRelation, inlineCreateSave, copy',
                         'moduleClassName' => $moduleClassName,
                         'rightName' => $moduleClassName::getCreateRight(),
                 );

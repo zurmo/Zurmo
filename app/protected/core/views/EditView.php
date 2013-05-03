@@ -85,10 +85,20 @@
                                                             );
             $content .= $formStart;
             $content .= $this->renderOperationDescriptionContent();
+
             $content .= '<div class="attributesContainer">';
-            $content .= $this->renderFormLayout($form);
+            if ($form != null && $this->renderRightSideFormLayoutForEdit($form) == null)
+            {
+                $class = ' full-width';
+            }
+            else
+            {
+                $class = '';
+            }
+            $content .= ZurmoHtml::tag('div', array('class' => 'left-column' . $class), $this->renderFormLayout($form));
             $content .= $this->renderRightSideContent($form);
             $content .= '</div>';
+
             $content .= $this->renderAfterFormLayout($form);
             $actionElementContent = $this->renderActionElementBar(true);
             if ($actionElementContent != null)
@@ -113,9 +123,8 @@
                 $rightSideContent = $this->renderRightSideFormLayoutForEdit($form);
                 if ($rightSideContent != null)
                 {
-                    $content  = '<div class="right-side-edit-view-panel"><div class="buffer"><div>';
-                    $content .= $rightSideContent;
-                    $content .= '</div></div></div>';
+                    $content = ZurmoHtml::tag('div', array('class' => 'right-side-edit-view-panel'), $rightSideContent);
+                    $content = ZurmoHtml::tag('div', array('class' => 'right-column'), $content);
                     return $content;
                 }
             }

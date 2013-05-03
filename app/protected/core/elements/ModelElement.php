@@ -156,7 +156,7 @@
                 'source'  => Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->getAutoCompleteControllerId()
                                                         . '/' . static::$autoCompleteActionId),
                 'options' => array(
-                    'select'   => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]);}', // Not Coding Standard
+                    'select'   => 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]).trigger("change");}', // Not Coding Standard
                     'appendTo' => 'js:$("#' . $this->getIdForTextField() . '").parent().parent()',
                     'search'   => 'js: function(event, ui)
                                   {

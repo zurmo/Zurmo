@@ -42,15 +42,63 @@
 
             $loginview = new LoginView($controller, $formModel, $extraHeaderContent);
             $loginview->setCssClasses(array('clearfix', 'background-' . mt_rand(1, 6)));
-            $gridView = new GridView(2, 1);
-            $gridView->setView($loginview, 0, 0);
-            $gridView->setView(new FooterView(), 1, 0);
+            $flashMessageView = new FlashMessageView($controller);
+            $gridView = new GridView(3, 1);
+            $gridView->setView($flashMessageView, 0, 0);
+            $gridView->setView($loginview, 1, 0);
+            $gridView->setView(new FooterView(), 2, 0);
+            $this->registerScripts();
             parent::__construct($gridView);
         }
 
         protected function getSubtitle()
         {
             return Zurmo::t('ZurmoModule', 'Sign in');
+        }
+
+        protected function registerScripts()
+        {
+            $this->registerUpdateFlashBarScript();
+            $this->registerSessionTimeoutFlashBarScript();
+        }
+
+        protected function registerUpdateFlashBarScript()
+        {
+            Yii::app()->clientScript->registerScript('handleUpdateFlashBar', '
+                function updateFlashBar(data, flashBarId)
+                {
+                    $("#" + flashBarId).jnotifyAddMessage(
+                    {
+                        text: data.message,
+                        permanent: false,
+                        showIcon: true,
+                        type: data.type
+                    });
+                }
+            ');
+        }
+
+        protected function registerSessionTimeoutFlashBarScript()
+        {
+            Yii::app()->clientScript->registerCoreScript('cookie');
+            Yii::app()->clientScript->registerScript('handleSessionTimeoutFlashBar', '
+                var notificationBarId         = "FlashMessageBar";
+                var sessionTimeoutCookieName  = "' . Yii::app()->user->loginRequiredAjaxResponse . 'Cookie";
+                var sessionTimeoutCookieValue = $.cookie(sessionTimeoutCookieName);
+                if (sessionTimeoutCookieValue == 1)
+                {
+                    $.cookie(sessionTimeoutCookieName, null,
+                                        {
+                                            expires : -1,
+                                            path:  "/"
+                                        });
+                    var data = {' . // Not Coding Standard
+                                '   "message" : "' . Zurmo::t('ZurmoModule', 'You have been logged out due to inactivity.'). '",
+                                    "type"    : "error"
+                                };
+                    updateFlashBar(data, notificationBarId);
+                }
+            ');
         }
     }
 ?>

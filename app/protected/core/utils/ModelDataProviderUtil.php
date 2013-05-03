@@ -270,8 +270,18 @@
                                                         ArrayUtil::getArrayValue($clauseInformation, 'modifierType'));
                 $builder->resolveJoinsAndBuildWhere(    $clauseInformation['operatorType'],
                                                         $clauseInformation['value'], $clausePosition,
-                                                        $where, $onTableAliasName);
+                                                        $where, $onTableAliasName,
+                                                        static::resolveResolveSubqueryValue($clauseInformation));
             }
+        }
+
+        protected static function resolveResolveSubqueryValue(Array $clauseInformation)
+        {
+            if(null == $resolveAsSubquery = ArrayUtil::getArrayValue($clauseInformation, 'resolveAsSubquery'))
+            {
+                return false;
+            }
+            return $resolveAsSubquery;
         }
 
         /**

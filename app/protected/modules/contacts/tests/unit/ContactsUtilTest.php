@@ -132,5 +132,44 @@
                                 $customerStates[0]->id  => 'Client');
             $this->assertEquals($compareData, $data);
         }
+
+        /**
+         * @depends testGetContactStateDataFromStartingStateKeyedByIdAndLabelByLanguage
+         */
+        public function testResolveAddressesFromRelatedAccount()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $contact = new Contact();
+            $account = new Account();
+            $account->name                        = 'some name';
+            $account->billingAddress->city        = 'some city';
+            $account->billingAddress->country     = 'some country';
+            $account->billingAddress->postalCode  = 'some postalCode';
+            $account->billingAddress->state       = 'some state';
+            $account->billingAddress->street1     = 'some street1';
+            $account->billingAddress->street2     = 'some street2';
+            $account->shippingAddress->city       = 'some2 city';
+            $account->shippingAddress->country    = 'some2 country';
+            $account->shippingAddress->postalCode = 'some2 postalCode';
+            $account->shippingAddress->state      = 'some2 state';
+            $account->shippingAddress->street1    = 'some2 street1';
+            $account->shippingAddress->street2    = 'some2 street2';
+            $saved = $account->save();
+            $this->assertTrue($saved);
+            $contact->account                     = $account;
+            ContactsUtil::resolveAddressesFromRelatedAccount($contact);
+            $this->assertEquals('some city',         $contact->primaryAddress->city);
+            $this->assertEquals('some country',      $contact->primaryAddress->country);
+            $this->assertEquals('some postalCode',   $contact->primaryAddress->postalCode);
+            $this->assertEquals('some state',        $contact->primaryAddress->state);
+            $this->assertEquals('some street1',      $contact->primaryAddress->street1);
+            $this->assertEquals('some street2',      $contact->primaryAddress->street2);
+            $this->assertEquals('some2 city',        $contact->secondaryAddress->city);
+            $this->assertEquals('some2 country',     $contact->secondaryAddress->country);
+            $this->assertEquals('some2 postalCode',  $contact->secondaryAddress->postalCode);
+            $this->assertEquals('some2 state',       $contact->secondaryAddress->state);
+            $this->assertEquals('some2 street1',     $contact->secondaryAddress->street1);
+            $this->assertEquals('some2 street2',     $contact->secondaryAddress->street2);
+        }
     }
 ?>

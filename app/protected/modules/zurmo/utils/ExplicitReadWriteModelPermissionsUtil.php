@@ -225,6 +225,8 @@
          * based on what the provided ExplicitReadWriteModelPermissions indicates should be done.
          * @param SecurableItem $securableItem
          * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
+         * @return boolean
+         * @throws NotSupportedException()
          */
         public static function resolveExplicitReadWriteModelPermissions(SecurableItem $securableItem,
                                   ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
@@ -323,6 +325,35 @@
             if ($saveSecurableItem)
             {
                 return $securableItem->save();
+            }
+            return true;
+        }
+
+        /**
+         * Given a SecurableItem, add and remove permissions just on the securableItem.  Since this method
+         * is called when the SecurableItem is not being saved and just for display purposes in the user interface.
+         * @param SecurableItem $securableItem
+         * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
+         * @return boolean
+         * @throws NotSupportedException()
+         */
+        public static function resolveExplicitReadWriteModelPermissionsForDisplay(SecurableItem $securableItem,
+                               ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
+        {
+            assert('$securableItem->id < 0');
+            if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadOnlyPermitables() as $permitable)
+                {
+                    $securableItem->addPermissions($permitable, Permission::READ);
+                }
+            }
+            if ($explicitReadWriteModelPermissions->getReadWritePermitablesCount() > 0)
+            {
+                foreach ($explicitReadWriteModelPermissions->getReadWritePermitables() as $permitable)
+                {
+                    $securableItem->addPermissions($permitable, Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER);
+                }
             }
             return true;
         }

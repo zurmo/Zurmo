@@ -89,15 +89,6 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'maxLength', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'minValue', 'type' => 'Text'),
                                             ),
                                         ),

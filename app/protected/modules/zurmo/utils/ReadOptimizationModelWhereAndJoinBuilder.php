@@ -48,7 +48,7 @@
         }
 
         public function resolveJoinsAndBuildWhere($operatorType, $value, & $clausePosition, & $where,
-                                                  $onTableAliasName = null)
+                                                  $onTableAliasName = null, $resolveAsSubquery = false)
         {
             assert('$operatorType == null');
             assert('$value == null');

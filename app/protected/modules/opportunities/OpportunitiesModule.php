@@ -76,6 +76,14 @@
                 'globalSearchAttributeNames' => array(
                     'name'
                 ),
+                'stageToProbabilityMapping' => array(
+                    'Prospecting'   => 10,
+                    'Qualification' => 25,
+                    'Negotiating'   => 50,
+                    'Verbal'        => 75,
+                    'Closed Won'    => 100,
+                    'Closed Lost'   => 0,
+                ),
                 'tabMenuItems' => array(
                     array(
                         'label'  => "eval:Zurmo::t('OpportunitiesModule', 'OpportunitiesModulePluralLabel', \$translationParams)",
@@ -164,6 +172,27 @@
         public static function canHaveContentTemplates()
         {
             return true;
+        }
+
+        public static function getStageToProbabilityMappingData()
+        {
+            $metadata = static::getMetadata();
+            if (isset($metadata['global']['stageToProbabilityMapping']))
+            {
+                return $metadata['global']['stageToProbabilityMapping'];
+            }
+            return array();
+        }
+
+        public static function getProbabilityByStageValue($value)
+        {
+            assert('is_string($value) || $value == null');
+            $stageToProbabilityMapping = self::getStageToProbabilityMappingData();
+            if (isset($stageToProbabilityMapping[$value]))
+            {
+                return $stageToProbabilityMapping[$value];
+            }
+            return 0;
         }
     }
 ?>

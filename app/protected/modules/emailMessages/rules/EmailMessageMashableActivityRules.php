@@ -54,6 +54,7 @@
                     'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'equals',
                     'value'                => $relationItemId,
+                    'resolveAsSubquery'    => true,
                 )
             );
             $searchAttributeData['structure'] = '(1 or 2)';
@@ -75,9 +76,10 @@
                     'relatedAttributeName' => 'personOrAccount',
                     'operatorType'         => 'oneOf',
                     'value'                => $relationItemIds,
+                    'resolveAsSubquery'    => true,
                 )
             );
-            $searchAttributeData['structure'] = '1 or 2';
+            $searchAttributeData['structure'] = '(1 or 2)';
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 

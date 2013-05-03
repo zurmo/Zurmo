@@ -47,6 +47,7 @@
                             array('type' => 'EditLink',      'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
                             array('type' => 'ConvertLink',   'renderType' => 'Details'),
+                            array('type' => 'CopyLink',       'renderType' => 'Details'),
                             array('type' => 'LeadDeleteLink', 'renderType' => 'Details'),
                         ),
                     ),

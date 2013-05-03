@@ -36,5 +36,20 @@
 
     class OpportunitiesModuleEditView extends GlobalSearchEnabledModuleEditView
     {
+        public static function getDefaultMetadata()
+        {
+            $metadata = parent::getDefaultMetadata();
+            $metadata['global']['panels'][0]['rows'][] =
+                array('cells' =>
+                array(
+                    array(
+                        'elements' => array(
+                            array('attributeName' => 'stageToProbabilityMapping', 'type' => 'StageToProbabilityMapping'),
+                        ),
+                    ),
+                ),
+                );
+            return $metadata;
+        }
     }
 ?>

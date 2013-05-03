@@ -60,6 +60,14 @@
         }
 
         /**
+         * Override to remove action buttons.
+         */
+        protected function getCGridViewLastColumn()
+        {
+            return array();
+        }
+
+        /**
          * @return array
          */
         public static function getDefaultMetadata()

@@ -90,15 +90,6 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'maxLength', 'type' => 'Text'),
-                                            ),
-                                        ),
-                                    )
-                                ),
-                                array('cells' =>
-                                    array(
-                                        array(
-                                            'elements' => array(
                                                 array('attributeName' => 'precisionLength', 'type' => 'Text'),
                                             ),
                                         ),

@@ -654,6 +654,7 @@ a.close-ModalGameNotification.simple-link{
         border-bottom: 1px solid #fff;
         .b-shadow(none);
 	    float: none;
+	    margin-bottom: 0;
     }
 }
 
@@ -690,6 +691,9 @@ a.close-ModalGameNotification.simple-link{
     }
 	+ .panel{
 		float: left;
+		+ .panel{
+			clear: right;
+		}
 	}
 }
 

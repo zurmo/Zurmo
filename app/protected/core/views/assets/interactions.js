@@ -143,10 +143,19 @@ $(window).ready(function(){
     });
 
     $(".overlay-label-field > input").live('blur', function(){
-        if($(this).val() == "") {
+        if($(this).val() == "")
+        {
             $(this).prev().fadeIn(250);
         }
     });
+
+    $(".overlay-label-field input").live('change', function(){
+        if($(this).val() != "")
+        {
+            $(this).prev().fadeOut(250);
+        }
+    });
+
     $(".overlay-label-field > input").each( function(){
         if($(this).val() == "") {
             $('label', $(this)).fadeIn(250);

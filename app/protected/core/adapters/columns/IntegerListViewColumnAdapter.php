@@ -39,9 +39,23 @@
         public function renderGridViewData()
         {
             return array(
-                'type' => 'Number',
                 'name'  => $this->attribute,
+                'value' => 'IntegerListViewColumnAdapter::renderNonEditableStatically($data, "' . $this->attribute . '")',
+                'type'  => 'raw',
             );
+        }
+
+        public static function renderNonEditableStatically($model, $attribute)
+        {
+            if($model instanceof RedBeanModel && $model->isAttributeFormattedAsProbability($attribute))
+            {
+                $resolvedValue = NumberUtil::divisionForZero($model->{$attribute}, 100);
+                return Yii::app()->numberFormatter->formatPercentage($resolvedValue);
+            }
+            else
+            {
+                return $model->{$attribute};
+            }
         }
     }
 ?>

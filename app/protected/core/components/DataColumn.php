@@ -42,6 +42,45 @@
     class DataColumn extends CDataColumn
     {
         /**
+         * Renders the header cell content.
+         * This method will render a link that can trigger the sorting if the column is sortable.
+         */
+        protected function renderHeaderCellContent()
+        {
+            if($this->grid->enableSorting && $this->sortable && $this->name !== null)
+            {
+                echo $this->grid->dataProvider->getSort()->link($this->name, $this->header, array('class' => 'sort-link'));
+            }
+            elseif($this->name!==null && $this->header===null)
+            {
+                if($this->grid->dataProvider instanceof CActiveDataProvider)
+                {
+                    echo CHtml::encode($this->grid->dataProvider->model->getAttributeLabel($this->name));
+                }
+                elseif($this->grid->dataProvider instanceof RedBeanModelDataProvider)
+                {
+                    $modelClassName = $this->grid->dataProvider->getModelClassName();
+                    if($modelClassName::isAnAttribute($this->name))
+                    {
+                        echo CHtml::encode($modelClassName::getAnAttributeLabel($this->name));
+                    }
+                    else
+                    {
+                        echo CHtml::encode($this->name);
+                    }
+                }
+                else
+                {
+                    echo CHtml::encode($this->name);
+                }
+            }
+            else
+            {
+                echo parent::renderHeaderCellContent();
+            }
+        }
+
+        /**
          * Override to add in offset information
          * (non-PHPdoc)
          * @see CDataColumn::renderDataCellContent()

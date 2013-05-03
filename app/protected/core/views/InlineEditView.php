@@ -103,8 +103,8 @@
                 CClientScript::POS_END
             );
             $content .= $formStart;
-            $content .= $this->renderFormLayout($form);
-            $content .= $this->renderAfterFormLayout($form);
+            $content .= ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $this->renderFormLayout($form) .
+                                                                               $this->renderAfterFormLayout($form));
             $actionElementContent = $this->renderActionElementBar(true);
             if ($actionElementContent != null)
             {

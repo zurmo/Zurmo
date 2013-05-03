@@ -71,7 +71,7 @@
             {
                 throw new NotImplementedException();
             }
-            return ZurmoHtml::tag('span', array(), Zurmo::t('ImportModule', 'Please select the module you would like to import to:'));
+            return ZurmoHtml::tag('h3', array(), Zurmo::t('ImportModule', 'Please select the module you would like to import to:'));
         }
 
         public function getEditableHtmlOptions()

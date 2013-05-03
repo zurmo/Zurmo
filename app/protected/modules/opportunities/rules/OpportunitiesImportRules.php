@@ -43,5 +43,14 @@
         {
             return 'Opportunity';
         }
+
+        /**
+         * Override to block out additional attributes that are not importable
+         * @return array
+         */
+        public static function getNonImportableAttributeNames()
+        {
+            return array_merge(parent::getNonImportableAttributeNames(), array('probability'));
+        }
     }
 ?>

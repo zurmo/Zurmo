@@ -125,17 +125,26 @@
             $inputPrefixData   = array(get_class($this->model), get_class($this->model->chart));
             $this->form->setInputPrefixData($inputPrefixData);
             $params            = array('inputPrefix' => $inputPrefixData);
-            $content           = '<div class="attributesContainer">';
-            $element           = new ChartTypeRadioStaticDropDownForReportElement($this->model->chart, 'type', $this->form,
-                array_merge($params, array('addBlank' => true)));
-            $leftSideContent   = $element->render();
-            $element           = new MixedChartRangeAndSeriesElement($this->model->chart, null, $this->form, $params);
-            $content          .= ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
-            $rightSideContent  = ZurmoHtml::tag('div', array(), $element->render());
-            $rightSideContent  = ZurmoHtml::tag('div', array('class' => 'buffer'), $rightSideContent);
-            $content          .= ZurmoHtml::tag('div', array('id' => 'series-and-range-areas', 'class' => 'right-side-edit-view-panel hidden-element'), $rightSideContent);
-            $content          .= $this->renderChartTipContent();
-            $content          .= '</div>';
+
+
+            $leftSideContent = null;
+            $element         = new ChartTypeRadioStaticDropDownForReportElement($this->model->chart, 'type', $this->form,
+                               array_merge($params, array('addBlank' => true)));
+            $leftSideContent = $element->render();
+            $element         = new MixedChartRangeAndSeriesElement($this->model->chart, null, $this->form, $params);
+            $leftSideContent = ZurmoHtml::tag('div', array('class' => 'panel'), $leftSideContent);
+            $leftSideContent = ZurmoHtml::tag('div', array('class' => 'left-column'), $leftSideContent);
+
+            $rightSideContent  = $element->render();
+            $rightSideContent  = ZurmoHtml::tag('div', array('id' => 'series-and-range-areas',
+                                 'class' => 'right-side-edit-view-panel hidden-element'), $rightSideContent);
+            $rightSideContent .= $this->renderChartTipContent();
+            $rightSideContent  = ZurmoHtml::tag('div', array('class' => 'right-column'), $rightSideContent);
+
+            $content  = '<div class="attributesContainer">';
+            $content .= $leftSideContent . $rightSideContent;
+            $content .= '</div>';
+
             $this->form->clearInputPrefixData();
             $this->registerScripts();
             return $content;
@@ -147,9 +156,7 @@
             $content .= ZurmoHtml::tag('p', array(),
                                        Zurmo::t('WorkflowsModule', 'In order to use a grouping as a series field, ' .
                                                     'the grouping must be added as a display column.'));
-            $content  = ZurmoHtml::tag('div', array(), $content);
-            $content  = ZurmoHtml::tag('div', array('class' => 'buffer'), $content);
-            $content  = ZurmoHtml::tag('div', array('class'    => 'right-side-edit-view-panel'), $content);
+            $content = ZurmoHtml::tag('div', array('class' => 'right-side-edit-view-panel'), $content);
             return $content;
         }
     }

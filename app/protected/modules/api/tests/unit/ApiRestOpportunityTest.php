@@ -149,7 +149,6 @@
 
             $data['name']           = "Michael";
             $data['closeDate']            = "2002-04-03";
-            $data['probability']            = "10";
             $data['description']          = "Opportunity description";
 
             $data['source']['value']     = $sourceValues[1];
@@ -180,6 +179,7 @@
             );
 
             // We need to unset some empty values from response.
+            $data['probability'] = '50';
             unset($response['data']['createdDateTime']);
             unset($response['data']['modifiedDateTime']);
             unset($response['data']['stage']['id']);

@@ -54,7 +54,7 @@
         {
             $tabMenuItems = array(
                 array(
-                    'label' => 'Designer',
+                    'label' => "eval:Zurmo::t('DesignerModule', 'Designer')",
                     'url'   => array('/designer/default'),
                     'right'            => self::RIGHT_ACCESS_DESIGNER,
                 ),

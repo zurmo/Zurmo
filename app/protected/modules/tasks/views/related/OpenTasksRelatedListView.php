@@ -52,8 +52,9 @@
                     ),
                     'rowMenu' => array(
                         'elements' => array(
-                            array('type'                      => 'EditLink'),
-                            array('type'                      => 'RelatedDeleteLink'),
+                            array('type' => 'EditLink'),
+                            array('type' => 'CopyLink',),
+                            array('type' => 'RelatedDeleteLink'),
                         ),
                     ),
                     'derivedAttributeTypes' => array(

@@ -70,17 +70,17 @@
             $metadata['global'] = array(
                 'adminTabMenuItems' => array(
                     array(
-                        'label' => 'Roles',
+                        'label' => "eval:Zurmo::t('ZurmoModule', 'Roles')",
                         'url'   => array('/zurmo/role'),
                         'right' => self::RIGHT_ACCESS_ROLES,
                         'items' => array(
                             array(
-                                'label' => 'Create Role',
+                                'label' => "eval:Zurmo::t('ZurmoModule', 'Create Role')",
                                 'url'   => array('/zurmo/role/create'),
                                 'right' => self::RIGHT_CREATE_ROLES
                             ),
                             array(
-                                'label' => 'Roles',
+                                'label' => "eval:Zurmo::t('ZurmoModule', 'Roles')",
                                 'url'   => array('/zurmo/role'),
                                 'right' => self::RIGHT_ACCESS_ROLES
                             ),
@@ -90,8 +90,8 @@
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Roles',
-                        'descriptionLabel' => 'Manage Roles',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Roles')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Roles')",
                         'route'            => '/zurmo/role',
                         'right'            => self::RIGHT_ACCESS_ROLES,
                     ),

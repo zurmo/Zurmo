@@ -74,13 +74,23 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='ModuleForWorkflowWizardView']/table/tbody/tr/td/div/input</td>
+	<td>//div[@id='ModuleForWorkflowWizardView']/div/div[2]/input</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//a[@id='moduleNextLink']/span[3]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -93,9 +103,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForText</td>
-	<td>//div[@id='TriggersForWorkflowWizardView']/div[2]/div[1]/div[1]/ul/li/div/div/div[1]</td>
+	<td>//div[@id='TriggersForWorkflowWizardView']/div[1]/div[2]/div[1]/div[1]/ul/li/div/div/div[1]</td>
 	<td>Annual Revenue</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -103,23 +123,23 @@
 	<td>200000</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=OnSaveWorkflowWizardForm_Triggers_0_operator</td>
 	<td>label=Less Than</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//select[@id='OnSaveWorkflowWizardForm_Triggers_0_operator']/option[8]</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//a[@id='triggersNextLink']/span[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -138,11 +158,6 @@
 	<td>label=Create</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//select[@id='actionType']/option[4]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
@@ -158,6 +173,11 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>id=OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_name_value</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_name_value</td>
 	<td>test</td>
@@ -166,11 +186,6 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
-</tr>
-<tr>
-	<td>focus</td>
-	<td>id=OnSaveWorkflowWizardForm_Actions_0_ActionAttributes_owner__User_stringifiedModelForValue</td>
-	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -298,6 +313,11 @@
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//a[@id='generalDataSaveAndRunLink']/span[3]</td>
 	<td></td>
@@ -313,9 +333,14 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='WorkflowDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
-	<td>WorkflowTest</td>
+	<td>waitForTextPresent</td>
+	<td>WorkflowTest ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>WorkflowTest ${randomSuffix}</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

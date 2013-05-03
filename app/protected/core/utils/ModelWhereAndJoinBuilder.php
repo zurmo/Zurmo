@@ -59,13 +59,15 @@
          * @param $clausePosition
          * @param $where
          * @param null | string $onTableAliasName
+         * @param boolean | $resolveAsSubquery
          */
         public function resolveJoinsAndBuildWhere($operatorType, $value, & $clausePosition, & $where,
-                                                  $onTableAliasName = null)
+                                                  $onTableAliasName = null, $resolveAsSubquery = false)
         {
             assert('is_string($operatorType)');
             assert('is_array($where)');
             assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            assert('is_bool($resolveAsSubquery)');
             if (!$this->modelAttributeToDataProviderAdapter->hasRelatedAttribute())
             {
                 $tableAliasName = $this->resolveJoins($onTableAliasName,
@@ -83,7 +85,7 @@
             else
             {
                 $this->buildJoinAndWhereForRelatedAttribute($operatorType, $value, $clausePosition, $where,
-                                                            $onTableAliasName);
+                                                            $onTableAliasName, $resolveAsSubquery);
             }
         }
 
@@ -96,12 +98,13 @@
          * @param null | string $onTableAliasName
          */
         protected function buildJoinAndWhereForRelatedAttribute($operatorType, $value, $whereKey, &$where,
-                                                                $onTableAliasName = null)
+                                                                $onTableAliasName = null, $resolveAsSubquery = false)
         {
             assert('is_string($operatorType)');
             assert('is_int($whereKey)');
             assert('is_array($where)');
             assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            assert('is_bool($resolveAsSubquery)');
             $relationWhere                          = array();
             if ($this->modelAttributeToDataProviderAdapter->getRelationType() == RedBeanModel::MANY_MANY)
             {
@@ -111,11 +114,12 @@
                                                       $relationAttributeTableAliasName,
                                                       $this->modelAttributeToDataProviderAdapter->resolveManyToManyColumnName());
             }
-            elseif ($this->modelAttributeToDataProviderAdapter->isRelatedAttributeRelation() &&
+            elseif (($this->modelAttributeToDataProviderAdapter->isRelatedAttributeRelation() &&
                     $this->modelAttributeToDataProviderAdapter->getRelatedAttributeRelationType() == RedBeanModel::HAS_MANY)
+                    || $resolveAsSubquery)
             {
-                $relationAttributeTableAliasName    = $this->resolveOnlyAttributeJoins($onTableAliasName,
-                                                      ModelDataProviderUtil::resolveCanUseFromJoins($onTableAliasName));
+                $relationAttributeTableAliasName = $this->resolveRelationAttributeTableAliasNameForResolveSubquery(
+                                                   $onTableAliasName, $resolveAsSubquery);
                 $this->buildWhereForRelatedAttributeThatIsItselfAHasManyRelation(
                                                       $relationAttributeTableAliasName,
                                                       $operatorType,
@@ -137,6 +141,34 @@
             $where[$whereKey] = strtr('1', $relationWhere);
         }
 
+        protected function resolveRelationAttributeTableAliasNameForResolveSubquery($onTableAliasName, $resolveAsSubquery = false)
+        {
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            assert('is_bool($resolveAsSubquery)');
+            if($resolveAsSubquery)
+            {
+                return $this->resolveRelationAttributeTableAliasNameForResolveSubqueryAsTrue($onTableAliasName);
+            }
+            else
+            {
+                return $this->resolveOnlyAttributeJoins($onTableAliasName,
+                       ModelDataProviderUtil::resolveCanUseFromJoins($onTableAliasName));
+            }
+        }
+
+        protected function resolveRelationAttributeTableAliasNameForResolveSubqueryAsTrue($onTableAliasName)
+        {
+            assert('is_string($onTableAliasName) || $onTableAliasName == null');
+            if($onTableAliasName == null)
+            {
+                return $this->modelAttributeToDataProviderAdapter->getModelTableName();
+            }
+            else
+            {
+                return $onTableAliasName;
+            }
+        }
+
         /**
          * Given a related attribute on a model and the related attribute is a has_many relation,
          * build the join and where sql string information.
@@ -156,27 +188,32 @@
         {
             assert('is_string($onTableAliasName)');
             assert('is_string($operatorType)');
-            assert('(is_array($value) && count($value) > 0) || is_string($value)');
+            assert('(is_array($value) && count($value) > 0) || is_string($value) || is_int($value)');
             assert('is_array($where)');
             assert('is_int($whereKey)');
+            if(!$this->modelAttributeToDataProviderAdapter->getRelatedAttributeRelationType() == RedBeanModel::HAS_MANY)
+            {
+                throw new NotSupportedException();
+            }
             $relationAttributeModelClassName = $this->modelAttributeToDataProviderAdapter->getRelatedAttributeRelationModelClassName();
             if ($relationAttributeModelClassName != 'CustomFieldValue' && $operatorType != 'allOf')
             {
-                //Until we can add a third parameter to the search adapter metadata, we have to assume we are only doing
-                //this for CustomFieldValue searches. Below we have $joinColumnName, since we don't have any other way
-                //of ascertaining this information for now.
-
-                //Once we add allOf, need to have an alternative sub-query
-                //below that uses if/else logic to compare count against how many possibles. then return 1 or 0.
-                throw new NotSupportedException('modelClassName: ' . $relationAttributeModelClassName .
-                                                ' operatorType: ' . $operatorType);
+                $modelClassName                  = $this->modelAttributeToDataProviderAdapter->getRelationModelClassName();
+                $relationAttributeTableName      = RedBeanModel::getTableName($modelClassName);
+                $joinColumnName                  = $modelClassName::getColumnNameByAttribute(
+                                                   $this->modelAttributeToDataProviderAdapter->getRelatedAttribute());
+                $relationColumnName              = self::resolveForeignKey(RedBeanModel::getTableName(
+                                                   $this->modelAttributeToDataProviderAdapter->getModelClassName()));
             }
-            $relationAttributeTableName      = RedBeanModel::getTableName($relationAttributeModelClassName);
-            $tableAliasName                  = $relationAttributeTableName;
-            $joinColumnName                  = 'value';
-            $relationColumnName              = self::resolveForeignKey(RedBeanModel::getTableName(
-                                               $this->modelAttributeToDataProviderAdapter->
+            else
+            {
+                $relationAttributeTableName      = RedBeanModel::getTableName($relationAttributeModelClassName);
+                $joinColumnName                  = 'value';
+                $relationColumnName              = self::resolveForeignKey(RedBeanModel::getTableName(
+                                                   $this->modelAttributeToDataProviderAdapter->
                                                    getRelatedAttributeModelClassName()));
+            }
+            $tableAliasName                  = $relationAttributeTableName;
             $quote                           = DatabaseCompatibilityUtil::getQuote();
             $where[$whereKey]                = "(1 = (select 1 from $quote$relationAttributeTableName$quote $tableAliasName " . // Not Coding Standard
                                                "where $quote$tableAliasName$quote.$quote$relationColumnName$quote = " . // Not Coding Standard

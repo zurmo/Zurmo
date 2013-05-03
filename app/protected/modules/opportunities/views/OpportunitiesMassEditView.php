@@ -48,6 +48,7 @@
                     ),
                     'nonPlaceableAttributeNames' => array(
                         'name',
+                        'probability',
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(

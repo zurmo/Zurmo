@@ -36,5 +36,43 @@
 
     class OpportunitiesModuleForm extends GlobalSearchEnabledModuleForm
     {
+        public $stageToProbabilityMapping;
+
+        public function rules()
+        {
+            return array_merge(parent::rules(), array(
+                array('stageToProbabilityMapping', 'validateStageToProbabilityMapping'),
+            ));
+        }
+
+        public function attributeLabels()
+        {
+            return array_merge(parent::attributeLabels(), array(
+                'stageToProbabilityMapping' => Zurmo::t('OpportunitiesModule', 'Probability Mapping'),
+            ));
+        }
+
+        public function validateStageToProbabilityMapping()
+        {
+            $validator = new RedBeanModelTypeValidator();
+            $validator->type = 'integer';
+            $valid     = true;
+            if(!is_array($this->stageToProbabilityMapping))
+            {
+                $this->addError('stageToProbabilityMapping', Zurmo::t('Core', '{attribute} must be {type}.',
+                                array('{type}' => 'integer')));
+                $valid = false;
+            }
+            foreach($this->stageToProbabilityMapping as $probability)
+            {
+                if(!$validator->validateValue($probability))
+                {
+                    $this->addError('stageToProbabilityMapping',
+                                    Zurmo::t('OpportunitiesModule', 'Mapped Probabilities must be integers'));
+                    $valid = false;
+                }
+            }
+            return $valid;
+        }
     }
 ?>

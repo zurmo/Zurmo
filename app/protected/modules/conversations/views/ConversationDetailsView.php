@@ -53,7 +53,11 @@
 
         protected function renderFormLayout($form = null)
         {
-            //override since the details are done @see renderConversationContent
+            $content  = $this->renderConversationContent();
+            $content .= $this->renderConversationCommentsContent();
+            $content .= $this->renderConversationCreateCommentContent();
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column'), $content);
+            return $content;
         }
 
         public function getTitle()
@@ -64,13 +68,13 @@
         protected function renderRightSideContent($form = null)
         {
             assert('$form == null');
-            $content  = '<div class="right-side-edit-view-panel" class="thred-info"><div class="buffer">';
+            $content  = null;
             $content .= $this->renderConversationOpenCloseElement();
-            $content .= '<div>';
             $content .= $this->renderConversationRelatedToAndAttachmentsContent();
             $content .= "<h3>".Zurmo::t('ConversationsModule', 'Participants') . '</h3>';
             $content .= $this->renderConversationParticipantsContent();
-            $content .= '</div></div></div>';
+            $content  = ZurmoHtml::tag('div', array('class' => 'right-side-edit-view-panel thread-info'), $content);
+            $content  = ZurmoHtml::tag('div', array('class' => 'right-column'), $content);
             return $content;
         }
 
@@ -78,14 +82,6 @@
         {
             $element = new ConversationOpenCloseElement($this->model, 'isClosed');
             $content = $element->render();
-            return $content;
-        }
-
-        protected function renderAfterFormLayoutForDetailsContent()
-        {
-            $content  = $this->renderConversationContent();
-            $content .= $this->renderConversationCommentsContent();
-            $content .= $this->renderConversationCreateCommentContent();
             return $content;
         }
 
@@ -119,7 +115,7 @@
                 $element->nonEditableTemplate = '<td colspan="{colspan}" class="conversation-related-Attachments">{content}</td>';
                 $contentForTable .= $element->render();
             }
-            $content = ZurmoHtml::tag('table', array('class' => 'thred-details'), $contentForTable);
+            $content = ZurmoHtml::tag('table', array('class' => 'thread-details'), $contentForTable);
             return $content;
         }
 

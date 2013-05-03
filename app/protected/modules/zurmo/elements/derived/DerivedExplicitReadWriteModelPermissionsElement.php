@@ -106,7 +106,7 @@
          */
         protected function resolveSelectedType()
         {
-            if (!$this->isModelCreateAction())
+            if (!$this->isModelCreateAction() || $this->model->isCopied())
             {
                 return parent::resolveSelectedType();
             }
@@ -129,7 +129,7 @@
          */
         protected function resolveSelectedGroup()
         {
-            if (!$this->isModelCreateAction())
+            if (!$this->isModelCreateAction()|| $this->model->isCopied())
             {
                 return parent::resolveSelectedGroup();
             }

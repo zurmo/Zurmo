@@ -38,7 +38,6 @@
      * A job for processing autoresponder messages that are not sent immediately when triggered
      */
 
-    // TODO: @Shoaibi: Critical99: These needs tests.
     class AutoresponderMessageInQueueJob extends BaseJob
     {
         /**

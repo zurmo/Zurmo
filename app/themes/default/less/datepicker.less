@@ -69,13 +69,13 @@
 		text-align:right;
 		.box-sizing();
 		cursor:pointer;
+		position: relative;
 		span{
 			visibility:hidden;
 		}
-		&:after{
+		&:before{
 			content:"▶";
-			position:relative;
-			right:10px;
+			margin-left: 10px;
 		}
 		:hover{
 			cursor:pointer !important;

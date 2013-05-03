@@ -88,6 +88,17 @@
             return self::ATTRIBUTE_NAME_PREFIX . $key;
         }
 
+        public static function resolveKeyByAttributeName($attribute)
+        {
+            assert('is_string($attribute)');
+            $parts = explode(self::ATTRIBUTE_NAME_PREFIX, $attribute);
+            if (count($parts) == 2 && $parts[1] != null)
+            {
+                return $parts[1];
+            }
+            return null;
+        }
+
         public function getDisplayAttributes()
         {
             return $this->displayAttributes;

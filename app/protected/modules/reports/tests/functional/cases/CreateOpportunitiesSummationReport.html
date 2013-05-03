@@ -202,7 +202,7 @@
 	<td>Opportunity</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>doubleClick</td>
 	<td>//li[@id='OrderBys_amount__Summation']/span</td>
 	<td></td>
 </tr>
@@ -214,7 +214,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//ul[@id='OrderBysattributeRowsUl']/li/div/div/div[1]</td>
-	<td>Opportunity</td>
+	<td>Amount -(Sum)</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -232,14 +232,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>select</td>
 	<td>id=SummationReportWizardForm_ChartForReportForm_firstSeries</td>
 	<td>label=Stage</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//option[@value='stage']</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>select</td>
@@ -247,9 +252,9 @@
 	<td>label=Amount -(Sum)</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//option[@value='amount__Summation']</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>

@@ -93,11 +93,10 @@
          */
         protected function renderFormContent()
         {
-            $content  = '<div>';
-            $content .= $this->renderAddEmailMessageLinkContentAndWrapper();
+            $content  = $this->renderAddEmailMessageLinkContentAndWrapper();
             $content .= $this->renderZeroComponentsContentAndWrapper();
             $content .= $this->renderEmailMessagesContentAndWrapper();
-            $content .= '</div>';
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $content);
             $this->registerScripts();
             return $content;
         }

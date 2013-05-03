@@ -46,6 +46,7 @@
                             array('type' => 'CancelLink', 'renderType' => 'Edit'),
                             array('type' => 'TaskDeleteLink'),
                             array('type' => 'EditLink', 'renderType' => 'Details'),
+                            array('type' => 'CopyLink', 'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
                         ),
                     ),

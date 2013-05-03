@@ -70,17 +70,17 @@
             $metadata['global'] = array(
                 'adminTabMenuItems' => array(
                     array(
-                        'label' => 'Groups',
+                        'label' => "eval:Zurmo::t('ZurmoModule', 'Groups')",
                         'url'   => array('/zurmo/group'),
                         'right' => self::RIGHT_ACCESS_GROUPS,
                         'items' => array(
                             array(
-                                'label' => 'Create Group',
+                                'label' => "eval:Zurmo::t('ZurmoModule', 'Create Group')",
                                 'url'   => array('/zurmo/group/create'),
                                 'right' => self::RIGHT_CREATE_GROUPS
                             ),
                             array(
-                                'label' => 'Groups',
+                                'label' => "eval:Zurmo::t('ZurmoModule', 'Groups')",
                                 'url'   => array('/zurmo/group'),
                                 'right' => self::RIGHT_ACCESS_GROUPS
                             ),
@@ -90,8 +90,8 @@
                 'configureMenuItems' => array(
                     array(
                         'category'         => ZurmoModule::ADMINISTRATION_CATEGORY_GENERAL,
-                        'titleLabel'       => 'Groups',
-                        'descriptionLabel' => 'Manage Groups',
+                        'titleLabel'       => "eval:Zurmo::t('ZurmoModule', 'Groups')",
+                        'descriptionLabel' => "eval:Zurmo::t('ZurmoModule', 'Manage Groups')",
                         'route'            => '/zurmo/group',
                         'right'            => self::RIGHT_ACCESS_GROUPS,
                     ),

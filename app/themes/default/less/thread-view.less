@@ -50,6 +50,10 @@
     textarea{
         line-height: 130%;
     }
+	.right-side-edit-view-panel{
+		//display: inline-block;
+		//float: none;
+	}
 }
 
 .single-coloumn-details-view,
@@ -76,7 +80,7 @@
         }
     }
     .right-side-edit-view-panel{
-        margin-right:15px;
+        //margin-right:15px;
     }
     .details-table{
         .clearfix();
@@ -84,51 +88,51 @@
 }
 
 /*Sidebar*/
-.thred-info{
+.thread-info{
     h3{
 	//border-top:1px solid #fff;
 	//padding-top:10px;
     }
 }
 
-.thred-details{
-    margin:0 0 0 0 !important;
+.thread-details{
+    margin:0 0 10px 0 !important;
     width: 100%;
     td + th{
-	padding-left:0 !important;
+		padding-left:0 !important;
     }
     th, td{
-	text-align: left;
-	padding:5px 0;
+		text-align: left;
+		padding:5px 0;
     }
     th{
-	color: #545454;
+		color: #545454;
     }
     td{
 	
     }
     .attachments{
-	margin: 0;
-	font-weight: normal;
+		margin: 0;
+		font-weight: normal;
     }
 }
 
 .conversation-related-Account{
     .t-shadow(0 1px #fff);
     > div{
-	position: relative;
-	&:before{
-	    .symbly(20px);
-	    content:"P";
-	    font-weight: normal !important;
-	    position: absolute;
-	    top:-3px;
-	    line-height: 1;
-	}
+		position: relative;
+		&:before{
+		    .symbly(20px);
+		    content:"P";
+		    font-weight: normal !important;
+		    position: absolute;
+		    top:-3px;
+		    line-height: 1;
+		}
     }
     a{
-	position: relative;
-	left: 15px;
+		position: relative;
+		left: 15px;
     }
     
 }
@@ -136,38 +140,38 @@
 .conversation-related-Opportunity{
     .t-shadow(0 1px #fff);
     > div{
-	position: relative;
-	&:before{
-	    .symbly(21px);
-	    content:"9";
-	    font-weight: normal !important;
-	    position: absolute;
-	    top:-2px;
-	    line-height: 1;
-	}
+		position: relative;
+		&:before{
+		    .symbly(21px);
+		    content:"9";
+		    font-weight: normal !important;
+		    position: absolute;
+		    top:-2px;
+		    line-height: 1;
+		}
     }
     a{
-	position: relative;
-	left: 15px;
+		position: relative;
+		left: 15px;
     }
 }
 
 .conversationStatusChangeArea{
-    margin: 15px 0;
+    margin:0 0 15px 0;
     padding:0;
     > span{
-	float: left;
-	line-height: 1;
-	margin:10px 10px 0 0;
-	padding: 0 0;
-	font-weight: bold;
+		float: left;
+		line-height: 1;
+		margin:10px 10px 0 0;
+		padding: 0 0;
+		font-weight: bold;
     }
     label{
-	display: inline !important;
-	margin-right: 10px;
-	input{
-	    margin-right: 5px;
-	}
+		display: inline !important;
+		margin-right: 10px;
+		input{
+		    margin-right: 5px;
+		}
     }
 }
 
@@ -222,24 +226,24 @@
 	.opacity(100);
     }
     &:first-child input:checked + label{
-	@topColor: #97c43d;
+		@topColor: #97c43d;
         @bottomColor: #6fa82d;
-	#gradient > .vertical(@topColor, @bottomColor ) !important; //green
-	border:1px solid @topColor;
+		#gradient > .vertical(@topColor, @bottomColor ) !important; //green
+		border:1px solid @topColor;
     }
     &:last-child input:checked + label{
-	@topColor: #c43d53;
+		@topColor: #c43d53;
         @bottomColor: #a82d31;
-	#gradient > .vertical(@topColor, @bottomColor ) !important; //red
-	border:1px solid @topColor;
+		#gradient > .vertical(@topColor, @bottomColor ) !important; //red
+		border:1px solid @topColor;
     }
     &:first-child input:checked:after{
-	border:2px solid #6fa82d;
-	box-shadow:0 0 10px #6fa82d;
+		border:2px solid #6fa82d;
+		box-shadow:0 0 10px #6fa82d;
     }
     &:last-child input:checked:after{
-	border:2px solid #a82d31;
-	box-shadow:0 0 10px #a82d31;
+		border:2px solid #a82d31;
+		box-shadow:0 0 10px #a82d31;
     }
 }
 
@@ -268,7 +272,7 @@
 
 #CommentList,
 .CommentList{
-    margin-left: 130px;
+    margin-left: 115px;
     .comment{
         margin-top:15px;
     }
@@ -306,8 +310,7 @@
 
 .model-details-summary{
     font-size: 12px !important;
-    padding-left: 130px;
-    padding-top:15px;
+    padding-left: 115px;
     .gravatar{
         margin-left: -115px;
     }
@@ -339,8 +342,6 @@
 #ModelDetailsSummaryView,
 #CommentInlineEditForModelView,
 #CommentsForRelatedModelView{
-    width:70%;
-    float:left;
     max-width: 600px;
     .box-sizing();
     .wide.form{
@@ -353,12 +354,12 @@
 
 #CommentInlineEditForModelView{
     margin-top: 0;
-    padding-left: 120px;
+    padding-left: 115px;
     td{
-        padding:0 0 0 10px !important;
+        padding:0 0 0 0 !important;
     }
     h2{
-        margin:0 0 13px 10px; 
+        margin:0 0 0 0;
     }
     .wide.form{
         padding:0;
@@ -386,7 +387,7 @@
     line-height: 140%;
     li{
         margin-bottom:2px;
-	padding-left:15px;
+		padding-left:15px;
     }
 }
 
@@ -538,14 +539,29 @@ a.user-link{
     }
 }
 
+#ConversationsPageView{
+	#comment-inline-edit-form,
+	#social-item-inline-edit-form{
+		.left-column{
+			padding: 0;
+		}
+		.form-toolbar{
+			padding: 0;
+		}
+	}
+}
+
 #comment-inline-edit-form,
 #social-item-inline-edit-form{
-    padding-top:15px;
+    padding-bottom:15px;
     border:none;
     border-bottom: 1px solid #ccc;
     background: none !important;
     .b-shadow(none);
     .reset-filter();
+	.left-column{
+		//padding: 0;
+	}
     td:first-child{
         padding-left: 0;
     }
@@ -557,8 +573,8 @@ a.user-link{
     .form-toolbar{
         text-align: right;
         border-top:none;
-        padding-top: 0;
-        margin-top: 2px;
+        padding: 0 15px;
+        margin-top: 0;
         a{
             color:#fff;
             margin-right:0;

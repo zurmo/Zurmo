@@ -65,7 +65,11 @@
             $savedWorkflow->type            = Workflow::TYPE_BY_TIME;
             $savedWorkflow->isActive        = false;
             $savedWorkflow->order           = 1;
-            $savedWorkflow->serializedData  = serialize(array());
+            $savedWorkflow->serializedData  = serialize(array(
+                ComponentForWorkflowForm::TYPE_TRIGGERS        => array(),
+                ComponentForWorkflowForm::TYPE_ACTIONS         => array(),
+                ComponentForWorkflowForm::TYPE_EMAIL_MESSAGES  => array(),
+            ));
             $saved                          = $savedWorkflow->save();
             if (!$saved)
             {
@@ -110,7 +114,11 @@
             $savedWorkflow->type            = Workflow::TYPE_BY_TIME;
             $savedWorkflow->isActive        = false;
             $savedWorkflow->order           = 1;
-            $savedWorkflow->serializedData  = serialize(array());
+            $savedWorkflow->serializedData  = serialize(array(
+                ComponentForWorkflowForm::TYPE_TRIGGERS        => array(),
+                ComponentForWorkflowForm::TYPE_ACTIONS         => array(),
+                ComponentForWorkflowForm::TYPE_EMAIL_MESSAGES  => array(),
+            ));
             $saved                          = $savedWorkflow->save();
             if (!$saved)
             {

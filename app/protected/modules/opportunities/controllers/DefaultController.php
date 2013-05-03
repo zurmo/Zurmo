@@ -135,6 +135,25 @@
         {
             $opportunity = Opportunity::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($opportunity);
+            $this->processEdit($opportunity, $redirectUrl);
+
+        }
+
+        public function actionCopy($id)
+        {
+            $copyToOpportunity  = new Opportunity();
+            $postVariableName   = get_class($copyToOpportunity);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $opportunity    = Opportunity::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($opportunity);
+                ZurmoCopyModelUtil::copy($opportunity, $copyToOpportunity);
+            }
+            $this->processEdit($copyToOpportunity);
+        }
+
+        protected function processEdit(Opportunity $opportunity, $redirectUrl = null)
+        {
             $view = new OpportunitiesPageView(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,
                                              $this->makeEditAndDetailsView(

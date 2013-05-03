@@ -301,5 +301,30 @@
             assert('is_string($language)');
             return $state->resolveTranslatedNameByLanguage($language);
         }
+
+        /**
+         * Given a contact with a related account, set the contact address information from the account address information
+         * @param Contact $contact
+         */
+        public static function resolveAddressesFromRelatedAccount(Contact & $contact)
+        {
+            if($contact->account->id > 0)
+            {
+                if($contact->account->billingAddress->id > 0)
+                {
+                    foreach($contact->account->billingAddress->getAttributeNames() as $attribute)
+                    {
+                        $contact->primaryAddress->{$attribute} = $contact->account->billingAddress->{$attribute};
+                    }
+                }
+                if($contact->account->shippingAddress->id > 0)
+                {
+                    foreach($contact->account->billingAddress->getAttributeNames() as $attribute)
+                    {
+                        $contact->secondaryAddress->{$attribute} = $contact->account->shippingAddress->{$attribute};
+                    }
+                }
+            }
+        }
     }
 ?>

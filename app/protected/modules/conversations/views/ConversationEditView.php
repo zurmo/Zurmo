@@ -111,7 +111,7 @@
             $content = null;
             if ($this->getModel() instanceof OwnedSecurableItem)
             {
-                $content .= "<h3>".Zurmo::t('ConversationsModule', 'Participants') . '</h3><div id="owner-box">';
+                $content .= '<h3>' . Zurmo::t('ConversationsModule', 'Participants') . '</h3><div id="owner-box">';
                 $element  = new MultiplePeopleForConversationElement($this->getModel(), null, $form);
                 $element->editableTemplate = '{content}{error}';
                 $content .= $element->render().'</div>';

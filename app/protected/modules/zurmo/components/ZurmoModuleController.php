@@ -98,9 +98,15 @@
 
         protected function renderAutoCompleteResults($modelClassName, $term)
         {
-            $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
-                            'autoCompleteListPageSize', get_class($this->getModule()));
+            $pageSize            = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                   'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ModelAutoCompleteUtil::getByPartialName($modelClassName, $term, $pageSize);
+            if(empty($autoCompleteResults))
+            {
+                $autoCompleteResults = array(array('id'    => null,
+                                                   'value' => null,
+                                                   'label' => Zurmo::t('Core', 'No results found')));
+            }
             return CJSON::encode($autoCompleteResults);
         }
 
@@ -141,6 +147,16 @@
                 $model->$relationAttributeName->add($relatedModel);
             }
             return $model;
+        }
+
+        /**
+         * Override to implement
+         * @param $id
+         * @throws NotImplementedException
+         */
+        public function actionCopy($id)
+        {
+            throw new NotImplementedException();
         }
 
         public function actionAuditEventsModalList($id)

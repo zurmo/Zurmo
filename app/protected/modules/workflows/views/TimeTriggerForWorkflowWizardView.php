@@ -100,11 +100,10 @@
          */
         protected function renderFormContent()
         {
-            $content  = '<div>';
-            $content .= $this->renderAttributeSelectorContentAndWrapper();
+            $content  = $this->renderAttributeSelectorContentAndWrapper();
             $content .= $this->renderZeroComponentsContentAndWrapper();
             $content .= $this->renderTimeTriggerContentAndWrapper();
-            $content .= '</div>';
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $content);
             $this->registerScripts();
             return $content;
         }

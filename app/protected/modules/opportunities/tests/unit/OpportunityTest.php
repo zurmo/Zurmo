@@ -47,11 +47,29 @@
             $stageValues = array(
                 'Prospecting',
                 'Negotiating',
-                'Close Won',
+                'Closed Won',
             );
             $stageFieldData = CustomFieldData::getByName('SalesStages');
             $stageFieldData->serializedData = serialize($stageValues);
             $this->assertTrue($stageFieldData->save());
+        }
+
+        /**
+         * @depends testCreateStageValues
+         */
+        public function testGetStageToProbabilityMappingData()
+        {
+            $this->assertEquals(6, count(OpportunitiesModule::getStageToProbabilityMappingData()));
+        }
+
+        /**
+         * @depends testGetStageToProbabilityMappingData
+         */
+        public function testGetProbabilityByStageValue()
+        {
+            $this->assertEquals(10,  OpportunitiesModule::getProbabilityByStageValue ('Prospecting'));
+            $this->assertEquals(50,  OpportunitiesModule::getProbabilityByStageValue ('Negotiating'));
+            $this->assertEquals(100, OpportunitiesModule::getProbabilityByStageValue ('Closed Won'));
         }
 
         /**
@@ -72,8 +90,10 @@
             $opportunity->amount         = $currencyValue;
             $opportunity->closeDate      = '2011-01-01';
             $opportunity->stage->value   = 'Verbal';
+            $this->assertEquals(0, $opportunity->probability);
             $saved                       = $opportunity->save();
             $this->assertTrue($saved);
+            $this->assertEquals(75, $opportunity->probability);
             $opportunity1Id              = $opportunity->id;
             $opportunity->forget();
 
@@ -307,7 +327,7 @@
             $stageValues = array(
                 'Prospecting',
                 'Negotiating',
-                'Close Won',
+                'Closed Won',
             );
             $stageFieldData = CustomFieldData::getByName('SalesStages');
             $stageFieldData->serializedData = serialize($stageValues);

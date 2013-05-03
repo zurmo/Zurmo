@@ -114,10 +114,28 @@
         {
             $account = Account::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($account);
+            $this->processEdit($account, $redirectUrl);
+        }
+
+        public function actionCopy($id)
+        {
+            $copyToAccount  = new Account();
+            $postVariableName   = get_class($copyToAccount);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $account        = Account::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($account);
+                ZurmoCopyModelUtil::copy($account, $copyToAccount);
+            }
+            $this->processEdit($copyToAccount);
+        }
+
+        protected function processEdit(Account $account, $redirectUrl = null)
+        {
             $view = new AccountsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             $this->makeEditAndDetailsView(
-                                                 $this->attemptToSaveModelFromPost($account, $redirectUrl), 'Edit')));
+                            makeStandardViewForCurrentUser($this,
+                            $this->makeEditAndDetailsView(
+                                $this->attemptToSaveModelFromPost($account, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 

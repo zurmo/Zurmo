@@ -66,6 +66,7 @@
             $content  = $this->renderMissionContent();
             $content .= $this->renderMissionCommentsContent();
             $content .= $this->renderMissionCreateCommentContent();
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $content);
             return $content;
         }
 

@@ -144,7 +144,7 @@
             $metadata['global'] = array(
                 'adminTabMenuItems' => array(
                     array(
-                        'label' => 'Users',
+                        'label' => "eval:Zurmo::t('UsersModule', 'Users')",
                         'url'   => array('/users/default'),
                         'right' => self::RIGHT_ACCESS_USERS,
                         'items' => array(

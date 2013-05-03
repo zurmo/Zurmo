@@ -61,13 +61,23 @@ a.z-button,
 .default-btn .white-button,
 .default-btn,
 .z-label,
+.float-bar,
 .hasDetailsFlyout ul,
 .stacked-list td div.checkbox-column ~ div,
 .search-form-tools input[type="submit"],
 a.search-form-tools input[type="submit"],
 .default-btn .search-form-tools input[type="submit"],
 .default-btn a.search-form-tools input[type="submit"],
+.left-column,
+.right-column,
+#modal-edit-form,
+#edit-form,
+#delete-form,
+.right-side-edit-view-panel,
 .after-form-details-content,
+.pager,
+.pager ul,
+.pager li,
 .LatestActivitiesListView .activity-item,
 .LatestActivitiesView .activity-item,
 #progressBar-links a,
@@ -95,6 +105,7 @@ atable.configuration-list td:last-child a,
 a.multiselect-holder input[type="button"],
 .default-btn .multiselect-holder input[type="button"],
 .default-btn a.multiselect-holder input[type="button"],
+.has-lang-label input + span,
 .EmailTestingButton,
 a.EmailTestingButton,
 .default-btn .EmailTestingButton,
@@ -293,14 +304,29 @@ a.ModalGameNotification a,
 .workflow-order-module-selector-container {
   zoom: 1;
 }
-.clearfix {
+.clearfix,
+#modal-edit-form,
+#edit-form,
+#delete-form,
+.right-side-edit-view-panel,
+.pager ul {
   zoom: 1;
 }
-.clearfix:before {
+.clearfix:before,
+#modal-edit-form:before,
+#edit-form:before,
+#delete-form:before,
+.right-side-edit-view-panel:before,
+.pager ul:before {
   content: "";
   display: table;
 }
-.clearfix:after {
+.clearfix:after,
+#modal-edit-form:after,
+#edit-form:after,
+#delete-form:after,
+.right-side-edit-view-panel:after,
+.pager ul:after {
   content: "";
   display: table;
   clear: both;
@@ -4844,9 +4870,11 @@ section {
   width: 50%;
   float: right;
 }
-#LoginView .form form {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+#LoginView .error {
+  margin-bottom: 40px !important;
+}
+#login-form {
+  padding: 5px 0 5px 15px;
   background: none !important;
   border-top: none !important;
   border-right: none !important;
@@ -4858,33 +4886,33 @@ section {
   box-shadow: none !important;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
-#LoginView .form form > div {
+#login-form > div {
   margin-bottom: 15px;
 }
-#LoginView .form form > div.clearfix {
+#login-form > div:last-child {
   margin-bottom: 0;
 }
-#LoginView .form form label {
+#login-form > div.clearfix {
+  margin-bottom: 0;
+}
+#login-form label {
   display: inline-block;
   margin-bottom: 5px;
 }
-#LoginView .form form input[type="password"],
-#LoginView .form form input[type="text"] {
+#login-form input[type="password"],
+#login-form input[type="text"] {
   background: #fff !important;
   margin: 0 !important;
 }
-#LoginView .form form input[type="checkbox"] {
+#login-form input[type="checkbox"] {
   float: left;
   margin-right: 10px !important;
   margin-top: 1px !important;
   clear: both;
 }
-#LoginView .form form .errorMessage {
+#login-form .errorMessage {
   font-size: 11px;
   padding-top: 4px;
-}
-#LoginView .error {
-  margin-bottom: 40px !important;
 }
 #Login {
   margin-left: 0;
@@ -6101,6 +6129,8 @@ body > .ui-autocomplete {
   height: 40px;
   display: block;
   z-index: 10;
+  padding: 0 15px 0 15px;
+  margin-bottom: 15px;
 }
 .float-bar .view-toolbar-container {
   z-index: 222222;
@@ -7246,7 +7276,6 @@ td.empty {
   padding-left: 15px;
 }
 .form form {
-  padding: 0 15px 15px 15px;
   border: 1px solid #CCC;
   -webkit-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
   -moz-box-shadow: 0 0 20px 5px rgba(153, 153, 153, 0.12);
@@ -7892,6 +7921,7 @@ div.wide.form label.hasCheckBox {
   width: 100%;
 }
 #search-form {
+  padding: 0 10px 15px 10px;
   border: 1px solid #dfdfdf;
   border-bottom: none;
   position: relative;
@@ -8035,16 +8065,6 @@ div.wide.form label.hasCheckBox {
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
-  zoom: 1;
-}
-.juiportlet-widget-content .cgrid-view:before {
-  content: "";
-  display: table;
-}
-.juiportlet-widget-content .cgrid-view:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 .search-view-0 {
   margin: 15px 0 0 0;
@@ -8423,28 +8443,20 @@ div.wide.form label.hasCheckBox {
   display: block;
 }
 /*=Edit + Add Account View*/
-.buffer {
-  zoom: 1;
-  padding-left: 30px;
+/*
+.buffer{
+	//.clearfix();
+	//padding-left:30px;
+
+	> div{
+		float:left;
+		padding:8px 10px;
+		background:#F4F4F4;
+		width:100%;
+		.box-sizing();
+	}
 }
-.buffer:before {
-  content: "";
-  display: table;
-}
-.buffer:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.buffer > div {
-  float: left;
-  padding: 8px 10px;
-  background: #F4F4F4;
-  width: 100%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+*/
 .double-column .panel {
   float: left;
   width: 100% !important;
@@ -8487,46 +8499,27 @@ div.wide.form label.hasCheckBox {
   display: table;
   clear: both;
 }
+.left-column {
+  padding: 15px 15px 15px 15px;
+  float: left;
+  width: 70%;
+}
+.left-column.full-width {
+  width: 100%;
+  float: none;
+}
+.left-column.full-width + .right-column {
+  display: none;
+}
+.right-column {
+  float: right;
+  width: 30%;
+  padding: 15px 15px 15px 15px;
+}
 #modal-edit-form,
 #edit-form,
 #delete-form {
-  zoom: 1;
   position: relative;
-  padding-top: 15px;
-}
-#modal-edit-form:before,
-#edit-form:before,
-#delete-form:before {
-  content: "";
-  display: table;
-}
-#modal-edit-form:after,
-#edit-form:after,
-#delete-form:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-#modal-edit-form .panel,
-#edit-form .panel,
-#delete-form .panel {
-  float: left;
-  width: 70%;
-  display: block;
-  zoom: 1;
-}
-#modal-edit-form .panel:before,
-#edit-form .panel:before,
-#delete-form .panel:before {
-  content: "";
-  display: table;
-}
-#modal-edit-form .panel:after,
-#edit-form .panel:after,
-#delete-form .panel:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 #modal-edit-form .panel table,
 #edit-form .panel table,
@@ -8536,7 +8529,7 @@ div.wide.form label.hasCheckBox {
 #modal-edit-form h3,
 #edit-form h3,
 #delete-form h3 {
-  margin-bottom: 8px;
+  margin: 15px 0 0 15px;
 }
 #modal-edit-form table,
 #edit-form table,
@@ -8587,8 +8580,8 @@ div.wide.form label.hasCheckBox {
 #delete-form .hasCheckBox input[type="checkbox"] {
   margin-bottom: 0 !important;
 }
-#modal-edit-form .panel {
-  width: 100%;
+#modal-edit-form {
+  padding: 15px 15px 12px 15px;
 }
 .more-panels-link {
   font-size: 11px;
@@ -8625,14 +8618,15 @@ div.wide.form label.hasCheckBox {
   margin-left: 10px;
 }
 .right-side-edit-view-panel {
-  width: 30%;
-  float: right;
+  padding: 8px 10px;
+  background: #F4F4F4;
+  width: 100%;
 }
 .right-side-edit-view-panel p {
   line-height: 140%;
 }
 .right-side-edit-view-panel h3 {
-  margin-bottom: 8px;
+  margin: 0 0 10px 0 !important;
 }
 .right-side-edit-view-panel label {
   width: 100%;
@@ -8758,6 +8752,7 @@ div.wide.form label.hasCheckBox {
   border: none;
   padding: 0;
   cursor: pointer;
+  z-index: 10005;
 }
 .has-date-select button:hover:before {
   color: #525252 !important;
@@ -9520,15 +9515,6 @@ div.radio-input .hasDropDown {
   -ms-text-shadow: none;
   text-shadow: none;
 }
-/*
-.back-to-inbox-link{
-    .smaller();
-    .opacity(50);
-    &:hover{
-        .opacity(100);
-    }
-}
-*/
 /*=Madlib*/
 .mad-lib input {
   width: auto !important;
@@ -9721,9 +9707,6 @@ div.hasHalfs .twoThirds {
 }
 /*Upcoming Meeting Pager*/
 .pager {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   width: 100%;
   text-align: center;
   background: #ffffff url(../images/view-toolbar-gradient.png) left bottom repeat-x;
@@ -9732,25 +9715,14 @@ div.hasHalfs .twoThirds {
   -o-box-shadow: inset 0 1px 0 #dfdfdf;
   -ms-box-shadow: inset 0 1px 0 #dfdfdf;
   box-shadow: inset 0 1px 0 #dfdfdf;
+  overflow: hidden;
 }
 .pager ul {
+  display: block;
   width: 50%;
   margin: 0 auto;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   list-style: none;
   border-left: 1px solid #DFDFDF;
-  zoom: 1;
-}
-.pager ul:before {
-  content: "";
-  display: table;
-}
-.pager ul:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 .pager .endless-list-pager {
   width: 100%;
@@ -9774,9 +9746,6 @@ div.hasHalfs .twoThirds {
   display: none;
 }
 .pager li {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   float: left;
   width: 30%;
   padding: 0;
@@ -9930,18 +9899,6 @@ div.hasHalfs .twoThirds {
 .LatestActivitiesListView form,
 .LatestActivitiesView form {
   position: relative;
-  zoom: 1;
-}
-.LatestActivitiesListView form:before,
-.LatestActivitiesView form:before {
-  content: "";
-  display: table;
-}
-.LatestActivitiesListView form:after,
-.LatestActivitiesView form:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 .LatestActivitiesListView .latest-activity-toolbar,
 .LatestActivitiesView .latest-activity-toolbar {
@@ -11403,12 +11360,6 @@ table.configuration-list td:last-child a .z-label:before {
 .AdministrativeArea .view-toolbar {
   margin-top: 0;
 }
-.AdministrativeArea .panel {
-  width: 100% !important;
-}
-#EmailTemplateEditAndDetailsView .panel {
-  width: 70% !important;
-}
 #ModulePermissionsEditAndDetailsView table tr:first-child th {
   padding-left: 15px;
   padding-bottom: 10px;
@@ -11552,154 +11503,82 @@ table.configuration-list td:last-child a .z-label:before {
 #JobsCollectionView td.level-1,
 .SecurityTreeListView td.level-1 {
   padding-left: 45px !important;
-}
-#LanguagesCollectionView td.level-1:before,
-#CurrenciesCollectionView td.level-1:before,
-#JobsCollectionView td.level-1:before,
-.SecurityTreeListView td.level-1:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
-  font-weight: 100 !important;
-  line-height: 100% !important;
+  background: url(../images/elbow.gif) 20px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-2,
 #CurrenciesCollectionView td.level-2,
 #JobsCollectionView td.level-2,
 .SecurityTreeListView td.level-2 {
   padding-left: 75px !important;
-}
-#LanguagesCollectionView td.level-2:before,
-#CurrenciesCollectionView td.level-2:before,
-#JobsCollectionView td.level-2:before,
-.SecurityTreeListView td.level-2:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 50px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-3,
 #CurrenciesCollectionView td.level-3,
 #JobsCollectionView td.level-3,
 .SecurityTreeListView td.level-3 {
   padding-left: 105px !important;
-}
-#LanguagesCollectionView td.level-3:before,
-#CurrenciesCollectionView td.level-3:before,
-#JobsCollectionView td.level-3:before,
-.SecurityTreeListView td.level-3:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 80px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-4,
 #CurrenciesCollectionView td.level-4,
 #JobsCollectionView td.level-4,
 .SecurityTreeListView td.level-4 {
   padding-left: 135px !important;
-}
-#LanguagesCollectionView td.level-4:before,
-#CurrenciesCollectionView td.level-4:before,
-#JobsCollectionView td.level-4:before,
-.SecurityTreeListView td.level-4:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 110px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-5,
 #CurrenciesCollectionView td.level-5,
 #JobsCollectionView td.level-5,
 .SecurityTreeListView td.level-5 {
   padding-left: 165px !important;
-}
-#LanguagesCollectionView td.level-5:before,
-#CurrenciesCollectionView td.level-5:before,
-#JobsCollectionView td.level-5:before,
-.SecurityTreeListView td.level-5:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 140px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-6,
 #CurrenciesCollectionView td.level-6,
 #JobsCollectionView td.level-6,
 .SecurityTreeListView td.level-6 {
   padding-left: 195px !important;
-}
-#LanguagesCollectionView td.level-6:before,
-#CurrenciesCollectionView td.level-6:before,
-#JobsCollectionView td.level-6:before,
-.SecurityTreeListView td.level-6:before {
-  content: "∟";
-  font-size: 30px;
-  position: absolute;
-  left: 165px;
-  top: -1px;
+  background: url(../images/elbow.gif) 170px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-7,
 #CurrenciesCollectionView td.level-7,
 #JobsCollectionView td.level-7,
 .SecurityTreeListView td.level-7 {
   padding-left: 225px !important;
-}
-#LanguagesCollectionView td.level-7:before,
-#CurrenciesCollectionView td.level-7:before,
-#JobsCollectionView td.level-7:before,
-.SecurityTreeListView td.level-7:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 200px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-8,
 #CurrenciesCollectionView td.level-8,
 #JobsCollectionView td.level-8,
 .SecurityTreeListView td.level-8 {
   padding-left: 255px !important;
-}
-#LanguagesCollectionView td.level-8:before,
-#CurrenciesCollectionView td.level-8:before,
-#JobsCollectionView td.level-8:before,
-.SecurityTreeListView td.level-8:before {
-  content: "∟";
-  font-size: 30px;
-  position: absolute;
-  left: 225px;
-  top: -1px;
+  background: url(../images/elbow.gif) 230px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-9,
 #CurrenciesCollectionView td.level-9,
 #JobsCollectionView td.level-9,
 .SecurityTreeListView td.level-9 {
   padding-left: 285px !important;
-}
-#LanguagesCollectionView td.level-9:before,
-#CurrenciesCollectionView td.level-9:before,
-#JobsCollectionView td.level-9:before,
-.SecurityTreeListView td.level-9:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+  background: url(../images/elbow.gif) 260px 10px no-repeat;
 }
 #LanguagesCollectionView td.level-10,
 #CurrenciesCollectionView td.level-10,
 #JobsCollectionView td.level-10,
 .SecurityTreeListView td.level-10 {
   padding-left: 315px !important;
+  background: url(../images/elbow.gif) 290px 10px no-repeat;
 }
-#LanguagesCollectionView td.level-10:before,
-#CurrenciesCollectionView td.level-10:before,
-#JobsCollectionView td.level-10:before,
-.SecurityTreeListView td.level-10:before {
-  content: "∟";
-  font-size: 30px;
-  position: relative;
-  top: -3px;
+#ModalView .SecurityTreeListView td.level-1,
+#ModalView .SecurityTreeListView td.level-2,
+#ModalView .SecurityTreeListView td.level-3,
+#ModalView .SecurityTreeListView td.level-4,
+#ModalView .SecurityTreeListView td.level-5,
+#ModalView .SecurityTreeListView td.level-6,
+#ModalView .SecurityTreeListView td.level-7,
+#ModalView .SecurityTreeListView td.level-8,
+#ModalView .SecurityTreeListView td.level-9,
+#ModalView .SecurityTreeListView td.level-10 {
+  background-position-y: 3px;
 }
 /*Roles*/
 #RolesTreeListView .z-action-link {
@@ -11908,8 +11787,8 @@ table.configuration-list td:last-child a .z-label:before {
   left: 1px;
   line-height: 24px;
   top: 1px;
-  width: 80px;
-  text-align: center;
+  min-width: 80px;
+  text-align: left;
   border-right: 1px solid #cccccc;
   -webkit-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
   -moz-text-shadow: rgba(255, 255, 255, 0.8) 0px 1px;
@@ -11922,6 +11801,7 @@ table.configuration-list td:last-child a .z-label:before {
   -ms-border-radius: 1px 0 0 1px;
   -o-border-radius: 1px 0 0 1px;
   border-radius: 1px 0 0 1px;
+  padding: 0 10px;
 }
 .has-lang-label .errorMessage {
   margin-bottom: 15px;
@@ -11934,7 +11814,6 @@ table.configuration-list td:last-child a .z-label:before {
   margin-bottom: 20px;
 }
 #UsersPageView .panel {
-  width: 100% !important;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -12062,18 +11941,19 @@ table.configuration-list td:last-child a .z-label:before {
   float: right;
 }
 /*Import window*/
+.AppContent.ImportWizardView #edit-form h3 {
+  margin-top: 0;
+  margin-left: 0;
+}
 .AppContent.ImportWizardView #edit-form table {
   width: 100%;
 }
 .AppContent.ImportWizardView #edit-form table td {
   padding-left: 0;
 }
-.AppContent.ImportWizardView h3 {
-  margin-bottom: 15px;
-}
 .AppContent.ImportWizardView .right-side-edit-view-panel {
-  width: 60% !important;
-  float: none !important;
+  background: none;
+  padding: 0;
 }
 .AppContent.ImportWizardView #addExtraColumnButton {
   -moz-box-sizing: border-box;
@@ -12139,11 +12019,6 @@ table.configuration-list td:last-child a .z-label:before {
   margin: 5px 0 0 10px !important;
 }
 /*= Step 3*/
-#ImportWizardSetModelPermissionsView .right-side-edit-view-panel {
-  position: relative !important;
-  top: 0 !important;
-  right: 0 !important;
-}
 /*=Step 4,Mapping view*/
 #ImportWizardMappingView > .wrapper {
   padding-bottom: 10px;
@@ -12156,6 +12031,10 @@ table.configuration-list td:last-child a .z-label:before {
 }
 #ImportWizardMappingView .required-fields {
   margin: 5px 0 0 15px;
+}
+#ImportWizardMappingView table {
+  border-left: 1px solid #DFDFDF;
+  border-right: 1px solid #DFDFDF;
 }
 #ImportWizardMappingView table tr:first-child th {
   color: #545454;
@@ -12181,12 +12060,8 @@ table.configuration-list td:last-child a .z-label:before {
 #ImportWizardMappingView tr td:last-child {
   padding-right: 15px;
 }
-#ImportWizardMappingView table tr:last-child td {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-#ImportWizardMappingView .view-toolbar-container {
-  padding-bottom: 15px;
+#ImportWizardMappingView .mapping-rules table {
+  border: none;
 }
 #ImportWizardMappingView .mapping-rules table,
 #ImportWizardMappingView .mapping-rules td,
@@ -12251,13 +12126,17 @@ table.configuration-list td:last-child a .z-label:before {
 .process-container-view {
   padding: 15px 15px 0 15px;
 }
+#sequenceProcess {
+  padding: 15px 0 0 0;
+}
+.process-message {
+  margin-left: 15px;
+}
 #ImportSequentialProcessContainerView > div {
   float: left;
   width: 100%;
-  padding-bottom: 15px;
 }
 #ImportSequentialProcessContainerView #edit-form {
-  padding: 0 0 15px 0 !important;
   border: 0 !important;
   background: none !important;
   -webkit-box-shadow: none;
@@ -12269,8 +12148,11 @@ table.configuration-list td:last-child a .z-label:before {
 #ImportSequentialProcessContainerView #edit-form table {
   width: 100%;
 }
-#ImportSequentialProcessContainerView #edit-form table td {
-  padding-left: 0;
+#ImportSequentialProcessContainerView td {
+  padding: 0;
+}
+#ImportSequentialProcessContainerView td h3 {
+  margin: 0 !important;
 }
 #ImportSequentialProcessContainerView h3,
 #ImportSequentialProcessContainerView h3 + span {
@@ -12321,6 +12203,9 @@ table.configuration-list td:last-child a .z-label:before {
   font-size: 12px !important;
   color: #666;
   font-weight: 400 !important;
+}
+#ImportWizardCreateUpdateModelsCompleteView h3 {
+  margin: 0 0 10px 0 !important;
 }
 .import-summary {
   margin: 0 0 15px 15px;
@@ -12555,7 +12440,7 @@ div.form select.error {
 }
 div.form .errorSummary {
   position: relative;
-  margin: 15px;
+  margin: 0 0 15px 0;
   padding: 10px;
   border-radius: 5px !important;
   border: 1px solid #cc0000;
@@ -12956,14 +12841,14 @@ div.wide.form .errorMessage {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   cursor: pointer;
+  position: relative;
 }
 .ui-datepicker .ui-datepicker-next span {
   visibility: hidden;
 }
-.ui-datepicker .ui-datepicker-next:after {
+.ui-datepicker .ui-datepicker-next:before {
   content: "▶";
-  position: relative;
-  right: 10px;
+  margin-left: 10px;
 }
 .ui-datepicker .ui-datepicker-next :hover {
   cursor: pointer !important;
@@ -15280,6 +15165,7 @@ a.close-ModalGameNotification.simple-link {
   -ms-box-shadow: none;
   box-shadow: none;
   float: none;
+  margin-bottom: 0;
 }
 #UserDetailsView .details-table {
   zoom: 1;
@@ -15321,6 +15207,9 @@ a.close-ModalGameNotification.simple-link {
 }
 .gravatar-container + .panel {
   float: left;
+}
+.gravatar-container + .panel + .panel {
+  clear: right;
 }
 #UserChangeAvatarView {
   zoom: 1;
@@ -15570,11 +15459,6 @@ a.dashboard-link .z-label {
 #ConversationDetailsAndRelationsView .panel > table {
   border-bottom: none;
 }
-.single-coloumn-details-view .right-side-edit-view-panel,
-#ConversationDetailsView .right-side-edit-view-panel,
-#ConversationDetailsAndRelationsView .right-side-edit-view-panel {
-  margin-right: 15px;
-}
 .single-coloumn-details-view .details-table,
 #ConversationDetailsView .details-table,
 #ConversationDetailsAndRelationsView .details-table {
@@ -15594,22 +15478,22 @@ a.dashboard-link .z-label {
   clear: both;
 }
 /*Sidebar*/
-.thred-details {
-  margin: 0 0 0 0 !important;
+.thread-details {
+  margin: 0 0 10px 0 !important;
   width: 100%;
 }
-.thred-details td + th {
+.thread-details td + th {
   padding-left: 0 !important;
 }
-.thred-details th,
-.thred-details td {
+.thread-details th,
+.thread-details td {
   text-align: left;
   padding: 5px 0;
 }
-.thred-details th {
+.thread-details th {
   color: #545454;
 }
-.thred-details .attachments {
+.thread-details .attachments {
   margin: 0;
   font-weight: normal;
 }
@@ -15662,7 +15546,7 @@ a.dashboard-link .z-label {
   left: 15px;
 }
 .conversationStatusChangeArea {
-  margin: 15px 0;
+  margin: 0 0 15px 0;
   padding: 0;
 }
 .conversationStatusChangeArea > span {
@@ -15809,7 +15693,7 @@ a.dashboard-link .z-label {
 }
 #CommentList,
 .CommentList {
-  margin-left: 130px;
+  margin-left: 115px;
 }
 #CommentList .comment,
 .CommentList .comment {
@@ -15856,8 +15740,7 @@ a.dashboard-link .z-label {
 }
 .model-details-summary {
   font-size: 12px !important;
-  padding-left: 130px;
-  padding-top: 15px;
+  padding-left: 115px;
 }
 .model-details-summary .gravatar {
   margin-left: -115px;
@@ -15883,8 +15766,6 @@ a.dashboard-link .z-label {
 #ModelDetailsSummaryView,
 #CommentInlineEditForModelView,
 #CommentsForRelatedModelView {
-  width: 70%;
-  float: left;
   max-width: 600px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -15911,13 +15792,13 @@ a.dashboard-link .z-label {
 }
 #CommentInlineEditForModelView {
   margin-top: 0;
-  padding-left: 120px;
+  padding-left: 115px;
 }
 #CommentInlineEditForModelView td {
-  padding: 0 0 0 10px !important;
+  padding: 0 0 0 0 !important;
 }
 #CommentInlineEditForModelView h2 {
-  margin: 0 0 13px 10px;
+  margin: 0 0 0 0;
 }
 #CommentInlineEditForModelView .wide.form {
   padding: 0;
@@ -16098,9 +15979,17 @@ a.user-link {
 #AllSocialItemsForPortletView .comment-content {
   padding-right: 15px;
 }
+#ConversationsPageView #comment-inline-edit-form .left-column,
+#ConversationsPageView #social-item-inline-edit-form .left-column {
+  padding: 0;
+}
+#ConversationsPageView #comment-inline-edit-form .form-toolbar,
+#ConversationsPageView #social-item-inline-edit-form .form-toolbar {
+  padding: 0;
+}
 #comment-inline-edit-form,
 #social-item-inline-edit-form {
-  padding-top: 15px;
+  padding-bottom: 15px;
   border: none;
   border-bottom: 1px solid #ccc;
   background: none !important;
@@ -16125,8 +16014,8 @@ a.user-link {
 #social-item-inline-edit-form .form-toolbar {
   text-align: right;
   border-top: none;
-  padding-top: 0;
-  margin-top: 2px;
+  padding: 0 15px;
+  margin-top: 0;
 }
 #comment-inline-edit-form .form-toolbar a,
 #social-item-inline-edit-form .form-toolbar a {
@@ -16494,17 +16383,21 @@ a.user-link {
 #ModuleForReportWizardView table td {
   padding-left: 0;
 }
-#GeneralDataForReportWizardView .panel {
-  width: 70%;
-  float: left;
+/*
+#GeneralDataForReportWizardView{
+    .panel{
+        width: 70%;
+        float: left;
+    }
+    .right-side-edit-view-panel{
+        width: 30%;
+        float: right;
+        position: relative;
+        top:-2px;
+        right:0;
+    }
 }
-#GeneralDataForReportWizardView .right-side-edit-view-panel {
-  width: 30%;
-  float: right;
-  position: relative;
-  top: -2px;
-  right: 0;
-}
+*/
 .hasTree {
   width: 25%;
   float: left;
@@ -17519,8 +17412,8 @@ a.user-link {
   position: relative;
   top: 0;
 }
-.details-table .email-template-combined-content {
-  margin: 15px;
+.email-template-combined-content {
+  padding: 0 15px;
 }
 .tabs-nav {
   border-bottom: 1px solid #dfdfdf;
@@ -17829,5 +17722,14 @@ a.user-link {
   }
   .juiportlet-widget {
     margin-right: 0 !important;
+  }
+  .right-column,
+  .left-column {
+    width: 100%;
+  }
+  .right-side-edit-view-panel {
+    padding: 0;
+    padding: 0 0 0 0;
+    background: none;
   }
 }

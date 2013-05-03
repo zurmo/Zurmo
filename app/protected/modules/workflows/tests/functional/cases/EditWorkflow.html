@@ -19,7 +19,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>index.php/workflows/default</td>
+	<td>index.php/workflows/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,14 +33,29 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>verifyElementPresent</td>
+	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>keyUp</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -57,9 +72,14 @@
 	<td>WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
-<tr>
+<!--tr>
 	<td>click</td>
-	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
+	<td>//div[@id='list-view']/table/tbody/tr/td[2]/a</td>
+	<td></td>
+</tr-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=WorkflowTest ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,7 +93,7 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>assertText</td>
 	<td>//div[@id='WorkflowDetailsView']/div/div[2]/table/tbody/tr[1]/td</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
@@ -98,14 +118,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Office Fax</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -113,14 +133,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Create Account</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -128,23 +148,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[@id='triggersNextLink']/span[3]</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=addRecipientType_0</td>
-	<td>label=All users in a specific role</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//select[@id='addRecipientType_0']/option[4]</td>
+	<td>waitForTextPresent</td>
+	<td>A person associated with the triggered record</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,13 +163,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[@id='triggersNextLink']/span[3]</td>
-	<td></td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
+	<td>waitForTextPresent</td>
+	<td>Save Workflow</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,7 +178,7 @@
 	<td>WorkflowTestEdit ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>//a[@id='generalDataSaveAndRunLink']/span[3]</td>
 	<td></td>
 </tr>
@@ -183,7 +193,7 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>assertText</td>
 	<td>//div[@id='WorkflowDetailsView']/div/h1/span/span</td>
 	<td>WorkflowTestEdit ${randomSuffix}</td>
 </tr>

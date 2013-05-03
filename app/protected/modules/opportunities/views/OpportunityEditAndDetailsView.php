@@ -44,8 +44,9 @@
                         'elements' => array(
                             array('type' => 'SaveButton', 'renderType' => 'Edit'),
                             array('type' => 'CancelLink', 'renderType' => 'Edit'),
-                            array('type' => 'EditLink', 'renderType' => 'Details'),
+                            array('type' => 'EditLink',   'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
+                            array('type' => 'CopyLink',   'renderType' => 'Details'),
                             array('type' => 'OpportunityDeleteLink', 'renderType' => 'Details'),
                         ),
                     ),
@@ -95,19 +96,19 @@
                                     )
                                 ),
                                 array('cells' =>
+                                array(
                                     array(
-                                        array(
-                                            'elements' => array(
-                                                array('attributeName' => 'probability', 'type' => 'Integer'),
-                                            ),
+                                        'elements' => array(
+                                            array('attributeName' => 'stage', 'type' => 'DropDown', 'addBlank' => true),
                                         ),
-                                    )
+                                    ),
+                                )
                                 ),
                                 array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'stage', 'type' => 'DropDown', 'addBlank' => true),
+                                                array('attributeName' => 'probability', 'type' => 'Integer'),
                                             ),
                                         ),
                                     )
@@ -141,7 +142,58 @@
         protected function getNewModelTitleLabel()
         {
             return Zurmo::t('OpportunitiesModule', 'Create OpportunitiesModuleSingularLabel',
-                                     LabelUtil::getTranslationParamsForAllModules());
+                LabelUtil::getTranslationParamsForAllModules());
+        }
+
+        /**
+         * Override to disabling probability attribute.
+         */
+        protected function resolveElementInformationDuringFormLayoutRender(& $elementInformation)
+        {
+            parent::resolveElementInformationDuringFormLayoutRender($elementInformation);
+            if($elementInformation['attributeName'] == 'probability')
+            {
+                $elementInformation['disabled'] = true;
+            }
+        }
+
+        protected function renderAfterFormLayout($form)
+        {
+            parent::renderAfterFormLayout($form);
+            $this->registerStageToProbabilityMappingScript($form);
+        }
+
+        protected function registerStageToProbabilityMappingScript($form)
+        {
+            $stageInputId       = Element::resolveInputIdPrefixIntoString(array(get_class($this->model), 'stage', 'value'));
+            $probabilityInputId = Element::resolveInputIdPrefixIntoString(array(get_class($this->model), 'probability'));
+            $mappingData        = OpportunitiesModule::getStageToProbabilityMappingData();
+            if(count($mappingData) > 0)
+            {
+                $jsonEncodedMapping = CJSON::encode($mappingData);
+                Yii::app()->clientScript->registerScript('stageToProbabilityMapping', "
+                $('#" . $stageInputId . "').unbind('change');
+                $('#" . $stageInputId . "').bind('change', function()
+                    {
+                        stageToProbabilityMapping($(this));
+                    }
+                );
+                function stageToProbabilityMapping(stageInput)
+                {
+                    var value  = stageInput.val();
+                    var result = $.parseJSON('" . $jsonEncodedMapping . "');
+                    $('#" . $probabilityInputId . "').val(0);
+                    $.each(result, function(stage, probability) {
+                        if(value == stage)
+                        {
+                            $('#" . $probabilityInputId . "').val(probability);
+                            return false;
+                        }
+                    });
+                 }
+                 stageToProbabilityMapping($('#" . $stageInputId . "'));
+                ");
+            }
         }
     }
 ?>

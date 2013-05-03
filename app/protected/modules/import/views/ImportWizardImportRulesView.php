@@ -52,13 +52,7 @@
             $element->editableTemplate = '{label}{content}';
 
             $content  = $form->errorSummary($this->model);
-            $content .= '<table>'     . "\n";
-            $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td>'    . "\n";
             $content .= $element->render();
-            $content .= '</td></tr>'  . "\n";
-            $content .= '</tbody>'    . "\n";
-            $content .= '</table>'    . "\n";
             return $content;
         }
     }

@@ -89,7 +89,7 @@
         protected function renderContent()
         {
             $content  = '<div class="process-container-view">' . "\n";
-            $content .= '<h3>' . $this->message . '</h3>';
+            $content .= '<h3 class="process-message">' . $this->message . '</h3>';
             $content .= '<span id="' . $this->getProgressBarId() . '-msg"></span>';
             $content .= '</div>';
             $this->registerAjaxScript();

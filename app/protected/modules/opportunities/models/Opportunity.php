@@ -50,6 +50,22 @@
             return 'Closed Won';
         }
 
+        protected function beforeSave()
+        {
+            if (parent::beforeSave())
+            {
+                if (array_key_exists('value', $this->stage->originalAttributeValues))
+                {
+                    $this->resolveStageToProbability();
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public function __toString()
         {
             try
@@ -131,6 +147,7 @@
                     array('probability',   'numerical', 'min' => 0, 'max' => 100),
                     array('probability',   'required'),
                     array('probability',   'default', 'value' => 0),
+                    array('probability',   'probability'),
                     array('stage',         'required'),
                 ),
                 'elements' => array(
@@ -172,6 +189,18 @@
         public static function getGamificationRulesType()
         {
             return 'OpportunityGamification';
+        }
+
+        private function resolveStageToProbability()
+        {
+            if($this->stage === null)
+            {
+                throw new NotSupportedException();
+            }
+            else
+            {
+                $this->probability = OpportunitiesModule::getProbabilityByStageValue($this->stage->value);
+            }
         }
     }
 ?>

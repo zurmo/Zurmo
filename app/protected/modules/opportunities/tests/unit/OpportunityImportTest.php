@@ -80,7 +80,7 @@
                                                   Yii::getPathOfAlias('application.modules.opportunities.tests.unit.files'));
 
             //update the ids of the account column to match the parent account.
-            R::exec("update " . $import->getTempTableName() . " set column_4 = " .
+            R::exec("update " . $import->getTempTableName() . " set column_3 = " .
                     $account->id . " where id != 1 limit 4");
 
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
@@ -90,12 +90,11 @@
             $mappingData = array(
                 'column_0' => ImportMappingUtil::makeStringColumnMappingData    ('name'),
                 'column_1' => ImportMappingUtil::makeDateColumnMappingData      ('closeDate'),
-                'column_2' => ImportMappingUtil::makeIntegerColumnMappingData   ('probability'),
-                'column_3' => ImportMappingUtil::makeIntegerColumnMappingData   ('description'),
-                'column_4' => ImportMappingUtil::makeHasOneColumnMappingData    ('account'),
-                'column_5' => ImportMappingUtil::makeDropDownColumnMappingData  ('stage'),
-                'column_6' => ImportMappingUtil::makeDropDownColumnMappingData  ('source'),
-                'column_7' => ImportMappingUtil::makeCurrencyColumnMappingData  ('amount', $currency),
+                'column_2' => ImportMappingUtil::makeIntegerColumnMappingData   ('description'),
+                'column_3' => ImportMappingUtil::makeHasOneColumnMappingData    ('account'),
+                'column_4' => ImportMappingUtil::makeDropDownColumnMappingData  ('stage'),
+                'column_5' => ImportMappingUtil::makeDropDownColumnMappingData  ('source'),
+                'column_6' => ImportMappingUtil::makeCurrencyColumnMappingData  ('amount', $currency),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Opportunities');
@@ -132,7 +131,7 @@
             $this->assertEquals(1,                         count($opportunities[0]));
             $this->assertEquals('opp2',                    $opportunities[0]->name);
             $this->assertEquals('1980-06-04',              $opportunities[0]->closeDate);
-            $this->assertEquals(20,                        $opportunities[0]->probability);
+            $this->assertEquals(25,                        $opportunities[0]->probability);
             $this->assertEquals('desc2',                   $opportunities[0]->description);
             $this->assertTrue($opportunities[0]->account->isSame($account));
             $this->assertEquals('Qualification',           $opportunities[0]->stage->value);
@@ -143,7 +142,7 @@
             $this->assertEquals(1,                         count($opportunities[0]));
             $this->assertEquals('opp3',                    $opportunities[0]->name);
             $this->assertEquals('1980-06-05',              $opportunities[0]->closeDate);
-            $this->assertEquals(30,                        $opportunities[0]->probability);
+            $this->assertEquals(50,                        $opportunities[0]->probability);
             $this->assertEquals('desc3',                   $opportunities[0]->description);
             $this->assertTrue($opportunities[0]->account->isSame($account));
             $this->assertEquals('Negotiating',             $opportunities[0]->stage->value);
@@ -203,7 +202,7 @@
                 Yii::getPathOfAlias('application.modules.opportunities.tests.unit.files'));
 
             //update the ids of the account column to match the parent account.
-            R::exec("update " . $import->getTempTableName() . " set column_4 = " .
+            R::exec("update " . $import->getTempTableName() . " set column_3 = " .
                 $account->id . " where id != 1 limit 4");
 
             $this->assertEquals(4, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
@@ -213,12 +212,11 @@
             $mappingData = array(
                 'column_0' => ImportMappingUtil::makeStringColumnMappingData    ('name'),
                 'column_1' => ImportMappingUtil::makeDateColumnMappingData      ('closeDate'),
-                'column_2' => ImportMappingUtil::makeIntegerColumnMappingData   ('probability'),
-                'column_3' => ImportMappingUtil::makeIntegerColumnMappingData   ('description'),
-                'column_4' => ImportMappingUtil::makeHasOneColumnMappingData    ('account'),
-                'column_5' => ImportMappingUtil::makeDropDownColumnMappingData  ('stage'),
-                'column_6' => ImportMappingUtil::makeDropDownColumnMappingData  ('source'),
-                'column_7' => ImportMappingUtil::makeCurrencyColumnMappingData  ('amount', $currency),
+                'column_2' => ImportMappingUtil::makeIntegerColumnMappingData   ('description'),
+                'column_3' => ImportMappingUtil::makeHasOneColumnMappingData    ('account'),
+                'column_4' => ImportMappingUtil::makeDropDownColumnMappingData  ('stage'),
+                'column_5' => ImportMappingUtil::makeDropDownColumnMappingData  ('source'),
+                'column_6' => ImportMappingUtil::makeCurrencyColumnMappingData  ('amount', $currency),
             );
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Opportunities');
@@ -236,7 +234,7 @@
                 $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
 
-            //Confirm that 6 models where created.
+            //Confirm that 3 models where created.
             $opportunities = Opportunity::getAll();
             $this->assertEquals(3, count($opportunities));
 
@@ -257,7 +255,7 @@
             $this->assertEquals(1,                         count($opportunities[0]));
             $this->assertEquals('opp2',                    $opportunities[0]->name);
             $this->assertEquals('1980-06-04',              $opportunities[0]->closeDate);
-            $this->assertEquals(20,                        $opportunities[0]->probability);
+            $this->assertEquals(25,                        $opportunities[0]->probability);
             $this->assertEquals('desc2',                   $opportunities[0]->description);
             $this->assertTrue($opportunities[0]->account->isSame($account));
             $this->assertEquals('Qualification',           $opportunities[0]->stage->value);
@@ -270,7 +268,7 @@
             $this->assertEquals(1,                         count($opportunities[0]));
             $this->assertEquals('opp3',                    $opportunities[0]->name);
             $this->assertEquals('1980-06-05',              $opportunities[0]->closeDate);
-            $this->assertEquals(30,                        $opportunities[0]->probability);
+            $this->assertEquals(50,                        $opportunities[0]->probability);
             $this->assertEquals('desc3',                   $opportunities[0]->description);
             $this->assertTrue($opportunities[0]->account->isSame($account));
             $this->assertEquals('Negotiating',             $opportunities[0]->stage->value);

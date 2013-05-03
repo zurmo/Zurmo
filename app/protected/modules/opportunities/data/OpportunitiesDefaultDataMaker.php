@@ -39,6 +39,10 @@
      */
     class OpportunitiesDefaultDataMaker extends DefaultDataMaker
     {
+        /**
+         * If you change the stages using the custom management, then make sure to change stageToProbabilityMapping
+         * in OpportunitiesModule metadata as well.
+         */
         public function make()
         {
             $values = array(

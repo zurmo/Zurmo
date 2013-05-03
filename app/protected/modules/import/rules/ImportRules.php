@@ -286,7 +286,10 @@
             $requireAttributesCollection           = array();
             foreach ($attributesCollection as $attributeIndex => $attributeData)
             {
-                if ($attributeData['isRequired'] && !$model->isAttributeReadOnly($attributeData['attributeName']))
+                if (!in_array($attributeData['attributeName'], static::getNonImportableAttributeNames()) &&
+                    !in_array($attributeData['attributeImportRulesType'], static::getNonImportableAttributeImportRulesTypes()) &&
+                    $attributeData['isRequired'] &&
+                    !$model->isAttributeReadOnly($attributeData['attributeName']))
                 {
                     $requireAttributesCollection[$attributeIndex] = $attributeData;
                 }

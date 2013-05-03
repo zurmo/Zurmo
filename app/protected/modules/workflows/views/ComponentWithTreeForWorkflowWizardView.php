@@ -72,9 +72,9 @@
          */
         protected function renderFormContent()
         {
-            $content              = $this->renderAttributesAndRelationsTreeContent();
-            $content             .= ZurmoHtml::tag('div', array('class' => 'dynamic-droppable-area'),
-                                                   $this->renderRightSideContent());
+            $content  = $this->renderAttributesAndRelationsTreeContent();
+            $content .= ZurmoHtml::tag('div', array('class' => 'dynamic-droppable-area'), $this->renderRightSideContent());
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $content);
             return $content;
         }
 

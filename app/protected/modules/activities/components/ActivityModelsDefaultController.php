@@ -98,6 +98,25 @@
             $modelClassName    = $this->getModule()->getPrimaryModelName();
             $activity          = $modelClassName::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($activity);
+            $this->processEdit($activity, $redirectUrl);
+        }
+
+        public function actionCopy($id, $redirectUrl = null)
+        {
+            $modelClassName   = $this->getModule()->getPrimaryModelName();
+            $copyToActivity   = new $modelClassName();
+            $postVariableName = get_class($copyToActivity);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $activity = $modelClassName::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($activity);
+                ActivityCopyModelUtil::copy($activity, $copyToActivity);
+            }
+            $this->processEdit($copyToActivity, $redirectUrl);
+        }
+
+        protected function processEdit(Activity $activity, $redirectUrl = null)
+        {
             $pageViewClassName = $this->getPageViewClassName();
             $view              = new $pageViewClassName(ZurmoDefaultViewUtil::
                                          makeStandardViewForCurrentUser($this,

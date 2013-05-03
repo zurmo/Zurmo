@@ -135,13 +135,31 @@
             }
             else
             {
-                $view = new LeadsPageView(ZurmoDefaultViewUtil::
-                                         makeStandardViewForCurrentUser($this,
-                                             $this->makeEditAndDetailsView(
-                                                $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
-                                                            'LeadTitleBarAndEditAndDetailsView')));
-                echo $view->render();
+                $this->processEdit($contact, $redirectUrl);
             }
+        }
+
+        public function actionCopy($id)
+        {
+            $copyToContact  = new Contact();
+            $postVariableName   = get_class($copyToContact);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $contact        = Contact::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
+                ZurmoCopyModelUtil::copy($contact, $copyToContact);
+            }
+            $this->processEdit($copyToContact);
+        }
+
+        protected function processEdit(Contact $contact, $redirectUrl = null)
+        {
+            $view = new LeadsPageView(ZurmoDefaultViewUtil::
+                                     makeStandardViewForCurrentUser($this,
+                                         $this->makeEditAndDetailsView(
+                                            $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit',
+                                                        'LeadTitleBarAndEditAndDetailsView')));
+            echo $view->render();
         }
 
         /**

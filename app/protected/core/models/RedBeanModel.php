@@ -123,6 +123,7 @@
         protected $isValidating           = false;
         protected $isSaving               = false;
         protected $isNewModel             = false;
+        protected $isCopied               = false;
 
         /**
          * Can this model be saved when save is called from a related model?  True if it can, false if it cannot.
@@ -144,6 +145,7 @@
             'defaultCalculatedDate'  => 'RedBeanModelDefaultCalculatedDateValidator',
             'readOnly'               => 'RedBeanModelReadOnlyValidator',
             'dateTimeDefault'        => 'RedBeanModelDateTimeDefaultValueValidator',
+            'probability'            => 'RedBeanModelProbabilityValidator',
         );
 
         /**
@@ -1465,6 +1467,25 @@
             foreach ($this->validators as $validator)
             {
                 if ($validator instanceof RedBeanModelReadOnlyValidator)
+                {
+                    if (in_array($attributeName, $validator->attributes, true))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /**
+         * Returns true if the attribute is formattted as probability
+         */
+        public function isAttributeFormattedAsProbability($attributeName)
+        {
+            assert("\$this->isAttribute(\"$attributeName\")");
+            foreach ($this->validators as $validator)
+            {
+                if ($validator instanceof RedBeanModelProbabilityValidator)
                 {
                     if (in_array($attributeName, $validator->attributes, true))
                     {
@@ -3000,6 +3021,22 @@
         public static function getSortAttributesByAttribute($attribute)
         {
             return array($attribute);
+        }
+
+        /**
+         * Utilized by copy mechanism, helps elements, views, understand the model better before the new model is saved.
+         */
+        public function setIsCopied()
+        {
+            $this->isCopied = true;
+        }
+
+        /**
+         * @return bool
+         */
+        public function isCopied()
+        {
+            return $this->isCopied;
         }
     }
 ?>

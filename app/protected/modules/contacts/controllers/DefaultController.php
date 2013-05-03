@@ -113,6 +113,7 @@
                                                                                 $relationAttributeName,
                                                                                 (int)$relationModelId,
                                                                                 $relationModuleId);
+            ContactsUtil::resolveAddressesFromRelatedAccount($contact);
             $this->actionCreateByModel($contact, $redirectUrl);
         }
 
@@ -129,10 +130,29 @@
         {
             $contact = Contact::getById(intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contact);
+            $this->processEdit($contact, $redirectUrl);
+
+        }
+
+        public function actionCopy($id)
+        {
+            $copyToContact  = new Contact();
+            $postVariableName   = get_class($copyToContact);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $contact        = Contact::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contact);
+                ZurmoCopyModelUtil::copy($contact, $copyToContact);
+            }
+            $this->processEdit($copyToContact);
+        }
+
+        protected function processEdit(Contact $contact, $redirectUrl = null)
+        {
             $view    = new ContactsPageView(ZurmoDefaultViewUtil::
-                                            makeStandardViewForCurrentUser($this,
-                                                $this->makeEditAndDetailsView(
-                                                    $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit')));
+                            makeStandardViewForCurrentUser($this,
+                            $this->makeEditAndDetailsView(
+                                $this->attemptToSaveModelFromPost($contact, $redirectUrl), 'Edit')));
             echo $view->render();
         }
 
@@ -329,6 +349,22 @@
                             'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ContactAutoCompleteUtil::getByPartialName($term, $pageSize, 'ContactsStateMetadataAdapter');
             echo CJSON::encode($autoCompleteResults);
+        }
+
+        public function actionGetAccountAddressesToCopy($id)
+        {
+            $account = static::getModelAndCatchNotFoundAndDisplayError('Account', intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($account);
+            $addressData = array();
+            foreach($account->billingAddress->getAttributeNames() as $attribute)
+            {
+                $addressData['billingAddress_' . $attribute] = $account->billingAddress->{$attribute};
+            }
+            foreach($account->shippingAddress->getAttributeNames() as $attribute)
+            {
+                $addressData['shippingAddress_' . $attribute] = $account->shippingAddress->{$attribute};
+            }
+            echo CJSON::encode($addressData);
         }
 
         protected static function getSearchFormClassName()

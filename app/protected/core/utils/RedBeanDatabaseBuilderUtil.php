@@ -584,6 +584,7 @@
                     case 'CUnsafeValidator':
                     case 'RedBeanModelCompareDateTimeValidator':
                     case 'RedBeanModelRequiredValidator':
+                    case 'RedBeanModelProbabilityValidator':
                     case 'UsernameLengthValidator':
                     case 'ValidateTimeZone':
                     case 'AtLeastOneContentAreaRequiredValidator':

@@ -78,12 +78,18 @@
         {
             if (Yii::app()->user->loginRequiredAjaxResponse)
             {
+                Yii::app()->clientScript->registerCoreScript('cookie');
                 Yii::app()->clientScript->registerScript('ajaxLoginRequired', '
                     jQuery("body").ajaxComplete(
                         function(event, request, options)
                         {
                             if (request.responseText == "' . Yii::app()->user->loginRequiredAjaxResponse . '")
                             {
+                                $.cookie("' . Yii::app()->user->loginRequiredAjaxResponse . 'Cookie", 1,
+                                        {
+                                            expires : 1,
+                                            path:  "/"
+                                        });
                                 window.location.reload(true);
                             }
                         }

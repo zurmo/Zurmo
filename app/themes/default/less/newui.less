@@ -142,43 +142,46 @@ footer, header, hgroup, menu, nav, section {
 	.form{
 		width:50%;
 		float:right;
-		form{
-			padding-top:0 !important;
-			padding-bottom:0 !important;
-			background:none !important;
-			border-top:none !important;
-			border-right:none !important;
-			border-bottom:none !important;
-			.b-shadow(~"none !important");
-			.reset-filter();
-			> div{
-				margin-bottom:15px;
-			}
-			> div.clearfix{
-				margin-bottom:0;
-			}
-			label{
-				display:inline-block;
-				margin-bottom:5px;
-			}
-			input[type="password"], input[type="text"]{
-				background:#fff !important;
-				margin:0 !important;
-			}
-			input[type="checkbox"]{
-				float:left;
-				margin-right:10px !important;
-				margin-top:1px !important;
-				clear:both;
-			}
-			.errorMessage{
-				font-size:11px;
-				padding-top:4px
-			}
-		}
 	}
 	.error{
 		margin-bottom: 40px !important;
+	}
+}
+
+#login-form{
+	padding:5px 0 5px 15px;
+	background:none !important;
+	border-top:none !important;
+	border-right:none !important;
+	border-bottom:none !important;
+	.b-shadow(~"none !important");
+	.reset-filter();
+	> div{
+		margin-bottom:15px;
+	}
+	> div:last-child{
+		margin-bottom: 0;
+	}
+	> div.clearfix{
+		margin-bottom:0;
+	}
+	label{
+		display:inline-block;
+		margin-bottom:5px;
+	}
+	input[type="password"], input[type="text"]{
+		background:#fff !important;
+		margin:0 !important;
+	}
+	input[type="checkbox"]{
+		float:left;
+		margin-right:10px !important;
+		margin-top:1px !important;
+		clear:both;
+	}
+	.errorMessage{
+		font-size:11px;
+		padding-top:4px
 	}
 }
 
@@ -1260,6 +1263,9 @@ body > .ui-autocomplete{
 	height: 40px;
 	display: block;
 	z-index: 10;
+	++.border-box;
+	padding: 0 15px 0 15px;
+	margin-bottom: 15px;
 	.view-toolbar-container{
 		z-index:222222;
 		position:fixed !important;
@@ -2019,7 +2025,7 @@ td.empty{
 		}
 	}
 	form{
-		padding:0 15px 15px 15px;
+		//padding:0 15px 15px 15px;
 		border:1px solid #CCC;
 		.b-shadow(0 0 20px 5px rgba(153, 153, 153, 0.12)); /*999*/
 		background: #ffffff;
@@ -2548,6 +2554,7 @@ div.wide.form{
 }
 
 #search-form{
+	padding:0 10px 15px 10px;
 	border:1px solid #dfdfdf;
 	border-bottom: none;
 	position: relative;
@@ -2602,7 +2609,7 @@ div.wide.form{
 .juiportlet-widget-content .cgrid-view{
 	width: 100%;
 	.b-shadow(none);
-	.clearfix();
+	//.clearfix();
 }
 
 .search-view-0{
@@ -2653,8 +2660,6 @@ div.wide.form{
 		}
 	}
 }
-
-
 
 .search-form-tools{
 	position: absolute;
@@ -2972,9 +2977,10 @@ div.wide.form{
 }
 
 /*=Edit + Add Account View*/
+/*
 .buffer{
-	.clearfix();
-	padding-left:30px;
+	//.clearfix();
+	//padding-left:30px;
 
 	> div{
 		float:left;
@@ -2984,7 +2990,7 @@ div.wide.form{
 		.box-sizing();
 	}
 }
-
+*/
 .double-column{
 	.panel{
 		float:left;
@@ -3023,23 +3029,39 @@ div.wide.form{
 	.clearfix();
 }
 
+.left-column{
+	padding: 15px 15px 15px 15px;
+	float: left;
+	width: 70%;
+	++.border-box;
+	&.full-width{
+		width: 100%;
+		float:none;
+		+.right-column{
+			display: none;
+		}
+	}
+}
+.right-column{
+	float: right;
+	width: 30%;
+	padding:15px 15px 15px 15px;
+	++.border-box;
+}
+
 #modal-edit-form,
 #edit-form,
 #delete-form{
-	.clearfix();
+	++.clearfix;
+	++.border-box;
 	position: relative;
-	padding-top:15px;
 	.panel{
-		float:left;
-		width:70%;
-		display:block;
-		.clearfix();
 		table{
 			width:100% !important;
 		}
 	}
 	h3{
-		margin-bottom:8px;
+		margin:15px 0 0 15px;
 	}
 	table{
 		border-bottom:none;
@@ -3074,12 +3096,12 @@ div.wide.form{
 	}
 }
 
-#modal-edit-form .panel{
-	width: 100%;
+#modal-edit-form{
+	padding: 15px 15px 12px 15px;
 }
 
 .more-panels-link{
-	font-size:11px;
+	.smaller();
 }
 
 .ui-overlay-block{
@@ -3119,18 +3141,16 @@ div.wide.form{
 }
 
 .right-side-edit-view-panel{
-	width:30%;
-	float:right;
-	//position:absolute;
-	//right:15px;
-	//top:15px;
+	padding: 8px 10px;
+	background: #F4F4F4;
+	width: 100%;
+	++.border-box;
+	++.clearfix;
 	p{
 		line-height: 140%;
 	}
 	h3{
-		margin-bottom:8px;
-	}
-	.buffer > div{
+		margin:0 0 10px 0 !important;
 	}
 	label{
 		width: 100%;
@@ -3256,6 +3276,7 @@ div.wide.form{
 		border:none;
 		padding:0;
 		cursor:pointer;
+		z-index: 10005;
 		&:hover{
 			&:before{
 				color:#525252 !important;
@@ -3368,16 +3389,10 @@ div.wide.form{
 	}
 	p{
 		width:100%;
-		a{
-			//++.themeColor-important;
-		}
 	}
 	.panelTitle{
 		padding-top:0;
 		padding-left:10px;
-	}
-	a{
-		//++.themeColor;
 	}
 	.map-link{
 		display: inline-block;
@@ -3849,10 +3864,8 @@ div.radio-input{
 			margin-left: 10px;
 			width:13px;
 			padding: 1px;
-			//height: 13px;
 			text-align: center;
 			line-height: 1;
-			//vertical-align: middle;
 			color: #666;
 			border:1px solid #fff;
 			.b-shadow(inset 0 0 0 1px #ddd);
@@ -3890,16 +3903,6 @@ div.radio-input{
 		}
 	}
 }
-
-/*
-.back-to-inbox-link{
-    .smaller();
-    .opacity(50);
-    &:hover{
-        .opacity(100);
-    }
-}
-*/
 
 /*=Madlib*/
 .mad-lib{
@@ -4052,18 +4055,20 @@ div.hasHalfs{
 
 /*Upcoming Meeting Pager*/
 .pager{
-	.box-sizing();
+	++.border-box;
 	width:100%;
 	text-align:center;
 	background: #fff url(../images/view-toolbar-gradient.png) left bottom repeat-x;
 	.b-shadow(inset 0 1px 0 #DFDFDF );
+	overflow: hidden;
 	ul{
+		display: block;
 		width:50%;
 		margin:0 auto;
-		.box-sizing();
+		++.border-box;
 		list-style: none;
 		border-left: 1px solid #DFDFDF;
-		.clearfix();
+		++.clearfix;
 	}
 	.endless-list-pager{
 		width:100%;
@@ -4084,7 +4089,7 @@ div.hasHalfs{
 		}
 	}
 	li{
-		.box-sizing();
+		++.border-box;
 		float:left;
 		width:30%;
 		padding:0;
@@ -4101,9 +4106,6 @@ div.hasHalfs{
 				color:#656565;
 				.b-shadow(~"inset 0 5px 10px 0px rgba(153, 153, 153, 0.45)");
 			}
-		}
-		> a:hover{
-			++.themeColor2-important;
 		}
 	}
 	.refresh{
@@ -4230,7 +4232,6 @@ div.hasHalfs{
 .LatestActivitiesView{
 	form{
 		position: relative;
-		.clearfix();
 	}
 	.latest-activity-toolbar{
 		border-bottom:1px solid #DFDFDF;

@@ -46,6 +46,7 @@
                             array('type' => 'CancelLink', 'renderType' => 'Edit'),
                             array('type' => 'EditLink', 'renderType' => 'Details'),
                             array('type' => 'AuditEventsModalListLink', 'renderType' => 'Details'),
+                            array('type' => 'CopyLink',       'renderType' => 'Details'),
                             array('type' => 'ContactDeleteLink', 'renderType' => 'Details'),
                         ),
                     ),
@@ -198,10 +199,61 @@
             return $metadata;
         }
 
+        protected function renderContent()
+        {
+            $this->registerCopyAddressFromAccountScript();
+            return parent::renderContent();
+        }
+
         protected function getNewModelTitleLabel()
         {
             return Zurmo::t('ContactsModule', 'Create ContactsModuleSingularLabel',
                                      LabelUtil::getTranslationParamsForAllModules());
+        }
+
+        protected function registerCopyAddressFromAccountScript()
+        {
+            $url           = Yii::app()->createUrl('contacts/default/getAccountAddressesToCopy');
+            $successScript = null;
+            foreach($this->model->primaryAddress->getAttributeNames() as $attribute)
+            {
+                $successScript .= "$('#Contact_primaryAddress_" . $attribute . "').val(data.billingAddress_" . $attribute . ").trigger('change'); \n";
+                $successScript .= "$('#Contact_secondaryAddress_" . $attribute . "').val(data.shippingAddress_" . $attribute . ").trigger('change'); \n";
+            }
+            Yii::app()->clientScript->registerScript('copyAddressFromAccountToContactScript', "
+                $('#Contact_account_id').live('change', function()
+                    {
+                       if($('#Contact_account_id').val() &&
+                          !$('#Contact_primaryAddress_street1').val() &&
+                          !$('#Contact_primaryAddress_street2').val() &&
+                          !$('#Contact_primaryAddress_city').val() &&
+                          !$('#Contact_primaryAddress_state').val() &&
+                          !$('#Contact_primaryAddress_postalCode').val() &&
+                          !$('#Contact_primaryAddress_country').val() &&
+                          !$('#Contact_secondaryAddress_street1').val() &&
+                          !$('#Contact_secondaryAddress_street2').val() &&
+                          !$('#Contact_secondaryAddress_city').val() &&
+                          !$('#Contact_secondaryAddress_state').val() &&
+                          !$('#Contact_secondaryAddress_postalCode').val() &&
+                          !$('#Contact_secondaryAddress_country').val())
+                          {
+                            $.ajax({
+                                url : '" . $url . "?id=' + $('#Contact_account_id').val(),
+                                type : 'GET',
+                                dataType: 'json',
+                                success : function(data)
+                                {
+                                    " . $successScript . "
+                                },
+                                error : function()
+                                {
+                                    //todo: error call
+                                }
+                            });
+                          }
+                    }
+                );
+            ");
         }
     }
 ?>

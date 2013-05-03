@@ -131,8 +131,8 @@
          */
         protected function renderContent()
         {
-            $content              = $this->renderTitleContent();
-            $content             .= $this->renderFormContent();
+            $content  = $this->renderTitleContent();
+            $content .= $this->renderFormContent();
             $actionElementContent = $this->renderActionElementBar(true);
             if ($actionElementContent != null)
             {

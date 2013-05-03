@@ -957,20 +957,22 @@ body > div {
   position: relative;
   top: 6px;
 }
-.right-side-edit-view-panel {
-  float: none;
-  width: 100%;
-  position: relative;
-  right: 0;
-  top: 0;
-}
-.right-side-edit-view-panel .buffer {
-  padding-left: 0;
-}
-.right-side-edit-view-panel .buffer > div {
-  padding: 0;
-  background: none;
-}
+/*
+	.right-side-edit-view-panel{
+		float:none;
+		width:100%;
+		position:relative;
+		right:0;
+		top:0;
+		.buffer{
+			padding-left:0;
+			> div{
+				padding:0;
+				background: none;
+			}
+		}
+	}
+	*/
 .hasParallelFields > div {
   width: 100% !important;
   display: block;
@@ -984,8 +986,11 @@ body > div {
   float: none;
   padding: 0 10px;
 }
-#ConversationDetailsView .right-side-edit-view-panel {
-  display: none;
+#ConversationDetailsView {
+  /*.right-side-edit-view-panel{
+			display:none;
+		}*/
+
 }
 .model-details-summary {
   padding-left: 65px;

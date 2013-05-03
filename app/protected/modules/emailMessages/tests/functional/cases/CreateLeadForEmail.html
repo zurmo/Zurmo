@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeGlobal</td>
-	<td>javascript{Math.floor(Math.random()*11000)}</td>
-	<td>randomSuffix</td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>index.php/emailMessages/demo/loadUnmatchedSampler</td>
 	<td></td>
@@ -68,18 +63,33 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='list-view']/table/tbody/tr/td/div/div/div/div[4]/div/form/div[2]/table/tbody/tr/td/div/div[3]/input</td>
+	<td>//div[@id='list-view']/table/tbody/tr/td/div/div/div/div[4]/div/form/div[2]/div/table/tbody/tr/td/div/div[3]/input</td>
 	<td>${randomSuffix}</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[4]//div/form/div[2]/table/tbody/tr[5]/td/div/div/input</td>
+	<td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[4]/div/form/div[2]/div/table/tbody/tr[5]/td/div/div/input</td>
 	<td>bob.message.zurmotest.com</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[4]/div/form/div[3]/div/a[2]/span[3]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
     <td>assertTextPresent</td>
@@ -93,8 +103,13 @@
 </tr>
 <tr>
     <td>type</td>
-    <td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[4]//div/form/div[2]/table/tbody/tr[5]/td/div/div/input</td>
+    <td>//div[@id='ArchivedEmailMatchingListView']/div/table/tbody/tr/td/div/div/div/div[4]/div/form/div[2]/div/table/tbody/tr[5]/td/div/div/input</td>
     <td>bob.message@zurmotest.com</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
     <td>setSpeed</td>
