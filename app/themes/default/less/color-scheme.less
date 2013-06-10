@@ -2,7 +2,7 @@
 // Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
 //
 // Zurmo is free software; you can redistribute it and/or modify it under
-// the terms of the GNU General Public License version 3 as published by the
+// the terms of the GNU Affero General Public License version 3 as published by the
 // Free Software Foundation with the addition of the following permission added
 // to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
 // IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -10,10 +10,10 @@
 //
 // Zurmo is distributed in the hope that it will be useful, but WITHOUT
 // ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
 // details.
 //
-// You should have received a copy of the GNU General Public License along with
+// You should have received a copy of the GNU Affero General Public License along with
 // this program; if not, see http://www.gnu.org/licenses or write to the Free
 // Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 // 02110-1301 USA.
@@ -23,9 +23,9 @@
 //
 // The interactive user interfaces in original and modified versions
 // of this program must display Appropriate Legal Notices, as required under
-// Section 5 of the GNU General Public License version 3.
+// Section 5 of the GNU Affero General Public License version 3.
 //
-// In accordance with Section 7(b) of the GNU General Public License version 3,
+// In accordance with Section 7(b) of the GNU Affero General Public License version 3,
 // these Appropriate Legal Notices must retain the display of the Zurmo
 // logo and Zurmo copyright notice. If the display of the logo is not reasonably
 // feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -79,6 +79,7 @@ a:link, a:active, a:visited{
     tr:hover .pencil,
     .ui-dialog .ui-dialog-title
     div.wide.form a,
+    #kanban-board-options-link,
     #select-list-attributes-link,
     #more-search-linkmodal,
     #more-search-link,
@@ -124,7 +125,8 @@ a:link, a:active, a:visited{
     .z-action-link,
     .drop-zone,
     .missing-chart,
-    a.active-tab
+    a.active-tab,
+    .edit-autoresponder-link
     {
         color: @themeColor;
     }
@@ -136,6 +138,8 @@ a:link, a:active, a:visited{
     .view-toolbar a.active span,
     .portlet-toolbar .icon-delete:before,
     .portlet-toolbar .icon-edit:before,
+    .mini-pillbox a:hover,
+    .mini-pillbox a.active,
     //.ZeroModelsYetView a span:before,
     #StickyListMenu  > li > a:hover > span,
     .addfileinput-button:hover span
@@ -151,8 +155,10 @@ a:link, a:active, a:visited{
     .configuration-list td:last-child a:hover,
     .configuration-list td:last-child a:hover span:before,
     .addfileinput-button:hover span,
-    #HomeDashboardPortletSelectionView li span,
+    .available-portlets span,
     .hide-welcome span,
+    .hide-marketing-intro span,
+    #kanban-board-options-link:hover,
     #more-search-link:hover,
     #select-list-attributes-link:hover
     {
@@ -163,7 +169,8 @@ a:link, a:active, a:visited{
     #AboutView p a, 
     #AboutView ul a,
     .back-to-app-menu-item span,
-    .breadcrumbs a
+    .breadcrumbs a,
+    .StepsAndProgressBarForWizardView .current-step
     {
          color: @themeColor !important;
     }
@@ -187,7 +194,8 @@ a:link, a:active, a:visited{
     #show-filters-structure-div-link,
     .filters-bar .ui-state-active,
     .filters-bar label:hover,
-    #clear-search-linkmodal
+    #clear-search-linkmodal,
+    .StepsAndProgressBarForWizardView .progress-bar
     {
         background-color: @themeColor;
     }
@@ -196,13 +204,11 @@ a:link, a:active, a:visited{
     .filter-portlet-model-bar label:hover,
     .latest-activity-toolbar .ui-state-active,
     .filter-portlet-model-bar .ui-state-active,
-    #clear-search-link
+    #clear-search-link,
     #MashableInboxForm_filteredBy_area label:hover,
     #MashableInboxForm_optionForModel_area label:hover,
     #MashableInboxForm_filteredBy_area .ui-state-active,
     #MashableInboxForm_optionForModel_area .ui-state-active
-    //.latest-activity-toolbar .filter-portlet-model-bar label,
-    
     {
         background-color: @themeColor !important;
     }
@@ -224,7 +230,8 @@ a:link, a:active, a:visited{
     .toolbar-mbmenu .options-menu ul a:hover,
     #ShortcutsMenu ul a:hover,
     .view-toolbar .parent > ul a:hover,
-    .edit-row-menu ul a:hover 
+    .edit-row-menu ul a:hover,
+    .edit-portlet-menu ul a:hover
     {
         background-color: @themeColor2 !important;
         color:#fff !important;
@@ -603,7 +610,7 @@ body.honey{
 }
 
 //background:#DDDEDE;
-
+.background-texture-1
 body.light-noise-diagonal,
 .texture-swatch.light-noise-diagonal .background-texture-1{
     background: url(../patterns/light-noise-diagonal/light-noise-diagonal.png) left top repeat;

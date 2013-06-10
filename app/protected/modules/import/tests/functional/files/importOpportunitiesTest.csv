@@ -1,4 +1,4 @@
-name,closeDate,probability,description,stage,source,amount,owner
-opportunity1,06-03-1980,10,desc1,Prospecting,Self-Generated,500,myusername1
-opportunity2,06-04-1980,20,desc2,Qualification,Inbound Call,501,myusername1
-opportunity3,06-05-1980,30,desc3,Negotiating,Tradeshow,502,myusername1
+name,closeDate,description,stage,source,amount,owner
+opportunity1,06-03-1980,desc1,Prospecting,Self-Generated,500,myusername1
+opportunity2,06-04-1980,desc2,Qualification,Inbound Call,501,myusername1
+opportunity3,06-05-1980,desc3,Negotiating,Tradeshow,502,myusername1

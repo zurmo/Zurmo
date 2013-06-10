@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -65,7 +65,7 @@
             $value = '/' . preg_quote($value) . '/';
         }
 
-        public function __construct($language, $content) // TODO: @Shoaibi/@Jason probably change it to locale object
+        public function __construct($language, $content) // TODO: @Shoaibi/@Jason Low: probably change it to locale object
         {
             $this->language = $language;
             $this->content  = $content;
@@ -73,7 +73,10 @@
 
         public function resolveMergeTagsArrayToAttributes($model, & $invalidTags = array(), $language = null, $errorOnFirstMissing = false)
         {
-            $language = ($language)? $language : $this->language;
+            if (!$language)
+            {
+                $language = $this->language;
+            }
             if (empty($this->mergeTags))
             {
                 return false;
@@ -102,12 +105,12 @@
         public function extractMergeTagsPlaceHolders()
         {
             // Current RE: /((WAS\%)?(([A-Z0-9])(\^|__)?)+)/ // Not Coding Standard
-            $pattern = '/' . preg_quote(static::TAG_PREFIX) .
-                '((WAS' . preg_quote(static::TIME_DELIMITER) . ')?' .
-                '(([A-Z0-9])' . '(' . preg_quote(static::CAPITAL_DELIMITER) . '|' .
-                preg_quote(static::PROPERTY_DELIMITER) . ')?)+)' . // Not Coding Standard
-                preg_quote(static::TAG_SUFFIX) .
-                '/';
+            $pattern =  '/' . preg_quote(static::TAG_PREFIX) .
+                        '((WAS' . preg_quote(static::TIME_DELIMITER) . ')?' .
+                        '(([A-Z0-9])' . '(' . preg_quote(static::CAPITAL_DELIMITER) . '|' .
+                        preg_quote(static::PROPERTY_DELIMITER) . ')?)+)' . // Not Coding Standard
+                        preg_quote(static::TAG_SUFFIX) .
+                        '/';
             // $this->mergeTags index 0 = with tag prefix and suffix, index 1 = without tag prefix and suffix
             $matchesCounts = preg_match_all($pattern, $this->content, $this->mergeTags);
             array_walk($this->mergeTags, 'static::resolveUniqueMergeTags');
@@ -121,7 +124,10 @@
             $attributes                 = array_values($this->mergeTags[1]);
             $this->resolveFullyQualifiedMergeTagsRegularExpression($mergeTags);
             $content                    = preg_replace($mergeTags, $attributes, $this->content, -1, $resolvedMergeTagsCount);
-            $this->content              = (!empty($content))? $content : $this->content;
+            if (!empty($content))
+            {
+                $this->content = $content;
+            }
             return $resolvedMergeTagsCount;
         }
 

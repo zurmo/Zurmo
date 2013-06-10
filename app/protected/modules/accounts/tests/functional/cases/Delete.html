@@ -87,9 +87,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div/div/ul/li/ul/li[3]/a</td>
+	<td>click</td>
+	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div/div/div/ul/li/ul/li[4]/a</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForConfirmation</td>
@@ -116,7 +121,7 @@
 	<td>Create</td>
 	<td></td>
 </tr>
-<tr>
+<!--tr>
 	<td>verifyTextPresent</td>
 	<td>Update</td>
 	<td></td>
@@ -124,6 +129,11 @@
 <tr>
 	<td>verifyTextPresent</td>
 	<td>Advanced</td>
+	<td></td>
+</tr-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=AccountsSearchForm_anyMixedAttributes</td>
 	<td></td>
 </tr>
 <tr>

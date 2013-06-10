@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -84,6 +84,8 @@
                             $('#ModuleForWorkflowWizardView').hide();
                             " . $this->renderTreeViewAjaxScriptContent($formName, 'TriggersForWorkflowWizardView') . "
                             $('#TriggersForWorkflowWizardView').show();
+                            $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('40%');
+                            $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').next().addClass('current-step');
                         }
                         if (linkId == '" . TriggersForWorkflowWizardView::getNextPageLinkId() . "')
                         {
@@ -101,6 +103,8 @@
                                     $('.toggle-me', this).toggle();
                                 }
                             });
+                            $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('60%');
+                            $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').next().addClass('current-step');
                         }
                         if (linkId == '" . ActionsForWorkflowWizardView::getNextPageLinkId() . "')
                         {
@@ -108,6 +112,8 @@
                                 WorkflowWizardForm::EMAIL_MESSAGES_VALIDATION_SCENARIO . "');
                             $('#ActionsForWorkflowWizardView').hide();
                             $('#EmailMessagesForWorkflowWizardView').show();
+                            $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('80%');
+                            $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').next().addClass('current-step');
                         }
                         if (linkId == '" . EmailMessagesForWorkflowWizardView::getNextPageLinkId() . "')
                         {
@@ -115,6 +121,8 @@
                             WorkflowWizardForm::GENERAL_DATA_VALIDATION_SCENARIO . "');
                             $('#EmailMessagesForWorkflowWizardView').hide();
                             $('#GeneralDataForWorkflowWizardView').show();
+                            $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('100%');
+                            $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').next().addClass('current-step');
                         }
 
                         var rowData = $('#" . $formName . "').find('.attachLoadingTarget').data() || {};
@@ -125,8 +133,8 @@
                             $('#' + rowData.row.toString() + ' .edit-dynamic-row-link').toggle();
                             $('#' + rowData.row.toString()).siblings().show();
                             $('#actionsNextLink').parent().parent().show();
+                            $('#actionType').removeAttr('disabled');
                         }
-
                         if (linkId == '" . GeneralDataForWorkflowWizardView::getNextPageLinkId() . "')
                         {
                             " . $this->getSaveAjaxString($formName) . "
@@ -158,6 +166,8 @@
                         $('#" . WizardActiveForm::makeErrorsSummaryId(static::getFormId()) . "').hide();
                         $('#ModuleForWorkflowWizardView').show();
                         $('#TriggersForWorkflowWizardView').hide();
+                        $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('20%');
+                        $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').prev().addClass('current-step');
                         return false;
                     }
                 );
@@ -167,6 +177,8 @@
                         $('#" . static::getValidationScenarioInputId() . "').val('" . WorkflowWizardForm::TRIGGERS_VALIDATION_SCENARIO . "');
                         $('#TriggersForWorkflowWizardView').show();
                         $('#ActionsForWorkflowWizardView').hide();
+                        $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('40%');
+                        $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').prev().addClass('current-step');
                         return false;
                     }
                 );
@@ -176,6 +188,8 @@
                         $('#" . static::getValidationScenarioInputId() . "').val('" . WorkflowWizardForm::ACTIONS_VALIDATION_SCENARIO . "');
                         $('#ActionsForWorkflowWizardView').show();
                         $('#EmailMessagesForWorkflowWizardView').hide();
+                        $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('60%');
+                        $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').prev().addClass('current-step');
                         return false;
                     }
                 );
@@ -185,6 +199,8 @@
                         $('#" . static::getValidationScenarioInputId() . "').val('" . WorkflowWizardForm::EMAIL_MESSAGES_VALIDATION_SCENARIO . "');
                         $('#EmailMessagesForWorkflowWizardView').show();
                         $('#GeneralDataForWorkflowWizardView').hide();
+                        $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('80%');
+                        $('.StepsAndProgressBarForWizardView').find('.current-step').removeClass('current-step').prev().addClass('current-step');
                         return false;
                     }
                 );

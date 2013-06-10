@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -51,6 +51,8 @@
         protected static $bobbyUserId;
 
         protected static $sarahUserId;
+
+        protected static $groupTest;
 
         public static function setUpBeforeClass()
         {
@@ -128,6 +130,13 @@
             self::$newState         = $contactStates[0];
             $contactStates          = ContactState::getByName('In progress');
             self::$inProgressState  = $contactStates[0];
+            self::$groupTest        = new Group();
+            self::$groupTest->name  = 'test';
+            $saved = self::$groupTest->save();
+            assert($saved); // Not Coding Standard
+            $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $saved = $group->save();
+            assert($saved); // Not Coding Standard
         }
 
         public function setup()
@@ -149,6 +158,100 @@
                 RedBeanDatabase::freeze();
             }
             parent::teardown();
+        }
+
+        public function testPermissionsResolveValueAndSetToModelUpdateAsDynamicCreatedByUser()
+        {
+            //Setup a triggered model that has Sarah creating and owning it.
+            $super                      = Yii::app()->user->userModel;
+            Yii::app()->user->userModel = User::getByUsername('sarah');
+            $triggeredModel             = new WorkflowModelTestItem();
+            $triggeredModel->lastName   = 'test';
+            $triggeredModel->string     = 'test';
+            $saved                      = $triggeredModel->save();
+            $this->assertTrue($saved);
+            Yii::app()->user->userModel = $super;
+            //Now the super is who modified it
+            $triggeredModel->string     = 'test2';
+            $saved                      = $triggeredModel->save();
+            $this->assertTrue($saved);
+
+            //Test same as triggered where triggered is owner
+            $form        = new ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm::TYPE_DYNAMIC_SAME_AS_TRIGGERED_MODEL;
+            $model       = new WorkflowModelTestItem();
+            $model->lastName   = 'test';
+            $model->string     = 'test';
+            $saved             = $model->save();
+            $this->assertTrue($saved);
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel, $triggeredModel);
+            $form->resolveValueAndSetToModel($adapter, 'permissions');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+            $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+
+            //Test same as triggered where triggered is not owner
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($triggeredModel);
+            $explicitReadWriteModelPermissions->addReadWritePermitable(self::$groupTest);
+            $success = ExplicitReadWriteModelPermissionsUtil::
+                resolveExplicitReadWriteModelPermissions($triggeredModel, $explicitReadWriteModelPermissions);
+            $this->assertTrue($success);
+            $form        = new ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm::TYPE_DYNAMIC_SAME_AS_TRIGGERED_MODEL;
+            $model       = new WorkflowModelTestItem();
+            $model->lastName   = 'test';
+            $model->string     = 'test';
+            $saved             = $model->save();
+            $this->assertTrue($saved);
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel, $triggeredModel);
+            $form->resolveValueAndSetToModel($adapter, 'permissions');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertTrue(isset($readWritePermitables[self::$groupTest->id]));
+
+            //Test same as owner
+            $form        = new ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm::TYPE_DYNAMIC_OWNER;
+            $model       = new WorkflowModelTestItem();
+            $model->lastName   = 'test';
+            $model->string     = 'test';
+            $saved             = $model->save();
+            $this->assertTrue($saved);
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel, $triggeredModel);
+            $form->resolveValueAndSetToModel($adapter, 'permissions');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+            $this->assertEquals(0, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+
+            //Test everyone group
+            $form        = new ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm::TYPE_DYNAMIC_EVERYONE_GROUP;
+            $model       = new WorkflowModelTestItem();
+            $model->lastName   = 'test';
+            $model->string     = 'test';
+            $saved             = $model->save();
+            $this->assertTrue($saved);
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel, $triggeredModel);
+            $form->resolveValueAndSetToModel($adapter, 'permissions');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $everyoneGroup      = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $this->assertTrue(isset($readWritePermitables[$everyoneGroup->id]));
+
+            //Test a specific group
+            $form        = new ExplicitReadWriteModelPermissionsWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = self::$groupTest->id;
+            $model       = new WorkflowModelTestItem();
+            $model->lastName   = 'test';
+            $model->string     = 'test';
+            $saved             = $model->save();
+            $this->assertTrue($saved);
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel, $triggeredModel);
+            $form->resolveValueAndSetToModel($adapter, 'permissions');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($model);
+            $this->assertEquals(1, $explicitReadWriteModelPermissions->getReadWritePermitablesCount());
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertTrue(isset($readWritePermitables[self::$groupTest->id]));
         }
 
         public function testCheckBoxResolveValueAndSetToModelUpdateAsStatic()
@@ -353,6 +456,22 @@
             $this->assertEquals('54', $model->integer);
         }
 
+        /**
+         * Merge tags don't work with phone, so it should result in the same string prior to calling resolveValueAndSetToModel
+         */
+        public function testIntegerResolveValueAndSetToModelUpdateAsStaticWithMergeTags()
+        {
+            $form        = new IntegerWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = IntegerWorkflowActionAttributeForm::TYPE_STATIC;
+            $form->value = '54 [[STRING]]';
+            $model       = new WorkflowModelTestItem();
+            $model->string = 'something';
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
+            $this->assertNull($model->integer);
+            $form->resolveValueAndSetToModel($adapter, 'integer');
+            $this->assertEquals('54 [[STRING]]', $model->integer);
+        }
+
         public function testLikeContactStateResolveValueAndSetToModelUpdateAsStatic()
         {
             $form        = new ContactStateWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
@@ -394,6 +513,19 @@
             $this->assertNull($model->phone);
             $form->resolveValueAndSetToModel($adapter, 'phone');
             $this->assertEquals('abc', $model->phone);
+        }
+
+        public function testPhoneResolveValueAndSetToModelUpdateAsStaticWithMergeTags()
+        {
+            $form        = new PhoneWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = PhoneWorkflowActionAttributeForm::TYPE_STATIC;
+            $form->value = 'abc [[STRING]]';
+            $model       = new WorkflowModelTestItem();
+            $model->string = 'xtz';
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
+            $this->assertNull($model->phone);
+            $form->resolveValueAndSetToModel($adapter, 'phone');
+            $this->assertEquals('abc xtz', $model->phone);
         }
 
         public function testPhoneResolveValueAndSetToModelUpdateAsNull()
@@ -475,6 +607,19 @@
             $this->assertEquals('abc', $model->string);
         }
 
+        public function testTextResolveValueAndSetToModelUpdateAsStaticWithMergeTags()
+        {
+            $form        = new TextWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = TextWorkflowActionAttributeForm::TYPE_STATIC;
+            $form->value = 'abc [[PHONE]]';
+            $model       = new WorkflowModelTestItem();
+            $model->phone = '123434567';
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
+            $this->assertNull($model->string);
+            $form->resolveValueAndSetToModel($adapter, 'string');
+            $this->assertEquals('abc 123434567', $model->string);
+        }
+
         public function testTextResolveValueAndSetToModelUpdateAsNull()
         {
             $form          = new TextWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
@@ -496,6 +641,19 @@
             $this->assertNull($model->textArea);
             $form->resolveValueAndSetToModel($adapter, 'textArea');
             $this->assertEquals('abc', $model->textArea);
+        }
+
+        public function testTextAreaResolveValueAndSetToModelUpdateAsStaticWithMergeTags()
+        {
+            $form        = new TextAreaWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
+            $form->type  = TextAreaWorkflowActionAttributeForm::TYPE_STATIC;
+            $form->value = 'abc [[PHONE]]';
+            $model       = new WorkflowModelTestItem();
+            $model->phone = '123434567';
+            $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
+            $this->assertNull($model->textArea);
+            $form->resolveValueAndSetToModel($adapter, 'textArea');
+            $this->assertEquals('abc 123434567', $model->textArea);
         }
 
         public function testTextAreaResolveValueAndSetToModelUpdateAsNull()

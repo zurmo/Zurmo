@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -45,8 +45,10 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            MarketingListTestHelper::createMarketingListByName('MarketingListName', 'MarketingList Description');
-            MarketingListTestHelper::createMarketingListByName('MarketingListName2', 'MarketingList Description2');
+            MarketingListTestHelper::createMarketingListByName('MarketingListName', 'MarketingList Description',
+                                                                                            'first', 'first@zurmo.com');
+            MarketingListTestHelper::createMarketingListByName('MarketingListName2', 'MarketingList Description2',
+                                                                                        'second', 'second@zurmo.com');
             ReadPermissionsOptimizationUtil::rebuild();
         }
 
@@ -81,7 +83,100 @@
             $this->setGetArray(array('ajax' => 'list-view'));
             $content = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
             $this->assertTrue(strpos($content, 'anyMixedAttributes') === false);
-            $this->resetGetArray();
+        }
+
+        /**
+         * @depends testSuperUserAllDefaultControllerActions
+         */
+        public function testSuperUserListSearchAction()
+        {
+            StickyReportUtil::clearDataByKey('MarketingListsSearchForm');
+            $this->setGetArray(array(
+                'MarketingListsSearchForm' => array(
+                    'anyMixedAttributesScope'    => array('All'),
+                    'anyMixedAttributes'         => 'xyz',
+                ) ,
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->assertTrue(strpos($content, 'No results found.') !== false);
+
+            StickyReportUtil::clearDataByKey('MarketingListsSearchForm');
+            $this->setGetArray(array(
+                'MarketingListsSearchForm' => array(
+                    'anyMixedAttributesScope'    => array('All'),
+                    'anyMixedAttributes'         => 'Marketing',
+                ) ,
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->assertTrue(strpos($content, '2 result(s)') !== false);
+            $this->assertEquals(2, substr_count($content, 'MarketingListName'));
+            $this->assertTrue(strpos($content, 'Clark Kent') !== false);
+
+            StickyReportUtil::clearDataByKey('MarketingListsSearchForm');
+            $this->setGetArray(array(
+                'MarketingListsSearchForm' => array(
+                    'anyMixedAttributesScope'    => array('All'),
+                    'anyMixedAttributes'         => 'Marketing',
+                    'selectedListAttributes'     => array('name', 'createdByUser', 'fromAddress', 'fromName'),
+                ) ,
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->assertTrue(strpos($content, '2 result(s)') !== false);
+            $this->assertEquals(2, substr_count($content, 'MarketingListName'));
+            $this->assertTrue(strpos($content, 'Clark Kent') !== false);
+            $this->assertEquals(2, substr_count($content, 'Clark Kent'));
+            $this->assertTrue(strpos($content, '@zurmo.com') !== false);
+            $this->assertEquals(4, substr_count($content, '@zurmo.com'));
+            $this->assertEquals(2, substr_count($content, 'first@zurmo.com'));
+            $this->assertEquals(2, substr_count($content, 'second@zurmo.com'));
+
+            StickyReportUtil::clearDataByKey('MarketingListsSearchForm');
+            $this->setGetArray(array(
+                'clearingSearch'            =>  1,
+                'MarketingListsSearchForm'  => array(
+                    'anyMixedAttributesScope'    => array('All'),
+                    'anyMixedAttributes'         => '',
+                    'selectedListAttributes'     => array('name', 'createdByUser', 'fromAddress', 'fromName'),
+                    'dynamicClauses'             => array(array(
+                        'attributeIndexOrDerivedType'   => 'fromAddress',
+                        'structurePosition'             => 1,
+                        'fromAddress'                   => 'second@zurmo.com',
+                    )),
+                    'dynamicStructure'          => '1',
+                ) ,
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->assertTrue(strpos($content, '1 result(s)') !== false);
+            $this->assertEquals(1, substr_count($content, 'MarketingListName2'));
+            $this->assertTrue(strpos($content, 'Clark Kent') !== false);
+            $this->assertEquals(1, substr_count($content, 'Clark Kent'));
+            $this->assertTrue(strpos($content, '@zurmo.com') !== false);
+            $this->assertEquals(2, substr_count($content, '@zurmo.com'));
+            $this->assertEquals(2, substr_count($content, 'second@zurmo.com'));
+
+            StickyReportUtil::clearDataByKey('MarketingListsSearchForm');
+            $this->setGetArray(array(
+                'clearingSearch'            =>  1,
+                'MarketingListsSearchForm'  =>  array(
+                    'anyMixedAttributesScope'    => array('All'),
+                    'anyMixedAttributes'         => '',
+                    'selectedListAttributes'     => array('name', 'createdByUser', 'fromAddress', 'fromName'),
+                    'dynamicClauses'             => array(array(
+                        'attributeIndexOrDerivedType'   => 'fromName',
+                        'structurePosition'             => 1,
+                        'fromName'                   => 'first',
+                    )),
+                    'dynamicStructure'          => '1',
+                ) ,
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->assertTrue(strpos($content, '1 result(s)') !== false);
+            $this->assertEquals(1, substr_count($content, 'MarketingListName'));
+            $this->assertTrue(strpos($content, 'Clark Kent') !== false);
+            $this->assertEquals(1, substr_count($content, 'Clark Kent'));
+            $this->assertTrue(strpos($content, '@zurmo.com') !== false);
+            $this->assertEquals(2, substr_count($content, '@zurmo.com'));
+            $this->assertEquals(2, substr_count($content, 'first@zurmo.com'));
         }
 
         /**
@@ -150,10 +245,10 @@
             $this->assertTrue(strpos($content, '<span>Options</span></a>') !== false);
             $this->assertTrue(strpos($content, '<span>Edit</span></a></li>') !== false);
             $this->assertTrue(strpos($content, '<span>Delete</span></a></li>') !== false);
-            $this->assertTrue(strpos($content, '<h3>Members</h3></div>') !== false);
-            $this->assertTrue(strpos($content, '<span>Add Member</span></a>') !== false);
+            $this->assertTrue(strpos($content, '<h3>Contacts/Leads</h3>') !== false);
+            $this->assertTrue(strpos($content, '<span>Add Contact/Lead</span></a>') !== false);
             $this->assertTrue(strpos($content, 'From Contacts/Leads</label>') !== false);
-            $this->assertTrue(strpos($content, 'From a Report</label>') !== false);
+            $this->assertTrue(strpos($content, 'From Report</label>') !== false);
             $this->assertTrue(strpos($content, '<span>Subscribe</span></a>') !== false);
             $this->assertTrue(strpos($content, '<span>Unsubscribe</span></a>') !== false);
             $this->assertTrue(strpos($content, '<span>Delete</span></a>') !== false);
@@ -208,6 +303,39 @@
             $this->assertEquals($redirectUrl, $compareRedirectUrl);
             $marketingLists = MarketingList::getAll();
             $this->assertEquals(2, count($marketingLists));
+        }
+
+        public function testMarketingListDashboardGroupByActions()
+        {
+            $portlets = Portlet::getAll();
+            foreach ($portlets as $portlet)
+            {
+                if ($portlet->viewType = 'MarketingListOverallMetrics')
+                {
+                    $marketingListPortlet = $portlet;
+                }
+            }
+            $marketingLists = MarketingList::getAll();
+
+            $this->setGetArray(array(
+                        'portletId'         => $portlet->id,
+                        'uniqueLayoutId'    => 'MarketingListDetailsAndRelationsViewLeftBottomView',
+                        'portletParams'     => array('relationModelId'  => $marketingLists[0]->id,
+                                                     'relationModuleId' => 'marketingLists',
+                            ),
+                    ));
+            $this->setPostArray(array(
+                        'MarketingOverallMetricsForm' => array('groupBy' => MarketingOverallMetricsForm::GROUPING_TYPE_DAY)
+                    ));
+            $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
+            $this->setPostArray(array(
+                        'MarketingOverallMetricsForm' => array('groupBy' => MarketingOverallMetricsForm::GROUPING_TYPE_MONTH)
+                    ));
+            $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
+            $this->setPostArray(array(
+                        'MarketingOverallMetricsForm' => array('groupBy' => MarketingOverallMetricsForm::GROUPING_TYPE_WEEK)
+                    ));
+            $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
         }
     }
 ?>

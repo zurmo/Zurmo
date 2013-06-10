@@ -2,7 +2,7 @@
 // Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
 //
 // Zurmo is free software; you can redistribute it and/or modify it under
-// the terms of the GNU General Public License version 3 as published by the
+// the terms of the GNU Affero General Public License version 3 as published by the
 // Free Software Foundation with the addition of the following permission added
 // to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
 // IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -10,10 +10,10 @@
 //
 // Zurmo is distributed in the hope that it will be useful, but WITHOUT
 // ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+// FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
 // details.
 //
-// You should have received a copy of the GNU General Public License along with
+// You should have received a copy of the GNU Affero General Public License along with
 // this program; if not, see http://www.gnu.org/licenses or write to the Free
 // Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 // 02110-1301 USA.
@@ -23,13 +23,25 @@
 //
 // The interactive user interfaces in original and modified versions
 // of this program must display Appropriate Legal Notices, as required under
-// Section 5 of the GNU General Public License version 3.
+// Section 5 of the GNU Affero General Public License version 3.
 //
-// In accordance with Section 7(b) of the GNU General Public License version 3,
+// In accordance with Section 7(b) of the GNU Affero General Public License version 3,
 // these Appropriate Legal Notices must retain the display of the Zurmo
 // logo and Zurmo copyright notice. If the display of the logo is not reasonably
 // feasible for technical reasons, the Appropriate Legal Notices must display the words
 // "Copyright Zurmo Inc. 2013. All rights reserved".
+
+.juiportlet-columns-MarketingDashboard{
+	.juiportlet-widget{
+		margin-right: 0;
+	}
+}
+
+.marketing-list-members-portlet-container{
+	.portlet-view-toolbar{
+		float: left;
+	}
+}
 
 //#marketing-list-member-select-contact-or-report-form,
 #marketing-list-member-configuration-form{
@@ -60,6 +72,10 @@
 			outline: none !important;
 			box-shadow:none !important;
 		}
+	}
+	.list-view-items-summary-clone{
+		margin-top: 51px;
+		font-weight: bold;
 	}
 }
 
@@ -148,6 +164,8 @@
 
 #MarketingListMembersConfigurationForm_filteredBySubscriptionType_area{
 	margin-left: 15px;
+	width: auto;
+	top: 20px;
 }
 
 .marketing-list-member-stats{
@@ -165,5 +183,392 @@
 		.parent > ul{
 			top: auto;
 		}
+	}
+}
+
+#ReportDetailsView,
+#CampaignDetailsView,
+#MarketingListDetailsView,
+#SecuredActionBarForMarketingSearchAndListView{
+	position: relative;
+	z-index: 10;
+	+ div{
+		position: relative;
+		z-index: 5;
+		+ div{
+			position: relative;
+			z-index: 1;
+		}
+	}
+}
+
+.marketing-graph{
+	float: left;
+	margin-left:2%;
+	padding-bottom: 15px;
+	&:first-child{
+		margin-left: 0;
+	}
+	h3{
+		padding-left: 15px;
+	}
+	&.half{
+		width: 49%;
+	}
+}
+
+.graph-container{
+	clear:left;
+	margin: 15px 0 0 0;
+}
+
+.edit-autoresponder-link{
+	font-size: 14px;
+	font-weight: bold;
+	font-style: normal;
+	&:after{
+		content: " — ";
+		font-weight: 400;
+		color: #545454;
+	}
+}
+.autoresponder-extra-info{
+	margin-bottom:10px;
+	font-style: italic;
+}
+
+.autoresponder-stats{
+	.fifth();
+	float: left;
+	margin-left: 2%;
+	text-align: left;
+	font-size: 12px;
+	strong{
+		font-size: 26px;
+		font-weight: bold;
+		display: block;
+	}
+	span{
+		//font-weight: bold;
+	}
+}
+
+a + .autoresponder-stats{
+	margin-left: 0;
+}
+
+.metrics-details{
+	text-align: right;
+	h3{
+		width: auto;
+		float: left;
+		color:#545454 !important;
+	}
+	div, form{
+		width: auto;
+		display:inline-block;
+		label{
+			float: left;
+		}
+	}
+	> div{
+		font-size: 14px;
+		line-height: 1;
+		font-weight: bold;
+		color: #656565;
+		display: block;
+		margin-bottom: 10px;
+		/*&:after{
+			content: "|";
+			font-weight: bold;
+			padding:0 8px;
+		}*/
+	}
+}
+
+#marketing-intro-content{
+	margin-bottom: 30px;
+}
+
+#marketing-intro-steps{
+	float: left;
+	width: 100%;
+	margin: 30px 0 15px 0;
+
+	> div{
+		float: left;
+		margin-left: 2%;
+		min-height: 150px;
+		#gradient > .vertical( rgba(34, 34, 34, 0.85), rgba(51,51,51, 0.75) );
+		color: #EFEFEF;
+		border: 1px solid #333;
+		.radius(4px);
+		.b-shadow(~"inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111");
+		++.border-box;
+		padding:1px 0 0 0;
+		&:first-child{
+			margin-left: 0;
+		}
+	}
+	h3{
+		++.border-box;
+		color: #fff;
+		font-size: 14px;
+		padding: 34px 0 0 10px;
+		font-weight: normal;
+		.t-shadow(0 1px 0 #000);
+		position: relative;
+		float: left;
+		line-height: 1;
+		height: 100%;
+		min-height: 149px;
+		strong{
+			display: block;
+			font-size: 50px;
+			line-height: 1;
+		}
+		span{
+			color: #fff;
+			display: inline-block;
+			font-weight: 100 !important;
+			font-size: 80%;
+			line-height: 50px;
+			margin-top: -5px;
+		}
+		width: 85px;
+		border-right: 1px solid rgb(40, 40, 40);
+	}
+	p{
+		++.border-box;
+		min-height: 149px;
+		padding: 10px 10px 10px 10px;
+		margin-left: 85px;
+		font-size: 13px;
+		line-height: 21px;
+		border-left: 1px solid rgb(51, 51, 51);
+		color: #ececec;
+		strong{
+			color: #fff;
+			display: block;
+			font-size: 14px;
+			line-height: 22px;
+		}
+	}
+	span{
+		display: block;
+	}
+}
+
+.hide-marketing-intro{
+	.hide-welcome();
+	clear: none;
+	position: static;
+	top: 0;
+	float: right;
+	margin-bottom: 30px;
+}
+
+/*Continuum*/
+.email-recipient-name{
+	float: left;
+	width: 15%;
+	display: block;
+	line-height:20px;
+}
+
+.continuum{
+	//width: 25%;
+	float: left;
+	display: inline-block;
+	.smaller();
+	margin-right: 10px;
+	> div{
+		display: inline-block;
+		border:1px solid #b7b7b7;
+		border-top-color: #e7e7e7;
+		border-left-color:#d7d7d7;
+		border-right-color:#d7d7d7;
+		border-radius:4px;
+		background:url(../images/view-toolbar-gradient-darker.png) left bottom repeat-x;
+		//background:#111 url(../images/dark-texture-table-footer.png) left top repeat-x !important;
+		++.border-box;
+		.b-shadow(inset 0 0 1px 1px #efefef);
+	}
+	.email-recipient-stage-status{
+		width: auto;
+		++.border-box;
+		font-weight: 700;
+		position:relative;
+		border-left: 1px solid #bababa;
+		color:#545454;
+		text-shadow:#fff 0 1px 0;
+		margin: 0;
+		padding-right: 6px;
+		line-height:20px;
+		display:inline-block;
+		border-left:1px solid #bababa;
+		&:first-child{
+			border-left: none;
+		}
+		span{
+			font-size: 10px;
+			font-weight: bold;
+		}
+	}
+}
+
+.email-recipient-stage-status{
+	float: right;
+	text-align: center;
+	.seventh();
+	float: left;
+	margin-left: 2%;
+	.smaller();
+	font-weight: bold;
+	line-height:20px;
+	&.stage-true{
+		i {
+			color: #97c43d;
+			.t-shadow(0 0 5px #97c43d);
+		}
+	}
+	&.stage-false{
+		i {
+			color: #c43d53;
+			.t-shadow(0 0 5px #c43d53);
+		}
+	}
+	i{
+		font-weight: bold;
+		line-height: 1;
+		padding:0 6px;
+		color: #ffd900;
+		.t-shadow(0 0 5px #ffd900);
+	}
+	span{
+		//font-weight: bold;
+	}
+}
+
+.no-email-recipients-found{
+	.icon-notice:before {
+		content: "f";
+	}
+}
+
+#MarketingIntroLinkActionElement{
+	ul{
+		right: 0;
+		li{
+			padding:0 5px 5px 5px;
+			.hasCheckBox{
+				display: inline-block;
+				margin-right: 5px;
+				position: relative;
+				top: 4px;
+			}
+		}
+	}
+	.parent{
+		a{
+			padding-left: 10px;
+		}
+		> a > span{
+			.symbly(24px);
+			position: relative;
+			top: 2px;
+		}
+		a:after{
+			margin-left: 2px;
+			top: 0;
+		}
+	}
+}
+
+.screen-options{
+	padding: 5px;
+	text-align: right;
+}
+
+/*Manage Subscriptions*/
+#MarketingListsExternalActionsPageView,
+#MarketingListsManageSubscriptionsPageView{
+	max-width: 900px;
+	margin: 30px auto;
+	> .GridView{
+		++.clearfix;
+	}
+	#HeaderLinksView{
+		margin:0 0 20px 0;
+		> div{
+			margin:0;
+		}
+		+ div{
+			background:none;
+			.unstyle-panel();
+		}
+	}
+	#corp-logo span{
+		color: #545454;
+	}
+	.Warning,
+	.wrapper{
+		.unstyle-panel();
+		float: none;
+	}
+	.Warning,
+	.wrapper{
+		background: #fff;
+		.b-shadow(0 0 12px 5px rgba(153, 153, 153, 0.3)); /*999*/
+		.radius(5px);
+	}
+	.Warning{
+		++.clearfix;
+		padding: 15px 0 30px 0;
+		h2, div, p{
+			float: none;
+			margin: 0;
+			width: 100%;
+			text-align: center;
+		}
+		h2{
+			padding: 0;
+		}
+		div{
+			margin:15px 0 20px 0;
+			border: 0;
+		}
+	}
+	#FooterView {
+		margin: 20px 0;
+		padding-bottom: 20px;
+		clear: both;
+	}
+	h1{
+		background: none;
+		border: none;
+		.unstyle-panel();
+	}
+	#MarketingListsManageSubscriptionsListView{
+
+	}
+	#marketingLists-manageSubscriptionsList{
+		table{
+			width: 100%;
+			th{
+				font-weight: bold !important;
+				height: 35px;
+				line-height: 35px;
+				//background: url(../images/table-items-header.png) left top repeat-x;
+				padding: 0 5px;
+				white-space: nowrap;
+			}
+			td{
+				padding-bottom: 15px;
+			}
+		}
+	}
+	.switch{
+		margin-right: 15px;
 	}
 }

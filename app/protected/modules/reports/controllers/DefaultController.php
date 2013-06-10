@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -135,43 +135,50 @@
                 $this->actionSelectType();
                 Yii::app()->end(0, false);
             }
-            $breadcrumbLinks = array(Zurmo::t('ReportsModule', 'Create'));
+            $breadcrumbLinks         = array(Zurmo::t('ReportsModule', 'Create'));
             assert('is_string($type)');
             $report           = new Report();
             $report->setType($type);
+            $progressBarAndStepsView = ReportWizardViewFactory::makeStepsAndProgressBarViewFromReport($report);
             $reportWizardView = ReportWizardViewFactory::makeViewFromReport($report);
             $view             = new ReportsPageView(ZurmoDefaultViewUtil::
-                                                    makeViewWithBreadcrumbsForCurrentUser(
+                                                    makeTwoViewsWithBreadcrumbsForCurrentUser(
                                                     $this,
+                                                    $progressBarAndStepsView,
                                                     $reportWizardView,
                                                     $breadcrumbLinks,
                                                     'ReportBreadCrumbView'));
             echo $view->render();
         }
 
-        public function actionEdit($id)
+        public function actionEdit($id, $isBeingCopied = false)
         {
             $savedReport      = SavedReport::getById((int)$id);
             ControllerSecurityUtil::resolveCanCurrentUserAccessModule($savedReport->moduleClassName);
-            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($savedReport);
+            if (!$isBeingCopied)
+            {
+                ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($savedReport);
+            }
             $breadcrumbLinks  = array(strval($savedReport));
             $report           = SavedReportToReportAdapter::makeReportBySavedReport($savedReport);
-            $reportWizardView = ReportWizardViewFactory::makeViewFromReport($report);
+            $progressBarAndStepsView = ReportWizardViewFactory::makeStepsAndProgressBarViewFromReport($report);
+            $reportWizardView = ReportWizardViewFactory::makeViewFromReport($report, (bool)$isBeingCopied);
             $view             = new ReportsPageView(ZurmoDefaultViewUtil::
-                                                    makeViewWithBreadcrumbsForCurrentUser(
+                                                    makeTwoViewsWithBreadcrumbsForCurrentUser(
                                                     $this,
+                                                    $progressBarAndStepsView,
                                                     $reportWizardView,
                                                     $breadcrumbLinks,
                                                     'ReportBreadCrumbView'));
             echo $view->render();
         }
 
-        public function actionSave($type, $id = null)
+        public function actionSave($type, $id = null, $isBeingCopied = false)
         {
             $postData                  = PostUtil::getData();
             $savedReport               = null;
             $report                    = null;
-            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id);
+            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id, (bool)$isBeingCopied);
             $reportToWizardFormAdapter = new ReportToWizardFormAdapter($report);
             $model                     =  $reportToWizardFormAdapter->makeFormByType();
             if (isset($postData['ajax']) && $postData['ajax'] === 'edit-form')
@@ -209,12 +216,12 @@
             }
         }
 
-        public function actionRelationsAndAttributesTree($type, $treeType, $id = null, $nodeId = null)
+        public function actionRelationsAndAttributesTree($type, $treeType, $id = null, $nodeId = null, $isBeingCopied = false)
         {
             $postData    = PostUtil::getData();
             $savedReport = null;
             $report      = null;
-            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id);
+            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id, (bool)$isBeingCopied);
             if ($nodeId != null)
             {
                 $reportToTreeAdapter = new ReportRelationsAndAttributesToTreeAdapter($report, $treeType);
@@ -228,17 +235,19 @@
             echo $content;
         }
 
-        public function actionAddAttributeFromTree($type, $treeType, $nodeId, $rowNumber, $trackableStructurePosition = false, $id = null)
+        public function actionAddAttributeFromTree($type, $treeType, $nodeId, $rowNumber,
+                                                   $trackableStructurePosition = false, $id = null, $isBeingCopied = false)
         {
             $postData                           = PostUtil::getData();
             $savedReport                        = null;
             $report                             = null;
-            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id);
+            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id, (bool)$isBeingCopied);
             $nodeIdWithoutTreeType              = ReportRelationsAndAttributesToTreeAdapter::
                                                      removeTreeTypeFromNodeId($nodeId, $treeType);
             $moduleClassName                    = $report->getModuleClassName();
             $modelClassName                     = $moduleClassName::getPrimaryModelName();
             $form                               = new WizardActiveForm();
+            $form->id                           = 'edit-form';
             $form->enableAjaxValidation         = true; //ensures error validation populates correctly
 
             $wizardFormClassName                = ReportToWizardFormAdapter::getFormClassNameByType($report->getType());
@@ -264,12 +273,12 @@
             echo $content;
         }
 
-        public function actionGetAvailableSeriesAndRangesForChart($type, $id = null)
+        public function actionGetAvailableSeriesAndRangesForChart($type, $id = null, $isBeingCopied = false)
         {
             $postData                           = PostUtil::getData();
             $savedReport                        = null;
             $report                             = null;
-            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id);
+            $this->resolveSavedReportAndReportByPostData($postData, $savedReport, $report, $type, $id, (bool)$isBeingCopied);
             $moduleClassName                    = $report->getModuleClassName();
             $modelClassName                     = $moduleClassName::getPrimaryModelName();
             $modelToReportAdapter               = ModelRelationsAndAttributesToReportAdapter::
@@ -389,7 +398,7 @@
                     // Output csv file directly to user browser
                     if ($dataProvider)
                     {
-                        $data1      = $dataProvider->getData();
+                        $data1 = ExportUtil::getDataForExport($dataProvider);
                         $headerData = array();
                         foreach ($data1 as $reportResultsRowData)
                         {
@@ -418,7 +427,7 @@
                 {
                     if ($dataProvider)
                     {
-                        $serializedData = serialize($dataProvider);
+                        $serializedData = ExportUtil::getSerializedDataForExport($dataProvider);
                     }
                     // Create background job
                     $exportItem                  = new ExportItem();
@@ -444,7 +453,18 @@
             $this->redirect(array($this->getId() . '/index'));
         }
 
-        public function actionAutoComplete($term, $moduleClassName, $type)
+        public function actionModalList($stateMetadataAdapterClassName = null)
+        {
+            $modalListLinkProvider = new SelectFromRelatedEditModalListLinkProvider(
+                $_GET['modalTransferInformation']['sourceIdFieldId'],
+                $_GET['modalTransferInformation']['sourceNameFieldId'],
+                $_GET['modalTransferInformation']['modalId']
+            );
+            echo ModalSearchListControllerUtil::
+                    setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $stateMetadataAdapterClassName);
+        }
+
+        public function actionAutoComplete($term, $moduleClassName = null, $type = null)
         {
             $pageSize = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                         'autoCompleteListPageSize', get_class($this->getModule()));
@@ -466,7 +486,8 @@
             return true;
         }
 
-        protected function resolveSavedReportAndReportByPostData(Array $postData, & $savedReport, & $report, $type, $id = null)
+        protected function resolveSavedReportAndReportByPostData(Array $postData, & $savedReport, & $report, $type,
+                                                                 $id = null, $isBeingCopied = false)
         {
             if ($id == null)
             {
@@ -474,6 +495,14 @@
                 $savedReport               = new SavedReport();
                 $report                    = new Report();
                 $report->setType($type);
+            }
+            elseif ($isBeingCopied)
+            {
+                $savedReport              = new SavedReport();
+                $oldReport                = SavedReport::getById(intval($id));
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($oldReport);
+                ZurmoCopyModelUtil::copy($oldReport, $savedReport);
+                $report                   = SavedReportToReportAdapter::makeReportBySavedReport($savedReport);
             }
             else
             {

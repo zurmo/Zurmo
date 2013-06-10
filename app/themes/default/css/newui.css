@@ -3,7 +3,7 @@
  * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
  *
  * Zurmo is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License version 3 as published by the
+ * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -11,10 +11,10 @@
  *
  * Zurmo is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
- * You should have received a copy of the GNU General Public License along with
+ * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
@@ -24,15 +24,15 @@
  *
  * The interactive user interfaces in original and modified versions
  * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU General Public License version 3.
+ * Section 5 of the GNU Affero General Public License version 3.
  *
- * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the Zurmo
  * logo and Zurmo copyright notice. If the display of the logo is not reasonably
  * feasible for technical reasons, the Appropriate Legal Notices must display the words
  * Copyright Zurmo Inc. 2013. All rights reserved.
  ********************************************************************************/
-* {
+.zurmo * {
   margin: 0;
   padding: 0;
 }
@@ -64,6 +64,11 @@ a.z-button,
 .float-bar,
 .hasDetailsFlyout ul,
 .stacked-list td div.checkbox-column ~ div,
+.filters-bar #MashableInboxForm_filteredBy_area,
+.filters-bar #MashableInboxForm_optionForModel_area,
+.filters-bar .latest-activity-toolbar,
+.filters-bar .filter-portlet-model-bar,
+.filters-bar,
 .search-form-tools input[type="submit"],
 a.search-form-tools input[type="submit"],
 .default-btn .search-form-tools input[type="submit"],
@@ -75,11 +80,16 @@ a.search-form-tools input[type="submit"],
 #delete-form,
 .right-side-edit-view-panel,
 .after-form-details-content,
+#inline-edit-form .view-toolbar-container,
 .pager,
 .pager ul,
 .pager li,
 .LatestActivitiesListView .activity-item,
 .LatestActivitiesView .activity-item,
+#MashableInboxForm_filteredBy_area,
+#MashableInboxForm_optionForModel_area,
+.latest-activity-toolbar,
+.filter-portlet-model-bar,
 #progressBar-links a,
 a#progressBar-links a,
 .default-btn #progressBar-links a,
@@ -198,13 +208,21 @@ a.designer-toolbar input[type="submit"],
 .AppContent.ImportWizardView #addExtraColumnButton a.designer-toolbar input[type="submit"],
 .addfileinput-button span .designer-toolbar input[type="submit"],
 .addfileinput-button span a.designer-toolbar input[type="submit"],
+#contactStatesData_AddInputButton,
 #customFieldDataData_AddInputButton,
+a#contactStatesData_AddInputButton,
 a#customFieldDataData_AddInputButton,
+.default-btn #contactStatesData_AddInputButton,
 .default-btn #customFieldDataData_AddInputButton,
+.default-btn a#contactStatesData_AddInputButton,
 .default-btn a#customFieldDataData_AddInputButton,
+.AppContent.ImportWizardView #addExtraColumnButton #contactStatesData_AddInputButton,
 .AppContent.ImportWizardView #addExtraColumnButton #customFieldDataData_AddInputButton,
+.AppContent.ImportWizardView #addExtraColumnButton a#contactStatesData_AddInputButton,
 .AppContent.ImportWizardView #addExtraColumnButton a#customFieldDataData_AddInputButton,
+.addfileinput-button span #contactStatesData_AddInputButton,
 .addfileinput-button span #customFieldDataData_AddInputButton,
+.addfileinput-button span a#contactStatesData_AddInputButton,
 .addfileinput-button span a#customFieldDataData_AddInputButton,
 .ModalGameNotification a,
 a.ModalGameNotification a,
@@ -227,6 +245,7 @@ a.ModalGameNotification a,
 .dynamic-row-field,
 .value-data,
 .report-runtime-availability,
+#RuntimeFiltersForPortletView .view-toolbar-container,
 .hasDrillDownContent,
 .first-series-and-range-area > div,
 .second-series-and-range-area > div,
@@ -248,7 +267,23 @@ a.ModalGameNotification a,
 .tabs-container,
 .email-template-content,
 .tabs-container > .tab,
-.email-template-content > .tab {
+.email-template-content > .tab,
+.autoresponder-combined-content .big-spinner,
+.email-template-combined-content .big-spinner,
+.email-template-content .big-spinner,
+#marketing-intro-steps > div,
+#marketing-intro-steps h3,
+#marketing-intro-steps p,
+.continuum > div,
+.continuum .email-recipient-stage-status,
+#kanban-board,
+#kanban-board .drop-zone-container,
+#kanban-board .drop-zone,
+.kanban-column,
+.kanban-card > div,
+.webform-embed-code textarea,
+#business-card-buttons > div,
+#business-card-buttons a {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -309,7 +344,13 @@ a.ModalGameNotification a,
 #edit-form,
 #delete-form,
 .right-side-edit-view-panel,
-.pager ul {
+.pager ul,
+#MarketingListsExternalActionsPageView > .GridView,
+#MarketingListsManageSubscriptionsPageView > .GridView,
+#MarketingListsExternalActionsPageView .Warning,
+#MarketingListsManageSubscriptionsPageView .Warning,
+#kanban-board,
+#ContactWebFormEditAndDetailsView .ui-sortable {
   zoom: 1;
 }
 .clearfix:before,
@@ -317,7 +358,13 @@ a.ModalGameNotification a,
 #edit-form:before,
 #delete-form:before,
 .right-side-edit-view-panel:before,
-.pager ul:before {
+.pager ul:before,
+#MarketingListsExternalActionsPageView > .GridView:before,
+#MarketingListsManageSubscriptionsPageView > .GridView:before,
+#MarketingListsExternalActionsPageView .Warning:before,
+#MarketingListsManageSubscriptionsPageView .Warning:before,
+#kanban-board:before,
+#ContactWebFormEditAndDetailsView .ui-sortable:before {
   content: "";
   display: table;
 }
@@ -326,7 +373,13 @@ a.ModalGameNotification a,
 #edit-form:after,
 #delete-form:after,
 .right-side-edit-view-panel:after,
-.pager ul:after {
+.pager ul:after,
+#MarketingListsExternalActionsPageView > .GridView:after,
+#MarketingListsManageSubscriptionsPageView > .GridView:after,
+#MarketingListsExternalActionsPageView .Warning:after,
+#MarketingListsManageSubscriptionsPageView .Warning:after,
+#kanban-board:after,
+#ContactWebFormEditAndDetailsView .ui-sortable:after {
   content: "";
   display: table;
   clear: both;
@@ -352,6 +405,7 @@ a.ModalGameNotification a,
   -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
   box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12);
+  white-space: nowrap;
 }
 .modal-view-toolbar a,
 .modal-view-toolbar input[type="submit"],
@@ -388,7 +442,9 @@ a.ui-datepicker .ui-datepicker-current,
 a.ui-datepicker .ui-datepicker-close,
 .designer-toolbar input[type="submit"],
 a.designer-toolbar input[type="submit"],
+#contactStatesData_AddInputButton,
 #customFieldDataData_AddInputButton,
+a#contactStatesData_AddInputButton,
 a#customFieldDataData_AddInputButton,
 .ModalGameNotification a,
 a.ModalGameNotification a {
@@ -454,7 +510,9 @@ a.ui-datepicker .ui-datepicker-current:before,
 a.ui-datepicker .ui-datepicker-close:before,
 .designer-toolbar input[type="submit"]:before,
 a.designer-toolbar input[type="submit"]:before,
+#contactStatesData_AddInputButton:before,
 #customFieldDataData_AddInputButton:before,
+a#contactStatesData_AddInputButton:before,
 a#customFieldDataData_AddInputButton:before,
 .ModalGameNotification a:before,
 a.ModalGameNotification a:before {
@@ -496,7 +554,9 @@ a.ui-datepicker .ui-datepicker-current:after,
 a.ui-datepicker .ui-datepicker-close:after,
 .designer-toolbar input[type="submit"]:after,
 a.designer-toolbar input[type="submit"]:after,
+#contactStatesData_AddInputButton:after,
 #customFieldDataData_AddInputButton:after,
+a#contactStatesData_AddInputButton:after,
 a#customFieldDataData_AddInputButton:after,
 .ModalGameNotification a:after,
 a.ModalGameNotification a:after {
@@ -539,7 +599,9 @@ a.ui-datepicker .ui-datepicker-current.attachLoading.z-button,
 a.ui-datepicker .ui-datepicker-close.attachLoading.z-button,
 .designer-toolbar input[type="submit"].attachLoading.z-button,
 a.designer-toolbar input[type="submit"].attachLoading.z-button,
+#contactStatesData_AddInputButton.attachLoading.z-button,
 #customFieldDataData_AddInputButton.attachLoading.z-button,
+a#contactStatesData_AddInputButton.attachLoading.z-button,
 a#customFieldDataData_AddInputButton.attachLoading.z-button,
 .ModalGameNotification a.attachLoading.z-button,
 a.ModalGameNotification a.attachLoading.z-button {
@@ -580,7 +642,9 @@ a.ui-datepicker .ui-datepicker-current:not(.attachLoading) .z-label,
 a.ui-datepicker .ui-datepicker-close:not(.attachLoading) .z-label,
 .designer-toolbar input[type="submit"]:not(.attachLoading) .z-label,
 a.designer-toolbar input[type="submit"]:not(.attachLoading) .z-label,
+#contactStatesData_AddInputButton:not(.attachLoading) .z-label,
 #customFieldDataData_AddInputButton:not(.attachLoading) .z-label,
+a#contactStatesData_AddInputButton:not(.attachLoading) .z-label,
 a#customFieldDataData_AddInputButton:not(.attachLoading) .z-label,
 .ModalGameNotification a:not(.attachLoading) .z-label,
 a.ModalGameNotification a:not(.attachLoading) .z-label {
@@ -684,6 +748,7 @@ table.configuration-list td:last-child a.loading .z-spinner,
 .ui-datepicker .ui-datepicker-current.loading .z-spinner,
 .ui-datepicker .ui-datepicker-close.loading .z-spinner,
 .designer-toolbar input[type="submit"].loading .z-spinner,
+#contactStatesData_AddInputButton.loading .z-spinner,
 #customFieldDataData_AddInputButton.loading .z-spinner,
 .ModalGameNotification a.loading .z-spinner {
   display: inline-block;
@@ -704,6 +769,7 @@ table.configuration-list td:last-child a.loading .z-icon,
 .ui-datepicker .ui-datepicker-current.loading .z-icon,
 .ui-datepicker .ui-datepicker-close.loading .z-icon,
 .designer-toolbar input[type="submit"].loading .z-icon,
+#contactStatesData_AddInputButton.loading .z-icon,
 #customFieldDataData_AddInputButton.loading .z-icon,
 .ModalGameNotification a.loading .z-icon {
   display: none;
@@ -862,6 +928,7 @@ body.blue .xhtml-validation-info,
 body.blue .performance-info,
 body.blue tr:hover .pencil,
 body.blue .ui-dialog .ui-dialog-title div.wide.form a,
+body.blue #kanban-board-options-link,
 body.blue #select-list-attributes-link,
 body.blue #more-search-linkmodal,
 body.blue #more-search-link,
@@ -906,7 +973,8 @@ body.blue .showAllCommentsLink,
 body.blue .treeview span:hover .z-action-link,
 body.blue .drop-zone,
 body.blue .missing-chart,
-body.blue a.active-tab {
+body.blue a.active-tab,
+body.blue .edit-autoresponder-link {
   color: #282a76;
 }
 body.blue #notifications-flyout .single-notification h4,
@@ -916,6 +984,8 @@ body.blue .view-toolbar a.active,
 body.blue .view-toolbar a.active span,
 body.blue .portlet-toolbar .icon-delete:before,
 body.blue .portlet-toolbar .icon-edit:before,
+body.blue .mini-pillbox a:hover,
+body.blue .mini-pillbox a.active,
 body.blue #StickyListMenu > li > a:hover > span,
 body.blue .addfileinput-button:hover span .pager a:hover:before,
 body.blue .pager a:hover:after,
@@ -929,8 +999,10 @@ body.blue .configuration-list li a:hover span:before,
 body.blue .configuration-list td:last-child a:hover,
 body.blue .configuration-list td:last-child a:hover span:before,
 body.blue .addfileinput-button:hover span,
-body.blue #HomeDashboardPortletSelectionView li span,
+body.blue .available-portlets span,
 body.blue .hide-welcome span,
+body.blue .hide-marketing-intro span,
+body.blue #kanban-board-options-link:hover,
 body.blue #more-search-link:hover,
 body.blue #select-list-attributes-link:hover {
   color: #7cb830;
@@ -939,7 +1011,8 @@ body.blue .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.blue #AboutView p a,
 body.blue #AboutView ul a,
 body.blue .back-to-app-menu-item span,
-body.blue .breadcrumbs a {
+body.blue .breadcrumbs a,
+body.blue .StepsAndProgressBarForWizardView .current-step {
   color: #282a76 !important;
 }
 body.blue .portlet-toolbar .icon-create:hover,
@@ -959,14 +1032,16 @@ body.blue #clear-search-link,
 body.blue #show-filters-structure-div-link,
 body.blue .filters-bar .ui-state-active,
 body.blue .filters-bar label:hover,
-body.blue #clear-search-linkmodal {
+body.blue #clear-search-linkmodal,
+body.blue .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #282a76;
 }
 body.blue .latest-activity-toolbar label:hover,
 body.blue .filter-portlet-model-bar label:hover,
 body.blue .latest-activity-toolbar .ui-state-active,
 body.blue .filter-portlet-model-bar .ui-state-active,
-body.blue #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.blue #clear-search-link,
+body.blue #MashableInboxForm_filteredBy_area label:hover,
 body.blue #MashableInboxForm_optionForModel_area label:hover,
 body.blue #MashableInboxForm_filteredBy_area .ui-state-active,
 body.blue #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -987,7 +1062,8 @@ body.blue #StickyListMenu ul a:hover,
 body.blue .toolbar-mbmenu .options-menu ul a:hover,
 body.blue #ShortcutsMenu ul a:hover,
 body.blue .view-toolbar .parent > ul a:hover,
-body.blue .edit-row-menu ul a:hover {
+body.blue .edit-row-menu ul a:hover,
+body.blue .edit-portlet-menu ul a:hover {
   background-color: #7cb830 !important;
   color: #fff !important;
 }
@@ -1426,6 +1502,7 @@ body.brown .xhtml-validation-info,
 body.brown .performance-info,
 body.brown tr:hover .pencil,
 body.brown .ui-dialog .ui-dialog-title div.wide.form a,
+body.brown #kanban-board-options-link,
 body.brown #select-list-attributes-link,
 body.brown #more-search-linkmodal,
 body.brown #more-search-link,
@@ -1470,7 +1547,8 @@ body.brown .showAllCommentsLink,
 body.brown .treeview span:hover .z-action-link,
 body.brown .drop-zone,
 body.brown .missing-chart,
-body.brown a.active-tab {
+body.brown a.active-tab,
+body.brown .edit-autoresponder-link {
   color: #547980;
 }
 body.brown #notifications-flyout .single-notification h4,
@@ -1480,6 +1558,8 @@ body.brown .view-toolbar a.active,
 body.brown .view-toolbar a.active span,
 body.brown .portlet-toolbar .icon-delete:before,
 body.brown .portlet-toolbar .icon-edit:before,
+body.brown .mini-pillbox a:hover,
+body.brown .mini-pillbox a.active,
 body.brown #StickyListMenu > li > a:hover > span,
 body.brown .addfileinput-button:hover span .pager a:hover:before,
 body.brown .pager a:hover:after,
@@ -1493,8 +1573,10 @@ body.brown .configuration-list li a:hover span:before,
 body.brown .configuration-list td:last-child a:hover,
 body.brown .configuration-list td:last-child a:hover span:before,
 body.brown .addfileinput-button:hover span,
-body.brown #HomeDashboardPortletSelectionView li span,
+body.brown .available-portlets span,
 body.brown .hide-welcome span,
+body.brown .hide-marketing-intro span,
+body.brown #kanban-board-options-link:hover,
 body.brown #more-search-link:hover,
 body.brown #select-list-attributes-link:hover {
   color: #b88f30;
@@ -1503,7 +1585,8 @@ body.brown .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.brown #AboutView p a,
 body.brown #AboutView ul a,
 body.brown .back-to-app-menu-item span,
-body.brown .breadcrumbs a {
+body.brown .breadcrumbs a,
+body.brown .StepsAndProgressBarForWizardView .current-step {
   color: #547980 !important;
 }
 body.brown .portlet-toolbar .icon-create:hover,
@@ -1523,14 +1606,16 @@ body.brown #clear-search-link,
 body.brown #show-filters-structure-div-link,
 body.brown .filters-bar .ui-state-active,
 body.brown .filters-bar label:hover,
-body.brown #clear-search-linkmodal {
+body.brown #clear-search-linkmodal,
+body.brown .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #547980;
 }
 body.brown .latest-activity-toolbar label:hover,
 body.brown .filter-portlet-model-bar label:hover,
 body.brown .latest-activity-toolbar .ui-state-active,
 body.brown .filter-portlet-model-bar .ui-state-active,
-body.brown #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.brown #clear-search-link,
+body.brown #MashableInboxForm_filteredBy_area label:hover,
 body.brown #MashableInboxForm_optionForModel_area label:hover,
 body.brown #MashableInboxForm_filteredBy_area .ui-state-active,
 body.brown #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -1551,7 +1636,8 @@ body.brown #StickyListMenu ul a:hover,
 body.brown .toolbar-mbmenu .options-menu ul a:hover,
 body.brown #ShortcutsMenu ul a:hover,
 body.brown .view-toolbar .parent > ul a:hover,
-body.brown .edit-row-menu ul a:hover {
+body.brown .edit-row-menu ul a:hover,
+body.brown .edit-portlet-menu ul a:hover {
   background-color: #b88f30 !important;
   color: #fff !important;
 }
@@ -1990,6 +2076,7 @@ body.lime .xhtml-validation-info,
 body.lime .performance-info,
 body.lime tr:hover .pencil,
 body.lime .ui-dialog .ui-dialog-title div.wide.form a,
+body.lime #kanban-board-options-link,
 body.lime #select-list-attributes-link,
 body.lime #more-search-linkmodal,
 body.lime #more-search-link,
@@ -2034,7 +2121,8 @@ body.lime .showAllCommentsLink,
 body.lime .treeview span:hover .z-action-link,
 body.lime .drop-zone,
 body.lime .missing-chart,
-body.lime a.active-tab {
+body.lime a.active-tab,
+body.lime .edit-autoresponder-link {
   color: #2b434f;
 }
 body.lime #notifications-flyout .single-notification h4,
@@ -2044,6 +2132,8 @@ body.lime .view-toolbar a.active,
 body.lime .view-toolbar a.active span,
 body.lime .portlet-toolbar .icon-delete:before,
 body.lime .portlet-toolbar .icon-edit:before,
+body.lime .mini-pillbox a:hover,
+body.lime .mini-pillbox a.active,
 body.lime #StickyListMenu > li > a:hover > span,
 body.lime .addfileinput-button:hover span .pager a:hover:before,
 body.lime .pager a:hover:after,
@@ -2057,8 +2147,10 @@ body.lime .configuration-list li a:hover span:before,
 body.lime .configuration-list td:last-child a:hover,
 body.lime .configuration-list td:last-child a:hover span:before,
 body.lime .addfileinput-button:hover span,
-body.lime #HomeDashboardPortletSelectionView li span,
+body.lime .available-portlets span,
 body.lime .hide-welcome span,
+body.lime .hide-marketing-intro span,
+body.lime #kanban-board-options-link:hover,
 body.lime #more-search-link:hover,
 body.lime #select-list-attributes-link:hover {
   color: #bcc98e;
@@ -2067,7 +2159,8 @@ body.lime .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.lime #AboutView p a,
 body.lime #AboutView ul a,
 body.lime .back-to-app-menu-item span,
-body.lime .breadcrumbs a {
+body.lime .breadcrumbs a,
+body.lime .StepsAndProgressBarForWizardView .current-step {
   color: #2b434f !important;
 }
 body.lime .portlet-toolbar .icon-create:hover,
@@ -2087,14 +2180,16 @@ body.lime #clear-search-link,
 body.lime #show-filters-structure-div-link,
 body.lime .filters-bar .ui-state-active,
 body.lime .filters-bar label:hover,
-body.lime #clear-search-linkmodal {
+body.lime #clear-search-linkmodal,
+body.lime .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #2b434f;
 }
 body.lime .latest-activity-toolbar label:hover,
 body.lime .filter-portlet-model-bar label:hover,
 body.lime .latest-activity-toolbar .ui-state-active,
 body.lime .filter-portlet-model-bar .ui-state-active,
-body.lime #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.lime #clear-search-link,
+body.lime #MashableInboxForm_filteredBy_area label:hover,
 body.lime #MashableInboxForm_optionForModel_area label:hover,
 body.lime #MashableInboxForm_filteredBy_area .ui-state-active,
 body.lime #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -2115,7 +2210,8 @@ body.lime #StickyListMenu ul a:hover,
 body.lime .toolbar-mbmenu .options-menu ul a:hover,
 body.lime #ShortcutsMenu ul a:hover,
 body.lime .view-toolbar .parent > ul a:hover,
-body.lime .edit-row-menu ul a:hover {
+body.lime .edit-row-menu ul a:hover,
+body.lime .edit-portlet-menu ul a:hover {
   background-color: #bcc98e !important;
   color: #fff !important;
 }
@@ -2554,6 +2650,7 @@ body.cherry .xhtml-validation-info,
 body.cherry .performance-info,
 body.cherry tr:hover .pencil,
 body.cherry .ui-dialog .ui-dialog-title div.wide.form a,
+body.cherry #kanban-board-options-link,
 body.cherry #select-list-attributes-link,
 body.cherry #more-search-linkmodal,
 body.cherry #more-search-link,
@@ -2598,7 +2695,8 @@ body.cherry .showAllCommentsLink,
 body.cherry .treeview span:hover .z-action-link,
 body.cherry .drop-zone,
 body.cherry .missing-chart,
-body.cherry a.active-tab {
+body.cherry a.active-tab,
+body.cherry .edit-autoresponder-link {
   color: #6c8092;
 }
 body.cherry #notifications-flyout .single-notification h4,
@@ -2608,6 +2706,8 @@ body.cherry .view-toolbar a.active,
 body.cherry .view-toolbar a.active span,
 body.cherry .portlet-toolbar .icon-delete:before,
 body.cherry .portlet-toolbar .icon-edit:before,
+body.cherry .mini-pillbox a:hover,
+body.cherry .mini-pillbox a.active,
 body.cherry #StickyListMenu > li > a:hover > span,
 body.cherry .addfileinput-button:hover span .pager a:hover:before,
 body.cherry .pager a:hover:after,
@@ -2621,8 +2721,10 @@ body.cherry .configuration-list li a:hover span:before,
 body.cherry .configuration-list td:last-child a:hover,
 body.cherry .configuration-list td:last-child a:hover span:before,
 body.cherry .addfileinput-button:hover span,
-body.cherry #HomeDashboardPortletSelectionView li span,
+body.cherry .available-portlets span,
 body.cherry .hide-welcome span,
+body.cherry .hide-marketing-intro span,
+body.cherry #kanban-board-options-link:hover,
 body.cherry #more-search-link:hover,
 body.cherry #select-list-attributes-link:hover {
   color: #933140;
@@ -2631,7 +2733,8 @@ body.cherry .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.cherry #AboutView p a,
 body.cherry #AboutView ul a,
 body.cherry .back-to-app-menu-item span,
-body.cherry .breadcrumbs a {
+body.cherry .breadcrumbs a,
+body.cherry .StepsAndProgressBarForWizardView .current-step {
   color: #6c8092 !important;
 }
 body.cherry .portlet-toolbar .icon-create:hover,
@@ -2651,14 +2754,16 @@ body.cherry #clear-search-link,
 body.cherry #show-filters-structure-div-link,
 body.cherry .filters-bar .ui-state-active,
 body.cherry .filters-bar label:hover,
-body.cherry #clear-search-linkmodal {
+body.cherry #clear-search-linkmodal,
+body.cherry .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #6c8092;
 }
 body.cherry .latest-activity-toolbar label:hover,
 body.cherry .filter-portlet-model-bar label:hover,
 body.cherry .latest-activity-toolbar .ui-state-active,
 body.cherry .filter-portlet-model-bar .ui-state-active,
-body.cherry #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.cherry #clear-search-link,
+body.cherry #MashableInboxForm_filteredBy_area label:hover,
 body.cherry #MashableInboxForm_optionForModel_area label:hover,
 body.cherry #MashableInboxForm_filteredBy_area .ui-state-active,
 body.cherry #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -2679,7 +2784,8 @@ body.cherry #StickyListMenu ul a:hover,
 body.cherry .toolbar-mbmenu .options-menu ul a:hover,
 body.cherry #ShortcutsMenu ul a:hover,
 body.cherry .view-toolbar .parent > ul a:hover,
-body.cherry .edit-row-menu ul a:hover {
+body.cherry .edit-row-menu ul a:hover,
+body.cherry .edit-portlet-menu ul a:hover {
   background-color: #933140 !important;
   color: #fff !important;
 }
@@ -3118,6 +3224,7 @@ body.turquoise .xhtml-validation-info,
 body.turquoise .performance-info,
 body.turquoise tr:hover .pencil,
 body.turquoise .ui-dialog .ui-dialog-title div.wide.form a,
+body.turquoise #kanban-board-options-link,
 body.turquoise #select-list-attributes-link,
 body.turquoise #more-search-linkmodal,
 body.turquoise #more-search-link,
@@ -3162,7 +3269,8 @@ body.turquoise .showAllCommentsLink,
 body.turquoise .treeview span:hover .z-action-link,
 body.turquoise .drop-zone,
 body.turquoise .missing-chart,
-body.turquoise a.active-tab {
+body.turquoise a.active-tab,
+body.turquoise .edit-autoresponder-link {
   color: #447799;
 }
 body.turquoise #notifications-flyout .single-notification h4,
@@ -3172,6 +3280,8 @@ body.turquoise .view-toolbar a.active,
 body.turquoise .view-toolbar a.active span,
 body.turquoise .portlet-toolbar .icon-delete:before,
 body.turquoise .portlet-toolbar .icon-edit:before,
+body.turquoise .mini-pillbox a:hover,
+body.turquoise .mini-pillbox a.active,
 body.turquoise #StickyListMenu > li > a:hover > span,
 body.turquoise .addfileinput-button:hover span .pager a:hover:before,
 body.turquoise .pager a:hover:after,
@@ -3185,8 +3295,10 @@ body.turquoise .configuration-list li a:hover span:before,
 body.turquoise .configuration-list td:last-child a:hover,
 body.turquoise .configuration-list td:last-child a:hover span:before,
 body.turquoise .addfileinput-button:hover span,
-body.turquoise #HomeDashboardPortletSelectionView li span,
+body.turquoise .available-portlets span,
 body.turquoise .hide-welcome span,
+body.turquoise .hide-marketing-intro span,
+body.turquoise #kanban-board-options-link:hover,
 body.turquoise #more-search-link:hover,
 body.turquoise #select-list-attributes-link:hover {
   color: #44bbcc;
@@ -3195,7 +3307,8 @@ body.turquoise .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.turquoise #AboutView p a,
 body.turquoise #AboutView ul a,
 body.turquoise .back-to-app-menu-item span,
-body.turquoise .breadcrumbs a {
+body.turquoise .breadcrumbs a,
+body.turquoise .StepsAndProgressBarForWizardView .current-step {
   color: #447799 !important;
 }
 body.turquoise .portlet-toolbar .icon-create:hover,
@@ -3215,14 +3328,16 @@ body.turquoise #clear-search-link,
 body.turquoise #show-filters-structure-div-link,
 body.turquoise .filters-bar .ui-state-active,
 body.turquoise .filters-bar label:hover,
-body.turquoise #clear-search-linkmodal {
+body.turquoise #clear-search-linkmodal,
+body.turquoise .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #447799;
 }
 body.turquoise .latest-activity-toolbar label:hover,
 body.turquoise .filter-portlet-model-bar label:hover,
 body.turquoise .latest-activity-toolbar .ui-state-active,
 body.turquoise .filter-portlet-model-bar .ui-state-active,
-body.turquoise #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.turquoise #clear-search-link,
+body.turquoise #MashableInboxForm_filteredBy_area label:hover,
 body.turquoise #MashableInboxForm_optionForModel_area label:hover,
 body.turquoise #MashableInboxForm_filteredBy_area .ui-state-active,
 body.turquoise #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -3243,7 +3358,8 @@ body.turquoise #StickyListMenu ul a:hover,
 body.turquoise .toolbar-mbmenu .options-menu ul a:hover,
 body.turquoise #ShortcutsMenu ul a:hover,
 body.turquoise .view-toolbar .parent > ul a:hover,
-body.turquoise .edit-row-menu ul a:hover {
+body.turquoise .edit-row-menu ul a:hover,
+body.turquoise .edit-portlet-menu ul a:hover {
   background-color: #44bbcc !important;
   color: #fff !important;
 }
@@ -3682,6 +3798,7 @@ body.violet .xhtml-validation-info,
 body.violet .performance-info,
 body.violet tr:hover .pencil,
 body.violet .ui-dialog .ui-dialog-title div.wide.form a,
+body.violet #kanban-board-options-link,
 body.violet #select-list-attributes-link,
 body.violet #more-search-linkmodal,
 body.violet #more-search-link,
@@ -3726,7 +3843,8 @@ body.violet .showAllCommentsLink,
 body.violet .treeview span:hover .z-action-link,
 body.violet .drop-zone,
 body.violet .missing-chart,
-body.violet a.active-tab {
+body.violet a.active-tab,
+body.violet .edit-autoresponder-link {
   color: #4a3970;
 }
 body.violet #notifications-flyout .single-notification h4,
@@ -3736,6 +3854,8 @@ body.violet .view-toolbar a.active,
 body.violet .view-toolbar a.active span,
 body.violet .portlet-toolbar .icon-delete:before,
 body.violet .portlet-toolbar .icon-edit:before,
+body.violet .mini-pillbox a:hover,
+body.violet .mini-pillbox a.active,
 body.violet #StickyListMenu > li > a:hover > span,
 body.violet .addfileinput-button:hover span .pager a:hover:before,
 body.violet .pager a:hover:after,
@@ -3749,8 +3869,10 @@ body.violet .configuration-list li a:hover span:before,
 body.violet .configuration-list td:last-child a:hover,
 body.violet .configuration-list td:last-child a:hover span:before,
 body.violet .addfileinput-button:hover span,
-body.violet #HomeDashboardPortletSelectionView li span,
+body.violet .available-portlets span,
 body.violet .hide-welcome span,
+body.violet .hide-marketing-intro span,
+body.violet #kanban-board-options-link:hover,
 body.violet #more-search-link:hover,
 body.violet #select-list-attributes-link:hover {
   color: #91a1dc;
@@ -3759,7 +3881,8 @@ body.violet .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.violet #AboutView p a,
 body.violet #AboutView ul a,
 body.violet .back-to-app-menu-item span,
-body.violet .breadcrumbs a {
+body.violet .breadcrumbs a,
+body.violet .StepsAndProgressBarForWizardView .current-step {
   color: #4a3970 !important;
 }
 body.violet .portlet-toolbar .icon-create:hover,
@@ -3779,14 +3902,16 @@ body.violet #clear-search-link,
 body.violet #show-filters-structure-div-link,
 body.violet .filters-bar .ui-state-active,
 body.violet .filters-bar label:hover,
-body.violet #clear-search-linkmodal {
+body.violet #clear-search-linkmodal,
+body.violet .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #4a3970;
 }
 body.violet .latest-activity-toolbar label:hover,
 body.violet .filter-portlet-model-bar label:hover,
 body.violet .latest-activity-toolbar .ui-state-active,
 body.violet .filter-portlet-model-bar .ui-state-active,
-body.violet #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.violet #clear-search-link,
+body.violet #MashableInboxForm_filteredBy_area label:hover,
 body.violet #MashableInboxForm_optionForModel_area label:hover,
 body.violet #MashableInboxForm_filteredBy_area .ui-state-active,
 body.violet #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -3807,7 +3932,8 @@ body.violet #StickyListMenu ul a:hover,
 body.violet .toolbar-mbmenu .options-menu ul a:hover,
 body.violet #ShortcutsMenu ul a:hover,
 body.violet .view-toolbar .parent > ul a:hover,
-body.violet .edit-row-menu ul a:hover {
+body.violet .edit-row-menu ul a:hover,
+body.violet .edit-portlet-menu ul a:hover {
   background-color: #91a1dc !important;
   color: #fff !important;
 }
@@ -4246,6 +4372,7 @@ body.honey .xhtml-validation-info,
 body.honey .performance-info,
 body.honey tr:hover .pencil,
 body.honey .ui-dialog .ui-dialog-title div.wide.form a,
+body.honey #kanban-board-options-link,
 body.honey #select-list-attributes-link,
 body.honey #more-search-linkmodal,
 body.honey #more-search-link,
@@ -4290,7 +4417,8 @@ body.honey .showAllCommentsLink,
 body.honey .treeview span:hover .z-action-link,
 body.honey .drop-zone,
 body.honey .missing-chart,
-body.honey a.active-tab {
+body.honey a.active-tab,
+body.honey .edit-autoresponder-link {
   color: #46201c;
 }
 body.honey #notifications-flyout .single-notification h4,
@@ -4300,6 +4428,8 @@ body.honey .view-toolbar a.active,
 body.honey .view-toolbar a.active span,
 body.honey .portlet-toolbar .icon-delete:before,
 body.honey .portlet-toolbar .icon-edit:before,
+body.honey .mini-pillbox a:hover,
+body.honey .mini-pillbox a.active,
 body.honey #StickyListMenu > li > a:hover > span,
 body.honey .addfileinput-button:hover span .pager a:hover:before,
 body.honey .pager a:hover:after,
@@ -4313,8 +4443,10 @@ body.honey .configuration-list li a:hover span:before,
 body.honey .configuration-list td:last-child a:hover,
 body.honey .configuration-list td:last-child a:hover span:before,
 body.honey .addfileinput-button:hover span,
-body.honey #HomeDashboardPortletSelectionView li span,
+body.honey .available-portlets span,
 body.honey .hide-welcome span,
+body.honey .hide-marketing-intro span,
+body.honey #kanban-board-options-link:hover,
 body.honey #more-search-link:hover,
 body.honey #select-list-attributes-link:hover {
   color: #abbc42;
@@ -4323,7 +4455,8 @@ body.honey .dynamic-search-row .remove-extra-dynamic-search-row-link:hover,
 body.honey #AboutView p a,
 body.honey #AboutView ul a,
 body.honey .back-to-app-menu-item span,
-body.honey .breadcrumbs a {
+body.honey .breadcrumbs a,
+body.honey .StepsAndProgressBarForWizardView .current-step {
   color: #46201c !important;
 }
 body.honey .portlet-toolbar .icon-create:hover,
@@ -4343,14 +4476,16 @@ body.honey #clear-search-link,
 body.honey #show-filters-structure-div-link,
 body.honey .filters-bar .ui-state-active,
 body.honey .filters-bar label:hover,
-body.honey #clear-search-linkmodal {
+body.honey #clear-search-linkmodal,
+body.honey .StepsAndProgressBarForWizardView .progress-bar {
   background-color: #46201c;
 }
 body.honey .latest-activity-toolbar label:hover,
 body.honey .filter-portlet-model-bar label:hover,
 body.honey .latest-activity-toolbar .ui-state-active,
 body.honey .filter-portlet-model-bar .ui-state-active,
-body.honey #clear-search-link #MashableInboxForm_filteredBy_area label:hover,
+body.honey #clear-search-link,
+body.honey #MashableInboxForm_filteredBy_area label:hover,
 body.honey #MashableInboxForm_optionForModel_area label:hover,
 body.honey #MashableInboxForm_filteredBy_area .ui-state-active,
 body.honey #MashableInboxForm_optionForModel_area .ui-state-active {
@@ -4371,7 +4506,8 @@ body.honey #StickyListMenu ul a:hover,
 body.honey .toolbar-mbmenu .options-menu ul a:hover,
 body.honey #ShortcutsMenu ul a:hover,
 body.honey .view-toolbar .parent > ul a:hover,
-body.honey .edit-row-menu ul a:hover {
+body.honey .edit-row-menu ul a:hover,
+body.honey .edit-portlet-menu ul a:hover {
   background-color: #abbc42 !important;
   color: #fff !important;
 }
@@ -4738,7 +4874,7 @@ body.honey .action-reject:hover .z-label {
 .color-swatch.honey .theme-color-3 {
   background: #582823;
 }
-body.light-noise-diagonal,
+.background-texture-1 body.light-noise-diagonal,
 .texture-swatch.light-noise-diagonal .background-texture-1 {
   background: url(../patterns/light-noise-diagonal/light-noise-diagonal.png) left top repeat;
 }
@@ -4762,13 +4898,18 @@ body.light-toast,
 .texture-swatch.light-toast .background-texture-1 {
   background: url(../patterns/light-toast/light-toast.png) left top repeat;
 }
-/*END COLOR SCHEME/THEME*/@font-face {
-  font-family: 'ZurmoGamificationSymblyReguRg';
-  src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');
-  src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/zurmogamificationsymblyregular-regular-webfont.woff') format('woff'), url('../fonts/zurmogamificationsymblyregular-regular-webfont.ttf') format('truetype'), url('../fonts/zurmogamificationsymblyregular-regular-webfont.svg#ZurmoGamificationSymblyReguRg') format('svg');
-  font-weight: normal;
-  font-style: normal;
+/*END COLOR SCHEME/THEME*//*
+@font-face {
+	font-family: 'ZurmoGamificationSymblyReguRg';
+	src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');
+	src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/zurmogamificationsymblyregular-regular-webfont.woff') format('woff'),
+	url('../fonts/zurmogamificationsymblyregular-regular-webfont.ttf') format('truetype'),
+	url('../fonts/zurmogamificationsymblyregular-regular-webfont.svg#ZurmoGamificationSymblyReguRg') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
+*/
 /*=Variables*/
 .strong {
   font-weight: bold;
@@ -4791,12 +4932,18 @@ body.light-toast,
   pointer-events: none;
   background: #EFEFEF;
 }
-html,
-body {
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+html.zurmo,
+html.zurmo body {
   background: #DDDEDE;
   min-height: 100%;
 }
-body {
+.zurmo body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   color: #545454;
@@ -4805,20 +4952,20 @@ body {
   -o-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
-a:link,
-a:hover,
-a:active,
-a:visited {
+.zurmo body a:link,
+.zurmo body a:hover,
+.zurmo body a:active,
+.zurmo body a:visited {
   text-decoration: none;
   outline: none;
 }
-a:link img,
-a:hover img,
-a:active img,
-a:visited img {
+.zurmo body a:link img,
+.zurmo body a:hover img,
+.zurmo body a:active img,
+.zurmo body a:visited img {
   border: none;
 }
-a:focus {
+.zurmo body a:focus {
   outline: none;
 }
 /*=HTML5*/
@@ -5014,6 +5161,7 @@ section {
 #ShortcutsMenu ul,
 .view-toolbar .parent > ul,
 .portlet-view-toolbar .parent > ul,
+.edit-portlet-menu ul,
 .edit-row-menu ul {
   border: 1px solid #b6b6b6;
   background-color: #ebebeb;
@@ -5043,6 +5191,7 @@ section {
 #ShortcutsMenu ul li,
 .view-toolbar .parent > ul li,
 .portlet-view-toolbar .parent > ul li,
+.edit-portlet-menu ul li,
 .edit-row-menu ul li {
   line-height: 100%;
 }
@@ -5050,6 +5199,7 @@ section {
 #ShortcutsMenu ul li > a,
 .view-toolbar .parent > ul li > a,
 .portlet-view-toolbar .parent > ul li > a,
+.edit-portlet-menu ul li > a,
 .edit-row-menu ul li > a {
   color: #666;
   font-size: 11px;
@@ -5062,6 +5212,7 @@ section {
 #ShortcutsMenu ul li > a:hover,
 .view-toolbar .parent > ul li > a:hover,
 .portlet-view-toolbar .parent > ul li > a:hover,
+.edit-portlet-menu ul li > a:hover,
 .edit-row-menu ul li > a:hover {
   color: #fff !important;
 }
@@ -5814,26 +5965,22 @@ body > .ui-autocomplete {
 .toggle-hidden-nav-items {
   display: block;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px 0 5px 0;
   margin: 0 0 0 0;
   cursor: pointer;
   position: relative;
-  top: 5px;
+  top: 8px;
 }
 .toggle-hidden-nav-items:after {
-  content: '\00F7';
-  font-weight: normal;
-  font-size: 20px;
-  font-family: "ZurmoGamificationSymblyReguRg";
+  content: "···";
+  font-size: 26px;
+  font-weight: bold;
   line-height: 1;
   -webkit-text-shadow: 0 1px 0 #ffffff;
   -moz-text-shadow: 0 1px 0 #ffffff;
   -o-text-shadow: 0 1px 0 #ffffff;
   -ms-text-shadow: 0 1px 0 #ffffff;
   text-shadow: 0 1px 0 #ffffff;
-}
-.toggle-hidden-nav-items.point-up:after {
-  content: '\00A1';
 }
 /*=Recently Viewed*/
 #RecentlyViewedView {
@@ -6013,6 +6160,19 @@ body > .ui-autocomplete {
 #RecentlyViewedView li.type-WorkflowsModule em:before {
   content: '\20AC';
 }
+#RecentlyViewedView li.type-ProductsModule em:before {
+  content: '\003E';
+}
+#RecentlyViewedView li.type-ProductTemplatesModule em:before {
+  content: '\00AC';
+}
+#RecentlyViewedView li.type-ProductsCategoryModule em:before {
+  content: '\00D7';
+}
+#RecentlyViewedView li.type-CampaignsModule em:before {
+  content: '\002C';
+  font-size: 26px;
+}
 /*=Content*/
 .AppContent {
   -webkit-border-radius: 0 0 5px 5px;
@@ -6111,15 +6271,13 @@ body > .ui-autocomplete {
   z-index: 5;
 }
 /*=dashboard*/
-#HomePageView .AppContent {
-  padding-right: 0;
+#HomeDashboardView .view-toolbar-container {
+  position: relative;
+  z-index: 10;
 }
-#HomePageView .AppContent#DashboardEditView {
-  padding-right: 20px;
-}
-#HomeDashboardView .parent > ul {
-  min-width: 160px;
-  margin-top: 0;
+#HomeDashboardView .juiportlet-columns {
+  position: relative;
+  z-index: 1;
 }
 /*=Inner toolbar*/
 .float-bar {
@@ -6174,10 +6332,27 @@ body > .ui-autocomplete {
   border-top: 1px solid #CCC;
 }
 .view-toolbar-container {
-  width: auto;
   display: inline-block;
   width: 100%;
   position: relative;
+  z-index: 100;
+}
+.widgets-lock {
+  position: relative;
+  margin-top: -37px;
+  margin-bottom: 15px;
+  float: right;
+}
+.widgets-lock .view-toolbar {
+  float: right;
+  margin-bottom: 0 !important;
+}
+.juiportlet-widget-head .view-toolbar-container {
+  float: right;
+  width: auto;
+}
+.juiportlet-widget-head .view-toolbar {
+  margin-bottom: 0;
 }
 .unread-count {
   display: inline-block;
@@ -6211,15 +6386,11 @@ body > .ui-autocomplete {
   border: 1px solid #dfdfdf;
 }
 form .view-toolbar-container,
-.juiportlet-widget .view-toolbar-container,
 .ActionBarForSecurityTreeListView .view-toolbar-container,
 #ActionBarForDesignerModuleView .view-toolbar-container,
 #LeaderboardView .view-toolbar-container,
 #UsersPageView .view-toolbar-container {
   float: none;
-}
-.juiportlet-widget .view-toolbar-container {
-  display: block;
 }
 .view-toolbar,
 .portlet-view-toolbar {
@@ -6288,6 +6459,13 @@ form .view-toolbar-container,
 .portlet-view-toolbar > a:first-child {
   border-left: none;
 }
+.view-toolbar + .view-toolbar {
+  float: right;
+}
+.portlet-view-toolbar {
+  float: right;
+  margin: 0 0 0 0;
+}
 .portlet-view-toolbar .parent {
   position: relative;
 }
@@ -6316,6 +6494,38 @@ form .view-toolbar-container,
 .portlet-view-toolbar > a:active,
 .view-toolbar .parent > a:active,
 .portlet-view-toolbar .parent > a:active {
+  color: #656565;
+  box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #ffffff;
+}
+.mini-pillbox label {
+  margin-right: 10px;
+  font-size: 11px !important;
+  line-height: 26px !important;
+}
+.mini-pillbox .pills {
+  display: inline-block;
+  font-size: 11px;
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  background: url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+}
+.mini-pillbox a {
+  font-weight: 700;
+  position: relative;
+  color: #656565;
+  text-shadow: #fff 0 1px 0;
+  padding: 0 6px;
+  line-height: 24px;
+  display: inline-block;
+  border-left: 1px solid #bababa;
+}
+.mini-pillbox a:first-child {
+  border-left: none;
+}
+.mini-pillbox a:active {
   color: #656565;
   box-shadow: inset 0 10px 10px 4px rgba(153, 153, 153, 0.4), 0 1px 0 0 #ffffff;
 }
@@ -6353,6 +6563,7 @@ form .view-toolbar-container,
   content: "!";
   top: -2px;
 }
+#MarketingCreateLinkActionElement .parent > a:before,
 #MarketingListAddSubscriberLinkActionElement .parent > a:before,
 #MashableInboxCreateDropdown .parent > a:before,
 .icon-create:before {
@@ -6383,8 +6594,44 @@ form .view-toolbar-container,
   position: relative;
   top: -2px;
 }
-#HomeDashboardView .parent > a:before,
-.icon-change-dashborad:before {
+.icon-lock {
+  padding: 0 10px !important;
+}
+.icon-lock:before {
+  content: "F";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+  margin: 0;
+}
+.icon-unlock {
+  padding: 0 10px !important;
+}
+.icon-unlock:before {
+  content: "E";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+  margin: 0;
+}
+.icon-marketing-dashboard:before,
+#ChangeDashboardsMenu .parent > a:before {
   content: "/";
   font-weight: normal;
   font-size: 24px;
@@ -6463,7 +6710,7 @@ form .view-toolbar-container,
 }
 #MassDeleteLinkActionElement .parent > a:before,
 #ListViewDeleteMassActionMenu .parent > a:before {
-  content: "—";
+  content: '\2014';
   font-weight: normal;
   font-size: 22px;
   font-family: "ZurmoGamificationSymblyReguRg";
@@ -6801,7 +7048,7 @@ form .view-toolbar-container,
   top: -2px;
 }
 .icon-combined:before {
-  content: '\00AE';
+  content: '\00A7';
   font-weight: normal;
   font-size: 26px;
   font-family: "ZurmoGamificationSymblyReguRg";
@@ -6898,6 +7145,48 @@ form .view-toolbar-container,
   position: relative;
   top: -1px;
 }
+.icon-products:before {
+  content: '\003E';
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+.icon-catalog-items:before {
+  content: '\00AC';
+  font-weight: normal;
+  font-size: 27px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+.icon-product-categories:before {
+  content: '\00D7';
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
 .icon-mobile:before {
   content: '\2018';
   font-weight: normal;
@@ -6939,6 +7228,75 @@ form .view-toolbar-container,
   vertical-align: middle;
   position: relative;
   top: 0;
+}
+.icon-kanban-board-view-type:before {
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  content: '\00AE';
+}
+.icon-grid-view-type:before {
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  content: '\00B0';
+  top: -2px;
+}
+.icon-marketing-campaigns:before {
+  font-weight: normal;
+  font-size: 28px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  content: '\002C';
+  top: -2px;
+}
+.icon-webforms:before {
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  content: '\003C';
+  top: -2px;
+}
+.icon-webforms-entries:before {
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  content: '\005E';
+  top: -2px;
 }
 /*=Footer*/
 #FooterView {
@@ -7130,10 +7488,13 @@ td {
   margin-top: 2px;
   float: left;
 }
-.stacked-list td:first-child div:first-child {
+.stacked-list tr:first-child > div:first-child {
   font-size: 13px;
   font-weight: bold;
   margin: 0 0 3px 0;
+}
+.juiportlet-widget-content .stacked-list tr:first-child td {
+  border-top: none !important;
 }
 .sort-link:after {
   margin-left: 10px;
@@ -7192,6 +7553,8 @@ tr.even {
 .empty {
   display: block;
   font-size: 11px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.5);
 }
 td.empty {
   display: table-cell !important;
@@ -7295,6 +7658,22 @@ td.empty {
   background-image: linear-gradient(top, #ffffff, #f5f5f5);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
+.form .row-description {
+  display: inline-block;
+  font-style: italic;
+  font-size: 11px;
+  padding: 0 0 5px 0;
+}
+.form .row-description:before {
+  content: "T";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  margin-right: 6px;
+  font-style: normal;
+  position: relative;
+  top: 2px;
+}
 .AppContent label {
   font-size: 12px;
   color: #666;
@@ -7313,9 +7692,8 @@ td.empty {
   margin: 0 10px;
 }
 .portlet-toolbar {
-  position: absolute;
-  top: -35px;
-  right: 8px;
+  float: right;
+  margin-right: 10px;
 }
 .portlet-toolbar a {
   line-height: 25px;
@@ -7907,6 +8285,46 @@ div.wide.form label.hasCheckBox {
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 52%;
 }
+.zero-components-view .Campaign .large-icon:after,
+.splash-view .Campaign .large-icon:after {
+  content: '\002C';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
+}
+.zero-components-view .Product .large-icon:after,
+.splash-view .Product .large-icon:after {
+  content: '\003E';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
+}
+.zero-components-view .ProductTemplate .large-icon:after,
+.splash-view .ProductTemplate .large-icon:after {
+  content: '\00AC';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
+}
+.zero-components-view .ProductCategory .large-icon:after,
+.splash-view .ProductCategory .large-icon:after {
+  content: '\00D7';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
+}
+.zero-components-view .ContactWebForm .large-icon:after,
+.splash-view .ContactWebForm .large-icon:after {
+  content: '\003C';
+  font-weight: normal;
+  font-size: 300px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 52%;
+}
 #NoUserEmailConfigurationYetView .z-label {
   z-index: auto;
 }
@@ -7965,6 +8383,14 @@ div.wide.form label.hasCheckBox {
 #search-form table {
   border-bottom: none;
 }
+#search-form .filters-bar {
+  width: auto;
+  top: 20px;
+}
+#search-form .filters-bar > div {
+  float: left;
+  padding-left: 15px;
+}
 .SecuredListView {
   float: left;
   width: 100%;
@@ -7982,9 +8408,8 @@ div.wide.form label.hasCheckBox {
   font-size: 11px;
   padding-left: 8px;
   border-bottom: 1px solid #DFDFDF;
-  overflow: hidden;
-  height: 40px;
-  line-height: 40px;
+  width: 100%;
+  min-height: 40px;
   background-color: #ededed;
   background-repeat: repeat-x;
   background-image: -moz-linear-gradient(top, #f6f6f6, #ededed);
@@ -8023,6 +8448,7 @@ div.wide.form label.hasCheckBox {
   font-size: 11px !important;
   padding: 3px;
   margin: 0 3px;
+  white-space: nowrap;
 }
 .filters-bar label:hover {
   color: #FFF;
@@ -8051,12 +8477,20 @@ div.wide.form label.hasCheckBox {
   padding: 0;
   margin: 0;
 }
+.filters-bar > .ui-buttonset {
+  padding-top: 14px;
+}
 .filters-bar > div + div {
   display: inline-block;
   margin-left: 15px;
 }
 .cgrid-view {
   position: relative;
+}
+.juiportlet-widget-content {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 .juiportlet-widget-content .cgrid-view {
   width: 100%;
@@ -8065,6 +8499,7 @@ div.wide.form label.hasCheckBox {
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
+  overflow-x: hidden;
 }
 .search-view-0 {
   margin: 15px 0 0 0;
@@ -8131,6 +8566,9 @@ div.wide.form label.hasCheckBox {
   line-height: 25px;
   font-size: 11px;
 }
+.search-form-tools > a {
+  margin-right: 25px;
+}
 #more-search-linkmodal,
 #more-search-link {
   margin-left: 0;
@@ -8145,9 +8583,7 @@ div.wide.form label.hasCheckBox {
   top: 1px;
   margin-left: 5px;
 }
-#select-list-attributes-link {
-  margin-left: 25px;
-}
+#kanban-board-options-link:after,
 #select-list-attributes-link:after {
   content: "÷";
   font-weight: normal;
@@ -8215,6 +8651,7 @@ div.wide.form label.hasCheckBox {
 #ModalView .items thead tr:first-child th {
   border-top: none;
 }
+.kanban-board-options-view,
 .select-list-attributes-view,
 .search-view-1 {
   margin-top: 15px;
@@ -8224,14 +8661,7 @@ div.wide.form label.hasCheckBox {
   float: left;
   width: 100%;
 }
-.select-list-attributes-view label,
-.search-view-1 label {
-  padding-top: 7px;
-  padding-right: 10px;
-  width: 100%;
-  display: block;
-  text-align: left;
-}
+.kanban-board-options-view #cancel-advanced-search,
 .select-list-attributes-view #cancel-advanced-search,
 .search-view-1 #cancel-advanced-search {
   color: #656565;
@@ -8241,21 +8671,34 @@ div.wide.form label.hasCheckBox {
   -ms-text-shadow: none;
   text-shadow: none;
 }
+.kanban-board-options-view #cancel-advanced-search .z-label,
 .select-list-attributes-view #cancel-advanced-search .z-label,
 .search-view-1 #cancel-advanced-search .z-label {
   background: url(../images/view-toolbar-gradient.png) left bottom repeat-x !important;
 }
+.kanban-board-options-view .view-toolbar-container,
 .select-list-attributes-view .view-toolbar-container,
 .search-view-1 .view-toolbar-container {
   border-top: 1px solid #CCCCCC;
+  z-index: 1;
 }
+.kanban-board-options-view > div,
 .select-list-attributes-view > div,
 .search-view-1 > div {
   display: block;
 }
+.kanban-board-options-view .view-toolbar-container,
 .select-list-attributes-view .view-toolbar-container,
 .search-view-1 .view-toolbar-container {
   display: inline-block;
+}
+.select-list-attributes-view label,
+.search-view-1 label {
+  padding-top: 7px;
+  padding-right: 10px;
+  width: 100%;
+  display: block;
+  text-align: left;
 }
 .select-list-attributes-view table {
   border-bottom: none;
@@ -8289,7 +8732,6 @@ div.wide.form label.hasCheckBox {
   border-radius: 3px;
   color: #fff !important;
   font-size: 11px;
-  margin-left: 10px;
 }
 #clear-search-link .icon-clear {
   font-weight: normal;
@@ -8511,6 +8953,12 @@ div.wide.form label.hasCheckBox {
 .left-column.full-width + .right-column {
   display: none;
 }
+.left-column .left-column {
+  padding: 0 15px 0 0;
+}
+.left-column .right-column {
+  padding: 0 0 15px 0;
+}
 .right-column {
   float: right;
   width: 30%;
@@ -8529,7 +8977,7 @@ div.wide.form label.hasCheckBox {
 #modal-edit-form h3,
 #edit-form h3,
 #delete-form h3 {
-  margin: 15px 0 0 15px;
+  margin: 0 0 15px 0;
 }
 #modal-edit-form table,
 #edit-form table,
@@ -8819,12 +9267,30 @@ div.wide.form label.hasCheckBox {
 .ConfigurableMetadataView .juiportlet-widget-head {
   cursor: default;
 }
+.juiportlet-widget-content .details-table {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+  box-shadow: none !important;
+}
 .details-table {
   position: relative;
-  margin-right: 20px;
+  margin: 0px !important;
 }
 .details-table table {
-  margin: 10px 0;
+  margin: 0 0 10px 0;
 }
 .details-table .double-column .col-0,
 .details-table .double-column .col-2 {
@@ -8884,6 +9350,14 @@ div.wide.form label.hasCheckBox {
   margin-top: 0;
   margin-left: 0;
 }
+.details-table h1 + .toolbar-mbmenu {
+  top: 6px;
+  right: 0px;
+  position: absolute;
+}
+.details-table h1 + .toolbar-mbmenu .parent > ul {
+  top: 27px;
+}
 .after-form-details-content {
   color: #545454 !important;
   float: none;
@@ -8904,10 +9378,6 @@ div.wide.form label.hasCheckBox {
   height: auto !important;
 }
 /*=For single meeting, contact etc..*/
-.AppContent.TableOfContentsView .toolbar-mbmenu,
-.AppContent.SecuredEditAndDetailsView .toolbar-mbmenu {
-  top: 8px;
-}
 .wrapper {
   float: left;
   width: 100%;
@@ -9023,23 +9493,18 @@ div.wide.form label.hasCheckBox {
   position: relative;
 }
 .toolbar-mbmenu {
-  position: absolute;
-  top: 7px;
-  right: 10px;
-  margin: 0;
+  margin: 0 10px 0 0;
   float: right;
   width: auto;
 }
 .toolbar-mbmenu .view-toolbar {
-  position: absolute;
-  right: 0;
-  top: 0;
   border: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   -o-box-shadow: none;
   -ms-box-shadow: none;
   box-shadow: none;
+  background: none;
 }
 .toolbar-mbmenu ul {
   list-style: none;
@@ -9090,11 +9555,14 @@ div.wide.form label.hasCheckBox {
   margin-left: 5px;
 }
 .toolbar-mbmenu .options-menu ul {
-  margin-top: -5px;
+  white-space: nowrap;
+  margin-top: 0;
   padding-top: 3px;
   padding-bottom: 3px;
   display: none;
   font-weight: normal !important;
+  right: 0;
+  z-index: 9999;
 }
 .toolbar-mbmenu .options-menu ul a {
   text-indent: 0;
@@ -9282,9 +9750,6 @@ div.wide.form label.hasCheckBox {
 #NoteInlineEditForPortletView .wide.form {
   float: none;
 }
-#inline-edit-form {
-  padding: 15px 15px 15px 0;
-}
 #inline-edit-form table + table {
   float: left;
   -moz-box-sizing: border-box;
@@ -9293,6 +9758,7 @@ div.wide.form label.hasCheckBox {
 }
 #inline-edit-form .panel td {
   padding-bottom: 15px;
+  padding-left: 0;
 }
 #inline-edit-form > table td > a:after {
   content: "÷";
@@ -9319,8 +9785,12 @@ div.wide.form label.hasCheckBox {
 #inline-edit-form table {
   border-bottom: none;
 }
+#inline-edit-form .left-column {
+  padding-bottom: 0;
+}
 #inline-edit-form .view-toolbar-container {
   display: inline-block;
+  padding: 0 15px 15px 15px;
 }
 #inline-edit-form .view-toolbar-container a {
   float: right;
@@ -9432,6 +9902,7 @@ div.radio-input .hasDropDown {
 .BreadCrumbView {
   position: relative;
   z-index: 10;
+  display: inline-block;
 }
 .BreadCrumbView + div {
   position: relative;
@@ -9579,46 +10050,42 @@ div.hasHalfs > div input {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-div.hasParallelFields .fifth,
-div.hasHalfs .fifth {
+.seventh {
+  width: 12.5%;
+}
+.sixth {
+  width: 15%;
+}
+.fifth {
   width: 19%;
 }
-div.hasParallelFields .twoFifths,
-div.hasHalfs .twoFifths {
+.twoFifths {
   width: 36.5%;
 }
-div.hasParallelFields .threeFifths,
-div.hasHalfs .threeFifths {
+.threeFifths {
   width: 55.5%;
   margin-right: 4%;
 }
-div.hasParallelFields .fourFifths,
-div.hasHalfs .fourFifths {
+.fourFifths {
   width: 73%;
   margin-right: 4%;
 }
-div.hasParallelFields .fifth + .twoFifths,
-div.hasHalfs .fifth + .twoFifths {
+.fifth + .twoFifths {
   margin-right: 4%;
 }
-div.hasParallelFields .half,
-div.hasHalfs .half {
+.half {
   width: 48%;
 }
-div.hasParallelFields .quarter,
-div.hasHalfs .quarter {
+.quarter {
   width: 23%;
 }
-div.hasParallelFields .threeQuarters,
-div.hasHalfs .threeQuarters {
+.threeQuarters {
   width: 73%;
 }
-div.hasParallelFields .third,
-div.hasHalfs .third {
+.third {
   width: 32%;
 }
-div.hasParallelFields .twoThirds,
-div.hasHalfs .twoThirds {
+.twoThirds {
   width: 64%;
 }
 .juiportlet-widget.OpportunitiesForAccountRelatedListView div.button-column,
@@ -9638,11 +10105,13 @@ div.hasHalfs .twoThirds {
   -moz-opacity: 1;
   opacity: 1;
 }
+.edit-portlet-menu,
 .edit-row-menu {
   float: right;
   margin: 0 10px 0 0;
   list-style: none;
 }
+.edit-portlet-menu > li,
 .edit-row-menu > li {
   position: relative;
   -webkit-text-shadow: none !important;
@@ -9651,6 +10120,7 @@ div.hasHalfs .twoThirds {
   -ms-text-shadow: none !important;
   text-shadow: none !important;
 }
+.edit-portlet-menu > li > a,
 .edit-row-menu > li > a {
   padding: 0;
   display: block;
@@ -9661,6 +10131,7 @@ div.hasHalfs .twoThirds {
   opacity: 0.5;
   white-space: nowrap;
 }
+.edit-portlet-menu > li > a span,
 .edit-row-menu > li > a span {
   display: inline-block;
   text-indent: -9999px;
@@ -9670,18 +10141,21 @@ div.hasHalfs .twoThirds {
   -ms-text-shadow: none !important;
   text-shadow: none !important;
 }
+.edit-portlet-menu > li > a:hover,
 .edit-row-menu > li > a:hover {
   filter: alpha(opacity=100);
   -khtml-opacity: 1;
   -moz-opacity: 1;
   opacity: 1;
 }
+.edit-portlet-menu > li > a:before,
 .edit-row-menu > li > a:before {
   content: "n";
   font-weight: normal;
   font-size: 24px;
   font-family: "ZurmoGamificationSymblyReguRg";
 }
+.edit-portlet-menu > li > a:after,
 .edit-row-menu > li > a:after {
   content: "÷";
   font-weight: normal;
@@ -9691,6 +10165,7 @@ div.hasHalfs .twoThirds {
   top: -2px;
   left: 2px;
 }
+.edit-portlet-menu > li a,
 .edit-row-menu > li a {
   -webkit-text-shadow: none !important;
   -moz-text-shadow: none !important;
@@ -9698,12 +10173,65 @@ div.hasHalfs .twoThirds {
   -ms-text-shadow: none !important;
   text-shadow: none !important;
 }
+.edit-portlet-menu ul,
 .edit-row-menu ul {
-  width: 110px;
-  margin-left: -97px;
+  min-width: 110px;
+  margin-left: -85px;
   list-style: none;
   top: 20px;
   font-size: 11px;
+}
+.edit-portlet-menu {
+  line-height: 1;
+  margin-top: 9px;
+  margin-right: 15px;
+}
+.edit-portlet-menu ul {
+  top: 20px;
+}
+.edit-row-menu {
+  white-space: nowrap;
+}
+.edit-row-menu > li {
+  position: relative;
+  white-space: nowrap;
+}
+.edit-row-menu > li > a {
+  position: relative;
+  z-index: 10;
+  white-space: nowrap;
+}
+.edit-row-menu ul {
+  line-height: 1;
+  white-space: nowrap;
+  left: auto;
+  right: -10px;
+  margin: 0;
+  top: -3px;
+  z-index: 1;
+  padding-right: 30px;
+  -webkit-border-radius: 0 15px 15px 0;
+  -moz-border-radius: 0 15px 15px 0;
+  -ms-border-radius: 0 15px 15px 0;
+  -o-border-radius: 0 15px 15px 0;
+  border-radius: 0 15px 15px 0;
+}
+.edit-row-menu ul > li {
+  display: inline;
+  border-left: 1px solid #d8d8d8;
+}
+.edit-row-menu ul > li + li {
+  margin-left: -3px;
+}
+.edit-row-menu ul > li a {
+  display: inline-block;
+}
+.edit-row-menu ul > li:first-child {
+  border-left: none;
+}
+.edit-row-menu > li.over > a {
+  pointer-event: none;
+  opacity: 0.5;
 }
 /*Upcoming Meeting Pager*/
 .pager {
@@ -9993,6 +10521,11 @@ div.hasHalfs .twoThirds {
   line-height: 140%;
   word-break: break-all;
 }
+.LatestActivitiesListView .activity-item span a,
+.LatestActivitiesView .activity-item span a {
+  break-word: break-all;
+  display: inline-block;
+}
 .LatestActivitiesListView .items em,
 .LatestActivitiesView .items em {
   display: inline-block;
@@ -10091,6 +10624,7 @@ div.hasHalfs .twoThirds {
   font-size: 11px !important;
   padding: 3px;
   margin: 0 3px;
+  white-space: nowrap;
 }
 #MashableInboxForm_filteredBy_area label:hover,
 #MashableInboxForm_optionForModel_area label:hover,
@@ -10136,9 +10670,8 @@ div.hasHalfs .twoThirds {
 }
 .filter-portlet-model-bar {
   border-bottom: 1px solid #DFDFDF;
-  overflow: hidden;
-  height: 40px;
-  line-height: 40px;
+  width: 100%;
+  min-height: 40px;
   background-color: #ededed;
   background-repeat: repeat-x;
   background-image: -moz-linear-gradient(top, #f6f6f6, #ededed);
@@ -10154,6 +10687,9 @@ div.hasHalfs .twoThirds {
   -ms-box-shadow: inset 0 1px 0 0 #ffffff;
   box-shadow: inset 0 1px 0 0 #ffffff;
   position: relative;
+}
+.filter-portlet-model-bar > .ui-buttonset {
+  padding-top: 14px;
 }
 .activity-date {
   font-size: 11px;
@@ -10404,11 +10940,6 @@ div.hasHalfs .twoThirds {
 /*=Mass Edit + DELETE view*/
 .AppContent.MassEditView #edit-form table {
   width: 100%;
-}
-.AppContent.MassEditView .hasCheckBox {
-  margin-top: 0 !important;
-  position: relative;
-  top: -4px;
 }
 .AppContent.MassEditView tr th:first-child {
   padding: 0 !important;
@@ -10761,11 +11292,38 @@ div.hasHalfs .twoThirds {
   position: relative;
   top: 1px;
 }
+/*Products Portlet*/
+.products-portlet-totals {
+  display: block;
+  padding: 10px;
+  border-top: 1px solid #DFDFDF;
+  background: #111111 url(../images/dark-texture-table-footer.png) left top repeat-x !important;
+  color: #FFF;
+  font-weight: bold;
+}
+.editable-cell {
+  border-bottom: 1px dotted #ccc;
+  width: auto;
+  display: inline-block;
+}
+.editable-cell:after {
+  content: "!";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  position: relative;
+  right: -10px;
+  top: 1px;
+  line-height: 1;
+}
 .juiportlet-columns .juiportlet-column {
   float: left;
   min-height: 400px;
   height: auto !important;
   height: 400px;
+}
+.juiportlet-columns .juiportlet-column + .juiportlet-column .juiportlet-widget {
+  margin-right: 0;
 }
 .juiportlet-widget-column1 {
   margin: 0;
@@ -10818,7 +11376,6 @@ div.hasHalfs .twoThirds {
 
 }
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-head {
-  overflow: hidden;
   width: 100%;
   height: 40px;
   line-height: 40px;
@@ -10837,6 +11394,8 @@ div.hasHalfs .twoThirds {
   -ms-box-shadow: inset 0 1px 0 0 #ffffff;
   box-shadow: inset 0 1px 0 0 #ffffff;
   position: relative;
+  border-bottom: 1px solid #CCC;
+  z-index: 999;
 }
 .juiportlet-columns .juiportlet-widget .juiportlet-widget-head h3 {
   float: left;
@@ -10845,74 +11404,6 @@ div.hasHalfs .twoThirds {
 }
 .collapse ~ h3 {
   margin-left: 0;
-}
-.juiportlet-widget-head {
-  border-bottom: 1px solid #CCC;
-  background: #fff;
-  cursor: move;
-}
-/*.juiportlet-widget-head */
-a.remove {
-  float: right;
-  display: inline;
-  width: 13px;
-  height: 40px;
-  margin-right: 8px;
-  text-indent: -9999em;
-  outline: none;
-  position: relative;
-  z-index: 9999;
-}
-a.remove .icon {
-  line-height: 1;
-  position: relative;
-  float: right;
-}
-a.remove .icon:after {
-  position: absolute;
-  top: 6px;
-  right: 0;
-  content: "—";
-  font-weight: normal;
-  font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
-  text-indent: 0;
-  display: block;
-  float: right;
-  color: #A7A7A7;
-  -webkit-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-  -moz-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-  -o-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-  -ms-text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-  text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
-}
-.juiportlet-widget-head a.edit {
-  float: right;
-  display: inline;
-  width: 14px;
-  height: 40px;
-  text-indent: -9999em;
-  margin-right: 8px;
-  outline: none;
-  position: relative;
-}
-.juiportlet-widget-head a.edit .icon {
-  line-height: 1;
-  position: relative;
-  float: right;
-}
-.juiportlet-widget-head a.edit .icon:after {
-  position: absolute;
-  top: 6px;
-  right: 0;
-  content: "n";
-  font-weight: normal;
-  font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
-  text-indent: 0;
-  display: block;
-  float: right;
-  color: #A7A7A7;
 }
 .juiportlet-widget-head a.collapse {
   float: left;
@@ -10931,6 +11422,8 @@ a.remove .icon:after {
 }
 .juiportlet-widget-content {
   padding: 0 0 0 0;
+  position: relative;
+  z-index: 1;
 }
 .juiportlet-widget-content > li {
   padding: 10px 15px;
@@ -11108,7 +11601,7 @@ a.remove .icon:after {
   padding: 8px 2px;
 }
 #InstallPageView #install-form {
-  padding-top: 15px !important;
+  padding: 15px !important;
 }
 #InstallPageView #install-form table {
   padding-bottom: 15px;
@@ -11778,7 +12271,6 @@ table.configuration-list td:last-child a .z-label:before {
 }
 .has-lang-label input {
   position: relative;
-  padding-left: 80px;
 }
 .has-lang-label input + span {
   background: url(../images/lang-label.png) left top no-repeat;
@@ -11801,7 +12293,7 @@ table.configuration-list td:last-child a .z-label:before {
   -ms-border-radius: 1px 0 0 1px;
   -o-border-radius: 1px 0 0 1px;
   border-radius: 1px 0 0 1px;
-  padding: 0 10px;
+  padding: 0 10px 0 17px;
 }
 .has-lang-label .errorMessage {
   margin-bottom: 15px;
@@ -11823,9 +12315,6 @@ table.configuration-list td:last-child a .z-label:before {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-}
-#UserCreateView .panel {
-  width: 70% !important;
 }
 .panelTitle {
   padding-left: 15px;
@@ -11867,6 +12356,12 @@ table.configuration-list td:last-child a .z-label:before {
   top: -2px;
 }
 /*=User Security*/
+.UserGroupMembershipView,
+#PoliciesEditAndDetailsView,
+#ModulePermissionsEditAndDetailsView,
+#RightsEditAndDetailsView {
+  margin-top: 15px;
+}
 .UserGroupMembershipView .details-table,
 #PoliciesEditAndDetailsView .details-table,
 #ModulePermissionsEditAndDetailsView .details-table,
@@ -11879,6 +12374,9 @@ table.configuration-list td:last-child a .z-label:before {
 #RightsEditAndDetailsView th {
   text-align: left;
   min-width: 200px;
+}
+.UserGroupMembershipView {
+  margin-top: 0;
 }
 .UserGroupMembershipView th {
   text-align: left !important;
@@ -12251,7 +12749,7 @@ table.configuration-list td:last-child a .z-label:before {
 }
 .texture-swatch span {
   width: 90px;
-  background: #DDDEDE;
+  background: #FFF;
   border: 3px solid #DDDEDE;
   margin-top: -3px;
 }
@@ -12286,28 +12784,34 @@ table.configuration-list td:last-child a .z-label:before {
 .uploaded-logo ~ .file-size {
   vertical-align: top;
 }
-#HomeDashboardPortletSelectionView ul {
+/*footer preview*/
+.footer-preview-modal {
+  padding: 15px;
+  white-space: normal;
+  word-break: break-all;
+}
+.available-portlets {
   padding: 20px;
   list-style: none;
   zoom: 1;
 }
-#HomeDashboardPortletSelectionView ul:before {
+.available-portlets:before {
   content: "";
   display: table;
 }
-#HomeDashboardPortletSelectionView ul:after {
+.available-portlets:after {
   content: "";
   display: table;
   clear: both;
 }
-#HomeDashboardPortletSelectionView ul li {
+.available-portlets li {
   width: 50%;
   float: left;
   margin-bottom: 15px;
   color: #666;
   vertical-align: middle;
 }
-#HomeDashboardPortletSelectionView ul span {
+.available-portlets span {
   font-weight: normal;
   font-size: 24px;
   font-family: "ZurmoGamificationSymblyReguRg";
@@ -12317,11 +12821,11 @@ table.configuration-list td:last-child a .z-label:before {
   outline: none !important;
   display: inline-block;
 }
-#HomeDashboardPortletSelectionView ul a {
+.available-portlets a {
   outline: none !important;
   cursor: pointer;
 }
-#HomeDashboardPortletSelectionView ul a:foucs {
+.available-portlets a:foucs {
   outline: none;
 }
 /*Edit Portlet*/
@@ -13280,6 +13784,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   background-image: -o-linear-gradient(top, #ffffff, #f5f5f5);
   background-image: linear-gradient(top, #ffffff, #f5f5f5);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .modal-settings .hasCheckBox {
   margin-left: 0;
@@ -13289,7 +13796,7 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   padding: 0 0 15px 0;
 }
 .designer-toolbar {
-  margin: 15px 0 0 0;
+  margin: 0;
 }
 .designer-toolbar input[type="submit"] {
   margin-bottom: 15px;
@@ -13721,8 +14228,8 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 }
 .AttributeEditView .sortable .remove-sortable-item-link {
   position: absolute;
-  left: 6px;
-  top: 5px;
+  left: 3px;
+  top: 3px;
   z-index: 100;
 }
 .AttributeEditView .sortable .remove-sortable-item-link span {
@@ -13732,7 +14239,7 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 .AttributeEditView .sortable .remove-sortable-item-link:after {
   content: "_";
   font-weight: normal;
-  font-size: 20px;
+  font-size: 22px;
   font-family: "ZurmoGamificationSymblyReguRg";
   text-indent: 0 !important;
   color: #A7A7A7;
@@ -13796,8 +14303,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 #customFieldDataData_ul li {
   position: relative;
 }
+#contactStatesData_AddInputButton,
 #customFieldDataData_AddInputButton {
-  margin: 15px 0 0 0 !important;
+  margin: 5px 0 0 0 !important;
   float: left;
   clear: both;
 }
@@ -13816,6 +14324,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   }
   input::-moz-focus-inner {
     border: 0;
+  }
+  .edit-row-menu ul {
+    top: 0px !important;
   }
 }
 .tooltip {
@@ -14731,6 +15242,10 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 .EditEmailTemplate .badge-icon:before {
   content: '\00B6';
 }
+.game-badge-CreateCampaign .badge-icon:before,
+.CreateCampaign .badge-icon:before {
+  content: '\002C';
+}
 .game-badge-CreateMarketingList .badge-icon:before,
 .CreateMarketingList .badge-icon:before,
 .game-badge-EditMarketingList .badge-icon:before,
@@ -14757,6 +15272,22 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 .game-badge-EarlyBird .badge-icon:before,
 .EarlyBird .badge-icon:before {
   content: "#";
+}
+.game-badge-SearchProducts .badge-icon:before,
+.SearchProducts .badge-icon:before,
+.game-badge-CreateProduct .badge-icon:before,
+.CreateProduct .badge-icon:before {
+  content: '\003E';
+}
+.game-badge-CreateProductTemplate .badge-icon:before,
+.CreateProductTemplate .badge-icon:before {
+  content: '\00AC';
+}
+.game-badge-SearchProductTemplates .badge-icon:before,
+.SearchProductTemplates .badge-icon:before,
+.game-badge-CreateProductCategory .badge-icon:before,
+.CreateProductCategory .badge-icon:before {
+  content: '\00D7';
 }
 /*Big Icons for popup badges*/
 .game-level-change .badge-icon:before {
@@ -15167,6 +15698,9 @@ a.close-ModalGameNotification.simple-link {
   float: none;
   margin-bottom: 0;
 }
+#UserDetailsView {
+  padding: 0 20px 20px 0;
+}
 #UserDetailsView .details-table {
   zoom: 1;
   position: relative !important;
@@ -15433,49 +15967,78 @@ a.dashboard-link .z-label {
   line-height: 130%;
 }
 .single-coloumn-details-view.AppContent,
+#MissionDetailsView.AppContent,
 #ConversationDetailsView.AppContent,
 #ConversationDetailsAndRelationsView.AppContent {
   padding-right: 0;
 }
 .single-coloumn-details-view .GridView,
+#MissionDetailsView .GridView,
 #ConversationDetailsView .GridView,
 #ConversationDetailsAndRelationsView .GridView {
   display: none;
 }
 .single-coloumn-details-view .GridView:first-child,
+#MissionDetailsView .GridView:first-child,
 #ConversationDetailsView .GridView:first-child,
 #ConversationDetailsAndRelationsView .GridView:first-child {
   display: block;
   width: 100%;
 }
 .single-coloumn-details-view .panel,
+#MissionDetailsView .panel,
 #ConversationDetailsView .panel,
 #ConversationDetailsAndRelationsView .panel {
   width: 70%;
   float: left;
 }
 .single-coloumn-details-view .panel > table,
+#MissionDetailsView .panel > table,
 #ConversationDetailsView .panel > table,
 #ConversationDetailsAndRelationsView .panel > table {
   border-bottom: none;
 }
 .single-coloumn-details-view .details-table,
+#MissionDetailsView .details-table,
 #ConversationDetailsView .details-table,
 #ConversationDetailsAndRelationsView .details-table {
+  border: 1px solid #ccc !important;
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) !important;
+  -moz-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) !important;
+  -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) !important;
+  -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) !important;
+  box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12) !important;
+  background-color: #f5f5f5  !important;
+  background-repeat: no-repeat  !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5))  !important;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5)  !important;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5)  !important;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5)  !important;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5)  !important;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5)  !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0) !important;
   zoom: 1;
 }
 .single-coloumn-details-view .details-table:before,
+#MissionDetailsView .details-table:before,
 #ConversationDetailsView .details-table:before,
 #ConversationDetailsAndRelationsView .details-table:before {
   content: "";
   display: table;
 }
 .single-coloumn-details-view .details-table:after,
+#MissionDetailsView .details-table:after,
 #ConversationDetailsView .details-table:after,
 #ConversationDetailsAndRelationsView .details-table:after {
   content: "";
   display: table;
   clear: both;
+}
+.single-coloumn-details-view .toolbar-mbmenu,
+#MissionDetailsView .toolbar-mbmenu,
+#ConversationDetailsView .toolbar-mbmenu,
+#ConversationDetailsAndRelationsView .toolbar-mbmenu {
+  top: 8px !important;
 }
 /*Sidebar*/
 .thread-details {
@@ -15798,7 +16361,7 @@ a.dashboard-link .z-label {
   padding: 0 0 0 0 !important;
 }
 #CommentInlineEditForModelView h2 {
-  margin: 0 0 0 0;
+  margin: 0 0 10px 0;
 }
 #CommentInlineEditForModelView .wide.form {
   padding: 0;
@@ -15873,6 +16436,9 @@ a.dashboard-link .z-label {
 }
 #MissionEditView .panel {
   width: 100% !important;
+}
+#MissionEditView .view-toolbar-container + .left-column {
+  display: none;
 }
 .mission-change-status-link {
   margin: 0 5px !important;
@@ -16291,7 +16857,16 @@ a.user-link {
 }
 /*email modal*/
 #NoUserEmailConfigurationYetView {
-  padding-bottom: 30px;
+  padding: 0 0 30px 0;
+}
+#NoUserEmailConfigurationYetView .large-icon {
+  margin-top: 0;
+}
+#NoUserEmailConfigurationYetView .large-icon:after {
+  font-size: 220px;
+}
+#NoUserEmailConfigurationYetView p {
+  margin-top: 15px;
 }
 /*User email configuration*/
 .outbound-settings {
@@ -16636,6 +17211,7 @@ a.user-link {
 .EmailMessages .dynamic-row {
   padding: 10px 30px;
 }
+.ui-sortable .dynamic-row:hover,
 .sortable .dynamic-row:hover {
   -webkit-border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
@@ -16644,10 +17220,12 @@ a.user-link {
   border-radius: 0 3px 3px 0;
   background: #f0f0f0 url(../images/drag-handle.png) left top repeat-y;
 }
-.sortable .dynamic-row:active {
+.ui-sortable .ui-sortable-helper .dynamic-row,
+.sortable .ui-sortable-helper .dynamic-row {
   cursor: move;
   background-color: #f5f5f5;
 }
+.ui-sortable .expanded-row .dynamic-row:hover,
 .sortable .expanded-row .dynamic-row:hover {
   background-image: none !important;
 }
@@ -16704,6 +17282,10 @@ a.user-link {
   padding-left: 15px;
   width: 80%;
 }
+.first-date-area {
+  margin-top: 10px;
+  display: block;
+}
 .dynamic-and-for-mixed {
   display: inline-block;
   padding: 5px 0;
@@ -16739,25 +17321,22 @@ a.user-link {
 #RuntimeFiltersForPortletView .dynamic-rows {
   float: none;
 }
-#RuntimeFiltersForPortletView .dynamic-rows ul {
-  padding: 15px 15px 5px 15px;
+#RuntimeFiltersForPortletView .first-date-area {
+  margin-top: 0;
 }
 #RuntimeFiltersForPortletView .view-toolbar-container {
-  clear: left;
-  margin: 0 15px 15px 15px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: auto;
+  width: 100%;
 }
 .ReportResultsComponentForPortletView {
   position: relative;
+  min-height: 60px;
 }
 .ReportResultsComponentForPortletView .big-spinner {
+  display: block;
   float: left;
   position: relative;
   left: 50%;
-  margin: 30px 0 0 -21px;
+  margin: 10px 0 0 -21px;
   height: 65px;
 }
 .ReportResultsGridView #report-results-grid-view {
@@ -16896,10 +17475,12 @@ a.user-link {
 #series-and-range-areas .buffer {
   padding-left: 22px;
 }
+#CampaignDetailsView h1,
 #MarketingListDetailsView h1,
 #ReportDetailsView h1 {
   margin-bottom: 15px;
 }
+#CampaignDetailsView .view-toolbar ul:first-child > li > a,
 #MarketingListDetailsView .view-toolbar ul:first-child > li > a,
 #ReportDetailsView .view-toolbar ul:first-child > li > a {
   border-left: none;
@@ -16925,8 +17506,7 @@ a.user-link {
   position: relative;
   top: 3px;
 }
-.label-for-marketing-list-widgets,
-.label-for-report-widgets {
+.hasCheckboxes .hasCheckBox + label {
   padding-right: 15px;
   margin: 0 !important;
   font-size: 11px !important;
@@ -17137,12 +17717,13 @@ a.user-link {
 .all-related-field {
   float: left;
   width: 80%;
-  padding-left: 15px;
 }
 .all-related-field .value-data {
-  width: 44.5%;
+  width: 42.5%;
+  float: left;
 }
 .all-related-field > span {
+  width: 15%;
   float: left;
   line-height: 26px;
 }
@@ -17275,6 +17856,86 @@ a.user-link {
   color: #555;
   font-weight: bold;
   margin: 15px 0 0 0;
+}
+/*Wizard progress bar*/
+.StepsAndProgressBarForWizardView .progress {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.StepsAndProgressBarForWizardView .progress-back {
+  width: 100%;
+  height: 13px;
+  background: #ededed;
+  -webkit-box-shadow: inset 0 0 5px 0 #cccccc;
+  -moz-box-shadow: inset 0 0 5px 0 #cccccc;
+  -o-box-shadow: inset 0 0 5px 0 #cccccc;
+  -ms-box-shadow: inset 0 0 5px 0 #cccccc;
+  box-shadow: inset 0 0 5px 0 #cccccc;
+  padding: 3px 2px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.StepsAndProgressBarForWizardView .progress-bar {
+  height: 100%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+.StepsAndProgressBarForWizardView span {
+  display: inline-block;
+  text-align: center;
+}
+.StepsAndProgressBarForWizardView .current-step {
+  font-weight: bold;
+}
+/*Misc*/
+.margetags-guide-link {
+  margin-bottom: 10px;
+}
+.margetags-guide-link .simple-link {
+  margin-left: 0;
+}
+.icon-notice:before {
+  content: "j";
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding: 0 0 0 0;
+  margin: 0 6px 0 -30px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+}
+.general-issue-notice {
+  text-align: center;
+  width: 75%;
+  margin: 10px auto 15px auto;
+  position: relative;
+}
+.general-issue-notice .icon-notice {
+  display: block;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.general-issue-notice .icon-notice:before {
+  margin: 0;
+  font-size: 100px;
+  line-height: 60px !important;
+}
+.general-issue-notice p {
+  font-size: 14px;
+  line-height: 21px;
 }
 #MashableInboxActionBarForViews .view-toolbar ul:first-child > li > a {
   border-left: none;
@@ -17412,8 +18073,39 @@ a.user-link {
   position: relative;
   top: 0;
 }
+.autoresponder-combined-content,
 .email-template-combined-content {
   padding: 0 15px;
+  position: relative;
+}
+.autoresponder-combined-content .big-spinner,
+.email-template-combined-content .big-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.autoresponder-combined-content .spinner,
+.email-template-combined-content .spinner {
+  left: 50% !important;
+  top: 50% !important;
+}
+.email-template-content .big-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+.email-template-content .spinner {
+  left: 50% !important;
+  top: 50% !important;
 }
 .tabs-nav {
   border-bottom: 1px solid #dfdfdf;
@@ -17462,6 +18154,12 @@ a.user-link {
 }
 .mergetag-guide-modal li {
   margin-bottom: 4px;
+}
+.juiportlet-columns-MarketingDashboard .juiportlet-widget {
+  margin-right: 0;
+}
+.marketing-list-members-portlet-container .portlet-view-toolbar {
+  float: left;
 }
 #marketing-list-member-configuration-form {
   position: relative;
@@ -17514,6 +18212,10 @@ a.user-link {
 #marketing-list-member-configuration-form input[type="text"]:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+#marketing-list-member-configuration-form .list-view-items-summary-clone {
+  margin-top: 51px;
+  font-weight: bold;
 }
 .MarketingListMembersListView {
   margin-bottom: 0;
@@ -17616,6 +18318,8 @@ a.user-link {
 }
 #MarketingListMembersConfigurationForm_filteredBySubscriptionType_area {
   margin-left: 15px;
+  width: auto;
+  top: 20px;
 }
 .marketing-list-member-stats {
   margin: 5px 0 0 0;
@@ -17631,12 +18335,1007 @@ a.user-link {
 .portlet-with-toolbar .view-toolbar .parent > ul {
   top: auto;
 }
+#ReportDetailsView,
+#CampaignDetailsView,
+#MarketingListDetailsView,
+#SecuredActionBarForMarketingSearchAndListView {
+  position: relative;
+  z-index: 10;
+}
+#ReportDetailsView + div,
+#CampaignDetailsView + div,
+#MarketingListDetailsView + div,
+#SecuredActionBarForMarketingSearchAndListView + div {
+  position: relative;
+  z-index: 5;
+}
+#ReportDetailsView + div + div,
+#CampaignDetailsView + div + div,
+#MarketingListDetailsView + div + div,
+#SecuredActionBarForMarketingSearchAndListView + div + div {
+  position: relative;
+  z-index: 1;
+}
+.marketing-graph {
+  float: left;
+  margin-left: 2%;
+  padding-bottom: 15px;
+}
+.marketing-graph:first-child {
+  margin-left: 0;
+}
+.marketing-graph h3 {
+  padding-left: 15px;
+}
+.marketing-graph.half {
+  width: 49%;
+}
+.graph-container {
+  clear: left;
+  margin: 15px 0 0 0;
+}
+.edit-autoresponder-link {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+}
+.edit-autoresponder-link:after {
+  content: " — ";
+  font-weight: 400;
+  color: #545454;
+}
+.autoresponder-extra-info {
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.autoresponder-stats {
+  width: 19%;
+  float: left;
+  margin-left: 2%;
+  text-align: left;
+  font-size: 12px;
+}
+.autoresponder-stats strong {
+  font-size: 26px;
+  font-weight: bold;
+  display: block;
+}
+a + .autoresponder-stats {
+  margin-left: 0;
+}
+.metrics-details {
+  text-align: right;
+}
+.metrics-details h3 {
+  width: auto;
+  float: left;
+  color: #545454 !important;
+}
+.metrics-details div,
+.metrics-details form {
+  width: auto;
+  display: inline-block;
+}
+.metrics-details div label,
+.metrics-details form label {
+  float: left;
+}
+.metrics-details > div {
+  font-size: 14px;
+  line-height: 1;
+  font-weight: bold;
+  color: #656565;
+  display: block;
+  margin-bottom: 10px;
+  /*&:after{
+			content: "|";
+			font-weight: bold;
+			padding:0 8px;
+		}*/
+
+}
+#marketing-intro-content {
+  margin-bottom: 30px;
+}
+#marketing-intro-steps {
+  float: left;
+  width: 100%;
+  margin: 30px 0 15px 0;
+}
+#marketing-intro-steps > div {
+  float: left;
+  margin-left: 2%;
+  min-height: 150px;
+  background-color: rgba(51, 51, 51, 0.75);
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, rgba(34, 34, 34, 0.85), rgba(51, 51, 51, 0.75));
+  background-image: -ms-linear-gradient(top, rgba(34, 34, 34, 0.85), rgba(51, 51, 51, 0.75));
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(34, 34, 34, 0.85)), color-stop(100%, rgba(51, 51, 51, 0.75)));
+  background-image: -webkit-linear-gradient(top, rgba(34, 34, 34, 0.85), rgba(51, 51, 51, 0.75));
+  background-image: -o-linear-gradient(top, rgba(34, 34, 34, 0.85), rgba(51, 51, 51, 0.75));
+  background-image: linear-gradient(top, rgba(34, 34, 34, 0.85), rgba(51, 51, 51, 0.75));
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(34, 34, 34, 0.85)', endColorstr='rgba(51, 51, 51, 0.75)', GradientType=0);
+  color: #EFEFEF;
+  border: 1px solid #333;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111;
+  -moz-box-shadow: inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111;
+  -o-box-shadow: inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111;
+  -ms-box-shadow: inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111;
+  box-shadow: inset 0 1px 1px 0 rgba(200, 200, 200, 0.4), 0 1px 0 0 #111;
+  padding: 1px 0 0 0;
+}
+#marketing-intro-steps > div:first-child {
+  margin-left: 0;
+}
+#marketing-intro-steps h3 {
+  color: #fff;
+  font-size: 14px;
+  padding: 34px 0 0 10px;
+  font-weight: normal;
+  -webkit-text-shadow: 0 1px 0 #000000;
+  -moz-text-shadow: 0 1px 0 #000000;
+  -o-text-shadow: 0 1px 0 #000000;
+  -ms-text-shadow: 0 1px 0 #000000;
+  text-shadow: 0 1px 0 #000000;
+  position: relative;
+  float: left;
+  line-height: 1;
+  height: 100%;
+  min-height: 149px;
+  width: 85px;
+  border-right: 1px solid #282828;
+}
+#marketing-intro-steps h3 strong {
+  display: block;
+  font-size: 50px;
+  line-height: 1;
+}
+#marketing-intro-steps h3 span {
+  color: #fff;
+  display: inline-block;
+  font-weight: 100 !important;
+  font-size: 80%;
+  line-height: 50px;
+  margin-top: -5px;
+}
+#marketing-intro-steps p {
+  min-height: 149px;
+  padding: 10px 10px 10px 10px;
+  margin-left: 85px;
+  font-size: 13px;
+  line-height: 21px;
+  border-left: 1px solid #333333;
+  color: #ececec;
+}
+#marketing-intro-steps p strong {
+  color: #fff;
+  display: block;
+  font-size: 14px;
+  line-height: 22px;
+}
+#marketing-intro-steps span {
+  display: block;
+}
+.hide-marketing-intro {
+  display: block;
+  clear: both;
+  position: relative;
+  top: 30px;
+  font-size: 11px;
+  clear: none;
+  position: static;
+  top: 0;
+  float: right;
+  margin-bottom: 30px;
+}
+.hide-marketing-intro span {
+  font-weight: normal;
+  font-size: 26px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 9px;
+  border: none;
+  margin-right: 5px;
+  outline: none !important;
+  display: inline-block;
+}
+.hide-marketing-intro span:before {
+  content: "•";
+}
+/*Continuum*/
+.email-recipient-name {
+  float: left;
+  width: 15%;
+  display: block;
+  line-height: 20px;
+}
+.continuum {
+  float: left;
+  display: inline-block;
+  font-size: 11px;
+  margin-right: 10px;
+}
+.continuum > div {
+  display: inline-block;
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  background: url(../images/view-toolbar-gradient-darker.png) left bottom repeat-x;
+  -webkit-box-shadow: inset 0 0 1px 1px #efefef;
+  -moz-box-shadow: inset 0 0 1px 1px #efefef;
+  -o-box-shadow: inset 0 0 1px 1px #efefef;
+  -ms-box-shadow: inset 0 0 1px 1px #efefef;
+  box-shadow: inset 0 0 1px 1px #efefef;
+}
+.continuum .email-recipient-stage-status {
+  width: auto;
+  font-weight: 700;
+  position: relative;
+  color: #545454;
+  text-shadow: #fff 0 1px 0;
+  margin: 0;
+  padding-right: 6px;
+  line-height: 20px;
+  display: inline-block;
+  border-left: 1px solid #bababa;
+}
+.continuum .email-recipient-stage-status:first-child {
+  border-left: none;
+}
+.continuum .email-recipient-stage-status span {
+  font-size: 10px;
+  font-weight: bold;
+}
+.email-recipient-stage-status {
+  float: right;
+  text-align: center;
+  width: 12.5%;
+  float: left;
+  margin-left: 2%;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 20px;
+}
+.email-recipient-stage-status.stage-true i {
+  color: #97c43d;
+  -webkit-text-shadow: 0 0 5px #97c43d;
+  -moz-text-shadow: 0 0 5px #97c43d;
+  -o-text-shadow: 0 0 5px #97c43d;
+  -ms-text-shadow: 0 0 5px #97c43d;
+  text-shadow: 0 0 5px #97c43d;
+}
+.email-recipient-stage-status.stage-false i {
+  color: #c43d53;
+  -webkit-text-shadow: 0 0 5px #c43d53;
+  -moz-text-shadow: 0 0 5px #c43d53;
+  -o-text-shadow: 0 0 5px #c43d53;
+  -ms-text-shadow: 0 0 5px #c43d53;
+  text-shadow: 0 0 5px #c43d53;
+}
+.email-recipient-stage-status i {
+  font-weight: bold;
+  line-height: 1;
+  padding: 0 6px;
+  color: #ffd900;
+  -webkit-text-shadow: 0 0 5px #ffd900;
+  -moz-text-shadow: 0 0 5px #ffd900;
+  -o-text-shadow: 0 0 5px #ffd900;
+  -ms-text-shadow: 0 0 5px #ffd900;
+  text-shadow: 0 0 5px #ffd900;
+}
+.no-email-recipients-found .icon-notice:before {
+  content: "f";
+}
+#MarketingIntroLinkActionElement ul {
+  right: 0;
+}
+#MarketingIntroLinkActionElement ul li {
+  padding: 0 5px 5px 5px;
+}
+#MarketingIntroLinkActionElement ul li .hasCheckBox {
+  display: inline-block;
+  margin-right: 5px;
+  position: relative;
+  top: 4px;
+}
+#MarketingIntroLinkActionElement .parent a {
+  padding-left: 10px;
+}
+#MarketingIntroLinkActionElement .parent > a > span {
+  font-weight: normal;
+  font-size: 24px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  position: relative;
+  top: 2px;
+}
+#MarketingIntroLinkActionElement .parent a:after {
+  margin-left: 2px;
+  top: 0;
+}
+.screen-options {
+  padding: 5px;
+  text-align: right;
+}
+/*Manage Subscriptions*/
+#MarketingListsExternalActionsPageView,
+#MarketingListsManageSubscriptionsPageView {
+  max-width: 900px;
+  margin: 30px auto;
+}
+#MarketingListsExternalActionsPageView #HeaderLinksView,
+#MarketingListsManageSubscriptionsPageView #HeaderLinksView {
+  margin: 0 0 20px 0;
+}
+#MarketingListsExternalActionsPageView #HeaderLinksView > div,
+#MarketingListsManageSubscriptionsPageView #HeaderLinksView > div {
+  margin: 0;
+}
+#MarketingListsExternalActionsPageView #HeaderLinksView + div,
+#MarketingListsManageSubscriptionsPageView #HeaderLinksView + div {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+#MarketingListsExternalActionsPageView #corp-logo span,
+#MarketingListsManageSubscriptionsPageView #corp-logo span {
+  color: #545454;
+}
+#MarketingListsExternalActionsPageView .Warning,
+#MarketingListsManageSubscriptionsPageView .Warning,
+#MarketingListsExternalActionsPageView .wrapper,
+#MarketingListsManageSubscriptionsPageView .wrapper {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  float: none;
+}
+#MarketingListsExternalActionsPageView .Warning,
+#MarketingListsManageSubscriptionsPageView .Warning,
+#MarketingListsExternalActionsPageView .wrapper,
+#MarketingListsManageSubscriptionsPageView .wrapper {
+  background: #fff;
+  -webkit-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
+  -moz-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
+  -o-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
+  -ms-box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
+  box-shadow: 0 0 12px 5px rgba(153, 153, 153, 0.3);
+  /*999*/
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+#MarketingListsExternalActionsPageView .Warning,
+#MarketingListsManageSubscriptionsPageView .Warning {
+  padding: 15px 0 30px 0;
+}
+#MarketingListsExternalActionsPageView .Warning h2,
+#MarketingListsManageSubscriptionsPageView .Warning h2,
+#MarketingListsExternalActionsPageView .Warning div,
+#MarketingListsManageSubscriptionsPageView .Warning div,
+#MarketingListsExternalActionsPageView .Warning p,
+#MarketingListsManageSubscriptionsPageView .Warning p {
+  float: none;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+#MarketingListsExternalActionsPageView .Warning h2,
+#MarketingListsManageSubscriptionsPageView .Warning h2 {
+  padding: 0;
+}
+#MarketingListsExternalActionsPageView .Warning div,
+#MarketingListsManageSubscriptionsPageView .Warning div {
+  margin: 15px 0 20px 0;
+  border: 0;
+}
+#MarketingListsExternalActionsPageView #FooterView,
+#MarketingListsManageSubscriptionsPageView #FooterView {
+  margin: 20px 0;
+  padding-bottom: 20px;
+  clear: both;
+}
+#MarketingListsExternalActionsPageView h1,
+#MarketingListsManageSubscriptionsPageView h1 {
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+#MarketingListsExternalActionsPageView #marketingLists-manageSubscriptionsList table,
+#MarketingListsManageSubscriptionsPageView #marketingLists-manageSubscriptionsList table {
+  width: 100%;
+}
+#MarketingListsExternalActionsPageView #marketingLists-manageSubscriptionsList table th,
+#MarketingListsManageSubscriptionsPageView #marketingLists-manageSubscriptionsList table th {
+  font-weight: bold !important;
+  height: 35px;
+  line-height: 35px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+#MarketingListsExternalActionsPageView #marketingLists-manageSubscriptionsList table td,
+#MarketingListsManageSubscriptionsPageView #marketingLists-manageSubscriptionsList table td {
+  padding-bottom: 15px;
+}
+#MarketingListsExternalActionsPageView .switch,
+#MarketingListsManageSubscriptionsPageView .switch {
+  margin-right: 15px;
+}
+#kanban-holder {
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  background-size: 100% 100%;
+  vertical-align: top;
+}
+#kanban-holder #kanban-board,
+#kanban-holder .kanban-column,
+#kanban-holder .kanban-column > div {
+  margin-bottom: 0 !important;
+}
+#kanban-holder .empty {
+  padding: 10px;
+}
+#kanban-holder .general-issue-notice {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 15px 0;
+}
+#kanban-holder .general-issue-notice p {
+  font-weight: bold;
+}
+#kanban-holder.kanban-background-football {
+  background: #ffffff url(../images/kanban/football.jpg) left bottom no-repeat;
+}
+#kanban-holder.kanban-background-tennis {
+  background: #ffffff url(../images/kanban/tennis.jpg) left bottom no-repeat;
+}
+#kanban-holder.kanban-background-motor {
+  background: #ffffff url(../images/kanban/asphalt.jpg) center bottom no-repeat;
+}
+#kanban-holder.kanban-background-yoga {
+  background: #ffffff url(../images/kanban/yoga.jpg) right top no-repeat;
+}
+.kanban-background-football .background-texture-1 {
+  background: #ffffff url(../images/kanban/swatch-football.jpg) left top no-repeat;
+}
+.kanban-background-tennis .background-texture-1 {
+  background: #ffffff url(../images/kanban/swatch-tennis.jpg) left top no-repeat;
+}
+.kanban-background-motor .background-texture-1 {
+  background: #ffffff url(../images/kanban/swatch-asphalt.jpg) left top no-repeat;
+}
+.kanban-background-yoga .background-texture-1 {
+  background: #ffffff url(../images/kanban/swatch-yoga.jpg) left top no-repeat;
+}
+#kanban-board {
+  display: table;
+  vertical-align: top;
+  height: 100%;
+  width: 100%;
+}
+#kanban-board .drop-zone-container {
+  padding: 37px 2px 2px 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+#kanban-board .drop-zone {
+  position: relative;
+}
+.kanban-column {
+  white-space: normal;
+  display: table-cell;
+  vertical-align: top;
+  border-left: 1px solid #dfdfdf;
+  position: relative;
+}
+.kanban-column:first-child {
+  border-left: none;
+}
+.kanban-column ul {
+  list-style: none;
+  padding: 5px 5px;
+  position: relative;
+  z-index: 5;
+  min-height: 600px;
+}
+.kanban-column .droppable-dynamic-rows-container {
+  width: 100%;
+  height: 100%;
+}
+.column-header {
+  font-weight: bold !important;
+  height: 35px;
+  line-height: 35px;
+  background: rgba(255, 255, 255, 0.8) url(../images/table-items-header.png) left top repeat-x;
+  padding: 0 0 0 5px;
+  white-space: nowrap;
+  border-bottom: 1px solid #dfdfdf;
+}
+/*
+@themeColor        : #282A76;
+    @themeColor2       : #7CB830;
+    @themeColorBtn     : #97c43d;
+    @themeColorBtn2    : darken(@themeColorBtn, 10%);
+    */
+.kanban-card > div {
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0 0 5px 0 !important;
+  background: #f0f0f0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  padding: 5px 5px 15px 10px;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15);
+  -moz-box-shadow: inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15);
+  -o-box-shadow: inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15);
+  -ms-box-shadow: inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15);
+}
+.kanban-card span {
+  display: block;
+  margin-bottom: 3px;
+}
+.kanban-card .opportunity-name {
+  font-size: 12px;
+  font-weight: normal;
+}
+.kanban-card .account-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+}
+.kanban-card .opportunity-amount {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  color: #222363;
+  -webkit-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  -moz-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  -o-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  -ms-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.kanban-card .closing-date {
+  font-size: 11px;
+  text-align: right;
+}
+.kanban-card .closing-date i {
+  text-align: left;
+  font-weight: normal;
+  font-size: 12px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+}
+.kanban-card .closing-date i:after {
+  content: "z";
+}
+.kanban-card .opportunity-owner {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  text-align: right;
+  display: block;
+  line-height: 1;
+}
+.kanban-card .opportunity-owner span {
+  display: inline-block;
+  top: -7px;
+  position: relative;
+  margin: 0 5px;
+}
+.kanban-card .opportunity-owner img {
+  background: #DFDFDF;
+  padding: 1px;
+}
+.kanban-card .hidden-content > a {
+  font-size: 11px;
+  position: relative;
+  top: 5px;
+}
+.kanban-card .hidden-content > div {
+  display: none;
+  padding: 10px 0 5px 0;
+}
+.kanban-card.clone {
+  position: absolute;
+  z-index: 10000;
+}
+.kanban-board-options-panel {
+  width: 50%;
+  float: left;
+}
+.kanban-board-options-panel h3 {
+  margin-bottom: 10px;
+}
+.icon-kanban-board-view-type,
+.icon-grid-view-type {
+  padding-left: 10px !important;
+}
+.icon-kanban-board-view-type:before,
+.icon-grid-view-type:before {
+  margin: 0;
+}
+.icon-kanban-board-view-type span,
+.icon-grid-view-type span {
+  display: none;
+}
+.webform-embed-code {
+  padding: 0;
+  margin-bottom: 15px;
+  word-break: break-all;
+  white-space: normal;
+}
+.webform-embed-code code {
+  white-space: normal;
+}
+.webform-embed-code textarea {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  -webkit-box-shadow: inset 0 0 2px 0 #cccccc;
+  -moz-box-shadow: inset 0 0 2px 0 #cccccc;
+  -o-box-shadow: inset 0 0 2px 0 #cccccc;
+  -ms-box-shadow: inset 0 0 2px 0 #cccccc;
+  box-shadow: inset 0 0 2px 0 #cccccc;
+  width: 100%;
+  padding: 5px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  resize: none;
+  white-space: pre;
+  overflow: auto;
+  font-family: "Courier New", Courier, monospace;
+}
+#ContactWebFormEditAndDetailsView .ui-sortable {
+  list-style: none;
+}
+#ContactWebFormEditAndDetailsView .ui-sortable .hasCheckBox + label {
+  top: 0;
+  left: 8px;
+}
+#ContactWebFormEditAndDetailsView #ContactWebForm_serializedData {
+  display: block;
+  margin-top: -5px;
+}
+#ContactWebFormEditAndDetailsView label + label {
+  margin-left: 0;
+}
+#ContactWebFormEditAndDetailsView .third,
+#ContactWebFormEditAndDetailsView .twoThirds {
+  float: left;
+}
+#ContactWebFormEditAndDetailsView .twoThirds {
+  margin-left: 2%;
+}
+#ContactWebFormEditAndDetailsView .dynamic-row .remove-dynamic-row-link {
+  top: 5px;
+}
+#ContactWebFormEditAndDetailsView .row-description {
+  margin-bottom: 5px;
+}
+#zurmoExternalWebForm {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #545454;
+}
+#zurmoExternalWebForm .AppContent,
+#zurmoExternalWebForm .wrapper {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  border: none;
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+#zurmoExternalWebForm .left-column {
+  padding-bottom: 0;
+}
+#zurmoExternalWebForm .attributesContainer {
+  margin: 0;
+  padding: 0;
+}
+#zurmoExternalWebForm .form-toolbar,
+#zurmoExternalWebForm .view-toolbar-container {
+  border: none;
+  text-align: right;
+  padding: 0;
+  margin: 0;
+}
+#zurmoExternalWebForm .float-bar {
+  margin: 0;
+}
+#zurmoExternalWebForm .z-button {
+  margin: 0;
+}
+#zurmoExternalWebForm .z-label {
+  color: #fff;
+  background-color: #799e30;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #97c43d, #799e30);
+  background-image: -ms-linear-gradient(top, #97c43d, #799e30);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #97c43d), color-stop(100%, #799e30));
+  background-image: -webkit-linear-gradient(top, #97c43d, #799e30);
+  background-image: -o-linear-gradient(top, #97c43d, #799e30);
+  background-image: linear-gradient(top, #97c43d, #799e30);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97c43d', endColorstr='#799e30', GradientType=0);
+  -webkit-text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.2) !important;
+  -moz-text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.2) !important;
+  -o-text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.2) !important;
+  -ms-text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+#zurmoExternalWebForm .z-label:active {
+  color: #1f290c !important;
+  background-color: #5b7724;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #97c43d, #5b7724);
+  background-image: -ms-linear-gradient(top, #97c43d, #5b7724);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #97c43d), color-stop(100%, #5b7724));
+  background-image: -webkit-linear-gradient(top, #97c43d, #5b7724);
+  background-image: -o-linear-gradient(top, #97c43d, #5b7724);
+  background-image: linear-gradient(top, #97c43d, #5b7724);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97c43d', endColorstr='#5b7724', GradientType=0);
+  -webkit-text-shadow: 0px 1px 0 #b6d678 !important;
+  -moz-text-shadow: 0px 1px 0 #b6d678 !important;
+  -o-text-shadow: 0px 1px 0 #b6d678 !important;
+  -ms-text-shadow: 0px 1px 0 #b6d678 !important;
+  text-shadow: 0px 1px 0 #b6d678 !important;
+}
+#zurmoExternalWebForm .z-label:hover {
+  -webkit-box-shadow: inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+  -moz-box-shadow: inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+  -o-box-shadow: inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+  -ms-box-shadow: inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+  box-shadow: inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF;
+}
+.business-card {
+  padding-right: 50px;
+}
+.business-card h2 {
+  line-height: 100%;
+  padding-bottom: 15px;
+}
+.business-card h2 .salutation {
+  font-weight: normal;
+  font-size: 80%;
+  margin-right: 5px;
+}
+.business-card h3 {
+  line-height: 140%;
+  font-weight: normal;
+  color: #545454 !important;
+}
+.business-card h4 {
+  color: #545454 !important;
+  line-height: 150%;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+.business-card .contact-details {
+  color: #111;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 7px;
+}
+.business-card .contact-details > a {
+  margin-right: 20px;
+  color: #333;
+}
+.business-card .address {
+  margin-bottom: 15px;
+}
+.business-card .icon-landline:before {
+  content: "W";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding-right: 3px;
+  color: #111;
+}
+.business-card .icon-mobile-phone:before {
+  content: '\2018';
+  font-weight: normal;
+  font-size: 21px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding-right: 3px;
+  color: #111;
+}
+.business-card .icon-email:before {
+  content: "g";
+  font-weight: normal;
+  font-size: 18px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding-right: 5px;
+  color: #111;
+}
+.business-card .icon-map:before {
+  content: "L";
+  font-weight: normal;
+  font-size: 20px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  padding-right: 3px;
+  color: #111;
+}
+#_business-card-buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  text-align: center;
+}
+#_business-card-buttons a {
+  display: block;
+  width: 50px;
+  height: 50px;
+  font-size: 10px;
+  font-weight: bold;
+}
+#_business-card-buttons a i {
+  display: block;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 45px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 1;
+  color: #ccc;
+}
+#_business-card-buttons a span {
+  display: none;
+}
+#business-card-buttons {
+  display: inline-block;
+  font-size: 11px;
+}
+#business-card-buttons > div {
+  display: inline-block;
+  border: 1px solid #b7b7b7;
+  border-top-color: #e7e7e7;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+  border-radius: 4px;
+  background: url(../images/view-toolbar-gradient-darker.png) left bottom repeat-x;
+  -webkit-box-shadow: inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -moz-box-shadow: inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -o-box-shadow: inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  -ms-box-shadow: inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12);
+  box-shadow: inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12);
+}
+#business-card-buttons a {
+  text-align: center;
+  width: auto;
+  position: relative;
+  text-shadow: #fff 0 1px 0;
+  margin: 0;
+  padding: 0 6px;
+  display: inline-block;
+  border-left: 1px solid #bababa;
+}
+#business-card-buttons a:first-child {
+  border-left: none;
+}
+#business-card-buttons a span {
+  font-size: 10px;
+  font-weight: bold;
+  display: none;
+}
+#business-card-buttons a i {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  font-family: "ZurmoGamificationSymblyReguRg";
+  line-height: 1;
+  color: #656565;
+}
+#business-card-buttons.center-top {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  margin-left: -72px;
+}
+#business-card-buttons.center-top strong {
+  margin-right: 4px;
+}
+#business-card-buttons.center-top > div {
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  -ms-border-radius: 0 0 4px 4px;
+  -o-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+}
+#business-card-buttons.top-right {
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+#business-card-buttons.top-right a,
+#business-card-buttons.top-right strong {
+  display: block;
+}
+#business-card-buttons.top-right strong {
+  margin-bottom: 3px;
+  font-size: 10px;
+  text-align: right;
+}
+#business-card-buttons.top-right a {
+  border-left: none;
+  border-top: 1px solid #bababa;
+}
+#business-card-buttons.top-right a:first-child {
+  border-top: none;
+}
+#business-card-buttons.top-right a:hover span {
+  float: left;
+  position: absolute;
+  right: 32px;
+  top: 5px;
+  display: block;
+}
+#business-card-buttons .active {
+  color: #97c43d;
+  -webkit-text-shadow: 0 0 1px #cbe29f;
+  -moz-text-shadow: 0 0 1px #cbe29f;
+  -o-text-shadow: 0 0 1px #cbe29f;
+  -ms-text-shadow: 0 0 1px #cbe29f;
+  text-shadow: 0 0 1px #cbe29f;
+}
+#business-card-buttons .active i {
+  color: #97c43d;
+}
 /*********************************************************************************
  * Zurmo is a customer relationship management program developed by
  * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
  *
  * Zurmo is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License version 3 as published by the
+ * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -17644,10 +19343,10 @@ a.user-link {
  *
  * Zurmo is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
- * You should have received a copy of the GNU General Public License along with
+ * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
@@ -17657,9 +19356,9 @@ a.user-link {
  *
  * The interactive user interfaces in original and modified versions
  * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU General Public License version 3.
+ * Section 5 of the GNU Affero General Public License version 3.
  *
- * In accordance with Section 7(b) of the GNU General Public License version 3,
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the Zurmo
  * logo and Zurmo copyright notice. If the display of the logo is not reasonably
  * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -17699,14 +19398,11 @@ a.user-link {
     width: 100%;
     min-width: 0 !important;
   }
-  #HomeDashboardView {
-    padding-right: 20px;
-  }
-  #HomeDashboardView .juiportlet-column {
+  .juiportlet-column {
     width: 100%;
     float: none;
   }
-  #HomeDashboardView .juiportlet-widget {
+  .juiportlet-widget {
     min-width: auto;
     margin-right: 0px;
   }

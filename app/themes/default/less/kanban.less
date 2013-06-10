@@ -1,0 +1,255 @@
+// Zurmo is a customer relationship management program developed by
+// Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
+//
+// Zurmo is free software; you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License version 3 as published by the
+// Free Software Foundation with the addition of the following permission added
+// to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+// IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
+// OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+//
+// Zurmo is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+// details.
+//
+// You should have received a copy of the GNU Affero General Public License along with
+// this program; if not, see http://www.gnu.org/licenses or write to the Free
+// Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+// 02110-1301 USA.
+//
+// You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+// Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+//
+// The interactive user interfaces in original and modified versions
+// of this program must display Appropriate Legal Notices, as required under
+// Section 5 of the GNU Affero General Public License version 3.
+//
+// In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+// these Appropriate Legal Notices must retain the display of the Zurmo
+// logo and Zurmo copyright notice. If the display of the logo is not reasonably
+// feasible for technical reasons, the Appropriate Legal Notices must display the words
+// "Copyright Zurmo Inc. 2013. All rights reserved".
+
+#kanban-holder{
+	background: #fff;// url(../images/kanban/yoga1.jpg) left bottom no-repeat;
+	margin: 0;
+	padding: 0;
+	background-size: 100% 100%;
+	//height: 600px;
+	vertical-align: top;
+	#kanban-board,
+	.kanban-column,
+	.kanban-column > div{
+		margin-bottom: 0 !important;
+	}
+	.empty{
+		padding: 10px;
+	}
+	.general-issue-notice{
+		width:100%;
+		background: rgba(255, 255, 255, 0.6);
+		padding: 15px 0;
+		p{
+			font-weight: bold;
+		}
+	}
+}
+
+#kanban-holder.kanban-background-football{
+	background: #fff url(../images/kanban/football.jpg) left bottom no-repeat;
+}
+
+#kanban-holder.kanban-background-tennis{
+	background: #fff url(../images/kanban/tennis.jpg) left bottom no-repeat;
+}
+
+#kanban-holder.kanban-background-motor{
+	background:#fff url(../images/kanban/asphalt.jpg) center bottom no-repeat;
+}
+
+#kanban-holder.kanban-background-yoga{
+	background:#fff url(../images/kanban/yoga.jpg) right top no-repeat;
+}
+
+.kanban-background-football .background-texture-1{
+	background: #fff url(../images/kanban/swatch-football.jpg) left top no-repeat;
+}
+
+.kanban-background-tennis .background-texture-1{
+	background: #fff url(../images/kanban/swatch-tennis.jpg) left top no-repeat;
+}
+
+.kanban-background-motor .background-texture-1{
+	background:#fff url(../images/kanban/swatch-asphalt.jpg) left top no-repeat;
+}
+
+.kanban-background-yoga .background-texture-1{
+	background:#fff url(../images/kanban/swatch-yoga.jpg) left top no-repeat;
+}
+
+
+#kanban-board{
+	++.clearfix;
+	++.border-box;
+	display: table;
+	vertical-align: top;
+	height: 100%;
+	width: 100%;
+	.drop-zone-container{
+		padding: 37px 2px 2px 2px;
+		++.border-box;
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
+	}
+	.drop-zone{
+		++.border-box;
+		position: relative;
+	}
+	.ui-state-active{
+
+	}
+}
+
+.kanban-column{
+	++.border-box;
+	white-space: normal;
+	display: table-cell;//inline-block;
+	vertical-align: top;
+	border-left: 1px solid #dfdfdf;
+	position: relative;
+	&:first-child{
+		border-left: none;
+	}
+	ul{
+		list-style: none;
+		padding: 5px 5px;
+		position: relative;
+		z-index: 5;
+		min-height: 600px;
+	}
+	.droppable-dynamic-rows-container{
+		//position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.column-header{
+	font-weight: bold !important;
+	height: 35px;
+	line-height: 35px;
+	background:rgba(255, 255, 255, 0.8) url(../images/table-items-header.png) left top repeat-x;
+	padding: 0 0 0 5px;
+	white-space: nowrap;
+	border-bottom: 1px solid #dfdfdf;
+}
+/*
+@themeColor        : #282A76;
+    @themeColor2       : #7CB830;
+    @themeColorBtn     : #97c43d;
+    @themeColorBtn2    : darken(@themeColorBtn, 10%);
+    */
+
+.kanban-card{
+	> div{
+		position: relative;
+		width: 100%;
+		display: block;
+		margin:0 0 5px 0 !important;
+		background: #f0f0f0;
+		.radius(3px);
+		padding:5px 5px 15px 10px;
+		++.border-box;
+		.b-shadow(~'inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.15)');
+	}
+	span{
+		display: block;
+		margin-bottom: 3px;
+	}
+	.opportunity-name{
+		font-size: 12px;
+		font-weight: normal;
+	}
+	.account-name{
+		font-size: 14px;
+		font-weight: bold;
+		color: #666;
+	}
+	.opportunity-amount{
+		font-size: 20px;
+		font-weight: bold;
+		text-align: right;
+		color: darken(#282A76, 5%);
+		.t-shadow(0 1px 0 rgba(255, 255, 255, 0.9));
+		line-height: 1;
+		margin-bottom:5px;
+	}
+	.closing-date{
+		.smaller();
+		text-align: right;
+		i{
+			text-align: left;
+			.symbly(12px);
+			&:after{
+				content: "z";
+			}
+		}
+	}
+	.opportunity-owner{
+		position: absolute;
+		right: 5px;
+		bottom: 5px;
+		text-align: right;
+		display: block;
+		line-height: 1;
+		span{
+			display: inline-block;
+			top: -7px;
+			position: relative;
+			margin: 0 5px;
+		}
+		img{
+			background: #DFDFDF;
+			padding: 1px;
+		}
+	}
+	.hidden-content{
+		> a{
+			.smaller();
+			position: relative;
+			top: 5px;
+		}
+		> div{
+			display: none;
+			padding: 10px 0 5px 0;
+		}
+	}
+}
+
+.kanban-card.clone{
+	position: absolute;
+	z-index: 10000;
+}
+
+.kanban-board-options-panel{
+	width: 50%;
+	float: left;
+	h3{
+		margin-bottom: 10px;
+	}
+}
+
+.icon-kanban-board-view-type,
+.icon-grid-view-type{
+	padding-left: 10px !important;
+	&:before{
+		margin:0;
+	}
+	span{
+		display: none;
+	}
+}

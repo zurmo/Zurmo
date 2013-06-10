@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -190,8 +190,9 @@
 
         public function getView()
         {
-            $className = $this->viewType . 'View';
+            $className                 = $this->viewType . 'View';
             $this->params['portletId'] = $this->id;
+            $this->params['layoutId']  = $this->layoutId;
             $this->view = new $className(unserialize($this->serializedViewData), $this->params, $this->getUniquePortletPageId());
             return $this->view;
         }
@@ -221,11 +222,34 @@
             return $this->getView()->render();
         }
 
+        public function renderHeadContent()
+        {
+            return $this->getView()->renderPortletHeadContent();
+        }
+
+        public function getPortletParams()
+        {
+            return $this->getView()->getPortletParams();
+        }
+
         public function isEditable()
         {
             $className = get_class($this->getView());
             return $className::canUserConfigure();
         }
+
+//        public function isRemovable()
+//        {
+//            $className = get_class($this->getView());
+//            if (method_exists($className, 'canUserRemove'))
+//            {
+//                return $className::canUserRemove();
+//            }
+//            else
+//            {
+//                return null;
+//            }
+//        }
 
         public function beforeDelete()
         {
@@ -239,6 +263,32 @@
                 }
             }
             return parent::beforeDelete();
+        }
+
+        /**
+         * Check if the portlet is already added to the detail view. This would
+         * take care of the case where user click on the link in select portlet
+         * list more than one time
+         * @param string $viewType
+         * @param string $uniqueLayoutId
+         * @param int $userId
+         * @return boolean
+         */
+        public static function doesPortletExistByViewTypeLayoutIdAndUser($viewType, $uniqueLayoutId, $userId)
+        {
+            assert('is_integer($userId) && $userId >= 1');
+            $sql = "select count(*) as count "          .
+                   'from portlet '                                       .
+                   "where layoutid = '$uniqueLayoutId' and viewtype = '$viewType' and _user_id = $userId";
+            $row = R::getRow($sql);
+            if ($row['count'] > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 ?>

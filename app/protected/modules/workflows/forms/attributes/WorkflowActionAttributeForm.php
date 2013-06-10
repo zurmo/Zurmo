@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -92,6 +92,13 @@
         protected $displayLabel;
 
         /**
+         * Text and TextArea attributes for example since you can have merge tags as these attribute values
+         * that need to get overridden
+         * @var bool
+         */
+        protected $shouldResolveValueForMergeTags = false;
+
+        /**
          * @return string - If the class name is BooleanWorkflowActionAttributeForm,
          * then 'Boolean' will be returned.
          */
@@ -100,6 +107,15 @@
             $type = get_called_class();
             $type = substr($type, 0, strlen($type) - strlen('WorkflowActionAttributeForm'));
             return $type;
+        }
+
+        /**
+         * Return true if the actionAttribute should resolve value before save.  If false, it will resolve value afterSave
+         * @return bool
+         */
+        public static function resolveValueBeforeSave()
+        {
+            return true;
         }
 
         /**
@@ -231,7 +247,12 @@
             assert('is_string($attribute)');
             if ($this->type == WorkflowActionAttributeForm::TYPE_STATIC)
             {
-                $adapter->getModel()->{$attribute} = $this->value;
+                $value = $this->value;
+                if ($this->shouldResolveValueForMergeTags)
+                {
+                    $value = $this->resolveValueForMergeTags($value, $adapter);
+                }
+                $adapter->getModel()->{$attribute} = $value;
             }
             elseif ($this->type == WorkflowActionAttributeForm::TYPE_STATIC_NULL)
             {
@@ -241,6 +262,40 @@
             {
                 throw new NotSupportedException();
             }
+        }
+
+        public function shouldSetNullAlternativeValue()
+        {
+            return false;
+        }
+
+        /**
+         * In the event that the value is not being set, sometimes an attribute still requires an alternative to null.
+         * An example is boolean where the default value should be 0 not NULL. Same is true with dateTime, and date
+         * where the default values should be 0000-00-00 00:00:00 and 0000-00-00 respectively.
+         * @param WorkflowActionProcessingModelAdapter $adapter
+         * @param $attribute
+         * @throws NotSupportedException
+         */
+        public function resolveNullAlternativeValueAndSetToModel(WorkflowActionProcessingModelAdapter $adapter, $attribute)
+        {
+            assert('is_string($attribute)');
+            if ($this->shouldSetValue || !$this->shouldSetNullAlternativeValue())
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        protected function resolveValueForMergeTags($value, WorkflowActionProcessingModelAdapter $adapter)
+        {
+            $mergeTagsUtil = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW,
+                             Yii::app()->languageHelper->getByUser($adapter->getTriggeredByUser()),
+                             $value);
+            if (false === $resolvedValue  = $mergeTagsUtil->resolveMergeTags($adapter->getTriggeredModel()))
+            {
+                return $value;
+            }
+            return $resolvedValue;
         }
     }
 ?>

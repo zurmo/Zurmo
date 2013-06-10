@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -168,6 +168,24 @@
             $this->setGetArray(array('id' => $savedReports[0]->id));
             $this->resetPostArray();
             $this->runControllerWithNoExceptionsAndGetContent('reports/default/details');
+            $this->setGetArray(array('id' => $savedReports[0]->id));
+            $this->resetPostArray();
+            $this->runControllerWithNoExceptionsAndGetContent('reports/default/edit');
+            //Save an existing report
+            $this->setGetArray(array('type' => 'RowsAndColumns', 'id' => $savedReports[0]->id));
+            $postData = static::makeRowsAndColumnsReportPostData();
+            $postData['save'] = 'save';
+            $this->setPostArray($postData);
+            $this->runControllerWithExitExceptionAndGetContent('reports/default/save');
+            $this->assertEquals(1, count($savedReports));
+            //Clone existing report
+            $this->setGetArray(array('type' => 'RowsAndColumns', 'id' => $savedReports[0]->id, 'isBeingCopied' => '1'));
+            $postData = static::makeRowsAndColumnsReportPostData();
+            $postData['save'] = 'save';
+            $this->setPostArray($postData);
+            $this->runControllerWithExitExceptionAndGetContent('reports/default/save');
+            $savedReports     = SavedReport::getAll();
+            $this->assertEquals(2, count($savedReports));
         }
 
         /**
@@ -180,7 +198,7 @@
                 return;
             }
             $savedReports = SavedReport::getAll();
-            $this->assertEquals(1, count($savedReports));
+            $this->assertEquals(2, count($savedReports));
             $this->setGetArray(array('id' => $savedReports[0]->id));
             //Test where there is no data to export
             $this->runControllerWithRedirectExceptionAndGetContent('reports/default/export');
@@ -239,7 +257,7 @@
         public function testApplyAndResetRuntimeFilters()
         {
             $savedReports = SavedReport::getAll();
-            $this->assertEquals(1, count($savedReports));
+            $this->assertEquals(2, count($savedReports));
             $this->setGetArray(array('id' => $savedReports[0]->id));
             //validate filters, where it doesn't validate, the value is missing
             $this->setPostArray(array('RowsAndColumnsReportWizardForm' => array('Filters' => array(
@@ -301,11 +319,11 @@
         public function testDelete()
         {
             $savedReports = SavedReport::getAll();
-            $this->assertEquals(2, count($savedReports));
+            $this->assertEquals(3, count($savedReports));
             $this->setGetArray(array('id' => $savedReports[0]->id));
             $this->runControllerWithRedirectExceptionAndGetContent('reports/default/delete');
             $savedReports = SavedReport::getAll();
-            $this->assertEquals(1, count($savedReports));
+            $this->assertEquals(2, count($savedReports));
         }
 
         //todo: test saving a report and changing owner so you don't have permissions anymore. it should do a flashbar and redirect you to the list view.

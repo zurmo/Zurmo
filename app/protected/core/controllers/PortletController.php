@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -107,7 +107,7 @@
         /**
          * Called using Ajax.
          */
-        public function actionModalConfigSave($portletId, $uniqueLayoutId)
+        public function actionModalConfigSave($portletId, $uniqueLayoutId, array $portletParams = array())
         {
             $portlet           = Portlet::getById(intval($portletId));
             $configurableView  = $portlet->getView()->getConfigurationView();
@@ -115,19 +115,22 @@
             $portlet->serializedViewData = serialize($configurableView->getViewMetadata());
             $portlet->save();
             $portlet->forget();
-            $this->actionModalRefresh($portletId, $uniqueLayoutId, null);
+            $this->actionModalRefresh($portletId, $uniqueLayoutId, null, $portletParams);
         }
 
         /**
          * Refresh portlet contents within a dashboard or details relation view. In the case of details relation view
          * detect if the relationModelId is populated, in which case resolve and populate the relationModel.
          * Resets controller back to default.
+         * @param string $portletId
+         * @param string $uniqueLayoutId
+         * @param string $redirectUrl
          * @param array $portletParams - optional argument which allows you to override the standard parameters.
+         * @param bool $portletsAreRemovable
          */
         public function actionModalRefresh($portletId, $uniqueLayoutId, $redirectUrl, array $portletParams = array(),
                                            $portletsAreRemovable = true)
         {
-            assert('is_bool($portletsAreRemovable)');
             $portlet = Portlet::getById(intval($portletId));
             $portlet->params = array_merge(array(
                     'controllerId' => 'default',
@@ -140,7 +143,7 @@
                 $portlet->params['relationModel'] = $modelClassName::getById((int)$portlet->params['relationModelId']);
             }
             $view = new AjaxPageView(new PortletRefreshView($portlet, $uniqueLayoutId, $this->getModule()->getId(),
-                                                            $portletsAreRemovable));
+                                                            (bool)$portletsAreRemovable));
             echo $view->render();
         }
     }

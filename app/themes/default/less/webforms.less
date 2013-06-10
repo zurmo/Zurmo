@@ -1,0 +1,102 @@
+.webform-embed-code{
+	padding:0;
+	margin-bottom: 15px;
+	word-break: break-all;
+	white-space: normal;
+	code{
+		white-space: normal;
+	}
+	textarea{
+		margin-top: 10px;
+		border: 1px solid #ccc;
+		background: #fff;
+		.b-shadow(inset 0 0 2px 0 #ccc);
+		width: 100%;
+		padding: 5px;
+		++.border-box;
+		.radius(2px);
+		resize: none;
+		white-space: pre;
+		overflow: auto;
+		font-family: "Courier New",Courier,monospace;
+	}
+}
+
+#ContactWebFormEditAndDetailsView{
+	.ui-sortable{
+		++.clearfix;
+		list-style: none;
+		.hasCheckBox + label{
+			top: 0;
+			left: 8px;
+		}
+	}
+	#ContactWebForm_serializedData{
+		display: block;
+		margin-top: -5px;
+	}
+	label + label{
+		margin-left: 0;
+	}
+	.third, .twoThirds{
+		float: left;
+	}
+	.twoThirds{
+		margin-left: 2%;
+	}
+	.dynamic-row .remove-dynamic-row-link {
+		top: 5px;
+	}
+	.row-description{
+		margin-bottom: 5px;
+	}
+}
+
+#zurmoExternalWebForm{
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:12px;
+	color: #545454;
+	.AppContent,
+	.wrapper{
+		.radius(0);
+		padding:0;
+		margin:0;
+		border: none;
+		.unstyle-panel();
+	}
+	.left-column{
+		padding-bottom: 0;
+	}
+	.attributesContainer{
+		margin: 0;
+		padding: 0;
+	}
+	.form-toolbar,
+	.view-toolbar-container{
+		border: none;
+		text-align: right;
+		padding: 0;
+		margin: 0;
+	}
+	.float-bar{
+		margin: 0;
+	}
+	@themeColorBtnDefault     : #97c43d;
+	@themeColorBtn2Default    : darken(@themeColorBtnDefault, 10%);
+	.z-button{
+		margin: 0;
+	}
+	.z-label{
+		color:#fff;
+		#gradient > .vertical( @themeColorBtnDefault, @themeColorBtn2Default );
+		.t-shadow( 0px -1px 0 rgba(0, 0, 0, 0.2) ) !important;
+		&:active{
+			color: darken(@themeColorBtnDefault, 40%) !important;
+			#gradient > .vertical( @themeColorBtnDefault, darken(@themeColorBtn2Default, 10%) );
+			.t-shadow( 0px 1px 0 lighten(@themeColorBtnDefault, 15%) ) !important;
+		}
+		&:hover{
+			.b-shadow(~"inset 0 5px 15px 2px rgba(0, 0, 0, 0.4), 0 1px 0 0 #FFF");
+		}
+	}
+}

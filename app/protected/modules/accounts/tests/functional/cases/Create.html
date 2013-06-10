@@ -223,6 +223,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//div[@id='AccountDetailsAndRelationsView']/div[1]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>link=Edit</td>
 	<td>Edit</td>
@@ -362,6 +377,11 @@
 	<td>USA</td>
 </tr>
 <tr>
+	<td>setSpeed</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>Account_name</td>
 	<td>Changing The Account ${randomSuffix}</td>
@@ -389,7 +409,7 @@
 <!-- Creating contact for testing edit and unlink-->
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div/div/a[@class='icon-create']</td>
+	<td>//div[@class='juiportlet-columns']/ul[2]/li[3]/div[1]/div/div/a[@class='icon-create']</td>
 	<td></td>
 </tr>
 <tr>
@@ -439,7 +459,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div[2]/table/tbody/tr/td[2]/div/ul/li/ul/li/a</td>
+	<td>//div[@class='juiportlet-columns']/ul[2]/li[3]/div[1]/div/div/a[@class='icon-create']</td>
 	<td></td>
 </tr>
 <tr>
@@ -456,6 +476,26 @@
 	<td>type</td>
 	<td>id=Contact_firstName</td>
 	<td>Changing Test </td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Last Name cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Contact_lastName</td>
+	<td>Contact ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -498,11 +538,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>setSpeed</td>
-	<td>1</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
@@ -515,7 +550,7 @@
 <!-- Creating contact for testing delete-->
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='juiportlet-columns']/ul/li[3]/div[2]/div/div/div/a[@class='icon-create']</td>
+	<td>//div[@class='juiportlet-columns']/ul[2]/li[3]/div[1]/div/div/a[@class='icon-create']</td>
 	<td></td>
 </tr>
 <tr>
@@ -527,6 +562,11 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>1</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>

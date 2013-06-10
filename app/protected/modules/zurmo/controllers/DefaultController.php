@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -268,7 +268,6 @@
             {
                 $model                     = new $modelClassName(false);
                 $searchForm                = new $formModelClassName($model);
-                //$rawPostFormData           = $_POST[$formModelClassName];
                 if (isset($_POST[$formModelClassName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]))
                 {
                     $searchForm->setAnyMixedAttributesScope($_POST[$formModelClassName][SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME]);
@@ -276,7 +275,18 @@
                 }
                 if (isset($_POST[$formModelClassName][SearchForm::SELECTED_LIST_ATTRIBUTES]))
                 {
+                    $listAttributesSelector         = new ListAttributesSelector($viewClassName, $model->getModuleClassName());
+                    $listAttributesSelector->setSelected($_POST[$formModelClassName][SearchForm::SELECTED_LIST_ATTRIBUTES]);
+                    $searchForm->setListAttributesSelector($listAttributesSelector);
                     unset($_POST[$formModelClassName][SearchForm::SELECTED_LIST_ATTRIBUTES]);
+                }
+                if (isset($_POST[$formModelClassName][KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES]))
+                {
+                    unset($_POST[$formModelClassName][KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES]);
+                }
+                if (isset($_POST[$formModelClassName][KanbanBoard::SELECTED_THEME]))
+                {
+                    unset($_POST[$formModelClassName][KanbanBoard::SELECTED_THEME]);
                 }
                 $sanitizedSearchData = $this->resolveAndSanitizeDynamicSearchAttributesByPostData(
                                                                 $_POST[$formModelClassName], $searchForm);
@@ -287,7 +297,7 @@
                     if ($searchForm->validate())
                     {
                         $savedSearch = $this->processSaveSearch($searchForm, $viewClassName);
-                        echo CJSON::encode(array('id' => $savedSearch->id, 'name' => $savedSearch->name));
+                        echo CJSON::encode(array('id' => $savedSearch->id, 'name' => $savedSearch->name, 'sortAttribute' => $this->getSortAttributeFromSavedSearchData($savedSearch), 'sortDescending' => $this->getSortDescendingFromSavedSearchData($savedSearch) ));
                         Yii::app()->end(0, false);
                     }
                 }
@@ -310,7 +320,12 @@
 
         protected function processSaveSearch($searchForm, $viewClassName)
         {
-            $savedSearch = SavedSearchUtil::makeSavedSearchBySearchForm($searchForm, $viewClassName);
+            $modelClassName     = get_class($searchForm->model);
+            $moduleClassName    = $modelClassName::getModuleClassName();
+            //Get sticky data here
+            $stickySearchKey    = $moduleClassName::getModuleLabelByTypeAndLanguage('Plural') . 'SearchView';
+            $stickySearchData   = StickySearchUtil::getDataByKey($stickySearchKey);
+            $savedSearch        = SavedSearchUtil::makeSavedSearchBySearchForm($searchForm, $viewClassName, $stickySearchData);
             if (!$savedSearch->save())
             {
                 throw new FailedToSaveModelException();
@@ -426,6 +441,36 @@
         {
             header("Content-Type:   ZurmoFileHelper::getMimeType($filePath)");
             echo file_get_contents($filePath);
+        }
+
+        public function actionPreviewFooter($isHtmlContent, $content)
+        {
+            Yii::app()->getClientScript()->setToAjaxMode();
+            $view   = new AutoresponderOrCampaignFooterTextPreviewView((bool)$isHtmlContent, $content);
+            $modalView = new ModalView($this, $view);
+            echo $modalView->render();
+        }
+
+        protected function getSortAttributeFromSavedSearchData($savedSearch)
+        {
+            $unserializedData = unserialize($savedSearch->serializedData);
+            if (isset($unserializedData['sortAttribute']))
+            {
+                return $unserializedData['sortAttribute'];
+            }
+
+            return '';
+        }
+
+        protected function getSortDescendingFromSavedSearchData($savedSearch)
+        {
+            $unserializedData = unserialize($savedSearch->serializedData);
+            if (isset($unserializedData['sortDescending']))
+            {
+                return $unserializedData['sortDescending'];
+            }
+
+            return '';
         }
     }
 ?>

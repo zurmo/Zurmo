@@ -62,24 +62,21 @@ var juiPortlets = {
         $(settings.widgetSelector, $(juiPortlets.columnsClass)).each(function () {
             var thisWidgetSettings = juiPortlets.getWidgetSettings(this.id);
             if (thisWidgetSettings.removable) {
-                if($('#' + this.id).find(settings.handleSelector).find(':contains("CLOSE")').text()=='CLOSE')
-                {
-                    $('#' + this.id).find(settings.handleSelector).find(':contains("CLOSE")').mousedown(function (e) {
-                        e.stopPropagation();
-                    }).click(function () {
-                        if(confirm(juiPortlets.removalMessage)) {
-                            $(this).parents(settings.widgetSelector).animate({
-                                opacity: 0
-                            },function () {
-                                $(this).wrap('<div/>').parent().slideUp(function () {
-                                    $(this).remove();
-                                    juiPortlets.savePreferences();
-                                });
+                $('#' + this.id).find(settings.handleSelector).find('.remove-portlet').mousedown(function (e) {
+                    e.stopPropagation();
+                }).click(function () {
+                    if(confirm(juiPortlets.removalMessage)) {
+                        $(this).parents(settings.widgetSelector).animate({
+                            opacity: 0
+                        },function () {
+                            $(this).wrap('<div/>').parent().slideUp(function () {
+                                $(this).remove();
+                                juiPortlets.savePreferences();
                             });
-                        }
-                        return false;
-                    })
-                }
+                        });
+                    }
+                    return false;
+                })
             }
 
             if (thisWidgetSettings.editable) {

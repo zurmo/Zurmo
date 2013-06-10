@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -40,9 +40,9 @@
      */
     abstract class SearchForm extends ModelForm
     {
-        const ANY_MIXED_ATTRIBUTES_SCOPE_NAME = 'anyMixedAttributesScope';
+        const ANY_MIXED_ATTRIBUTES_SCOPE_NAME       = 'anyMixedAttributesScope';
 
-        const SELECTED_LIST_ATTRIBUTES        = 'selectedListAttributes';
+        const SELECTED_LIST_ATTRIBUTES              = 'selectedListAttributes';
 
         private $dynamicAttributeData;
 
@@ -71,6 +71,12 @@
          * @var ListAttributesSelector
          */
         private $listAttributesSelector;
+
+        /**
+         * When utilized, shows a kanban board view instead of a listview
+         * @var null | object KanbanBoard
+         */
+        private $kanbanBoard;
 
         public function __construct(RedBeanModel $model)
         {
@@ -195,7 +201,10 @@
 
         public static function getNonSearchableAttributes()
         {
-            return array(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME, self::SELECTED_LIST_ATTRIBUTES);
+            return array(self::ANY_MIXED_ATTRIBUTES_SCOPE_NAME,
+                         self::SELECTED_LIST_ATTRIBUTES,
+                         KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES,
+                         KanbanBoard::SELECTED_THEME);
         }
 
         public function getSearchableAttributes()
@@ -583,6 +592,22 @@
         public function getListAttributesSelector()
         {
             return $this->listAttributesSelector;
+        }
+
+        /**
+         * @see KanbanBoard class
+         */
+        public function setKanbanBoard(KanbanBoard $kanbanBoard)
+        {
+            $this->kanbanBoard = $kanbanBoard;
+        }
+
+        /**
+         * @return null|object KanbanBoard
+         */
+        public function getKanbanBoard()
+        {
+            return $this->kanbanBoard;
         }
     }
 ?>

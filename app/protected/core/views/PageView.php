@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -227,8 +227,8 @@
                 Yii::app()->getAssetManager()->publish(
                     Yii::getPathOfAlias('application.core.views.assets')) . '/jquery.truncateText.js');
             return '<!DOCTYPE html>' .
-                   '<!--[if IE 8]><html class="ie8" lang="en"><![endif]-->' .
-                   '<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->';
+                   '<!--[if IE 8]><html class="zurmo ie8" lang="en"><![endif]-->' .
+                   '<!--[if gt IE 8]><!--><html class="zurmo" lang="en"><!--<![endif]-->';
         }
 
         /**
@@ -309,7 +309,7 @@
                    '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
                    '<meta name="viewport"  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . // Not Coding Standard
                    '<meta name="apple-mobile-web-app-capable" content="yes" />' . // Not Coding Standard
-                   '<link rel="apple-touch-icon" sizes="144x144" href="/themes/default/images/touch-icon-iphone4.png" />'  . //also add 57px, 72px, 144px // Not Coding Standard
+                   '<link rel="apple-touch-icon" sizes="144x144" href="' . Yii::app()->baseUrl . '/themes/default/images/touch-icon-iphone4.png" />'  . //also add 57px, 72px, 144px // Not Coding Standard
                    $specialCssContent .
                    '<title>' . $title . '</title>'  .
                    '</head>';

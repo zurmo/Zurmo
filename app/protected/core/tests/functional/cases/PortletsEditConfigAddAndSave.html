@@ -12,11 +12,6 @@
 <tr><td rowspan="1" colspan="3">EditConfigAddAndSave</td></tr>
 </thead><tbody>
 <tr>
-  <td>setSpeed</td>
-  <td>1000</td>
-  <td></td>
-</tr>
-<tr>
   <td>open</td>
   <td>index.php/accounts/default</td>
   <td></td>
@@ -33,7 +28,7 @@
 </tr>
 <tr>
   <td>click</td>
-  <td>//li[@class='juiportlet-widget TasksMyListView']/div/a[3]/span</td>
+  <td>//div[@id='HomeDashboardView']/div[2]/ul[1]/li[3]/div[1]/ul/li/ul/li[1]/a</td>
   <td></td>
 </tr>
 <tr>
@@ -56,10 +51,15 @@
   <td>name=save</td>
   <td></td>
 </tr>
-<tr>
+<!--tr>
   <td>waitForText</td>
   <td>//li[@class='juiportlet-widget TasksMyListView']/div[1]/h3</td>
   <td>TestTitle ${randomSuffix}</td>
+</tr-->
+<tr>
+  <td>waitForTextPresent</td>
+  <td>TestTitle ${randomSuffix}</td>
+  <td></td>
 </tr>
 <tr>
   <td>click</td>

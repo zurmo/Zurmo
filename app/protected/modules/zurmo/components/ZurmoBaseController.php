@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -44,7 +44,7 @@
 
         public function filters()
         {
-            $moduleClassName = get_class($this->getModule());
+            $moduleClassName = $this->resolveModuleClassNameForFilters();
             $filters = array();
             if (is_subclass_of($moduleClassName, 'SecurableModule'))
             {
@@ -75,6 +75,11 @@
                 'rightName' => ZurmoModule::RIGHT_BULK_DELETE,
             );
             return $filters;
+        }
+
+        public function resolveModuleClassNameForFilters()
+        {
+            return get_class($this->getModule());
         }
 
         public function __construct($id, $module = null)
@@ -136,7 +141,8 @@
                                        GetUtil::resolveSelectedIdsFromGet(),
                                        null,
                                        array(),
-                                       $searchForm->getListAttributesSelector());
+                                       $searchForm->getListAttributesSelector(),
+                                       $searchForm->getKanbanBoard());
             return $listView;
         }
 
@@ -152,13 +158,54 @@
             assert('is_bool($setSticky)');
             $listModelClassName = get_class($searchModel->getModel());
             static::resolveToTriggerOnSearchEvents($listModelClassName);
+            $this->resolveKanbanBoardIsActiveByGet($searchModel);
             $dataCollection = $this->makeDataCollectionAndResolveSavedSearch($searchModel, $stickySearchKey, $setSticky);
-            $dataProvider   = $this->makeRedBeanDataProviderByDataCollection(
-                $searchModel,
-                $pageSize,
-                $stateMetadataAdapterClassName,
-                $dataCollection);
+            $pageSize       = $this->resolvePageSizeForKanbanBoard($searchModel, $pageSize);
+            $dataProvider   = $this->makeRedBeanDataProviderByDataCollection($searchModel, $pageSize,
+                                $stateMetadataAdapterClassName, $dataCollection);
             return $dataProvider;
+        }
+
+        /**
+         * @param $searchModel
+         */
+        private function resolveKanbanBoardIsActiveByGet($searchModel)
+        {
+            if (!$searchModel instanceof SearchForm || $searchModel->getKanbanBoard() == null)
+            {
+                return;
+            }
+            if (isset($_GET['kanbanBoard']) && $_GET['kanbanBoard'] && !Yii::app()->userInterface->isMobile())
+            {
+                $searchModel->getKanbanBoard()->setIsActive();
+            }
+            elseif (isset($_GET['kanbanBoard']) && !$_GET['kanbanBoard'])
+            {
+                $searchModel->getKanbanBoard()->setIsNotActive();
+                $searchModel->getKanbanBoard()->setClearSticky();
+            }
+            elseif (Yii::app()->userInterface->isMobile())
+            {
+                $searchModel->getKanbanBoard()->setIsNotActive();
+            }
+        }
+
+        /**
+         * @param $searchModel
+         * @param $pageSize
+         * @return int
+         */
+        private function resolvePageSizeForKanbanBoard($searchModel, $pageSize)
+        {
+            if (!$searchModel instanceof SearchForm)
+            {
+                return $pageSize;
+            }
+            if ($searchModel->getKanbanBoard() !== null && $searchModel->getKanbanBoard()->getIsActive())
+            {
+                $pageSize = KanbanBoardExtendedGridView::resolvePageSizeForMaxCount();
+            }
+            return $pageSize;
         }
 
         private function makeDataCollectionAndResolveSavedSearch($searchModel, $stickySearchKey = null, $setSticky = true)
@@ -174,17 +221,19 @@
                 if ($stickySearchKey != null && null != $stickySearchData = StickySearchUtil::getDataByKey($stickySearchKey))
                 {
                     SavedSearchUtil::resolveSearchFormByStickyDataAndModel($stickySearchData, $searchModel);
+                    SavedSearchUtil::resolveSearchFormByStickySortData($getData, $searchModel, $stickySearchData);
                     $dataCollection = new SavedSearchAttributesDataCollection($searchModel);
                 }
                 else
                 {
-                    SavedSearchUtil::resolveSearchFormByGetData(GetUtil::getData(), $searchModel);
+                    SavedSearchUtil::resolveSearchFormByGetData($getData, $searchModel);
                     if ($searchModel->savedSearchId != null)
                     {
                         $dataCollection = new SavedSearchAttributesDataCollection($searchModel);
                     }
                 }
-                if ($stickySearchKey != null && $setSticky)
+                if ($stickySearchKey != null && ($setSticky ||
+                    ($searchModel->getKanbanBoard() != null && $searchModel->getKanbanBoard()->getClearSticky())))
                 {
                     if ($stickySearchData == null)
                     {
@@ -1118,6 +1167,18 @@
             // TODO: @Shoaibi/@Jason: Low: Candidate for MassActionController
             $actionId = str_replace(array('Progress', 'Save'), '', $actionId);
             return ($capitalizeFirst)? ucfirst($actionId) : $actionId;
+        }
+
+        protected function resolveActiveElementTypeForKanbanBoard(SearchForm $searchForm)
+        {
+            if ($searchForm->getKanbanBoard()->getIsActive())
+            {
+                return ListViewTypesToggleLinkActionElement::TYPE_KANBAN_BOARD;
+            }
+            else
+            {
+                return ListViewTypesToggleLinkActionElement::TYPE_GRID;
+            }
         }
     }
 ?>

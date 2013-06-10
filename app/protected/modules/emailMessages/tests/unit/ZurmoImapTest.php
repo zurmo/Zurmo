@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -37,6 +37,8 @@
     class ZurmoImapTest extends ZurmoBaseTest
     {
         public static $emailHelperSendEmailThroughTransport;
+
+        protected $user;
 
         public static function setUpBeforeClass()
         {
@@ -59,27 +61,22 @@
 
         public static function tearDownAfterClass()
         {
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['userImapSettings']['imapFolder'];
-            $imap->init();
-            $imap->connect();
-            $imap->deleteMessages(true);
-
+            EmailMessageTestHelper::purgeAllMessages();
             Yii::app()->emailHelper->sendEmailThroughTransport = self::$emailHelperSendEmailThroughTransport;
             parent::tearDownAfterClass();
         }
 
+        public function setUp()
+        {
+            EmailMessageTestHelper::purgeAllMessages();
+            parent::setUp();
+            $this->user                 = User::getByUsername('super');
+            Yii::app()->user->userModel = $this->user;
+        }
+
         public function testInit()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
+            $this->skipTestIfMissingSettings();
             $imap = new ZurmoImap();
             $this->assertEquals(null,    $imap->imapHost);
             $this->assertEquals(null,    $imap->imapUsername);
@@ -108,8 +105,10 @@
                                 ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapHost'));
             $this->assertEquals(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'],
                                 ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapUsername'));
-            $this->assertEquals(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'],
-                                ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapPassword'));
+            //$this->assertEquals(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'],
+            //                    ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapPassword'));
+            $this->assertFalse(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'] ==
+                               ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapPassword'));
             $this->assertEquals(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'],
                                 ZurmoConfigurationUtil::getByModuleName('EmailMessagesModule', 'imapPort'));
             $this->assertEquals(Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'],
@@ -131,10 +130,7 @@
         */
         public function testConnect()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
+            $this->skipTestIfMissingSettings();
             $imap = new ZurmoImap();
             $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
             $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
@@ -167,20 +163,8 @@
 
         public function testGetMessageBoxStatsDetailed()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
 
             $messageBoxStatDetails = $imap->getMessageBoxStatsDetailed();
@@ -190,20 +174,8 @@
 
         public function testGetMessageBoxStats()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
 
             $messageBoxStat = $imap->getMessageBoxStats();
@@ -213,20 +185,8 @@
 
         public function testDeleteMessages()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
             $imap->deleteMessages(false);
 
@@ -250,20 +210,8 @@
 
         public function testDeleteMessage()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
             $imap->deleteMessages(true);
             $imapStats = $imap->getMessageBoxStatsDetailed();
@@ -292,20 +240,8 @@
 
         public function testGetMessagesWithoutAttachments()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
 
             $imap->deleteMessages(true);
@@ -330,20 +266,8 @@
 
         public function testGetMessagesWithAttachments()
         {
-            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
-            {
-                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
-            }
-            $imap = new ZurmoImap();
-            $imap->imapHost        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapHost'];
-            $imap->imapUsername    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapUsername'];
-            $imap->imapPassword    = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPassword'];
-            $imap->imapPort        = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapPort'];
-            $imap->imapSSL         = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapSSL'];
-            $imap->imapFolder      = Yii::app()->params['emailTestAccounts']['dropboxImapSettings']['imapFolder'];
-
-            $imap->setInboundSettings();
-            $imap->init();
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
 
             $imap->deleteMessages(true);
@@ -380,6 +304,65 @@
             $this->assertTrue($messages[0]->attachments[1]['attachment'] != '');
             $this->assertEquals('text.txt', $messages[0]->attachments[2]['filename']);
             $this->assertTrue(strlen($messages[0]->attachments[2]['attachment']) > 0);
+        }
+
+        public function testGetMessagesWithCustomHeaders()
+        {
+            $this->skipTestIfMissingSettings(true);
+            $imap = EmailMessageTestHelper::resolveImapObject();
+            $this->assertTrue($imap->connect());
+            $returnPath            = Yii::app()->params['emailTestAccounts']['bounceImapSettings']['imapUsername'];
+
+            $imap->deleteMessages(true);
+
+            $headers    = array('zurmoItemId' => 10,
+                'zurmoItemClass' => 'AutoresponderItem',
+                'zurmoPersonId'  => 20,
+                'Return-Path'   => $returnPath,
+            );
+            Yii::app()->emailHelper->sendRawEmail("Test Email",
+                Yii::app()->emailHelper->outboundUsername,
+                $imap->imapUsername,
+                'Test email body',
+                '<strong>Test</strong> email html body',
+                null,
+                null,
+                null,
+                null,
+                $headers
+            );
+            sleep(20);
+            $messages = $imap->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals("Test Email", $messages[0]->subject);
+            $this->assertEquals("Test email body", trim($messages[0]->textBody));
+            $this->assertEquals("<strong>Test</strong> email html body", trim($messages[0]->htmlBody));
+            $this->assertEquals($imap->imapUsername, $messages[0]->to[0]['email']);
+            $this->assertEquals(Yii::app()->emailHelper->outboundUsername, $messages[0]->fromEmail);
+            $this->assertNotEmpty($messages[0]->headers);
+            $this->assertEquals(10, $messages[0]->headers['zurmoItemId']);
+            $this->assertEquals(20, $messages[0]->headers['zurmoPersonId']);
+            $this->assertEquals('AutoresponderItem', $messages[0]->headers['zurmoItemClass']);
+            if (isset($messages[0]->headers['Return-Path']))
+            {
+                $this->assertEquals('<' . $returnPath . '>', $messages[0]->headers['Return-Path']);
+            }
+            else
+            {
+                $this->assertEquals('<' . $returnPath . '>', $messages[0]->headers['Return-path']);
+            }
+        }
+
+        protected function skipTestIfMissingSettings($checkBounceSettingsToo = false)
+        {
+            if (!EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
+            {
+                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test email settings are not configured in perInstanceTest.php file.'));
+            }
+            elseif ($checkBounceSettingsToo && !BounceMessageTestHelper::isSetBounceImapSettings())
+            {
+                $this->markTestSkipped(Zurmo::t('EmailMessagesModule', 'Test bounce settings are not configured in perInstanceTest.php file.'));
+            }
         }
     }
 ?>

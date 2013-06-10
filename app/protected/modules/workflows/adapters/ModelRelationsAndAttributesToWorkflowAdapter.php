@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -579,11 +579,13 @@
         /**
          * @param RedBeanModel $precedingModel
          * @param null|string $precedingRelation
+         * @param null|string $onlyIncludeThisModelClassName
          * @return array
          * @throws NotSupportedException if there the preceding model and relation are not either both defined or both
          * null
          */
-        public function getInferredRelationsData(RedBeanModel $precedingModel = null, $precedingRelation = null)
+        public function getInferredRelationsData(RedBeanModel $precedingModel = null, $precedingRelation = null,
+                                                 $onlyIncludeThisModelClassName = null)
         {
             if (($precedingModel != null && $precedingRelation == null) ||
                ($precedingModel == null && $precedingRelation != null))
@@ -598,11 +600,15 @@
                 {
                     foreach ($inferredRelationModelClassNames as $modelClassName)
                     {
-                        if (!$this->inferredRelationLinksToPrecedingRelation($modelClassName, $attribute, $precedingModel, $precedingRelation))
+                        if ($onlyIncludeThisModelClassName === null || $onlyIncludeThisModelClassName == $modelClassName)
                         {
-                            $attributes[$modelClassName  . FormModelUtil::DELIMITER .
-                                    $attribute . FormModelUtil::DELIMITER . self::DYNAMIC_RELATION_INFERRED] =
-                            array('label' => $modelClassName::getModelLabelByTypeAndLanguage('Plural'));
+                            if (!$this->inferredRelationLinksToPrecedingRelation($modelClassName,
+                                $attribute, $precedingModel, $precedingRelation))
+                            {
+                                $attributes[$modelClassName  . FormModelUtil::DELIMITER .
+                                        $attribute . FormModelUtil::DELIMITER . self::DYNAMIC_RELATION_INFERRED] =
+                                array('label' => $modelClassName::getModelLabelByTypeAndLanguage('Plural'));
+                            }
                         }
                     }
                 }
@@ -816,6 +822,31 @@
         }
 
         /**
+         * Only includes relations that are to the 'Contact' model
+         * Utilized by @see DynamicTriggeredModelRelationUserWorkflowEmailMessageRecipientForm
+         * @return sorted array
+         */
+        public function getSelectableContactRelationsDataForEmailMessageRecipientModelRelation()
+        {
+            $attributes = array();
+            foreach ($this->model->getAttributes() as $attribute => $notUsed)
+            {
+                if ($this->model->isRelation($attribute) &&
+                    !$this->rules->relationIsUsedAsAttribute($this->model, $attribute) &&
+                    $this->rules->attributeCanBeTriggered($this->model, $attribute)  &&
+                    !$this->model->isOwnedRelation($attribute) &&
+                    $this->model->getRelationModelClassName($attribute) == 'Contact')
+                {
+                    $this->resolveRelationToSelectableRelationData($attributes, $attribute);
+                }
+            }
+            $attributes = array_merge($attributes, $this->getDerivedRelationsViaCastedUpModelData(null, null, 'Contact'));
+            $attributes = array_merge($attributes, $this->getInferredRelationsData(null, null, 'Contact'));
+            $sortedAttributes = ArrayUtil::subValueSort($attributes, 'label', 'asort');
+            return $sortedAttributes;
+        }
+
+        /**
          * Exclude User relations and Owned relations.
          * @return sorted array
          */
@@ -987,12 +1018,15 @@
         /**
          * @param RedBeanModel $precedingModel
          * @param null|string $precedingRelation
+         * @param null|string $onlyIncludeThisModelClassName
          * @return array
          * @throws NotSupportedException if there the preceding model and relation are not either both defined or both
          * null
          */
-        protected function getDerivedRelationsViaCastedUpModelData(RedBeanModel $precedingModel = null, $precedingRelation = null)
+        protected function getDerivedRelationsViaCastedUpModelData(RedBeanModel $precedingModel = null, $precedingRelation = null,
+                                                                   $onlyIncludeThisModelClassName = null)
         {
+            assert('$onlyIncludeThisModelClassName  === null || is_string($onlyIncludeThisModelClassName)');
             if (($precedingModel != null && $precedingRelation == null) ||
                ($precedingModel == null && $precedingRelation != null))
             {
@@ -1006,13 +1040,17 @@
                 {
                     foreach ($metadata[$modelClassName]["derivedRelationsViaCastedUpModel"] as $relation => $derivedRelationData)
                     {
-                        if (!$this->derivedRelationLinksToPrecedingRelation(
-                            $this->model->getDerivedRelationModelClassName($relation),
-                            $this->model->getDerivedRelationViaCastedUpModelOpposingRelationName($relation),
-                            $precedingModel,
-                            $precedingRelation))
+                        $relationModelClassName = $this->model->getDerivedRelationModelClassName($relation);
+                        if ($onlyIncludeThisModelClassName === null || $relationModelClassName == $onlyIncludeThisModelClassName)
                         {
-                            $attributes[$relation] = array('label' => $this->model->getAttributeLabel($relation));
+                            if (!$this->derivedRelationLinksToPrecedingRelation(
+                                $relationModelClassName,
+                                $this->model->getDerivedRelationViaCastedUpModelOpposingRelationName($relation),
+                                $precedingModel,
+                                $precedingRelation))
+                            {
+                                $attributes[$relation] = array('label' => $this->model->getAttributeLabel($relation));
+                            }
                         }
                     }
                 }

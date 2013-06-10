@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -44,6 +44,12 @@
         protected $moduleId;
 
         protected $dataProvider;
+
+        /**
+         * Override and set to false if you want the viewToolbar to render during renderPortletHeadContent instead
+         * @var bool
+         */
+        protected $renderViewToolBarDuringRenderContent = true;
 
         /**
          * True/false to decide if each row in the list view widget
@@ -80,6 +86,8 @@
 
         private $listAttributesSelector;
 
+        private $kanbanBoard;
+
         /**
          * Constructs a list view specifying the controller as
          * well as the model that will have its details displayed.isDisplayAttributeACalculationOrModifier
@@ -92,13 +100,15 @@
             $selectedIds,
             $gridIdSuffix = null,
             $gridViewPagerParams = array(),
-            $listAttributesSelector = null
+            $listAttributesSelector = null,
+            $kanbanBoard            = null
         )
         {
             assert('is_array($selectedIds)');
             assert('is_string($modelClassName)');
             assert('is_array($this->gridViewPagerParams)');
             assert('$listAttributesSelector == null || $listAttributesSelector instanceof ListAttributesSelector');
+            assert('$kanbanBoard === null || $kanbanBoard instanceof $kanbanBoard');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->modelClassName         = $modelClassName;
@@ -109,6 +119,7 @@
             $this->gridViewPagerParams    = $gridViewPagerParams;
             $this->gridId                 = 'list-view';
             $this->listAttributesSelector = $listAttributesSelector;
+            $this->kanbanBoard            = $kanbanBoard;
         }
 
         /**
@@ -123,9 +134,13 @@
             $cClipWidget->beginClip("ListView");
             $cClipWidget->widget($this->getGridViewWidgetPath(), $this->getCGridViewParams());
             $cClipWidget->endClip();
-            $content = $this->renderViewToolBar();
+            $content     = null;
+            if ($this->renderViewToolBarDuringRenderContent)
+            {
+                $content .= $this->renderViewToolBar();
+            }
             $content .= $cClipWidget->getController()->clips['ListView'] . "\n";
-            if ($this->rowsAreSelectable)
+            if ($this->getRowsAreSelectable())
             {
                 $content .= ZurmoHtml::hiddenField($this->gridId . $this->gridIdSuffix . '-selectedIds', implode(",", $this->selectedIds)) . "\n"; // Not Coding Standard
             }
@@ -139,15 +154,31 @@
             {
                 $widget = 'application.core.widgets.StackedExtendedGridView';
             }
-            else
+            elseif ($this->kanbanBoard === null || !$this->kanbanBoard->getIsActive())
             {
                 $widget = 'application.core.widgets.ExtendedGridView';
+            }
+            elseif ($this->kanbanBoard->getIsActive())
+            {
+                $widget = $this->kanbanBoard->getGridViewWidgetPath();
+            }
+            else
+            {
+                throw new NotSupportedException();
             }
             return $widget;
         }
 
+        /**
+         * For a Kanban Board view, the rows are never selectable.
+         * @return bool
+         */
         public function getRowsAreSelectable()
         {
+            if ($this->kanbanBoard != null && $this->kanbanBoard->getIsActive())
+            {
+                return false;
+            }
             return $this->rowsAreSelectable;
         }
 
@@ -160,8 +191,7 @@
         {
             $columns = $this->getCGridViewColumns();
             assert('is_array($columns)');
-
-            return array(
+            $params = array(
                 'id' => $this->getGridViewId(),
                 'htmlOptions' => array(
                     'class' => 'cgrid-view'
@@ -181,6 +211,7 @@
                 'summaryText'          => static::getSummaryText(),
                 'summaryCssClass'      => static::getSummaryCssClass(),
             );
+            return $this->resolveCGridViewParamsForKanbanBoard($params);
         }
 
         protected static function getGridTemplate()
@@ -263,7 +294,7 @@
          protected function getCGridViewColumns()
          {
             $columns = array();
-            if ($this->rowsAreSelectable)
+            if ($this->getRowsAreSelectable())
             {
                 $firstColumn = $this->getCGridViewFirstColumn();
                 array_push($columns, $firstColumn);
@@ -327,13 +358,13 @@
 
         protected function getCGridViewBeforeAjaxUpdate()
         {
-            if ($this->rowsAreSelectable)
+            if ($this->getRowsAreSelectable())
             {
-                return 'js:function(id, options) { makeSmallLoadingSpinner(true, "#" + id); addListViewSelectedIdsToUrl(id, options); }';
+                return 'js:function(id, options) { $(this).makeSmallLoadingSpinner(true, "#" + id); addListViewSelectedIdsToUrl(id, options); }';
             }
             else
             {
-                return 'js:function(id, options) { makeSmallLoadingSpinner(true, "#" + id); }';
+                return 'js:function(id, options) { $(this).makeSmallLoadingSpinner(true, "#" + id); }';
             }
         }
 
@@ -381,7 +412,7 @@
 
         protected function getCGridViewSelectableRowsCount()
         {
-            if ($this->rowsAreSelectable)
+            if ($this->getRowsAreSelectable())
             {
                 return 2;
             }
@@ -502,6 +533,16 @@
         public function getControllerId()
         {
             return $this->controllerId;
+        }
+
+        private function resolveCGridViewParamsForKanbanBoard(array $params)
+        {
+            if (Yii::app()->userInterface->isMobile() || $this->kanbanBoard === null || !$this->kanbanBoard->getIsActive())
+            {
+                return $params;
+            }
+            $params = array_merge($params, $this->kanbanBoard->getGridViewParams());
+            return array_merge($params, $this->resolveExtraParamsForKanbanBoard());
         }
     }
 ?>

@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -58,6 +58,11 @@
         {
             parent::setUp();
             Yii::app()->user->userModel = User::getByUsername('super');
+        }
+
+        public function testGetModuleClassName()
+        {
+            $this->assertEquals('MarketingListsModule', MarketingListMember::getModuleClassName());
         }
 
         public function testCreateAndGetMarketingListMemberById()
@@ -142,7 +147,7 @@
             foreach ($contacts as $index => $contact)
             {
                 $unsubcribed = ($index % 2);
-                $member = MarketingListMemberTestHelper::fillMarketingListMember($unsubcribed, $marketingList, $contacts[0]);
+                $member = MarketingListMemberTestHelper::populateMarketingListMember($unsubcribed, $marketingList, $contacts[0]);
                 $this->assertTrue($member->unrestrictedSave());
                 if ($unsubcribed)
                 {
@@ -166,32 +171,34 @@
         {
             $marketingList                  = MarketingListTestHelper::createMarketingListByName('test marketing List 06');
             $this->assertNotNull($marketingList);
-            $autoresponderSubscribe         = AutoresponderTestHelper::createAutoresponder('autoresponder Subscribe',
-                                                                                        'test autoresponder Subscribe',
-                                                                                        'This is text content Subscribe',
-                                                                                        'This is <b>html</b> content Subscribe',
-                                                                                        10,
-                                                                                        Autoresponder::OPERATION_SUBSCRIBE,
-                                                                                        $marketingList
+            $autoresponderSubscribe         = AutoresponderTestHelper::createAutoresponder(
+                                                                                'test autoresponder Subscribe',
+                                                                                'This is text content Subscribe',
+                                                                                'This is <b>html</b> content Subscribe',
+                                                                                10,
+                                                                                Autoresponder::OPERATION_SUBSCRIBE,
+                                                                                false,
+                                                                                $marketingList
                                                                                     );
             $this->assertNotNull($autoresponderSubscribe);
-            $autoresponderUnsubscribe       = AutoresponderTestHelper::createAutoresponder('autoresponder Unsubscribe',
-                                                                                        'test autoresponder Unsubscribe',
-                                                                                        'This is text content Unsubscribe',
-                                                                                        'This is <b>html</b> content Unsubscribe',
-                                                                                        20,
-                                                                                        Autoresponder::OPERATION_UNSUBSCRIBE,
-                                                                                        $marketingList
+            $autoresponderUnsubscribe       = AutoresponderTestHelper::createAutoresponder(
+                                                                            'test autoresponder Unsubscribe',
+                                                                            'This is text content Unsubscribe',
+                                                                            'This is <b>html</b> content Unsubscribe',
+                                                                            20,
+                                                                            Autoresponder::OPERATION_UNSUBSCRIBE,
+                                                                            true,
+                                                                            $marketingList
                                                                                     );
             $this->assertNotNull($autoresponderUnsubscribe);
             $member                         = MarketingListMemberTestHelper::createMarketingListMember(0, $marketingList);
             $autoresponderItemsSubscribe    = AutoresponderItem::getByProcessedAndAutoresponderId(
-                                                                                        AutoresponderItem::NOT_PROCESSED,
+                                                                                        0,
                                                                                         $autoresponderSubscribe->id);
             $this->assertNotEmpty($autoresponderItemsSubscribe);
             $this->assertCount(1, $autoresponderItemsSubscribe);
             $autoresponderItemsUnsubscribe    = AutoresponderItem::getByProcessedAndAutoresponderId(
-                                                                                        AutoresponderItem::NOT_PROCESSED,
+                                                                                        0,
                                                                                         $autoresponderUnsubscribe->id);
             $this->assertEmpty($autoresponderItemsUnsubscribe);
 
@@ -200,43 +207,15 @@
             $this->assertTrue($saved);
 
             $autoresponderItemsSubscribe    = AutoresponderItem::getByProcessedAndAutoresponderId(
-                                                                                        AutoresponderItem::NOT_PROCESSED,
+                                                                                        0,
                                                                                         $autoresponderSubscribe->id);
             $this->assertNotEmpty($autoresponderItemsSubscribe);
             $this->assertCount(1, $autoresponderItemsSubscribe);
             $autoresponderItemsUnsubscribe    = AutoresponderItem::getByProcessedAndAutoresponderId(
-                                                                                        AutoresponderItem::NOT_PROCESSED,
+                                                                                        0,
                                                                                         $autoresponderUnsubscribe->id);
             $this->assertNotEmpty($autoresponderItemsUnsubscribe);
             $this->assertCount(1, $autoresponderItemsUnsubscribe);
-        }
-
-        /**
-         * @depends testCreateAndGetMarketingListMemberById
-         */
-        public function testBeforeDeleteAutoresponderRegister()
-        {
-            $marketingList                  = MarketingListTestHelper::createMarketingListByName('test marketing List 07');
-            $this->assertNotNull($marketingList);
-            $autoresponderRemove            = AutoresponderTestHelper::createAutoresponder('autoresponder Remove',
-                                                                                            'test autoresponder Remove',
-                                                                                            'This is text content Remove',
-                                                                                            'This is <b>html</b> content Remove',
-                                                                                            10,
-                                                                                            Autoresponder::OPERATION_REMOVE,
-                                                                                            $marketingList
-                                                                                        );
-            $this->assertNotNull($autoresponderRemove);
-
-            $member                         = MarketingListMemberTestHelper::createMarketingListMember(0, $marketingList);
-            $saved = $member->delete();
-            $this->assertTrue($saved);
-
-            $autoresponderItemsRemove       = AutoresponderItem::getByProcessedAndAutoresponderId(
-                                                                                            AutoresponderItem::NOT_PROCESSED,
-                                                                                            $autoresponderRemove->id);
-            $this->assertNotEmpty($autoresponderItemsRemove);
-            $this->assertCount(1, $autoresponderItemsRemove);
         }
     }
 ?>

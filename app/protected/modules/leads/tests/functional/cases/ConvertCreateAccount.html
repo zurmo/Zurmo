@@ -68,8 +68,18 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='LeadEditAndDetailsView']/div/h1</td>
+	<td>//div[@id='LeadDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div[1]/h3</td>
 	<td>exact:Silly Sally ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='LeadDetailsAndRelationsView']/div[1]/div/a</td>
+    <td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -208,7 +218,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='ContactEditAndDetailsView']/div/div[2]/table/tbody/tr[2]/td[1]</td>
+	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[2]/td</td>
 	<td>Qualified</td>
 </tr>
 <tr>
@@ -228,32 +238,32 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/h1</td>
+	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div[1]/h3</td>
 	<td>exact:my created account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[1]/td[1]</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
 	<td>my created account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[3]/td[1]</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[3]/td</td>
 	<td>Financial Services</td>
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[9]/th</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[9]/th</td>
 	<td>Billing Address</td>
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[9]/td</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[9]/td</td>
 	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[4]/td[1]</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[4]/td</td>
 	<td>5679076543</td>
 </tr>
 <tr>
@@ -263,7 +273,7 @@
 </tr>
 <tr>
 	<td>verifyText</td>
-	<td>//div[@id='AccountEditAndDetailsView']/div/div[2]/table/tbody/tr[10]/td</td>
+	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[10]/td</td>
 	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
 </tr>
 </tbody></table>

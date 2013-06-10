@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -46,6 +46,31 @@
         public function actionIndex()
         {
             $this->actionList();
+        }
+
+        /**
+         * Currently supports an attribute that is a CustomField
+         * @param string $id
+         * @param string $attribute
+         * @param string $value
+         * @throws NotSupportedException
+         * @throws FailedToSaveModelException
+         */
+        public function actionUpdateAttributeValue($id, $attribute, $value)
+        {
+            $modelClassName = $this->getModule()->getPrimaryModelName();
+            $model          = $modelClassName::getById(intval($id));
+            ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($model);
+            if (!$model->isAttribute($attribute) || !$model->{$attribute} instanceof CustomField)
+            {
+                throw new NotSupportedException();
+            }
+            $model->{$attribute}->value = $value;
+            $saved                      = $model->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
         }
 
         public function actionLoadSavedSearch($id, $redirectAction = 'list')
@@ -101,7 +126,7 @@
             $pageSize            = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                                    'autoCompleteListPageSize', get_class($this->getModule()));
             $autoCompleteResults = ModelAutoCompleteUtil::getByPartialName($modelClassName, $term, $pageSize);
-            if(empty($autoCompleteResults))
+            if (empty($autoCompleteResults))
             {
                 $autoCompleteResults = array(array('id'    => null,
                                                    'value' => null,
@@ -180,12 +205,19 @@
             return null;
         }
 
-        protected function export($stickySearchKey = null)
+        protected function export($stickySearchKey = null, $modelClassName = null, $exportFileName = null)
         {
             assert('$stickySearchKey == null || is_string($stickySearchKey)');
-            $modelClassName        = $this->getModelName();
+            assert('$modelClassName == null || is_string($modelClassName)');
+            assert('$exportFileName == null || is_string($exportFileName)');
+            if ($modelClassName == null)
+            {
+                $modelClassName        = $this->getModelName();
+            }
             $searchFormClassName   = static::getSearchFormClassName();
+            $pageSize              = null;
             $model                 = new $modelClassName(false);
+
             if ($searchFormClassName != null)
             {
                 $searchForm = new $searchFormClassName($model);
@@ -195,16 +227,22 @@
                 throw new NotSupportedException();
             }
             $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
-            $dataProvider                  = $this->getDataProviderByResolvingSelectAllFromGet(
-                                             $searchForm, null, Yii::app()->user->userModel->id,
-                                             $stateMetadataAdapterClassName, $stickySearchKey);
+
+            $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
+                $searchForm,
+                $pageSize,
+                Yii::app()->user->userModel->id,
+                null,
+                $stickySearchKey
+            );
+
             if (!$dataProvider)
             {
                 $idsToExport = array_filter(explode(",", trim($_GET['selectedIds'], " ,"))); // Not Coding Standard
             }
             $totalItems = static::getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider, false);
-            $headerData = array();
-            $data       = array();
+
+            $data = array();
             if ($totalItems > 0)
             {
                 if ($totalItems <= ExportModule::$asynchronusThreshold)
@@ -212,8 +250,7 @@
                     // Output csv file directly to user browser
                     if ($dataProvider)
                     {
-                        $dataProvider->getPagination()->setPageSize($totalItems);
-                        $modelsToExport = $dataProvider->getData();
+                        $modelsToExport = ExportUtil::getDataForExport($dataProvider);
                         if (count($modelsToExport) > 0)
                         {
                             $modelToExportAdapter  = new ModelToExportAdapter($modelsToExport[0]);
@@ -248,8 +285,16 @@
                     // Output data
                     if (count($data))
                     {
-                        $fileName = $this->getModule()->getName() . ".csv";
-                        ExportItemToCsvFileUtil::export($data, $headerData, $fileName, true);
+                        if ($exportFileName == null)
+                        {
+                            $fileName = $this->getModule()->getName() . ".csv";
+                        }
+                        else
+                        {
+                            $fileName = $exportFileName . ".csv";
+                        }
+                        // TODO Clarify with Jason, header data is missing here
+                        $output = ExportItemToCsvFileUtil::export($data, array(), $fileName, true);
                     }
                     else
                     {
@@ -262,8 +307,7 @@
                 {
                     if ($dataProvider)
                     {
-                        $dataProvider->getPagination()->setPageSize($totalItems);
-                        $serializedData = serialize($dataProvider);
+                        $serializedData = ExportUtil::getSerializedDataForExport($dataProvider);
                     }
                     else
                     {
@@ -275,7 +319,7 @@
                     $exportItem->isCompleted     = 0;
                     $exportItem->exportFileType  = 'csv';
                     $exportItem->exportFileName  = $this->getModule()->getName();
-                    $exportItem->modelClassName  = $modelClassName;
+                    $exportItem->modelClassName = $modelClassName;
                     $exportItem->serializedData  = $serializedData;
                     $exportItem->save();
                     $exportItem->forget();

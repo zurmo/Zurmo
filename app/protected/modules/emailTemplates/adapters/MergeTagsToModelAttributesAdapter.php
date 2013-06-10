@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -41,6 +41,10 @@
     class MergeTagsToModelAttributesAdapter
     {
         const PROPERTY_NOT_FOUND = "!MERGETAG-TO-ATTR-FAILED";
+
+        protected static $specialAttributesResolver = array (
+                                                            'modelUrl'  => 'resolveModelUrlByModel',
+                                                            );
 
         public static function resolveMergeTagsArrayToAttributesFromModel(& $mergeTags, $model, & $invalidTags = array(), $language = 'en', $errorOnFirstMissing = false)
         {
@@ -67,7 +71,7 @@
                 }
             }
             $mergeTags = $resolvedMergeTags;
-            return (empty($invalidTags))? true: false;
+            return (empty($invalidTags));
         }
 
         protected static function stripTimeDelimiterAndReturnQualifier(& $mergeTag)
@@ -89,70 +93,102 @@
         {
             $attributeName = strtok($attributeAccessorString, '->');
             $modelAttributeAdapter = new ModelAttributesAdapter($model);
-            if (!$model->isAttribute($attributeName))
+            if (array_key_exists($attributeName, static::$specialAttributesResolver) && empty($timeQualifier))
             {
-                return static::PROPERTY_NOT_FOUND;
+                $methodName = static::$specialAttributesResolver[$attributeName];
+                return static::$methodName($model);
             }
-            elseif ($model->$attributeName instanceof CustomField)
+            else
             {
-                $value = static::getAttributeValue($model->$attributeName, 'value', $timeQualifier);
-                // TODO: @Shoaibi/@Jason: Low: need to apply localizations(Date/time/currency formats, ...) here besides translation
-                return (isset($value)) ? Zurmo::t($model::getModuleClassName(), $value, array(), null, $language) : null;
-            }
-            elseif ($model->isRelation($attributeName))
-            {
-                $model = $model->$attributeName;
-                if ($attributeName === $attributeAccessorString) // We have name of relation, don't have a property requested, like $object->owner
+                if (!$model->isAttribute($attributeName))
                 {
-                    $attributeAccessorString = null;
+                    return static::PROPERTY_NOT_FOUND;
                 }
-                else
+                elseif ($model->$attributeName instanceof CustomField)
                 {
-                    $attributeAccessorString = str_replace($attributeName . '->', '', $attributeAccessorString);
-                }
-                if (empty($attributeAccessorString))
-                {
-                    // If a user specific a relation merge tag but not a property, we assume he meant "value" property.
-                    if (empty($timeQualifier))
+                    $value = static::getAttributeValue($model->$attributeName, 'value', $timeQualifier);
+                    // TODO: @Shoaibi/@Jason: Low: need to apply localizations(Date/time/currency formats, ...) here besides translation
+                    if ($value)
                     {
-                        return strval($model);
+                        $value = Zurmo::t($model::getModuleClassName(), $value, array(), null, $language);
+                    }
+                    return $value;
+                }
+                elseif ($model->isRelation($attributeName))
+                {
+                    $model = $model->$attributeName;
+                    if ($attributeName === $attributeAccessorString) // We have name of relation, don't have a property requested, like $object->owner
+                    {
+                        $attributeAccessorString = null;
+                    }
+                    else
+                    {
+                        $attributeAccessorString = str_replace($attributeName . '->', '', $attributeAccessorString);
+                    }
+                    if (empty($attributeAccessorString))
+                    {
+                        // If a user specific a relation merge tag but not a property, we assume he meant "value" property.
+                        if (empty($timeQualifier))
+                        {
+                            return strval($model);
+                        }
+                        else
+                        {
+                            return static::PROPERTY_NOT_FOUND;
+                        }
+                    }
+                    return static::resolveMergeTagToStandardOrRelatedAttribute($attributeAccessorString, $model, $language, $timeQualifier);
+                }
+                elseif ($modelAttributeAdapter->isStandardAttribute($attributeName))
+                {
+                    if ($attributeName === $attributeAccessorString) // we don't have any accessor operator after the attributeName e.g. its the last in list
+                    {
+                        return static::getAttributeValue($model, $attributeName, $timeQualifier);
                     }
                     else
                     {
                         return static::PROPERTY_NOT_FOUND;
                     }
                 }
-                return static::resolveMergeTagToStandardOrRelatedAttribute($attributeAccessorString, $model, $language, $timeQualifier);
-            }
-            elseif ($modelAttributeAdapter->isStandardAttribute($attributeName))
-            {
-                if ($attributeName === $attributeAccessorString) // we don't have any accessor operator after the attributeName e.g. its the last in list
-                {
-                    return static::getAttributeValue($model, $attributeName, $timeQualifier);
-                }
                 else
                 {
-                    return static::PROPERTY_NOT_FOUND;
+                    // Don't really need this as null would be return implicitly if we exclude this,
+                    // so basically this is just to avoid IDE warnings to not returning anything
+                    return null;
                 }
             }
-            else
-            {
-                // Don't really need this as null would be return implicitly if we exclude this,
-                // so basically this is just to avoid IDE warnings to not returning anything
-                return null;
-            }
+        }
+
+        protected static function resolveModelUrlByModel($model)
+        {
+            $modelClassName     = get_class($model);
+            $moduleClassName    = $modelClassName::getModuleClassName();
+            $moduleId           = $moduleClassName::getDirectoryName();
+            return Yii::app()->createAbsoluteUrl('/' . $moduleId . '/default/details/', array('id' => $model->id));
         }
 
         protected static function getAttributeValue($model, $attributeName, $timeQualifier)
         {
-            return (empty($timeQualifier)) ?
-                        static::getAttributeCurrentValue($model, $attributeName) :
-                        static::getAttributePreviousValue($model, $attributeName);
+            if (empty($timeQualifier))
+            {
+               return static::getAttributeCurrentValue($model, $attributeName);
+            }
+            else
+            {
+                return static::getAttributePreviousValue($model, $attributeName);
+            }
         }
 
         protected static function getAttributeCurrentValue($model, $attributeName)
         {
-            return (isset($model->$attributeName))? $model->$attributeName : null;
+            if (isset($model->$attributeName))
+            {
+                return $model->$attributeName;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected static function getAttributePreviousValue($model, $attributeName)
@@ -183,9 +219,9 @@
             return static::resolveStringToCamelCase(str_replace(MergeTagsUtil::PROPERTY_DELIMITER, '->', strtolower($string)));
         }
 
-        protected static function resolveStringToCamelCase($string, $capitaliseFirstChar = false )
+        protected static function resolveStringToCamelCase($string, $capitaliseFirstCharacter = false )
         {
-            if ($capitaliseFirstChar)
+            if ($capitaliseFirstCharacter)
             {
                 $string[0] = strtoupper($string[0]);
             }

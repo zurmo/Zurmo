@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -40,7 +40,7 @@
      */
     class CurrencyValueElement extends TextElement
     {
-            /**
+        /**
          * Renders the editable currency attribute. Also renders a currency id selector if there is more
          * than one currency. If there is only one currency, then show a display only currency code with
          * a hidden input for the currency id. //todo: only showing hidden currency id
@@ -60,13 +60,13 @@
             $content  = '<div class="hasParallelFields">';
             $content .= ZurmoHtml::tag('div', array('class' => 'quarter'), $activeCurrenciesElement->render());
             $content .= ZurmoHtml::tag('div', array('class' => 'threeQuarters'),
-                            $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value'));
+                            $this->renderEditableValueTextField($currencyValueModel, $this->form, $this->attribute, 'value', $this->model));
             $content .= $this->renderExtraEditableContent();
             $content .= '</div>';
             return $content;
         }
 
-        protected function renderEditableValueTextField($model, $form, $inputNameIdPrefix, $attribute)
+        protected function renderEditableValueTextField($model, $form, $inputNameIdPrefix, $attribute, $parentModel = null)
         {
             //need to override a resolveValue to NOT default to 0 if not specifically null
             $id =  $this->getEditableInputId($inputNameIdPrefix, $attribute);
@@ -75,6 +75,8 @@
                 'id'   => $id,
                 'value' => $this->resolveAndGetEditableValue($model, $attribute),
             );
+            $additionalHtmlOptions = $this->getHtmlOptions();
+            $htmlOptions           = array_merge($htmlOptions, $additionalHtmlOptions);
             $textField = $form->textField($model, $attribute, $htmlOptions);
             $error     = $form->error    ($model, $attribute, array('inputID' => $id), true, true,
                                           $this->renderScopedErrorId($inputNameIdPrefix, $attribute));
@@ -90,7 +92,7 @@
         {
             assert('$this->model->{$this->attribute} instanceof CurrencyValue');
             $currencyValueModel = $this->model->{$this->attribute};
-            return Yii::app()->numberFormatter->formatCurrency( $currencyValueModel->value,
+            return Yii::app()->numberFormatter->formatCurrency((float)$currencyValueModel->value,
                                                                 $currencyValueModel->currency->code);
         }
 
@@ -120,6 +122,7 @@
          */
         protected function resolveParamsForCurrencyId(& $params)
         {
+            $params['htmlOptions'] = $this->getHtmlOptions();
         }
 
         protected function resolveAndGetEditableValue($model, $attribute)

@@ -229,7 +229,7 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//div[contains(@class, 'ContactsForAccountRelatedListView ')]/div[1]/div/a</td>
+  <td>//li[@id='EditLinkActionElement']/a</td>
   <td></td>
 </tr>
 <tr>
@@ -242,39 +242,39 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
-<tr>
+<!--tr>
   <td>waitForTextPresent</td>
   <td>Create Contact</td>
   <td></td>
-</tr>
+</tr-->
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_street1</td>
+	<td>Account_billingAddress_street1</td>
 	<td>123 ABC Street</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_street2</td>
+	<td>Account_billingAddress_street2</td>
 	<td>suite 100</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_city</td>
+	<td>Account_billingAddress_city</td>
 	<td>Chicago</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_state</td>
+	<td>Account_billingAddress_state</td>
 	<td>IL</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_postalCode</td>
+	<td>Account_billingAddress_postalCode</td>
 	<td>60611</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>Contact_primaryAddress_country</td>
+	<td>Account_billingAddress_country</td>
 	<td>USA</td>
 </tr>
 <!-- Create contacts via shortcut menu -->

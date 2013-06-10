@@ -63,7 +63,7 @@
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//div[@id='AccountEditAndDetailsView']/div/div/table/tbody/tr/td</td>
+  <td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
   <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
@@ -253,7 +253,7 @@
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//div[@id='OpportunityEditAndDetailsView']/div/div/table/tbody/tr/td</td>
+  <td>//div[@id='OpportunityDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
@@ -276,20 +276,40 @@
   <td>Negotiating</td>
   <td></td>
 </tr>
-<tr>
+<!--tr>
   <td>assertNotText</td>
-  <td>//div[@id='OpportunityEditAndDetailsView']/div/div[2]/table/tbody/tr[4]/td</td>
+  <td>//div[@id='OpportunityDetailsPortletView']/div/div/table/tbody/tr[8]/td</td>
   <td></td>
-</tr>
+</tr-->
 <tr>
   <td>assertText</td>
   <td>link=my account ${randomSuffix}</td>
   <td>my account ${randomSuffix}</td>
 </tr>
 <tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+  <td>clickAndWait</td>
+  <td>//div[@id='OpportunityDetailsAndRelationsView']/div[1]/div/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
   <td>clickAndWait</td>
   <td>link=Edit</td>
   <td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>1</td>
+	<td></td>
 </tr>
 <tr>
   <td>waitForPageToLoad</td>
@@ -328,7 +348,7 @@
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//div[@id='OpportunityEditAndDetailsView']/div/div/table/tbody/tr/td</td>
+  <td>//div[@id='OpportunityDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>

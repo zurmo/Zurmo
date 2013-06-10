@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -53,7 +53,10 @@
          * used by the designer page view.
          * @param CController $controller
          * @param View $containedView
-         * @param mixed $activeNodeModuleClassName (null or string)
+         * @param $breadcrumbLinks
+         * @param $breadcrumbViewClassName
+         * @param array $cssClasses
+         * @return GridView
          */
         public static function makeViewWithBreadcrumbsForCurrentUser(CController $controller,
                                                                      View $containedView,
@@ -68,6 +71,46 @@
                                                             $controller->getModule()->getId(),
                                                             $breadcrumbLinks), 0, 0);
             $gridView->setView($containedView, 1, 0);
+            return static::makeStandardViewForCurrentUser($controller, $gridView);
+        }
+
+        /**
+
+         * @param CController $controller
+         * @param View $containedView
+         * @param $breadcrumbLinks
+         * @param $breadcrumbViewClassName
+         * @param array $cssClasses
+         * @return GridView
+         */
+
+
+        /**
+         * Given a controller, two contained views, construct the gridview
+         * used by the designer page view.
+         * @param CController $controller
+         * @param View $containedView
+         * @param View $secondContainedView
+         * @param $breadcrumbLinks
+         * @param $breadcrumbViewClassName
+         * @param array $cssClasses
+         * @return GridView
+         */
+        public static function makeTwoViewsWithBreadcrumbsForCurrentUser(CController $controller,
+                                                                         View $containedView,
+                                                                         View $secondContainedView,
+                                                                         $breadcrumbLinks,
+                                                                         $breadcrumbViewClassName,
+                                                                         $cssClasses = array())
+        {
+            assert('is_array($breadcrumbLinks)');
+            $gridView    = new GridView(3, 1);
+            $gridView->setCssClasses($cssClasses);
+            $gridView->setView(new $breadcrumbViewClassName($controller->getId(),
+                                                            $controller->getModule()->getId(),
+                                                            $breadcrumbLinks), 0, 0);
+            $gridView->setView($containedView, 1, 0);
+            $gridView->setView($secondContainedView, 2, 0);
             return static::makeStandardViewForCurrentUser($controller, $gridView);
         }
 
@@ -327,6 +370,17 @@
                     }
                 }
             }
+        }
+
+        public static function setLockKeyForDetailsAndRelationsView($key, $value)
+        {
+            assert('is_bool($value)');
+            Yii::app()->user->setState($key, $value);
+        }
+
+        public static function getLockKeyForDetailsAndRelationsView($key)
+        {
+            return Yii::app()->user->getState($key);
         }
     }
 ?>

@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -95,7 +95,7 @@
             $compareWhere  = "(({$quote}emailmessagesender{$quote}.{$quote}personoraccount_item_id{$quote} IN(4,5)) or (1 = "; // Not Coding Standard
             $compareWhere .= "(select 1 from {$quote}emailmessagerecipient{$quote} emailmessagerecipient where ";
             $compareWhere .= "{$quote}emailmessagerecipient{$quote}.{$quote}emailmessage_id` = {$quote}emailmessage";
-            $compareWhere .= "{$quote}.id and {$quote}emailmessagerecipient{$quote}.{$quote}personoraccount_item_id` IN(4,5) limit 1)))";
+            $compareWhere .= "{$quote}.id and {$quote}emailmessagerecipient{$quote}.{$quote}personoraccount_item_id` IN(4,5) limit 1)))"; // Not Coding Standard
             $this->assertEquals($compareWhere, $where);
 
             $sql = EmailMessage::makeSubsetOrCountSqlQuery('emailmessage', $joinTablesAdapter, 1, 5, $where, null);
@@ -139,7 +139,7 @@
             $compareSubsetSql .= "{$quote}ownedsecurableitem{$quote}.{$quote}securableitem_id{$quote} ";
             $compareSubsetSql .= "and {$quote}munge_id{$quote} in ('" . join("', '", $mungeIds) . "') ";
             $compareSubsetSql .= "where (" . $compareWhere . ') ';
-            $compareSubsetSql .= "and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = " . Yii::app()->user->userModel->id. " ";
+            $compareSubsetSql .= "and ({$quote}ownedsecurableitem{$quote}.{$quote}owner__user_id{$quote} = " . Yii::app()->user->userModel->id. " "; // Not Coding Standard
             $compareSubsetSql .= "OR {$quote}emailmessage_read{$quote}.{$quote}munge_id{$quote} IS NOT NULL) ";  // Not Coding Standard
             $compareSubsetSql .= "and {$quote}ownedsecurableitem{$quote}.{$quote}id{$quote} = ";
             $compareSubsetSql .= "{$quote}emailmessage{$quote}.{$quote}ownedsecurableitem_id{$quote} ";

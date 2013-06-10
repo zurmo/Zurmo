@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -82,14 +82,14 @@
             return array(
                 'autoFill'  => false,
                 'select'    => $this->getWidgetSelectActionJS(),
-                'search'    => 'js:function(event, ui) { makeOrRemoveTogglableSpinner(true,  $(this).parent()) }',
-                'open'      => 'js:function(event, ui) { makeOrRemoveTogglableSpinner(false, $(this).parent()) }',
-                'close'     => 'js:function(event, ui) { makeOrRemoveTogglableSpinner(false, $(this).parent()) }',
+                'search'    => 'js:function(event, ui) { $(this).makeOrRemoveTogglableSpinner(true,  $(this).parent()) }',
+                'open'      => 'js:function(event, ui) { $(this).makeOrRemoveTogglableSpinner(false, $(this).parent()) }',
+                'close'     => 'js:function(event, ui) { $(this).makeOrRemoveTogglableSpinner(false, $(this).parent()) }',
                 'response'  => 'js:function(event, ui)
                     {
                         if (ui.content.length < 1)
                         {
-                            makeOrRemoveTogglableSpinner(false, $(this).parent());
+                            $(this).makeOrRemoveTogglableSpinner(false, $(this).parent());
                         }
                     }'
             );
@@ -112,9 +112,14 @@
                                 {
                                     url:        url,
                                     dataType:   "json",
-                                    data:       { marketingListId: modelId, id: ui.item.id, type: selectType },
-                                    beforeSend: function(request, settings) {
-                                                    makeSmallLoadingSpinner(listGridViewId);
+                                    data:       {
+                                                    marketingListId: modelId,
+                                                    id: ui.item.id,
+                                                     type: selectType
+                                                },
+                                    beforeSend: function(request, settings)
+                                                {
+                                                    $(this).makeSmallLoadingSpinner(listGridViewId);
                                                     $("#" + listGridViewId).addClass("loading");
                                                     if (disableTextBox == true)
                                                     {
@@ -125,23 +130,27 @@
                                                         $("." + radioButtonClass).attr("disabled", "disabled");
                                                     }
                                                 },
-                                    success:    function(data, status, request) {
+                                    success:    function(data, status, request)
+                                                {
                                                     $("#" + listGridViewId).find(".pager").find(".refresh").find("a").click();
                                                     updateFlashBar(data, notificationBarId);
                                                 },
-                                    error:      function(request, status, error) {
+                                    error:      function(request, status, error)
+                                                {
                                                     var data = {' . // Not Coding Standard
                                                                 '   "message" : "' . Zurmo::t('MarketingListsModule', 'There was an error processing your request'). '",
                                                                     "type"    : "error"
                                                                 };
                                                     updateFlashBar(data, notificationBarId);
                                                 },
-                                    complete:   function(request, status) {
+                                    complete:   function(request, status)
+                                                {
                                                     $(searchBox).removeAttr("disabled");
                                                     $(searchBox).val("");
                                                     $("." + radioButtonClass).removeAttr("disabled");
                                                     $("#" + listGridViewId).removeClass("loading");
                                                     event.preventDefault();
+                                                    return false;
                                                 }
                                 }
                             );
@@ -151,18 +160,26 @@
 
         protected function registerScripts()
         {
-            Yii::app()->clientScript->registerScript($this->getListViewGridId() . '-updateFlashBar', '
-                function updateFlashBar(data, flashBarId)
-                {
-                    $("#" + flashBarId).jnotifyAddMessage(
+            $scriptName = $this->getListViewGridId() . '-updateFlashBar';
+            if (Yii::app()->clientScript->isScriptRegistered($scriptName))
+            {
+                return;
+            }
+            else
+            {
+                Yii::app()->clientScript->registerScript($scriptName, '
+                    function updateFlashBar(data, flashBarId)
                     {
-                        text: data.message,
-                        permanent: false,
-                        showIcon: true,
-                        type: data.type
-                    });
-                }
-            ');
+                        $("#" + flashBarId).jnotifyAddMessage(
+                        {
+                            text: data.message,
+                            permanent: false,
+                            showIcon: true,
+                            type: data.type
+                        });
+                    }
+                ');
+            }
         }
 
         protected function getModelId()

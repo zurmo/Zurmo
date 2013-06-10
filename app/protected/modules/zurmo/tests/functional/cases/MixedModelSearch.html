@@ -138,11 +138,11 @@
 	<td>id=AccountsListView</td>
 	<td></td>
 </tr>
-<tr>
+<!--tr>
 	<td>assertVisible</td>
 	<td>id=ContactsListView</td>
 	<td></td>
-</tr>
+</tr-->
 <tr>
 	<td>assertNotVisible</td>
 	<td>id=LeadsListView</td>
@@ -312,8 +312,19 @@
     <td>30000</td>
 </tr>
 <tr>
+    <td>clickAndWait</td>
+    <td>//div[@id='LeadDetailsAndRelationsView']/div[1]/div/a</td>
+    <td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='LeadEditAndDetailsView']/div/div/div/ul/li/ul/li[3]/a/span</td>
+	<!--td>//div[@id='LeadDetailsAndRelationsView']div[2]/div/ul/li/div[1]/div/div/ul/li/ul/li[3]/a/span</td-->
+	<td>link=Convert</td>
 	<td></td>
 </tr>
 <tr>
@@ -428,7 +439,7 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>No results found.</td>
+	<td>My Contact ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
@@ -436,16 +447,16 @@
 	<td>id=AccountsListView</td>
 	<td></td>
 </tr>
-<tr>
+<!--tr>
 	<td>assertNotVisible</td>
 	<td>id=ContactsListView</td>
 	<td></td>
-</tr>
-<tr>
+</tr-->
+<!--tr>
 	<td>assertVisible</td>
 	<td>id=LeadsListView</td>
 	<td></td>
-</tr>
+</tr-->
 <tr>
 	<td>assertNotVisible</td>
 	<td>id=OpportunitiesListView</td>
@@ -582,11 +593,11 @@
 	<td>id=ContactsListView</td>
 	<td></td>
 </tr>
-<tr>
+<!--tr>
 	<td>assertVisible</td>
 	<td>id=LeadsListView</td>
 	<td></td>
-</tr>
+</tr-->
 <tr>
 	<td>assertNotVisible</td>
 	<td>id=OpportunitiesListView</td>

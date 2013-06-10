@@ -4,7 +4,7 @@
      * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
-     * the terms of the GNU General Public License version 3 as published by the
+     * the terms of the GNU Affero General Public License version 3 as published by the
      * Free Software Foundation with the addition of the following permission added
      * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
      * IN WHICH THE COPYRIGHT IS OWNED BY ZURMO, ZURMO DISCLAIMS THE WARRANTY
@@ -12,10 +12,10 @@
      *
      * Zurmo is distributed in the hope that it will be useful, but WITHOUT
      * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-     * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+     * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
      * details.
      *
-     * You should have received a copy of the GNU General Public License along with
+     * You should have received a copy of the GNU Affero General Public License along with
      * this program; if not, see http://www.gnu.org/licenses or write to the Free
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
@@ -25,9 +25,9 @@
      *
      * The interactive user interfaces in original and modified versions
      * of this program must display Appropriate Legal Notices, as required under
-     * Section 5 of the GNU General Public License version 3.
+     * Section 5 of the GNU Affero General Public License version 3.
      *
-     * In accordance with Section 7(b) of the GNU General Public License version 3,
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
      * these Appropriate Legal Notices must retain the display of the Zurmo
      * logo and Zurmo copyright notice. If the display of the logo is not reasonably
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
@@ -58,6 +58,7 @@
         /**
          * Returns the display name for plural of the model class.
          * @return dynamic label name based on module.
+         * @param null | string $language
          */
         protected static function getPluralLabel($language = null)
         {
@@ -124,8 +125,7 @@
                 'rules' => array(
                     array('type',                       'required'),
                     array('type',                       'type',    'type' => 'integer'),
-                    array('type',                       'numerical', 'min' => self::TYPE_WORKFLOW,
-                                                                                        'max' => self::TYPE_CONTACT),
+                    array('type',                       'numerical'),
                     array('modelClassName',             'required'),
                     array('modelClassName',             'type',   'type' => 'string'),
                     array('modelClassName',             'length', 'max' => 64),
@@ -147,8 +147,11 @@
                     array('textContent',                'EmailTemplateMergeTagsValidator', 'except' => 'autoBuildDatabase'),
                 ),
                 'elements' => array(
-                    'htmlContent'                  => 'TextArea',
-                    'textContent'                  => 'TextArea',
+                    'htmlContent'                   => 'TextArea',
+                    'textContent'                   => 'TextArea',
+                ),
+                'relations' => array(
+                    'files'                         => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED),
                 ),
             );
             return $metadata;
@@ -230,16 +233,15 @@
 
         protected static function translatedAttributeLabels($language)
         {
-            $params = LabelUtil::getTranslationParamsForAllModules();
             return array_merge(parent::translatedAttributeLabels($language),
                 array(
-                    'modelClassName'  => Zurmo::t('Core',                'Module',   array(), null, $language),
-                    'language'        => Zurmo::t('ZurmoModule',         'Language',   array(), null, $language),
-                    'htmlContent'     => Zurmo::t('EmailMessagesModule', 'Html Content',  array(), null, $language),
-                    'name'            => Zurmo::t('ZurmoModule',         'Name',  array(), null, $language),
-                    'subject'         => Zurmo::t('EmailMessagesModule', 'Subject',  array(), null, $language),
-                    'type'            => Zurmo::t('Core',                'Type',  array(), null, $language),
-                    'textContent'     => Zurmo::t('EmailMessagesModule', 'Text Content',  array(), null, $language),
+                    'modelClassName'  => Zurmo::t('Core',                'Module',   null, null, $language),
+                    'language'        => Zurmo::t('ZurmoModule',         'Language',   null, null, $language),
+                    'htmlContent'     => Zurmo::t('EmailMessagesModule', 'Html Content',  null, null, $language),
+                    'name'            => Zurmo::t('ZurmoModule',         'Name',  null, null, $language),
+                    'subject'         => Zurmo::t('EmailMessagesModule', 'Subject',  null, null, $language),
+                    'type'            => Zurmo::t('Core',                'Type',  null, null, $language),
+                    'textContent'     => Zurmo::t('EmailMessagesModule', 'Text Content',  null, null, $language),
                 )
             );
         }
