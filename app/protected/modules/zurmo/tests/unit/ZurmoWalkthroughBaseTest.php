@@ -616,5 +616,140 @@
                 $content = $this->runControllerWithRedirectExceptionAndGetContent('designer/default/attributeEdit');
             }
         }
+
+        private function buildAttributesArrayFromPostArray($postArray)
+        {
+            $testAttributes = array();
+            foreach ($postArray as $moduleClass => $values)
+            {
+                foreach ($values as $attribute => $value)
+                {
+                    if (is_array($value))
+                    {
+                        $testAttributes[$attribute] = $this->buildAttributesArrayFromPostArray(array('dummy' => $value));
+                    }
+                    else
+                    {
+                        $testAttributes[] = $attribute;
+                    }
+                }
+            }
+            return $testAttributes;
+        }
+
+        /**
+         * Uses postArray to check response field values.
+         *
+         * @param OwnedSecurableItem $model     Model to get values from
+         * @param array              $postArray Array of post values
+         * @return boolean
+         */
+        protected function checkCopyActionResponseAttributeValuesFromPostArray($model, $postArray, $linkClass = null)
+        {
+            return $this->checkCopyActionResponseAttributeValues(
+                $model,
+                $this->buildAttributesArrayFromPostArray($postArray),
+                $linkClass
+            );
+        }
+
+        /**
+         * Test if form fields have values from record.
+         *
+         * It supports selects, plain text fields and textareas.
+         *
+         * @param OwnedSecurableItem $model          Model to get values from
+         * @param array              $testAttributes Array of fields to test
+         * @return boolean
+         */
+        protected function checkCopyActionResponseAttributeValues($model, $testAttributes, $linkClass = null)
+        {
+            $class = get_class($model);
+            if (empty($linkClass))
+            {
+                $realm = strtolower($class);
+            }
+            else
+            {
+                $realm = rtrim(strtolower($linkClass), 's');
+            }
+            $this->setGetArray(array('id' => $model->id));
+            $this->resetPostArray();
+            $response = $this->runControllerWithNoExceptionsAndGetContent($realm.'s/default/copy');
+            return $this->checkResponseAgainstAttributeArray($response, $model, $class, $testAttributes, $linkClass);
+        }
+
+        private function checkResponseAgainstAttributeArray($response, $model, $class, $testAttributes, $linkClass = null)
+        {
+            $attributesValid = true;
+            $matchRulesBase = array();
+            $matchRulesBase[] = '/id="%testAttribute%".*?>%value%<\/t/';
+            $matchRulesBase[] = '/id="%testAttribute%".*?value="%value%"/';
+            $matchRulesBase[] = '/id="%testAttribute%">.*?<option value="%value%" selected="selected"/s';
+            foreach ($testAttributes as $relation=>$testAttribute)
+            {
+                if (is_array($testAttribute))
+                {
+                    $attributesValid = $attributesValid && $this->checkResponseAgainstAttributeArray($response, $model->{$relation}, $class.'_'.$relation, $testAttribute, $linkClass);
+                }
+                else
+                {
+                    $matchResult = false;
+                    $matchRules  = str_replace(
+                        array('%testAttribute%', '%value%'),
+                        array($class.'_'.$testAttribute, str_replace('/','\/',$model->{$testAttribute})),
+                        $matchRulesBase
+                    );
+                    foreach ($matchRules as $matchRule)
+                    {
+                        $matchResult = $matchResult || preg_match($matchRule, $response);
+                    }
+                    $this->assertTrue($matchResult, $class.'_'.$testAttribute.'=='.$model->{$testAttribute});
+                    $attributesValid = $attributesValid && $matchResult;
+                }
+            }
+            return (bool)$attributesValid;
+        }
+
+        /**
+         * Updates the model with values from post array.
+         *
+         * @param OwnedSecurableItem $model     Updated model
+         * @param array              $postArray Array of post values
+         */
+        protected function updateModelValuesFromPostArray($model, $postArray)
+        {
+            foreach ($postArray as $moduleClass => $attributeValues)
+            {
+                $this->assertInstanceOf($moduleClass, $model);
+                $model->setAttributes($attributeValues);
+            }
+        }
+
+
+        /**
+         * Checks if the model has values from post array.
+         *
+         * @param OwnedSecurableItem $model     Updated model
+         * @param array              $postArray Array of post values
+         */
+        protected function assertModelHasValuesFromPostArray($model, $postArray)
+        {
+            foreach ($postArray as $moduleClass => $attributeValues)
+            {
+                $this->assertInstanceOf($moduleClass, $model);
+                foreach ($attributeValues as $attribute => $attributeValue)
+                {
+                    if (is_array($attributeValue))
+                    {
+                        $this->assertModelHasValuesFromPostArray($model->{$attribute}, array(get_class($model->{$attribute}) => $attributeValue));
+                    }
+                    else
+                    {
+                        $this->assertEquals($attributeValue, $model->{$attribute});
+                    }
+                }
+            }
+        }
     }
 ?>

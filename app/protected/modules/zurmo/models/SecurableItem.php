@@ -372,7 +372,7 @@
                 !$this->isSetting &&
                 !$this->isValidating &&
                 // Anyone can get the id and owner, createdByUser, and modifiedByUser anytime.
-                !in_array($attributeName, array('id', 'owner', 'createByUser', 'modifiedByUser')))
+                !in_array($attributeName, array('id', 'owner', 'createdByUser', 'modifiedByUser')))
             {
                 self::checkPermissionsHasAnyOf(Permission::READ);
             }

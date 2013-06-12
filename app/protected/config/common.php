@@ -37,6 +37,7 @@
     $common_config = array(
         'basePath'          => COMMON_ROOT . DIRECTORY_SEPARATOR . 'protected',
         'name'              => 'ZurmoCRM',
+        'label'             => 'Zurmo',
         'defaultController' => 'home/default/welcome',
         'sourceLanguage'    => 'en',
 

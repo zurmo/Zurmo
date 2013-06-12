@@ -492,6 +492,84 @@
         }
 
         /**
+         * @depends testSuperUserCreateFromRelationAction
+         */
+        public function testSuperUserCopyAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $contacts = Contact::getByName('myNewContact myNewContactson');
+            $this->assertCount(1, $contacts);
+
+            $postArray = array(
+                'Contact' => array(
+                    'firstName' => 'myNewContact',
+                    'lastName'  => 'myNewContactson',
+                    'jobTitle'  => 'job title',
+                    'account'   => array(
+                            'name'  => 'Linked account',
+                    ),
+                    'department'    => 'Some department',
+                    'officePhone'   => '456765421',
+                    'mobilePhone'   => '958462315',
+                    'officeFax'     => '123456789',
+                    'primaryEmail'  => array(
+                            'emailAddress' => 'a@a.com',
+                    ),
+                    'secondaryEmail' => array(
+                            'emailAddress' => 'b@b.com',
+                    ),
+                    'primaryAddress' => array(
+                            'street1'    => 'Street1',
+                            'street2'    => 'Street2',
+                            'city'       => 'City',
+                            'state'      => 'State',
+                            'postalCode' => '12345',
+                            'country'    => 'Country',
+                    ),
+                    'secondaryAddress' => array(
+                            'street1'    => 'Street1',
+                            'street2'    => 'Street2',
+                            'city'       => 'City',
+                            'state'      => 'State',
+                            'postalCode' => '12345',
+                            'country'    => 'Country',
+                    ),
+                    'description' => 'some description',
+                )
+            );
+
+            $this->updateModelValuesFromPostArray($contacts[0], $postArray);
+            $this->assertModelHasValuesFromPostArray($contacts[0], $postArray);
+
+            $this->assertTrue($contacts[0]->save());
+            $this->assertTrue(
+                $this->checkCopyActionResponseAttributeValuesFromPostArray($contacts[0], $postArray)
+            );
+
+            $postArray['Contact']['firstName']  = 'myClonedContact';
+            $postArray['Contact']['lastName']   = 'myClonedContactson';
+            $postArray['Contact']['state']      = array('id' => LeadsUtil::getStartingState()->id);
+            $this->setGetArray(array('id' => $contacts[0]->id));
+            $this->setPostArray($postArray);
+            $this->runControllerWithRedirectExceptionAndGetUrl('contacts/default/copy');
+
+            $contacts = Contact::getByName('myClonedContact myClonedContactson');
+            $this->assertCount(1, $contacts);
+            $this->assertTrue($contacts[0]->owner->isSame($super));
+
+            unset($postArray['Contact']['state']);
+            $this->assertModelHasValuesFromPostArray($contacts[0], $postArray);
+
+            $contacts = Contact::getAll();
+            $this->assertCount(15, $contacts);
+
+            $contacts = Contact::getByName('myClonedContact myClonedContactson');
+            $this->assertCount(1, $contacts);
+            $this->assertTrue($contacts[0]->delete());
+        }
+
+        /**
          * @deletes selected contacts.
          */
         public function testMassDeleteActionsForSelectedIds()

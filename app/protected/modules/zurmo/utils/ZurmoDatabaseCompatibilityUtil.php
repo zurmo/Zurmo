@@ -1759,6 +1759,10 @@
                                           'translation(767)'
                                           )
                                     );
+            self::createUniqueIndex('emailmessagerecipient',
+                                    'remailmessage_Index',
+                                    array('emailmessage_id')
+                                    );
         }
 
         protected static function createUniqueIndex($tableName, $indexName, $columns = array())

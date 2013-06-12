@@ -124,14 +124,17 @@
             assert('is_string($from["address"])');
             $emailMessage              = new EmailMessage();
             $emailMessage->owner       = Yii::app()->user->userModel;
-            $emailMessage->subject     = Zurmo::t('EmailMessagesModule', 'A test email from Zurmo');
+            $emailMessage->subject     = Zurmo::t('EmailMessagesModule', 'A test email from Zurmo',
+                                         LabelUtil::getTranslationParamsForAllModules());
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = EmailNotificationUtil::
                                             resolveNotificationTextTemplate(
-                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.'));
+                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.',
+                                            LabelUtil::getTranslationParamsForAllModules()));
             $emailContent->htmlContent = EmailNotificationUtil::
                                             resolveNotificationHtmlTemplate(
-                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.'));
+                                            Zurmo::t('EmailMessagesModule', 'A test text message from Zurmo.', 
+                                            LabelUtil::getTranslationParamsForAllModules()));
             $emailMessage->content     = $emailContent;
             $sender                    = new EmailMessageSender();
             $sender->fromAddress       = $from['address'];

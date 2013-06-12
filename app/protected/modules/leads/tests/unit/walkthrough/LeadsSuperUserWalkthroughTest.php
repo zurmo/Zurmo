@@ -370,6 +370,79 @@
         /**
          * @depends testSuperUserCreateAction
          */
+        public function testSuperUserCopyAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $leads = Contact::getByName('myNewLead myNewLeadson');
+            $this->assertCount(1, $leads);
+
+            $postArray = array(
+                'Contact' => array(
+                    'firstName'     => 'myNewLead',
+                    'lastName'      => 'myNewLeadson',
+                    'jobTitle'      => 'job title',
+                    'companyName'   => 'Some Company',
+                    'department'    => 'Some department',
+                    'officePhone'   => '456765421',
+                    'mobilePhone'   => '958462315',
+                    'officeFax'     => '123456789',
+                    'primaryEmail' => array(
+                            'emailAddress' => 'a@a.com',
+                    ),
+                    'secondaryEmail' => array(
+                        'emailAddress' => 'b@b.com',
+                    ),
+                    'primaryAddress' => array(
+                            'street1'    => 'Street1',
+                            'street2'    => 'Street2',
+                            'city'       => 'City',
+                            'state'      => 'State',
+                            'postalCode' => '12345',
+                            'country'    => 'Country',
+                    ),
+                    'secondaryAddress' => array(
+                            'street1'    => 'Street1',
+                            'street2'    => 'Street2',
+                            'city'       => 'City',
+                            'state'      => 'State',
+                            'postalCode' => '12345',
+                            'country'    => 'Country',
+                    ),
+                    'website' => 'http://example.com',
+                    'description' => 'some description',
+                )
+            );
+
+            $this->updateModelValuesFromPostArray($leads[0], $postArray);
+            $this->assertModelHasValuesFromPostArray($leads[0], $postArray);
+
+            $this->assertTrue($leads[0]->save());
+            $this->assertTrue(
+                $this->checkCopyActionResponseAttributeValuesFromPostArray($leads[0], $postArray, 'Lead')
+            );
+
+            $postArray['Contact']['firstName']  = 'myClonedLead';
+            $postArray['Contact']['lastName']   = 'myClonedLeadson';
+            $postArray['Contact']['state']      = array('id' => LeadsUtil::getStartingState()->id);
+            $this->setGetArray(array('id' => $leads[0]->id));
+            $this->setPostArray($postArray);
+            $this->runControllerWithRedirectExceptionAndGetUrl('leads/default/copy');
+
+            $leads = Contact::getByName('myClonedLead myClonedLeadson');
+            $this->assertCount(1, $leads);
+            $this->assertTrue($leads[0]->owner->isSame($super));
+
+            unset($postArray['Contact']['state']);
+            $this->assertModelHasValuesFromPostArray($leads[0], $postArray);
+
+            $leads = Contact::getAll();
+            $this->assertCount(13, $leads);
+        }
+
+        /**
+         * @depends testSuperUserCreateAction
+         */
         public function testSuperUserConvertAction()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -447,7 +520,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $leads = Contact::getAll();
-            $this->assertEquals(15, count($leads));
+            $this->assertEquals(16, count($leads));
             $superLeadId   = self::getModelIdByModelNameAndName('Contact', 'superLead');
             $superLeadId2  = self::getModelIdByModelNameAndName('Contact', 'superLead2 superLead2son');
             $superLeadId3  = self::getModelIdByModelNameAndName('Contact', 'superLead3 superLead3son');
@@ -460,6 +533,7 @@
             $superLeadId10 = self::getModelIdByModelNameAndName('Contact', 'superLead10 superLead10son');
             $superLeadId11 = self::getModelIdByModelNameAndName('Contact', 'superLead11 superLead11son');
             $superLeadId12 = self::getModelIdByModelNameAndName('Contact', 'superLead12 superLead12son');
+            $superLeadId13 = self::getModelIdByModelNameAndName('Contact', 'myClonedLead myClonedLeadson');
             //Load Model MassDelete Views.
 
             //MassDelete view for single selected ids
@@ -472,10 +546,10 @@
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDelete');
-            $this->assertFalse(strpos($content, '<strong>11</strong>&#160;Leads selected for removal') === false);
+            $this->assertFalse(strpos($content, '<strong>12</strong>&#160;Leads selected for removal') === false);
             //MassDelete for selected Record Count
             $leads = Contact::getAll();
-            $this->assertEquals(15, count($leads));
+            $this->assertEquals(16, count($leads));
 
             //MassDelete for selected ids for paged scenario
             $lead1 = Contact::getById($superLeadId);
@@ -500,17 +574,18 @@
 
             //MassDelete for selected Record Count
             $leads = Contact::getAll();
-            $this->assertEquals(10, count($leads));
+            $this->assertEquals(11, count($leads));
 
             //MassDelete for selected ids for page 2
             $this->setGetArray(array(
-                'selectedIds'  => $superLeadId . ',' . $superLeadId2 . ',' .  // Not Coding Standard
+                'selectedIds'  => $superLeadId  . ',' . $superLeadId2 . ',' . // Not Coding Standard
                                   $superLeadId3 . ',' . $superLeadId4 . ',' . // Not Coding Standard
-                                  $superLeadId5 . ',' . $superLeadId6,        // Not Coding Standard
+                                  $superLeadId5 . ',' . $superLeadId6 . ',' . // Not Coding Standard
+                                  $superLeadId13,                             // Not Coding Standard
                 'selectAll'    => '',
                 'massDelete'   => '',
                 'Contact_page' => 2));
-            $this->setPostArray(array('selectedRecordCount' => 6));
+            $this->setPostArray(array('selectedRecordCount' => 7));
             $this->runControllerWithNoExceptionsAndGetContent('leads/default/massDeleteProgress');
 
            //MassDelete for selected Record Count

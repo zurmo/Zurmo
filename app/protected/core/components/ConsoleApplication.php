@@ -43,6 +43,12 @@
     class ConsoleApplication extends CConsoleApplication
     {
         /**
+         * Label describing application
+         * @var string
+         */
+        public $label;
+
+        /**
          * Some console applications can use the theme engine.  An example is sending an email notification using
          * an html email template.
          * @var string

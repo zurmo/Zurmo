@@ -102,7 +102,7 @@
             ),
         )
     );
-    if (file_exists(INSTANCE_ROOT . '/protected/config/commercial.php'))
+    if (file_exists(COMMON_ROOT . '/protected/config/commercial.php'))
     {
         $config = CMap::mergeArray($config, require(COMMON_ROOT . '/protected/config/commercial.php'));
     }

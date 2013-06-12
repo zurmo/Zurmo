@@ -372,6 +372,65 @@
         /**
          * @depends testSuperUserCreateAction
          */
+        public function testSuperUserCopyAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $accounts = Account::getAll();
+            $this->assertEquals(20, count($accounts));
+            $accounts = Account::getByName('myNewAccount');
+
+            $postArray = array(
+               'Account' => array(
+                    'officeFax' => '456789123',
+                    'employees' => 156,
+                    'annualRevenue' => 951623,
+                    'website' => 'http://www.example.com',
+                    'description' => 'Some account description',
+                    'billingAddress' => array(
+                        'street1' => 'Street1',
+                        'street2' => 'Street2',
+                        'city' => 'City',
+                        'state' => 'State',
+                        'postalCode' => '12345',
+                        'country' => 'Country',
+                    ),
+                    'shippingAddress' => array(
+                        'street1' => 'saStreet1',
+                        'street2' => 'saStreet2',
+                        'city' => 'saCity',
+                        'state' => 'saState',
+                        'postalCode' => '92345',
+                        'country' => 'saCountry',
+                    ),
+                )
+            );
+
+            $this->updateModelValuesFromPostArray($accounts[0], $postArray);
+            $this->assertModelHasValuesFromPostArray($accounts[0], $postArray);
+
+            $this->assertTrue($accounts[0]->save());
+
+            $this->assertTrue(
+                $this->checkCopyActionResponseAttributeValuesFromPostArray($accounts[0], $postArray)
+            );
+
+            $postArray['Account']['name']        = 'myClonedAccount';
+            $postArray['Account']['description'] = 'Cloned description';
+            $this->setGetArray(array('id' => $accounts[0]->id));
+            $this->setPostArray($postArray);
+            $redirectUrl = $this->runControllerWithRedirectExceptionAndGetUrl('accounts/default/copy');
+
+            $accounts = Account::getByName('myClonedAccount');
+            $this->assertEquals(1, count($accounts));
+            $this->assertTrue  ($accounts[0]->owner->isSame($super));
+            $this->assertModelHasValuesFromPostArray($accounts[0], $postArray);
+            $accounts = Account::getAll();
+            $this->assertEquals(21, count($accounts));
+        }
+
+        /**
+         * @depends testSuperUserCreateAction
+         */
         public function testStickySearchActions()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
@@ -434,7 +493,7 @@
 
             //MassDelete for selected Record Count
             $accounts = Account::getAll();
-            $this->assertEquals(20, count($accounts));
+            $this->assertEquals(21, count($accounts));
 
             $superAccountId2  = self::getModelIdByModelNameAndName('Account', 'superAccount2');
             $superAccountId3  = self::getModelIdByModelNameAndName('Account', 'superAccount3');
@@ -454,6 +513,7 @@
             $superAccountId18 = self::getModelIdByModelNameAndName('Account', 'superAccount18');
             $superAccountId19 = self::getModelIdByModelNameAndName('Account', 'superAccount19');
             $superAccountId20 = self::getModelIdByModelNameAndName('Account', 'superAccount20');
+            $superAccountId21 = self::getModelIdByModelNameAndName('Account', 'myClonedAccount');
 
             //Load Model MassDelete Views.
             //MassDelete view for single selected ids
@@ -466,15 +526,16 @@
             $this->setGetArray(array('selectAll' => '1'));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/default/massDelete');
-            $this->assertFalse(strpos($content, '<strong>20</strong>&#160;Accounts selected for removal') === false);
+            $this->assertFalse(strpos($content, '<strong>21</strong>&#160;Accounts selected for removal') === false);
             //MassDelete for selected ids
-            $account2 = Account::getById($superAccountId2);
-            $account3 = Account::getById($superAccountId3);
+            $account2  = Account::getById($superAccountId2);
+            $account3  = Account::getById($superAccountId3);
+            $account21 = Account::getById($superAccountId21);
             $this->setGetArray(array(
-                'selectedIds' => $superAccountId2 . ',' . $superAccountId3, // Not Coding Standard
+                'selectedIds' => implode(',', array($superAccountId2,$superAccountId3,$superAccountId21)), // Not Coding Standard
                 'selectAll' => '',
                 'Account_page' => 1));
-            $this->setPostArray(array('selectedRecordCount' => '5'));
+            $this->setPostArray(array('selectedRecordCount' => 3));
             $this->runControllerWithRedirectExceptionAndGetContent('accounts/default/massDelete');
 
             //MassDelete for selected Record Count
@@ -525,8 +586,9 @@
             $this->assertEquals(10, count($accounts));
         }
 
-         /**
-         *Test Bug with mass delete and multiple pages when using select all
+        /**
+         * Test Bug with mass delete and multiple pages when using select all
+         * @depends testMassDeleteActionsForSelectedIds
          */
         public function testMassDeletePagesProperlyAndRemovesAllSelected()
         {

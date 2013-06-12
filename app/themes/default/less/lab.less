@@ -1,5 +1,82 @@
+/* entire container, keeps perspective
+.flip-container {
+	-webkit-perspective: 1000;
+}*/
+/* flip the pane when hovered
+.flip-container:hover .flipper, .flip-container.hover .flipper {
+	-webkit-transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+	width: 100%;
+	height: 100%;
+}
+*/
+/* flip speed goes here
+.flipper {
+	-webkit-transition: 0.6s;
+	-webkit-transform-style: preserve-3d;
+
+	position: relative;
+}*/
+
+/* hide back of pane during swap
+.front, .back {
+	-webkit-backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+} */
+
+/* front pane, placed above back
+.front {
+	z-index: 2;
+}*/
+
+/* back, initially hidden pane
+.back {
+	-webkit-transform: rotateY(180deg);
+}
+*/
+
+
+
+
+
+.sliding-panels-container{
+	//overflow: hidden;
+}
+.sliding-panel{
+	/*width: 100%;
+	display: block;
+	float: left;
+	border: 1px solid red;
+	position: absolute;
+	++.box-sizing;
+	z-index: 0;
+	+ .sliding-panel{
+		left: 100%;
+	}*/
+	//-webkit-transform:scale(0, 0);
+	display: none;
+	width: 100%;
+	border: 1px solid red;
+	.box-sizing();
+	position: relative;
+}
+
+div.showing-panel{
+	//-webkit-transform:scale(1, 1);
+	display: block;
+}
+
 .business-card{
-	padding-right: 50px;
+	//padding-right: 50px;
+	position: relative;
+	.gravatar{
+		margin-right: 12px;
+	}
 	h2{
 		line-height: 100%;
 		padding-bottom: 15px;
@@ -9,7 +86,7 @@
 			margin-right: 5px;
 		}
 	}
-	h3{
+	h3.position{
 		line-height: 140%;
 		font-weight: normal;
 		color: #545454 !important;
@@ -17,15 +94,18 @@
 	h4{
 		color: #545454 !important;
 		line-height: 150%;
-		margin-bottom: 25px;
+		margin-bottom: 15px;
 		font-size: 14px;
 	}
 	.contact-details{
+		clear: left;
 		color: #111;
 		font-size: 14px;
 		color: #666;
 		margin-bottom: 7px;
+		margin-top: 10px;
 		> a{
+			margin-top: 5px;
 			margin-right: 20px;
 			color: #333;
 		}
@@ -72,6 +152,31 @@
 			color: #111;
 		}
 	}
+	.demographic-details{
+		position: absolute;
+		top: 0;
+		right: 0;
+		text-align: right;
+		.sex{
+			width: 30px;
+			height: 62px;
+			display: block;
+			text-indent: -9999px;
+			text-align: left;
+			margin-top: 0;
+			line-height: 1;
+		}
+		.male{
+			background: url(../images/people.png) right top no-repeat;
+		}
+		span{
+			margin-top: 13px;
+			font-weight: bold;
+			display: block;
+			float: right;
+			line-height: 150%;
+		}
+	}
 }
 
 #_business-card-buttons{
@@ -114,6 +219,7 @@
 }
 
 #business-card-buttons{
+	display: none !important;
 	//position: absolute;
 	//right: 10px;
 	//top: 10px;
@@ -199,12 +305,90 @@
 			}
 		}
 	}
-
 	.active{
 		color: #97c43d;
 		.t-shadow(0 0 1px lighten(#97c43d, 25%));
 		i{
 			color: #97c43d;
 		}
+	}
+}
+
+.social-icon{
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	text-indent: -9999px;
+	margin-right: 4px;
+	&:hover{
+		.radius(3px);
+		.b-shadow(0 0 7px 0 #999);
+	}
+}
+
+.icon-twitter{ background: url(../images/social-icons/twitter.png) center center no-repeat }
+.icon-facebook{ background: url(../images/social-icons/facebook.png) left top no-repeat; }
+.icon-linkedin{ background: url(../images/social-icons/linkedin.png) left top no-repeat; }
+
+
+.rapleaf-data{
+	display: none;
+	h3{
+		margin-bottom: 10px;
+		margin-top: 30px;
+	}
+	ul{
+		list-style: none;
+	}
+	li{
+		font-weight: bold;
+		margin-bottom: 3px;
+		color: #666;
+	}
+	li span{
+		font-weight: normal;
+		margin-left: 5px;
+		border: 1px solid #ccc;
+		background: #eaeaea;
+		.radius(3px);
+		padding:2px 4px;
+		.smaller();
+		color: #323232;
+	}
+	.complex-data{
+		li{
+			line-height: 200%;
+			width: 33.3%;
+			float: left;
+		}
+	}
+	.simple-data{
+		li{
+			float: left;
+			width: auto;
+			margin-bottom: 7px;
+		}
+		span{
+			margin: 0 5px 0 0;
+		}
+	}
+	.half{
+		float: left;
+		width: 49%;
+		+ .half{
+			margin-left: 2%;
+		}
+	}
+}
+
+.special-pager{
+	.next span{
+		text-indent: 0 !important;
+		.smaller();
+		padding: 5px 0 5px 0 !important;
+	}
+	.next a:after,
+	.hidden.next:after{
+		display: none !important;
 	}
 }

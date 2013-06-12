@@ -149,7 +149,7 @@
             catch (NotFoundException $e)
             {
                 $modules = Module::getModuleObjects();
-                $params  = array();
+                $params  = array('Zurmo' => Yii::app()->label);
                 foreach ($modules as $module)
                 {
                     $params[get_class($module) . 'SingularLabel']

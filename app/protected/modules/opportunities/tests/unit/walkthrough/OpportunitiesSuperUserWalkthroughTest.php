@@ -518,6 +518,70 @@
         }
 
         /**
+         * @depends testSuperUserCreateFromRelationAction
+         */
+        public function testSuperUserCopyAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $currencies = Currency::getAll();
+
+            $opportunities = Opportunity::getByName('myNewOpportunity');
+            $this->assertCount(1, $opportunities);
+
+            $postArray = array(
+                'Opportunity' => array(
+                    'name' => 'myNewOpportunity',
+                    'amount' => array(
+                        'value' => '1000',
+                        'currency' => array(
+                            'id' => $currencies[0]->id,
+                        ),
+                    ),
+                    'account' => array(
+                        'name' => 'Linked account',
+                    ),
+                    'closeDate' => '2012-11-01',
+                    'probability' => 50,
+                    'stage' => array(
+                        'value' => 'Negotiating',
+                    ),
+                   'description' => 'some description',
+                )
+            );
+
+            $this->updateModelValuesFromPostArray($opportunities[0], $postArray);
+            $this->assertModelHasValuesFromPostArray($opportunities[0], $postArray);
+
+            $this->assertTrue($opportunities[0]->save());
+
+            unset($postArray['Opportunity']['closeDate']);
+            $this->assertTrue(
+                $this->checkCopyActionResponseAttributeValuesFromPostArray($opportunities[0], $postArray, 'Opportunities')
+            );
+
+            $postArray['Opportunity']['name']       = 'myNewClonedOpportunity';
+            $postArray['Opportunity']['closeDate']  = '11/1/12';
+
+            $this->setGetArray(array('id' => $opportunities[0]->id));
+            $this->setPostArray($postArray);
+            $this->runControllerWithRedirectExceptionAndGetUrl('opportunities/default/copy');
+
+            $opportunities = Opportunity::getByName('myNewClonedOpportunity');
+            $this->assertCount(1, $opportunities);
+            $this->assertTrue($opportunities[0]->owner->isSame($super));
+
+            $postArray['Opportunity']['closeDate'] = '2012-11-01';
+            $this->assertModelHasValuesFromPostArray($opportunities[0], $postArray);
+
+            $opportunities = Opportunity::getAll();
+            $this->assertCount(15, $opportunities);
+
+            $opportunities = Opportunity::getByName('myNewClonedOpportunity');
+            $this->assertCount(1, $opportunities);
+            $this->assertTrue($opportunities[0]->delete());
+        }
+
+        /**
          * @deletes selected leads.
          */
         public function testMassDeleteActionsForSelectedIds()

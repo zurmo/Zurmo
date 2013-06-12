@@ -37,6 +37,12 @@
     class WebApplication extends CWebApplication
     {
         /**
+         * Label describing application
+         * @var string
+         */
+        public $label;
+
+        /**
          * If the application has been installed or not.
          * @var boolean
          */

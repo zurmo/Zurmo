@@ -96,7 +96,7 @@
         {
             if ($model->note->id > 0)
             {
-                return Yii::app()->format->html($model->note->description);
+                return Yii::app()->format->html(strval($model->note));
             }
             else
             {
@@ -106,7 +106,7 @@
 
         private static function renderAfterDescriptionContent(SocialItem $model)
         {
-            if ($model->note->id > 0)
+            if ($model->note->id > 0 && ActionSecurityUtil::canCurrentUserPerformAction('Details', $model->note))
             {
                 $content = null;
                 if ($model->note->activityItems->count() > 0)

@@ -48,23 +48,38 @@
             $htmlTemplate                       = self::getNotificationHtmlTemplate();
             $htmlContent                        = array();
             $htmlContent['{bodyContent}']       = $bodyContent;
-            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo');
+            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo', LabelUtil::getTranslationParamsForAllModules());
             $htmlContent['{preferenceContent}'] = ZurmoHtml::link(Zurmo::t('EmailMessagesModule', 'Manage your email preferences'), $url);
             return strtr($htmlTemplate, $htmlContent);
         }
 
         protected static function getNotificationHtmlTemplate()
         {
-            $theme        = Yii::app()->theme->name;
-            $name         = 'NotificationEmailTemplate';
-            $templateName = "themes/$theme/templates/$name.html";
-            if (!file_exists($templateName))
-            {
-                $templateName = "themes/default/templates/$name.html";
+            $theme              = Yii::app()->theme->name;
+            $name               = 'NotificationEmailTemplate';                     
+            $templateName       = "themes/$theme/templates/$name.html";
+            $customTemplateName = "themes/$theme/templates/Custom$name.html";            
+            if (!file_exists($customTemplateName))
+            {                
+                $customTemplateName = "themes/default/templates/Custom$name.html";
             }
-            if (file_exists($templateName))
+            else
             {
-                return file_get_contents($templateName);
+                if (!file_exists($templateName))
+                {
+                    $templateName = "themes/default/templates/$name.html";
+                }
+            }
+            if (file_exists($customTemplateName))
+            {
+                return file_get_contents($customTemplateName);
+            }
+            else
+            {
+                if (file_exists($templateName))
+                {
+                    return file_get_contents($templateName);
+                }
             }
         }
 
@@ -80,23 +95,38 @@
             $htmlTemplate                       = self::getNotificationTextTemplate();
             $htmlContent                        = array();
             $htmlContent['{bodyContent}']       = $bodyContent;
-            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo');
+            $htmlContent['{sourceContent}']     = Zurmo::t('EmailMessagesModule', 'This message sent from Zurmo', LabelUtil::getTranslationParamsForAllModules());
             $htmlContent['{preferenceContent}'] = Zurmo::t('EmailMessagesModule', 'Manage your email preferences') . ZurmoHtml::link(null, $url);
             return strtr($htmlTemplate, $htmlContent);
         }
 
         protected static function getNotificationTextTemplate()
         {
-            $theme        = Yii::app()->theme->name;
-            $name         = 'NotificationEmailTemplate';
-            $templateName = "themes/$theme/templates/$name.txt";
-            if (!file_exists($templateName))
-            {
-                $templateName = "themes/default/templates/$name.txt";
+            $theme              = Yii::app()->theme->name;
+            $name               = 'NotificationEmailTemplate';
+            $templateName       = "themes/$theme/templates/$name.txt";
+            $customTemplateName = "themes/$theme/templates/Custom$name.txt"; 
+            if (!file_exists($customTemplateName))
+            {                
+                $customTemplateName = "themes/default/templates/Custom$name.txt";
             }
-            if (file_exists($templateName))
+            else
             {
-                return file_get_contents($templateName);
+                if (!file_exists($templateName))
+                {
+                    $templateName = "themes/default/templates/$name.txt";
+                }
+            }
+            if (file_exists($customTemplateName))
+            {
+                return file_get_contents($customTemplateName);
+            }
+            else
+            {
+                if (file_exists($templateName))
+                {
+                    return file_get_contents($templateName);
+                }
             }
         }
 

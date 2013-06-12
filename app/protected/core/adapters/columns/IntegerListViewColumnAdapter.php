@@ -50,7 +50,7 @@
             if ($model instanceof RedBeanModel && $model->isAttributeFormattedAsProbability($attribute))
             {
                 $resolvedValue = NumberUtil::divisionForZero($model->{$attribute}, 100);
-                return Yii::app()->numberFormatter->formatPercentage((int)$resolvedValue);
+                return Yii::app()->numberFormatter->formatPercentage($resolvedValue);
             }
             else
             {

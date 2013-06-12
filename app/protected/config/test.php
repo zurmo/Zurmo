@@ -104,5 +104,10 @@
     {
         $common_config['params']['testGoogleGeoCodeApiKey'] = $testGoogleGeoCodeApiKey;
     }
+    
+    if (file_exists(COMMON_ROOT . '/protected/config/commercialTest.php'))
+    {        
+        $common_config = CMap::mergeArray($common_config, require(COMMON_ROOT . '/protected/config/commercialTest.php'));
+    }
     return $common_config;
 ?>

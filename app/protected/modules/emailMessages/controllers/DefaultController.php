@@ -198,7 +198,8 @@
                     }
                     else
                     {
-                        $userToSendMessagesFrom        = User::getById((int)BaseJobControlUserConfigUtil::getUserToRunAs());
+                        $user                   = BaseJobControlUserConfigUtil::getUserToRunAs();
+                        $userToSendMessagesFrom = User::getById((int)$user->id);
                         $emailMessage = EmailMessageHelper::sendTestEmailFromUser($emailHelper, $userToSendMessagesFrom,
                                                                       $configurationForm->aTestToAddress);
                     }
