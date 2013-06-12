@@ -1759,10 +1759,9 @@
                                           'translation(767)'
                                           )
                                     );
-            self::createUniqueIndex('emailmessagerecipient',
-                                    'remailmessage_Index',
-                                    array('emailmessage_id')
-                                    );
+            self::createIndex('emailmessagerecipient',
+                              'remailmessage_Index',
+                              array('emailmessage_id'));
         }
 
         protected static function createUniqueIndex($tableName, $indexName, $columns = array())
@@ -1789,6 +1788,43 @@
                     }
                     $columnsString = implode(",", $columns); // Not Coding Standard
                     R::exec("ALTER TABLE $tableName  ADD  UNIQUE INDEX $indexName ($columnsString);");
+                }
+                catch (Exception $e)
+                {
+                    echo "Failed to add $indexName on  $tableName.\n";
+                    throw $e;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        protected static function createIndex($tableName, $indexName, $columns = array())
+        {
+            assert('RedBeanDatabase::isSetup()');
+            assert('$tableName != ""');
+            assert('$indexName != ""');
+            assert('!empty($columns)');
+            if (RedBeanDatabase::getDatabaseType() == 'mysql')
+            {
+                try
+                {
+                    $rows = R::getAll("SHOW INDEX FROM $tableName");
+                    if (!empty($rows))
+                    {
+                        foreach ($rows as $row)
+                        {
+                            // Delete only first index in sequence
+                            if ($row['Key_name'] == $indexName && $row['Seq_in_index'] == '1')
+                            {
+                                R::exec("DROP INDEX $indexName ON $tableName");
+                            }
+                        }
+                    }
+                    $columnsString = implode(",", $columns); // Not Coding Standard
+                    R::exec("ALTER TABLE $tableName  ADD INDEX $indexName ($columnsString);");
                 }
                 catch (Exception $e)
                 {

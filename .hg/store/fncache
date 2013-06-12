@@ -8105,3 +8105,4 @@ data/app/themes/default/images/view-toolbar-gradient-darker.png.i
 data/app/themes/default/less/lab.less.i
 data/app/themes/default/less/webforms.less.i
 data/app/protected/modules/zurmo/elements/LocaleStaticDropDownElement.php.i
+data/app/protected/modules/workflows/elements/derived/TimeTriggerDurationElement.php.i
