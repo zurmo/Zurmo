@@ -60,27 +60,28 @@
         {
             $theme        = 'themes/' . Yii::app()->theme->name;
             $cs = Yii::app()->getClientScript();
-            $cs->registerCssFile(Yii::app()->getBaseUrl(true) . '/' . $theme . '/css/keyframes.css');
+            $absoluteBaseUrl    = Yii::app()->getBaseUrl(true);
+            $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/keyframes.css');
 
             $specialCssContent = null;
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
             {
                 $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="newui" href="' .
-                    Yii::app()->getBaseUrl(true) . '/' . $theme . '/less/newui.less"/>';
+                    $absoluteBaseUrl . '/' . $theme . '/less/newui.less"/>';
                 if (Yii::app()->userInterface->isMobile())
                 {
                     $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="mobile" href="' .
-                        Yii::app()->getBaseUrl(true) . '/' . $theme . '/less/mobile.less"/>';
+                        $absoluteBaseUrl . '/' . $theme . '/less/mobile.less"/>';
                 }
                 $specialCssContent .= '<!--[if lt IE 9]><link rel="stylesheet/less" type="text/css" href="' .
-                    Yii::app()->getBaseUrl(true) . '/' . $theme . '/less/ie.less"/><![endif]-->';
+                    $absoluteBaseUrl . '/' . $theme . '/less/ie.less"/><![endif]-->';
             }
             else
             {
-                $cs->registerCssFile(Yii::app()->getBaseUrl(true) . '/' . $theme . '/css/newui.css');
+                $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/newui.css');
                 if (Yii::app()->userInterface->isMobile())
                 {
-                    $cs->registerCssFile(Yii::app()->getBaseUrl(true) . '/' . $theme . '/css/mobile.css');
+                    $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/mobile.css');
                 }
             }
             if (MINIFY_SCRIPTS)
@@ -89,7 +90,7 @@
             }
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 9)
             {
-                $cs->registerCssFile(Yii::app()->getBaseUrl(true) . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
+                $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
             }
 
             foreach ($this->getStyles() as $style)
@@ -98,7 +99,7 @@
                 {
                     if (file_exists("$theme/css/$style.css"))
                     {
-                        $cs->registerCssFile(Yii::app()->getBaseUrl(true) . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
+                        $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
                     }
                 }
             }

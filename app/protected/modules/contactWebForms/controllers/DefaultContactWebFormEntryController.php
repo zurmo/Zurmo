@@ -91,12 +91,54 @@
             else
             {
                 $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider,
-                             'SecuredActionBarForContactWebFormsSearchAndListView', 'ContactWebFormEntry', $activeActionElementType);
+                             'SecuredActionBarForContactWebFormEntrySearchAndListView', 'ContactWebFormEntry',
+                             $activeActionElementType);
                 $view = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
                                               makeViewWithBreadcrumbsForCurrentUser(
                                               $this, $mixedView, $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
             }
             echo $view->render();
+        }
+
+        public function actionMassDelete()
+        {
+            $pageSize            = Yii::app()->pagination->resolveActiveForCurrentUserByType('massDeleteProgressPageSize');
+            $contactWebFormEntry = new ContactWebFormEntry(false);
+            $activeAttributes    = $this->resolveActiveAttributesFromMassDeletePost();
+            $dataProvider        = $this->getDataProviderByResolvingSelectAllFromGet(
+                                   new ContactWebFormEntrySearchForm($contactWebFormEntry), $pageSize, null, null);
+            $selectedRecordCount = static::getSelectedRecordCountByResolvingSelectAllFromGet($dataProvider);
+            $contactWebFormEntry = $this->processMassDelete($pageSize, $activeAttributes, $selectedRecordCount,
+                                   'ContactWebFormsPageView', $contactWebFormEntry,
+                                   ContactWebFormEntry::getModelLabelByTypeAndLanguage('Plural'), $dataProvider,
+                                   array($this->getId() . '/list'));
+            $massDeleteView      = $this->makeMassDeleteView($contactWebFormEntry, $activeAttributes, $selectedRecordCount,
+                                   ContactWebFormEntry::getModelLabelByTypeAndLanguage('Plural'));
+            $view                = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
+                                   makeStandardViewForCurrentUser($this, $massDeleteView));
+            echo $view->render();
+        }
+
+        public function actionMassDeleteProgress()
+        {
+            $pageSize            = Yii::app()->pagination->resolveActiveForCurrentUserByType('massDeleteProgressPageSize');
+            $contactWebFormEntry = new ContactWebFormEntry(false);
+            $dataProvider        = $this->getDataProviderByResolvingSelectAllFromGet(
+                                   new ContactWebFormsSearchForm($contactWebFormEntry), $pageSize, null, null);
+            $this->processMassDeleteProgress('ContactWebFormEntry', $pageSize,
+                                              ContactWebFormEntry::getModelLabelByTypeAndLanguage('Plural'),
+                                              $dataProvider);
+        }
+
+        protected function makeMassDeleteView($model, $activeAttributes, $selectedRecordCount, $title,
+                                              $massDeleteViewClassName = 'MassDeleteView')
+        {
+            $moduleName          = $this->getModule()->getPluralCamelCasedName();
+            $moduleClassName     = $moduleName . 'Module';
+            $title               = Zurmo::t('Core', 'Mass Delete') . ': ' . $title;
+            $view                = new $massDeleteViewClassName($this->getId(), $this->getModule()->getId(),
+                                   $model, $activeAttributes, $selectedRecordCount, $title, null, $moduleClassName, false);
+            return $view;
         }
     }
 ?>

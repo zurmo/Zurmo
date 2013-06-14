@@ -33,7 +33,9 @@
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
-
+    /**
+     * Column adapter for name value for product list
+     */
     class ProductNameRelatedListViewColumnAdapter extends TextListViewColumnAdapter
     {
         public function renderGridViewData()

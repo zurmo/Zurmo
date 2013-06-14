@@ -35,6 +35,9 @@
             return null;
         }
 
+        /**
+         * @return null or string containing create link
+         */
         public function render()
         {
             $items = array();

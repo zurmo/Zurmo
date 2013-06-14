@@ -48,6 +48,9 @@
             return array();
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -65,6 +68,9 @@
             $demoDataHelper->setRangeByModelName('ContactWebFormEntry', $contactWebFormEntries[0], $contactWebFormEntries[count($contactWebFormEntries)-1]);
         }
 
+        /**
+         * @param RedBeanModel $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof ContactWebFormEntry');

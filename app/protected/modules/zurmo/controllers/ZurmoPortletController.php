@@ -235,18 +235,20 @@
             assert('!empty($_GET["uniqueLayoutId"])');
             assert('!empty($_GET["portletType"])');
             $isPortletAlreadyAdded = Portlet::doesPortletExistByViewTypeLayoutIdAndUser($_GET['portletType'], $_GET['uniqueLayoutId'], Yii::app()->user->userModel->id);
+            $maximumColumns = $this->resolveMaximumColumnsByLayoutId();
+
             if ($isPortletAlreadyAdded === false)
             {
                 $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($_GET['uniqueLayoutId'], Yii::app()->user->userModel->id, array());
                 if (!empty($portletCollection))
                 {
-                    foreach ($portletCollection[1] as $position => $portlet)
+                    foreach ($portletCollection[$maximumColumns] as $position => $portlet)
                     {
-                            $portlet->position = $portlet->position + 1;
-                            $portlet->save();
+                        $portlet->position = $portlet->position + 1;
+                        $portlet->save();
                     }
                 }
-                Portlet::makePortletUsingViewType($_GET['portletType'], $_GET['uniqueLayoutId'], Yii::app()->user->userModel);
+                Portlet::makePortletUsingViewType($_GET['portletType'], $_GET['uniqueLayoutId'], Yii::app()->user->userModel, $maximumColumns);
             }
             if (!empty($_GET['modelId']))
             {
@@ -257,6 +259,18 @@
                 $dashboardId = '';
             }
             $this->redirect(array('/' . $this->resolveAndGetModuleId() . '/default/details', 'id' => $dashboardId));
+        }
+
+        /**
+         * Resolve maximum columns by layout id
+         * @return int
+         */
+        private function resolveMaximumColumnsByLayoutId()
+        {
+            $layoutTypes    = ConfigurableDetailsAndRelationsView::getLayoutTypesData();
+            $layoutType     = $layoutTypes[ConfigurableDetailsAndRelationsView::getDefaultLayoutType()];
+            $maximumColumns = substr($layoutType, 0, 1);
+            return $maximumColumns;
         }
     }
 ?>

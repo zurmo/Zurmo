@@ -41,6 +41,11 @@
     {
         protected static $activeModuleId = 'products';
 
+        /**
+         * Resolve for active menu item
+         * @param array $items
+         * @param object $controller
+         */
         protected static function resolveForActiveMenuItem(&$items, $controller)
         {
             assert('$controller == null || $controller instanceof CController');

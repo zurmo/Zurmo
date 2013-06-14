@@ -143,7 +143,7 @@
             {
                 $this->setId('nav');
             }
-            $this->themeUrl = Yii::app()->baseUrl . '/themes';
+            $this->themeUrl = Yii::app()->themeManager->baseUrl;
             $this->theme = Yii::app()->theme->name;
             $this->nljs = "\n";
             $this->items = $this->cssParentItems($this->items);

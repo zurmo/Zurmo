@@ -55,10 +55,10 @@
         {
             $statusDropDownArray    = Campaign::getStatusDropDownArray();
             $this->assertNotEmpty($statusDropDownArray);
-            $this->assertEquals('Paused', $statusDropDownArray[1]);
-            $this->assertEquals('Active', $statusDropDownArray[2]);
-            $this->assertEquals('Processing', $statusDropDownArray[3]);
-            $this->assertEquals('Completed', $statusDropDownArray[4]);
+            $this->assertEquals('Paused',       $statusDropDownArray[1]);
+            $this->assertEquals('Active',       $statusDropDownArray[2]);
+            $this->assertEquals('Processing',   $statusDropDownArray[3]);
+            $this->assertEquals('Completed',    $statusDropDownArray[4]);
         }
 
         public function testCreateAndGetCampaignListById()
@@ -81,9 +81,9 @@
             unset($campaign);
             $campaign                   = Campaign::getById($id);
             $this->assertEquals('Test Campaign Name',                       $campaign->name);
-            $this->assertEquals(1,               $campaign->supportsRichText);
+            $this->assertEquals(1,                                          $campaign->supportsRichText);
             $this->assertEquals(Campaign::STATUS_PAUSED,                    $campaign->status);
-            $this->assertEquals('From Name',                           $campaign->fromName);
+            $this->assertEquals('From Name',                                $campaign->fromName);
             $this->assertEquals('from@zurmo.com',                           $campaign->fromAddress);
             $this->assertEquals('Test Subject',                             $campaign->subject);
             $this->assertEquals('Test Html Content',                        $campaign->htmlContent);

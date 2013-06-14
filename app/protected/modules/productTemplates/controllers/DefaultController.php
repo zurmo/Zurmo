@@ -132,7 +132,8 @@
                         'productType' => $productType,
                         'productPriceFrequency' => $productPriceFrequency,
                         'productSellPriceCurrency' => $productSellPriceCurrency,
-                        'productSellPriceValue' => $productSellPriceValue
+                        'productSellPriceValue' => $productSellPriceValue,
+                        'productName'           => $productTemplate->name
                         );
 
                 echo json_encode($output);
@@ -460,6 +461,37 @@
             );
             echo ModalSearchListControllerUtil::
                  setAjaxModeAndRenderModalSearchList($this, $modalListLinkProvider, $stateMetadataAdapterClassName);
+        }
+
+        /**
+         * Copies the product template
+         * @param int $id
+         */
+        public function actionCopy($id)
+        {
+            $copyToProductTemplate = new ProductTemplate();
+            $postVariableName      = get_class($copyToProductTemplate);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $productTemplate = ProductTemplate::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($productTemplate);
+                ProductZurmoCopyModelUtil::copy($productTemplate, $copyToProductTemplate);
+            }
+            $this->processEdit($copyToProductTemplate);
+        }
+
+        /**
+         * Process the editing of product template
+         * @param Product $productTemplate
+         * @param string $redirectUrl
+         */
+        protected function processEdit(ProductTemplate $productTemplate, $redirectUrl = null)
+        {
+            $view = new ProductTemplatesPageView(ZurmoDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this,
+                            $this->makeEditAndDetailsView(
+                                $this->attemptToSaveModelFromPost($productTemplate, $redirectUrl), 'Edit')));
+            echo $view->render();
         }
     }
 ?>

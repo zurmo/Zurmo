@@ -32,6 +32,9 @@
 
         const RIGHT_ACCESS_CONTACT_WEB_FORMS = 'Access Contact Web Forms Tab';
 
+        /**
+         * @return array
+         */
         public function getDependencies()
         {
             return array(
@@ -39,22 +42,33 @@
             );
         }
 
+        /**
+         * @return array
+         */
         public function getRootModelNames()
         {
             return array('ContactWebForm', 'ContactWebFormEntry');
         }
 
+        /**
+         * @return array
+         */
         public static function getTranslatedRightsLabels()
         {
-            //todo: fix this to be reflecting the name of 'contacts' i think.
             $params                                       = LabelUtil::getTranslationParamsForAllModules();
             $labels                                       = array();
-            $labels[self::RIGHT_CREATE_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule', 'Create ContactWebFormsModulePluralLabel',     $params);
-            $labels[self::RIGHT_DELETE_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule', 'Delete ContactWebFormsModulePluralLabel',     $params);
-            $labels[self::RIGHT_ACCESS_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule', 'Access ContactWebFormsModulePluralLabel Tab', $params);
+            $labels[self::RIGHT_CREATE_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule',
+                                                            'Create ContactsModuleSingularLabel Web Forms',     $params);
+            $labels[self::RIGHT_DELETE_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule',
+                                                            'Delete ContactsModuleSingularLabel Web Forms',     $params);
+            $labels[self::RIGHT_ACCESS_CONTACT_WEB_FORMS] = Zurmo::t('ContactWebFormsModule',
+                                                            'Access ContactsModuleSingularLabel Web Forms Tab', $params);
             return $labels;
         }
 
+        /**
+         * @return array
+         */
         public static function getDefaultMetadata()
         {
             $metadata = array();
@@ -81,44 +95,86 @@
             return $metadata;
         }
 
+        /**
+         * @return string|void
+         */
         public static function getPrimaryModelName()
         {
             return 'ContactWebForm';
         }
 
+        /**
+         * @return null|string
+         */
         public static function getAccessRight()
         {
             return self::RIGHT_ACCESS_CONTACT_WEB_FORMS;
         }
 
+        /**
+         * @return null|string
+         */
         public static function getCreateRight()
         {
             return self::RIGHT_CREATE_CONTACT_WEB_FORMS;
         }
 
+        /**
+         * @return null|string
+         */
         public static function getDeleteRight()
         {
             return self::RIGHT_DELETE_CONTACT_WEB_FORMS;
         }
 
+        /**
+         * @return null|string
+         */
         public static function getGlobalSearchFormClassName()
         {
             return 'ContactWebFormsSearchForm';
         }
 
+        /**
+         * @return bool
+         */
         public static function hasPermissions()
         {
             return true;
         }
 
+        /**
+         * @return bool
+         */
         public static function modelsAreNeverGloballySearched()
         {
             return true;
         }
 
+        /**
+         * @return array|void
+         */
         public static function getDemoDataMakerClassNames()
         {
             return array('ContactWebFormDemoDataMaker', 'ContactWebFormEntryDemoDataMaker');
+        }
+
+        /**
+         * @param string $language
+         * @return string
+         */
+        protected static function getSingularModuleLabel($language)
+        {
+            return Zurmo::t('ContactWebFormsModule', 'Contact Web Form', array(), null, $language);
+        }
+
+        /**
+         * @param string $language
+         * @return string
+         */
+        protected static function getPluralModuleLabel($language)
+        {
+            return Zurmo::t('ContactWebFormsModule', 'Contact Web Forms', array(), null, $language);
         }
     }
 ?>

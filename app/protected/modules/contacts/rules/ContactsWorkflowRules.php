@@ -54,6 +54,8 @@
                     array('state' => ModelAttributeToOperatorTypeUtil::AVAILABLE_OPERATORS_TYPE_DROPDOWN),
                     'triggerValueElementTypes' =>
                     array('state' => 'AllContactStatesStaticDropDownForWizardModel'),
+                    'cannotTrigger' =>
+                    array('products')
                 )
             );
             return array_merge(parent::getDefaultMetadata(), $metadata);

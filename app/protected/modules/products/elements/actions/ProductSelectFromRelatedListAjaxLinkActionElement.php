@@ -36,20 +36,26 @@
 
     class ProductSelectFromRelatedListAjaxLinkActionElement extends SelectFromRelatedListAjaxLinkActionElement
     {
+        /**
+         * @return string
+         */
         protected function getDefaultRoute()
         {
             return Yii::app()->createUrl('productTemplates/' . $this->controllerId . '/selectFromRelatedList/',
                     array(
-                    'uniqueLayoutId'          => $this->getUniqueLayoutId(),
-                    'portletId'               => $this->getPortletId(),
-                    'relationAttributeName'   => $this->params['relationAttributeName'],
-                    'relationModelId'         => $this->params['relationModelId'],
-                    'relationModuleId'        => $this->params['relationModuleId'],
-                    'relationModelClassName'  => $this->getRelationModelClassName(),
+                        'uniqueLayoutId'          => $this->getUniqueLayoutId(),
+                        'portletId'               => $this->getPortletId(),
+                        'relationAttributeName'   => $this->params['relationAttributeName'],
+                        'relationModelId'         => $this->params['relationModelId'],
+                        'relationModuleId'        => $this->params['relationModuleId'],
+                        'relationModelClassName'  => $this->getRelationModelClassName(),
                     )
             );
         }
 
+        /**
+         * @return string
+         */
         protected function getDefaultLabel()
         {
             return Zurmo::t('ProductsModule', 'Select From Catalog');

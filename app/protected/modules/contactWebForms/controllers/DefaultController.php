@@ -54,7 +54,7 @@
         public function actionList()
         {
             $pageSize        = Yii::app()->pagination->resolveActiveForCurrentUserByType('listPageSize',
-                                                                                          get_class($this->getModule()));
+                               get_class($this->getModule()));
             $activeActionElementType = 'ContactWebFormsListLink';
             $contactWebForm  = new ContactWebForm(false);
             $searchForm      = new ContactWebFormsSearchForm($contactWebForm);
@@ -69,9 +69,9 @@
             {
                 $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider,
                              'SecuredActionBarForContactWebFormsSearchAndListView', null, $activeActionElementType);
-                $view = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
-                                              makeViewWithBreadcrumbsForCurrentUser(
-                                              $this, $mixedView, $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
+                $view      = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
+                                 makeViewWithBreadcrumbsForCurrentUser(
+                                 $this, $mixedView, $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
             }
             echo $view->render();
         }
@@ -84,15 +84,14 @@
             $breadcrumbLinks = array($breadCrumbTitle);
             if (isset($_POST[$modelClassName]))
             {
-                $_POST[$modelClassName]['serializedData'] = serialize($_POST['attributeIndexOrDerivedType']);
+                unset($_POST[$modelClassName]['serializedData']);
+                $contactWebForm->serializedData = serialize($_POST['attributeIndexOrDerivedType']);
             }
-            else
-            {
-                $contactWebForm->defaultOwner = Yii::app()->user->userModel;
-            }
-            $titleBarAndEditView = $this->makeEditAndDetailsView(
-                                          $this->attemptToSaveModelFromPost($contactWebForm), 'Edit');
-            $view = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
+            $contactWebForm->defaultOwner = Yii::app()->user->userModel;
+            $contactWebForm->language     = Yii::app()->language;
+            $titleBarAndEditView          = $this->makeEditAndDetailsView(
+                                            $this->attemptToSaveModelFromPost($contactWebForm), 'Edit');
+            $view                         = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
                                                 makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView,
                                                 $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
             echo $view->render();
@@ -100,33 +99,38 @@
 
         public function actionEdit($id)
         {
-            $contactWebForm = static::getModelAndCatchNotFoundAndDisplayError('ContactWebForm', intval($id));
+            $contactWebForm  = static::getModelAndCatchNotFoundAndDisplayError('ContactWebForm', intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserWriteModel($contactWebForm);
-            $modelClassName = $this->getModule()->getPrimaryModelName();
+            $modelClassName  = $this->getModule()->getPrimaryModelName();
             $breadCrumbTitle = Zurmo::t('ContactWebFormsModule', 'Edit Web Form');
             $breadcrumbLinks = array($breadCrumbTitle);
+            if ($contactWebForm->language === null)
+            {
+                $contactWebForm->language = Yii::app()->language;
+            }
             if (isset($_POST[$modelClassName]))
             {
-                $_POST[$modelClassName]['serializedData'] = serialize($_POST['attributeIndexOrDerivedType']);
+                unset($_POST[$modelClassName]['serializedData']);
+                $contactWebForm->serializedData = serialize($_POST['attributeIndexOrDerivedType']);
             }
-            $titleBarAndEditView = $this->makeEditAndDetailsView(
-                                          $this->attemptToSaveModelFromPost($contactWebForm), 'Edit');
-            $view = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
-                                                makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView,
-                                                $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
+            $titleBarAndEditView                = $this->makeEditAndDetailsView(
+                                                  $this->attemptToSaveModelFromPost($contactWebForm), 'Edit');
+            $view                               = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
+                                                      makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndEditView,
+                                                      $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
             echo $view->render();
         }
 
         public function actionDetails($id)
         {
-            $contactWebForm = static::getModelAndCatchNotFoundAndDisplayError('ContactWebForm', intval($id));
+            $contactWebForm         = static::getModelAndCatchNotFoundAndDisplayError('ContactWebForm', intval($id));
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($contactWebForm);
-            $breadCrumbTitle = $contactWebForm->name;
-            $breadcrumbLinks = array($breadCrumbTitle);
+            $breadCrumbTitle        = $contactWebForm->name;
+            $breadcrumbLinks        = array($breadCrumbTitle);
             $titleBarAndDetailsView = $this->makeEditAndDetailsView($contactWebForm, 'Details');
-            $view = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
-                                                makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndDetailsView,
-                                                $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
+            $view                   = new ContactWebFormsPageView(ZurmoDefaultAdminViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $titleBarAndDetailsView,
+                                          $breadcrumbLinks, 'ContactWebFormsBreadCrumbView'));
             echo $view->render();
         }
 

@@ -70,7 +70,7 @@
          */
         public function init()
         {
-            $this->themeUrl = Yii::app()->baseUrl . '/themes';
+            $this->themeUrl = Yii::app()->themeManager->baseUrl;
             $this->theme    = Yii::app()->theme->name;
             parent::init();
         }

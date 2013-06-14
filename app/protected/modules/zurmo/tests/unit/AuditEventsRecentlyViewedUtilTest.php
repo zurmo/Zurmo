@@ -100,6 +100,30 @@
                                     getForCurrentUserByModuleName('ZurmoModule', 'recentlyViewed'));
         }
 
+        public function testResolveNewRecentlyViewedModelAfterChangingName()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            ZurmoConfigurationUtil::setForCurrentUserByModuleName('ZurmoModule', 'recentlyViewed', null);
+            $account1       = new Account();
+            $account1->name = 'For test recently viewed';
+            $this->assertTrue($account1->save());
+            AuditEventsRecentlyViewedUtil::resolveNewRecentlyViewedModel('AccountsModule', $account1, 2);
+            $this->assertEquals(serialize(array(array('AccountsModule', $account1->id, strval($account1)))),
+                                ZurmoConfigurationUtil::
+                                    getForCurrentUserByModuleName('ZurmoModule', 'recentlyViewed'));
+            $account1->name = 'new name for same account';
+            $this->assertTrue($account1->save());
+            AuditEventsRecentlyViewedUtil::resolveNewRecentlyViewedModel('AccountsModule', $account1, 2);
+            $this->assertEquals(serialize(array(array('AccountsModule', $account1->id, strval($account1)))),
+                                ZurmoConfigurationUtil::
+                                    getForCurrentUserByModuleName('ZurmoModule', 'recentlyViewed'));
+            AuditEventsRecentlyViewedUtil::resolveNewRecentlyViewedModel('ContactsModule', $account1, 2);
+            $this->assertEquals(serialize(array(array('ContactsModule', $account1->id, strval($account1)),
+                                                array('AccountsModule', $account1->id, strval($account1)))),
+                                ZurmoConfigurationUtil::
+                                    getForCurrentUserByModuleName('ZurmoModule', 'recentlyViewed'));
+        }
+
         public function testFetRecentlyViewedAjaxContentByUser()
         {
             Yii::app()->user->userModel = User::getByUsername('super');

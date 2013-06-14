@@ -39,6 +39,11 @@
             $this->hashIndexHiddenField     = ContactWebFormEntry::HASH_INDEX_HIDDEN_FIELD;
         }
 
+        public static function getDesignerRulesType()
+        {
+            return null;
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = array(

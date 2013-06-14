@@ -39,11 +39,17 @@
      */
     class ProductGamificationRules extends GamificationRules
     {
+        /**
+         * @return array
+         */
         public static function getPointTypesAndValuesForCreateModel()
         {
             return array(GamePoint::TYPE_SALES => 20);
         }
 
+        /**
+         * @return array
+         */
         public static function getPointTypesAndValuesForUpdateModel()
         {
             return array(GamePoint::TYPE_SALES => 10);

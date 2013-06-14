@@ -349,6 +349,17 @@
             die();
         }
 
+        /**
+         * Create product from product template when user select a product
+         * template while adding a product in product portlet view
+         * @param string $relationModuleId
+         * @param int $portletId
+         * @param string $uniqueLayoutId
+         * @param int $id
+         * @param int $relationModelId
+         * @param string $relationAttributeName
+         * @param string $relationModelClassName
+         */
         public function actionCreateProductFromProductTemplate($relationModuleId, $portletId, $uniqueLayoutId, $id,
                                 $relationModelId, $relationAttributeName, $relationModelClassName = null)
         {
@@ -378,6 +389,37 @@
                                     'portletParams'        => array(  'relationModuleId' => $relationModuleId,
                                                                       'relationModelId'  => $relationModelId),
                             ));
+        }
+
+        /**
+         * Copies the product
+         * @param int $id
+         */
+        public function actionCopy($id)
+        {
+            $copyToProduct      = new Product();
+            $postVariableName   = get_class($copyToProduct);
+            if (!isset($_POST[$postVariableName]))
+            {
+                $product        = Product::getById((int)$id);
+                ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($product);
+                ProductZurmoCopyModelUtil::copy($product, $copyToProduct);
+            }
+            $this->processEdit($copyToProduct);
+        }
+
+        /**
+         * Process the editing of product
+         * @param Product $product
+         * @param string $redirectUrl
+         */
+        protected function processEdit(Product $product, $redirectUrl = null)
+        {
+            $view = new ProductsPageView(ZurmoDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this,
+                            $this->makeEditAndDetailsView(
+                                $this->attemptToSaveModelFromPost($product, $redirectUrl), 'Edit')));
+            echo $view->render();
         }
     }
 ?>

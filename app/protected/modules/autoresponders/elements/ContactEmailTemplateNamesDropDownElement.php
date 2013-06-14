@@ -77,12 +77,24 @@
             {
                 // Begin Not Coding Standard
                 Yii::app()->clientScript->registerScript($scriptName, '
-                        function updateContentAreaWithDataFromAjax(textContentElement, htmlContentElement,
-                                                                                                redActorElement, data)
+                        function updateContentElementsWithData(textContentElement, htmlContentElement, redActorElement, subjectElement, data)
                         {
-                            $(textContentElement).html(data.textContent);
-                            $(htmlContentElement).html(data.htmlContent);
-                            $(redActorElement).html(data.htmlContent);
+                            updateElementWithData(textContentElement, data.textContent);
+                            updateElementWithData(htmlContentElement, data.htmlContent);
+                            updateElementWithData(redActorElement, data.htmlContent);
+                            updateElementWithData(subjectElement, data.subject);
+                        }
+
+                        function updateElementWithData(element, data)
+                        {
+                            if ($(element).attr("type") == "text")
+                            {
+                                $(element).val(data);
+                            }
+                            else
+                            {
+                                $(element).html(data);
+                            }
                         }
 
                         function deleteExistingAttachments()
@@ -138,6 +150,8 @@
                                 var disableTextBox      = "' . static::DISABLE_TEXTBOX_WHEN_AJAX_IN_PROGRESS. '";
                                 var textContentId       = "' . $this->getTextContentId() . '";
                                 var htmlContentId       = "' . $this->getHtmlContentId() . '";
+                                var subjectId           = "' . $this->getSubjectId() . '";
+                                var subjectElement      = $("#" + subjectId);
                                 var textContentElement  = $("#" + textContentId);
                                 var htmlContentElement  = $("#" + htmlContentId);
                                 var redActorElement     = $("#" + htmlContentId).parent().find(".redactor_editor");
@@ -161,6 +175,7 @@
                                                         {
                                                             $(textContentElement).attr("disabled", "disabled");
                                                             $(htmlContentElement).attr("disabled", "disabled");
+                                                            $(subjectElement).attr("disabled", "disabled");
                                                             $(redActorElement).hide();
                                                         }
                                                         deleteExistingAttachments();
@@ -169,10 +184,11 @@
                                                     {
                                                         $(this).makeLargeLoadingSpinner(false, ".email-template-content");
                                                         $(".email-template-content .big-spinner").remove();
-                                                        updateContentAreaWithDataFromAjax(textContentElement,
-                                                                                            htmlContentElement,
-                                                                                            redActorElement,
-                                                                                            data);
+                                                        updateContentElementsWithData(textContentElement,
+                                                                                        htmlContentElement,
+                                                                                        redActorElement,
+                                                                                        subjectElement,
+                                                                                        data);
                                                         updateAddFilesWithDataFromAjax(data.filesIds, notificationBarId);
                                                     },
                                         error:      function(request, status, error)
@@ -191,6 +207,7 @@
                                                         $(dropDown).val("");
                                                         $(textContentElement).removeAttr("disabled");
                                                         $(htmlContentElement).removeAttr("disabled");
+                                                        $(subjectElement).removeAttr("disabled");
                                                         $(redActorElement).show();
                                                         event.preventDefault();
                                                         return false;
@@ -275,6 +292,13 @@
             $textContentId .= '_';
             $textContentId .= EmailTemplateHtmlAndTextContentElement::TEXT_CONTENT_INPUT_NAME;
             return $textContentId;
+        }
+
+        protected function getSubjectId()
+        {
+            $id = $this->getModuleId();
+            $id .= '_subject';
+            return $id;
         }
 
         protected function getHtmlContentId()

@@ -39,6 +39,12 @@
      */
     class PortletRulesFactory
     {
+        CONST CUSTOM_RULES_PREFIX = 'Custom';
+
+        /**
+         * @param string $viewClassName
+         * @return null|PortletRules
+         */
         public static function createPortletRulesByView($viewClassName)
         {
             assert('$viewClassName !== null');
@@ -49,11 +55,28 @@
                 $portletRulesType = $viewClassName::getPortletRulesType();
                 if ($portletRulesType !== null)
                 {
-                    $portletRulesClassName = $portletRulesType . 'PortletRules';
+                    $portletRulesClassName = self::resolveForCustomRules($portletRulesType);
                     return new $portletRulesClassName($viewClassName);
                 }
             }
             return null;
+        }
+
+        /**
+         * @param string $portletRulesType
+         * @return string
+         */
+        protected static function resolveForCustomRules($portletRulesType)
+        {
+            $customPortletRulesClassName = self::CUSTOM_RULES_PREFIX . $portletRulesType . 'PortletRules';
+            if (@class_exists($customPortletRulesClassName))
+            {
+                return $customPortletRulesClassName;
+            }
+            else
+            {
+                return $portletRulesType . 'PortletRules';
+            }
         }
     }
 ?>

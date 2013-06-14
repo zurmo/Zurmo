@@ -75,6 +75,10 @@
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $for));
         }
 
+        /**
+         * Gets editable html options
+         * @return array
+         */
         public function getEditableHtmlOptions()
         {
             $htmlOptions = array(
@@ -86,6 +90,10 @@
             return $htmlOptions;
         }
 
+        /**
+         * Gets array for stages
+         * @return array
+         */
         protected function getArray()
         {
             $data = array(ProductsConfigurationForm::FILTERED_BY_ALL_STAGES => Zurmo::t('Products', 'All'),

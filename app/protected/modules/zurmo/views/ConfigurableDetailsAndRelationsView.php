@@ -77,7 +77,7 @@
                                                     false,
                                                     $portletsAreMovable,
                                                     false,
-                                                    '75,25', // Not Coding Standard
+                                                    static::getDefaultLayoutType(), // This could be driven by a db value based on layout type id
                                                     $portletsAreRemovable);
             $content          .=  $configurableView->render();
             $content          .= $this->renderScripts();
@@ -175,6 +175,28 @@
                 $portletsAreRemovable   = false;
                 $portletsAreMovable     = false;
             }
+        }
+
+        /**
+         * Get layout type for configurable details and relations view
+         * @return type
+         */
+        public static function getLayoutTypesData()
+        {
+            return array(
+                '100'   => Zurmo::t('HomeModule', '1 Column'),
+                '50,50' => Zurmo::t('HomeModule', '2 Columns'), // Not Coding Standard
+                '75,25' => Zurmo::t('HomeModule', '2 Columns Left Strong'), // Not Coding Standard
+            );
+        }
+
+        /**
+         * Get the layout type
+         * @return string
+         */
+        public static function getDefaultLayoutType()
+        {
+            return '75,25'; // Not Coding Standard
         }
     }
 ?>

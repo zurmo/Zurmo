@@ -353,5 +353,25 @@
                 self::setLastAttemptedInfoUpdateTimeStamp();
             }
         }
+
+        /**
+         * Zurmo is a special case, where the module label is always the label of the application
+         * @param string $language
+         * @return string
+         */
+        protected static function getSingularModuleLabel($language)
+        {
+            return Yii::app()->label;
+        }
+
+        /**
+         * Zurmo is a special case, where the module label is always the label of the application and is always singular
+         * @param string $language
+         * @return string
+         */
+        protected static function getPluralModuleLabel($language)
+        {
+            return Yii::app()->label;
+        }
     }
 ?>

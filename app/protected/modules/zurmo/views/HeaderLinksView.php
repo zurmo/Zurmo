@@ -76,7 +76,7 @@
             }
             else
             {
-                $logoFileSrc   = Yii::app()->baseUrl . '/themes/default/images/Zurmo_logo.png';
+                $logoFileSrc   = Yii::app()->themeManager->baseUrl . '/default/images/Zurmo_logo.png';
             }
             $logoHeight = ZurmoConfigurationFormAdapter::resolveLogoHeight();
             $logoWidth  = ZurmoConfigurationFormAdapter::resolveLogoWidth();

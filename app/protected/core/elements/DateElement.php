@@ -46,7 +46,7 @@
          */
         protected function renderControlEditable()
         {
-            $themePath = Yii::app()->baseUrl . '/themes/' . Yii::app()->theme->name;
+            $themePath = Yii::app()->themeManager->baseUrl . '/' . Yii::app()->theme->name;
             $value     = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
                             $this->model->{$this->attribute});
             $cClipWidget = new CClipWidget();

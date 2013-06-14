@@ -28,11 +28,18 @@
     {
         const OPEN_STAGE    = 'Open';
 
+        /**
+         * @param string $name
+         * @return string
+         */
         public static function getByName($name)
         {
             return self::getByNameOrEquivalent('name', $name);
         }
 
+        /**
+         * @return string
+         */
         public function __toString()
         {
             try
@@ -49,16 +56,26 @@
             }
         }
 
+        /**
+         * @return string
+         */
         public static function getModuleClassName()
         {
             return 'ProductsModule';
         }
 
+        /**
+         * @return bool
+         */
         public static function canSaveMetadata()
         {
             return true;
         }
 
+        /**
+         * @param string $language
+         * @return array
+         */
         public static function translatedAttributeLabels($language)
         {
             $params = LabelUtil::getTranslationParamsForAllModules();
@@ -74,6 +91,9 @@
                 ));
         }
 
+        /**
+         * @return array
+         */
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
@@ -133,16 +153,25 @@
             return $metadata;
         }
 
+        /**
+         * @return bool
+         */
         public static function isTypeDeletable()
         {
             return true;
         }
 
+        /**
+         * @return bool
+         */
         public static function hasReadPermissionsOptimization()
         {
             return true;
         }
 
+        /**
+         * @return string
+         */
         public static function getGamificationRulesType()
         {
             return 'ProductGamification';

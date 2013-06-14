@@ -26,11 +26,17 @@
 
     class ContactWebFormEntrySearchForm extends OwnedSearchForm
     {
+        /**
+         * @return string|void
+         */
         protected static function getRedBeanModelClassName()
         {
             return 'ContactWebFormEntry';
         }
 
+        /**
+         * @return array
+         */
         public function rules()
         {
             return array_merge(parent::rules(), array(
@@ -38,6 +44,9 @@
             ));
         }
 
+        /**
+         * @return array
+         */
         public function attributeLabels()
         {
             return array_merge(parent::attributeLabels(), array(
@@ -45,6 +54,9 @@
             ));
         }
 
+        /**
+         * @return array
+         */
         public function getAttributesMappedToRealAttributesMetadata()
         {
             return array_merge(parent::getAttributesMappedToRealAttributesMetadata(), array(

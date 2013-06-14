@@ -129,7 +129,7 @@
             assert('is_bool($this->collapsible)');
             assert('is_bool($this->movable)');
             assert('in_array($this->layoutType, array("100", "50,50", "75,25"))'); // Not Coding Standard
-            $this->themeUrl = Yii::app()->baseUrl . '/themes';
+            $this->themeUrl = Yii::app()->themeManager->baseUrl;
             $this->theme = Yii::app()->theme->name;
             $this->registerJuiPortletsScripts();
             parent::init();

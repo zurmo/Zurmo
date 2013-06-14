@@ -101,5 +101,20 @@
             );
             return $metadata;
         }
+
+            /**
+             * Override to change the editableTemplate to place the label above the input.
+             * @see DetailsView::resolveElementDuringFormLayoutRender()
+             */
+            protected function resolveElementDuringFormLayoutRender(& $element)
+            {
+                if ($element->getAttribute() == 'name')
+                {
+                    $notification = ZurmoHtml::tag('span', array('class' => 'row-description'),
+                                    Zurmo::t('MarketingListsModule', 'This field is public, give it a meaningful name'));
+                    $element->editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}' .
+                                                 $notification . '{error}</td>';
+                }
+            }
     }
 ?>

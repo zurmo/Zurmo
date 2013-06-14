@@ -242,7 +242,12 @@
                         }
                         );
                             " . $this->renderScriptCallToRebuildSelectInputFromInputs() . "
-                        $(this).resolvePaddingForHasLangLabel(('.has-lang-label', newLi));
+                        $('.has-lang-label', newLi).each(
+                            function()
+                            {
+                                $(this).resolvePaddingForHasLangLabel( $(this) );
+                            }
+                        );
                         return false;
                     }
                 );

@@ -295,7 +295,7 @@
         {
             $marketingListId = self::getModelIdByModelNameAndName ('MarketingList', 'New MarketingListName');
 
-            // Delete an marketingList.
+            // Delete a marketingList.
             $this->setGetArray(array('id' => $marketingListId));
             $this->resetPostArray();
             $redirectUrl = $this->runControllerWithRedirectExceptionAndGetUrl('marketingLists/default/delete');
@@ -336,6 +336,127 @@
                         'MarketingOverallMetricsForm' => array('groupBy' => MarketingOverallMetricsForm::GROUPING_TYPE_WEEK)
                     ));
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
+        }
+
+        public function testAutoComplete()
+        {
+            $this->setGetArray(array('term' => 'inexistant'));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/autoComplete');
+            $decodedContent     = CJSON::decode($content);
+            $this->assertNotEmpty($decodedContent);
+            $this->assertArrayHasKey(0, $decodedContent);
+            $decodedContent     = $decodedContent[0];
+            $this->assertArrayHasKey('id', $decodedContent);
+            $this->assertArrayHasKey('value', $decodedContent);
+            $this->assertArrayHasKey('label', $decodedContent);
+            $this->assertNull($decodedContent['id']);
+            $this->assertNull($decodedContent['value']);
+            $this->assertNotNull($decodedContent['label']);
+            $this->assertEquals('No results found', $decodedContent['label']);
+
+            $this->setGetArray(array('term' => 'Mark'));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/autoComplete');
+            $decodedContent     = CJSON::decode($content);
+            $this->assertNotEmpty($decodedContent);
+            $this->assertArrayHasKey(0, $decodedContent);
+            $this->assertArrayHasKey(1, $decodedContent);
+            $result1     = $decodedContent[0];
+            $result2     = $decodedContent[1];
+
+            $this->assertArrayHasKey('id', $result1);
+            $this->assertArrayHasKey('value', $result1);
+            $this->assertArrayHasKey('label', $result1);
+            $this->assertNotNull($result1['id']);
+            $this->assertEquals($result1['value'], $result1['label']);
+            $this->assertNotNull($result1['label']);
+            $this->assertEquals('MarketingListName', $result1['label']);
+
+            $this->assertArrayHasKey('id', $result2);
+            $this->assertArrayHasKey('value', $result2);
+            $this->assertArrayHasKey('label', $result2);
+            $this->assertNotNull($result2['id']);
+            $this->assertEquals($result2['value'], $result2['label']);
+            $this->assertNotNull($result2['label']);
+            $this->assertEquals('MarketingListName2', $result2['label']);
+        }
+
+        public function testGetInfoToCopyToCampaign()
+        {
+            $marketingListId    = self::getModelIdByModelNameAndName('MarketingList', 'MarketingListName');
+            $marketingList      = MarketingList::getById($marketingListId);
+            $this->setGetArray(array('id' => $marketingListId));
+            $content            = $this->runControllerWithNoExceptionsAndGetContent(
+                                                                    'marketingLists/default/getInfoToCopyToCampaign');
+            $decodedContent     = CJSON::decode($content);
+            $this->assertNotEmpty($decodedContent);
+            $this->assertArrayHasKey('fromName', $decodedContent);
+            $this->assertArrayHasKey('fromAddress', $decodedContent);
+            $this->assertEquals($marketingList->fromName, $decodedContent['fromName']);
+            $this->assertEquals($marketingList->fromAddress, $decodedContent['fromAddress']);
+        }
+
+        public function testModalList()
+        {
+            $this->setGetArray(array(
+               'modalTransferInformation'   => array(
+                   'sourceIdFieldId'    =>  'Campaign_marketingList_id',
+                   'sourceNameFieldId'  =>  'Campaign_marketingList_name',
+                   'modalId'            =>  'modalContainer-edit-form',
+               )
+            ));
+            $content    = $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/modalList');
+            $this->assertTrue(strpos($content, '<div id="ModalView">') !== false);
+            $this->assertTrue(strpos($content, '<div id="MarketingListsModalSearchAndListView" ' .
+                                                'class="ModalSearchAndListView GridView">') !== false);
+            $this->assertTrue(strpos($content, '<div id="MarketingListsModalSearchView" class="SearchView ModelView' .
+                                                ' ConfigurableMetadataView MetadataView">') !== false);
+            $this->assertTrue(strpos($content, '<div class="wide form">') !== false);
+            $this->assertTrue(strpos($content, '<form id="search-formmodal" method="post">') !== false);
+            $this->assertTrue(strpos($content, '<div class="list-view-items-summary-clone">') !== false);
+            $this->assertTrue(strpos($content, '</div><div class="search-view-0"') !== false);
+            $this->assertTrue(strpos($content, '<table><tr><th></th><td colspan="3">') !== false);
+            $this->assertTrue(strpos($content, '<select class="ignore-style ignore-clearform" id="MarketingListsSearch' .
+                                                'Form_anyMixedAttributesScope" multiple="multiple" ' .
+                                                'style="display:none;" size="4" name="MarketingListsSearchForm' .
+                                                '[anyMixedAttributesScope][]">') !== false);
+            $this->assertTrue(strpos($content, '<option value="All" selected="selected">All</option>') !== false);
+            $this->assertTrue(strpos($content, '<option value="name">Name</option>') !== false);
+            $this->assertTrue(strpos($content, '<input class="input-hint anyMixedAttributes-input" ' .
+                                                'onfocus="$(this).select();" size="80" id="MarketingListsSearchForm' .
+                                                '_anyMixedAttributes" name="MarketingListsSearchForm' .
+                                                '[anyMixedAttributes]" type="text"') !== false);
+            $this->assertTrue(strpos($content, '</div><div class="search-form-tools">') !== false);
+            $this->assertTrue(strpos($content, '<a id="clear-search-linkmodal" style="display:none;" href="#">' .
+                                                'Clear</a>') !== false);
+            $this->assertTrue(strpos($content, '<input id="clearingSearch-search-formmodal" type="hidden" ' .
+                                                'name="clearingSearch"') !== false);
+            $this->assertTrue(strpos($content, '</div></form>') !== false);
+            $this->assertTrue(strpos($content, '<div id="modalContainer-search-formmodal"></div>') !== false);
+            $this->assertTrue(strpos($content, '<div id="MarketingListsModalListView" class="ModalListView ListView ' .
+                                                'ModelView ConfigurableMetadataView MetadataView">') !== false);
+            $this->assertTrue(strpos($content, '<div class="cgrid-view" id="list-viewmodal">') !== false);
+            $this->assertTrue(strpos($content, '<div class="summary">1-2 of 2 result(s).</div>') !== false);
+            $this->assertTrue(strpos($content, '<table class="items">') !== false);
+            $this->assertTrue(strpos($content, '<th id="list-viewmodal_c0">') !== false);
+            $this->assertTrue(strpos($content, '<a class="sort-link" href="') !== false);
+            $this->assertTrue(strpos($content, 'marketingLists/default/modalList?modalTransferInformation%5BsourceId' . // Not Coding Standard
+                                                'FieldId%5D=Campaign_marketingList_id&amp;modalTransferInformation%5B' . // Not Coding Standard
+                                                'sourceNameFieldId%5D=Campaign_marketingList_name&amp;modalTransfer' .  // Not Coding Standard
+                                                'Information%5BmodalId%5D=modalContainer-edit-form&amp;MarketingList' . // Not Coding Standard
+                                                '_sort=name">Name</a></th></tr>') !== false);                           // Not Coding Standard
+            $this->assertTrue(strpos($content, '<tr class="odd">') !== false);
+            $this->assertTrue(strpos($content, 'MarketingListName</a></td></tr>') !== false);
+            $this->assertTrue(strpos($content, '<tr class="even">') !== false);
+            $this->assertTrue(strpos($content, 'MarketingListName2</a></td></tr>') !== false);
+            $this->assertTrue(strpos($content, '<div class="pager horizontal">') !== false);
+            $this->assertTrue(strpos($content, '<li class="refresh hidden">') !== false);
+            $this->assertTrue(strpos($content, 'marketingLists/default/modalList?modalTransferInformation%5Bsource'.    // Not Coding Standard
+                                                'IdFieldId%5D=Campaign_marketingList_id&amp;modalTransferInformation'.  // Not Coding Standard
+                                                '%5BsourceNameFieldId%5D=Campaign_marketingList_name&amp;modal' .       // Not Coding Standard
+                                                'TransferInformation%5BmodalId%5D=modalContainer-edit-form">' .         // Not Coding Standard
+                                                'refresh</a></li></ul>') !== false);
+            $this->assertTrue(strpos($content, '</div><div class="list-preloader">') !== false);
+            $this->assertTrue(strpos($content, '<span class="z-spinner"></span></div>') !== false);
         }
     }
 ?>

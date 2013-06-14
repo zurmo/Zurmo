@@ -148,7 +148,7 @@
             Yii::app()->language = 'en';
             //Demonstrate getSingularModuleLabel and getPluralModuleLabel and how if they are not overriden, they
             //will not necessarily produce desired results.
-            $this->assertEquals('Zurm', ZurmoModule::getModuleLabelByTypeAndLanguage('Singular'));
+            $this->assertEquals('Zurmo', ZurmoModule::getModuleLabelByTypeAndLanguage('Singular'));
             $this->assertEquals('Zurmo', ZurmoModule::getModuleLabelByTypeAndLanguage('Plural'));
         }
     }

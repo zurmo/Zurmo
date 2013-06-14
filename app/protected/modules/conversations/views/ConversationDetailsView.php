@@ -51,6 +51,20 @@
             return $metadata;
         }
 
+        protected function renderContent()
+        {
+            $content  = '<div class="details-table">';
+            $content .= $this->renderTitleContent();
+            $content .= $this->resolveAndRenderActionElementMenu();
+            $leftContent  = $this->renderBeforeFormLayoutForDetailsContent();
+            $leftContent .= $this->renderFormLayout();
+            $content .= ZurmoHtml::tag('div', array('class' => 'left-column'), $leftContent);
+            $content .= $this->renderRightSideContent();
+            $content .= $this->renderAfterFormLayoutForDetailsContent();
+            $content .= '</div>';
+            return $content;
+        }
+
         protected function renderFormLayout($form = null)
         {
             $content  = $this->renderConversationContent();

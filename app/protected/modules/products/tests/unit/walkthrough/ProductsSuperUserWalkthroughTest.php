@@ -88,11 +88,8 @@
             //Save product.
             $superProduct       = Product::getById($superProductId);
             $this->setPostArray(array('Product' => array('name' => 'My New Product 1')));
-            //TODO Ask Jason as this is causing issue
-            //$this->runControllerWithRedirectExceptionAndGetContent('products/default/edit');
-//            $superProduct       = Product::getById($superProductId);
-//            $this->assertEquals(20, $superProduct->quantity);
-            //Test having a failed validation on the contact during save.
+
+            //Test having a failed validation on the product during save.
             $this->setGetArray (array('id'      => $superProductId));
             $this->setPostArray(array('Product' => array('name' => '')));
             $content = $this->runControllerWithNoExceptionsAndGetContent('products/default/edit');
@@ -286,6 +283,20 @@
             //calculating products count
             $products = Product::getAll();
             $this->assertEquals(0, count($products));
+        }
+
+        public function testCloningWithAnotherProduct()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            Yii::app()->user->userModel = $super;
+
+            $product = ProductTestHelper::createProductByNameForOwner("My Product 1", $super);
+            $id = $product->id;
+            $this->setGetArray(array('id' => $id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('products/default/copy');
+            $this->assertTrue(strpos($content, 'My Product 1') > 0);
+            $products = Product::getAll();
+            $this->assertEquals(1, count($products));
         }
     }
 ?>

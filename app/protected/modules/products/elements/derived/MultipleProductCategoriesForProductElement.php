@@ -31,6 +31,9 @@
      */
     class MultipleProductCategoriesForProductElement extends Element implements DerivedElementInterface
     {
+        /**
+         * @return string
+         */
         protected function renderControlNonEditable()
         {
             $content  = null;
@@ -46,6 +49,9 @@
             return $content;
         }
 
+        /**
+         * @return string
+         */
         protected function renderControlEditable()
         {
             assert('$this->model instanceof Product || $this->model instanceof Product');
@@ -55,11 +61,12 @@
                                         'name'                      => $this->getNameForIdField(),
                                         'id'                        => $this->getIdForIdField(),
                                         'jsonEncodedIdsAndLabels'   => CJSON::encode($this->getExistingProductCategoriesRelationsIdsAndLabels()),
-                                        'sourceUrl'   => Yii::app()->createUrl('productTemplates/default/autoCompleteAllProductCategoriesForMultiSelectAutoComplete'),
-                                        'htmlOptions' => array(
-                                        'disabled' => $this->getDisabledValue(),
-                            ),
-                                        'hintText' => Zurmo::t('ProductsModule', 'Type a ' . ProductCategory::getModelLabelByTypeAndLanguage('SingularLowerCase'),
+                                        'sourceUrl'                 => Yii::app()->createUrl('productTemplates/default/autoCompleteAllProductCategoriesForMultiSelectAutoComplete'),
+                                        'htmlOptions'               => array(
+                                                                                'disabled' => $this->getDisabledValue(),
+                                                                            ),
+                                        'hintText'                  => Zurmo::t('ProductsModule',
+                                                                                'Type a ' . ProductCategory::getModelLabelByTypeAndLanguage('SingularLowerCase'),
                                                                 LabelUtil::getTranslationParamsForAllModules())
             ));
             $cClipWidget->endClip();
@@ -71,16 +78,25 @@
         {
         }
 
+        /**
+         * @return string
+         */
         protected function renderLabel()
         {
             return $this->resolveNonActiveFormFormattedLabel($this->getFormattedAttributeLabel());
         }
 
+        /**
+         * @return string
+         */
         protected function getFormattedAttributeLabel()
         {
             return Yii::app()->format->text(Zurmo::t('ProductsModule', 'Categories'));
         }
 
+        /**
+         * @return string
+         */
         public static function getDisplayName()
         {
             return Zurmo::t('ProductsModule', 'Related ProductsModulePluralLabel',
@@ -97,16 +113,25 @@
             return array();
         }
 
+        /**
+         * @return string
+         */
         protected function getNameForIdField()
         {
             return 'ProductCategoriesForm[categoryIds]';
         }
 
+        /**
+         * @return string
+         */
         protected function getIdForIdField()
         {
             return 'ProductCategoriesForm_ProductCategory_ids';
         }
 
+        /**
+         * @return string
+         */
         protected function getExistingProductCategoriesRelationsIdsAndLabels()
         {
             $existingProductCategories = array();
@@ -118,6 +143,9 @@
             return $existingProductCategories;
         }
 
+        /**
+         * @return string
+         */
         public static function renderHtmlContentLabelFromProductCategoryAndKeyword($productCategory, $keyword)
         {
             assert('$productCategory instanceof ProductCategory && $productCategory->id > 0');

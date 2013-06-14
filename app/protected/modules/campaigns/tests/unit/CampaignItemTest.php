@@ -471,6 +471,275 @@
             $this->assertCount(5, $campaignItems);
         }
 
+        /**
+         * @depends testRegisterCampaignItemsByCampaign
+         */
+        public function testIsQueuedOrSkipped()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 06');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 05',
+                                                                                'subject 05',
+                                                                                'text 05',
+                                                                                'html 05',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 06',
+                                                                                        Yii::app()->user->userModel);
+            $email                  = new Email();
+            $email->emailAddress    = 'info@zurmo.com';
+            $contact->primaryEmail  = $email;
+            $this->assertTrue($contact->save());
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertTrue($campaignItem->isQueuedOrSkipped());
+            CampaignItemsUtil::processDueItem($campaignItem);
+            $this->assertTrue($campaignItem->isQueuedOrSkipped());
+        }
+
+        /**
+         * @depends testIsQueuedOrSkipped
+         */
+        public function testIsSkipped()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 07');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 06',
+                                                                                'subject 06',
+                                                                                'text 06',
+                                                                                'html 06',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 07',
+                                                                                        Yii::app()->user->userModel);
+            $email                  = new Email();
+            $email->emailAddress    = 'info@zurmo.com';
+            $contact->primaryEmail  = $email;
+            $this->assertTrue($contact->save());
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->isSkipped());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_SKIP, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->isSkipped());
+        }
+
+        /**
+         * @depends testIsSkipped
+         */
+        public function testIsSent()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 08');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 07',
+                                                                                'subject 07',
+                                                                                'text 07',
+                                                                                'html 07',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 08',
+                                                                                        Yii::app()->user->userModel);
+            $email                  = new Email();
+            $email->emailAddress    = 'info@zurmo.com';
+            $contact->primaryEmail  = $email;
+            $this->assertTrue($contact->save());
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->isSent());
+            CampaignItemsUtil::processDueItem($campaignItem);
+            $this->assertFalse($campaignItem->isSent()); // Folder is outbox at the end of processDueItem and hence it fails
+            $box                                    = EmailBox::resolveAndGetByName(EmailBox::CAMPAIGNS_NAME);
+            $campaignItem->emailMessage->folder     = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_SENT);
+            $this->assertTrue($campaignItem->unrestrictedSave());
+            $this->assertTrue($campaignItem->isSent());
+        }
+
+        /**
+         * @depends testIsSent
+         */
+        public function testHasFailedToSend()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 09');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 08',
+                                                                                'subject 08',
+                                                                                'text 08',
+                                                                                'html 08',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 09',
+                                                                                        Yii::app()->user->userModel);
+            $email                  = new Email();
+            $email->emailAddress    = 'info@zurmo.com';
+            $contact->primaryEmail  = $email;
+            $this->assertTrue($contact->save());
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->hasFailedToSend());
+            CampaignItemsUtil::processDueItem($campaignItem);
+            $this->assertFalse($campaignItem->hasFailedToSend()); // Folder is outbox at the end of processDueItem and hence it fails
+            $box                                    = EmailBox::resolveAndGetByName(EmailBox::CAMPAIGNS_NAME);
+            $campaignItem->emailMessage->folder     = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_FAILURE);
+            $this->assertTrue($campaignItem->unrestrictedSave());
+            $this->assertTrue($campaignItem->hasFailedToSend());
+        }
+
+        /**
+         * @depends testHasFailedToSend
+         */
+        public function testHasAtLeastOneOpenActivity()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 10');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 09',
+                                                                                'subject 09',
+                                                                                'text 09',
+                                                                                'html 09',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 10',
+                                                                                            Yii::app()->user->userModel);
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->hasAtLeastOneOpenActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_SKIP, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertFalse($campaignItem->hasAtLeastOneOpenActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneOpenActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneOpenActivity());
+        }
+
+        /**
+         * @depends testHasAtLeastOneOpenActivity
+         */
+        public function testHasAtLeastOneClickActivity()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 11');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 10',
+                                                                                'subject 10',
+                                                                                'text 10',
+                                                                                'html 10',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 11',
+                                                                                        Yii::app()->user->userModel);
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->hasAtLeastOneClickActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertFalse($campaignItem->hasAtLeastOneClickActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_CLICK, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneClickActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_CLICK, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneClickActivity());
+        }
+
+        /**
+         * @depends testHasAtLeastOneClickActivity
+         */
+        public function testHasAtLeastOneUnsubscribeActivity()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 12');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 11',
+                                                                                'subject 11',
+                                                                                'text 11',
+                                                                                'html 11',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 12',
+                                                                                        Yii::app()->user->userModel);
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->hasAtLeastOneUnsubscribeActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertFalse($campaignItem->hasAtLeastOneUnsubscribeActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_UNSUBSCRIBE, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneUnsubscribeActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_UNSUBSCRIBE, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneUnsubscribeActivity());
+        }
+
+        /**
+         * @depends testHasAtLeastOneUnsubscribeActivity
+         */
+        public function testHasAtLeastOneBounceActivity()
+        {
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 13');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 12',
+                                                                                'subject 12',
+                                                                                'text 12',
+                                                                                'html 12',
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                $marketingList);
+            $this->assertNotNull($campaign);
+            $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 13',
+                                                                                        Yii::app()->user->userModel);
+            $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
+            $this->assertNotNull($campaignItem);
+            $this->assertFalse($campaignItem->hasAtLeastOneBounceActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertFalse($campaignItem->hasAtLeastOneBounceActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_BOUNCE, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneBounceActivity());
+            CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_BOUNCE, $campaignItem->id,
+                                                                                        $contact->getClassId('Person'));
+            $this->assertTrue($campaignItem->hasAtLeastOneBounceActivity());
+        }
+
         protected function deleteAllCampaignItems()
         {
             $campaignItems  = CampaignItem::getAll();

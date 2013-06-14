@@ -33,7 +33,7 @@
     {
         /**
          * Get list of all index and derived attributes
-         * @return array of attributes
+         * @return array of all attributes
          */
         public static function getAllAttributes()
         {
@@ -44,6 +44,11 @@
             return $attributes;
         }
 
+        /**
+         * @param $attributes
+         * @param null $contactWebFormAttributes
+         * @return array of attributes placed on web form, default to required fields
+         */
         public static function getAllPlacedAttributes($attributes, $contactWebFormAttributes = null)
         {
             $items = array();
@@ -77,6 +82,11 @@
             return $items;
         }
 
+        /**
+         * @param $attributes
+         * @param null $contactWebFormAttributes
+         * @return array of attributes not placed on web form, but can be placed
+         */
         public static function getAllNonPlacedAttributes($attributes, $contactWebFormAttributes = null)
         {
             $items = array();
@@ -104,6 +114,10 @@
             return $items;
         }
 
+        /**
+         * @param integer $id
+         * @return string
+         */
         public static function getEmbedScript($id)
         {
             $embedScript = '<div id="zurmoExternalWebForm">' .

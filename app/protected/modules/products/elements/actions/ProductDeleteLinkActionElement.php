@@ -36,6 +36,11 @@
 
     class ProductDeleteLinkActionElement extends DeleteLinkActionElement
     {
+        /**
+         * Resolve confirm alert options while deleting product
+         * @param array $htmlOptions
+         * @return array
+         */
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)
         {
             $htmlOptions['confirm'] = Zurmo::t('ProductsModule', 'Are you sure you want to delete this {modelLabel}?',

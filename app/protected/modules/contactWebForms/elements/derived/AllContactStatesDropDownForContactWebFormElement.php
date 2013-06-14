@@ -26,11 +26,17 @@
 
     class AllContactStatesDropDownForContactWebFormElement extends ContactStateDropDownElement
     {
+        /**
+         * @return array
+         */
         protected function getDropDownArray()
         {
             return ContactsUtil::getAllContactStatesDataFromStartingStateKeyedByIdAndLabelByLanguage(Yii::app()->language);
         }
 
+        /**
+         * @return string
+         */
         public static function getDisplayName()
         {
             return Zurmo::t('ContactsModule', 'Status');
@@ -48,6 +54,9 @@
             );
         }
 
+        /**
+         * @return string
+         */
         protected function resolveAttributeName()
         {
             return 'defaultState';

@@ -56,11 +56,11 @@
         protected static function getNotificationHtmlTemplate()
         {
             $theme              = Yii::app()->theme->name;
-            $name               = 'NotificationEmailTemplate';                     
+            $name               = 'NotificationEmailTemplate';
             $templateName       = "themes/$theme/templates/$name.html";
-            $customTemplateName = "themes/$theme/templates/Custom$name.html";            
+            $customTemplateName = "themes/$theme/templates/Custom$name.html";
             if (!file_exists($customTemplateName))
-            {                
+            {
                 $customTemplateName = "themes/default/templates/Custom$name.html";
             }
             else
@@ -105,9 +105,9 @@
             $theme              = Yii::app()->theme->name;
             $name               = 'NotificationEmailTemplate';
             $templateName       = "themes/$theme/templates/$name.txt";
-            $customTemplateName = "themes/$theme/templates/Custom$name.txt"; 
+            $customTemplateName = "themes/$theme/templates/Custom$name.txt";
             if (!file_exists($customTemplateName))
-            {                
+            {
                 $customTemplateName = "themes/default/templates/Custom$name.txt";
             }
             else

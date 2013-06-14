@@ -61,6 +61,10 @@
             $cs->setIsolationMode();
             $contactWebForm = static::getModelAndCatchNotFoundAndDisplayError('ContactWebForm', intval($id));
             $metadata       = static::getMetadataByWebForm($contactWebForm);
+            if ($contactWebForm->language !== null)
+            {
+                Yii::app()->language = $contactWebForm->language;
+            }
             if (is_string($contactWebForm->submitButtonLabel) && !empty($contactWebForm->submitButtonLabel))
             {
                 $metadata['global']['toolbar']['elements'][0]['label'] = $contactWebForm->submitButtonLabel;
@@ -179,9 +183,7 @@
             $moduleClassName          = 'ContactsModule';
             $modelClassName           = $moduleClassName::getPrimaryModelName();
             $editableMetadata         = $viewClassName::getMetadata();
-            $designerRulesType        = $viewClassName::getDesignerRulesType();
-            $designerRulesClassName   = $designerRulesType . 'DesignerRules';
-            $designerRules            = new $designerRulesClassName();
+            $designerRules            = new EditAndDetailsViewDesignerRules();
             $modelAttributesAdapter   = DesignerModelToViewUtil::getModelAttributesAdapter($viewClassName, $modelClassName);
             $derivedAttributesAdapter = new DerivedAttributesAdapter($modelClassName);
             $attributeCollection      = array_merge($modelAttributesAdapter->getAttributes(),

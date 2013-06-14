@@ -29,11 +29,14 @@
      */
     class SortableContactWebFormAttributesElement extends Element
     {
+        /**
+         * @return string
+         * @throws NotSupportedException
+         */
         protected function renderControlNonEditable()
         {
             $attributes = ContactWebFormsUtil::getAllAttributes();
             $contactWebFormAttributes = null;
-
             if (isset($this->model->serializedData))
             {
                 $contactWebFormAttributes = unserialize($this->model->serializedData);
@@ -51,24 +54,26 @@
             }
         }
 
+        /**
+         * @return string
+         */
         protected function renderControlEditable()
         {
             $attributes = ContactWebFormsUtil::getAllAttributes();
             $contactWebFormAttributes = null;
-
             if (isset($this->model->serializedData))
             {
                 $contactWebFormAttributes = unserialize($this->model->serializedData);
             }
             $clip = $this->form->checkBoxList($this->model,
-                $this->attribute,
-                ContactWebFormsUtil::getAllNonPlacedAttributes($attributes,
-                    $contactWebFormAttributes),
-                $this->getEditableHtmlOptions());
-            $title   = ZurmoHtml::tag('h3', array(), Zurmo::t('ContactWebFormModule', 'Available Fields'));
-            $content = ZurmoHtml::tag('span', array('class' => 'row-description'),
-                       Zurmo::t('ContactWebFormModule', 'Check the fields that you like to add to your form, you can then change their order or remove them'));
-            $content .=  ZurmoHtml::tag('div', array('class' => 'third'), $title . $clip );
+                                              $this->attribute,
+                                              ContactWebFormsUtil::getAllNonPlacedAttributes($attributes,
+                                              $contactWebFormAttributes),
+            $this->getEditableHtmlOptions());
+            $title     = ZurmoHtml::tag('h3', array(), Zurmo::t('ContactWebFormModule', 'Available Fields'));
+            $content   = ZurmoHtml::tag('span', array('class' => 'row-description'),
+                         Zurmo::t('ContactWebFormModule', 'Check the fields that you like to add to your form, you can then change their order or remove them'));
+            $content  .= ZurmoHtml::tag('div', array('class' => 'third'), $title . $clip );
 
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("attributesList");
@@ -77,56 +82,33 @@
                 'items'        => ContactWebFormsUtil::getAllPlacedAttributes($attributes, $contactWebFormAttributes),
             ));
             $cClipWidget->endClip();
-            $clip = $cClipWidget->getController()->clips['attributesList'];
-            $title = ZurmoHtml::tag('h3', array(), Zurmo::t('ContactWebFormModule', 'Chosen Fields'));
-            $content .= ZurmoHtml::tag('div', array('class' => 'twoThirds'), $title . $clip );
-
+            $clip       = $cClipWidget->getController()->clips['attributesList'];
+            $title      = ZurmoHtml::tag('h3', array(), Zurmo::t('ContactWebFormModule', 'Chosen Fields'));
+            $content   .= ZurmoHtml::tag('div', array('class' => 'twoThirds'), $title . $clip );
             $this->registerScript();
-
             return $content;
         }
 
         protected function registerScript()
         {
-            // Begin Not Coding Standard
-            $script = "$(\"[id^='ContactWebForm_serializedData_']\").live('change', function()
-                       {
-                           if ($(this).is(':checked'))
-                           {
-                                var attributeId      = $(this).val();
-                                var elementId        = $(this).attr('id');
-                                var attributeLabel   = $('label[for=' + elementId + ']').html();
-                                $(this).closest('div').remove();
-                                var attributeElement = '<li><div class=\"dynamic-row\"><div>';
-                                attributeElement    += '<label for=\'' + elementId + '\'>' + attributeLabel + '</label>';
-                                attributeElement    += '<input type=\'hidden\' name=\'attributeIndexOrDerivedType[]\' value=\'' + attributeId + '\' />';
-                                attributeElement    += '</div><a class=\"remove-dynamic-row-link\" id=\'' + elementId + '\' data-value=\'' + attributeId + '\' href=\"#\">—</a></div></li>';
-                                $('ul#yw1').append(attributeElement);
-                           }
-                       });
-                       $('.remove-dynamic-row-link').live('click', function(){
-                                var attributeId      = $(this).attr('data-value');
-                                var elementId        = $(this).attr('id');
-                                var attributeLabel   = $('label[for=' + elementId + ']').html();
-                                $(this).closest('li').remove();
-                                var attributeElement = '<div class=\'multi-select-checkbox-input\'><label class=\'hasCheckBox\'><label class=\'hasCheckBox\'>';
-                                attributeElement    += '<input id=\'' + elementId + '\' value=\'' + attributeId + '\' type=\'checkbox\'';
-                                attributeElement    += ' name=\'ContactWebForm[serializedData][]\'></label></label><label for=\'' + elementId + '\'>' + attributeLabel + '</label></div>';
-                                $('span#ContactWebForm_serializedData').append(attributeElement);
-                            return false;
-                       })";
-            // End Not Coding Standard
-            Yii::app()->clientScript->registerScript('addOrRemoveFormAttributes', $script);
+            Yii::app()->clientScript->registerScriptFile(
+                Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('application.modules.contactWebForms.views.assets')) . '/ContactWebFormUtils.js');
         }
 
+        /**
+         * @return array
+         */
         protected function getEditableHtmlOptions()
         {
             return array(
                 'template'  => '<div class="multi-select-checkbox-input"><label class="hasCheckBox">{input}</label>{label}</div>',
-                'separator' => ''
-            );
+                'separator' => '');
         }
 
+        /**
+         * @return string
+         */
         protected function renderItemTemplate()
         {
             return '<li><div class="dynamic-row"><div>
@@ -139,6 +121,9 @@
         {
         }
 
+        /**
+         * @return string
+         */
         protected function renderLabel()
         {
             return Zurmo::t('ContactWebFormModule', 'Form Layout');

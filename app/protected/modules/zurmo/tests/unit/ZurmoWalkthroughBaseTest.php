@@ -686,25 +686,25 @@
             $matchRulesBase[] = '/id="%testAttribute%".*?>%value%<\/t/';
             $matchRulesBase[] = '/id="%testAttribute%".*?value="%value%"/';
             $matchRulesBase[] = '/id="%testAttribute%">.*?<option value="%value%" selected="selected"/s';
-            foreach ($testAttributes as $relation=>$testAttribute)
+            foreach ($testAttributes as $relation => $testAttribute)
             {
                 if (is_array($testAttribute))
                 {
-                    $attributesValid = $attributesValid && $this->checkResponseAgainstAttributeArray($response, $model->{$relation}, $class.'_'.$relation, $testAttribute, $linkClass);
+                    $attributesValid = $attributesValid && $this->checkResponseAgainstAttributeArray($response, $model->{$relation}, $class . '_' . $relation, $testAttribute, $linkClass);
                 }
                 else
                 {
                     $matchResult = false;
                     $matchRules  = str_replace(
                         array('%testAttribute%', '%value%'),
-                        array($class.'_'.$testAttribute, str_replace('/','\/',$model->{$testAttribute})),
+                        array($class . '_' . $testAttribute, str_replace('/', '\/', $model->{$testAttribute})),
                         $matchRulesBase
                     );
                     foreach ($matchRules as $matchRule)
                     {
                         $matchResult = $matchResult || preg_match($matchRule, $response);
                     }
-                    $this->assertTrue($matchResult, $class.'_'.$testAttribute.'=='.$model->{$testAttribute});
+                    $this->assertTrue($matchResult, $class . '_' . $testAttribute . '==' . $model->{$testAttribute});
                     $attributesValid = $attributesValid && $matchResult;
                 }
             }
@@ -725,7 +725,6 @@
                 $model->setAttributes($attributeValues);
             }
         }
-
 
         /**
          * Checks if the model has values from post array.

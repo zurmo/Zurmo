@@ -43,11 +43,20 @@
 
         public $breadcrumbLinks;
 
+        /**
+         * @return string
+         */
         protected function getMessageViewClassName()
         {
             return $this->zeroModelsYetViewClassName;
         }
 
+        /**
+         * Resolve and render zero model view for product template, products
+         * and product categories
+         * @param Object $messageView
+         * @return string containing the zero model view
+         */
         protected function resolveAndRenderView(View $messageView)
         {
             $gridViewId              = 'notUsed';

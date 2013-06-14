@@ -206,7 +206,7 @@
          */
         protected function renderXHtmlStart()
         {
-            $themeUrl = Yii::app()->baseUrl . '/themes';
+            $themeUrl  = Yii::app()->themeManager->baseUrl;
             $theme    = Yii::app()->theme->name;
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
             {
@@ -245,31 +245,33 @@
             {
                 $title = "$title - $subtitle";
             }
-            $defaultTheme = 'themes/default';
-            $theme        = 'themes/' . Yii::app()->theme->name;
+            $defaultThemeName       = 'default';
+            $defaultThemeBaseUrl    =  Yii::app()->themeManager->baseUrl . '/' . $defaultThemeName;
+            $themeName              = Yii::app()->theme->name;
+            $themeBaseUrl           =  Yii::app()->themeManager->baseUrl . '/' . $themeName;
             $cs = Yii::app()->getClientScript();
             //$cs->registerMetaTag('UTF-8', null, 'charset'); // Not Coding Standard
-            $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/keyframes.css');
+            $cs->registerCssFile($themeBaseUrl . '/css/keyframes.css');
 
             $specialCssContent = null;
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
             {
                 $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="newui" href="' .
-                                      Yii::app()->baseUrl . '/' . $theme . '/less/newui.less"/>';
+                                                                                $themeBaseUrl . '/less/newui.less"/>';
                 if (Yii::app()->userInterface->isMobile())
                 {
                     $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="mobile" href="' .
-                        Yii::app()->baseUrl . '/' . $theme . '/less/mobile.less"/>';
+                                                                                $themeBaseUrl . '/less/mobile.less"/>';
                 }
                 $specialCssContent .= '<!--[if lt IE 9]><link rel="stylesheet/less" type="text/css" href="' .
-                                      Yii::app()->baseUrl . '/' . $theme . '/less/ie.less"/><![endif]-->';
+                                                                        $themeBaseUrl . '/less/ie.less"/><![endif]-->';
             }
             else
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/newui.css');
+                $cs->registerCssFile($themeBaseUrl . '/css/newui.css');
                 if (Yii::app()->userInterface->isMobile())
                 {
-                    $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/mobile.css');
+                    $cs->registerCssFile($themeBaseUrl . '/css/mobile.css');
                 }
             }
             if (MINIFY_SCRIPTS)
@@ -282,34 +284,34 @@
             }
             if (Yii::app()->browser->getName() == 'msie' && Yii::app()->browser->getVersion() < 9)
             {
-                $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css' . '/ie.css', 'screen, projection');
+                $cs->registerCssFile($themeBaseUrl . '/css' . '/ie.css', 'screen, projection');
             }
 
             foreach ($this->getStyles() as $style)
             {
                 if ($style != 'ie')
                 {
-                    if (file_exists("$theme/css/$style.css"))
+                    if (file_exists("themes/$themeName/css/$style.css"))
                     {
-                        $cs->registerCssFile(Yii::app()->baseUrl . '/' . $theme . '/css/' . $style. '.css'); // Not Coding Standard
+                        $cs->registerCssFile($themeBaseUrl . '/css/' . $style. '.css'); // Not Coding Standard
                     }
                 }
             }
 
-            if (file_exists("$theme/ico/favicon.ico"))
+            if (file_exists("themes/$themeName/ico/favicon.ico"))
             {
-                $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $theme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null, $themeBaseUrl . '/ico/favicon.ico');
             }
             else
             {
-                $cs->registerLinkTag('shortcut icon', null, Yii::app()->baseUrl . '/' . $defaultTheme . '/ico/favicon.ico');
+                $cs->registerLinkTag('shortcut icon', null, $defaultThemeBaseUrl . '/ico/favicon.ico');
             }
             return '<head>' .
                    '<meta charset="utf-8">' .
                    '<meta http-equiv="X-UA-Compatible" content="IE=edge" />' . // Not Coding Standard
                    '<meta name="viewport"  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' . // Not Coding Standard
                    '<meta name="apple-mobile-web-app-capable" content="yes" />' . // Not Coding Standard
-                   '<link rel="apple-touch-icon" sizes="144x144" href="' . Yii::app()->baseUrl . '/themes/default/images/touch-icon-iphone4.png" />'  . //also add 57px, 72px, 144px // Not Coding Standard
+                   '<link rel="apple-touch-icon" sizes="144x144" href="' . $defaultThemeBaseUrl . '/images/touch-icon-iphone4.png" />'  . //also add 57px, 72px, 144px // Not Coding Standard
                    $specialCssContent .
                    '<title>' . $title . '</title>'  .
                    '</head>';

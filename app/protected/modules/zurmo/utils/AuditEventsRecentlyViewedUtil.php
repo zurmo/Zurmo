@@ -167,10 +167,17 @@
             {
                 $recentlyViewed = array();
             }
-            if (in_array($newItem, $recentlyViewed))
+            $inRecentlyKey = null;
+            foreach ($recentlyViewed as $key => $item)
             {
-                $key = array_search($newItem, $recentlyViewed);
-                unset($recentlyViewed[$key]);
+                if ($item[1] == $newItem[1] && $item[0] == $newItem[0])
+                {
+                    $inRecentlyKey = $key;
+                }
+            }
+            if (isset($inRecentlyKey))
+            {
+                unset($recentlyViewed[$inRecentlyKey]);
                 array_keys($recentlyViewed);
             }
             if (array_unshift($recentlyViewed, $newItem) > $count)

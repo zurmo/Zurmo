@@ -1,0 +1,7 @@
+--------------------------------------------------------------
+Package: Free Social Media Icons
+Author: Thomas Weichselbaumer, ThemeZee.com
+Source: http://themezee.com/free-social-media-icons/
+
+License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
+--------------------------------------------------------------

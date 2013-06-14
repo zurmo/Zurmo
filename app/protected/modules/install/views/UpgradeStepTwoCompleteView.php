@@ -53,7 +53,7 @@
 
         protected function renderContent()
         {
-            $imagePath = Yii::app()->baseUrl . '/themes/default/images/ajax-loader.gif';
+            $imagePath = Yii::app()->themeManager->baseUrl . '/default/images/ajax-loader.gif';
             $progressBarImageContent = ZurmoHtml::image($imagePath, 'Progress Bar');
             $cs = Yii::app()->getClientScript();
             $cs->registerScriptFile($cs->getCoreScriptUrl() . '/jquery.min.js', CClientScript::POS_END);

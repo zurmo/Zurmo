@@ -79,7 +79,7 @@
                 $style = null;
             }
             $content  = '<div id="' . self::PANEL_ID . '" ' . $style . '>';
-            $content .= '<h1>' . Zurmo::t('MarketingModule', 'How does Email Marketing work in Zurmo?'). '</h1>';
+            $content .= '<h1>' . Zurmo::t('MarketingModule', 'How does Email Marketing work in Zurmo?', LabelUtil::getTranslationParamsForAllModules()). '</h1>';
 
             $content .= '<div id="marketing-intro-steps" class="clearfix">';
             $content .= '<div class="third"><h3>' . Zurmo::t('Core', 'Step') . '<strong>1<span>➜</span></strong></h3>';

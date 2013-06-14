@@ -26,6 +26,10 @@
 
     class ProductTemplatesPageView extends ZurmoDefaultPageView
     {
+        /**
+         * Gets the subtitle
+         * @return string
+         */
         protected function getSubtitle()
         {
             return Zurmo::t('ProductTemplatesModule', 'ProductTemplates');

@@ -36,56 +36,61 @@
 
         const HASH_INDEX_HIDDEN_FIELD = 'hashIndex';
 
+        /**
+         * @param string $name
+         * @return model
+         */
         public static function getByName($name)
         {
             return ZurmoModelSearch::getModelsByFullName('ContactWebFormEntry', $name);
         }
 
+        /**
+         * @param $language
+         * @return array
+         */
         protected static function translatedAttributeLabels($language)
         {
             return parent::translatedAttributeLabels($language);
         }
 
+        /**
+         * @return string
+         */
         public static function getModuleClassName()
         {
             return 'ContactWebFormsModule';
         }
 
         /**
-         * Override since Person has its own override.
-         * @see RedBeanModel::getLabel
-         * @param null | string $language
-         * @return dynamic label name based on module.
+         * @param $language
+         * @return string
          */
         protected static function getLabel($language = null)
         {
-            if (null != $moduleClassName = static::getModuleClassName())
-            {
-                return $moduleClassName::getModuleLabelByTypeAndLanguage('Singular', $language);
-            }
-            return get_called_class();
+            return Zurmo::t('ContactWebFormsModule', 'Contact Web Form Entry', array(), null, $language);
         }
 
         /**
-         * Override since Person has its own override.
-         * @see RedBeanModel::getPluralLabel
-         * @param null | string $language
-         * @return dynamic label name based on module.
+         * @param $language
+         * @return string, display name for plural of the model class.
          */
         protected static function getPluralLabel($language = null)
         {
-            if (null != $moduleClassName = static::getModuleClassName())
-            {
-                return $moduleClassName::getModuleLabelByTypeAndLanguage('Plural', $language);
-            }
-            return static::getLabel($language) . 's';
+            return Zurmo::t('ContactWebFormsModule', 'Contact Web Form Entries', array(), null, $language);
         }
 
+        /**
+         * @return bool
+         */
         public static function canSaveMetadata()
         {
             return true;
         }
 
+        /**
+         * @return array
+         */
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();
@@ -109,26 +114,39 @@
                 'elements' => array(
                 ),
                 'defaultSortAttribute' => 'status',
-                'noAudit' => array(),
+                'noAudit' => array('serializedData', 'hashIndex'),
             );
             return $metadata;
         }
 
+        /**
+         * @return bool
+         */
         public static function isTypeDeletable()
         {
             return true;
         }
 
+        /**
+         * @return string
+         */
         public static function getRollUpRulesType()
         {
             return 'ContactWebFormEntry';
         }
 
+        /**
+         * @return bool
+         */
         public static function hasReadPermissionsOptimization()
         {
             return true;
         }
 
+        /**
+         * @param string $hashIndex row identifier for ContactWebFormEntry
+         * @return array of module class names and display labels.
+         */
         public static function getByHashIndex($hashIndex)
         {
             $modelClassName = get_called_class();

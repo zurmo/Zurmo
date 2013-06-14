@@ -29,6 +29,9 @@
      */
     class ProductsDefaultDataMaker extends DefaultDataMaker
     {
+        /**
+         * Make the field data for product stages
+         */
         public function make()
         {
             $values = array(

@@ -29,6 +29,12 @@
      */
     class ProductCategoriesUtil
     {
+        /**
+         * Resolves the categories sent via post request
+         * @param Product $product
+         * @param array $postData
+         * @return array containing categories
+         */
         public static function resolveProductHasManyProductCategoriesFromPost(
                                     Product $product, $postData)
         {

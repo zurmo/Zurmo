@@ -20,6 +20,7 @@ function copyProductTemplateDataForProduct(templateId, url)
                          $('#Product_priceFrequency_value').val(data.productPriceFrequency);
                          $('#Product_sellPrice_currency_id').val(data.productSellPriceCurrency);
                          $('#Product_sellPrice_value').val(data.productSellPriceValue);
+                         $('#Product_name').val(data.productName);
                      }
         }
     );

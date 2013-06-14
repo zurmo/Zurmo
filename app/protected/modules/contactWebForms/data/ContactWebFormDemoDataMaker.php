@@ -43,11 +43,17 @@
 
         protected $seedData;
 
+        /**
+         * @return array
+         */
         public static function getDependencies()
         {
             return array('users');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -75,6 +81,9 @@
             $demoDataHelper->setRangeByModelName('ContactWebForm', $contactWebForms[0], $contactWebForms[count($contactWebForms)-1]);
         }
 
+        /**
+         * @param RedBeanModel $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof ContactWebForm');

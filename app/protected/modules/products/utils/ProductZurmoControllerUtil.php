@@ -33,6 +33,12 @@
 
         protected $peopleAddedAsProductCategories;
 
+        /**
+         * Constructor for class
+         * @param string $relatedItemsRelationName
+         * @param string $relatedItemsFormName
+         * @param string $productCategoryFormName
+         */
         public function __construct($relatedItemsRelationName, $relatedItemsFormName, $productCategoryFormName)
         {
             assert('is_string($relatedItemsRelationName)');
@@ -41,6 +47,10 @@
             $this->productCategoryFormName = $productCategoryFormName;
         }
 
+        /**
+         * @param object $model
+         * @param attay $explicitReadWriteModelPermissions
+         */
         protected function afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions)
         {
             assert('$model instanceof Product');

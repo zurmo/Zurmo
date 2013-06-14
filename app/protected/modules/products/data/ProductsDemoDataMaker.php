@@ -31,11 +31,18 @@
     {
         protected $ratioToLoad = 1;
 
+        /**
+         * Gets the dependencies before creating products data
+         * @return array
+         */
         public static function getDependencies()
         {
             return array('productTemplates');
         }
 
+        /**
+         * @param object $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');

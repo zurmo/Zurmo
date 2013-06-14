@@ -26,6 +26,10 @@
 
     class ContactWebFormDeleteLinkActionElement extends DeleteLinkActionElement
     {
+        /**
+         * @param $htmlOptions
+         * @return array
+         */
         protected function resolveConfirmAlertInHtmlOptions($htmlOptions)
         {
             $htmlOptions['confirm'] = Zurmo::t('ContactWebFormsModule', 'Are you sure you want to delete this {modelLabel}?',

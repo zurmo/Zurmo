@@ -39,6 +39,10 @@
      */
     class ProductsPortletPersistentConfigUtil extends PortletPersistentConfigUtil
     {
+        /**
+         * Gets module name
+         * @return string
+         */
         protected static function getModuleName()
         {
             return 'ProductsModule';

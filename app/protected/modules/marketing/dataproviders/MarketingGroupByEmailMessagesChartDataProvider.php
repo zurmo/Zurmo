@@ -61,7 +61,7 @@
             assert('is_string($columnName)');
             $quote                 = DatabaseCompatibilityUtil::getQuote();
             $emailMessageTableName = EmailMessage::getTableName('EmailMessage');
-            $queryString = "DATE_FORMAT(DATE_ADD({$columnName}, INTERVAL(2-DAYOFWEEK(" .
+            $queryString = "DATE_FORMAT(DATE_SUB({$columnName}, INTERVAL(WEEKDAY(" .
                            "{$quote}{$emailMessageTableName}{$quote}.{$quote}{$columnName}{$quote})) day), '%Y-%m-%d')";
             $selectQueryAdapter->addClauseByQueryString($queryString, static::FIRST_DAY_OF_WEEK_DATE);
         }

@@ -36,6 +36,9 @@
 
     class ContactWebFormListViewColumnAdapter extends TextListViewColumnAdapter
     {
+        /**
+         * @return array
+         */
         public function renderGridViewData()
         {
             if ($this->getIsLink())

@@ -74,26 +74,26 @@
 
         protected function renderContent()
         {
-            $params   = LabelUtil::getTranslationParamsForAllModules();
-            $rand     = mt_rand(1, 6);
-            $theme    = 'themes/' . Yii::app()->theme->name;
-            $imgUrl   = Yii::app()->baseUrl . '/' . $theme . '/images/welcome-gallery-' . $rand . '.png';
-            $content  = '<div class="clearfix">';
-            $content .= '<h1>' . Zurmo::t('HomeModule', 'Welcome to Zurmo', $params). '</h1>';
-            $content .= static::renderSocialLinksContent();
-            $content .= '<div id="welcome-content">';
-            $content .= '<div id="instructions"><div id="welcome-gallery"><img src="' . $imgUrl . '" title="" /><span></span></div>';
-            $content .= '<p>';
-            $content .= Zurmo::t('HomeModule', 'Using a CRM shouldn\'t be a chore. With Zurmo, you can earn points, ' .
+            $params     = LabelUtil::getTranslationParamsForAllModules();
+            $rand       = mt_rand(1, 6);
+            $themeName  = Yii::app()->theme->name;
+            $imgUrl     = Yii::app()->themeManager->baseUrl . '/' . $themeName . '/images/welcome-gallery-' . $rand . '.png';
+            $content    = '<div class="clearfix">';
+            $content    .= '<h1>' . Zurmo::t('HomeModule', 'Welcome to Zurmo', $params). '</h1>';
+            $content    .= static::renderSocialLinksContent();
+            $content    .= '<div id="welcome-content">';
+            $content    .= '<div id="instructions"><div id="welcome-gallery"><img src="' . $imgUrl . '" title="" /><span></span></div>';
+            $content    .= '<p>';
+            $content    .= Zurmo::t('HomeModule', 'Using a CRM shouldn\'t be a chore. With Zurmo, you can earn points, ' .
                                'collect badges, and compete against co-workers while getting your job done.', $params);
-            $content .= '</p>';
-            $content .= $this->renderDashboardLinkContent();
-            $content .= '</div>';
-            $content .= static::renderHelpfulLinksContent();
-            $content .= $this->renderTipsContent();
-            $content .= $this->renderHideLinkContent();
-            $content .= '</div>';
-            $content .= '</div>';
+            $content    .= '</p>';
+            $content    .= $this->renderDashboardLinkContent();
+            $content    .= '</div>';
+            $content    .= static::renderHelpfulLinksContent();
+            $content    .= $this->renderTipsContent();
+            $content    .= $this->renderHideLinkContent();
+            $content    .= '</div>';
+            $content    .= '</div>';
             return $content;
         }
 

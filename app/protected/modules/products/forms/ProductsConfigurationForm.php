@@ -57,6 +57,9 @@
          */
         public $filteredByStage = self::FILTERED_BY_ALL_STAGES;
 
+        /**
+         * @return array
+         */
         public function rules()
         {
             return array(

@@ -161,8 +161,8 @@
             //Save a layout change. Collapse all portlets
             //At this point portlets for this view should be created because we have already loaded the 'details' page in a request above.
             $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($uniqueLayoutId, $super->id, array());
-            $this->assertEquals(5, count($portlets[1]));
-            $this->assertEquals(3, count($portlets[2]));
+            $this->assertEquals(4, count($portlets[1]));
+            $this->assertEquals(4, count($portlets[2]));
             $portletPostData = array();
             $portletCount = 0;
             foreach ($portlets as $column => $columnPortlets)
@@ -203,10 +203,10 @@
             }
 
             //Load up modal config edit view.
-            $this->assertTrue($portlets[1][1]->id > 0);
-            $this->assertEquals('AccountsMyList', $portlets[1][1]->viewType);
+            $this->assertTrue($portlets[1][5]->id > 0);
+            $this->assertEquals('AccountsMyList', $portlets[1][5]->viewType);
             $this->setGetArray(array(
-                'portletId'    => $portlets[1][1]->id,
+                'portletId'    => $portlets[1][5]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->resetPostArray();
@@ -214,7 +214,7 @@
 
             //Now validate the form.
             $this->setGetArray(array(
-                'portletId'    => $portlets[1][1]->id,
+                'portletId'    => $portlets[1][5]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
@@ -224,7 +224,7 @@
 
             //save changes to the portlet title
             $this->setGetArray(array(
-                'portletId'      => $portlets[1][1]->id,
+                'portletId'      => $portlets[1][5]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->setPostArray(array(
@@ -232,12 +232,12 @@
                 'AccountsSearchForm' => array()));
             $this->runControllerWithNoExceptionsAndGetContent('home/defaultPortlet/modalConfigSave');
             //Now confirm the title change was successful.
-            $portlet = Portlet::getById($portlets[1][1]->id);
+            $portlet = Portlet::getById($portlets[1][5]->id);
             $this->assertEquals('something new', $portlet->getView()->getTitle());
 
             //Refresh a portlet modally.
             $this->setGetArray(array(
-                'portletId'    => $portlets[1][1]->id,
+                'portletId'    => $portlets[1][5]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
                 'redirectUrl' => 'home/default'));
             $this->resetPostArray();
@@ -249,13 +249,13 @@
 
             //task sorting issue
             //check whether tasks portlet render or not
-            $this->assertTrue($portlets[1][4]->id > 0);
-            $this->assertEquals('TasksMyList', $portlets[1][4]->viewType);
+            $this->assertTrue($portlets[1][3]->id > 0);
+            $this->assertEquals('TasksMyList', $portlets[1][3]->viewType);
 
             //to sort task list
             $this->setGetArray(array(
                 'Task_sort'      => 'name',
-                'portletId'      => $portlets[1][4]->id,
+                'portletId'      => $portlets[1][3]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
             ));
             $this->resetPostArray();
@@ -265,9 +265,9 @@
             $this->resetGetArray();
             $this->setGetArray(array(
                 'Task_sort'      => 'dueDateTime',
-                'portletId'      => $portlets[1][4]->id,
+                'portletId'      => $portlets[1][3]->id,
                 'uniqueLayoutId' => $uniqueLayoutId,
-                'ajax'           => 'list-view' . $uniqueLayoutId . '_' . $portlets[1][4]->id
+                'ajax'           => 'list-view' . $uniqueLayoutId . '_' . $portlets[1][3]->id
             ));
             $this->runControllerWithNoExceptionsAndGetContent('home/default');
         }

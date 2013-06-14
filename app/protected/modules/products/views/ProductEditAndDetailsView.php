@@ -36,6 +36,7 @@
                             array('type'  => 'SaveButton',        'renderType' => 'Edit'),
                             array('type'  => 'EditLink',          'renderType' => 'Details'),
                             array('type'  => 'ProductDeleteLink', 'renderType' => 'Details'),
+                            array('type'  => 'CopyLink',          'renderType' => 'Details'),
                         ),
                     ),
                     'nonPlaceableAttributeNames' => array(
@@ -48,6 +49,15 @@
                     'panels' => array(
                         array(
                             'rows' => array(
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'productTemplate', 'type' => 'ProductTemplate'),
+                                            ),
+                                        ),
+                                    )
+                                ),
                                 array('cells' =>
                                     array(
                                         array(
@@ -155,16 +165,7 @@
         protected function renderRightSideFormLayoutForEdit($form)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $content = '';
-            if ($this->getModel() instanceof OwnedSecurableItem)
-            {
-                $content .= "<h3>".Zurmo::t('ProductTemplatesModule', 'Select Catalog Item') . '</h3><div id="product-template-box">';
-                $element  = new ProductTemplateElement($this->getModel(), 'productTemplate', $form);
-                $element->editableTemplate = '{content}{error}';
-                $content .= $element->render().'</div>';
-            }
-
-            $content = $content . "<br/>" . parent::renderRightSideFormLayoutForEdit($form);
+            $content = parent::renderRightSideFormLayoutForEdit($form);
 
             return $content;
         }

@@ -111,7 +111,7 @@
             $campaign->fromAddress              = $fromAddress;
             $campaign->supportsRichText         = $supportsRichText;
             $campaign->enableTracking           = $enableTracking;
-            $campaign->sendOnDateTime          = $sendOnDateTime;
+            $campaign->sendOnDateTime           = $sendOnDateTime;
             $campaign->marketingList            = $marketingList;
             return $campaign;
         }

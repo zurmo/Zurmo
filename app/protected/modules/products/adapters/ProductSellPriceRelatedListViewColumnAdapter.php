@@ -33,7 +33,9 @@
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
-
+    /**
+     * Column adapter for Sell Price for product list in portlet
+     */
     class ProductSellPriceRelatedListViewColumnAdapter extends TextListViewColumnAdapter
     {
         public function renderGridViewData()

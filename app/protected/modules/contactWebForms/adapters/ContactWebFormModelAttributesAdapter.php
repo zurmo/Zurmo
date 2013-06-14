@@ -39,6 +39,9 @@
      */
     class ContactWebFormModelAttributesAdapter extends ModelAttributesAdapter
     {
+        /**
+         * @return array of place-able attributes
+         */
         public function getAttributes()
         {
             $attributes = array();

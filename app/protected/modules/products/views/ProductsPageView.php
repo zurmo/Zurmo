@@ -26,6 +26,10 @@
 
     class ProductsPageView extends ZurmoDefaultPageView
     {
+        /**
+         * Gets sub title
+         * @return string
+         */
         protected function getSubtitle()
         {
             return Zurmo::t('ProductsModule', 'Products');

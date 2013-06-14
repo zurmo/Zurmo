@@ -34,6 +34,7 @@
                         'elements' => array(
                             array('type'  => 'EditLink',                     'renderType' => 'Details'),
                             array('type'  => 'ProductTemplateDeleteLink',    'renderType' => 'Details'),
+                            array('type'  => 'CopyLink',                     'renderType' => 'Details'),
                         ),
                     ),
                     'nonPlaceableAttributeNames' => array(
