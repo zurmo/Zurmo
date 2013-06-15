@@ -59,37 +59,38 @@
             $annualTotal            = 0;
             foreach ($models as $model)
             {
-                if ($persistantProductConfigItemValue === null)
+                if (ControllerSecurityUtil::doesCurrentUserHavePermissionOnSecurableItem($model, Permission::READ))
                 {
-                    $persistantProductConfigItemValue = ProductsConfigurationForm::FILTERED_BY_ALL_STAGES;
-                }
-                if ($persistantProductConfigItemValue != ProductsConfigurationForm::FILTERED_BY_ALL_STAGES)
-                {
-                    if ($model->stage->value != $persistantProductConfigItemValue)
+                    if ($persistantProductConfigItemValue === null)
                     {
-                        continue;
+                        $persistantProductConfigItemValue = ProductsConfigurationForm::FILTERED_BY_ALL_STAGES;
+                    }
+                    if ($persistantProductConfigItemValue != ProductsConfigurationForm::FILTERED_BY_ALL_STAGES)
+                    {
+                        if ($model->stage->value != $persistantProductConfigItemValue)
+                        {
+                            continue;
+                        }
+                    }
+
+                    if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_ONE_TIME)
+                    {
+                        $oneTimeTotal += $this->getAdjustedTotalByCurrency($model);
+                    }
+
+                    if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_MONTHLY)
+                    {
+                        $monthlyTotal += $this->getAdjustedTotalByCurrency($model);
+                    }
+
+                    if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_ANNUALLY)
+                    {
+                        $annualTotal  += $this->getAdjustedTotalByCurrency($model);
                     }
                 }
-
-                if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_ONE_TIME)
-                {
-                    $oneTimeTotal += $this->getAdjustedTotalByCurrency($model);
-                }
-
-                if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_MONTHLY)
-                {
-                    $monthlyTotal += $this->getAdjustedTotalByCurrency($model);
-                }
-
-                if ($model->priceFrequency == ProductTemplate::PRICE_FREQUENCY_ANNUALLY)
-                {
-                    $annualTotal  += $this->getAdjustedTotalByCurrency($model);
-                }
             }
-
             $content            = Zurmo::t("Core", "Total: ");
             $contentArray        = array();
-
             if ($oneTimeTotal > 0)
             {
                 $contentArray[] = Yii::app()->numberFormatter->formatCurrency($oneTimeTotal,
@@ -108,7 +109,6 @@
                                                                     Yii::app()->currencyHelper->getCodeForCurrentUserForDisplay())
                                                                      . Zurmo::t("Core", " Annually");
             }
-
             if (empty ($contentArray))
             {
                 $content = '';

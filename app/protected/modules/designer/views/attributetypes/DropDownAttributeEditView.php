@@ -118,13 +118,13 @@
 
         protected function renderAfterFormLayout($form)
         {
-            $content  = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
+            $title    = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
             $element  = new EditableDropDownCollectionElement($this->model, 'customFieldDataData', $form,
                                 array('specificValueFromDropDownAttributeName' => 'defaultValueOrder',
                                       'baseLanguage'           => Yii::app()->languageHelper->getBaseLanguage(),
                                       'activeLanguagesData'    => Yii::app()->languageHelper->getActiveLanguagesData(),
                                       'labelsAttributeName'    => 'customFieldDataLabels'));
-            $content .= ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $element->render());
+            $content = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $title . $element->render());
             return $content;
         }
 

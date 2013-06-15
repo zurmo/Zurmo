@@ -417,7 +417,8 @@ To: Steve <steve@example.com>
 
             sleep(30);
             $job = new EmailArchivingJob();
-            $this->assertTrue($job->run());
+            $this->assertFalse($job->run());
+            $this->assertTrue(strpos($job->getErrorMessage(), 'Failed to process Message id') !== false);
 
             $this->assertEquals(1, count(EmailMessage::getAll()));
             $emailMessages = EmailMessage::getAll();

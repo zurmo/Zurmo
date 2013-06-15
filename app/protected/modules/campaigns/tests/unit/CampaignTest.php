@@ -115,7 +115,7 @@
             $this->assertArrayHasKey('textContent', $errors);
             $this->assertEquals('Please provide at least one of the contents field.', $errors['textContent'][0]);
             $this->assertArrayHasKey('marketingList', $errors);
-            $this->assertEquals('Name cannot be blank.', $errors['marketingList']['name'][0]);
+            $this->assertEquals('Marketing List cannot be blank.', $errors['marketingList'][0]);
 
             $campaign->name             = 'Test Campaign Name2';
             $campaign->supportsRichText = 0;

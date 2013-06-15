@@ -63,7 +63,7 @@
             //#1 Create Archived - Sent
             $emailMessage              = new EmailMessage();
             $emailMessage->setScenario('importModel');
-            $emailMessage->owner       = Yii::app()->user->userModel;
+            $emailMessage->owner       = $contact->owner;
             $emailMessage->subject     = 'A test archived sent email';
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My First Message';
@@ -85,11 +85,16 @@
             $emailMessage->folder       = EmailFolder::getByBoxAndType($this->emailBox, EmailFolder::TYPE_ARCHIVED);
             $emailMessage->sentDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - $interval);
             $emailMessage->createdDateTime = $emailMessage->sentDateTime;
-            $saved = $emailMessage->save();
+            $emailMessage->addPermissions(Group::getByName(Group::EVERYONE_GROUP_NAME), Permission::READ_WRITE_CHANGE_PERMISSIONS_CHANGE_OWNER);
+            $saved                          = $emailMessage->save();
             if (!$saved)
             {
-                throw new NotSupportedException();
+                throw new FailedToSaveModelException();
             }
+            $emailMessage = EmailMessage::getById($emailMessage->id);
+            ReadPermissionsOptimizationUtil::
+                securableItemGivenPermissionsForGroup($emailMessage, Group::getByName(Group::EVERYONE_GROUP_NAME));
+            $emailMessage->save();
             return $emailMessage;
         }
     }

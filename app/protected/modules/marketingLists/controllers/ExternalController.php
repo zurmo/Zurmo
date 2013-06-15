@@ -69,18 +69,6 @@
 
         public function actionManageSubscriptions($hash, $preview = 0)
         {
-            /*
-            $contact            = RandomDataUtil::getRandomValueFromArray(Contact::getAll());
-            $personId           = $contact->getClassId('Person');
-            $marketingList      = RandomDataUtil::getRandomValueFromArray(MarketingList::getAll());
-            $marketingListId    = $marketingList->id;
-            $model              = RandomDataUtil::getRandomValueFromArray(CampaignItem::getAll());
-            $modelId            = $model->id;
-            $modelType          = get_class($model);
-            $hash               = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, $modelId, $modelType, false);
-            CVarDumper::dump($hash, 10, 1);
-            exit; // Not Coding Standard
-            */
             $this->renderPreviewMessage($preview);
             $contact                = null;
             $personId               = null;

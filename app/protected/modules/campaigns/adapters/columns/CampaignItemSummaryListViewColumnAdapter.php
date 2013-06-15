@@ -48,9 +48,16 @@
 
         public static function resolveContactAndMetricsSummary(CampaignItem $campaignItem)
         {
-            $content  = static::resolveContactWithLink($campaignItem->contact);
-            $content .= static::renderMetricsContent($campaignItem);
-            return $content;
+            if (ActionSecurityUtil::canCurrentUserPerformAction('Details', $campaignItem->contact))
+            {
+                $content  = static::resolveContactWithLink($campaignItem->contact);
+                $content .= static::renderMetricsContent($campaignItem);
+                return $content;
+            }
+            else
+            {
+                return static::renderRestrictedContactAccessLink($campaignItem->contact);
+            }
         }
 
         public static function resolveContactWithLink(Contact $contact)
@@ -79,6 +86,19 @@
             return $content;
         }
 
+        protected static function renderRestrictedEmailMessageAccessLink(EmailMessage $emailMessage)
+        {
+            $title       = Zurmo::t('CampaignsModule', 'You cannot see the performance metrics due to limited access');
+            $content     = ZurmoHtml::tag('em', array(), Zurmo::t('CampaignsModule', 'Restricted'));
+            $content    .= ZurmoHtml::tag('span', array('id'    => 'restricted-access-email-message-tooltip' . $emailMessage->id,
+                           'class' => 'tooltip',
+                           'title' => $title), '?');
+            $qtip = new ZurmoTip(array('options' => array('position' => array('my' => 'bottom left', 'at' => 'top left',
+                           'adjust' => array('x' => 6, 'y' => -1)))));
+            $qtip->addQTip('#restricted-access-email-message-tooltip' . $emailMessage->id);
+            return $content;
+        }
+
         protected static function resolveModuleClassName(Contact $contact)
         {
             if (LeadsUtil::isStateALead($contact->state))
@@ -93,6 +113,10 @@
 
         protected static function renderMetricsContent(CampaignItem $campaignItem)
         {
+            if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $campaignItem->emailMessage))
+            {
+                return static::renderRestrictedEmailMessageAccessLink($campaignItem->emailMessage);
+            }
             $isQueuedOrSkipped     = $campaignItem->isQueuedOrSkipped();
             $isSkipped             = $campaignItem->isSkipped();
             if ($isQueuedOrSkipped && !$isSkipped)

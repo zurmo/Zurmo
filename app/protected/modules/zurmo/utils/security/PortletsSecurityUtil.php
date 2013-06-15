@@ -58,5 +58,22 @@
             }
             return $resolvedPortlets;
         }
+
+        /**
+         * Checks if the user has permission to add portlet from modal
+         * @param Object $portletRules
+         * @return bool
+         */
+        public static function doesCurrentUserHavePermissionToAddPortlet($portletRules)
+        {
+            $user             = Yii::app()->user->userModel;
+            $viewClassName    = $portletRules->getType() . 'View';
+            $moduleClassName  = $viewClassName::getModuleClassName();
+            if (RightsUtil::canUserAccessModule($moduleClassName, $user))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 ?>

@@ -68,9 +68,11 @@
                             $portletRules = PortletRulesFactory::createPortletRulesByView($className);
                             if ($portletRules != null && $portletRules->allowOnDashboard())
                             {
-                                if ($portletRules->allowMultiplePlacementOnDashboard() ||
+                                if ($portletRules->allowMultiplePlacementOnDashboard() &&
+                                    (PortletsSecurityUtil::doesCurrentUserHavePermissionToAddPortlet($portletRules) === true) ||
                                    (!$portletRules->allowMultiplePlacementOnDashboard() &&
-                                    !in_array($portletRules->getType(), $placedViewTypes)))
+                                    !in_array($portletRules->getType(), $placedViewTypes)&&
+                                    (PortletsSecurityUtil::doesCurrentUserHavePermissionToAddPortlet($portletRules) === true)))
                                 {
                                     $metadata = $className::getMetadata();
                                     $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(

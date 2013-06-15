@@ -89,7 +89,16 @@
                        {
                            $lastCheckTime = $message->createdDate;
                        }
-                       $this->processMessage($message);
+                       if (!$this->processMessage($message))
+                       {
+                           if (!empty($this->errorMessage))
+                           {
+                               $this->errorMessage .= PHP_EOL;
+                           }
+                           $messageContent     = Zurmo::t('EmailMessagesModule', 'Failed to process Message id: {uid}',
+                                                                                    array('{uid}' => $message->uid));
+                           $this->errorMessage .= $messageContent;
+                       }
                    }
                    $this->imapManager->expungeMessages();
                    if ($lastCheckTime != '')
@@ -97,7 +106,7 @@
                        $this->setLastImapDropboxCheckTime($lastCheckTime);
                    }
                 }
-                return true;
+                return (empty($this->errorMessage));
             }
             else
             {

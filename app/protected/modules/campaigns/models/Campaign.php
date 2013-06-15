@@ -247,5 +247,11 @@
         {
             return 'CampaignGamification';
         }
+
+        public function getErrors($attributeNameOrNames = null)
+        {
+            // TODO: @Shoaibi/@Jason: Medium: We should have overriden getErrors' original code but this was easier.
+            return $this->attributeNameToErrors;
+        }
     }
 ?>

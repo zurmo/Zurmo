@@ -51,7 +51,6 @@
 
         public function testLoad()
         {
-            return;//temporarily disabled
             $this->assertEquals(2, Group::getCount());
             $this->assertEquals(0, Role::getCount());
             $this->assertEquals(0, Account::getCount());
@@ -71,7 +70,7 @@
             $this->assertEquals(8, Group::getCount());
             $this->assertEquals(3, Role::getCount());
             $this->assertEquals(3, Account::getCount());
-            $this->assertEquals(12, Contact::getCount());
+            $this->assertEquals(16, Contact::getCount());
             $this->assertEquals(6,  Opportunity::getCount());
             $this->assertEquals(18, Meeting::getCount());
             $this->assertEquals(12, Note::getCount());

@@ -346,7 +346,8 @@
             $this->assertTrue(strpos($content, '<div class="errorSummary"><p>Please fix the following' .
                                                 ' input errors:</p>') !== false);
             $this->assertTrue(strpos($content, '<li>Name cannot be blank.</li>') !== false);
-            $this->assertEquals(2, substr_count($content, '<li>Name cannot be blank.</li>')); // one for marketingList, one for own.
+            $this->assertEquals(1, substr_count($content, '<li>Name cannot be blank.</li>'));
+            $this->assertTrue(strpos($content, '<li>Marketing List cannot be blank.</li>') !== false);
             $this->assertTrue(strpos($content, '<li>Supports HTML cannot be blank.</li>') !== false);
             $this->assertTrue(strpos($content, '<li>Send On cannot be blank.</li>') !== false);
             $this->assertTrue(strpos($content, '<li>From Name cannot be blank.</li>') !== false);

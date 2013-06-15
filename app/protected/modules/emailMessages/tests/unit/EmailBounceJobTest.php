@@ -102,7 +102,7 @@
                 null,
                 array()
             );
-            sleep(45);
+            sleep(60);
             $messages = $bounce->getMessages();
             $this->assertEquals(1, count($messages));
             $this->assertEquals("Non-Bounce No Headers", $messages[0]->subject);
@@ -111,7 +111,8 @@
             $this->assertEquals($bounce->imapUsername, $messages[0]->to[0]['email']);
             $this->assertEquals(Yii::app()->emailHelper->outboundUsername, $messages[0]->fromEmail);
             $job    = new EmailBounceJob();
-            $this->assertTrue($job->run());
+            $this->assertFalse($job->run());
+            $this->assertTrue(strpos($job->getErrorMessage(), 'Failed to process Message id:') !== false);
             $activities    = AutoresponderItemActivity::getAll();
             $this->assertEmpty($activities);
             $messages = $bounce->getMessages();
@@ -139,13 +140,14 @@
                 null,
                 $headers
             );
-            sleep(45);
+            sleep(60);
             $messages = $bounce->getMessages();
             $this->assertEquals(1, count($messages));
             $this->assertEquals("Mail delivery failed: returning message to sender", $messages[0]->subject);
             $this->assertTrue(strpos($messages[0]->textBody, 'Test email body') !== false);
             $job    = new EmailBounceJob();
-            $this->assertTrue($job->run());
+            $this->assertFalse($job->run());
+            $this->assertTrue(strpos($job->getErrorMessage(), 'Failed to process Message id:') !== false);
             $activities    = AutoresponderItemActivity::getAll();
             $this->assertEmpty($activities);
             $messages = $bounce->getMessages();
@@ -176,7 +178,7 @@
                 null,
                 $headers
             );
-            sleep(45);
+            sleep(60);
             $messages = $bounce->getMessages();
             $this->assertEquals(1, count($messages));
             $this->assertEquals("Mail delivery failed: returning message to sender", $messages[0]->subject);
@@ -184,7 +186,8 @@
             $this->assertTrue(strpos($messages[0]->textBody, 'headerOne: 1') !== false);
             $this->assertTrue(strpos($messages[0]->textBody, 'headerTwo: 2') !== false);
             $job    = new EmailBounceJob();
-            $this->assertTrue($job->run());
+            $this->assertFalse($job->run());
+            $this->assertTrue(strpos($job->getErrorMessage(), 'Failed to process Message id:') !== false);
             $activities    = AutoresponderItemActivity::getAll();
             $this->assertEmpty($activities);
             $messages = $bounce->getMessages();
@@ -233,7 +236,7 @@
                 null,
                 $headers
             );
-            sleep(30);
+            sleep(60);
             $messages = $bounce->getMessages();
             $this->assertEquals(1, count($messages));
             $this->assertEquals("Mail delivery failed: returning message to sender", $messages[0]->subject);
@@ -309,7 +312,7 @@
                 null,
                 $headers
             );
-            sleep(45);
+            sleep(60);
             $messages = $bounce->getMessages();
             $this->assertEquals(2, count($messages));
             for ($i = 0; $i < 2; $i++)

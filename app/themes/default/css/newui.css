@@ -14230,7 +14230,7 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 .AttributeEditView .sortable .remove-sortable-item-link {
   position: absolute;
   left: 3px;
-  top: 3px;
+  line-height: 1;
   z-index: 100;
 }
 .AttributeEditView .sortable .remove-sortable-item-link span {
@@ -14249,6 +14249,9 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
   -o-text-shadow: 0 1px 0 #ffffff;
   -ms-text-shadow: 0 1px 0 #ffffff;
   text-shadow: 0 1px 0 #ffffff;
+  line-height: 1;
+  position: relative;
+  top: 1px;
 }
 .AttributeEditView form div table td {
   padding-left: 0 !important;
@@ -18092,8 +18095,18 @@ a.user-link {
 }
 .autoresponder-combined-content .spinner,
 .email-template-combined-content .spinner {
-  left: 50% !important;
-  top: 50% !important;
+  margin: 100px 0 0 50%;
+  left: 0 !important;
+  top: 0 !important;
+}
+.email-template-content {
+  /*
+	.spinner{
+		margin: 15% 0 0 50%;
+		left: 0 !important;
+		top: 0 !important;
+	}*/
+
 }
 .email-template-content .big-spinner {
   position: absolute;
@@ -18104,10 +18117,6 @@ a.user-link {
   height: 100%;
   background: rgba(255, 255, 255, 0.8);
   margin: 0;
-}
-.email-template-content .spinner {
-  left: 50% !important;
-  top: 50% !important;
 }
 .tabs-nav {
   border-bottom: 1px solid #dfdfdf;

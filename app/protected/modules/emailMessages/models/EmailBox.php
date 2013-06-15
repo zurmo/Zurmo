@@ -47,7 +47,7 @@
 
         const CAMPAIGNS_NAME        = 'Campaigns';
 
-        protected $isNotifications = false;
+        protected $isSpecialBox     = false;
 
         public static function getByName($name)
         {
@@ -154,12 +154,12 @@
 
         protected function setSpecialBox()
         {
-            $this->isNotifications = true;
+            $this->isSpecialBox = true;
         }
 
         public function isSpecialBox()
         {
-            return $this->isNotifications;
+            return $this->isSpecialBox;
         }
 
         public function __toString()
@@ -228,7 +228,7 @@
 
         public function isDeletable()
         {
-            return !$this->isNotifications;
+            return !$this->isSpecialBox;
         }
     }
 ?>

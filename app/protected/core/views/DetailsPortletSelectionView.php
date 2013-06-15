@@ -71,7 +71,8 @@
                             {
                                 if ($this->resolveLayoutIdInAllowedOnPortletViewClassNames($className) &&
                                     $className::allowMultiplePlacement() == false &&
-                                    !in_array($portletRules->getType(), $placedViewTypes))
+                                    !in_array($portletRules->getType(), $placedViewTypes)&&
+                                    (PortletsSecurityUtil::doesCurrentUserHavePermissionToAddPortlet($portletRules) === true))
                                 {
                                     $metadata = $className::getMetadata();
                                     $url = Yii::app()->createUrl($this->moduleId . '/defaultPortlet/add', array(

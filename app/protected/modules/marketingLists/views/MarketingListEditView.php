@@ -111,7 +111,7 @@
                 if ($element->getAttribute() == 'name')
                 {
                     $notification = ZurmoHtml::tag('span', array('class' => 'row-description'),
-                                    Zurmo::t('MarketingListsModule', 'This field is public, give it a meaningful name'));
+                                    Zurmo::t('MarketingListsModule', 'Name will be publicly viewable by Contacts/Leads to manage their subscriptions'));
                     $element->editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}' .
                                                  $notification . '{error}</td>';
                 }
