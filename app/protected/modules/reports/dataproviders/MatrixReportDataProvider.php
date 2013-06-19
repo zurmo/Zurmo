@@ -112,7 +112,7 @@
          */
         public function calculateTotalGroupingsCount()
         {
-            return $this->dataProvider->getXAxisGroupByDataValuesCount() * $this->dataProvider->getYAxisGroupByDataValuesCount();
+            return $this->getXAxisGroupByDataValuesCount() * $this->getYAxisGroupByDataValuesCount();
         }
 
         /**

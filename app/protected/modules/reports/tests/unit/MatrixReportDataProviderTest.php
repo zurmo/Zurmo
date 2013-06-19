@@ -195,5 +195,37 @@
             $compareData        = array('rows' => array(), 'axisCrossingColumnCount' => 0);
             $this->assertEquals($compareData, $data);
         }
+
+        public function testCalculateTotalItemCount()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $report = new Report();
+            $report->setType(Report::TYPE_MATRIX);
+            $report->setModuleClassName('ReportsTestModule');
+            $report->setFiltersStructure('');
+            $displayAttribute = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem',
+                                Report::TYPE_MATRIX);
+            $displayAttribute->attributeIndexOrDerivedType = 'integer__Maximum';
+            $report->addDisplayAttribute($displayAttribute);
+            $reportDataProvider = new MatrixReportDataProvider($report);
+            $count = $reportDataProvider->calculateTotalItemCount();
+            $this->assertEquals(0, $count);
+        }
+
+        public function testCalculateTotalGroupingsCount()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $report = new Report();
+            $report->setType(Report::TYPE_MATRIX);
+            $report->setModuleClassName('ReportsTestModule');
+            $report->setFiltersStructure('');
+            $displayAttribute = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem',
+                                Report::TYPE_MATRIX);
+            $displayAttribute->attributeIndexOrDerivedType = 'integer__Maximum';
+            $report->addDisplayAttribute($displayAttribute);
+            $reportDataProvider = new MatrixReportDataProvider($report);
+            $count = $reportDataProvider->calculateTotalGroupingsCount();
+            $this->assertEquals(0, $count);
+        }
     }
 ?>
