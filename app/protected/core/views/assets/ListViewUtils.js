@@ -42,7 +42,7 @@ function processAjaxSuccessError(id, data)
     }
 }
 
-function processListViewSummaryClone(listViewId, summaryCssClass, summaryClonePath)
+function processListViewSummaryClone(listViewId, summaryCssClass, summaryCloneId)
 {
     listViewSelector = $('#' + listViewId);
     replacementContent = $(listViewSelector).find('.' + summaryCssClass).html();
@@ -50,15 +50,7 @@ function processListViewSummaryClone(listViewId, summaryCssClass, summaryClonePa
     {
         replacementContent = null;
     }
-    if (typeof(summaryClonePath) == 'undefined')
-    {
-        summaryClone = $(listViewSelector).parent().parent('.GridView').find('form').first()
-            .find('.list-view-items-summary-clone');
-    }
-    else
-    {
-        summaryClone = summaryClonePath.call($(listViewSelector));
-    }
+    summaryClone = $('#' + summaryCloneId);
     summaryClone.html(replacementContent);
 }
 

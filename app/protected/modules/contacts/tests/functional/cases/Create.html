@@ -326,29 +326,171 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--Business Card View-->
+<tr>
+	<td>assertTextPresent</td>
+	<td>Mrs.Jinny Jane ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=yt2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Compose Email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-icon.ui-icon-closethick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=123 Main Street Suite 500 Chicago IL, 60614 USA</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-icon.ui-icon-closethick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-office-phone']</td>
+	<td>456</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-mobile-phone']</td>
+	<td>789</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-email']</td>
+	<td>jane@company.com</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/img[@class='gravatar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[1]/td</td>
+	<td>Mrs. Jinny Jane ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[3]/td</td>
+	<td>Sales Manager</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[5]/td</td>
+	<td>Sales</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[7]/td</td>
+	<td>Tradeshow</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>link=Sam Smith</td>
+	<td>Sam Smith</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[2]/td</td>
+	<td>Customer</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>link=my account ${randomSuffix}</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[6]/td</td>
+	<td>456</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[8]/td</td>
+	<td>789</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[9]/td</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>link=123 Main Street Suite 500 Chicago IL, 60614 USA</td>
+	<td>123 Main Street Suite 500 Chicago IL, 60614 USA</td>
+</tr>
+<!--tr>
+	<td>assertText</td>
+	<td>link=456 Bee Street Suite 400 Gary Indiana, 67898 USA</td>
+	<td>456 Bee Street Suite 400 Gary Indiana, 67898 USA</td>
+</tr-->
+<!--Full View-->
+<tr>
+	<td>click</td>
+	<td>//div[@id='ContactDetailsPortletView']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
 <tr>
 	<td>waitForTextPresent</td>
 	<td>Jinny Jane ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-office-phone']</td>
+	<td>456</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-mobile-phone']</td>
+	<td>789</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-email']</td>
+	<td>jane@company.com</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/img[@class='gravatar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[1]/td</td>
 	<td>Mrs. Jinny Jane ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[3]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[3]/td</td>
 	<td>Sales Manager</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[5]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[5]/td</td>
 	<td>Sales</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[7]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[7]/td</td>
 	<td>Tradeshow</td>
 </tr>
 <tr>
@@ -357,8 +499,8 @@
 	<td>Sam Smith</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[2]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[2]/td</td>
 	<td>Customer</td>
 </tr>
 <tr>
@@ -367,29 +509,29 @@
 	<td>my account ${randomSuffix}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[6]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[6]/td</td>
 	<td>456</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[8]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[8]/td</td>
 	<td>789</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[9]/td</td>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[9]/td</td>
 	<td>123</td>
 </tr>
 <tr>
 	<td>compareText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[12]/td</td>
-	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[12]/td</td>
+	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA</td>
 </tr>
 <tr>
 	<td>compareText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[13]/td</td>
-	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[13]/td</td>
+	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA</td>
 </tr>
 </tbody></table>
 </body>

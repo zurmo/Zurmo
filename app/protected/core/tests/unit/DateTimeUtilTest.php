@@ -81,7 +81,6 @@
             $this->assertEquals('2013-08-04', $monthsData['2013-07-29']);
             $monthsData = DateTimeUtil::getWeekStartAndEndDatesBetweenTwoDatesInARange('2013-01-21', '2013-01-28');
             $compareData = array(
-                '2013-01-14' => '2013-01-20',
                 '2013-01-21' => '2013-01-27',
                 '2013-01-28' => '2013-02-03');
             $this->assertEquals($compareData, $monthsData);
@@ -97,6 +96,10 @@
             $compareData = array(
                 '2012-12-24' => '2012-12-30',
                 '2012-12-31' => '2013-01-06');
+            $this->assertEquals($compareData, $monthsData);
+            $monthsData = DateTimeUtil::getWeekStartAndEndDatesBetweenTwoDatesInARange('2013-04-01', '2013-04-01');
+            $compareData = array(
+                '2013-04-01' => '2013-04-07');
             $this->assertEquals($compareData, $monthsData);
         }
 
@@ -140,6 +143,10 @@
                 '2013-11-01' => '2013-11-30',
                 '2013-12-01' => '2013-12-31',
                 '2014-01-01' => '2014-01-31');
+            $this->assertEquals($compareData, $monthsData);
+            $monthsData = DateTimeUtil::getMonthStartAndEndDatesBetweenTwoDatesInARange('2013-04-01', '2013-04-01');
+            $compareData = array(
+                '2013-04-01' => '2013-04-30');
             $this->assertEquals($compareData, $monthsData);
         }
 

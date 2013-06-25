@@ -239,17 +239,10 @@
 
             if ($isPortletAlreadyAdded === false)
             {
-                $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($_GET['uniqueLayoutId'], Yii::app()->user->userModel->id, array());
-                if (!empty($portletCollection))
-                {
-                    foreach ($portletCollection[$maximumColumns] as $position => $portlet)
-                    {
-                        $portlet->position = $portlet->position + 1;
-                        $portlet->save();
-                    }
-                }
-                Portlet::makePortletUsingViewType($_GET['portletType'], $_GET['uniqueLayoutId'], Yii::app()->user->userModel, $maximumColumns);
+                $this->resetPortletsInColumnToAccomodateNewPortlet($maximumColumns);
+                Portlet::makePortletUsingViewType($_GET['portletType'], $_GET['uniqueLayoutId'], Yii::app()->user->userModel, intval($maximumColumns));
             }
+
             if (!empty($_GET['modelId']))
             {
                 $dashboardId = $_GET['modelId'];
@@ -257,6 +250,12 @@
             else
             {
                 $dashboardId = '';
+            }
+
+            //Please see @link:AccountDetailsAndRelationsPortletViewTest
+            if (isset($_GET['redirect']))
+            {
+                return;
             }
             $this->redirect(array('/' . $this->resolveAndGetModuleId() . '/default/details', 'id' => $dashboardId));
         }
@@ -271,6 +270,28 @@
             $layoutType     = $layoutTypes[ConfigurableDetailsAndRelationsView::getDefaultLayoutType()];
             $maximumColumns = substr($layoutType, 0, 1);
             return $maximumColumns;
+        }
+
+        /**
+         * Reset portlet positions when a new portlet is added on the detail view
+         * @param int $maximumColumns
+         */
+        private function resetPortletsInColumnToAccomodateNewPortlet($maximumColumns)
+        {
+            $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($_GET['uniqueLayoutId'], Yii::app()->user->userModel->id, array());
+            $maximumIndexFromCollection = max(array_keys($portletCollection));
+            $maximumIterativeIndex = min($maximumIndexFromCollection, $maximumColumns);
+            if (!empty($portletCollection))
+            {
+                if ($maximumIterativeIndex > 1)
+                {
+                    foreach ($portletCollection[$maximumIterativeIndex] as $position => $portlet)
+                    {
+                        $portlet->position = $portlet->position + 1;
+                        $portlet->save();
+                    }
+                }
+            }
         }
     }
 ?>

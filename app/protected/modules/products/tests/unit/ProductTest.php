@@ -37,6 +37,11 @@
             $opportunity            = OpportunityTestHelper::createOpportunityByNameForOwner('superOpportunity', $super);
             $productTemplate        = ProductTemplateTestHelper::createProductTemplateByName('superProductTemplate');
             $contactWithNoAccount   = ContactTestHelper::createContactByNameForOwner('noAccountContact', $super);
+            $everyoneGroup = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $everyoneGroup->save();
+//            $a = new Group();
+//            $a->name = 'AAA';
+//            $a->save();
         }
 
         public function testDemoDataMaker()
@@ -168,6 +173,89 @@
             Yii::app()->user->userModel = User::getByUsername('super');
             $products                   = Product::getAll();
             $this->assertEquals(1, count($products));
+        }
+
+        public function testProductSaveWithPermissions()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $contacts         = Contact::getAll();
+            $accounts         = Account::getByName('superAccount');
+            $opportunities    = Opportunity::getByName('superOpportunity');
+            $productTemplates = ProductTemplate::getByName('superProductTemplate');
+            $account          = $accounts[0];
+            $user             = $account->owner;
+            $everyoneGroup    = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $explicitReadWriteModelPermissions = new ExplicitReadWriteModelPermissions();
+            $currencyHelper = Yii::app()->currencyHelper;
+            $currencyCode = $currencyHelper->getBaseCode();
+            $currency = Currency::getByCode($currencyCode);
+            $postData         = array(
+                                        'productTemplate' => array('id' => $productTemplates[0]->id),
+                                        'name' => 'ProductPermissionTest',
+                                        'quantity' => 6,
+                                        'account' => array('id' => $accounts[0]->id),
+                                        'contact' => array('id' => $contacts[0]->id),
+                                        'opportunity' => array('id' => ''),
+                                        'type' => ProductTemplate::TYPE_PRODUCT,
+                                        'priceFrequency' => ProductTemplate::PRICE_FREQUENCY_ONE_TIME,
+                                        'sellPrice' => array('currency' => array('id' => $currency->id), 'value' => 210                                           ),
+                                        'stage' => array('value' => 'Open'),
+                                        'owner' => array('id' => $user->id),
+                                        'explicitReadWriteModelPermissions' => array(
+                                                'type' => ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP,
+                                                'nonEveryoneGroup' => ''
+                                            )
+
+                                    );
+            $model                  = new Product();
+            $sanitizedPostData      = PostUtil::sanitizePostByDesignerTypeForSavingModel($model, $postData);
+            if ($model instanceof SecurableItem)
+            {
+                $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::resolveByPostDataAndModelThenMake($sanitizedPostData, $model);
+            }
+            else
+            {
+                $explicitReadWriteModelPermissions = null;
+            }
+
+            $readyToUseData                = ExplicitReadWriteModelPermissionsUtil::
+                                                 removeIfExistsFromPostData($sanitizedPostData);
+
+            $sanitizedOwnerData            = PostUtil::sanitizePostDataToJustHavingElementForSavingModel(
+                                                 $readyToUseData, 'owner');
+            $sanitizedDataWithoutOwner     = PostUtil::
+                                                 removeElementFromPostDataForSavingModel($readyToUseData, 'owner');
+            $model->setAttributes($sanitizedDataWithoutOwner);
+            if ($model->validate())
+            {
+                $modelToStringValue = strval($model);
+                if ($sanitizedOwnerData != null)
+                {
+                    $model->setAttributes($sanitizedOwnerData);
+                }
+                if ($model instanceof OwnedSecurableItem)
+                {
+                    $passedOwnerValidation = $model->validate(array('owner'));
+                }
+                else
+                {
+                    $passedOwnerValidation = true;
+                }
+                if ($passedOwnerValidation && $model->save(false))
+                {
+                    if ($explicitReadWriteModelPermissions != null)
+                    {
+                        $success = ExplicitReadWriteModelPermissionsUtil::
+                                    resolveExplicitReadWriteModelPermissions($model, $explicitReadWriteModelPermissions);
+                        //todo: handle if success is false, means adding/removing permissions save failed.
+                    }
+                    $savedSuccessfully = true;
+                }
+            }
+            else
+            {
+            }
+            $this->assertEquals('ProductPermissionTest', $model->name);
         }
     }
 ?>

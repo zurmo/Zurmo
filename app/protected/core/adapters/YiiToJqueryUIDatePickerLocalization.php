@@ -47,7 +47,8 @@
         public static function getLanguage()
         {
             $language = Yii::app()->getLanguage();
-            if ($language == 'en' || $language == 'en_us')
+            if ($language == 'en' || $language == 'en_us' || $language == 'en_ca' ||
+                $language == 'en_au' || $language == 'en_gb')
             {
                 return;
             }
@@ -65,37 +66,15 @@
          */
         public static function resolveDateFormat($dateFormat)
         {
-            switch($dateFormat)
-            {
-                case 'dd.MM.yy':    //de, ru format
-                    return 'dd.mm.y';
-                case 'M/d/yy':      //en, fa_ir format
-                    return 'm/d/y';
-                case 'dd/MM/yy':    //es, fr, it, pt format
-                    return 'dd/mm/y';
-                case 'd.M.yyyy':    //sk format
-                    return 'd.m.yy';
-                case 'd.M.yy.':     //sr_yu format
-                    return 'd.m.y.';
-                case 'd-M-yy':      //hi format
-                    return 'd-m-y';
-                case 'dd/MM/yyyy':  //vi format
-                    return 'dd/mm/yy';
-                case 'yy-M-d':      //zh_cn format
-                    return 'y-m-dd';
-                case 'yy/MM/dd':    //ja(old), az, tg, uz format
-                    return 'y/mm/dd';
-                case 'yyyy/MM/dd':  //ja(new), si, en_za format
-                    return 'yy/mm/dd';
-                case 'dd-MM-yy':    //nl format
-                        return 'dd-mm-y';
-                case 'd/MM/yy':     //en_au format
-                        return 'd/mm/y';
-                case 'dd.MM.yyyy':  //tr format
-                        return 'dd.mm.yy';
-                default :
-                    throw new NotImplementedException();
-            }
+            $patterns = array(
+                '/[M]{1}/',
+                '/[y]{2}/',
+            );
+            $replacements = array(
+                'm',
+                'y',
+            );
+            return preg_replace($patterns, $replacements, $dateFormat);
         }
 
         /**
@@ -105,21 +84,15 @@
          */
         public static function resolveTimeFormat($timeFormat)
         {
-            switch($timeFormat)
-            {
-                case 'HH:mm':       //de, es, fr, it, pt, nl, sr_yu, vi format
-                    return 'hh:mm';
-                case 'h:mm a':      //en, hi, en_au format
-                    return 'h:mm tt';
-                case 'H:mm':        //sk, fa_ir, ru, ja format
-                    return 'h:mm';
-                case 'ah:mm':       //zh_cn format
-                    return 'tth:mm';
-                case 'HH.mm':       //da format
-                    return 'hh.mm';
-                default :
-                    throw new NotImplementedException();
-            }
+            $patterns = array(
+                '/[H]/',
+                '/[a]{1}/',
+            );
+            $replacements = array(
+                'h',
+                'tt',
+            );
+            return preg_replace($patterns, $replacements, $timeFormat);
         }
     }
 ?>

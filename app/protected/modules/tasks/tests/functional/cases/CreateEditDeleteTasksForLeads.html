@@ -602,23 +602,8 @@
   <td></td>
 </tr-->
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='RecentlyViewedView']/ul/li[2]/a/span[2]</td>
-	<td></td>
-</tr>
-<tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-  <td>waitForTextPresent</td>
-  <td>The record you are trying to access does not exist.</td>
+  <td>assertTextNotPresent</td>
+  <td>Task kick-off new lead ${randomSuffix}</td>
   <td></td>
 </tr>
 </tbody></table>

@@ -373,14 +373,24 @@
     <td>30000</td>
 </tr>
 <tr>
+  <td>click</td>
+  <td>//div[@id='UserDetailsView']/div/a</td>
+  <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
   <td>assertText</td>
   <td>link=Edit</td>
   <td>Edit</td>
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/h1</td>
-  <td>Jhon Smith${randomSuffix}</td>
+  <td>//div[@id='zurmoView']/div[1]/table/tbody/tr[6]/td</td>
+  <td>jhon smith${randomSuffix}</td>
 </tr>
 <!-- Create of a User completes here-->
 <tr>
@@ -447,7 +457,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/div/div[2]/table/tbody/tr[2]/th</td>
+  <td>//div[@id='zurmoView']/div[1]/table/tbody/tr[2]/th</td>
   <td>Department</td>
 </tr>
 <tr>
@@ -507,7 +517,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/div/div[3]/table/tbody/tr[1]/td/a</td>
+  <td>//div[@id='zurmoView']/div[2]/table/tbody/tr[1]/td/a</td>
   <td>testRole${randomSuffix2}</td>
 </tr>
 <tr>
@@ -697,7 +707,7 @@
 </tr>
 <tr>
   <td>assertText</td>
-  <td>//div[@id='UserDetailsView']/div/div/div[2]/table/tbody/tr[2]/th</td>
+  <td>//div[@id='zurmoView']/div[1]/table/tbody/tr[2]/th</td>
   <td>Department</td>
 </tr>
 </tr>

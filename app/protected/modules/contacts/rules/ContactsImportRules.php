@@ -44,7 +44,7 @@
             return 'Contact';
         }
 
-            /**
+        /**
          * Get the array of available derived attribute types that can be mapped when using these import rules.
          * @return array
          */

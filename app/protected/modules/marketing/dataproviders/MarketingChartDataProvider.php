@@ -322,7 +322,7 @@
         protected function resolveChartDataStructure()
         {
             $chartData           = array();
-            $groupedDateTimeData = static::makeGroupedDateTimeData($this->beginDate, $this->endDate, $this->groupBy);
+            $groupedDateTimeData = static::makeGroupedDateTimeData($this->beginDate, $this->endDate, $this->groupBy, false);
             foreach ($groupedDateTimeData as $groupData)
             {
                 $chartData[$groupData['beginDate']] = array_merge(static::resolveChartDataBaseGroupElements(),

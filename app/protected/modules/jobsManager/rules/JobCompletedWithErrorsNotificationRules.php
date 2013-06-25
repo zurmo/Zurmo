@@ -48,10 +48,5 @@
         {
             return 'JobCompletedWithErrors';
         }
-
-        public function allowDuplicates()
-        {
-            return true;
-        }
     }
 ?>

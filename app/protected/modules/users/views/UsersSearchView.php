@@ -45,6 +45,7 @@
                         'currency',
                         'timeZone',
                         'language',
+                        'locale',
                         'newPassword',
                         'newPassword_repeat',
                         'serializedAvatarData',

@@ -64,7 +64,7 @@
             $totalPrice = ProductElementUtil::getProductPortletTotalPrice($product, 0);
             $this->assertEquals($totalPrice, "$1,001.08"); // Not Coding Standard
         }
-
+/**
         public function testGetProductNameLinkStringWithExceededLength()
         {
             $super = User::getByUsername('super');
@@ -92,7 +92,7 @@
             $this->assertEquals(strip_tags($name), "I am testing products");
             $this->assertEquals(strlen(strip_tags($name)), 21);
         }
-
+**/
         public function testResolveProductHasManyProductCategoriesFromPost()
         {
             $super = User::getByUsername('super');

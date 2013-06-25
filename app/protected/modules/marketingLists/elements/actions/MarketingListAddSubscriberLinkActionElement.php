@@ -43,6 +43,7 @@
 
         public function render()
         {
+            $this->registerScripts();
             $items          = array($this->renderMenuItem());
             $clipName       = get_class($this);
             $cClipWidget    = new CClipWidget();
@@ -94,6 +95,7 @@
                                                                             )
                                                                         );
             $content                        = $formStart;
+            $content                       .= $this->renderCloseButton();
             $selectContactOrReportElement   = new SelectContactOrReportElement(new MarketingListMemberSelectForm(),
                                                             null,
                                                             $form,
@@ -118,6 +120,20 @@
         {
             // TODO: @Shoaibi/@Jason: Low: Create a common parent for Element and ActionElement, put this there.
             return ArrayUtil::getArrayValueWithExceptionIfNotFound($this->params, 'pageVarName');
+        }
+
+        protected function renderCloseButton()
+        {
+            return ZurmoHtml::tag('a', array('class' => 'close-flyout'), 'Z');
+        }
+
+        protected function registerScripts()
+        {
+            $script = "$('close-flyout').click(function()
+                        {
+                            $(this).parentsUntil(li).parent().hide();
+                        });";
+            Yii::app()->clientScript->registerScript(get_class() . 'CloseFlyoutScript', $script);
         }
     }
 ?>

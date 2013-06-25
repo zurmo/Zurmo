@@ -109,7 +109,7 @@
                     array('companyName',            'length',  'min'  => 3, 'max' => 64),
                     array('description',            'type',    'type' => 'string'),
                     array('state',                  'required'),
-                    array('website',                'url'),
+                    array('website',                'url',     'defaultScheme' => 'http'),
                     array('googleWebTrackingId',    'type',    'type' => 'string'),
                 ),
                 'elements' => array(

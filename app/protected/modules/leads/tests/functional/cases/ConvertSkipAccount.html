@@ -232,34 +232,44 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//div[@id='LeadDetailsPortletView']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--tr>
     <td>waitForText</td>
     <td>//div[@id='LeadDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div[1]/h3</td>
     <td>exact:Sunny Dunes ${randomSuffix}</td>
-</tr>
+</tr-->
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[1]/td</td>
     <td>Mrs. Sunny Dunes ${randomSuffix}</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[2]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[2]/td</td>
     <td>In Progress</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[4]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[4]/td</td>
     <td>Sand Technology</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[8]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[8]/td</td>
     <td>888999888</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[13]/td</td>
-    <td>458 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[13]/td</td>
+    <td>458 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USA</td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -268,13 +278,13 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[14]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[14]/td</td>
     <td>Financial Services</td>
 </tr>
 <tr>
     <td>compareText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[12]/td</td>
-    <td>125 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[12]/td</td>
+    <td>125 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USA</td>
 </tr>
 <tr>
     <td>assertText</td>
@@ -288,12 +298,12 @@
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[7]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[7]/td</td>
     <td>Inbound Call</td>
 </tr>
 <tr>
     <td>assertText</td>
-    <td>//div[@id='LeadDetailsPortletView']/div/div/div/table/tbody/tr[16]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[16]/td</td>
     <td>test</td>
 </tr>
 <tr>
@@ -387,13 +397,23 @@
     <td></td>
 </tr-->
 <tr>
+	<td>click</td>
+	<td>//div[@id='ContactDetailsPortletView']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--tr>
     <td>assertText</td>
     <td>//div[@id='ContactDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div[1]/h3</td>
     <td>exact:Sunny Dunes ${randomSuffix}</td>
-</tr>
+</tr-->
 <tr>
     <td>assertText</td>
-    <td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[2]/td</td>
+    <td>//div[@id='zurmoView']/div/table/tbody/tr[2]/td</td>
     <td>Qualified</td>
 </tr>
 </tbody></table>

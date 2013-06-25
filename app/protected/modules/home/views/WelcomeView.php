@@ -75,7 +75,7 @@
         protected function renderContent()
         {
             $params     = LabelUtil::getTranslationParamsForAllModules();
-            $rand       = mt_rand(1, 6);
+            $rand       = mt_rand(1, 11);
             $themeName  = Yii::app()->theme->name;
             $imgUrl     = Yii::app()->themeManager->baseUrl . '/' . $themeName . '/images/welcome-gallery-' . $rand . '.png';
             $content    = '<div class="clearfix">';

@@ -188,6 +188,16 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'locale', 'type' => 'LocaleStaticDropDown',
+                                                    'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'timeZone', 'type' => 'TimeZoneStaticDropDown',
                                                       'addBlank' => true),
                                             ),

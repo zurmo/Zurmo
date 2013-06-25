@@ -55,5 +55,13 @@
         {
             return array('url', 'defaultScheme' => 'http');
         }
+
+        public function rules()
+        {
+            $newRules = array(
+                array_merge(array('defaultValue'), $this->getModelAttributePartialRule()),
+            );
+            return array_merge(parent::rules(), $newRules);
+        }
     }
 ?>

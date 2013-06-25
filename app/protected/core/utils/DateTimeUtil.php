@@ -425,12 +425,12 @@
             assert('is_string($beginDate)');
             assert('is_string($endDate)');
             $weekTimeStamp      = strtotime($beginDate);
-            $endTimeStamp        = strtotime($endDate);
+            $endTimeStamp       = strtotime($endDate);
             $weeksData          = array();
-            while ($weekTimeStamp < $endTimeStamp)
+            while ($weekTimeStamp <= $endTimeStamp)
             {
                 $date = new DateTime(date('Y-m-d', $weekTimeStamp));
-                $date->modify('this week last monday');
+                $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
                 $beginDateOfWeek = $date->format('Y-m-d');
                 $date->modify('this week next sunday');
                 $endDateOfWeek = $date->format('Y-m-d');
@@ -439,7 +439,7 @@
             }
             //Capture dates in last week if needed
             $date = new DateTime(date('Y-m-d', $weekTimeStamp));
-            $date->modify('this week last monday');
+            $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
             $beginDateOfWeek = $date->format('Y-m-d');
             if ($beginDateOfWeek < $endDate)
             {
@@ -451,7 +451,7 @@
             if ($endDateOfWeek < $endDate)
             {
                 $date = new DateTime(date('Y-m-d', $weekTimeStamp));
-                $date->modify('this week last monday');
+                $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
                 $beginDateOfWeek = $date->format('Y-m-d');
                 $date->modify('this week next sunday');
                 $endDateOfWeek = $date->format('Y-m-d');
@@ -474,7 +474,7 @@
             $monthTimeStamp      = strtotime($beginDate);
             $endTimeStamp        = strtotime($endDate);
             $monthsData          = array();
-            while ($monthTimeStamp < $endTimeStamp)
+            while ($monthTimeStamp <= $endTimeStamp)
             {
                 $date = new DateTime(date('Y-m-d', $monthTimeStamp));
                 $date->modify('first day of this month');

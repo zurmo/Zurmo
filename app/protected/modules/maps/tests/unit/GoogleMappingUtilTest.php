@@ -102,8 +102,8 @@
             AddressMappingUtil::updateChangedAddresses(2);
 
             $account1 = Account::getById($accountId1);
-            $this->assertEquals(round('42.1153153', 4) , round($account1->billingAddress->latitude, 4));
-            $this->assertEquals(round('-87.9763703', 4), round($account1->billingAddress->longitude, 4));
+            $this->assertEquals(round('42.3854311', 4) , round($account1->billingAddress->latitude, 4));
+            $this->assertEquals(round('-88.209049', 4), round($account1->billingAddress->longitude, 4));
             $this->assertEquals(0,             $account1->billingAddress->invalid);
 
             $account2 = Account::getById($accountId2);
@@ -148,12 +148,12 @@
             $geoCodeResultObj3 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData3);
             $geoCodeResultObj4 = GoogleMappingUtil::getGeoCodeResultByData($apiKey, $geoCodeQueryData4);
 
-            $this->assertEquals(round('42.1153153',  4), round($geoCodeResultObj1->latitude,  4));
-            $this->assertEquals(round('-87.9763703', 4), round($geoCodeResultObj1->longitude, 4));
+            $this->assertEquals(round('42.3854311',  4), round($geoCodeResultObj1->latitude,  4));
+            $this->assertEquals(round('-88.209049', 4), round($geoCodeResultObj1->longitude, 4));
             $this->assertEquals(round('37.39680',    4), round($geoCodeResultObj2->latitude,  4));
             $this->assertEquals(round('-121.87794',  4), round($geoCodeResultObj2->longitude, 4));
             $this->assertEquals('41',  round($geoCodeResultObj3->latitude, 0));
-            $this->assertEquals('-73', round($geoCodeResultObj3->longitude, 0));
+            $this->assertEquals('-74', round($geoCodeResultObj3->longitude, 0));
             $this->assertEquals('43.06132',    round($geoCodeResultObj4->latitude, 5));
             $this->assertEquals('-87.88806', round($geoCodeResultObj4->longitude, 5));
         }

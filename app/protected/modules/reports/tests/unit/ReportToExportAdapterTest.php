@@ -260,7 +260,7 @@
                                          'Tag Cloud', 'Radio Drop Down', 'A name for a state', 'Owner');
             $compareRowData     = array( 'xFirst xLast', 1, '2013-02-12', '2013-02-12 10:15:00',
                                          10.5, 10, '7842151012', 'xString', 'xtextAreatest',
-                                         'http://www.test.com', 'Test2', '$100.00', 'USD', 'someString', 'test@someString.com',
+                                         'http://www.test.com', 'Test2', '100.00', 'USD', 'someString', 'test@someString.com',
                                          'Multi 1,Multi 2', 'Cloud 2,Cloud 3', 'Test2', 'someName', 'super'); // Not Coding Standard
             $this->assertEquals($compareHeaderData, $adapter->getHeaderData());
             $this->assertEquals($compareRowData, $adapter->getData());
@@ -473,7 +473,7 @@
                                         'Reports Tests >> Owner');
             $compareRowData     = array('xFirst xLast', 1, '2013-02-12', '2013-02-12 10:15:00',
                                         10.5, 10, '7842151012', 'xString', 'xtextAreatest',
-                                        'http://www.test.com', 'Test2', '$100.00', 'USD', 'someString', 'test@someString.com',
+                                        'http://www.test.com', 'Test2', '100.00', 'USD', 'someString', 'test@someString.com',
                                         'Multi 1,Multi 2', 'Cloud 2,Cloud 3', 'Test2', 'someName', 'super'); // Not Coding Standard
             $this->assertEquals($compareHeaderData, $adapter->getHeaderData());
             $this->assertEquals($compareRowData, $adapter->getData());
@@ -704,8 +704,8 @@
                                         '2013-02-14 00:00:00',
                                         '2013-02-12 00:59:00',
                                         18.45, 19.41, 192.15, 180.21, 2000,
-                                        5000, 1000, 9000, '5,000', 'Mixed Currency', '6,000', // Not Coding Standard
-                                        'Mixed Currency', '7,000', 'Mixed Currency','8,000', 'Mixed Currency'); // Not Coding Standard
+                                        5000, 1000, 9000, 5000, 'Mixed Currency', 6000, // Not Coding Standard
+                                        'Mixed Currency', 7000, 'Mixed Currency',8000, 'Mixed Currency'); // Not Coding Standard
             $this->assertEquals($compareHeaderData, $adapter->getHeaderData());
             $this->assertEquals($compareRowData, $adapter->getData());
         }

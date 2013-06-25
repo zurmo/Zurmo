@@ -221,6 +221,7 @@
                 'template'             => static::getGridTemplate(),
                 'summaryText'          => static::getSummaryText(),
                 'summaryCssClass'      => static::getSummaryCssClass(),
+                'summaryCloneId'       => $this->getSummaryCloneId(),
                 'enableSorting'        => false,
                 'expandableRows'       => $this->rowsAreExpandable(),
                 'leadingHeaders'       => $this->getLeadingHeaders(),
@@ -397,6 +398,11 @@
          */
         protected function getLeadingHeaders()
         {
+        }
+
+        public function getSummaryCloneId()
+        {
+            return  $this->getGridViewId() . "-summary-clone";
         }
     }
 ?>

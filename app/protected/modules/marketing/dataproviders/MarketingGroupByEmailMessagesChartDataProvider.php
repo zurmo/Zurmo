@@ -48,8 +48,7 @@
             assert('is_string($columnName)');
             $quote       = DatabaseCompatibilityUtil::getQuote();
             $emailMessageTableName = EmailMessage::getTableName('EmailMessage');
-            $queryString = "DATE_FORMAT({$quote}{$emailMessageTableName}{$quote}.{$quote}{$columnName}{$quote}, '%Y-%m-%d')";
-            $selectQueryAdapter->addClauseByQueryString($queryString, static::DAY_DATE);
+            $selectQueryAdapter->addDayDateClause($emailMessageTableName, $columnName, static::DAY_DATE);
         }
 
         /**
@@ -61,9 +60,7 @@
             assert('is_string($columnName)');
             $quote                 = DatabaseCompatibilityUtil::getQuote();
             $emailMessageTableName = EmailMessage::getTableName('EmailMessage');
-            $queryString = "DATE_FORMAT(DATE_SUB({$columnName}, INTERVAL(WEEKDAY(" .
-                           "{$quote}{$emailMessageTableName}{$quote}.{$quote}{$columnName}{$quote})) day), '%Y-%m-%d')";
-            $selectQueryAdapter->addClauseByQueryString($queryString, static::FIRST_DAY_OF_WEEK_DATE);
+            $selectQueryAdapter->addFirstDayOfWeekDateClause($emailMessageTableName, $columnName, static::FIRST_DAY_OF_WEEK_DATE);
         }
 
         /**
@@ -75,9 +72,7 @@
             assert('is_string($columnName)');
             $quote                 = DatabaseCompatibilityUtil::getQuote();
             $emailMessageTableName = EmailMessage::getTableName('EmailMessage');
-            $queryString = "DATE_FORMAT(DATE_ADD({$columnName}, INTERVAL(1-DAYOFMONTH(" .
-                           "{$quote}{$emailMessageTableName}{$quote}.{$quote}{$columnName}{$quote})) day), '%Y-%m-%d')";
-            $selectQueryAdapter->addClauseByQueryString($queryString, static::FIRST_DAY_OF_MONTH_DATE);
+            $selectQueryAdapter->addFirstDayOfMonthDateClause($emailMessageTableName, $columnName, static::FIRST_DAY_OF_MONTH_DATE);
         }
 
         /**

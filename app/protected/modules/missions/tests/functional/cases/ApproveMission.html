@@ -285,6 +285,33 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>id=MashableInboxForm_searchTerm</td>
+	<td>New mission ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>MashableInboxForm_searchTerm</td>
+	<td>\10</td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No results found.</td>
+	<td></td>
+</tr>
+
+
+<!--tr>
     <td>clickAndWait</td>
     <td>//div[@id='RecentlyViewedView']/ul/li/a/span[2]</td>
     <td></td>
@@ -303,7 +330,7 @@
     <td>waitForText</td>
     <td>//div[@id='ModelNotFoundView']/h2</td>
     <td>The record you are trying to access does not exist.</td>
-</tr>
+</tr-->
 
 </tbody></table>
 </body>

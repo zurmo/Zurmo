@@ -67,9 +67,19 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//div[@id='LeadDetailsPortletView']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForText</td>
-	<td>//div[@id='LeadDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div[1]/h3</td>
-	<td>exact:Silly Sally ${randomSuffix}</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[1]/td</td>
+	<td>Mrs. Silly Sally ${randomSuffix}</td>
 </tr>
 <tr>
     <td>clickAndWait</td>
@@ -212,13 +222,23 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//div[@id='ContactDetailsPortletView']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>link=my created account ${randomSuffix}</td>
 	<td>my created account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='ContactDetailsPortletView']/div/div/div/table/tbody/tr[2]/td</td>
+	<td>//div[@id='zurmoView']/div/table/tbody/tr[2]/td</td>
 	<td>Qualified</td>
 </tr>
 <tr>
@@ -259,7 +279,7 @@
 <tr>
 	<td>verifyText</td>
 	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[9]/td</td>
-	<td>123 Main Street<br /> Suite 500<br /> Chicago IL, 60614<br /> USAmap</td>
+	<td>123 Main Street<br> Suite 500<br> Chicago IL, 60614<br> USA</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -274,7 +294,7 @@
 <tr>
 	<td>verifyText</td>
 	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[10]/td</td>
-	<td>456 Bee Street<br /> Suite 400<br /> Gary Indiana, 67898<br /> USAmap</td>
+	<td>456 Bee Street<br> Suite 400<br> Gary Indiana, 67898<br /> USA</td>
 </tr>
 </tbody></table>
 </body>

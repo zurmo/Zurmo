@@ -71,7 +71,7 @@
         {
             $combinedRows        = array();
             //todo: should fix and get proper table name of attribute instead of passing in item
-            $groupBy             = $this->resolveGroupBy('Item', 'createdDateTime');
+            $groupBy             = $this->resolveGroupBy('EmailMessage', 'sentDateTime');
             $beginDateTime       = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeBeginningOfDay($this->beginDate);
             $endDateTime         = DateTimeUtil::convertDateIntoTimeZoneAdjustedDateTimeEndOfDay($this->endDate);
             if ($this->marketingList == null)
@@ -125,8 +125,10 @@
             $selectDistinct            = false;
             $campaignTableName         = Campaign::getTableName('Campaign');
             $campaignItemTableName     = CampaignItem::getTableName('CampaignItem');
+            $itemTableName             = Item::getTableName('Item');
             $emailMessageTableName     = EmailMessage::getTableName('EmailMessage');
             $sentDateTimeColumnName    = EmailMessage::getColumnNameByAttribute('sentDateTime');
+            $createdDateTimeColumnName = Item::getColumnNameByAttribute('createdDateTime');
             $joinTablesAdapter         = new RedBeanModelJoinTablesQueryAdapter('Campaign');
             $where                     = RedBeanModelDataProvider::makeWhere('Campaign', $searchAttributeData, $joinTablesAdapter);
             Campaign::resolveReadPermissionsOptimizationToSqlQuery(Yii::app()->user->userModel,
@@ -142,10 +144,10 @@
             $uniqueOpensSelectPart     = static::resolveCampaignTypeSubQuery(EmailMessageActivity::TYPE_OPEN);
             $uniqueClicksSelectPart    = static::resolveCampaignTypeSubQuery(EmailMessageActivity::TYPE_CLICK);
             $bouncedSelectPart         = static::resolveCampaignTypeSubQuery(EmailMessageActivity::TYPE_BOUNCE);
-            $optedOutSelectPart        = static::resolveCampaignTypeSubQuery(EmailMessageActivity::TYPE_UNSUBSCRIBE);
-            static::addEmailMessageDayDateClause            ($selectQueryAdapter, $sentDateTimeColumnName);
-            static::addEmailMessageFirstDayOfWeekDateClause ($selectQueryAdapter, $sentDateTimeColumnName);
-            static::addEmailMessageFirstDayOfMonthDateClause($selectQueryAdapter, $sentDateTimeColumnName);
+            $optedOutSelectPart        = static::resolveCampaignTypeSubQuery(EmailMessageActivity::TYPE_UNSUBSCRIBE);//
+            $selectQueryAdapter->addDayDateClause($itemTableName, $createdDateTimeColumnName, static::DAY_DATE);
+            $selectQueryAdapter->addFirstDayOfWeekDateClause($itemTableName, $createdDateTimeColumnName, static::FIRST_DAY_OF_WEEK_DATE);
+            $selectQueryAdapter->addFirstDayOfMonthDateClause($itemTableName, $createdDateTimeColumnName, static::FIRST_DAY_OF_MONTH_DATE);
             $selectQueryAdapter->addNonSpecificCountClause();
             $selectQueryAdapter->addClauseByQueryString($queuedEmailsSelectPart,  static::QUEUED);
             $selectQueryAdapter->addClauseByQueryString($sentEmailsSelectPart,  static::SENT);
@@ -170,29 +172,31 @@
             $quote                      = DatabaseCompatibilityUtil::getQuote();
             $where                      = null;
             $selectDistinct             = false;
+            $itemTableName              = Item::getTableName('Item');
             $marketingListTableName     = Autoresponder::getTableName('MarketingList');
             $autoresponderTableName     = Autoresponder::getTableName('Autoresponder');
             $autoresponderItemTableName = AutoresponderItem::getTableName('AutoresponderItem');
             $emailMessageTableName      = EmailMessage::getTableName('EmailMessage');
             $sentDateTimeColumnName     = EmailMessage::getColumnNameByAttribute('sentDateTime');
+            $createdDateTimeColumnName  = Item::getColumnNameByAttribute('createdDateTime');
             $joinTablesAdapter          = new RedBeanModelJoinTablesQueryAdapter('Autoresponder');
             MarketingList::resolveReadPermissionsOptimizationToSqlQuery(Yii::app()->user->userModel,
                 $joinTablesAdapter,
                 $where,
                 $selectDistinct);
             $selectQueryAdapter     = new RedBeanModelSelectQueryAdapter($selectDistinct);
-            $queuedEmailsSelectPart = "count(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
+            $queuedEmailsSelectPart = "sum(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
                                       $quote . " = '0000-00-00 00:00:00' OR {$quote}{$emailMessageTableName}{$quote}" .
                                       ".{$quote}{$sentDateTimeColumnName}{$quote} IS NULL THEN 1 ELSE 0 END)"; // Not Coding Standard
-            $sentEmailsSelectPart   = "count(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
+            $sentEmailsSelectPart   = "sum(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
                                       $quote . " > '0000-00-00 00:00:00' THEN 1 ELSE 0 END)";
             $uniqueOpensSelectPart  = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_OPEN);
             $uniqueClicksSelectPart = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_CLICK);
             $bouncedSelectPart      = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_BOUNCE);
             $optedOutSelectPart     = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_UNSUBSCRIBE);
-            static::addEmailMessageDayDateClause            ($selectQueryAdapter, $sentDateTimeColumnName);
-            static::addEmailMessageFirstDayOfWeekDateClause ($selectQueryAdapter, $sentDateTimeColumnName);
-            static::addEmailMessageFirstDayOfMonthDateClause($selectQueryAdapter, $sentDateTimeColumnName);
+            $selectQueryAdapter->addDayDateClause($itemTableName, $createdDateTimeColumnName, static::DAY_DATE);
+            $selectQueryAdapter->addFirstDayOfWeekDateClause($itemTableName, $createdDateTimeColumnName, static::FIRST_DAY_OF_WEEK_DATE);
+            $selectQueryAdapter->addFirstDayOfMonthDateClause($itemTableName, $createdDateTimeColumnName, static::FIRST_DAY_OF_MONTH_DATE);
             $selectQueryAdapter->addNonSpecificCountClause();
             $selectQueryAdapter->addClauseByQueryString($queuedEmailsSelectPart,  static::QUEUED);
             $selectQueryAdapter->addClauseByQueryString($sentEmailsSelectPart,  static::SENT);

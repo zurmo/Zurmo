@@ -45,22 +45,18 @@
             {
                 if ($this->getCurrencyValueConversionType() == Report::CURRENCY_CONVERSION_TYPE_ACTUAL)
                 {
-                    $data[] = Yii::app()->numberFormatter->formatCurrency((float)$currencyValue->value,
-                              $currencyValue->currency->code);
+                    $data[] = $currencyValue->value;
                     $data[] = $currencyValue->currency->code;
                 }
                 elseif ($this->getCurrencyValueConversionType() == Report::CURRENCY_CONVERSION_TYPE_BASE)
                 {
-                    $data[] = Yii::app()->numberFormatter->formatCurrency((float)$currencyValue->value *
-                              $currencyValue->rateToBase, Yii::app()->currencyHelper->getBaseCode());
+                    $data[] = $currencyValue->value * $currencyValue->rateToBase;
                     $data[] = Yii::app()->currencyHelper->getBaseCode();
                 }
                 elseif ($this->getCurrencyValueConversionType() == Report::CURRENCY_CONVERSION_TYPE_SPOT)
                 {
                     //Assumes base conversion is done using sql math
-                    $data[] = Yii::app()->numberFormatter->formatCurrency((float)$currencyValue->value *
-                              $currencyValue->rateToBase * $this->getFromBaseToSpotRate(),
-                              $this->getSpotConversionCurrencyCode());
+                    $data[] = $currencyValue->value * $currencyValue->rateToBase * $this->getFromBaseToSpotRate();
                     $data[] = $this->getSpotConversionCurrencyCode();
                 }
             }

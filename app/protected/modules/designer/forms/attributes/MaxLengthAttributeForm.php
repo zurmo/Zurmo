@@ -55,10 +55,11 @@
         public function rules()
         {
             return array_merge(parent::rules(), array(
-                array('maxLength', 'required'),
-                array('maxLength', 'length',    'min' => 1, 'max' => 3),
-                array('maxLength', 'numerical', 'min' => 1, 'max' => 255),
-                array('maxLength', 'numerical', 'integerOnly' => true),
+                array('maxLength',      'required'),
+                array('maxLength',      'length',    'min' => 1, 'max' => 3),
+                array('maxLength',      'numerical', 'min' => 1, 'max' => 255),
+                array('maxLength',      'numerical', 'integerOnly' => true),
+                array('defaultValue',   'length',    'max' => $this->maxLength),
             ));
         }
 

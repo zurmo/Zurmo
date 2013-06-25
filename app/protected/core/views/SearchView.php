@@ -351,7 +351,12 @@
 
         protected function renderSummaryCloneContent()
         {
-            return '<div class="list-view-items-summary-clone"></div>';
+            return ZurmoHtml::tag('div',
+                                  array(
+                                      'id'    => $this->getListViewId() . '-summary-clone',
+                                      'class' => ExtendedGridView::CLONE_SUMMARY_CLASS,
+                                  ),
+                                  '');
         }
 
         protected function getSelectListAttributesLinkContent()

@@ -134,5 +134,39 @@
         {
             return $this->renderWrapperAndActionElementMenu();
         }
+
+        /**
+         * Just show 'Details' because the business card view has the person's name
+         * @return string
+         */
+        public function getTitle()
+        {
+            return Zurmo::t('Core', 'Details');
+        }
+
+        protected function resolveLeftContentForSlidingPanels($content)
+        {
+            $content  = $this->makeFirstSlidingPanelContent($content);
+            $content .= $this->makeSecondSlidingPanelContent();
+            return $content;
+        }
+
+        protected function makeFirstSlidingPanelContent($content)
+        {
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel', 'id' => 'zurmoView'), $content);
+        }
+
+        protected function makeSecondSlidingPanelContent()
+        {
+            $layout  = new PersonCardViewLayout($this->model);
+            $content = $layout->renderContent();
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel business-card showing-panel',
+                                               'id'    => 'businessCardView'), $content);
+        }
+
+        protected function renderAfterDetailsTable()
+        {
+            return PersonSlidingPanelsUtil::renderToggleLinkContent();
+        }
     }
 ?>

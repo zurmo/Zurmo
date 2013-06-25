@@ -94,7 +94,9 @@
             // Begin Not Coding Standard
             return 'js:function(id, data) {
                         processAjaxSuccessError(id, data);
-                        processListViewSummaryClone("' . $this->getGridViewId() . '", "' . static::getSummaryCssClass() . '");
+                        processListViewSummaryClone("' . $this->getGridViewId() . '",
+                                                    "' . static::getSummaryCssClass() . '",
+                                                    "' . $this->getSummaryCloneId() . '" );
                     }';
             // End Not Coding Standard
         }

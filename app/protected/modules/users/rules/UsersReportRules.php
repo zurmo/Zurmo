@@ -66,6 +66,7 @@
                                 'hash',
                                 'groups',
                                 'language',
+                                'locale',
                                 'manager',
 
                                 'role',

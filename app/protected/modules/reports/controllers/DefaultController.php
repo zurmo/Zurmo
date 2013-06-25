@@ -320,7 +320,7 @@
             {
                 throw new NotSupportedException();
             }
-            DataToReportUtil::resolveFilters($postData[$wizardFormClassName], $report);
+            DataToReportUtil::resolveFilters($postData[$wizardFormClassName], $report, true);
             if (isset($postData['ajax']) && $postData['ajax'] == 'edit-form')
             {
                 $adapter          = new ReportToWizardFormAdapter($report);

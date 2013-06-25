@@ -210,6 +210,7 @@
                 'template'             => static::getGridTemplate(),
                 'summaryText'          => static::getSummaryText(),
                 'summaryCssClass'      => static::getSummaryCssClass(),
+                'summaryCloneId'       => $this->getSummaryCloneId(),
             );
             return $this->resolveCGridViewParamsForKanbanBoard($params);
         }
@@ -233,6 +234,11 @@
         protected static function getSummaryCssClass()
         {
             return 'summary';
+        }
+
+        public function getSummaryCloneId()
+        {
+            return  $this->getGridViewId() . "-summary-clone";
         }
 
         protected function getCGridViewPagerParams()
@@ -309,13 +315,7 @@
                     {
                         foreach ($cell['elements'] as $columnInformation)
                         {
-                            $columnClassName = $columnInformation['type'] . 'ListViewColumnAdapter';
-                            $columnAdapter  = new $columnClassName($columnInformation['attributeName'], $this, array_slice($columnInformation, 1));
-                            $column = $columnAdapter->renderGridViewData();
-                            if (!isset($column['class']))
-                            {
-                                $column['class'] = 'DataColumn';
-                            }
+                            $column = $this->processColumnInfoToFetchColumnData($columnInformation);
                             array_push($columns, $column);
                         }
                     }
@@ -543,6 +543,21 @@
             }
             $params = array_merge($params, $this->kanbanBoard->getGridViewParams());
             return array_merge($params, $this->resolveExtraParamsForKanbanBoard());
+        }
+
+        /**
+         * Process input column information to fetch column data
+         */
+        protected function processColumnInfoToFetchColumnData($columnInformation)
+        {
+            $columnClassName = $columnInformation['type'] . 'ListViewColumnAdapter';
+            $columnAdapter   = new $columnClassName($columnInformation['attributeName'], $this, array_slice($columnInformation, 1));
+            $column = $columnAdapter->renderGridViewData();
+            if (!isset($column['class']))
+            {
+                $column['class'] = 'DataColumn';
+            }
+            return $column;
         }
     }
 ?>

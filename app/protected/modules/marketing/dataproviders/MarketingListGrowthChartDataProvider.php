@@ -87,7 +87,7 @@
                 $selectDistinct);
             $selectQueryAdapter        = new RedBeanModelSelectQueryAdapter($selectDistinct);
             $newSubscriberSelectPart   = "sum(CASE WHEN {$quote}{$marketingListMemberTableName}{$quote}.{$quote}{$createdDateTimeColumnName}" .
-                                         $quote . " > '$beginDateTime' THEN 1 ELSE 0 END)";
+                                         $quote . " >= '$beginDateTime' THEN 1 ELSE 0 END)";
             $existingSubscriberSelectPart = "sum(CASE WHEN {$quote}{$marketingListMemberTableName}{$quote}.{$quote}{$createdDateTimeColumnName}" .
                                             $quote . " < '$beginDateTime' AND " .
                                             "{$quote}{$marketingListMemberTableName}{$quote}.{$quote}" .

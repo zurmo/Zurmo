@@ -293,8 +293,7 @@
                         {
                             $fileName = $exportFileName . ".csv";
                         }
-                        // TODO Clarify with Jason, header data is missing here
-                        $output = ExportItemToCsvFileUtil::export($data, array(), $fileName, true);
+                        $output = ExportItemToCsvFileUtil::export($data, $headerData, $fileName, true);
                     }
                     else
                     {

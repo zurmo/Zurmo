@@ -175,13 +175,29 @@
                                                                   'valueType'                   => 'Between',
                                                                   'value'                       => '2/24/12',
                                                                   'secondValue'                 => '2/28/12');
-
+            $data[ComponentForReportForm::TYPE_FILTERS][] = array('attributeIndexOrDerivedType' => 'dateTime',
+                                                                  'value'                       => '2/25/12',
+                                                                  'availableAtRunTime'          => true);
             DataToReportUtil::resolveFilters($data, $report);
             $filters = $report->getFilters();
-            $this->assertCount(1, $filters);
+            $this->assertCount(2, $filters);
             $this->assertEquals('Between', $filters[0]->valueType);
             $this->assertEquals('2012-02-24', $filters[0]->value);
             $this->assertEquals('2012-02-28', $filters[0]->secondValue);
+            $this->assertEquals('2012-02-25', $filters[1]->value);
+
+            //Should remove only the runtime filter
+            $data   = array();
+            $data[ComponentForReportForm::TYPE_FILTERS][] = array('attributeIndexOrDerivedType' => 'dateTime',
+                                                                  'value'                       => '2/25/12',
+                                                                  'availableAtRunTime'          => true);
+            DataToReportUtil::resolveFilters($data, $report, true);
+            $filters = $report->getFilters();
+            $this->assertCount(2, $filters);
+            $this->assertEquals('Between', $filters[0]->valueType);
+            $this->assertEquals('2012-02-24', $filters[0]->value);
+            $this->assertEquals('2012-02-28', $filters[0]->secondValue);
+            $this->assertEquals('2012-02-25', $filters[1]->value);
         }
 
         public function testSanitizeFiltersData()

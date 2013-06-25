@@ -130,8 +130,8 @@
             $this->assertEquals(2, count($latitudeLongitudeCoordinates));
             $this->assertTrue(isset($latitudeLongitudeCoordinates['latitude']));
             $this->assertTrue(isset($latitudeLongitudeCoordinates['longitude']));
-            $this->assertEquals(round('42.1153153', 4), round($latitudeLongitudeCoordinates['latitude'], 4));
-            $this->assertEquals(round('-87.9763703', 4), round($latitudeLongitudeCoordinates['longitude'], 4));
+            $this->assertEquals(round('42.3854311', 4), round($latitudeLongitudeCoordinates['latitude'], 4));
+            $this->assertEquals(round('-88.209049', 4), round($latitudeLongitudeCoordinates['longitude'], 4));
         }
     }
 ?>

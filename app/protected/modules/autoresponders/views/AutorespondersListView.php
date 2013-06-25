@@ -193,8 +193,9 @@
         protected function getCGridViewParams()
         {
             return array_merge(parent::getCGridViewParams(),
-                        array('hideHeader'     => true,
-                              'itemsCssClass'  => 'items stacked-list'));
+                        array('hideHeader'            => true,
+                              'itemsCssClass'         => 'items stacked-list',
+                              'renderSpanOnEmptyText' => false));
         }
 
         protected function getPortletId()
@@ -205,6 +206,14 @@
         protected function renderSummaryCloneContent()
         {
             return ZurmoHtml::tag('div', array('class' => 'list-view-items-summary-clone'), '');
+        }
+
+        protected function getEmptyText()
+        {
+            $content  = '<div class="general-issue-notice no-autoresponders-found"><span class="icon-notice"></span><p>';
+            $content .= Zurmo::t('CampaignsModule', 'No Autoresponders created');
+            $content .= '</p></div>';
+            return $content;
         }
     }
 ?>

@@ -52,7 +52,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'name', 'type' => 'Text'),
+                                                array('attributeName' => 'name', 'type' => 'Text', 'isLink' => true),
                                             ),
                                         ),
                                     )
@@ -67,13 +67,13 @@
                                     )
                         ),
                         array('cells' =>
-                            array(
-                                array(
-                                    'elements' => array(
-                                        array('attributeName' => 'sellPrice', 'type' => 'CurrencyValue'),
-                                    ),
-                                ),
-                            )
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'sellPrice', 'type' => 'CurrencyValue'),
+                                            ),
+                                        ),
+                                    )
                         ),
                     ),
                 ),

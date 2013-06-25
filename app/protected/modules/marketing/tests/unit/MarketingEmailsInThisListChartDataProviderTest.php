@@ -35,8 +35,9 @@
      ********************************************************************************/
     class MarketingEmailsInThisListChartDataProviderTest extends ZurmoBaseTest
     {
-        private $campaign;
         private $marketingList;
+        private $campaign;
+        private $autoresponder;
         private $emailBox;
 
         public static function setUpBeforeClass()
@@ -57,12 +58,20 @@
         {
             parent::setUp();
             Yii::app()->user->userModel = User::getByUsername('super');
-            $emailBoxes     = EmailBox::getAll();
-            $this->emailBox = $emailBoxes[0];
-            $this->marketingList    =
+            $emailBoxes                 = EmailBox::getAll();
+            $this->emailBox             = $emailBoxes[0];
+            $this->marketingList        =
                     MarketingListTestHelper::createMarketingListByName('Test Marketing List');
-            $this->campaign         =
+            $this->campaign             =
                     CampaignTestHelper::createCampaign('Test Campaing 01', 'text', 'text exemple');
+            $this->autoresponder        =
+                    AutoresponderTestHelper::createAutoresponder(
+                            'Test Autoresponder 01',
+                            'text',
+                            'html',
+                            60,
+                            Autoresponder::OPERATION_SUBSCRIBE,
+                            true);
         }
 
         public function teardown()
@@ -133,218 +142,349 @@
         }
 
         /**
-         * @dataProvider dataForTestGetChartDataForCampaigns
+         * @dataProvider dataForTestGetChartData
          */
-        public function testGetChartDataForCampaigns($campaingItemActivityCreationArray, $emailMessageSentDateTime)
+        public function testGetChartData($activityCreationArray, $emailMessageSentDateTime, $isMultiplierOn)
         {
             $contacts = Contact::getAll();
-            $this->addCampaingItem($contacts[0], $emailMessageSentDateTime, $campaingItemActivityCreationArray);
+            $this->addCampaignItem     ($contacts[0], $emailMessageSentDateTime, $activityCreationArray);
+            $this->addAutoresponderItem($contacts[0], $emailMessageSentDateTime, $activityCreationArray);
+            if ($isMultiplierOn)
+            {
+                $this->addCampaignItem     ($contacts[1], $emailMessageSentDateTime, $activityCreationArray);
+                $this->addAutoresponderItem($contacts[1], $emailMessageSentDateTime, $activityCreationArray);
+            }
 
-            $sent = true;
+            $isSent = true;
             if (!isset($emailMessageSentDateTime))
             {
                 $emailMessageSentDateTime = date('Y-m-d');
-                $sent = false;
+                $isSent = false;
             }
             //Test when beginDate < sentDate < endDate
             //Grouping by day
-            $beginDate          = date('Y-m-d', strtotime($emailMessageSentDateTime) - 1 * 24 * 60 * 60);
-            $endDate            = date('Y-m-d', strtotime($emailMessageSentDateTime) + 1 * 24 * 60 * 60);
-            $chartDataProvider  = new MarketingEmailsInThisListChartDataProvider();
-            $chartDataProvider->setBeginDate($beginDate);
-            $chartDataProvider->setEndDate  ($endDate);
-            $chartDataProvider->setGroupBy(MarketingOverallMetricsForm::GROUPING_TYPE_DAY);
-            $chartDataProvider->setCampaign($this->campaign);
-            $chartData          = $chartDataProvider->getChartData();
-
-            $this->assertCount (3,          $chartData);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $beginDate,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = 0;
-            $expectedArray['uniqueClicks']      = 0;
-            $expectedArray['uniqueOpens']       = 0;
-            $expectedArray['bounced']           = 0;
-            $expectedArray['optedOut']          = 0;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[0]);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $emailMessageSentDateTime,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = $sent;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->resolveExpectedDataFromCreationArray($campaingItemActivityCreationArray, $expectedArray);
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[1]);
-
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'between',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_DAY,
+                                    $isSent,
+                                    $isMultiplierOn);
             //Grouping by week
-            $beginDate          = date('Y-m-d', strtotime($emailMessageSentDateTime) - 7 * 24 * 60 * 60);
-            $endDate            = date('Y-m-d', strtotime($emailMessageSentDateTime) + 7 * 24 * 60 * 60);
-            $chartDataProvider  = new MarketingEmailsInThisListChartDataProvider();
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'between',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_WEEK,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by month
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'between',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_MONTH,
+                                    $isSent,
+                                    $isMultiplierOn);
+
+            //Test when beginDate < endDate < sentDate
+            //Grouping by day
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'after',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_DAY,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by week
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'after',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_WEEK,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by month
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'after',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_MONTH,
+                                    $isSent,
+                                    $isMultiplierOn);
+
+            //Test when sentDate < beginDate < endDate
+            //Grouping by day
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'before',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_DAY,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by week
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'before',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_WEEK,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by month
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'before',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_MONTH,
+                                    $isSent,
+                                    $isMultiplierOn);
+
+            //Test when sentDate = beginDate = endDate
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'equals',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_DAY,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by week
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'equals',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_WEEK,
+                                    $isSent,
+                                    $isMultiplierOn);
+            //Grouping by month
+            $this->assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                                    $activityCreationArray,
+                                    $emailMessageSentDateTime,
+                                    'equals',
+                                    MarketingOverallMetricsForm::GROUPING_TYPE_MONTH,
+                                    $isSent,
+                                    $isMultiplierOn);
+        }
+
+        private function assertChartDataAsExpectedBySentTimeAndConditionAndGroupingBy(
+                $campaingItemActivityCreationArray,
+                $emailMessageSentDateTime,
+                $condition,
+                $groupingBy,
+                $isSent,
+                $isMultiplierOn)
+        {
+            $count = null;
+            switch ($condition)
+            {
+                case 'equals':
+                    $count = 1;
+                    break;
+                case 'between':
+                    $count = 3;
+                    break;
+                default:
+                    $count = 2;
+                    break;
+            }
+            $beginDate                  = $this->getBeginDateByConditionAndGroupingBy(
+                    $emailMessageSentDateTime,
+                    $condition,
+                    $groupingBy);
+            $endDate                    = $this->getEndDateByConditionAndGroupingBy(
+                    $emailMessageSentDateTime,
+                    $condition,
+                    $groupingBy);
+            $chartDataProvider          = new MarketingEmailsInThisListChartDataProvider();
             $chartDataProvider->setBeginDate($beginDate);
             $chartDataProvider->setEndDate  ($endDate);
-            $chartDataProvider->setGroupBy(MarketingOverallMetricsForm::GROUPING_TYPE_WEEK);
+            $chartDataProvider->setGroupBy  ($groupingBy);
+
+            $chartDateProviderForMarketingList = clone $chartDataProvider;
+
+            $combinedChartData          = $chartDataProvider->getChartData();
+
             $chartDataProvider->setCampaign($this->campaign);
-            $chartData          = $chartDataProvider->getChartData();
+            $campaignChartData          = $chartDataProvider->getChartData();
 
-            $this->assertCount (3,          $chartData);
+            $chartDateProviderForMarketingList->setMarketingList($this->marketingList);
+            $marketingListChartData     = $chartDateProviderForMarketingList->getChartData();
 
-            $date = new DateTime($beginDate);
-            $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
-            $beginDateOfWeek = $date->format('Y-m-d');
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $beginDateOfWeek,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = 0;
-            $expectedArray['uniqueClicks']      = 0;
-            $expectedArray['uniqueOpens']       = 0;
-            $expectedArray['bounced']           = 0;
-            $expectedArray['optedOut']          = 0;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = 'Week of ' . $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[0]);
+            $this->assertCount ($count,          $combinedChartData);
+            $this->assertCount ($count,          $campaignChartData);
+            $this->assertCount ($count,          $marketingListChartData);
 
-            $date = new DateTime($emailMessageSentDateTime);
-            $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
-            $beginDateOfWeek = $date->format('Y-m-d');
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $beginDateOfWeek,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = $sent;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = 'Week of ' . $displayLabel;
-            $this->resolveExpectedDataFromCreationArray($campaingItemActivityCreationArray, $expectedArray);
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[1]);
+            if ($condition != 'equals')
+            {
+                $displayLabel = $this->getDisplayLabel($beginDate, $groupingBy);
+                $expectedArray                      = array();
+                $expectedArray['queued']            = 0;
+                $expectedArray['sent']              = 0;
+                $expectedArray['uniqueClicks']      = 0;
+                $expectedArray['uniqueOpens']       = 0;
+                $expectedArray['bounced']           = 0;
+                $expectedArray['optedOut']          = 0;
+                $expectedArray['displayLabel']      = $displayLabel;
+                if ($groupingBy == 'Week')
+                {
+                    $expectedArray['dateBalloonLabel']  = 'Week of ' . $displayLabel;
+                }
+                else
+                {
+                    $expectedArray['dateBalloonLabel']  = $displayLabel;
+                }
+                $this->assertChartDataColumnAsExpected($expectedArray, $campaignChartData[0]);
+                $this->assertChartDataColumnAsExpected($expectedArray, $marketingListChartData[0]);
+            }
 
-            //Test when beginDate < endDate < sentDate for day grouping
-            $beginDate          = date('Y-m-d', strtotime($emailMessageSentDateTime) - 2 * 24 * 60 * 60);
-            $endDate            = date('Y-m-d', strtotime($emailMessageSentDateTime) - 1 * 24 * 60 * 60);
-            $chartDataProvider->setBeginDate($beginDate);
-            $chartDataProvider->setEndDate  ($endDate);
-            $chartDataProvider->setGroupBy(MarketingOverallMetricsForm::GROUPING_TYPE_DAY);
-            $chartDataProvider->setCampaign($this->campaign);
-            $chartData          = $chartDataProvider->getChartData();
+            if ($condition == 'equals')
+            {
+                $campaignColumn      = $campaignChartData[0];
+                $marketingListColumn = $marketingListChartData[0];
+            }
+            elseif ($condition == 'between')
+            {
+                $campaignColumn      = $campaignChartData[1];
+                $marketingListColumn = $marketingListChartData[1];
+            }
+            if (isset($campaignColumn))
+            {
+                $displayLabel = $this->getDisplayLabel($emailMessageSentDateTime, $groupingBy);
+                $expectedArray                      = array();
+                $expectedArray['displayLabel']      = $displayLabel;
+                if ($groupingBy == 'Week')
+                {
+                    $expectedArray['dateBalloonLabel']  = 'Week of ' . $displayLabel;
+                }
+                else
+                {
+                    $expectedArray['dateBalloonLabel']  = $displayLabel;
+                }
+                $this->resolveExpectedDataFromIsSent(
+                        $isSent,
+                        $expectedArray,
+                        $isMultiplierOn ? 2 : 1);
+                $this->resolveExpectedDataFromCreationArray(
+                        $campaingItemActivityCreationArray,
+                        $expectedArray,
+                        $isMultiplierOn ? 2 : 1);
+                $this->assertChartDataColumnAsExpected($expectedArray, $campaignColumn);
+                $this->assertChartDataColumnAsExpected($expectedArray, $marketingListColumn);
+            }
+            else
+            {
+                $displayLabel = $this->getDisplayLabel($endDate, $groupingBy);
+                $expectedArray                      = array();
+                $expectedArray['queued']            = 0;
+                $expectedArray['sent']              = 0;
+                $expectedArray['uniqueClicks']      = 0;
+                $expectedArray['uniqueOpens']       = 0;
+                $expectedArray['bounced']           = 0;
+                $expectedArray['optedOut']          = 0;
+                $expectedArray['displayLabel']      = $displayLabel;
+                if ($groupingBy == 'Week')
+                {
+                    $expectedArray['dateBalloonLabel']  = 'Week of ' . $displayLabel;
+                }
+                else
+                {
+                    $expectedArray['dateBalloonLabel']  = $displayLabel;
+                }
+                $this->assertChartDataColumnAsExpected($expectedArray, $campaignChartData[1]);
+                $this->assertChartDataColumnAsExpected($expectedArray, $marketingListChartData[1]);
+            }
+            $this->assertCombinedChartDataAsExpected($combinedChartData, $campaignChartData, $marketingListChartData);
+        }
 
-            $this->assertCount (2,          $chartData);
+        private function getBeginDateByConditionAndGroupingBy($emailMessageSentDateTime, $condition, $groupingBy)
+        {
+            $add = null;
+            switch ($condition)
+            {
+                case 'after':
+                    $add = '-2';
+                    break;
+                case 'before':
+                    $add = '+1'; // Not Coding Standard
+                    break;
+                case 'between':
+                    $add = '-1';
+                    break;
+                default:
+                    $add = '+0'; // Not Coding Standard
+                    break;
+            }
+            $date       = new DateTime($emailMessageSentDateTime);
+            $date->modify($add . $groupingBy);
+            $beginDate  = $date->format('Y-m-d');
+            return $beginDate;
+        }
 
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $beginDate,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = 0;
-            $expectedArray['uniqueClicks']      = 0;
-            $expectedArray['uniqueOpens']       = 0;
-            $expectedArray['bounced']           = 0;
-            $expectedArray['optedOut']          = 0;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[0]);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $endDate,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[1]);
-
-            //Test when sentDate < beginDate < endDate for day grouping
-            $beginDate          = date('Y-m-d', strtotime($emailMessageSentDateTime) + 1 * 24 * 60 * 60);
-            $endDate            = date('Y-m-d', strtotime($emailMessageSentDateTime) + 2 * 24 * 60 * 60);
-            $chartDataProvider->setBeginDate($beginDate);
-            $chartDataProvider->setEndDate  ($endDate);
-            $chartDataProvider->setGroupBy(MarketingOverallMetricsForm::GROUPING_TYPE_DAY);
-            $chartDataProvider->setCampaign($this->campaign);
-            $chartData          = $chartDataProvider->getChartData();
-
-            $this->assertCount (2,          $chartData);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $beginDate,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = 0;
-            $expectedArray['uniqueClicks']      = 0;
-            $expectedArray['uniqueOpens']       = 0;
-            $expectedArray['bounced']           = 0;
-            $expectedArray['optedOut']          = 0;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[0]);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $endDate,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[1]);
-
-            //Test when sentDate = beginDate = endDate for day grouping
-            $beginDate = $emailMessageSentDateTime;
-            $endDate   = $emailMessageSentDateTime;
-            $chartDataProvider  = new MarketingEmailsInThisListChartDataProvider();
-            $chartDataProvider->setBeginDate($beginDate);
-            $chartDataProvider->setEndDate  ($endDate);
-            $chartDataProvider->setGroupBy(MarketingOverallMetricsForm::GROUPING_TYPE_DAY);
-            $chartDataProvider->setCampaign($this->campaign);
-            $chartData          = $chartDataProvider->getChartData();
-
-            $this->assertCount (1,          $chartData);
-
-            $displayLabel = DateTimeUtil
-                    ::resolveValueForDateLocaleFormattedDisplay(
-                            $emailMessageSentDateTime,
-                            DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH
-                      );
-            $expectedArray                      = array();
-            $expectedArray['queued']            = 0;
-            $expectedArray['sent']              = $sent;
-            $expectedArray['displayLabel']      = $displayLabel;
-            $expectedArray['dateBalloonLabel']  = $displayLabel;
-            $this->resolveExpectedDataFromCreationArray($campaingItemActivityCreationArray, $expectedArray);
-            $this->assertChartDataColumnAsExpected($expectedArray, $chartData[0]);
+        private function getEndDateByConditionAndGroupingBy($emailMessageSentDateTime, $condition, $groupingBy)
+        {
+            $add = null;
+            switch ($condition)
+            {
+                case 'after':
+                    $add = '-1';
+                    break;
+                case 'before':
+                    $add = '+2'; // Not Coding Standard
+                    break;
+                case 'between':
+                    $add = '+1'; // Not Coding Standard
+                    break;
+                default:
+                    $add = '+0'; // Not Coding Standard
+                    break;
+            }
+            $date       = new DateTime($emailMessageSentDateTime);
+            $date->modify($add . $groupingBy);
+            $endDate    = $date->format('Y-m-d');
+            return $endDate;
         }
 
         private function resolveExpectedDataFromCreationArray($creationArray, & $expectedArray, $multiplier = 1)
         {
-            $sent               = $expectedArray['sent'];
-            $uniqueClicks       = ($creationArray[CampaignItemActivity::TYPE_CLICK] >= 1 && $sent ) ? 1 : 0;
-            $uniqueOpens        = ($creationArray[CampaignItemActivity::TYPE_OPEN] >= 1 && $sent ) ? 1 : 0;
-            $bounced            = ($creationArray[CampaignItemActivity::TYPE_BOUNCE] >= 1 && $sent ) ? 1 : 0;
-            $optedOut           = ($creationArray[CampaignItemActivity::TYPE_UNSUBSCRIBE] >= 1 && $sent ) ? 1 : 0;
+            $uniqueClicks       = $creationArray[CampaignItemActivity::TYPE_CLICK] >= 1 ? 1 : 0;
+            $uniqueOpens        = $creationArray[CampaignItemActivity::TYPE_OPEN] >= 1 ? 1 : 0;
+            $bounced            = $creationArray[CampaignItemActivity::TYPE_BOUNCE] >= 1 ? 1 : 0;
+            $optedOut           = $creationArray[CampaignItemActivity::TYPE_UNSUBSCRIBE] >= 1 ? 1 : 0;
 
             $expectedArray['uniqueClicks']  = $uniqueClicks * $multiplier;
             $expectedArray['uniqueOpens']   = $uniqueOpens * $multiplier;
             $expectedArray['bounced']       = $bounced * $multiplier;
             $expectedArray['optedOut']      = $optedOut * $multiplier;
+        }
+
+        private function resolveExpectedDataFromIsSent($isSent, & $expectedArray, $multiplier)
+        {
+            if ($isSent)
+            {
+                $expectedArray['sent']      = $multiplier;
+                $expectedArray['queued']    = 0;
+            }
+            else
+            {
+                $expectedArray['sent']      = 0;
+                $expectedArray['queued']    = $multiplier;
+            }
+        }
+
+        private function assertCombinedChartDataAsExpected($combinedChartData, $campaignChartData, $marketingListChartData)
+        {
+            foreach ($combinedChartData as $key => $chartColumn)
+            {
+                $this->assertEquals($combinedChartData[$key]['queued'],
+                                    $campaignChartData[$key]['queued'] + $marketingListChartData[$key]['queued']);
+                $this->assertEquals($combinedChartData[$key]['sent'],
+                                    $campaignChartData[$key]['sent'] + $marketingListChartData[$key]['sent']);
+                $this->assertEquals($combinedChartData[$key]['uniqueClicks'],
+                                    $campaignChartData[$key]['uniqueClicks'] + $marketingListChartData[$key]['uniqueClicks']);
+                $this->assertEquals($combinedChartData[$key]['bounced'],
+                                    $campaignChartData[$key]['bounced'] + $marketingListChartData[$key]['bounced']);
+                $this->assertEquals($combinedChartData[$key]['optedOut'],
+                                    $campaignChartData[$key]['optedOut'] + $marketingListChartData[$key]['optedOut']);
+            }
         }
 
         private function assertChartDataColumnAsExpected(Array $expectedArray, $chartDataColumn)
@@ -376,7 +516,34 @@
                                 $chartDataColumn['dateBalloonLabel']);
         }
 
-        private function addCampaingItem($contact, $emailMessageSentDateTime, $creationArray)
+        private function addCampaignItem($contact, $emailMessageSentDateTime, $creationArray)
+        {
+            $emailMessage                            = $this->createEmailMessage($contact, $emailMessageSentDateTime);
+            $campaignItem                            = new CampaignItem();
+            $campaignItem->contact                   = $contact;
+            $campaignItem->processed                 = true;
+            $campaignItem->emailMessage              = $emailMessage;
+            $this->resolveCampaignItemActivities($contact, $creationArray, $campaignItem);
+            $this->campaign->campaignItems->add($campaignItem);
+            $this->assertTrue($this->campaign->save());
+        }
+
+        private function addAutoresponderItem($contact, $emailMessageSentDateTime, $creationArray)
+        {
+            $emailMessage                            = $this->createEmailMessage($contact, $emailMessageSentDateTime);
+            $autoresponderItem                       = new AutoresponderItem();
+            $autoresponderItem->contact              = $contact;
+            $autoresponderItem->processed            = true;
+            $autoresponderItem->emailMessage         = $emailMessage;
+            $autoresponderItem->processDateTime      = DateTimeUtil
+                        ::convertTimestampToDbFormatDateTime(time());;
+            $this->resolveAutoresponderItemActivities($contact, $creationArray, $autoresponderItem);
+            $this->autoresponder->autoresponderItems->add($autoresponderItem);
+            $this->autoresponder->validate();
+            $this->assertTrue($this->autoresponder->save());
+        }
+
+        private function createEmailMessage($contact, $emailMessageSentDateTime)
         {
             $emailBox                                = $this->emailBox;
 
@@ -410,14 +577,7 @@
             $emailMessage->folder                    =
                     EmailFolder::getByBoxAndType($emailBox, EmailFolder::TYPE_ARCHIVED);
             $emailMessage->recipients->add($recipient);
-
-            $campaignItem                            = new CampaignItem();
-            $campaignItem->contact                   = $contact;
-            $campaignItem->processed                 = true;
-            $campaignItem->emailMessage              = $emailMessage;
-            $this->resolveCampaignItemActivities($contact, $creationArray, $campaignItem);
-            $this->campaign->campaignItems->add($campaignItem);
-            $this->assertTrue($this->campaign->save());
+            return $emailMessage;
         }
 
         private function resolveCampaignItemActivities($contact, $creationArray, CampaignItem  & $campaignItem)
@@ -435,7 +595,44 @@
             }
         }
 
-        public function dataForTestGetChartDataForCampaigns()
+        private function resolveAutoresponderItemActivities($contact, $creationArray, AutoresponderItem  & $autoresponderItem)
+        {
+            foreach ($creationArray as $type => $numberOfType)
+            {
+                for ($i = 1; $i <= $numberOfType; $i++)
+                {
+                    $activity             = new AutoresponderItemActivity();
+                    $activity->person     = $contact;
+                    $activity->type       = $type;
+                    $activity->quantity   = 1;
+                    $autoresponderItem->autoresponderItemActivities->add($activity);
+                }
+            }
+        }
+
+        private function getDisplayLabel($date, $groupingBy)
+        {
+            $dateForLabel = $date;
+            $format       = DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_AND_DAY_WIDTH;
+            if ($groupingBy == MarketingOverallMetricsForm::GROUPING_TYPE_WEEK)
+            {
+                $date = new DateTime($date);
+                $date->modify(('Sunday' == $date->format('l')) ? 'Monday last week' : 'Monday this week');
+                $dateForLabel = $date->format('Y-m-d');
+            }
+            elseif ($groupingBy == MarketingOverallMetricsForm::GROUPING_TYPE_MONTH)
+            {
+                $format = DateTimeUtil::DISPLAY_FORMAT_ABBREVIATED_MONTH_ONLY_WIDTH;
+            }
+            $displayLabel = DateTimeUtil
+                        ::resolveValueForDateLocaleFormattedDisplay(
+                                $dateForLabel,
+                                $format
+                          );
+            return $displayLabel;
+        }
+
+        public function dataForTestGetChartData()
         {
             $data = array(
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
@@ -443,67 +640,92 @@
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      '2013-06-09'),
+                      '2013-06-09',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
                             CampaignItemActivity::TYPE_BOUNCE      => 1,
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      '2012-02-29'),
+                      '2013-06-09',
+                      true),
+                array(array(CampaignItemActivity::TYPE_CLICK       => 1,
+                            CampaignItemActivity::TYPE_BOUNCE      => 1,
+                            CampaignItemActivity::TYPE_OPEN        => 1,
+                            CampaignItemActivity::TYPE_SKIP        => 1,
+                            CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
+                      '2012-02-29',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
                             CampaignItemActivity::TYPE_BOUNCE      => 2,
                             CampaignItemActivity::TYPE_OPEN        => 3,
                             CampaignItemActivity::TYPE_SKIP        => 4,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 5),
-                      '2013-04-01'),
+                      '2013-04-01',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 5,
                             CampaignItemActivity::TYPE_BOUNCE      => 4,
                             CampaignItemActivity::TYPE_OPEN        => 3,
                             CampaignItemActivity::TYPE_SKIP        => 2,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
                             CampaignItemActivity::TYPE_BOUNCE      => 0,
                             CampaignItemActivity::TYPE_OPEN        => 0,
                             CampaignItemActivity::TYPE_SKIP        => 0,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 0),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 0,
                             CampaignItemActivity::TYPE_BOUNCE      => 1,
                             CampaignItemActivity::TYPE_OPEN        => 0,
                             CampaignItemActivity::TYPE_SKIP        => 0,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 0),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 0,
                             CampaignItemActivity::TYPE_BOUNCE      => 0,
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 0,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 0),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 0,
                             CampaignItemActivity::TYPE_BOUNCE      => 0,
                             CampaignItemActivity::TYPE_OPEN        => 0,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 0),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 0,
                             CampaignItemActivity::TYPE_BOUNCE      => 0,
                             CampaignItemActivity::TYPE_OPEN        => 0,
                             CampaignItemActivity::TYPE_SKIP        => 0,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 0,
                             CampaignItemActivity::TYPE_BOUNCE      => 0,
                             CampaignItemActivity::TYPE_OPEN        => 0,
                             CampaignItemActivity::TYPE_SKIP        => 0,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 0),
-                      '2013-06-12'),
+                      '2013-06-12',
+                      false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
                             CampaignItemActivity::TYPE_BOUNCE      => 1,
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      null),
+                      null,
+                      false),
+                array(array(CampaignItemActivity::TYPE_CLICK       => 1,
+                            CampaignItemActivity::TYPE_BOUNCE      => 1,
+                            CampaignItemActivity::TYPE_OPEN        => 1,
+                            CampaignItemActivity::TYPE_SKIP        => 1,
+                            CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
+                      null,
+                      true),
             );
             return $data;
         }

@@ -136,7 +136,12 @@
 
         private function renderSummaryCloneContent()
         {
-            return "<div class='list-view-items-summary-clone'></div>";
+            return ZurmoHtml::tag('div',
+                                 array(
+                                     'id'       => $this->listView->getGridViewId() . '-summary-clone',
+                                     'class'    => ExtendedGridView::CLONE_SUMMARY_CLASS,
+                                 ),
+                                 '');
         }
 
         private function renderSearchView($model, $form)

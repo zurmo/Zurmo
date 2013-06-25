@@ -42,6 +42,18 @@
             SecurityTestHelper::createSuperAdmin();
         }
 
+        public function testValidatingCorrectLatitudeAndLongitudeLength()
+        {
+            $address = new Address();
+            $address->latitude = -112.8327778;
+            $validated  = $address->validate();
+            $this->assertTrue($validated);
+            $address = new Address();
+            $address->latitude = -112.83277785; //Length = 13
+            $validated  = $address->validate();
+            $this->assertFalse($validated);
+        }
+
         public function testStringify()
         {
             $address = new Address();

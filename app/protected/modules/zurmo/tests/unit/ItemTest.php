@@ -108,6 +108,22 @@
             $this->assertEquals('1234567890',   $account->officePhone);
             $this->assertWithinTolerance($createdTime,      DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->createdDateTime),  2);
             $this->assertWithinTolerance($lastModifiedTime, DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->modifiedDateTime), 2);
+            unset($account);
+            sleep(3);
+            $account = Account::getById($id);
+            $this->assertEquals('Test Account', $account->name);
+            $this->assertEquals('1234567890',   $account->officePhone);
+            $this->assertWithinTolerance($createdTime,      DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->createdDateTime),  2);
+            $this->assertWithinTolerance($lastModifiedTime, DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->modifiedDateTime), 2);
+            unset($account);
+            sleep(3);
+            $account = Account::getById($id);
+            $contact = ContactTestHelper::createContactByNameForOwner('contactTest', $user);
+            $account->contacts->add($contact);
+            $this->assertWithinTolerance($createdTime,      DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->createdDateTime),  2);
+            $this->assertTrue($account->save());
+            $this->assertWithinTolerance($createdTime,      DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->createdDateTime),  2);
+            $this->assertNotEquals      ($lastModifiedTime, DateTimeUtil::convertDbFormatDateTimeToTimestamp($account->modifiedDateTime));
         }
 
         /**

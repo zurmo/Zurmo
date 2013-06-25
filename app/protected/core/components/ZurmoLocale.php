@@ -99,6 +99,16 @@
         }
 
         /**
+         * Currently returns some english based ids since they are needed to support proper date/time/number formatting
+         * for users
+         * @return array of IDs that Zurmo accepts for locale
+         */
+        public static function getSelectableLocaleIds()
+        {
+            return array('en_au', 'en_ca', 'en_gb', 'en_us');
+        }
+
+        /**
          * Constructor.
          * Since the constructor is protected, please use {@link getInstance}
          * to obtain an instance of the specified locale.

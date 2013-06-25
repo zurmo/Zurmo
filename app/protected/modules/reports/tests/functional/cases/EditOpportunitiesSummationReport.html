@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>Search</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Search</td></tr>
+</thead><tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/reports/default?clearingSearch=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ReportsSearchForm_anyMixedAttributes</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>ReportsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='ReportsListView']/div/table/tbody/tr/td[2]/a</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>SummationReport ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>ReportsSearchForm_anyMixedAttributes</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='ReportsListView']/div/table/tbody/tr/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='moduleNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@id='FiltersTreeView']/li/span</td>
+	<td>Opportunity</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='filterBysNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@id='GroupBysTreeView']/li/span</td>
+	<td>Opportunity</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='groupBysNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@id='DisplayAttributesTreeView']/li/span</td>
+	<td>Opportunity</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='displayAttributesNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@id='DrillDownDisplayAttributesTreeView']/li/span</td>
+	<td>Opportunity</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='drillDownDisplayAttributesNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//ul[@id='OrderBysTreeView']/li/span</td>
+	<td>Opportunity</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='orderBysDataNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='ChartForReportWizardView']/div[1]/h3</td>
+	<td>Select a Chart</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='chartNextLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='GeneralDataForReportWizardView']/div[1]/h3</td>
+	<td>Save Report</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=SummationReportWizardForm_description</td>
+	<td>SummationReport description</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='generalDataSaveAndRunLink']/span[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Stage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Stage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Count</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Count</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Amount -(Sum)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Amount -(Sum)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Closed Won</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Closed Won</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/reports/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>id=ReportsSearchForm_anyMixedAttributes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ReportsSearchForm_anyMixedAttributes</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>id=ReportsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
+	<td>SummationReport ${randomSuffix}</td>
+</tr>
+</tbody></table>
+</body>
+</html>

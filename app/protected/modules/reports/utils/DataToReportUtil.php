@@ -94,9 +94,16 @@
          * @param array $data
          * @param Report $report
          */
-        public static function resolveFilters($data, Report $report)
+        public static function resolveFilters($data, Report $report, $shouldRemoveOnlyRuntimeFilters = false)
         {
-            $report->removeAllFilters();
+            if ($shouldRemoveOnlyRuntimeFilters)
+            {
+                $report->removeRuntimeFilters();
+            }
+            else
+            {
+                $report->removeAllFilters();
+            }
             $moduleClassName = $report->getModuleClassName();
             if (count($filtersData = ArrayUtil::getArrayValue($data, ComponentForReportForm::TYPE_FILTERS)) > 0)
             {

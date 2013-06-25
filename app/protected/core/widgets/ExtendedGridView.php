@@ -42,6 +42,8 @@
      */
     class ExtendedGridView extends CGridView
     {
+        const CLONE_SUMMARY_CLASS = 'list-view-items-summary-clone';
+
         public $template = "{selectRowsSelectors}{summary}\n{items}\n{pager}";
 
         /**
@@ -55,6 +57,10 @@
         public $blankDisplay = '&#160;';
 
         public $cssFile = false;
+
+        public $summaryCloneId;
+
+        public $renderSpanOnEmptyText = true;
 
         public function init()
         {
@@ -170,23 +176,34 @@
         public function renderSummary()
         {
             parent::renderSummary();
-            $summaryClonePath = null;
-            foreach ($this->columns as $column)
-            {
-                if (get_class($column) === 'RowMenuColumn' && isset($column->listView))
-                {
-                    $listClassName      = $column->listView;
-                    $reflectionClass    = new ReflectionClass($listClassName);
-                    if ($reflectionClass->implementsInterface('RendersMultipleSummaryPlaceholdersInterface'))
-                    {
-                        $summaryClonePath = ', ' . $listClassName::getSummaryCloneQueryPath();
-                        break;
-                    }
-                }
-            }
             Yii::app()->clientScript->registerScript($this->id . '_listViewSummaryChangeScript', '
-            processListViewSummaryClone("' . $this->id . '", "' . $this->summaryCssClass . '"' . $summaryClonePath . ');
+                processListViewSummaryClone("' . $this->id . '", "' . $this->summaryCssClass . '", "' . $this->summaryCloneId . '");
             ');
+        }
+
+        /**
+         * Renders the empty message when there is no data.
+         */
+        public function renderEmptyText()
+        {
+            if ($this->emptyText === null)
+            {
+                $emptyText = Yii::t('zii', 'No results found.');
+            }
+            else
+            {
+                $emptyText = $this->emptyText;
+            }
+
+            if ($this->renderSpanOnEmptyText)
+            {
+                $icon = ZurmoHtml::tag('span', array('class' => 'icon-empty'), '');
+                echo CHtml::tag('span', array('class' => 'empty'), $icon . $emptyText);
+            }
+            else
+            {
+                echo $emptyText;
+            }
         }
     }
 ?>

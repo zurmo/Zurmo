@@ -157,7 +157,7 @@
 
             $rules       = ModelAttributeRulesToWorkflowActionAttributeUtil::
                            getApplicableRulesByModelClassNameAndAttributeName('Address', 'latitude', 'value');
-            $compareData = array(array('value',  'length',  'max'  => 11),
+            $compareData = array(array('value',  'length',  'max'  => 12),
                                  array('value',  'RedBeanModelNumberValidator',  'precision' => 7));
             $this->assertEquals($compareData, $rules);
         }

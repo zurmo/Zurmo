@@ -294,7 +294,43 @@
                     $requireAttributesCollection[$attributeIndex] = $attributeData;
                 }
             }
+            static::resolveRequiredDerivedAttributesCollection($requireAttributesCollection);
             return $requireAttributesCollection;
+        }
+
+        /**
+         * If there is any derived attribute with a real attribute required that is not yeat in
+         * the attributesCollection, if populate the Collection with the date from the derived attribute
+         * @param Array $attributesCollection
+         */
+        protected static function resolveRequiredDerivedAttributesCollection(& $attributesCollection)
+        {
+            $modelClassName = static::getModelClassName();
+            $model          = new $modelClassName(false);
+            foreach (static::getDerivedAttributeTypes() as $derivedType)
+            {
+                $attributeImportRulesClassName = $derivedType . 'AttributeImportRules';
+                $attributeImportRules          = new $attributeImportRulesClassName($model);
+                assert('$attributeImportRules instanceof DerivedAttributeImportRules');
+                $displayLabel                  = $attributeImportRules->getDisplayLabel();
+                $realAttributes                = $attributeImportRules->getRealModelAttributeNames();
+                foreach ($realAttributes as $realAttribute)
+                {
+                    if (!in_array($realAttribute, array_keys($attributesCollection)) &&
+                       $model->isAttributeRequired($realAttribute))
+                    {
+                        ModelAttributeImportMappingCollectionUtil::populateCollection(
+                            $attributesCollection,
+                            $realAttribute,
+                            $displayLabel,
+                            $realAttribute,
+                            $derivedType,
+                            null,
+                            true
+                        );
+                    }
+                }
+            }
         }
 
         /**

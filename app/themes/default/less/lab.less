@@ -1,6 +1,4 @@
-.sliding-panels-container{
-
-}
+.sliding-panels-container{}
 
 .sliding-panel{
 	display: none;
@@ -9,14 +7,13 @@
 	position: relative;
 }
 
-div.showing-panel{
-	//display: block;
-}
+div.showing-panel{}
 
 .business-card{
 	display: block;
 	.gravatar{
 		margin-right: 12px;
+		margin-bottom:6px;
 	}
 	h2{
 		line-height: 100%;
@@ -26,6 +23,11 @@ div.showing-panel{
 			font-weight: normal;
 			font-size: 80%;
 			margin-right: 5px;
+		}
+		.user-name{
+			font-weight: normal;
+			font-size: 80%;
+			margin-left: 5px;
 		}
 	}
 	h3.position{
@@ -46,20 +48,18 @@ div.showing-panel{
 		color: #666;
 		margin-bottom: 7px;
 		margin-top: 10px;
-		> a{
-			margin-top: 5px;
-			margin-right: 20px;
+		> span{
+			margin: 5px 20px 5px 0;
 			color: #333;
-		}
-		> a:before{
-		}
-		> a:first-child:before{
+			white-space:nowrap;
+			float:left;
 		}
 	}
 	.address{
+		clear:left;
 		margin-bottom: 15px;
 	}
-	.icon-landline{
+	.icon-office-phone{
 		&:before{
 			content:"W";
 			.symbly(20px);
@@ -97,7 +97,7 @@ div.showing-panel{
 		right: 0;
 		text-align: right;
 		.sex{
-			width: 30px;
+			width: 35px;
 			height: 62px;
 			display: block;
 			text-indent: -9999px;
@@ -107,6 +107,9 @@ div.showing-panel{
 		}
 		.male{
 			background: url(../images/people.png) right top no-repeat;
+		}
+		.female{
+			background: url(../images/people.png) right bottom no-repeat;
 		}
 		span{
 			margin-top: 13px;
@@ -118,31 +121,8 @@ div.showing-panel{
 	}
 }
 
-#_business-card-buttons{
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	text-align: center;
-	a{
-		display: block;
-		width: 50px;
-		height: 50px;
-		font-size: 10px;
-		font-weight: bold;
-		i{
-			display: block;
-			font-style: normal;
-			.symbly(45px);
-			line-height: 1;
-			color: #ccc;
-		}
-		span{
-			display: none;
-		}
-	}
-}
-
 .icon-demographic{
+
 }
 
 .icon-household{
@@ -159,9 +139,6 @@ div.showing-panel{
 
 #business-card-buttons{
 	display: none !important;
-	//position: absolute;
-	//right: 10px;
-	//top: 10px;
 	display: inline-block;
 	.smaller();
 	> div{
@@ -262,12 +239,47 @@ div.showing-panel{
 	}
 }
 
+.icon-bebo{ background: url(../images/social-icons/bebo.png) center center no-repeat }
+//.icon-email{ background: url(../images/social-icons/email.png) center center no-repeat }
+.icon-instagram{ background: url(../images/social-icons/instagram.png) center center no-repeat }
+.icon-picasa{ background: url(../images/social-icons/picasa.png) center center no-repeat }
+.icon-stumbleupon{ background: url(../images/social-icons/stumbleupon.png) center center no-repeat }
+.icon-behance{ background: url(../images/social-icons/behance.png) center center no-repeat }
+.icon-evernote{ background: url(../images/social-icons/evernote.png) center center no-repeat }
+.icon-lastfm{ background: url(../images/social-icons/lastfm.png) center center no-repeat }
+.icon-pinterest{ background: url(../images/social-icons/pinterest.png) center center no-repeat }
+.icon-tumblr{ background: url(../images/social-icons/tumblr.png) center center no-repeat }
+.icon-blogger{ background: url(../images/social-icons/blogger.png) center center no-repeat }
+.icon-facebook{ background: url(../images/social-icons/facebook.png) center center no-repeat }
+.icon-posterous{ background: url(../images/social-icons/posterous.png) center center no-repeat }
 .icon-twitter{ background: url(../images/social-icons/twitter.png) center center no-repeat }
-.icon-facebook{ background: url(../images/social-icons/facebook.png) left top no-repeat; }
-.icon-linkedin{ background: url(../images/social-icons/linkedin.png) left top no-repeat; }
+.icon-delicious{ background: url(../images/social-icons/delicious.png) center center no-repeat }
+.icon-flickr{ background: url(../images/social-icons/flickr.png) center center no-repeat }
+.icon-linkedin{ background: url(../images/social-icons/linkedin.png) center center no-repeat }
+.icon-reddit{ background: url(../images/social-icons/reddit.png) center center no-repeat }
+.icon-typepad{ background: url(../images/social-icons/typepad.png) center center no-repeat }
+.icon-designfloat{ background: url(../images/social-icons/designfloat.png) center center no-repeat }
+.icon-forrst{ background: url(../images/social-icons/forrst.png) center center no-repeat }
+.icon-myspace{ background: url(../images/social-icons/myspace.png) center center no-repeat }
+.icon-rss{ background: url(../images/social-icons/rss.png) center center no-repeat }
+.icon-vimeo{ background: url(../images/social-icons/vimeo.png) center center no-repeat }
+.icon-deviantart{ background: url(../images/social-icons/deviantart.png) center center no-repeat }
+.icon-friendfeed{ background: url(../images/social-icons/friendfeed.png) center center no-repeat }
+.icon-netvibes{ background: url(../images/social-icons/netvibes.png) center center no-repeat }
+.icon-skype{ background: url(../images/social-icons/skype.png) center center no-repeat }
+.icon-wordpress{ background: url(../images/social-icons/wordpress.png) center center no-repeat }
+.icon-digg{ background: url(../images/social-icons/digg.png) center center no-repeat }
+.icon-googleplus{ background: url(../images/social-icons/googleplus.png) center center no-repeat }
+.icon-orkut{ background: url(../images/social-icons/orkut.png) center center no-repeat }
+.icon-soundcloud{ background: url(../images/social-icons/soundcloud.png) center center no-repeat }
+.icon-yahoo{ background: url(../images/social-icons/yahoo.png) center center no-repeat }
+.icon-dribbble{ background: url(../images/social-icons/dribbble.png) center center no-repeat }
+.icon-grooveshark{ background: url(../images/social-icons/grooveshark.png) center center no-repeat }
+.icon-path{ background: url(../images/social-icons/path.png) center center no-repeat }
+.icon-spotify{ background: url(../images/social-icons/spotify.png) center center no-repeat }
+.icon-youtube{ background: url(../images/social-icons/youtube.png) center center no-repeat }
 
-
-.rapleaf-data{
+.back-of-card{
 	display: none;
 	h3{
 		margin-bottom: 10px;
@@ -333,6 +345,19 @@ div.special-pager{
 	}
 }
 
+#sliding-panel-toggle{
+	++.border-box;
+	width:100%;
+	background: #fff url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+	.b-shadow(inset 0 1px 0 #DFDFDF );
+	overflow: hidden;
+	display:block;
+	text-align:center;
+	font-weight:bold;
+	padding:5px 0;
+	.smaller();
+}
+
 .mini-button{
 	display: inline-block;
 	border:1px solid #b7b7b7;
@@ -349,14 +374,19 @@ div.special-pager{
 	margin-left: 10px;
 	top: -2px;
 	span{
+		.smaller();
+		font-weight:bold;
+		.t-shadow(0 1px 0 #fff);
 		color:#545454;
-		display: block;
+		display: none;
 		line-height:22px;
 		padding: 0 6px 0 28px;
 		background: url(../images/rapleaf.png) 4px center no-repeat;
 	}
 	span + span{
-		display: none;
 		line-height:22px;
+	}
+	.show{
+		display:block;
 	}
 }

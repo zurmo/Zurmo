@@ -103,7 +103,6 @@
                     'description',
                     'quantity',
                     'priceFrequency', //In template it is priceFrequency which is not working here due to difference in type of item
-                    'sellPrice',
                     'type'
                 ),
                 'relations' => array(

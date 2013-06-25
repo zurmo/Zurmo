@@ -127,6 +127,20 @@
             return "day({$queryString})";
         }
 
+        public static function makeDayDateModifierString($tableName, $columnName, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_bool($adjustForTimeZone)');
+            $quote           = DatabaseCompatibilityUtil::getQuote();
+            $queryString     = "{$quote}$tableName{$quote}.{$quote}$columnName{$quote}";
+            if ($adjustForTimeZone)
+            {
+                $queryString     .= DatabaseCompatibilityUtil::makeTimeZoneAdjustmentContent();
+            }
+            return "DATE_FORMAT({$queryString}, '%Y-%m-%d')";
+        }
+
         public static function makeWeekModifierString($tableName, $columnName, $adjustForTimeZone = false)
         {
             assert('is_string($tableName)');
@@ -141,6 +155,21 @@
             return "week({$queryString})";
         }
 
+        public static function makeFirstDayOfWeekDateModifierString($tableName, $columnName, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_bool($adjustForTimeZone)');
+            $quote           = DatabaseCompatibilityUtil::getQuote();
+            $queryString     = "{$quote}$tableName{$quote}.{$quote}$columnName{$quote}";
+            if ($adjustForTimeZone)
+            {
+                $queryString     .= DatabaseCompatibilityUtil::makeTimeZoneAdjustmentContent();
+            }
+            return "DATE_FORMAT(DATE_SUB({$queryString}, INTERVAL(WEEKDAY(" .
+                           "{$queryString})) day), '%Y-%m-%d')";
+        }
+
         public static function makeMonthModifierString($tableName, $columnName, $adjustForTimeZone = false)
         {
             assert('is_string($tableName)');
@@ -153,6 +182,21 @@
                 $queryString     .= DatabaseCompatibilityUtil::makeTimeZoneAdjustmentContent();
             }
             return "month({$queryString})";
+        }
+
+        public static function makeFirstDayOfMonthDateModifierString($tableName, $columnName, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_bool($adjustForTimeZone)');
+            $quote           = DatabaseCompatibilityUtil::getQuote();
+            $queryString     = "{$quote}$tableName{$quote}.{$quote}$columnName{$quote}";
+            if ($adjustForTimeZone)
+            {
+                $queryString     .= DatabaseCompatibilityUtil::makeTimeZoneAdjustmentContent();
+            }
+            return $queryString = "DATE_FORMAT(DATE_ADD({$queryString}, INTERVAL(1-DAYOFMONTH(" .
+                                  "{$queryString})) day), '%Y-%m-%d')";
         }
 
         public static function makeQuarterModifierString($tableName, $columnName, $adjustForTimeZone = false)
@@ -352,6 +396,17 @@
             $this->increaseClausesCountByOne();
         }
 
+        public function addDayDateClause($tableName, $columnName, $aliasName = null, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_string($aliasName) || $aliasName == null');
+            assert('is_bool($adjustForTimeZone)');
+            $queryString     = self::makeDayDateModifierString($tableName, $columnName, $adjustForTimeZone);
+            $this->clauses[] = self::resolveForAliasName($queryString, $aliasName);
+            $this->increaseClausesCountByOne();
+        }
+
         public function addWeekClause($tableName, $columnName, $aliasName = null, $adjustForTimeZone = false)
         {
             assert('is_string($tableName)');
@@ -363,6 +418,17 @@
             $this->increaseClausesCountByOne();
         }
 
+        public function addFirstDayOfWeekDateClause($tableName, $columnName, $aliasName = null, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_string($aliasName) || $aliasName == null');
+            assert('is_bool($adjustForTimeZone)');
+            $queryString     = self::makeFirstDayOfWeekDateModifierString($tableName, $columnName, $adjustForTimeZone);
+            $this->clauses[] = self::resolveForAliasName($queryString, $aliasName);
+            $this->increaseClausesCountByOne();
+        }
+
         public function addMonthClause($tableName, $columnName, $aliasName = null, $adjustForTimeZone = false)
         {
             assert('is_string($tableName)');
@@ -370,6 +436,17 @@
             assert('is_string($aliasName) || $aliasName == null');
             assert('is_bool($adjustForTimeZone)');
             $queryString     = self::makeMonthModifierString($tableName, $columnName, $adjustForTimeZone);
+            $this->clauses[] = self::resolveForAliasName($queryString, $aliasName);
+            $this->increaseClausesCountByOne();
+        }
+
+        public function addFirstDayOfMonthDateClause($tableName, $columnName, $aliasName = null, $adjustForTimeZone = false)
+        {
+            assert('is_string($tableName)');
+            assert('is_string($columnName)');
+            assert('is_string($aliasName) || $aliasName == null');
+            assert('is_bool($adjustForTimeZone)');
+            $queryString     = self::makeFirstDayOfMonthDateModifierString($tableName, $columnName, $adjustForTimeZone);
             $this->clauses[] = self::resolveForAliasName($queryString, $aliasName);
             $this->increaseClausesCountByOne();
         }

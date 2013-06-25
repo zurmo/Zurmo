@@ -77,6 +77,7 @@
             {
                 throw new ApiNoRightWebApiLoginException();
             }
+            $user->login();
             return $user;
         }
 
@@ -441,6 +442,7 @@
                     'hash'              => Zurmo::t('UsersModule',         'Hash',              array(), null, $language),
                     'isActive'          => Zurmo::t('UsersModule',         'Is Active',         array(), null, $language),
                     'language'          => Zurmo::t('ZurmoModule',         'Language',          array(), null, $language),
+                    'locale'            => Zurmo::t('ZurmoModule',         'Locale',            array(), null, $language),
                     'manager'           => Zurmo::t('UsersModule',         'Manager',           array(), null, $language),
                     'primaryEmail'      => Zurmo::t('ZurmoModule',         'Email',             array(), null, $language),
                     'primaryAddress'    => Zurmo::t('ZurmoModule',         'Address',           array(), null, $language),
@@ -448,6 +450,7 @@
                     'timeZone'          => Zurmo::t('UsersModule',         'Time Zone',         array(), null, $language),
                     'title'             => Zurmo::t('ZurmoModule',         'Salutation',        array(), null, $language),
                     'username'          => Zurmo::t('UsersModule',         'Username',          array(), null, $language),
+                    'lastLoginDateTime' => Zurmo::t('UsersModule',         'Last Login',        array(), null, $language),
                 )
             );
         }
@@ -648,10 +651,12 @@
                 'members' => array(
                     'hash',
                     'language',
+                    'locale',
                     'timeZone',
                     'username',
                     'serializedAvatarData',
                     'isActive',
+                    'lastLoginDateTime',
                 ),
                 'relations' => array(
                     'currency'          => array(RedBeanModel::HAS_ONE,             'Currency'),
@@ -673,6 +678,8 @@
                     array('hash',     'length',  'min'   => 32, 'max' => 32),
                     array('language', 'type',    'type'  => 'string'),
                     array('language', 'length',  'max'   => 10),
+                    array('locale',   'type',    'type'  => 'string'),
+                    array('locale',   'length',  'max'   => 10),
                     array('timeZone', 'type',    'type'  => 'string'),
                     array('timeZone', 'length',  'max'   => 64),
                     array('timeZone', 'UserDefaultTimeZoneDefaultValueValidator'),
@@ -687,6 +694,7 @@
                     array('serializedAvatarData', 'type', 'type' => 'string'),
                     array('isActive', 'readOnly'),
                     array('isActive', 'boolean'),
+                    array('lastLoginDateTime',    'type', 'type' => 'datetime'),
                 ),
                 'elements' => array(
                 ),
@@ -840,6 +848,15 @@
                 return array('firstName', $attribute);
             }
             return parent::getSortAttributesByAttribute($attribute);
+        }
+
+        protected function login()
+        {
+            if (!ApiRequest::isApiRequest())
+            {
+                $this->unrestrictedSet('lastLoginDateTime',  DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+                $this->save();
+            }
         }
     }
 ?>

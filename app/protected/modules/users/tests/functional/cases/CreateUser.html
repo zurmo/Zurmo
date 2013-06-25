@@ -12,49 +12,49 @@
 <tr><td rowspan="1" colspan="3">CreateUser</td></tr>
 </thead><tbody>
 <tr>
-    <td>setSpeed</td>
-    <td>3000</td>
-    <td></td>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>setTimeout</td>
-    <td>45000</td>
-    <td></td>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
 </tr>
 <tr>
-    <td>storeGlobal</td>
-    <td>javascript{Math.floor(Math.random()*11000)}</td>
-    <td>randomSuffix</td>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
 </tr>
 <tr>
-  <td>click</td>
-  <td>link=My Profile</td>
-  <td></td>
+	<td>click</td>
+	<td>link=My Profile</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=Users</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>link=Users</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -62,159 +62,251 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>select</td>
-    <td>UserPasswordForm_title_value</td>
-    <td>label=Mr.</td>
+	<td>select</td>
+	<td>UserPasswordForm_title_value</td>
+	<td>label=Mr.</td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_firstName</td>
-    <td>Janny${randomSuffix}</td>
+	<td>type</td>
+	<td>UserPasswordForm_firstName</td>
+	<td>Janny${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_lastName</td>
-    <td>Jingo${randomSuffix}</td>
+	<td>type</td>
+	<td>UserPasswordForm_lastName</td>
+	<td>Jingo${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_username</td>
-    <td>janny${randomSuffix}</td>
+	<td>type</td>
+	<td>UserPasswordForm_username</td>
+	<td>janny${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_newPassword</td>
-    <td>abc123</td>
+	<td>type</td>
+	<td>UserPasswordForm_newPassword</td>
+	<td>abc123</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_newPassword_repeat</td>
-    <td>abc123</td>
+	<td>type</td>
+	<td>UserPasswordForm_newPassword_repeat</td>
+	<td>abc123</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_jobTitle</td>
-    <td>Jingo Factory</td>
+	<td>type</td>
+	<td>UserPasswordForm_jobTitle</td>
+	<td>Jingo Factory</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_officePhone</td>
-    <td>123456789</td>
+	<td>type</td>
+	<td>UserPasswordForm_officePhone</td>
+	<td>123456789</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_mobilePhone</td>
-    <td>123455555</td>
+	<td>type</td>
+	<td>UserPasswordForm_mobilePhone</td>
+	<td>123455555</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_department</td>
-    <td>Mail</td>
+	<td>type</td>
+	<td>UserPasswordForm_department</td>
+	<td>Mail</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryEmail_emailAddress</td>
-    <td>janny${randomSuffix}.jingo.com</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryEmail_emailAddress</td>
+	<td>janny${randomSuffix}.jingo.com</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryAddress_street1</td>
-    <td>123 Jingo Street</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryAddress_street1</td>
+	<td>123 Jingo Street</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryAddress_state</td>
-    <td>IL</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryAddress_state</td>
+	<td>IL</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryAddress_city</td>
-    <td>Chicago</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryAddress_city</td>
+	<td>Chicago</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryAddress_postalCode</td>
-    <td>60614</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryAddress_postalCode</td>
+	<td>60614</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryAddress_country</td>
-    <td>USA</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryAddress_country</td>
+	<td>USA</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>save</td>
-    <td></td>
+	<td>click</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>assertTextPresent</td>
-    <td>Email Address is not a valid email address.</td>
-    <td></td>
+	<td>assertTextPresent</td>
+	<td>Email Address is not a valid email address.</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>UserPasswordForm_primaryEmail_emailAddress</td>
-    <td>janny${randomSuffix}@jingo.com</td>
+	<td>type</td>
+	<td>UserPasswordForm_primaryEmail_emailAddress</td>
+	<td>janny${randomSuffix}@jingo.com</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>save</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--Business Card View-->
+<tr>
+	<td>click</td>
+	<td>css=img.gravatar</td>
+	<td></td>
 </tr>
 <tr>
+	<td>assertTextPresent</td>
+	<td>Change Profile Picture: Janny${randomSuffix} Jingo${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-icon.ui-icon-closethick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=yt4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Compose Email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-icon.ui-icon-closethick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=123 Jingo Street Chicago IL, 60614 USA</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=span.ui-icon.ui-icon-closethick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-office-phone']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-mobile-phone']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='gravatar-container']/a/img[@class='gravatar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[3]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[4]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[1]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=sliding-panel-toggle</td>
+	<td></td>
+</tr>
+<!--Full View-->
+<tr>
+	<td>click</td>
+	<td>id=show-more-panels-link-yt2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<!--tr>
     <td>assertText</td>
-    <td>link=Edit</td>
-    <td>Edit</td>
-</tr>
-<tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/h1</td>
+    <td>//div[@id='zurmoView']/div[1]/table/tbody/tr[6]/td</td>
     <td>Janny${randomSuffix} Jingo${randomSuffix}</td>
+</tr-->
+<tr>
+	<td>verifyTextPresent</td>
+	<td>janny${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyTextPresent</td>
-    <td>janny${randomSuffix}</td>
-    <td></td>
+	<td>verifyTextPresent</td>
+	<td>Mail</td>
+	<td></td>
 </tr>
 <tr>
-    <td>verifyTextPresent</td>
-    <td>Mail</td>
-    <td></td>
-</tr>
-<tr>
-    <td>assertText</td>
-    <td>link=janny${randomSuffix}@jingo.com</td>
-    <td>janny${randomSuffix}@jingo.com</td>
+	<td>assertText</td>
+	<td>link=janny${randomSuffix}@jingo.com</td>
+	<td>janny${randomSuffix}@jingo.com</td>
 </tr>
 <!--tr>
     <td>compareText</td>
@@ -222,19 +314,54 @@
     <td>123 Jingo Street<br /> Chicago IL, 60614<br /> USAmap</td>
 </tr-->
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div/div[2]/table/tbody/tr[3]/td</td>
-    <td>123456789</td>
+	<td>assertText</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[3]/td</td>
+	<td>123456789</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div/div[2]/table/tbody/tr[4]/td</td>
-    <td>123455555</td>
+	<td>assertText</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[4]/td</td>
+	<td>123455555</td>
 </tr>
 <tr>
-    <td>assertText</td>
-    <td>//div[@id='UserDetailsView']/div/div/div[2]/table/tbody/tr[1]/td</td>
-    <td>Jingo Factory</td>
+	<td>assertText</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[1]/td</td>
+	<td>Jingo Factory</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[3]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[4]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@id='zurmoView']/div[1]/table/tbody/tr[1]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-office-phone']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-mobile-phone']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='contact-details']/span[@class='icon-email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//div[@id='businessCardView']/div[@class='gravatar-container']/a/img[@class='gravatar']</td>
+	<td></td>
 </tr>
 <!-- Assiginig this user to super admin group -->
 <tr>
@@ -243,14 +370,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -258,14 +385,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -273,14 +400,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>addSelection</td>
@@ -288,9 +415,9 @@
 	<td>label=Janny${randomSuffix} Jingo${randomSuffix}</td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -298,14 +425,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -313,79 +440,79 @@
 	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>clickAndWait</td>
-    <td>link=Sign out</td>
-    <td></td>
+	<td>clickAndWait</td>
+	<td>link=Sign out</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>Username</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>Username</td>
+	<td></td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>LoginForm_username</td>
-    <td>janny${randomSuffix}</td>
+	<td>type</td>
+	<td>LoginForm_username</td>
+	<td>janny${randomSuffix}</td>
 </tr>
 <tr>
-    <td>type</td>
-    <td>LoginForm_password</td>
-    <td>abc123</td>
+	<td>type</td>
+	<td>LoginForm_password</td>
+	<td>abc123</td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>Login</td>
-    <td></td>
+	<td>click</td>
+	<td>Login</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-    <td>waitForTextPresent</td>
-    <td>janny${randomSuffix}</td>
-    <td></td>
+	<td>waitForTextPresent</td>
+	<td>janny${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
-    <td>click</td>
-    <td>link=Save</td>
-    <td></td>
+	<td>click</td>
+	<td>link=Save</td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForPageToLoad</td>
-    <td></td>
-    <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-    <td>waitForCondition</td>
-    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-    <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 </tbody></table>
 </body>

@@ -412,7 +412,6 @@
                                                 ' ConfigurableMetadataView MetadataView">') !== false);
             $this->assertTrue(strpos($content, '<div class="wide form">') !== false);
             $this->assertTrue(strpos($content, '<form id="search-formmodal" method="post">') !== false);
-            $this->assertTrue(strpos($content, '<div class="list-view-items-summary-clone">') !== false);
             $this->assertTrue(strpos($content, '</div><div class="search-view-0"') !== false);
             $this->assertTrue(strpos($content, '<table><tr><th></th><td colspan="3">') !== false);
             $this->assertTrue(strpos($content, '<select class="ignore-style ignore-clearform" id="MarketingListsSearch' .

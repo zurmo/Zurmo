@@ -484,6 +484,22 @@
         }
 
         /**
+         * Removes all Runtime FilterForReportForm objects on this report
+         */
+        public function removeRuntimeFilters()
+        {
+            $filters = array();
+            foreach ($this->filters as $filter)
+            {
+                if (!$filter->availableAtRunTime)
+                {
+                    $filters[] = $filter;
+                }
+            }
+            $this->filters = $filters;
+        }
+
+        /**
          * @return array of GroupByForReportForm objects
          */
         public function getGroupBys()

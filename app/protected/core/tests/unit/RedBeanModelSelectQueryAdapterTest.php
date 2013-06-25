@@ -237,6 +237,17 @@
             $this->assertEquals($compareString, $adapter->getSelect());
         }
 
+        public function testAddDayDateClause()
+        {
+            $quote   = DatabaseCompatibilityUtil::getQuote();
+            $adapter = new RedBeanModelSelectQueryAdapter();
+            $this->assertEquals(0, $adapter->getClausesCount());
+            $adapter->addDayDateClause('table', 'abc', 'c');
+            $this->assertEquals(1, $adapter->getClausesCount());
+            $compareString = "select DATE_FORMAT({$quote}table{$quote}.{$quote}abc{$quote}, '%Y-%m-%d') c ";
+            $this->assertEquals($compareString, $adapter->getSelect());
+        }
+
         public function testAddWeekClause()
         {
             $quote   = DatabaseCompatibilityUtil::getQuote();
@@ -260,6 +271,19 @@
             $this->assertEquals($compareString, $adapter->getSelect());
         }
 
+        public function testAddFirstDayOfWeekDateClause()
+        {
+            $quote   = DatabaseCompatibilityUtil::getQuote();
+            $adapter = new RedBeanModelSelectQueryAdapter();
+            $this->assertEquals(0, $adapter->getClausesCount());
+            $adapter->addFirstDayOfWeekDateClause('table', 'abc', 'c');
+            $this->assertEquals(1, $adapter->getClausesCount());
+            $compareString = "select DATE_FORMAT(DATE_SUB({$quote}table{$quote}.{$quote}abc{$quote}, " .
+                             "INTERVAL(WEEKDAY({$quote}table{$quote}.{$quote}abc{$quote})) day), " .
+                             "'%Y-%m-%d') c ";
+            $this->assertEquals($compareString, $adapter->getSelect());
+        }
+
         public function testAddMonthClause()
         {
             $quote   = DatabaseCompatibilityUtil::getQuote();
@@ -280,6 +304,19 @@
             $this->assertEquals(1, $adapter->getClausesCount());
             $compareString = "select month({$quote}table{$quote}.{$quote}abc{$quote} - INTERVAL " .
                              abs(self::$chicagoOffsetInSeconds) . " SECOND) c ";
+            $this->assertEquals($compareString, $adapter->getSelect());
+        }
+
+        public function testAddFirstDayOfMonthDateClause()
+        {
+            $quote   = DatabaseCompatibilityUtil::getQuote();
+            $adapter = new RedBeanModelSelectQueryAdapter();
+            $this->assertEquals(0, $adapter->getClausesCount());
+            $adapter->addFirstDayOfMonthDateClause('table', 'abc', 'c');
+            $this->assertEquals(1, $adapter->getClausesCount());
+            $compareString = "select DATE_FORMAT(DATE_ADD({$quote}table{$quote}.{$quote}abc{$quote}, " .
+                             "INTERVAL(1-DAYOFMONTH({$quote}table{$quote}.{$quote}abc{$quote})) day), " .
+                             "'%Y-%m-%d') c ";
             $this->assertEquals($compareString, $adapter->getSelect());
         }
 

@@ -209,6 +209,8 @@
             Yii::app()->user->userModel = $super;
             $user = User::getByUsername('steve');
             Yii::app()->imap->connect();
+            //There is one notification from testRunCaseOne
+            $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
 
             $messages = EmailMessage::getAll();
             foreach ($messages as $message)
@@ -271,6 +273,7 @@
                 $this->assertTrue($attachment->size > 0);
             }
             $this->assertEquals(EmailFolder::TYPE_ARCHIVED_UNMATCHED, $emailMessage->folder->type);
+            //No duplicate notification is created
             $this->assertEquals(1, Notification::getCountByTypeAndUser('EmailMessageArchivingEmailAddressNotMatching', $user));
         }
 

@@ -78,5 +78,11 @@
             $email->emailAddress = $model->firstName . '.' . $model->lastName . '@company.com';
             return $email;
         }
+
+        protected static function resolveDemoEmailAddress($username)
+        {
+            $applicationName = strtolower(preg_replace('/[^\da-z]/i', '', Yii::app()->label));
+            return $username . '@test.' . $applicationName . '.com';
+        }
     }
 ?>

@@ -153,6 +153,16 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'locale', 'type' => 'LocaleStaticDropDown',
+                                                    'addBlank' => true),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'timeZone', 'type' => 'TimeZoneStaticDropDown'),
                                             ),
                                         ),
@@ -184,22 +194,38 @@
             return $metadata;
         }
 
+        /**
+         * Just show 'Details' because the business card view has the person's name
+         * @return string
+         */
         public function getTitle()
         {
-            if ($this->model->id > 0)
-            {
-                return strval($this->model);
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            return Zurmo::t('Core', 'Details');
         }
 
-        protected function renderBeforeFormLayoutForDetailsContent()
+        protected function resolveLeftContentForSlidingPanels($content)
         {
-            $element = new AvatarTypeAndEmailElement($this->model, 'serializedAvatarData');
-            return $element->render();
+            $content  = $this->makeFirstSlidingPanelContent($content);
+            $content .= $this->makeSecondSlidingPanelContent();
+            return $content;
+        }
+
+        protected function makeFirstSlidingPanelContent($content)
+        {
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel', 'id' => 'zurmoView'), $content);
+        }
+
+        protected function makeSecondSlidingPanelContent()
+        {
+            $layout  = new UserCardViewLayout($this->model);
+            $content = $layout->renderContent();
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel business-card showing-panel',
+                                               'id'    => 'businessCardView'), $content);
+        }
+
+        protected function renderAfterRightSideContent()
+        {
+            return PersonSlidingPanelsUtil::renderToggleLinkContent();
         }
     }
 ?>

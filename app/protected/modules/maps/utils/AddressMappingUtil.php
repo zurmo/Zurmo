@@ -69,8 +69,8 @@
                 if ($latitudeLongitudeCoordinates != null && (!empty($latitudeLongitudeCoordinates['latitude']) && !empty($latitudeLongitudeCoordinates['longitude'])))
                 {
                     assert('is_array($latitudeLongitudeCoordinates)');
-                    $address->latitude     = (double)$latitudeLongitudeCoordinates['latitude'];
-                    $address->longitude    = (double)$latitudeLongitudeCoordinates['longitude'];
+                    $address->latitude     = self::sanitizeLatitudeOrLongitude((double)$latitudeLongitudeCoordinates['latitude']);
+                    $address->longitude    = self::sanitizeLatitudeOrLongitude((double)$latitudeLongitudeCoordinates['longitude']);
                     $address->invalid      = false;
                 }
                 else
@@ -79,6 +79,12 @@
                 }
                 $address->unrestrictedSave(false);
             }
+        }
+
+        public static function sanitizeLatitudeOrLongitude($value)
+        {
+            assert('is_numeric($value)');
+            return substr($value, 0, 12);
         }
 
         /**

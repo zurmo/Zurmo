@@ -39,9 +39,10 @@
      */
     class AvatarTypeAndEmailElement extends Element
     {
+        public $editableTemplate = '<td colspan="{colspan}">{content}{error}</td>';
+
         protected function renderControlEditable()
         {
-            $this->editableTemplate = '<td colspan="{colspan}">{content}{error}</td>';
             $content  = $this->renderAvatarTypeRadio              ($this->model, $this->form, 'avatarType');
             $content .= $this->renderCustomAvatarEmailAddressInput($this->model, $this->form, 'customAvatarEmailAddress');
             $this->renderScripts();
@@ -50,8 +51,7 @@
 
         protected function renderControlNonEditable()
         {
-            $this->nonEditableTemplate = '<td colspan="{colspan}">{content}</td>';
-            $avatarImage = $this->model->getAvatarImage(200);
+            $avatarImage = $this->model->getAvatarImage(110);
             $content     = '<div class="gravatar-container">';
             if (Yii::app()->user->userModel->id == $this->model->id ||
                 RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))

@@ -291,5 +291,33 @@
             $report->addDrillDownDisplayAttribute($drillDownDisplayAttribute);
             $this->assertTrue($report->canCurrentUserProperlyRenderResults());
         }
+
+        public function testRemoveRuntimeFilters()
+        {
+            $report = new Report();
+            $report->setModuleClassName('ContactsModule');
+            $report->setType           (Report::TYPE_ROWS_AND_COLUMNS);
+
+            //A filter available at runtime
+            $filter                              = new FilterForReportForm('AccountsModule', 'Account', $report->getType());
+            $filter->availableAtRunTime          = true;
+            $filter->attributeIndexOrDerivedType = 'officePhone';
+            $filter->value                       = 'aValue';
+            $filter->operator                    = 'equals';
+            $report->addFilter($filter);
+
+            //A filter not available at runtime
+            $filter2                              = new FilterForReportForm('AccountsModule', 'Account', $report->getType());
+            $filter2->availableAtRunTime          = false;
+            $filter2->attributeIndexOrDerivedType = 'contacts___lastName';
+            $filter2->value                       = 'aValue';
+            $filter2->operator                    = 'equals';
+            $report->addFilter($filter2);
+
+            $report->removeRuntimeFilters();
+            $filters = $report->getFilters();
+            $this->assertCount(1, $filters);
+            $this->assertEquals($filter2, $filters[0]);
+        }
     }
 ?>

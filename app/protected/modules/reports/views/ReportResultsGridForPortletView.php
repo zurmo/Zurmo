@@ -39,12 +39,20 @@
      */
     class ReportResultsGridForPortletView extends ReportResultsComponentForPortletView
     {
+        private $gridViewId;
+
         /**
          * @return string
          */
         public function getTitle()
         {
-            return Zurmo::t('ReportsModule', 'Results');
+            $content  = Zurmo::t('ReportsModule', 'Results');
+            return $content;
+        }
+
+        public function renderPortletHeadContent()
+        {
+            return $this->renderSummaryCloneContent();;
         }
 
         /**
@@ -78,6 +86,15 @@
                 }
                 return $view->render();
             }
+        }
+
+        protected function renderSummaryCloneContent()
+        {
+            return ZurmoHtml::tag('div',
+                                  array('id'    => 'report-results-grid-view-summary-clone',
+                                        'class' => ExtendedGridView::CLONE_SUMMARY_CLASS,
+                                  ),
+                                  '');
         }
     }
 ?>
