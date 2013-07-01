@@ -49,7 +49,7 @@
 
         public function getValueElementType()
         {
-            return 'BooleanForWizardStaticDropDownElement';
+            return 'BooleanForWizardStaticDropDown';
         }
 
         /**
