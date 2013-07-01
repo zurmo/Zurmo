@@ -114,7 +114,12 @@
             $wizardFormClassName        = $this->getWizardFormClassName();
             $treeType                   = ComponentForReportForm::TYPE_FILTERS;
             $trackableStructurePosition = false; //can we set this to false without jacking things up?
-            foreach ($this->params["relationModel"]->getFilters() as $filterForReportForm)
+            $report                     = $this->params["relationModel"];
+            if (null != $stickyData = StickyReportUtil::getDataByKey($report->id))
+            {
+                StickyReportUtil::resolveStickyDataToReport($report, $stickyData);
+            }
+            foreach ($report->getFilters() as $filterForReportForm)
             {
                 if ($filterForReportForm->availableAtRunTime)
                 {

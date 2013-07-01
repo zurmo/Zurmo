@@ -87,10 +87,7 @@
 
         protected function getEmptyText()
         {
-            $moduleLabel     = Zurmo::t('CampaignsModule', 'Email Recipients');
-            $content  = '<div class="general-issue-notice no-email-recipients-found"><span class="icon-notice"></span><p>';
-            $content .= Zurmo::t('Core', 'Email recipients will appear here once the campaign begins sending out');
-            $content .= '</p></div>';
+            $content = Zurmo::t('Core', 'Email recipients will appear here once the campaign begins sending out');
             return $content;
         }
 

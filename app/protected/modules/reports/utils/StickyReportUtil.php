@@ -65,5 +65,33 @@
                 }
             }
         }
+
+        /**
+         * Overriding to prefix the key with model name
+         * @param string $key
+         */
+        public static function clearDataByKey($key)
+        {
+            parent::clearDataByKey('report_' . $key);
+        }
+
+        /**
+         * Overriding to prefix the key with model name
+         * @param string $key
+         */
+        public static function getDataByKey($key)
+        {
+            return parent::getDataByKey('report_' . $key);
+        }
+
+        /**
+         * Overriding to prefix the key with model name
+         * @param string $key
+         * @param array $data
+         */
+        public static function setDataByKeyAndData($key, array $data)
+        {
+            parent::setDataByKeyAndData('report_' . $key, $data);
+        }
     }
 ?>

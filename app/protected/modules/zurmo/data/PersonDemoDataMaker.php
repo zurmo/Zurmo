@@ -81,8 +81,7 @@
 
         protected static function resolveDemoEmailAddress($username)
         {
-            $applicationName = strtolower(preg_replace('/[^\da-z]/i', '', Yii::app()->label));
-            return $username . '@test.' . $applicationName . '.com';
+            return $username . '@test.' . StringUtil::resolveCustomizedLabel() . '.com';
         }
     }
 ?>

@@ -42,16 +42,26 @@
     {
         public function attach($owner)
         {
+            $this->attachNonApiRequestBehaviors($owner);
+            if (Yii::app()->isApplicationInstalled())
+            {
+                $this->attachNonApiRequestBehaviorsForInstalledApplication($owner);
+            }
+        }
+
+        protected function attachNonApiRequestBehaviors(CComponent $owner)
+        {
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleApplicationCache'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleImports'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLibraryCompatibilityCheck'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleStartPerformanceClock'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadLanguage'));
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadTimeZone'));
-            if (Yii::app()->isApplicationInstalled())
-            {
-                $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
-            }
+        }
+
+        protected function attachNonApiRequestBehaviorsForInstalledApplication(CComponent $owner)
+        {
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
         }
     }
 ?>

@@ -74,9 +74,14 @@
             $filter->availableAtRunTime          = true;
             $report->addFilter($filter);
 
+            $filterValue = array();
+            foreach (array_keys($leadStateIdsAndNames) as $value)
+            {
+                $filterValue[] = (string) $value;
+            }
             $filter = new FilterForReportForm('ContactsModule', 'Contact', $report->getType());
             $filter->attributeIndexOrDerivedType = 'state';
-            $filter->value                       = array_keys($leadStateIdsAndNames);
+            $filter->value                       = $filterValue;
             $filter->operator                    = OperatorRules::TYPE_ONE_OF;
             $report->addFilter($filter);
 

@@ -42,24 +42,32 @@
         {
             parent::setUpBeforeClass();
             global $freeze;
+            RedBeanDatabase::setup(Yii::app()->db->connectionString,
+                Yii::app()->db->username,
+                Yii::app()->db->password);
+            assert('RedBeanDatabase::isSetup()'); // Not Coding Standard
             if ($freeze)
             {
                 $schemaFile = sys_get_temp_dir() . '/autobuilt.sql';
                 $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches); // Not Coding Standard
                 assert('$success == 1'); // Not Coding Standard
                 $databaseName = $matches[1];
-                if (file_exists($schemaFile) && filesize($schemaFile) > 0)
+                if (is_readable($schemaFile) && filesize($schemaFile) > 0)
                 {
-                    system('mysql -u' . Yii::app()->db->username .
+                    $systemOutput = system('mysql -u' . Yii::app()->db->username .
                                 ' -p' . Yii::app()->db->password .
-                                  ' ' . $databaseName            .
-                           " < $schemaFile");
+                                  ' ' . $databaseName            . " < $schemaFile");
+                   if ($systemOutput != null)
+                   {
+                       echo 'Loading schema using system command. Output: ' . $systemOutput . "\n\n";
+                   }
+                }
+                else
+                {
+                    echo "The schema file is not readable: $schemaFile. \n\n";
+                    exit;
                 }
             }
-            RedBeanDatabase::setup(Yii::app()->db->connectionString,
-                                   Yii::app()->db->username,
-                                   Yii::app()->db->password);
-            assert('RedBeanDatabase::isSetup()'); // Not Coding Standard
             CustomFieldData::forgetAllPhpCache();
             GeneralCache::forgetAll();
             BeanModelCache::forgetAll();

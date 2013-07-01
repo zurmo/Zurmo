@@ -388,7 +388,7 @@
             ControllerSecurityUtil::resolveCanCurrentUserAccessModule($savedReport->moduleClassName);
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($savedReport);
             $report                         = SavedReportToReportAdapter::makeReportBySavedReport($savedReport);
-            $dataProvider                   = $this->getDataProviderForExport($report, (int)$stickySearchKey, false);
+            $dataProvider                   = $this->getDataProviderForExport($report, $report->getId(), false);
             $totalItems                     = intval($dataProvider->calculateTotalItemCount());
             $data                           = array();
             if ($totalItems > 0)

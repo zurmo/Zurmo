@@ -70,9 +70,12 @@
         {
             $id       = 'testImapConnection';
             $content  = '<span>';
+            $params   = array();
+            $this->resolveParamsFromModel($this->model, $params);
             $content .= ZurmoHtml::ajaxLink(
                 ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Test Connection')),
-                Yii::app()->createUrl('emailMessages/default/testImapConnection/', array()),
+                Yii::app()->createUrl('emailMessages/default/testImapConnection/',
+                                      $params),
                 static::resolveAjaxOptionsForTestEmailSettings($this->form->getId()),
                 array('id' => $id, 'class' => 'EmailTestingButton z-button')
             );
@@ -88,6 +91,14 @@
             $ajaxOptions['type'] = 'POST';
             $ajaxOptions['data'] = 'js:$("#' . $formId . '").serialize()';
             return $ajaxOptions;
+        }
+
+        protected function resolveParamsFromModel($model, & $params)
+        {
+            if (get_class($model) == 'BounceConfigurationForm')
+            {
+                $params['type'] = 2;
+            }
         }
     }
 ?>

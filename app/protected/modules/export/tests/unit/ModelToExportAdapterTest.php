@@ -87,6 +87,52 @@
             parent::teardown();
         }
 
+        public function testGetDataWithEmailAddress()
+        {
+            $testItem                               = new ExportTestModelItem5();
+            $createStamp = strtotime(DateTimeUtil::convertTimestampToDbFormatDateTime(time()));
+            $testItem->emailAddress                 = 'a@a.com';
+
+            $this->assertTrue($testItem->save());
+            $id = $testItem->id;
+            $testItem->forget();
+            unset($testItem);
+
+            $testItem    = ExportTestModelItem5::getById($id);
+            $adapter     = new ModelToExportAdapter($testItem);
+            $data        = $adapter->getData();
+
+            $headerData  = $adapter->getHeaderData();
+
+            $compareData = array(
+                $id,
+                'stubDateTime',
+                'stubDateTime',
+                'super',
+                'super',
+                'super',
+                'a@a.com',
+                );
+            $compareHeaderData = array(
+                $testItem->getAttributeLabel('id'),
+                $testItem->getAttributeLabel('createdDateTime'),
+                $testItem->getAttributeLabel('modifiedDateTime'),
+                $testItem->getAttributeLabel('createdByUser'),
+                $testItem->getAttributeLabel('modifiedByUser'),
+                $testItem->getAttributeLabel('owner'),
+                $testItem->getAttributeLabel('emailAddress'),
+                );
+
+            $createdDateTimeKey = array_search($testItem->getAttributeLabel('createdDateTime'), $headerData);
+            $modifiedDateTimeKey = array_search($testItem->getAttributeLabel('modifiedDateTime'), $headerData);
+            $this->assertEquals($createStamp, strtotime($data[$createdDateTimeKey]), '', 2);
+            $this->assertEquals($createStamp, strtotime($data[$modifiedDateTimeKey]), '', 2);
+            $data[$createdDateTimeKey]  = 'stubDateTime';
+            $data[$modifiedDateTimeKey] = 'stubDateTime';
+            $this->assertEquals($compareData,       $data);
+            $this->assertEquals($compareHeaderData, $headerData);
+        }
+
         public function testGetDataWithNoRelationsSet()
         {
             $super                                  = User::getByUsername('super');

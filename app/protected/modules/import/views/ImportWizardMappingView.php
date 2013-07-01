@@ -160,7 +160,7 @@
         protected function getFormLayoutHeaderColumnsContent()
         {
             $headerColumns = array();
-            $headerColumns[] = Zurmo::t('ImportModule', 'Zurmo Field');
+            $headerColumns[] = Zurmo::t('ImportModule', 'Zurmo Field', LabelUtil::getTranslationParamsForAllModules());
             if ($this->model->firstRowIsHeaderRow)
             {
                 $headerColumns[] = Zurmo::t('ImportModule', 'Header');

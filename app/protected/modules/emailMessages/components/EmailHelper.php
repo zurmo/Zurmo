@@ -107,13 +107,13 @@
          * Fallback from address to use for sending out notifications.
          * @var string
          */
-        public $defaultFromAddress   = 'notifications@zurmoalerts.com';
+        public $defaultFromAddress;
 
         /**
          * Utilized when sending a test email nightly to check the status of the smtp server
          * @var string
          */
-        public $defaultTestToAddress = 'testJobEmail@zurmoalerts.com';
+        public $defaultTestToAddress;
 
         /**
          * Called once per page load, will load up outbound settings from the database if available.
@@ -123,6 +123,8 @@
         public function init()
         {
             $this->loadOutboundSettings();
+            $this->defaultFromAddress   = EmailHelper::resolveDefaultEmailAddress('notification');
+            $this->defaultTestToAddress = EmailHelper::resolveDefaultEmailAddress('testJobEmail');
         }
 
         protected function loadOutboundSettings()
@@ -403,6 +405,14 @@
                 return $this->defaultFromAddress;
             }
             return $user->primaryEmail->emailAddress;
+        }
+
+        /*
+         * Resolving Default Email Addess For Email Testing
+         */
+        public static function resolveDefaultEmailAddress($defaultEmailAddress)
+        {
+            return $defaultEmailAddress . '@' . StringUtil::resolveCustomizedLabel() . 'alerts.com';
         }
     }
 ?>

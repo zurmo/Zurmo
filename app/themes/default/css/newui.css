@@ -11608,6 +11608,9 @@ div.hasHalfs > div input {
   vertical-align: middle;
   position: relative;
 }
+.juiportlet-widget.AllSocialItemsForPortletView .empty {
+  display: none;
+}
 .juiportlet-widget.AllSocialItemsForPortletView .icon-empty:before {
   content: 'u';
   font-weight: normal;
@@ -15932,6 +15935,9 @@ a.close-ModalGameNotification.simple-link {
   float: none;
   margin-bottom: 0;
 }
+.UserSocialItemsForPortletView .empty {
+  display: none;
+}
 #UserDetailsView {
   padding: 0 20px 20px 0;
 }
@@ -17188,21 +17194,6 @@ a.user-link {
 #ModuleForReportWizardView table td {
   padding-left: 0;
 }
-/*
-#GeneralDataForReportWizardView{
-    .panel{
-        width: 70%;
-        float: left;
-    }
-    .right-side-edit-view-panel{
-        width: 30%;
-        float: right;
-        position: relative;
-        top:-2px;
-        right:0;
-    }
-}
-*/
 .hasTree {
   width: 25%;
   float: left;
@@ -17618,6 +17609,9 @@ a.user-link {
 }
 .ReportResultsGridView .items {
   overflow-x: hidden;
+}
+.ReportResultsGridView .icon-empty:before {
+  content: "V";
 }
 #MatrixReportResultsGridView #report-results-grid-view > .items th,
 #MatrixReportResultsGridView #report-results-grid-view td {
@@ -18844,6 +18838,9 @@ a + .autoresponder-stats {
   -o-text-shadow: 0 0 5px #ffd900;
   -ms-text-shadow: 0 0 5px #ffd900;
   text-shadow: 0 0 5px #ffd900;
+}
+.CampaignItemsRelatedListView .icon-empty:before {
+  content: "f";
 }
 .no-subscribers-found .icon-notice:before,
 .no-email-recipients-found .icon-notice:before {

@@ -51,7 +51,7 @@
         protected function getDropDownArray()
         {
             return array(
-                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID     => Zurmo::t('ImportModule', 'Zurmo Id'),
+                IdValueTypeMappingRuleForm::ZURMO_MODEL_ID     => Zurmo::t('ImportModule', 'Zurmo Id', LabelUtil::getTranslationParamsForAllModules()),
                 IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID => Zurmo::t('ImportModule', 'Other Id'));
         }
     }

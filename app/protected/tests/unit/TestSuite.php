@@ -117,6 +117,12 @@
 
             if ($freeze && !$reuse)
             {
+                if (!is_writable(sys_get_temp_dir()))
+                {
+                    echo "\n\nTemp directory must be writable to store reusable schema\n"; // Not Coding Standard
+                    echo "Temp directory: " . sys_get_temp_dir() . "\n\n"; // Not Coding Standard
+                    exit;
+                }
                 InstallUtil::connectToDatabaseWithConnectionString(Yii::app()->db->connectionString,
                                                                    Yii::app()->db->username,
                                                                    Yii::app()->db->password);
@@ -134,11 +140,14 @@
                 $success = preg_match("/;dbname=([^;]+)/", Yii::app()->db->connectionString, $matches); // Not Coding Standard
                 assert('$success == 1');
                 $databaseName = $matches[1];
-                system('mysqldump -u' . Yii::app()->db->username .
-                                ' -p' . Yii::app()->db->password .
-                                  ' ' . $databaseName            .
-                       " > $schemaFile");
-
+                $systemOutput = system('mysqldump -u' . Yii::app()->db->username .
+                                       ' -p' . Yii::app()->db->password .
+                                       ' ' . $databaseName            .
+                                       " > $schemaFile");
+                if ($systemOutput != null)
+                {
+                    echo 'Dumping schema using system command. Output: ' . $systemOutput . "\n\n";
+                }
                 InstallUtil::close();
                 echo "Database closed.\n";
                 assert('!RedBeanDatabase::isSetup()');

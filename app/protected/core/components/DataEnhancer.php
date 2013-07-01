@@ -59,6 +59,15 @@
         }
 
         /**
+         * Override and return back of card close label for person
+         * @return null | string
+         */
+        public function getPersonBackOfCardCloseLabel()
+        {
+            return null;
+        }
+
+        /**
          * Override and return back of card content for person
          * @param User|Person $person
          * @return null | string

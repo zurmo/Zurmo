@@ -142,7 +142,7 @@
             $this->assertNull($emailHelper->outboundUsername);
             $this->assertNull($emailHelper->outboundPassword);
             $this->assertNull($emailHelper->outboundSecurity);
-            $this->assertEquals('notifications@zurmoalerts.com', $emailHelper->fromAddress);
+            $this->assertEquals($emailHelper->defaultTestToAddress, $emailHelper->fromAddress);
             $this->assertEquals(strval($billy), $emailHelper->fromName);
 
             //Load outbound setting when EmailAccount useCustomOutboundSettings = true

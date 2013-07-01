@@ -53,9 +53,9 @@
         protected function getDropDownArray()
         {
             return array(
-                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID            => Zurmo::t('ImportModule', 'Zurmo Id'),
+                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID            => Zurmo::t('ImportModule', 'Zurmo Id', LabelUtil::getTranslationParamsForAllModules()),
                 UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID  => Zurmo::t('ImportModule', 'Other Id'),
-                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME           => Zurmo::t('ImportModule', 'Zurmo Username'));
+                UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME           => Zurmo::t('ImportModule', 'Zurmo Username', LabelUtil::getTranslationParamsForAllModules()));
         }
     }
 ?>

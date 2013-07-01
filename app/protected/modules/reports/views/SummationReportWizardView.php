@@ -170,7 +170,7 @@
                 $('#" . ModuleForReportWizardView::getPreviousPageLinkId() . "').unbind('click');
                 $('#" . ModuleForReportWizardView::getPreviousPageLinkId() . "').bind('click', function()
                     {
-                        url = '" . Yii::app()->createUrl('reports/default/index') . "';
+                        url = document.referrer;
                         window.location.href = url;
                         return false;
                     }

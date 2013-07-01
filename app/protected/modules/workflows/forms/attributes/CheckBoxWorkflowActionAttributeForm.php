@@ -49,7 +49,20 @@
 
         public function getValueElementType()
         {
-            return 'BooleanStaticDropDown';
+            return 'BooleanForWizardStaticDropDownElement';
+        }
+
+        /**
+         * Value can only be true or false
+         * @return bool
+         */
+        public function validateValue()
+        {
+            if ($this->value == 0 || $this->value == 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         /**

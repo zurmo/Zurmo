@@ -109,7 +109,7 @@
                         if (linkId == '" . DisplayAttributesForReportWizardView::getNextPageLinkId() . "')
                         {
                             $('#" . static::getValidationScenarioInputId() . "').val('" .
-                                ReportWizardForm::ORDER_BYS_VALIDATION_SCENARIO . "');
+                                ReportWizardForm::GENERAL_DATA_VALIDATION_SCENARIO . "');
                             $('#DisplayAttributesForReportWizardView').hide();
                             $('#GeneralDataForReportWizardView').show();
                             $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('100%');
@@ -134,7 +134,7 @@
                 $('#" . ModuleForReportWizardView::getPreviousPageLinkId() . "').unbind('click');
                 $('#" . ModuleForReportWizardView::getPreviousPageLinkId() . "').bind('click', function()
                     {
-                        url = '" . Yii::app()->createUrl('reports/default/index') . "';
+                        url = document.referrer;
                         window.location.href = url;
                         return false;
                     }
@@ -176,7 +176,7 @@
                 $('#" . GeneralDataForReportWizardView::getPreviousPageLinkId() . "').unbind('click');
                 $('#" . GeneralDataForReportWizardView::getPreviousPageLinkId() . "').bind('click', function()
                     {
-                        $('#" . static::getValidationScenarioInputId() . "').val('" . ReportWizardForm::ORDER_BYS_VALIDATION_SCENARIO . "');
+                        $('#" . static::getValidationScenarioInputId() . "').val('" . ReportWizardForm::DISPLAY_ATTRIBUTES_VALIDATION_SCENARIO . "');
                         $('#DisplayAttributesForReportWizardView').show();
                         $('#GeneralDataForReportWizardView').hide();
                         $('.StepsAndProgressBarForWizardView').find('.progress-bar').width('80%');

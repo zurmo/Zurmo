@@ -51,7 +51,7 @@
         protected function getDropDownArray()
         {
             return array(
-                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID      => Zurmo::t('ImportModule', 'Zurmo Id'),
+                RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_ID      => Zurmo::t('ImportModule', 'Zurmo Id' , LabelUtil::getTranslationParamsForAllModules()),
                 RelatedModelValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID  => Zurmo::t('ImportModule', 'Other Id'),
                 RelatedModelValueTypeMappingRuleForm::ZURMO_MODEL_NAME    => Zurmo::t('ImportModule', 'Name'));
         }

@@ -42,10 +42,8 @@
         public function renderGridViewData()
         {
             $className = get_class($this);
-            $value      = $className. '::resolveValueFromNameAndUnsubscribed(strval($data->contact), ' .
-                                                                    '$data->unsubscribed, ' .
-                                                                    '"' . $this->view->getContainerModuleClassName() .
-                                                                    '")';
+            $linkContent = $this->view->getRelatedLinkString('$data->contact', 'contact', 'contacts');
+            $value      = $className . '::resolveValueFromNameAndUnsubscribed(' . $linkContent . ', $data->unsubscribed, "' . $this->view->getContainerModuleClassName() . '")';
             return array(
                 'name'  => 'Name',
                 'value' => $value,

@@ -92,4 +92,12 @@
                 return          ZurmoHtml::tag('h1', array(), $content);
             }
         }
+
+        /**
+         * used for customizing label in UI
+         */
+        public static function resolveCustomizedLabel()
+        {
+            return strtolower(preg_replace('/[^\da-z]/i', '', Yii::app()->label));
+        }
     }

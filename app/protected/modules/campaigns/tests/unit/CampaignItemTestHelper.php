@@ -38,7 +38,7 @@
     {
         public static function createCampaignItem($processed, $campaign = null, $contact = null)
         {
-            $campaignItem       = static::populateCampaignItem($processed, $campaign, $contact);
+            $campaignItem       = static::populateCampaignItem((bool)$processed, $campaign, $contact);
             $saved              = $campaignItem->unrestrictedSave();
             assert('$saved');
             return $campaignItem;
@@ -46,7 +46,7 @@
 
         public static function populateCampaignItem($processed, $campaign = null, $contact = null)
         {
-            assert('is_string($processed) || is_int($processed)');
+            assert('is_bool($processed)');
             assert('is_object($campaign) || $campaign === null');
             assert('is_object($contact) || $contact === null');
             if (empty($campaign))

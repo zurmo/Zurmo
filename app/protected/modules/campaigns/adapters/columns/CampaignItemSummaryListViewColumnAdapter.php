@@ -62,13 +62,17 @@
 
         public static function resolveContactWithLink(Contact $contact)
         {
-            $moduleClassName = static::resolveModuleClassName($contact);
-            $linkRoute       = '/' . $moduleClassName::getDirectoryName() . '/default/details';
-            $linkContent     = ActionSecurityUtil::resolveLinkToModelForCurrentUser(strval($contact), $contact,
-                               $moduleClassName, $linkRoute);
-            if ($linkContent == null)
+            $linkContent = static::renderRestrictedContactAccessLink($contact);
+            if (ActionSecurityUtil::canCurrentUserPerformAction('Details', $contact))
             {
-                $linkContent = static::renderRestrictedContactAccessLink($contact);
+                $moduleClassName = static::resolveModuleClassName($contact);
+                $linkRoute       = '/' . $moduleClassName::getDirectoryName() . '/default/details';
+                $link            = ActionSecurityUtil::resolveLinkToModelForCurrentUser(strval($contact), $contact,
+                                       $moduleClassName, $linkRoute);
+                if ($link != null)
+                {
+                    $linkContent = $link;
+                }
             }
             return ZurmoHtml::tag('div', array('class' => 'email-recipient-name'), $linkContent);
         }

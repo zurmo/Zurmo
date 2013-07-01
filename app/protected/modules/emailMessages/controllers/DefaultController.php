@@ -230,11 +230,21 @@
         }
 
         /**
-        * Assumes before calling this, the inbound settings have been validated in the form.
-        */
-        public function actionTestImapConnection()
+         * Assumes before calling this, the inbound settings have been validated in the form.
+         */
+        public function actionTestImapConnection($type = 1)
         {
-            $configurationForm = EmailArchivingConfigurationFormAdapter::makeFormFromGlobalConfiguration();
+            $type   = intval($type);
+            if ($type < 1 || $type > 2 )
+            {
+                throw new CHttpException(400);
+            }
+            $adapterClassName   = 'EmailArchivingConfigurationFormAdapter';
+            if ($type == 2)
+            {
+                $adapterClassName   = 'BounceConfigurationFormAdapter';
+            }
+            $configurationForm = $adapterClassName::makeFormFromGlobalConfiguration();
             $postVariableName   = get_class($configurationForm);
             if (isset($_POST[$postVariableName]))
             {

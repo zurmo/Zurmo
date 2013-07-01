@@ -57,6 +57,9 @@
     unset($common_config['controllerMap']);
     //Not applicable for console applications.
     unset($common_config['userInterface']);
-
+    if (file_exists(COMMON_ROOT . '/protected/config/commercialConsole.php'))
+    {
+        $common_config = CMap::mergeArray($common_config, require(COMMON_ROOT . '/protected/config/commercialConsole.php'));
+    }
     return $common_config
 ?>

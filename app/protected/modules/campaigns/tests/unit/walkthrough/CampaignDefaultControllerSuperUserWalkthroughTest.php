@@ -511,10 +511,8 @@
             $this->assertTrue(strpos($content, '<div class="campaign-items-container">') !== false);
             $this->assertTrue(strpos($content, '<div class="cgrid-view" id="list-viewCampaignDetailsAndRelations' .
                                                 'ViewLeftBottomView') !== false);
-            $this->assertTrue(strpos($content, '<div class="general-issue-notice no-email-recipients-found">' .
-                                                '<span class="icon-notice"></span>') !== false);
-            $this->assertTrue(strpos($content, '<p>Email recipients will appear here once the campaign begins ' .
-                                                'sending out</p></div></span>') !== false);
+            $this->assertTrue(strpos($content, 'Email recipients will appear here once the campaign begins ' .
+                                                'sending out') !== false);
         }
 
         /**
