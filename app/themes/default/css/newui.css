@@ -4886,29 +4886,29 @@ body.honey .action-reject:hover .z-label {
 .color-swatch.honey .theme-color-3 {
   background: #582823;
 }
-.background-texture-1 body.light-noise-diagonal,
+body.light-noise-diagonal,
 .texture-swatch.light-noise-diagonal .background-texture-1 {
-  background: url(../patterns/light-noise-diagonal/light-noise-diagonal.png) left top repeat;
+  background: url(../patterns/light-noise-diagonal/light-noise-diagonal.png) left top repeat !important;
 }
 body.french-stucco,
 .texture-swatch.french-stucco .background-texture-1 {
-  background: url(../patterns/french-stucco/french-stucco.png) left top repeat;
+  background: url(../patterns/french-stucco/french-stucco.png) left top repeat !important;
 }
 body.exclusive-paper,
 .texture-swatch.exclusive-paper .background-texture-1 {
-  background: url(../patterns/exclusive-paper/exclusive-paper.png) left top repeat;
+  background: url(../patterns/exclusive-paper/exclusive-paper.png) left top repeat !important;
 }
 body.diagonal-noise,
 .texture-swatch.iagonal-noise .background-texture-1 {
-  background: url(../patterns/diagonal-noise/diagonal-noise.png) left top repeat;
+  background: url(../patterns/diagonal-noise/diagonal-noise.png) left top repeat !important;
 }
 body.paper,
 .texture-swatch.paper .background-texture-1 {
-  background: url(../patterns/paper/paper.png) left top repeat;
+  background: url(../patterns/paper/paper.png) left top repeat !important;
 }
 body.light-toast,
 .texture-swatch.light-toast .background-texture-1 {
-  background: url(../patterns/light-toast/light-toast.png) left top repeat;
+  background: url(../patterns/light-toast/light-toast.png) left top repeat !important;
 }
 /*END COLOR SCHEME/THEME*//*
 @font-face {
@@ -16781,11 +16781,17 @@ a.user-link {
 #AllSocialItemsForPortletView .comment-content {
   padding-right: 15px;
 }
+#MissionsPageView #comment-inline-edit-form .left-column,
 #ConversationsPageView #comment-inline-edit-form .left-column,
+#MissionsPageView #social-item-inline-edit-form .left-column,
 #ConversationsPageView #social-item-inline-edit-form .left-column {
   padding: 0;
+  z-index: 110;
+  position: relative;
 }
+#MissionsPageView #comment-inline-edit-form .form-toolbar,
 #ConversationsPageView #comment-inline-edit-form .form-toolbar,
+#MissionsPageView #social-item-inline-edit-form .form-toolbar,
 #ConversationsPageView #social-item-inline-edit-form .form-toolbar {
   padding: 0;
 }
