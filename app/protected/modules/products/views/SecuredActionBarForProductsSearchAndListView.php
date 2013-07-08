@@ -70,6 +70,12 @@
                                 'listViewGridId'  => 'eval:$this->listViewGridId',
                                 'pageVarName'     => 'eval:$this->pageVarName'
                             ),
+                            array(
+                                'type'  => 'ExportLink',
+                                'htmlOptions' => array('class' => 'icon-export'),
+                                'listViewGridId' => 'eval:$this->listViewGridId',
+                                'pageVarName' => 'eval:$this->pageVarName'
+                            ),
                         ),
                     ),
                 ),

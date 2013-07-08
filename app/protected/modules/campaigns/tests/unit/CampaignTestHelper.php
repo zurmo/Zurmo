@@ -60,7 +60,7 @@
         {
             assert('is_string($name)');
             assert('is_string($subject)');
-            assert('is_string($textContent)');
+            assert('is_string($textContent) || $textContent === null');
             assert('is_string($htmlContent) || $htmlContent === null');
             assert('is_string($fromName) || $fromName === null');
             assert('is_string($fromAddress) || $fromAddress === null');

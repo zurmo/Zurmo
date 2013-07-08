@@ -169,5 +169,13 @@
 
             return $content;
         }
+
+        protected function renderAfterFormLayout($form)
+        {
+            parent::renderAfterFormLayout($form);
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->getAssetManager()->publish(
+                    Yii::getPathOfAlias('application.modules.productTemplates.elements.assets')) . '/ProductTemplateUtils.js',
+                CClientScript::POS_END);
+        }
     }
 ?>

@@ -64,35 +64,7 @@
             $totalPrice = ProductElementUtil::getProductPortletTotalPrice($product, 0);
             $this->assertEquals($totalPrice, "$1,001.08"); // Not Coding Standard
         }
-/**
-        public function testGetProductNameLinkStringWithExceededLength()
-        {
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $product = ProductTestHelper::createProductByNameForOwner('I am testing product name length', $super);
-            $id                       = $product->id;
-            $product->forget();
-            unset($product);
-            $product                  = Product::getById($id);
-            $name = ProductElementUtil::getProductNameLinkString($product, 0);
-            $this->assertEquals(strip_tags($name), "I am testing produc..");
-            $this->assertNotEquals(strlen($name), 21);
-        }
-
-        public function testGetProductNameLinkStringWithExactLength()
-        {
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-            $product = ProductTestHelper::createProductByNameForOwner('I am testing products', $super);
-            $id                       = $product->id;
-            $product->forget();
-            unset($product);
-            $product                  = Product::getById($id);
-            $name = ProductElementUtil::getProductNameLinkString($product, 0);
-            $this->assertEquals(strip_tags($name), "I am testing products");
-            $this->assertEquals(strlen(strip_tags($name)), 21);
-        }
-**/
+        
         public function testResolveProductHasManyProductCategoriesFromPost()
         {
             $super = User::getByUsername('super');

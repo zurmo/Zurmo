@@ -224,12 +224,12 @@
         }
 
         /**
-         * Return true if the related email message is id < 0 or it is created, but the
+         * Return true if the related email message in on the outbox folder
          * @return bool
          */
-        public function isQueuedOrSkipped()
+        public function isQueued()
         {
-            if ($this->emailMessage->id < 0 || $this->emailMessage->folder->type ==  EmailFolder::TYPE_OUTBOX)
+            if ($this->emailMessage->folder->type ==  EmailFolder::TYPE_OUTBOX)
             {
                 return true;
             }

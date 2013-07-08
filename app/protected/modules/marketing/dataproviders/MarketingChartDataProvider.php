@@ -300,7 +300,7 @@
             $groupByColumnString       = "{$quote}{$tableName}{$quote}.{$quote}{$columnName}{$quote}";
             if ($this->groupBy == MarketingOverallMetricsForm::GROUPING_TYPE_DAY)
             {
-                return $groupByColumnString;
+                return "DATE({$groupByColumnString})";
             }
             elseif ($this->groupBy == MarketingOverallMetricsForm::GROUPING_TYPE_WEEK)
             {

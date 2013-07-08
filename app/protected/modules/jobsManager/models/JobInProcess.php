@@ -39,6 +39,12 @@
      */
     class JobInProcess extends Item
     {
+        /**
+         * if count is greater than 1, return first, since then eventually this will clean out the jobs in process over time.
+         * @param string $type
+         * @return mixed
+         * @throws NotFoundException
+         */
         public static function getByType($type)
         {
             assert('is_string($type) && $type != ""');
@@ -56,7 +62,7 @@
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
             if (count($models) > 1)
             {
-                throw new NotSupportedException();
+                return $models[0];
             }
             if (count($models) == 0)
             {

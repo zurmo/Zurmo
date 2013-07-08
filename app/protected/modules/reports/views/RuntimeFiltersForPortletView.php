@@ -90,7 +90,9 @@
             $content       .= $this->renderViewToolBarContainer($form);
             $formEnd        = $clipWidget->renderEndWidget();
             $content       .= $formEnd;
-            $content       .= '</div></div></div>';
+            $content       .= '</div></div>';
+            $content       .= $this->renderModalContainer();
+            $content       .= '</div>';
             return $content;
         }
 
@@ -220,6 +222,13 @@
                                          $this->params['relationModel']->getId(), array());
             $applyElement          = new SaveButtonActionElement(null, null, null, $params);
             return $resetElement->render() . $applyElement->render();
+        }
+        
+        protected function renderModalContainer()
+        {
+            return ZurmoHtml::tag('div', array(
+                        'id' => ModelElement::MODAL_CONTAINER_PREFIX . '-' . $this->getFormId()
+                   ), '');
         }
     }
 ?>

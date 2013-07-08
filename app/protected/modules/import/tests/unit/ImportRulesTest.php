@@ -118,6 +118,8 @@
                 'Meetings'      => 'Meetings',
                 'Notes'         => 'Notes',
                 'Opportunities' => 'Opportunities',
+                'Products'         => 'Products',
+                'ProductTemplates' => 'Catalog Items',
                 'Tasks'         => 'Tasks',
                 'Users'         => 'Users',
             );

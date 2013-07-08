@@ -52,7 +52,7 @@
                 $('#FlashMessageBar').jnotifyAddMessage(
                 {
                     text: '". ZurmoHtml::encode(Yii::app()->user->getFlash('notification')) ."',
-                    permanent: false,
+                    permanent: true,
                     showIcon: true,
                 }
                 );

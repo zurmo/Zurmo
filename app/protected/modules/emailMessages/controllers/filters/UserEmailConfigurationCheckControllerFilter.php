@@ -50,7 +50,8 @@
             }
             catch (NotFoundException $e)
             {
-                $messageView = new NoUserEmailConfigurationYetView();
+                $redirectUrl = Yii::app()->request->getParam('redirectUrl');
+                $messageView = new NoUserEmailConfigurationYetView($redirectUrl);
                 $view        = new ModalView($this->controller, $messageView);
                 Yii::app()->getClientScript()->setToAjaxMode();
                 echo $view->render();

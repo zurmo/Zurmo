@@ -73,8 +73,7 @@
         {
            parent::renderScripts();
            Yii::app()->clientScript->registerScriptFile(Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('application.modules.products.elements.assets')
-                    ) . '/Modal.js',
+                    Yii::getPathOfAlias('application.modules.productTemplates.elements.assets')) . '/ProductTemplateUtils.js',
                 CClientScript::POS_END);
         }
     }

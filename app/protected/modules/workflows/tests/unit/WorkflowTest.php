@@ -58,7 +58,7 @@
         public function testGetWorkflowSupportedModulesAndLabelsForCurrentUser()
         {
             $modulesAndLabels = Workflow::getWorkflowSupportedModulesAndLabelsForCurrentUser();
-            $this->assertCount(6, $modulesAndLabels);
+            $this->assertCount(7, $modulesAndLabels);
             Yii::app()->user->userModel = User::getByUsername('nobody');
             $modulesAndLabels = Workflow::getWorkflowSupportedModulesAndLabelsForCurrentUser();
             $this->assertCount(0, $modulesAndLabels);
@@ -73,7 +73,7 @@
         public function testGetWorkflowSupportedModulesClassNamesCurrentUserHasAccessTo()
         {
             $moduleClassNames = Workflow::getWorkflowSupportedModulesClassNamesCurrentUserHasAccessTo();
-            $this->assertCount(6, $moduleClassNames);
+            $this->assertCount(7, $moduleClassNames);
             Yii::app()->user->userModel = User::getByUsername('nobody');
             $moduleClassNames = Workflow::getWorkflowSupportedModulesClassNamesCurrentUserHasAccessTo();
             $this->assertCount(0, $moduleClassNames);

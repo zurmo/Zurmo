@@ -48,6 +48,8 @@
         public static function resolveContentForTrackingAndFooter($tracking, & $content, $modelId, $modelType, $personId,
                                                                             $marketingListId, $isHtmlContent = false)
         {
+            assert('is_int($modelId)');
+            assert('is_int($marketingListId)');
             $trackingAdded = static::resolveContentForTracking($tracking, $content, $modelId, $modelType,
                                                                                             $personId, $isHtmlContent);
             if (!$trackingAdded)

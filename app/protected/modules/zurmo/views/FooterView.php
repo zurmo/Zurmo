@@ -54,7 +54,6 @@
             //logo and Zurmo copyright notice. If the display of the logo is not reasonably
             //feasible for technical reasons, the Appropriate Legal Notices must display the words
             //"Copyright Zurmo Inc. 2013. All rights reserved".
-            $userInterfaceTypeSelectorHtml = $this->renderUserInterfaceTypeSelector();
             $copyrightHtml = '<a href="http://www.zurmo.com" id="credit-link" class="clearfix"><span>' .
                              'Copyright &#169; Zurmo Inc., 2013. All rights reserved.</span></a>';
             if ($this->showUserInterfaceTypeSelector)

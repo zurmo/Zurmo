@@ -88,5 +88,71 @@
             $this->assertEquals(0, $emailAccount->useCustomOutboundSettings);
             $this->assertEquals('smtp', $emailAccount->outboundType);
         }
+        
+        public function testCrudForHasOneAndHasManyEmailAccountRelations()
+        {
+            $super          = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $emailAccount   = EmailAccount::resolveAndGetByUserAndName($super);            
+            $emailAccountId = $emailAccount->id;
+            
+            //Check read hasOne relation
+            $emailAccount       = EmailAccount::getById($emailAccountId);
+            $user               = $emailAccount->user;            
+            $this->assertEquals($super, $user);
+            
+            //Check update hasOne relation
+            $user               = User::getByUsername('billy');            
+            $emailAccount->user = $user;            
+            $this->assertTrue($emailAccount->save());
+            $emailAccount       = EmailAccount::getById($emailAccountId);            
+            $this->assertEquals($user, $emailAccount->user);            
+            
+            //Check delete hasOne relation
+            $emailAccount->user = null;
+            $this->assertTrue($emailAccount->save());
+            $emailAccount       = EmailAccount::getById($emailAccountId);                        
+            $this->assertLessThan(0, $emailAccount->user->id);            
+
+            
+            //Check create and read hasMany relation model
+            $emailMessage       = EmailMessageTestHelper::
+                                        createDraftSystemEmail('first test email', $user);
+            $emailAccount->messages->add($emailMessage);
+            $this->assertTrue($emailAccount->save());
+            $emailAccount       = EmailAccount::getById($emailAccountId);                        
+            $this->assertCount(1, $emailAccount->messages);            
+            $this->assertEquals($emailMessage, $emailAccount->messages[0]);
+            
+            //Check update hasMany relation
+            $emailMessage          = $emailAccount->messages[0]; 
+            $emailMessage->subject = 'first test email modified';
+            $this->assertTrue($emailAccount->save());
+            $emailAccount          = EmailAccount::getById($emailAccountId);                        
+            $this->assertCount(1, $emailAccount->messages);            
+            $this->assertEquals($emailMessage->subject, $emailAccount->messages[0]->subject);
+            
+            //Check add and read another hasMany relation model
+            $emailMessage2        = EmailMessageTestHelper::
+                                        createDraftSystemEmail('second test email', $user);
+            $emailAccount->messages->add($emailMessage2);
+            $this->assertTrue($emailAccount->save());
+            $emailAccount         = EmailAccount::getById($emailAccountId);                        
+            $this->assertCount(2, $emailAccount->messages);            
+            $this->assertContains($emailMessage2, $emailAccount->messages);
+                                    
+            //Check delete hasMany relation first model         
+            $emailAccount->messages->remove($emailMessage);
+            $this->assertTrue($emailAccount->save());
+            $emailAccount         = EmailAccount::getById($emailAccountId);                        
+            $this->assertCount(1, $emailAccount->messages);            
+            $this->assertNotContains($emailMessage, $emailAccount->messages);
+                        
+            //Check delete last hasMany relation model
+            $emailAccount->messages->remove($emailMessage2);
+            $this->assertTrue($emailAccount->save());            
+            $emailAccount         = EmailAccount::getById($emailAccountId);                        
+            $this->assertCount(0, $emailAccount->messages);                        
+        }
     }
 ?>

@@ -474,7 +474,7 @@
         /**
          * @depends testRegisterCampaignItemsByCampaign
          */
-        public function testIsQueuedOrSkipped()
+        public function testIsQueued()
         {
             $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 06');
             $campaign                   = CampaignTestHelper::createCampaign('campaign 05',
@@ -497,13 +497,13 @@
             $this->assertTrue($contact->save());
             $campaignItem   = CampaignItemTestHelper::createCampaignItem(0, $campaign, $contact);
             $this->assertNotNull($campaignItem);
-            $this->assertTrue($campaignItem->isQueuedOrSkipped());
+            $this->assertFalse($campaignItem->isQueued());
             CampaignItemsUtil::processDueItem($campaignItem);
-            $this->assertTrue($campaignItem->isQueuedOrSkipped());
+            $this->assertTrue($campaignItem->isQueued());
         }
 
         /**
-         * @depends testIsQueuedOrSkipped
+         * @depends testIsQueued
          */
         public function testIsSkipped()
         {

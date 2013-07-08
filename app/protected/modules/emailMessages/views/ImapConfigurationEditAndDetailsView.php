@@ -133,5 +133,20 @@
         {
             throw new NotSupportedException();
         }
+
+        /**
+         * Override to change the editableTemplate to place the label above the input.
+         * @see DetailsView::resolveElementDuringFormLayoutRender()
+         */
+        protected function resolveElementDuringFormLayoutRender(& $element)
+        {
+            if ($element->getAttribute() == 'imapFolder')
+            {
+                $notification = ZurmoHtml::tag('span', array('class' => 'row-description'),
+                    Zurmo::t('EmailMessagesModule', 'Emails in the specified folder will be deleted by Zurmo after processing.  We do not recommend using a personal email for archiving'));
+                $element->editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}' .
+                    $notification . '{error}</td>';
+            }
+        }
     }
 ?>

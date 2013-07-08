@@ -162,5 +162,75 @@
         {
             //todo: write a full set of tests to document workflow
         }
+
+        public function testUpdateRelatedCatalogItemOnAProductBySellPriceCriteria()
+        {
+            $super = User::getByUsername('super');
+            $contactStates = ContactState::getAll();
+            //Create workflow
+            $workflow = new Workflow();
+            $workflow->setDescription    ('aDescription');
+            $workflow->setIsActive       (true);
+            $workflow->setOrder          (1);
+            $workflow->setModuleClassName('ProductsModule');
+            $workflow->setName           ('myFirstProductWorkflow');
+            $workflow->setTriggerOn      (Workflow::TRIGGER_ON_NEW_AND_EXISTING);
+            $workflow->setType           (Workflow::TYPE_ON_SAVE);
+            $workflow->setTriggersStructure('1');
+            //Add Trigger
+            $trigger     = new TriggerForWorkflowForm('ProductsModule', 'Product', Workflow::TYPE_ON_SAVE);
+            $trigger->attributeIndexOrDerivedType = 'sellPrice';
+            $trigger->value                       = 600;
+            $trigger->operator                    = 'greaterThanOrEqualTo';
+            $workflow->addTrigger($trigger);
+            //Add action
+            $currencies                   = Currency::getAll();
+            $action                       = new ActionForWorkflowForm('Product', Workflow::TYPE_ON_SAVE);
+            $action->type                 = ActionForWorkflowForm::TYPE_UPDATE_RELATED;
+            $action->relation             = 'productTemplate';
+            $attributes                   = array(  'description'    => array('shouldSetValue'    => '1',
+                                                        'type'       => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                        'value'      => 'Set Price'),
+                                                    'priceFrequency' => array('shouldSetValue'    => '1',
+                                                        'type'       => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                        'value'      => 2),
+                                                    'listPrice'      => array('shouldSetValue'    => '1',
+                                                        'type'       => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                        'value'      => 800,
+                                                        'currencyId' => $currencies[0]->id),
+                                                    'cost'           => array('shouldSetValue'    => '1',
+                                                        'type'       => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                        'value'      => 700,
+                                                        'currencyId' => $currencies[0]->id),
+                                                );
+            $action->setAttributes(array(ActionForWorkflowForm::ACTION_ATTRIBUTES => $attributes));
+            $workflow->addAction($action);
+            //Create the saved Workflow
+            $savedWorkflow = new SavedWorkflow();
+            SavedWorkflowToWorkflowAdapter::resolveWorkflowToSavedWorkflow($workflow, $savedWorkflow);
+            $saved = $savedWorkflow->save();
+            $this->assertTrue($saved);
+
+            $productTemplate  = ProductTemplateTestHelper::createProductTemplateByName('superProductTemplate');
+            $productTemplates = ProductTemplate::getByName('superProductTemplate');
+            $product = ProductTestHelper::createProductByNameForOwner('Test Product', $super);
+            $this->assertTrue($product->id > 0);
+            $product->productTemplate = $productTemplates[0];
+
+            //Change product sell price
+            $product->sellPrice->value = 650;
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $product));
+            $saved = $product->save();
+            $this->assertTrue($saved);
+
+            $productId = $product->id;
+            $product->forget();
+
+            $product = Product::getById($productId);
+            $this->assertEquals('Set Price', $product->productTemplate->description);
+            $this->assertEquals(2, $product->productTemplate->priceFrequency);
+            $this->assertEquals(700, $product->productTemplate->cost->value);
+            $this->assertEquals(800, $product->productTemplate->listPrice->value);
+        }
     }
 ?>

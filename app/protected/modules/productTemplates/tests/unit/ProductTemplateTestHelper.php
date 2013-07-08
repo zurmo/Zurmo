@@ -37,12 +37,16 @@
             $productTemplate->description       = 'Description';
             $productTemplate->priceFrequency    = 2;
             $productTemplate->cost              = $currencyValue;
-            $productTemplate->listPrice         = $currencyValue;
 
-            $currencyValue                      = new CurrencyValue();
-            $currencyValue->value               = 500.54;
-            $currencyValue->currency            = $currencies[0];
-            $productTemplate->sellPrice         = $currencyValue;
+            $currencyValueListPrice             = new CurrencyValue();
+            $currencyValueListPrice->value      = 600.54;
+            $currencyValueListPrice->currency   = $currencies[0];
+            $productTemplate->listPrice         = $currencyValueListPrice;
+
+            $currencyValueSellPrice             = new CurrencyValue();
+            $currencyValueSellPrice->value      = 500.54;
+            $currencyValueSellPrice->currency   = $currencies[0];
+            $productTemplate->sellPrice         = $currencyValueSellPrice;
             $productTemplate->type              = ProductTemplate::TYPE_PRODUCT;
             $productTemplate->status            = ProductTemplate::STATUS_ACTIVE;
             $sellPriceFormula                   = new SellPriceFormula();

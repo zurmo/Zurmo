@@ -121,13 +121,13 @@
             {
                 return static::renderRestrictedEmailMessageAccessLink($campaignItem->emailMessage);
             }
-            $isQueuedOrSkipped     = $campaignItem->isQueuedOrSkipped();
+            $isQueued              = $campaignItem->isQueued();
             $isSkipped             = $campaignItem->isSkipped();
-            if ($isQueuedOrSkipped && !$isSkipped)
+            if ($isQueued)
             {
                 $content = static::getQueuedContent();
             }
-            elseif ($isQueuedOrSkipped && $isSkipped)
+            elseif ($isSkipped)
             {
                 $content = static::getSkippedContent();
             }
@@ -135,7 +135,7 @@
             {
                 $content = static::getSendFailedContent();
             }
-            else //sent
+            elseif ($campaignItem->isSent())
             {
                 $content = static::getSentContent();
                 if ($campaignItem->hasAtLeastOneOpenActivity())
@@ -154,6 +154,10 @@
                 {
                     $content .= static::getBouncedContent();
                 }
+            }
+            else //still awaiting queueing
+            {
+                $content = static::getAwaitingQueueingContent();
             }
             $clearFixContent = ZurmoHtml::tag('div', array('class' => 'clearfix'), $content);
             return ZurmoHtml::tag('div', array('class' => 'continuum'), $clearFixContent);
@@ -205,6 +209,12 @@
         {
             $content = '<i>&#9679;</i><span>' . Zurmo::t('MarketingModule', 'Bounced') . '</span>';
             return ZurmoHtml::tag('div', array('class' => 'email-recipient-stage-status stage-false'), $content);
+        }
+        
+        protected static function getAwaitingQueueingContent()
+        {
+            $content = '<i>&#9679;</i><span>' . Zurmo::t('MarketingModule', 'Awaiting queueing') . '</span>';
+            return ZurmoHtml::tag('div', array('class' => 'email-recipient-stage-status queued'), $content);
         }
     }
 ?>

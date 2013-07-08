@@ -55,7 +55,7 @@
             $batchSize = $this->resolveBatchSize();
             $campaignItemsToProcess    = CampaignItem::getByProcessedAndStatusAndSendOnDateTime(
                                                                                         0,
-                                                                                        Campaign::STATUS_ACTIVE,
+                                                                                        Campaign::STATUS_PROCESSING,
                                                                                         time(),
                                                                                         $batchSize);
             foreach ($campaignItemsToProcess as $campaignItem)

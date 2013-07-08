@@ -102,19 +102,19 @@
             return $metadata;
         }
 
-            /**
-             * Override to change the editableTemplate to place the label above the input.
-             * @see DetailsView::resolveElementDuringFormLayoutRender()
-             */
-            protected function resolveElementDuringFormLayoutRender(& $element)
+        /**
+         * Override to change the editableTemplate to place the label above the input.
+         * @see DetailsView::resolveElementDuringFormLayoutRender()
+         */
+        protected function resolveElementDuringFormLayoutRender(& $element)
+        {
+            if ($element->getAttribute() == 'name')
             {
-                if ($element->getAttribute() == 'name')
-                {
-                    $notification = ZurmoHtml::tag('span', array('class' => 'row-description'),
-                                    Zurmo::t('MarketingListsModule', 'Name will be publicly viewable by Contacts/Leads to manage their subscriptions'));
-                    $element->editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}' .
-                                                 $notification . '{error}</td>';
-                }
+                $notification = ZurmoHtml::tag('span', array('class' => 'row-description'),
+                                Zurmo::t('MarketingListsModule', 'Name will be publicly viewable by Contacts/Leads to manage their subscriptions'));
+                $element->editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}' .
+                                             $notification . '{error}</td>';
             }
+        }
     }
 ?>

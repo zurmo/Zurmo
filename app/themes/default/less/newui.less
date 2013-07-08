@@ -2248,14 +2248,18 @@ td.empty{
 		display: inline-block;
 		font-style: italic;
 		.smaller();
-		padding: 0 0 5px 0;
+		padding: 0 20px 5px 0;
+		//white-space: nowrap;
+		position: relative;
+		left: 20px;
+		top:5px;
 		&:before{
 			content:"T";
 			.symbly(24px);
-			margin-right: 6px;
+			margin-left: -20px;
 			font-style: normal;
-			position: relative;
-			top: 2px;
+			position: absolute;
+			top: -4px;
 		}
 	}
 }
@@ -3502,6 +3506,7 @@ div.wide.form{
 }
 
 .has-model-select{
+	z-index: 0;
 	clear:left;
 	padding:0 !important;
 	input{

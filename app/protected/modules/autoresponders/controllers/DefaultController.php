@@ -39,6 +39,9 @@
         const USER_MARKETING_LIST_ACCESS_FILTER_PATH =
             'application.modules.autoresponders.controllers.filters.UserCanAccessMarketingListControllerFilter';
 
+        const JOBS_CHECK_FILTER_PATH =
+            'application.modules.autoresponders.controllers.filters.AutoresponderJobsCheckControllerFilter';
+
         public function filters()
         {
             return array_merge(parent::filters(),
@@ -46,6 +49,9 @@
                     array(
                         static::USER_MARKETING_LIST_ACCESS_FILTER_PATH . ' + create, details, edit, delete',
                         'controller' => $this,
+                    ),
+                    array(
+                        static::JOBS_CHECK_FILTER_PATH . ' + create, details, edit',
                     ),
                 )
             );

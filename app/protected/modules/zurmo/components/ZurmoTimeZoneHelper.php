@@ -151,5 +151,14 @@
             $keyName = 'timeZoneConfirmed';
             ZurmoConfigurationUtil::setForCurrentUserByModuleName('UsersModule', $keyName, true);
         }
+        
+        public function isTimeZoneSetForCurrentUser()
+        {
+            if (Yii::app()->user->userModel->timeZone != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 ?>

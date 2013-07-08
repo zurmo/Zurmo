@@ -42,6 +42,9 @@
         const ZERO_MODELS_CHECK_FILTER_PATH =
             'application.modules.campaigns.controllers.filters.CampaignsZeroModelsCheckControllerFilter';
 
+        const JOBS_CHECK_FILTER_PATH =
+            'application.modules.campaigns.controllers.filters.CampaignJobsCheckControllerFilter';
+
         public static function getListBreadcrumbLinks()
         {
             $title = Zurmo::t('CampaignsModule', 'Campaigns');
@@ -66,6 +69,9 @@
                         'controller'                    => $this,
                         'activeActionElementType'       => 'CampaignsLink',
                         'breadcrumbLinks'               => static::getListBreadcrumbLinks(),
+                    ),
+                    array(
+                        static::JOBS_CHECK_FILTER_PATH . ' + create, details, edit',
                     ),
                 )
             );

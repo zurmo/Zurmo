@@ -474,7 +474,7 @@
             echo $view->render();
         }
 
-        public function actionEmailConfiguration($id)
+        public function actionEmailConfiguration($id,$redirectUrl = null)
         {
             UserAccessUtil::resolveCanCurrentUserAccessAction(intval($id));
             $user  = User::getById(intval($id));
@@ -494,7 +494,15 @@
                     Yii::app()->user->setFlash('notification',
                         Zurmo::t('UsersModule', 'User email configuration saved successfully.')
                     );
-                    $this->redirect(array($this->getId() . '/details', 'id' => $user->id));
+
+                    if($redirectUrl != null)
+                    {
+                        $this->redirect($redirectUrl);
+                    }
+                    else
+                    {
+                        $this->redirect(array($this->getId() . '/details', 'id' => $user->id));
+                    }
                 }
             }
             $titleBarAndEditView = new UserActionBarAndEmailConfigurationEditView(

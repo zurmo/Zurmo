@@ -76,9 +76,12 @@
 
         protected function renderScriptsContent()
         {
+            if(Yii::app()->timeZoneHelper->isTimeZoneSetForCurrentUser())
+            {
+                return null;
+            }
             return Yii::app()->clientScript->registerScript('timeZoneSelectOptions', "
-             var offset = (new Date()).getTimezoneOffset();
-
+             var offset = (new Date()).getTimezoneOffset();             
              var timezones =
              {
              '-12': 'Pacific/Kwajalein',

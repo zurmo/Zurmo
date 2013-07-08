@@ -81,13 +81,55 @@
          */
         public function testSuperUserCreateActionWithoutParameters()
         {
-            $this->runControllerWithNoExceptionsAndGetContent('autoresponders/default/create');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('autoresponders/default/create');
+        }
+
+        /**
+         * @depends testSuperUserCreateActionWithoutParameters
+         */
+        public function testFlashMessageShowsUpIfJobsDidntRun()
+        {
+            $redirectUrl    = 'http://www.zurmo.com/';
+            $this->setGetArray(array('marketingListId' => static::$marketingListId , 'redirectUrl' => $redirectUrl));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('autoresponders/default/create');
+            $compareContent = 'Autoresponders will not run properly until scheduled jobs are set up. Contact your administrator.';
+            $this->assertTrue(strpos($content, $compareContent) !== false);
+
+
+        }
+
+        /**
+         * @depends testFlashMessageShowsUpIfJobsDidntRun
+         */
+        public function testFlashMessageDoesNotShowUpIfJobsHaveRun()
+        {
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'AutoresponderQueueMessagesInOutbox';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'ProcessOutboundEmail';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $redirectUrl    = 'http://www.zurmo.com/';
+            $this->setGetArray(array('marketingListId' => static::$marketingListId , 'redirectUrl' => $redirectUrl));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('autoresponders/default/create');
+            $compareContent = 'Autoresponders will not run properly until scheduled jobs are set up. Contact your administrator.';
+            $this->assertTrue(strpos($content, $compareContent) === false);
         }
 
         /**
          * @expectedException CHttpException
          * @expectedMessage Your request is invalid.
-         * @depends testSuperUserCreateActionWithoutParameters
+         * @depends testFlashMessageDoesNotShowUpIfJobsHaveRun
          */
         public function testSuperUserCreateActionWithoutRedirectUrl()
         {

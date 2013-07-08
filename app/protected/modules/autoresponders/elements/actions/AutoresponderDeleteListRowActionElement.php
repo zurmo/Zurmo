@@ -50,5 +50,10 @@
         {
             return 'delete';
         }
+
+        protected function getUnlinkTranslatedMessage()
+        {
+            return Zurmo::t('AutorespondersModule', 'Are you sure you want to delete this autoresponder?');
+        }
     }
 ?>

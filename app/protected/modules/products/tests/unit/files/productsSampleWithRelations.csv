@@ -1,0 +1,3 @@
+Owner,Name,Description,Quantity,"Account - Name",Stage,"Sell Price","Price Frequency",Type,"Contact"
+super,"A Bend in the River November Issue import","Test Desc",6,sampleAccount,Open,210,2,2,""
+super,"A Bend in the River November Issue import copy","Test Desc 1",6,sampleAccount,Open,210,2,2,""

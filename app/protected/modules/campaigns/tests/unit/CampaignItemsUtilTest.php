@@ -53,6 +53,60 @@
         }
 
         /**
+         * Do not throw exception. That means it passes
+         */
+        public function testProcessDueCampaignItemThrowsExceptionWhenContentHasInvalidMergeTagsForOnlyHtml()
+        {
+            $html = "[[FIRST^NAME]], You are receiving this email";
+            $text = null;
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 01', $this->user);
+            $marketingList              = MarketingListTestHelper::populateMarketingListByName('marketingList 01');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 01',
+                'subject 01',
+                $text,
+                $html,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $marketingList,
+                false);
+            $processed                  = 0;
+            $campaignItem               = CampaignItemTestHelper::createCampaignItem($processed, $campaign, $contact);
+            CampaignItemsUtil::processDueItem($campaignItem);
+        }
+
+        /**
+         * @depends testProcessDueCampaignItemThrowsExceptionWhenContentHasInvalidMergeTagsForOnlyHtml
+         * Do not throw exception. That means it passes
+         */
+        public function testProcessDueCampaignItemThrowsExceptionWhenContentHasInvalidMergeTagsForOnlyText()
+        {
+            $text = "[[FIRST^NAME]], You are receiving this email";
+            $html = null;
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 01', $this->user);
+            $marketingList              = MarketingListTestHelper::populateMarketingListByName('marketingList 01');
+            $campaign                   = CampaignTestHelper::createCampaign('campaign 01',
+                'subject 01',
+                $text,
+                $html,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $marketingList,
+                false);
+            $processed                  = 0;
+            $campaignItem               = CampaignItemTestHelper::createCampaignItem($processed, $campaign, $contact);
+            CampaignItemsUtil::processDueItem($campaignItem);
+        }
+
+        /**
+         * @depends testProcessDueCampaignItemThrowsExceptionWhenContentHasInvalidMergeTagsForOnlyText
          * @expectedException NotFoundException
          */
         public function testProcessDueCampaignItemThrowsExceptionWhenNoContactIsAvailable()

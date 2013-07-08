@@ -7734,17 +7734,20 @@ td.empty {
   display: inline-block;
   font-style: italic;
   font-size: 11px;
-  padding: 0 0 5px 0;
+  padding: 0 20px 5px 0;
+  position: relative;
+  left: 20px;
+  top: 5px;
 }
 .form .row-description:before {
   content: "T";
   font-weight: normal;
   font-size: 24px;
   font-family: "ZurmoGamificationSymblyReguRg";
-  margin-right: 6px;
+  margin-left: -20px;
   font-style: normal;
-  position: relative;
-  top: 2px;
+  position: absolute;
+  top: -4px;
 }
 .AppContent label {
   font-size: 12px;
@@ -9213,6 +9216,7 @@ div.wide.form label.hasCheckBox {
   width: 100%;
 }
 .has-model-select {
+  z-index: 0;
   clear: left;
   padding: 0 !important;
 }
@@ -13794,12 +13798,12 @@ div.wide.form .errorMessage {
 }
 /* Example tokeninput style #2: Facebook style */
 ul.token-input-list {
+  z-index: 0;
   overflow: hidden;
   height: auto !important;
   height: 1%;
   cursor: text;
   min-height: 1px;
-  z-index: 999;
   margin: 0;
   padding: 0;
   background-color: #fff;

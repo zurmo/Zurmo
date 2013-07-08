@@ -133,7 +133,8 @@
                         'productPriceFrequency' => $productPriceFrequency,
                         'productSellPriceCurrency' => $productSellPriceCurrency,
                         'productSellPriceValue' => $productSellPriceValue,
-                        'productName'           => $productTemplate->name
+                        'productName'           => $productTemplate->name,
+                        'productDescription'    => $productTemplate->description
                         );
 
                 echo json_encode($output);

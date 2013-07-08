@@ -60,6 +60,23 @@
             return JobsUtil::resolveStringContentByType($this->type);
         }
 
+        public static function getByType($type, $pageSize = null)
+        {
+            assert('is_string($type)');
+            $searchAttributeData = array();
+            $searchAttributeData['clauses'] = array(
+                1 => array(
+                    'attributeName'             => 'type',
+                    'operatorType'              => 'equals',
+                    'value'                     => $type,
+                ),
+            );
+            $searchAttributeData['structure'] = '1';
+            $joinTablesAdapter                = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
+            $where = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
+            return self::getSubset($joinTablesAdapter, null, $pageSize, $where, null);
+        }
+
         public static function getDefaultMetadata()
         {
             $metadata = parent::getDefaultMetadata();

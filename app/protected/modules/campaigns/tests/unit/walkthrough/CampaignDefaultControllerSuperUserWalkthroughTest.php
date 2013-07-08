@@ -97,12 +97,58 @@
             // Test all default controller actions that do not require any POST/GET variables to be passed.
             $this->runControllerWithNoExceptionsAndGetContent('campaigns/default');
             $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/index');
-            $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/list');
-            $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/create');
+            $content = $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/list');
+            $compareContent = 'Campaigns will not run properly until scheduled jobs are set up. Contact your administrator.';
+            $this->assertTrue(strpos($content, $compareContent) === false);
+            $content = $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/create');
+            $compareContent = 'Campaigns will not run properly until scheduled jobs are set up. Contact your administrator.';
+            $this->assertTrue(strpos($content, $compareContent) !== false);
         }
 
         /**
          * @depends testSuperUserAllDefaultControllerActions
+         */
+        public function testWhenJobsHaveRunTheFlashMessageDoesNotShowUp()
+        {
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'CampaignGenerateDueCampaignItems';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'CampaignMarkCompleted';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'CampaignQueueMessagesInOutbox';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $jobLog                = new JobLog();
+            $jobLog->type          = 'ProcessOutboundEmail';
+            $jobLog->startDateTime = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->endDateTime   = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $jobLog->status        = JobLog::STATUS_COMPLETE_WITHOUT_ERROR;
+            $jobLog->isProcessed   = false;
+            $this->assertTrue($jobLog->save());
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/create');
+            $compareContent = 'Campaigns will not run properly until scheduled jobs are set up. Contact your administrator.';
+            $this->assertTrue(strpos($content, $compareContent) === false);
+        }
+
+        /**
+         * @depends testWhenJobsHaveRunTheFlashMessageDoesNotShowUp
          */
         public function testSuperUserListAction()
         {

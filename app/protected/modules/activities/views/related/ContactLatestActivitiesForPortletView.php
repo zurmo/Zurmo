@@ -53,7 +53,8 @@
                                             'relatedId'        =>
                                                 'eval:$this->params["relationModel"]->id',
                                             'toAddress'        =>
-                                                'eval:$this->params["relationModel"]->primaryEmail->emailAddress')
+                                                'eval:$this->params["relationModel"]->primaryEmail->emailAddress',
+                                            'redirectUrl'  => 'eval:Yii::app()->request->getRequestUri()')
                         ),
                     ),
                 ),
