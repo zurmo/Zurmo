@@ -51,6 +51,12 @@
          */
         const STATUS_COMPLETE_WITH_ERROR    = 2;
 
+        /**
+         * Do not audit JobLog model
+         * @var bool
+         */
+        protected $isAudited = false;
+
         public function __toString()
         {
             if ($this->type == null)
@@ -104,13 +110,6 @@
                     array('type',           'length', 'min'  => 3, 'max' => 64),
                 ),
                 'defaultSortAttribute' => 'type',
-                'noAudit' => array(
-                    'endDateTime',
-                    'message',
-                    'startDateTime',
-                    'status',
-                    'type'
-                ),
                 'elements' => array(
                     'description'     => 'TextArea',
                     'endDateTimex'    => 'DateTime',

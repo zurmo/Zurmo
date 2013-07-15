@@ -8404,6 +8404,13 @@ div.wide.form label.hasCheckBox {
   font-family: "ZurmoGamificationSymblyReguRg";
   line-height: 52%;
 }
+.highlight-create-button {
+  -o-animation: throb 2.5s infinite ease-in-out;
+  -ms-animation: throb 2.5s infinite ease-in-out;
+  -moz-animation: throb 2.5s infinite ease-in-out;
+  -webkit-animation: throb 2.5s infinite ease-in-out;
+  animation: throb 2.5s infinite ease-in-out;
+}
 #NoUserEmailConfigurationYetView .z-label {
   z-index: auto;
 }

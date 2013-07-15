@@ -67,7 +67,14 @@
                     'attributeName'        => 'id',
                     'operatorType'         => 'equals',
                     'value'                => $autoresponder->id);
-            $searchAttributeData['structure'] = '1';
+            $searchAttributeData['clauses'][2] = array(
+                    'attributeName' => 'autoresponderItems',
+                    'relatedModelData' => array(
+                        'attributeName'     => 'processed',                        
+                        'operatorType'      => 'equals',
+                        'value'             => true,                        
+                    ));                        
+            $searchAttributeData['structure'] = '1 and 2';
             return $searchAttributeData;
         }
 
@@ -82,10 +89,10 @@
             $sentDateTimeColumnName     = EmailMessage::getColumnNameByAttribute('sentDateTime');
             $joinTablesAdapter          = new RedBeanModelJoinTablesQueryAdapter('Autoresponder');
             $selectQueryAdapter         = new RedBeanModelSelectQueryAdapter($selectDistinct);
-            $queuedEmailsSelectPart     = "count(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
+            $queuedEmailsSelectPart     = "sum(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
                                           $quote . " = '0000-00-00 00:00:00' OR {$quote}{$emailMessageTableName}{$quote}" .
                                           ".{$quote}{$sentDateTimeColumnName}{$quote} IS NULL THEN 1 ELSE 0 END)"; // Not Coding Standard
-            $sentEmailsSelectPart   = "count(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
+            $sentEmailsSelectPart   = "sum(CASE WHEN {$quote}{$emailMessageTableName}{$quote}.{$quote}{$sentDateTimeColumnName}" .
                                       $quote . " > '0000-00-00 00:00:00' THEN 1 ELSE 0 END)";
             $uniqueOpensSelectPart  = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_OPEN);
             $uniqueClicksSelectPart = static::resolveAutoresponderTypeSubQuery(EmailMessageActivity::TYPE_CLICK);

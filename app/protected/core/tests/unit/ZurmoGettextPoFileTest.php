@@ -42,77 +42,77 @@
         protected static $poFileName = 'messages-test.po';
 
         protected static $compareArray = array(
-            'PO file Testmessage. Category: 1. Type: source 1' => array(
+            array(
                 'msgctxt' => 'TestCategory1',
                 'msgid' => 'PO file Testmessage. Category: 1. Type: source 1',
                 'msgstr' => 'PO file Testmessage. Category: 1. Type: translation 1'
             ),
-            'PO file Testmessage. Category: 1. Type: source 2' => array(
+            array(
                 'msgctxt' => 'TestCategory1',
                 'msgid' => 'PO file Testmessage. Category: 1. Type: source 2',
                 'msgstr' => 'PO file Testmessage. Category: 1. Type: translation 2'
             ),
-            'PO file Testmessage. Category: 1. Type: source 3' => array(
+            array(
                 'msgctxt' => 'TestCategory1',
                 'msgid' => 'PO file Testmessage. Category: 1. Type: source 3',
                 'msgstr' => 'PO file Testmessage. Category: 1. Type: translation 3'
             ),
-            'PO file Testmessage. Category: 1. Type: source 4' => array(
+            array(
                 'msgctxt' => 'TestCategory1',
                 'msgid' => 'PO file Testmessage. Category: 1. Type: source 4',
                 'msgstr' => 'PO file Testmessage. Category: 1. Type: translation 4'
             ),
-            'PO file Testmessage. Category: 1. Type: source 5' => array(
+            array(
                 'msgctxt' => 'TestCategory1',
                 'msgid' => 'PO file Testmessage. Category: 1. Type: source 5',
                 'msgstr' => 'PO file Testmessage. Category: 1. Type: translation 5'
             ),
-            'PO file Testmessage. Category: 2. Type: source 1' => array(
+            array(
                 'msgctxt' => 'TestCategory2',
                 'msgid' => 'PO file Testmessage. Category: 2. Type: source 1',
                 'msgstr' => 'PO file Testmessage. Category: 2. Type: translation 1'
             ),
-            'PO file Testmessage. Category: 2. Type: source 2' => array(
+            array(
                 'msgctxt' => 'TestCategory2',
                 'msgid' => 'PO file Testmessage. Category: 2. Type: source 2',
                 'msgstr' => 'PO file Testmessage. Category: 2. Type: translation 2'
             ),
-            'PO file Testmessage. Category: 2. Type: source 3' => array(
+            array(
                 'msgctxt' => 'TestCategory2',
                 'msgid' => 'PO file Testmessage. Category: 2. Type: source 3',
                 'msgstr' => 'PO file Testmessage. Category: 2. Type: translation 3'
             ),
-            'PO file Testmessage. Category: 2. Type: source 4' => array(
+            array(
                 'msgctxt' => 'TestCategory2',
                 'msgid' => 'PO file Testmessage. Category: 2. Type: source 4',
                 'msgstr' => 'PO file Testmessage. Category: 2. Type: translation 4'
             ),
-            'PO file Testmessage. Category: 2. Type: source 5' => array(
+            array(
                 'msgctxt' => 'TestCategory2',
                 'msgid' => 'PO file Testmessage. Category: 2. Type: source 5',
                 'msgstr' => 'PO file Testmessage. Category: 2. Type: translation 5'
             ),
-            'PO file Testmessage. Category: 3. Type: source 1' => array(
+            array(
                 'msgctxt' => 'TestCategory3',
                 'msgid' => 'PO file Testmessage. Category: 3. Type: source 1',
                 'msgstr' => 'PO file Testmessage. Category: 3. Type: translation 1'
             ),
-            'PO file Testmessage. Category: 3. Type: source 2' => array(
+            array(
                 'msgctxt' => 'TestCategory3',
                 'msgid' => 'PO file Testmessage. Category: 3. Type: source 2',
                 'msgstr' => 'PO file Testmessage. Category: 3. Type: translation 2'
             ),
-            'PO file Testmessage. Category: 3. Type: source 3' => array(
+            array(
                 'msgctxt' => 'TestCategory3',
                 'msgid' => 'PO file Testmessage. Category: 3. Type: source 3',
                 'msgstr' => 'PO file Testmessage. Category: 3. Type: translation 3'
             ),
-            'PO file Testmessage. Category: 3. Type: source 4' => array(
+            array(
                 'msgctxt' => 'TestCategory3',
                 'msgid' => 'PO file Testmessage. Category: 3. Type: source 4',
                 'msgstr' => 'PO file Testmessage. Category: 3. Type: translation 4'
             ),
-            'PO file Testmessage. Category: 3. Type: source 5' => array(
+            array(
                 'msgctxt' => 'TestCategory3',
                 'msgid' => 'PO file Testmessage. Category: 3. Type: source 5',
                 'msgstr' => 'PO file Testmessage. Category: 3. Type: translation 5'

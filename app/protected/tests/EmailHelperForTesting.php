@@ -82,12 +82,13 @@
         {
             assert('is_string($subject) && $subject != ""');
             assert('is_string($from)    && $from != ""');
-            assert('(is_array($to) || is_string($to)) && !empty($to)');
+            assert('(is_array($to) && !empty($to)) || is_string($to) || !isset($to)');
             assert('is_string($textContent)');
             assert('is_string($htmlContent)');
             assert('$textContent != ""  || $htmlContent != ""');
-            assert('is_array($cc)       || !isset($cc)');
-            assert('is_array($bcc)      || !isset($bcc)');
+            assert('(is_array($cc) && !empty($cc)) || is_string($cc) || !isset($cc)');
+            assert('(is_array($bcc) && !empty($bcc)) || is_string($bcc) || !isset($bcc)');            
+            assert('isset($to) || isset($cc) || isset($bcc)');            
             assert('is_array($attachments) || !isset($attachments)');
 
             $mailer           = $this->getOutboundMailer();
@@ -135,7 +136,7 @@
                     $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_TO);
                 }
             }
-            else
+            elseif (is_string($to))
             {
                 $mailer->addAddressByType($to, '', EmailMessageRecipient::TYPE_TO);
             }
@@ -147,6 +148,10 @@
                     $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_CC);
                 }
             }
+            elseif (is_string($cc))
+            {
+                $mailer->addAddressByType($cc, '', EmailMessageRecipient::TYPE_CC);
+            }
 
             if (is_array($bcc) && !empty($bcc))
             {
@@ -154,6 +159,10 @@
                 {
                     $mailer->addAddressByType($recipientEmail, '', EmailMessageRecipient::TYPE_BCC);
                 }
+            }
+            elseif (is_string($bcc))
+            {
+                $mailer->addAddressByType($bcc, '', EmailMessageRecipient::TYPE_BCC);
             }
 
             if (isset($attachments) && !empty($attachments))

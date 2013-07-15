@@ -227,5 +227,23 @@
             $this->assertEquals(1, count($permitables));
             $this->assertEquals('AAA', $permitables[self::$groupA->id]->name);
         }
+
+        /**
+         * Ensures another user can 'clone' an account they can see, but is not necessarily the owner and does not have
+         * super privileges.
+         */
+        public function testCopyingAModelOwnedByAnotherUserWhereYouHaveRestrictedAccess()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account = AccountTestHelper::createAccountByNameForOwner('a super account', Yii::app()->user->userModel);
+            //This will simulate sally having access to 'clone' the account.
+            $account->addPermissions(User::getByUserName('sally'), Permission::READ);
+            $account->save();
+            Yii::app()->user->userModel = User::getByUsername('sally');
+            $copyOfAccount = new Account();
+            ZurmoCopyModelUtil::copy($account, $copyOfAccount);
+            $saved = $copyOfAccount->save();
+            $this->assertTrue($saved);
+        }
     }
 ?>

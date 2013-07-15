@@ -81,15 +81,18 @@
             $mailer    = Swift_Mailer::newInstance($transport);
             $message   = Swift_Message::newInstance($this->Subject);
             $message->setFrom($this->From);
-            foreach ($this->toAddressesAndNames as $address => $name)
+            if (!empty($this->toAddressesAndNames))
             {
-                try
+                foreach ($this->toAddressesAndNames as $address => $name)
                 {
-                    $message->addTo($address, $name);
-                }
-                catch (Swift_RfcComplianceException $e)
-                {
-                    throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);
+                    try
+                    {
+                        $message->addTo($address, $name);
+                    }
+                    catch (Swift_RfcComplianceException $e)
+                    {
+                        throw new OutboundEmailSendException($e->getMessage(), $e->getCode(), $e);
+                    }
                 }
             }
 

@@ -40,6 +40,12 @@
     class JobInProcess extends Item
     {
         /**
+         * Do not audit JobInProcess model
+         * @var bool
+         */
+        protected $isAudited = false;
+
+        /**
          * if count is greater than 1, return first, since then eventually this will clean out the jobs in process over time.
          * @param string $type
          * @return mixed
@@ -94,9 +100,6 @@
                     array('type', 'length',  'min'  => 3, 'max' => 64),
                 ),
                 'defaultSortAttribute' => 'createdDateTime',
-                'noAudit' => array(
-                    'type',
-                )
             );
             return $metadata;
         }

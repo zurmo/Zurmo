@@ -83,12 +83,12 @@
                 'leftSideDisplayLabel'   => Zurmo::t('Core', 'Hidden Columns'),
                 'rightSideId'            => $this->getEditableInputId(SearchForm::SELECTED_LIST_ATTRIBUTES),
                 'rightSideName'          => $this->getEditableInputName(SearchForm::SELECTED_LIST_ATTRIBUTES),
-                'rightSideValue'         => $this->model->getListAttributesSelector()->getSelected(),
+                'rightSideValue'         => array(),
                 'rightSideData'          => $this->model->getListAttributesSelector()->getSelectedListAttributesNamesAndLabelsAndAll(),
                 'rightSideDisplayLabel'  => Zurmo::t('Core', 'Visible Columns'),
                 'formId'                 => $this->form->getId(),
                 'allowSorting'           => true,
-                'multiselectNavigationClasses' => 'multiselect-nav-updown',
+                'multiselectNavigationClasses' => 'multiselect-nav-updown',                
             ));
             $cClipWidget->endClip();
             $cellsContent  = $cClipWidget->getController()->clips['SortableListAttributes'];
@@ -116,7 +116,7 @@
                         resetSelectedListAttributes('" .
                             $this->getEditableInputId(SearchForm::SELECTED_LIST_ATTRIBUTES) . "', '" .
                             $this->getEditableInputId(SearchForm::SELECTED_LIST_ATTRIBUTES) . "_hidden', " .
-                            CJSON::encode($defaultSelectedAttributes) . ");
+                            CJSON::encode($defaultSelectedAttributes) . ");                        
                     }
                 );");
         }

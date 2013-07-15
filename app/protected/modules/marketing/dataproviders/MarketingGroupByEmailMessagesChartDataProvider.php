@@ -161,18 +161,26 @@
                         ),
                     ),
                 ),
+                3 => array(
+                    'attributeName' => 'campaignItems',
+                    'relatedModelData' => array(
+                        'attributeName'     => 'processed',                        
+                        'operatorType'      => 'equals',
+                        'value'             => true,                        
+                    )
+                ),
             );
             if ($campaign instanceof Campaign && $campaign->id > 0)
             {
-                $searchAttributeData['clauses'][3] = array(
+                $searchAttributeData['clauses'][4] = array(
                     'attributeName'        => 'id',
                     'operatorType'         => 'equals',
                     'value'                => $campaign->id);
-                $searchAttributeData['structure'] = '1 and 2 and 3';
+                $searchAttributeData['structure'] = '1 and 2 and 3 and 4';
             }
             else
             {
-                $searchAttributeData['structure'] = '1 and 2';
+                $searchAttributeData['structure'] = '1 and 2 and 3';
             }
             return $searchAttributeData;
         }
@@ -214,18 +222,26 @@
                         ),
                     ),
                 ),
+                3 => array(
+                    'attributeName' => 'autoresponderItems',
+                    'relatedModelData' => array(
+                        'attributeName'     => 'processed',                        
+                        'operatorType'      => 'equals',
+                        'value'             => true,                        
+                    )
+                ),
             );
             if ($marketingList instanceof MarketingList && $marketingList->id > 0)
             {
-                $searchAttributeData['clauses'][3] = array(
+                $searchAttributeData['clauses'][4] = array(
                     'attributeName'        => 'marketingList',
                     'operatorType'         => 'equals',
                     'value'                => $marketingList->id);
-                $searchAttributeData['structure'] = '1 and 2 and 3';
+                $searchAttributeData['structure'] = '1 and 2 and 3 and 4';
             }
             else
             {
-                $searchAttributeData['structure'] = '1 and 2';
+                $searchAttributeData['structure'] = '1 and 2 and 3';
             }
             return $searchAttributeData;
         }

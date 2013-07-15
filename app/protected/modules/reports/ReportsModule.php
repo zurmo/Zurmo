@@ -85,7 +85,7 @@
                 ),
                 'tabMenuItems' => array(
                     array(
-                        'label'  => 'Reports',
+                        'label'  => "eval:Zurmo::t('ReportsModule', 'Reports')",
                         'url'    => array('/reports/default'),
                         'right'  => self::RIGHT_ACCESS_REPORTS,
                         'mobile' => false,

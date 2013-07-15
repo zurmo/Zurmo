@@ -114,12 +114,12 @@
         }
 
         public static function getByProcessedAndProcessDateTime($processed, $timestamp = null, $pageSize = null)
-        {
+        {                        
             if (empty($timestamp))
             {
                 $timestamp = time();
             }
-            $dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($timestamp);
+            $dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($timestamp);                                   
             assert('is_int($processed)');
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(

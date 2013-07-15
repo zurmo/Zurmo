@@ -50,7 +50,8 @@
             $searchAttributeData['clauses'][($clausesCount + 1)] = array(
                     'attributeName'        => 'startDateTime',
                     'operatorType'         => 'lessThan',
-                    'value'                => DateTimeUtil::convertTimestampToDbFormatDateTime(time())
+                    'value'                => DateTimeUtil::convertTimestampToDbFormatDateTime(
+                                                        Yii::app()->timeZoneHelper->convertFromLocalTimeStampForCurrentUser(time()))
             );
             if ($searchAttributeData['structure'] != null)
             {

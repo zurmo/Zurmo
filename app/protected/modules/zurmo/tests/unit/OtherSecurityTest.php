@@ -163,20 +163,21 @@
             {
                 // They lose access to it.
                 $name = $account->name;
-                $this->fail();
+                //They should still have access to it. This is a change made in 2.0.13 to properly support cloning.
             }
             catch (AccessDeniedSecurityException $e)
             {
+                $this->fail();
             }
             try
             {
-                // Make sure they can't get it back by setting the
-                // owner to an unsaved user.
+                // AS of 2.0.13 they should be able to get it back.
                 $account->owner = new User();
-                $this->fail();
+
             }
             catch (AccessDeniedSecurityException $e)
             {
+                $this->fail();
             }
         }
 

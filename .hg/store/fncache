@@ -8306,3 +8306,15 @@ data/app/protected/modules/reports/adapters/ReportToExportAdapterFactory.php.i
 data/app/protected/modules/reports/adapters/RowsAndColumnsReportToExportAdapter.php.i
 data/app/protected/modules/reports/adapters/SummationDrillDownReportToExportAdapter.php.i
 data/app/protected/modules/reports/adapters/SummationReportToExportAdapter.php.i
+data/app/protected/core/utils/ProcessedTableCache.php.i
+data/app/protected/core/views/NoPortletsToPlaceView.php.i
+data/app/protected/modules/designer/rules/AccountConvertToViewDesignerRules.php.i
+data/app/protected/modules/reports/tests/unit/MatrixReportToExportAdapterTest.php.i
+data/app/protected/modules/reports/tests/unit/RowsAndColumnsReportToExportAdapterTest.php.i
+data/app/protected/modules/reports/tests/unit/SummationReportToExportAdapterTest.php.i
+data/app/protected/modules/reports/tests/unit/modules/ReportsTest2Module.php.i
+data/app/protected/modules/reports/tests/unit/rules/ReportsTest2ReportRules.php.i
+data/app/themes/default/images/social-icons/gravatar.png.i
+data/app/themes/default/images/social-icons/klout.png.i
+data/app/themes/default/images/social-icons/plancast.png.i
+data/app/themes/default/images/zurmo-zapier.png.i

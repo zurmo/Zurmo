@@ -131,21 +131,19 @@
                                        //then the users will have Permission::ALL because its id < 0.
                                        //@see OwnedSecurableItem::getEffectivePermissions
             $this->assertEquals(null, $account->name);
-            $this->assertEquals(Permission::NONE, $account->getEffectivePermissions($user));
+            $this->assertEquals(Permission::ALL, $account->getEffectivePermissions($user));
             //switch current user to make sure, still the same.
             Yii::app()->user->userModel = $user;
-            $this->assertEquals(Permission::NONE, $account->getEffectivePermissions($user));
+            $this->assertEquals(Permission::ALL, $account->getEffectivePermissions($user));
             Yii::app()->user->userModel = $super;
             $item->addPermissions($user, Permission::READ);
             $this->assertTrue($item->save());
             //now check that new user has permission to read on accounts in general.
             $permission = $account->getEffectivePermissions($user);
-            $this->assertEquals(Permission::READ, $permission);
-            $this->assertTrue(Permission::READ == ($permission & Permission::READ));
+            $this->assertEquals(Permission::ALL, $permission);
             Yii::app()->user->userModel = User::getByUsername('ktest');
             $permission = $account->getEffectivePermissions($user);
-            $this->assertEquals(Permission::READ, $permission);
-            $this->assertTrue(Permission::READ == ($permission & Permission::READ));
+            $this->assertEquals(Permission::ALL, $permission);
             Yii::app()->user->userModel = $super;
             $item->delete();
         }

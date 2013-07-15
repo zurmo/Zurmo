@@ -221,19 +221,21 @@
         {
             $imapMessage = new ImapMessage();
             $structure = imap_fetchstructure($this->imapStream, $messageNumber);
-            foreach ($mailHeaderInfo->to as $key => $to)
+            if (isset($mailHeaderInfo->to))
             {
-                if (isset($to->personal))
+                foreach ($mailHeaderInfo->to as $key => $to)
                 {
-                    $imapMessage->to[$key]['name'] = $to->personal;
+                    if (isset($to->personal))
+                    {
+                        $imapMessage->to[$key]['name'] = $to->personal;
+                    }
+                    else
+                    {
+                        $imapMessage->to[$key]['name'] = $to->mailbox;
+                    }
+                    $imapMessage->to[$key]['email'] = $to->mailbox . '@' . $to->host;
                 }
-                else
-                {
-                    $imapMessage->to[$key]['name'] = $to->mailbox;
-                }
-                $imapMessage->to[$key]['email'] = $to->mailbox . '@' . $to->host;
             }
-
             if (isset($mailHeaderInfo->cc))
             {
                 foreach ($mailHeaderInfo->cc as $key => $cc)
@@ -277,7 +279,8 @@
                 $imapMessage->senderEmail = $imapMessage->fromName;
             }
 
-            $imapMessage->subject       = $mailHeaderInfo->subject;
+            $subject                    = imap_mime_header_decode($mailHeaderInfo->subject);            
+            $imapMessage->subject       = $subject[0]->text;
             $imapMessage->textBody      = $this->getPart($messageNumber, 'TEXT/PLAIN', $structure);
             $imapMessage->htmlBody      = $this->getPart($messageNumber, 'TEXT/HTML', $structure);
             $imapMessage->attachments   = $this->getAttachments($structure, $messageNumber);

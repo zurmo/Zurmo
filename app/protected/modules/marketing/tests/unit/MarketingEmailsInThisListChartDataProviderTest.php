@@ -532,8 +532,8 @@
         {
             $emailMessage                            = $this->createEmailMessage($contact, $emailMessageSentDateTime);
             $autoresponderItem                       = new AutoresponderItem();
-            $autoresponderItem->contact              = $contact;
-            $autoresponderItem->processed            = true;
+            $autoresponderItem->contact              = $contact;                        
+            $autoresponderItem->processed            = true;            
             $autoresponderItem->emailMessage         = $emailMessage;
             $autoresponderItem->processDateTime      = DateTimeUtil
                         ::convertTimestampToDbFormatDateTime(time());;

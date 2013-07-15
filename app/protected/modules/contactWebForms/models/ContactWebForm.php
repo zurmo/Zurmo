@@ -126,7 +126,8 @@
                                                 RedBeanModel::LINK_TYPE_SPECIFIC, 'defaultState'),
                     'entries'          => array(RedBeanModel::HAS_MANY, 'ContactWebFormEntry', RedBeanModel::OWNED,
                                                 RedBeanModel::LINK_TYPE_SPECIFIC, 'entries'),
-                    'defaultOwner'     => array(RedBeanModel::HAS_ONE,  'User', RedBeanModel::NOT_OWNED),
+                    'defaultOwner'     => array(RedBeanModel::HAS_ONE,  'User', RedBeanModel::NOT_OWNED,
+                                                RedBeanModel::LINK_TYPE_SPECIFIC, 'defaultOwner'),
                 ),
                 'rules' => array(
                     array('name',              'required'),

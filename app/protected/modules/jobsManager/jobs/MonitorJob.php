@@ -39,6 +39,8 @@
      */
     class MonitorJob extends BaseJob
     {
+        protected static $pageSize = 50;
+
         /**
          * @returns Translated label that describes this job type.
          */
@@ -85,22 +87,20 @@
             {
                 self::makeJobStuckNotification($jobTitleLabels);
             }
-            $jobLogs = static::getNonMonitorJobLogsUnprocessed();
+            $jobLogs = static::getNonMonitorJobLogsUnprocessedWithErrors();
             foreach ($jobLogs as $jobLog)
             {
-                if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
-                {
-                    $message                      = new NotificationMessage();
-                    $message->htmlContent         = Zurmo::t('JobsManagerModule', 'Job completed with errors.');
-                    $url                          = Yii::app()->createAbsoluteUrl('jobsManager/default/jobLogDetails/',
-                                                                        array('id' => $jobLog->id));
-                    $message->htmlContent        .= "<br/>" . ZurmoHtml::link(Zurmo::t('Core', 'Click Here'), $url);
-                    $rules                        = new JobCompletedWithErrorsNotificationRules();
-                    NotificationsUtil::submit($message, $rules);
-                }
+                $message                      = new NotificationMessage();
+                $message->htmlContent         = Zurmo::t('JobsManagerModule', 'Job completed with errors.');
+                $url                          = Yii::app()->createAbsoluteUrl('jobsManager/default/jobLogDetails/',
+                                                                    array('id' => $jobLog->id));
+                $message->htmlContent        .= "<br/>" . ZurmoHtml::link(Zurmo::t('Core', 'Click Here'), $url);
+                $rules                        = new JobCompletedWithErrorsNotificationRules();
+                NotificationsUtil::submit($message, $rules);
                 $jobLog->isProcessed         = true;
                 $jobLog->save();
             }
+            $this->updateUnprocessedJobLogsWithoutErrors();
             return true;
         }
 
@@ -120,7 +120,7 @@
             return JobInProcess::getSubset($joinTablesAdapter, null, null, $where, null);
         }
 
-        protected static function getNonMonitorJobLogsUnprocessed()
+        protected static function getNonMonitorJobLogsUnprocessedWithErrors()
         {
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
@@ -134,11 +134,25 @@
                     'operatorType'         => 'doesNotEqual',
                     'value'                => (bool)1,
                 ),
+                3 => array(
+                    'attributeName'        => 'status',
+                    'operatorType'         => 'equals',
+                    'value'                => JobLog::STATUS_COMPLETE_WITH_ERROR,
+                ),
             );
-            $searchAttributeData['structure'] = '1 and 2';
+            $searchAttributeData['structure'] = '1 and 2 and 3';
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
             $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
-            return JobLog::getSubset($joinTablesAdapter, null, null, $where, null);
+            return JobLog::getSubset($joinTablesAdapter, null, self::$pageSize, $where, null);
+        }
+
+        /**
+         * Single sql query to improve performance
+         */
+        protected static function updateUnprocessedJobLogsWithoutErrors()
+        {
+            $sql = 'update joblog set isprocessed = 1 where joblog.isprocessed = 0';
+            R::exec($sql);
         }
 
         /**

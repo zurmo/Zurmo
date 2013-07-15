@@ -46,6 +46,12 @@
         // changes can be written to the audit log.
         public $originalAttributeValues = array();
 
+        /**
+         * Should the model be audited. Override and set to false if you do not need to audit the Item.
+         * @var bool
+         */
+        protected $isAudited = true;
+
         private $_workflowsToProcessAfterSave = array();
 
         private $_processWorkflowOnSave = true;
@@ -85,7 +91,7 @@
             $this->isSetting = true;
             try
             {
-                if (!$this->isSaving)
+                if (!$this->isSaving && $this->isAudited)
                 {
                     AuditUtil::saveOriginalAttributeValue($this, $attributeName, $value);
                 }
@@ -101,7 +107,10 @@
 
         public function delete()
         {
-            AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_DELETED, strval($this), $this);
+            if($this->isAudited)
+            {
+                AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_DELETED, strval($this), $this);
+            }
             return parent::delete();
         }
 
@@ -177,8 +186,11 @@
         protected function afterSave()
         {
             parent::afterSave();
-            $this->logAuditEventsListForCreatedAndModifed($this->isNewModel);
-            AuditUtil::clearRelatedModelsOriginalAttributeValues($this);
+            if($this->isAudited)
+            {
+                $this->logAuditEventsListForCreatedAndModifed($this->isNewModel);
+                AuditUtil::clearRelatedModelsOriginalAttributeValues($this);
+            }
             $this->originalAttributeValues      = array();
             $this->_workflowsToProcessAfterSave = array();
             $this->isNewModel = false; //reset.

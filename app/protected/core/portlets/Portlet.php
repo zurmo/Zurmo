@@ -282,5 +282,17 @@
                 return false;
             }
         }
+               
+        public static function getPlacedViewTypesByLayoutIdAndUser($uniqueLayoutId, $userId)
+        {
+            $portlets        = static::getByLayoutIdAndUserSortedById($uniqueLayoutId,
+                                                                       $userId);
+            $placedViewTypes = array();
+            foreach ($portlets as $portlet)
+            {
+                $placedViewTypes[] = $portlet->viewType;
+            }
+            return $placedViewTypes;
+        }
     }
 ?>

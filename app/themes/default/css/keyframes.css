@@ -9,6 +9,12 @@
 	}
 }
 
+@-webkit-keyframes throb {
+	50%   {
+		box-shadow:0 0 15px 2px #7cb830;
+	}
+}
+
 @font-face {
 	font-family: 'ZurmoGamificationSymblyReguRg';
 	src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');

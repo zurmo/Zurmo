@@ -43,7 +43,7 @@
             $this->assertContains(
                     'img class="gravatar" width="100" height="100"',
                     $personCardViewLayout->renderContent());
-            $this->assertContains(
+            $this->assertNotContains(
                     '<span class="salutation"></span>',
                     $personCardViewLayout->renderContent());
             $this->assertContains(

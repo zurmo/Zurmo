@@ -352,6 +352,54 @@
                 $this->assertEquals('<' . $returnPath . '>', $messages[0]->headers['Return-path']);
             }
         }
+        
+        public function testGetMessagesWithoutTo()
+        {
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
+            $this->assertTrue($imap->connect());
+
+            $imap->deleteMessages(true);
+            Yii::app()->emailHelper->sendRawEmail("Test Email",
+                                                  Yii::app()->emailHelper->outboundUsername,
+                                                  null,
+                                                  'Test email body',
+                                                  '<strong>Test</strong> email html body',
+                                                  $imap->imapUsername,
+                                                  null,
+                                                  null
+            );
+            sleep(20);
+            $messages = $imap->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals("Test Email", $messages[0]->subject);
+            $this->assertEquals("Test email body", trim($messages[0]->textBody));
+            $this->assertEquals("<strong>Test</strong> email html body", trim($messages[0]->htmlBody));
+            $this->assertEquals($imap->imapUsername, $messages[0]->cc[0]['email']);
+            $this->assertEquals(Yii::app()->emailHelper->outboundUsername, $messages[0]->fromEmail);
+        }
+        
+        public function testGetMessagesWithSubjectWithCharset()
+        {
+            $this->skipTestIfMissingSettings();
+            $imap = EmailMessageTestHelper::resolveImapObject();
+            $this->assertTrue($imap->connect());
+
+            $imap->deleteMessages(true);
+            Yii::app()->emailHelper->sendRawEmail("=?utf-8?B?2KLYstmF2KfbjNi0?=",
+                                                  Yii::app()->emailHelper->outboundUsername,
+                                                  $imap->imapUsername,
+                                                  'Test email body',
+                                                  '<strong>Test</strong> email html body',
+                                                  null,
+                                                  null,
+                                                  null
+            );
+            sleep(20);
+            $messages = $imap->getMessages();
+            $this->assertEquals(1, count($messages));
+            $this->assertEquals("آزمایش", $messages[0]->subject);            
+        }
 
         protected function skipTestIfMissingSettings($checkBounceSettingsToo = false)
         {

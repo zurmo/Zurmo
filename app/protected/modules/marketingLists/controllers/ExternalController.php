@@ -120,10 +120,10 @@
             if ($members)
             {
                 $this->toggleUnsubscribedForMembers($members, $newUnsubcribedValue);
-                $this->toggleOptOutForContact($contact, $optOut, $newUnsubcribedValue);
-                $message = $this->resolveStatusMessage($newUnsubcribedValue, $optOut);
+                $this->toggleOptOutForContact($contact, $optOut, $newUnsubcribedValue);                
                 $this->createActivityIfRequired($createNewActivity, $newUnsubcribedValue, $modelId, $modelType, $personId);
             }
+            $message = $this->resolveStatusMessage($newUnsubcribedValue, $optOut);
             $this->setToggleUnsubscribedCookie($message);
             $url = Yii::app()->createUrl('/marketingLists/external/manageSubscriptions', array('hash' => $hash));
             $this->redirect($url);
@@ -189,16 +189,13 @@
         {
             $statusMessage = Zurmo::t('MarketingListsModule', 'You have been subscribed.');
             if ($unsubscribed)
+            {                               
+                $statusMessage = Zurmo::t('MarketingListsModule', 'You have been unsubscribed.');
+            }
+            if ($optOut)
             {
-                if ($optOut)
-                {
-                    $statusMessage  = Zurmo::t('MarketingListsModule', 'You have been unsubscribed from all ' .
-                        'marketing lists and opted out from all future emails.');
-                }
-                else
-                {
-                    $statusMessage = Zurmo::t('MarketingListsModule', 'You have been unsubscribed.');
-                }
+                $statusMessage  = Zurmo::t('MarketingListsModule', 'You have been unsubscribed from all ' .
+                    'marketing lists and opted out from all future emails.');
             }
             return $statusMessage;
         }
@@ -226,8 +223,7 @@
         {
             if ($message)
             {
-                $cookieName = static::TOGGLE_UNSUBSCRIBED_COOKIE_NAME;
-                Yii::app()->request->cookies[$cookieName] = new CHttpCookie($cookieName, $message);
+                Yii::app()->user->setFlash('notification', $message);                
             }
         }
 

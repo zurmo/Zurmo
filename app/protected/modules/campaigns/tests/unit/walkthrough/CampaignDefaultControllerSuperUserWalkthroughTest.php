@@ -356,16 +356,16 @@
             $this->assertTrue(strpos($content, '<div class="right-column">') !== false);
             $this->assertTrue(strpos($content, '<div class="email-template-combined-content">') !== false);
             $this->assertTrue(strpos($content, '<div class="email-template-content"><div class="tabs-nav">') !== false);
-            $this->assertTrue(strpos($content, '<a class="active-tab" href="#tab1">Text Content</a>') !== false);
-            $this->assertTrue(strpos($content, '<a href="#tab2">Html Content</a>') !== false);
+            $this->assertTrue(strpos($content, '<a href="#tab1">Text Content</a>') !== false);
+            $this->assertTrue(strpos($content, '<a class="active-tab" href="#tab2">Html Content</a>') !== false);
             $this->assertTrue(strpos($content, '<a id="mergetag-guide" class="simple-link" href="#">' .
                                                 'MergeTag Guide</a></div>') !== false);
-            $this->assertTrue(strpos($content, '<div id="tab1" class="active-tab tab email-template-textContent">') !== false);
+            $this->assertTrue(strpos($content, '<div id="tab1" class=" tab email-template-textContent">') !== false);
             $this->assertTrue(strpos($content, '<th><label for="Campaign_textContent">Text Content</label></th>') !== false);
             $this->assertTrue(strpos($content, '<td colspan="1"><textarea id="Campaign_textContent" ' .
                                                 'name="Campaign[textContent]" rows="6" cols="50">' .
                                                 '</textarea></td></div>') !== false);
-            $this->assertTrue(strpos($content, '<div id="tab2" class="tab email-template-htmlContent">' .
+            $this->assertTrue(strpos($content, '<div id="tab2" class="active-tab tab email-template-htmlContent">' .
                                                 '<label for="Campaign_htmlContent">Html Content</label>') !== false);
             $this->assertTrue(strpos($content, '<textarea id=\'Campaign_htmlContent\' name=\'Campaign[htmlContent]\'>' .
                                                 '</textarea></div></div></td></div>') !== false);
@@ -660,7 +660,7 @@
             $this->assertTrue(strpos($content, '<td colspan="1"><textarea id="Campaign_textContent" ' .
                                                 'name="Campaign[textContent]" rows="6" cols="50">Text' .
                                                 '</textarea></td></div>') !== false);
-            $this->assertTrue(strpos($content, '<div id="tab2" class="tab email-template-htmlContent">' .
+            $this->assertTrue(strpos($content, '<div id="tab2" class=" tab email-template-htmlContent">' .
                                                 '<label for="Campaign_htmlContent">Html Content</label>') !== false);
             $this->assertTrue(strpos($content, '<textarea id=\'Campaign_htmlContent\' name=\'Campaign[htmlContent]\'>' .
                                                 'Html</textarea></div>') !== false);

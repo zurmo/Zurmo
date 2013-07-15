@@ -39,8 +39,6 @@
      */
     class JobLogCleanupJob extends BaseJob
     {
-        protected static $pageSize = 1000;
-
         /**
          * @returns Translated label that describes this job type.
          */
@@ -59,34 +57,21 @@
 
         public static function getRecommendedRunFrequencyContent()
         {
-            return Zurmo::t('JobsManagerModule', 'Once a week, early in the morning.');
+            return Zurmo::t('JobsManagerModule', 'Once per day.');
         }
 
         /**
-         * Return all job logs where the modifiedDateTime was more than 1 week ago.
-         * Then delete these logs.
+         * Deletes all job logs where the modifiedDateTime was more than 1 week ago.
+         * Runs operation in bulk to improve performance when large jobLogs are present.
          *
          * @see BaseJob::run()
          */
         public function run()
         {
-            $oneWeekAgoTimeStamp = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
-            $searchAttributeData = array();
-            $searchAttributeData['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'endDateTime',
-                    'operatorType'         => 'lessThan',
-                    'value'                => $oneWeekAgoTimeStamp,
-                ),
-            );
-            $searchAttributeData['structure'] = '1';
-            $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('JobLog');
-            $where = RedBeanModelDataProvider::makeWhere('JobLog', $searchAttributeData, $joinTablesAdapter);
-            $jobLogModels = JobLog::getSubset($joinTablesAdapter, null, self::$pageSize, $where, null);
-            foreach ($jobLogModels as $jobLog)
-            {
-                $jobLog->delete();
-            }
+            $oneWeekAgoTimeStamp     = DateTimeUtil::convertTimestampToDbFormatDateTime(time() - 60 * 60 *24 * 7);
+            $sql                     = 'DELETE from item, joblog using joblog inner join item on ' .
+                                       'item.id = joblog.item_id where joblog.enddatetime <= "' . $oneWeekAgoTimeStamp . '"';
+            R::exec($sql);
             return true;
         }
     }

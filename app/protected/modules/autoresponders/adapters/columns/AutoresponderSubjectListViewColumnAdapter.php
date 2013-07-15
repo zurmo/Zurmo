@@ -84,7 +84,7 @@
         }
 
         protected static function renderMetricsContent(Autoresponder $autoresponder)
-        {
+        {                                    
             $dataProvider = new AutoresponderGroupedChartDataProvider($autoresponder);
             $data = $dataProvider->getChartData();
             $sentQuantity         = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::SENT]);

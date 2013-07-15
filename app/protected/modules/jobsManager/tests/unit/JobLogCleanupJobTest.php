@@ -62,11 +62,18 @@
             $jobLog2->isProcessed = false;
             $jobLog2->save();
 
+            $sql = 'select count(*) count from item';
+            $row = R::getRow($sql);
+            $this->assertEquals(4, $row['count']);
+
             $job = new JobLogCleanupJob();
             $this->assertTrue($job->run());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(1, count($jobLogs));
             $this->assertEquals($jobLog2->id, $jobLogs[0]->id);
+            $sql = 'select count(*) count from item';
+            $row = R::getRow($sql);
+            $this->assertEquals(3, $row['count']);
         }
     }
 ?>

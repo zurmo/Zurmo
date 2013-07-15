@@ -54,6 +54,7 @@
                                    --port=port
                                    --outboundUsername=username
                                    --outboundPassword=password
+                                   --outboundSecurity=security
 
     DESCRIPTION
       Send an email messages.  Use double quotes to to make a sentence for a subject or content

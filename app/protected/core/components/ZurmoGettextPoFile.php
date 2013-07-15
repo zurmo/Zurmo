@@ -259,7 +259,7 @@
                 return;
             }
 
-            $this->messages[$message['msgid']] = $message;
+            $this->messages[] = $message;
         }
 
         protected function parseQuotedString($string)

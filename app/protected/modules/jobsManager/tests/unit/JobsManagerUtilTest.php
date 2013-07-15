@@ -105,11 +105,13 @@
             $this->assertEquals(1, count($jobLogs));
             $this->assertEquals(0, $jobLogs[0]->isProcessed);
             $jobLogId = $jobLogs[0]->id;
+            $jobLogs[0]->forget(); //to ensure cache is cleared before running monitor job
             JobsManagerUtil::runMonitorJob(new MessageLogger());
             $jobLogs = JobLog::getAll();
             $this->assertEquals(2, count($jobLogs));
             $this->assertEquals($jobLogId, $jobLogs[0]->id);
             $this->assertEquals(1, $jobLogs[0]->isProcessed);
+            $this->assertEquals(0, $jobLogs[1]->isProcessed);
         }
     }
 ?>

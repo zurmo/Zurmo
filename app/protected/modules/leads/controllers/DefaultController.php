@@ -40,17 +40,22 @@
         {
             return array_merge(parent::filters(),
                 array(
-                    array(
+                   array(
                         ZurmoBaseController::RIGHTS_FILTER_PATH . ' + convert, saveConvertedContact',
                         'moduleClassName' => 'LeadsModule',
                         'rightName' => LeadsModule::RIGHT_CONVERT_LEADS,
                    ),
-                    array(
+                   array(
                         ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + create, edit',
                         'moduleClassName' => get_class($this->getModule()),
                         'viewClassName'   => 'LeadEditAndDetailsView',
                    ),
-                    array(
+                   array(
+                        ZurmoBaseController::REQUIRED_ATTRIBUTES_FILTER_PATH . ' + convert',
+                        'moduleClassName' => 'AccountsModule',
+                        'viewClassName'   => 'AccountConvertToView',
+                   ),
+                   array(
                         ZurmoModuleController::ZERO_MODELS_CHECK_FILTER_PATH . ' + list, index',
                         'controller'                    => $this,
                         'stateMetadataAdapterClassName' => 'LeadsStateMetadataAdapter'
@@ -328,7 +333,7 @@
             $userCanCreateAccount  = RightsUtil::doesUserHaveAllowByRightName('AccountsModule',
                                      AccountsModule::RIGHT_CREATE_ACCOUNTS, Yii::app()->user->userModel);
             LeadsControllerSecurityUtil::
-            resolveCanUserProperlyConvertLead($userCanAccessContacts, $userCanAccessAccounts, $convertToAccountSetting);
+                resolveCanUserProperlyConvertLead($userCanAccessContacts, $userCanAccessAccounts, $convertToAccountSetting);
             if (isset($_POST['AccountSelectForm']))
             {
                 $selectAccountForm->setAttributes($_POST['AccountSelectForm']);
@@ -336,7 +341,7 @@
                 {
                     $account = Account::getById(intval($selectAccountForm->accountId));
                     $this->actionSaveConvertedContact($contact, $account);
-                }
+                }                
             }
             elseif (isset($_POST['Account']))
             {

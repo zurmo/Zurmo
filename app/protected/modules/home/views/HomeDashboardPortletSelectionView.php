@@ -51,7 +51,8 @@
 
         protected function renderContent()
         {
-            $placedViewTypes = $this->getPlacedViewTypes();
+            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId, 
+                                                                            Yii::app()->user->userModel->id);
             $content = '<ul class="available-portlets">';
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
@@ -96,18 +97,6 @@
             }
             $content .= '</ul>';
             return $content;
-        }
-
-        protected function getPlacedViewTypes()
-        {
-            $portlets        = Portlet::getByLayoutIdAndUserSortedById($this->uniqueLayoutId,
-                                                                       Yii::app()->user->userModel->id);
-            $placedViewTypes = array();
-            foreach ($portlets as $portlet)
-            {
-                $placedViewTypes[] = $portlet->viewType;
-            }
-            return $placedViewTypes;
-        }
+        }       
     }
 ?>

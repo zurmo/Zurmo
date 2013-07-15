@@ -64,32 +64,32 @@
             assert('is_string($htmlContent) || $htmlContent === null');
             assert('is_string($fromName) || $fromName === null');
             assert('is_string($fromAddress) || $fromAddress === null');
-            assert('is_string($supportsRichText) || is_int($supportsRichText) || $supportsRichText === null');
+            assert('is_bool($supportsRichText) || is_int($supportsRichText) || $supportsRichText === null');
             assert('is_string($status) || is_int($status) || $status === null');
             assert('is_string($sendOnDateTime) || is_int($sendOnDateTime) || $sendOnDateTime === null');
             assert('is_bool($enableTracking) || is_int($enableTracking) || $enableTracking === null');
             assert('is_object($marketingList) || $marketingList === null');
-            if ($supportsRichText == null)
+            if ($supportsRichText === null)
             {
                 $supportsRichText   = 1;
             }
-            if ($sendOnDateTime == null)
+            if ($sendOnDateTime === null)
             {
                 $sendOnDateTime = '0000-00-00 00:00:00';
             }
-            if ($status == null)
+            if ($status === null)
             {
                 $status             = Campaign::STATUS_ACTIVE;
             }
-            if ($enableTracking == null)
+            if ($enableTracking === null)
             {
                 $enableTracking     = 1;
             }
-            if ($fromName == null)
+            if ($fromName === null)
             {
                 $fromName       = 'Support Team';
             }
-            if ($fromAddress == null)
+            if ($fromAddress === null)
             {
                 $fromAddress    = 'support@zurmo.com';
             }

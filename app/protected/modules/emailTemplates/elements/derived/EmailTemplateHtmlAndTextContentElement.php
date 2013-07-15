@@ -74,11 +74,22 @@
             return static::renderModelAttributeLabel(static::TEXT_CONTENT_INPUT_NAME);
         }
 
-        protected function resolveTabbedContent($plainTextContent, $htmlContent)
+        protected function resolveTabbedContent($plainTextContent, $htmlContent, $activeTab = 'text')
         {
             $this->registerTabbedContentScripts();
-            $textTabHyperLink   = ZurmoHtml::link($this->renderTextContentAreaLabel(), '#tab1', array('class' => 'active-tab'));
-            $htmlTabHyperLink   = ZurmoHtml::link($this->renderHtmlContentAreaLabel(), '#tab2');
+            $textClass = 'active-tab';
+            $htmlClass = null;
+            if ($activeTab == 'html')
+            {
+                $textClass = null;
+                $htmlClass = 'active-tab';
+            }
+            $textTabHyperLink   = ZurmoHtml::link($this->renderTextContentAreaLabel(), 
+                                                  '#tab1', 
+                                                  array('class' => $textClass));
+            $htmlTabHyperLink   = ZurmoHtml::link($this->renderHtmlContentAreaLabel(), 
+                                                  '#tab2', 
+                                                  array('class' => $htmlClass));
             $tagsGuideLink      = null;
             if ($this->form)
             {
@@ -92,11 +103,11 @@
 
             $plainTextDiv       = ZurmoHtml::tag('div',
                                                 array('id' => 'tab1',
-                                                      'class' => 'active-tab tab email-template-' . static::TEXT_CONTENT_INPUT_NAME),
+                                                      'class' => $textClass . ' tab email-template-' . static::TEXT_CONTENT_INPUT_NAME),
                                                 $plainTextContent);
             $htmlContentDiv     = ZurmoHtml::tag('div',
                                                 array('id' => 'tab2',
-                                                      'class' => 'tab email-template-' . static::HTML_CONTENT_INPUT_NAME),
+                                                      'class' => $htmlClass . ' tab email-template-' . static::HTML_CONTENT_INPUT_NAME),
                                                 $htmlContent);
             return ZurmoHtml::tag('div', array('class' => 'email-template-content'), $tabContent . $plainTextDiv . $htmlContentDiv);
         }
@@ -134,12 +145,23 @@
         protected function renderControlNonEditable()
         {
             assert('$this->attribute == null');
-            return $this->resolveTabbedContent($this->model->textContent, $this->model->htmlContent);
+            $activeTab = $this->getActiveTab();
+            return $this->resolveTabbedContent($this->model->textContent, $this->model->htmlContent, $activeTab);
         }
 
         protected function renderControlEditable()
         {
-            return $this->resolveTabbedContent($this->renderTextContentArea(), $this->renderHtmlContentArea());
+            $activeTab = $this->getActiveTab();
+            return $this->resolveTabbedContent($this->renderTextContentArea(), $this->renderHtmlContentArea(), $activeTab);
+        }
+        
+        protected function getActiveTab()
+        {
+            if (empty($this->model->textContent))
+            {
+                return 'html';
+            }
+            return 'text';
         }
 
         // REVIEW : @Shoaibi Create a HTML element out of it.
