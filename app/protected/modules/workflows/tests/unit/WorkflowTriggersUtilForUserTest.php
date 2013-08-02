@@ -58,6 +58,47 @@
             self::$sarahUserId = $sarah->id;
         }
 
+        /**
+         * Actual test for owner since we need to check OwnedSecurableItem that it properly audits
+         */
+        public function testTimeTriggerBeforeSaveEqualsOwner()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $workflow = self::makeOnSaveWorkflowAndTimeTriggerWithoutValueType('owner', 'equals', self::$superUserId, 500);
+            $model           = new Account();
+            $this->assertEquals($model->owner->id, self::$superUserId);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $model->owner = User::getById(self::$bobbyUserId);
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @depends testTimeTriggerBeforeSaveEqualsOwner
+         */
+        public function testTriggerBeforeSaveOwner()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            //First test equals
+            $workflow = self::makeOnSaveWorkflowAndTriggerWithoutValueType('owner', 'equals', self::$superUserId);
+            $model           = new Account();
+            $this->assertEquals($model->owner->id, self::$superUserId);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+            $model->owner = User::getById(self::$bobbyUserId);
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            //Second test becomes
+            $workflow = self::makeOnSaveWorkflowAndTriggerWithoutValueType('owner', 'becomes', self::$superUserId);
+            $model           = new Account();
+            $this->assertEquals($model->owner->id, self::$superUserId);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+            $model->owner = User::getById(self::$bobbyUserId);
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @depends testTriggerBeforeSaveOwner
+         */
         public function testTimeTriggerBeforeSaveEqualsWithSameCast()
         {
             $workflow = self::makeOnSaveWorkflowAndTimeTriggerWithoutValueType('user__User', 'equals', self::$superUserId, 500);

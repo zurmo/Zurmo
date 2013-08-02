@@ -235,5 +235,23 @@
             $this->assertEquals(1, count($modelClassNames));
             $this->assertEquals('Meeting', $modelClassNames[0]);
         }
+
+        /**
+         * Should not throw exception, should cast down ok
+         */
+        public function testCastDown()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $startStamp             = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $meeting                = new Meeting();
+            $meeting->name          = 'aTest';
+            $meeting->startDateTime = $startStamp;
+            $this->assertTrue($meeting->save());
+            $itemId = $meeting->getClassId('Item');
+            $item = Item::getById($itemId);
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem('Meeting');
+            $castedDownModel        = $item->castDown(array($modelDerivationPathToItem));
+            $this->assertEquals('Meeting', get_class($castedDownModel));
+        }
     }
 ?>

@@ -44,7 +44,7 @@
         {
             if (!$this->isTrustedRequest())
             {
-                parent::validateCsrfToken($event);
+                return parent::validateCsrfToken($event);
             }
             else
             {
@@ -54,6 +54,7 @@
 
         protected function isTrustedRequest()
         {
+            $safeUrls       = array();
             foreach ($this->tokenEnabledRoutes as $tokenEnabledRoute)
             {
                 $safeUrls[] = Yii::app()->createUrl($tokenEnabledRoute);
@@ -71,6 +72,26 @@
                 }
             }
             return false;
+        }
+
+        public static function isExternalRequest()
+        {
+            try
+            {
+                $url = Yii::app()->getRequest()->getUrl();
+            }
+            catch (CException $e)
+            {
+                $url = '';
+            }
+            if (strpos($url, '/external/') !== false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 ?>

@@ -31,13 +31,15 @@
 
         public static function getListBreadcrumbLinks()
         {
-            $title = Zurmo::t('ProductTemplatesModule', 'Catalog Items');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            $title = Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', $params);
             return array($title);
         }
 
         public static function getDetailsAndEditBreadcrumbLinks()
         {
-            return array(Zurmo::t('ProductTemplatesModule', 'Catalog Items') => array('default/list'));
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return array(Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', $params) => array('default/list'));
         }
 
         public function filters()
@@ -51,7 +53,7 @@
             $filters = array_merge(array(
                                         array(
                                             ZurmoBaseController::RIGHTS_FILTER_PATH .
-                                            ' - modalList,details,autoCompleteAllProductCategoriesForMultiSelectAutoComplete', // Not Coding Standard
+                                            ' - modalList, selectFromRelatedList, details, autoCompleteAllProductCategoriesForMultiSelectAutoComplete', // Not Coding Standard
                                             'moduleClassName' => get_class($this->getModule()),
                                             'rightName' => ProductTemplatesModule::getAccessRight(),
                                         ),
@@ -114,38 +116,15 @@
 
         public function actionDetails($id)
         {
-            $productTemplate = static::getModelAndCatchNotFoundAndDisplayError('ProductTemplate', intval($id));
+            $productTemplate    = static::getModelAndCatchNotFoundAndDisplayError('ProductTemplate', intval($id));
             $breadcrumbLinks    = static::getDetailsAndEditBreadcrumbLinks();
             $breadcrumbLinks[]  = StringUtil::getChoppedStringContent(strval($productTemplate), 25);
-            if (Yii::app()->request->isAjaxRequest)
-            {
-                $categoryOutput = array();
-                $productType = $productTemplate->type;
-                $productPriceFrequency = $productTemplate->priceFrequency;
-                $productSellPriceCurrency = $productTemplate->sellPrice->currency->id;
-                $productSellPriceValue = $productTemplate->sellPrice->value;
-                foreach ($productTemplate->productCategories as $category)
-                {
-                    $categoryOutput[] = array( 'id' => $category->id, 'name' => $category->name);
-                }
-                $output = array('categoryOutput' => $categoryOutput,
-                        'productType' => $productType,
-                        'productPriceFrequency' => $productPriceFrequency,
-                        'productSellPriceCurrency' => $productSellPriceCurrency,
-                        'productSellPriceValue' => $productSellPriceValue,
-                        'productName'           => $productTemplate->name,
-                        'productDescription'    => $productTemplate->description
-                        );
-
-                echo json_encode($output);
-                die();
-            }
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($productTemplate);
             AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_VIEWED, array(strval($productTemplate), 'ProductTemplatesModule'), $productTemplate);
             $detailsView        = new ProductTemplateDetailsView($this->getId(), $this->getModule()->getId(), $productTemplate);
             $view               = new ProductTemplatesPageView(ProductDefaultViewUtil::
-                                                            makeViewWithBreadcrumbsForCurrentUser(
-                                                                $this, $detailsView, $breadcrumbLinks, 'ProductBreadCrumbView'));
+                                                                makeViewWithBreadcrumbsForCurrentUser(
+                                                                    $this, $detailsView, $breadcrumbLinks, 'ProductBreadCrumbView'));
             echo $view->render();
         }
 
@@ -269,7 +248,8 @@
          */
         public function actionMassDelete()
         {
-            $title           = Zurmo::t('ProductTemplatesModule', 'Mass Delete Catalog Items');
+            $params          = LabelUtil::getTranslationParamsForAllModules();
+            $title           = Zurmo::t('ProductTemplatesModule', 'Mass Delete ProductTemplatesModulePluralLabel', $params);
             $breadcrumbLinks = array(
                  $title,
             );
@@ -291,13 +271,14 @@
                                                             $selectedRecordCount,
                                                             'ProductTemplatesPageView',
                                                             $productTemplate,
-                                                            Zurmo::t('ProductTemplatesModule', 'Catalog Items'),
+                                                            Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', $params),
                                                             $dataProvider
                                                         );
 
             if ($productTemplate === false)
             {
-                Yii::app()->user->setFlash('notification', Zurmo::t('ProductTemplatesModule', 'One of the catalog item selected is  associated to products in the system hence could not be deleted'));
+                Yii::app()->user->setFlash('notification', Zurmo::t('ProductTemplatesModule',
+                'One of the ProductTemplatesModuleSingularLowerCaseLabel selected is  associated to products in the system hence could not be deleted', $params));
                 $this->redirect(Zurmo::app()->request->getUrlReferrer());
             }
             else
@@ -306,7 +287,7 @@
                     $productTemplate,
                     $activeAttributes,
                     $selectedRecordCount,
-                    Zurmo::t('ProductTemplatesModule', 'Catalog Items'),
+                    Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', $params),
                     'ProductTemplatesMassDeleteView'
                 );
                 $view = new ProductTemplatesPageView(ZurmoDefaultViewUtil::
@@ -449,8 +430,7 @@
                                                     $relationModuleId,
                                                     $stateMetadataAdapterClassName = null)
         {
-            $portlet = Portlet::getById((int)$portletId);
-
+            $portlet               = Portlet::getById((int)$portletId);
             $modalListLinkProvider = new ProductTemplateSelectFromRelatedListModalListLinkProvider(
                                             $relationAttributeName,
                                             (int)$relationModelId,
@@ -493,6 +473,36 @@
                             $this->makeEditAndDetailsView(
                                 $this->attemptToSaveModelFromPost($productTemplate, $redirectUrl), 'Edit')));
             echo $view->render();
+        }
+
+        /**
+         * Gets product template data for product
+         * @param string $id
+         */
+        public function actionGetProductTemplateDataForProduct($id)
+        {
+            $getData = GetUtil::getData();
+            $productTemplate    = static::getModelAndCatchNotFoundAndDisplayError('ProductTemplate', intval($id));
+
+            $categoryOutput             = array();
+            $productType                = $productTemplate->type;
+            $productPriceFrequency      = $productTemplate->priceFrequency;
+            $productSellPriceCurrency   = $productTemplate->sellPrice->currency->id;
+            $productSellPriceValue      = $productTemplate->sellPrice->value;
+            foreach ($productTemplate->productCategories as $category)
+            {
+                $categoryOutput[] = array( 'id' => $category->id, 'name' => $category->name);
+            }
+            $output = array('categoryOutput'           => $categoryOutput,
+                            'productType'              => $productType,
+                            'productPriceFrequency'    => $productPriceFrequency,
+                            'productSellPriceCurrency' => $productSellPriceCurrency,
+                            'productSellPriceValue'    => $productSellPriceValue,
+                            'productName'              => $productTemplate->name,
+                            'productDescription'       => $productTemplate->description
+                           );
+
+            echo CJSON::encode($output);
         }
     }
 ?>

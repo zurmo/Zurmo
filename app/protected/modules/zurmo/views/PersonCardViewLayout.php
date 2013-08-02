@@ -86,7 +86,7 @@
             $element                       = new DropDownElement($this->model, 'title', null);
             $element->nonEditableTemplate  = '{content}';
             $salutation = $element->render();
-            if($salutation != null)
+            if ($salutation != null)
             {
                 $spanContent = ZurmoHtml::tag('span', array('class' => 'salutation'), $element->render());
             }

@@ -167,7 +167,8 @@
             }
             $sortedContacts             = $contacts;
             sort($sortedContacts);
-            $this->assertEquals($contacts, $sortedContacts);
+            $compareContacts = array('Dino Dinoson', 'Jackie Bonn', 'Jackie Jackieson', 'Jackie Tyler');
+            $this->assertEquals($compareContacts, $sortedContacts);
         }
     }
 ?>

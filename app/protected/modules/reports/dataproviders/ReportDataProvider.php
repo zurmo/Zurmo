@@ -389,7 +389,6 @@
             $where                  = $this->makeFiltersContent($joinTablesAdapter);
             $orderBy                = $this->makeOrderBysContent($joinTablesAdapter);
             $groupBy                = $this->makeGroupBysContent($joinTablesAdapter);
-
             return                    SQLQueryUtil::makeQuery($modelClassName::getTableName($modelClassName),
                                       $selectQueryAdapter, $joinTablesAdapter, $offset, $limit, $where, $orderBy, $groupBy);
         }

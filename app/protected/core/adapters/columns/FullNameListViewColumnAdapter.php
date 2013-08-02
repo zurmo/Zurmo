@@ -41,7 +41,7 @@
             if ($this->getIsLink())
             {
                 return array(
-                'name' => 'lastName',
+                'name' => 'firstName',
                 'header' => Zurmo::t('Core', 'Name'),
                 'type' => 'raw',
                 'value' => $this->view->getLinkString('$data', $this->attribute),
@@ -50,7 +50,7 @@
             else
             {
                 return array(
-                    'name' => 'lastName',
+                    'name' => 'firstName',
                     'header' => Zurmo::t('Core', 'Name'),
                     'value'  => 'strval($data)',
                 );

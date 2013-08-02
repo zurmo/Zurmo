@@ -200,5 +200,10 @@
         {
             return 'EmailTemplatesModule';
         }
+
+        public static function canSaveMetadata()
+        {
+            return true;
+        }
     }
 ?>

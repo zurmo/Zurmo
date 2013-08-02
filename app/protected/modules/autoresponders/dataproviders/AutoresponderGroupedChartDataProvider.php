@@ -70,10 +70,10 @@
             $searchAttributeData['clauses'][2] = array(
                     'attributeName' => 'autoresponderItems',
                     'relatedModelData' => array(
-                        'attributeName'     => 'processed',                        
+                        'attributeName'     => 'processed',
                         'operatorType'      => 'equals',
-                        'value'             => true,                        
-                    ));                        
+                        'value'             => true,
+                    ));
             $searchAttributeData['structure'] = '1 and 2';
             return $searchAttributeData;
         }

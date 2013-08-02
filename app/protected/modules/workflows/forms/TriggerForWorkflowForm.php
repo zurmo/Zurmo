@@ -199,9 +199,7 @@
         {
             if ((in_array($this->operator, self::getOperatorsWhereValueIsRequired()) ||
                in_array($this->valueType, self::getValueTypesWhereValueIsRequired()) ||
-               ($this->getValueElementType() == 'BooleanForWorkflowStaticDropDown' ||
-               $this->getValueElementType()  == 'UserNameId' ||
-               ($this->getValueElementType()  == 'MixedDateTypesForWorkflow' && $this->valueType == null))) &&
+               ($this->getValueElementType()  == 'MixedDateTypesForWorkflow' && $this->valueType == null)) &&
                $this->value == null)
             {
                 $this->addError('value', Zurmo::t('WorkflowsModule', 'Value cannot be blank.'));

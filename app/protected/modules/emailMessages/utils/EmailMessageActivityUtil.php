@@ -39,6 +39,7 @@
      */
     class EmailMessageActivityUtil
     {
+        // TODO: @Shoaibi: Critical: Refactor this class into multiple sub-classes
         const IMAGE_PATH            =   '/default/images/1x1-pixel.png';
 
         const VALID_HASH_PATTERN    = '~^[A-Z0-9\+=/ ]+~i'; // Not Coding Standard
@@ -56,7 +57,7 @@
             {
                 return false;
             }
-            static::resolveContentForFooter($content, $personId, $marketingListId, $modelId, $modelType, $isHtmlContent);
+            static::resolveContentForUnsubscribeAndManageSubscriptionsUrls($content, $personId, $marketingListId, $modelId, $modelType, $isHtmlContent);
             return true;
         }
 
@@ -341,68 +342,102 @@ PTN;
             }
         }
 
-        protected static function resolveContentForFooter(& $content, $personId, $marketingListId, $modelId,
-                                                                                            $modelType, $isHtmlContent)
+        protected static function resolveContentForUnsubscribeAndManageSubscriptionsUrls(& $content, $personId,
+                                                                                         $marketingListId, $modelId,
+                                                                                         $modelType, $isHtmlContent)
         {
-            $placeholderFooterContent = static::resolveFooterPlaceholderContentByType($isHtmlContent);
-            static::resolveFooterPlaceholders($content, $placeholderFooterContent, $personId,
-                                                                $marketingListId, $modelId, $modelType, $isHtmlContent);
+            $unsubscribePlaceholder = UnsubscribeAndManageSubscriptionsPlaceholderUtil::UNSUBSCRIBE_URL_PLACEHOLDER;
+            $manageSubscriptionsPlaceholder = UnsubscribeAndManageSubscriptionsPlaceholderUtil::
+                                                                                MANAGE_SUBSCRIPTIONS_URL_PLACEHOLDER;
+            $replaceExisting    = false;
+            if (strpos($content, $unsubscribePlaceholder) !== false ||
+                strpos($content, $manageSubscriptionsPlaceholder) !== false)
+            {
+                $replaceExisting = true;
+            }
+            static::resolveUnsubscribeAndManageSubscriptionPlaceholders($content, $personId, $marketingListId, $modelId,
+                                                                    $modelType, $isHtmlContent, $replaceExisting, false);
         }
 
-        public static function resolveFooterPlaceholders(& $content, $placeholderContent, $personId,
-                                                $marketingListId, $modelId, $modelType, $isHtmlContent, $preview = null)
+        public static function resolveUnsubscribeAndManageSubscriptionPlaceholders(& $content, $personId,
+                                                                                      $marketingListId, $modelId,
+                                                                                      $modelType, $isHtmlContent,
+                                                                                      $replaceExisting = false,
+                                                                                      $preview = false)
         {
-            $hash                           = static::resolveHashForFooter($personId, $marketingListId, $modelId,
-                                                                                                    $modelType, true);
+            $hash                           = static::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId,
+                                                                                            $marketingListId, $modelId,
+                                                                                            $modelType, !$preview);
             $unsubscribeUrl                 = static::resolveUnsubscribeUrl($hash, $preview);
             $manageSubscriptionsUrl         = static::resolveManageSubscriptionsUrl($hash, $preview);
             static::resolvePlaceholderUrlsForHtmlContent($unsubscribeUrl, $manageSubscriptionsUrl, $isHtmlContent);
-            static::resolveFooterTagsWithUrls($placeholderContent, $unsubscribeUrl, $manageSubscriptionsUrl);
-            static::addNewLine($placeholderContent, $isHtmlContent);
-            $content            .= $placeholderContent;
+            if ($replaceExisting)
+            {
+                static::resolveUnsubscribeAndManageSubscriptionPlaceholdersToUrls($content, $unsubscribeUrl,
+                                                                                                $manageSubscriptionsUrl);
+            }
+            else
+            {
+                $placeholderContent = static::resolveDefaultFooterPlaceholderContentByType($isHtmlContent);
+                static::resolveUnsubscribeAndManageSubscriptionPlaceholdersToUrls($placeholderContent, $unsubscribeUrl,
+                                                                                                $manageSubscriptionsUrl);
+                StringUtil::prependNewLine($placeholderContent, $isHtmlContent);
+                $content            .= $placeholderContent;
+            }
         }
 
-        protected static function resolvePlaceholderUrlsForHtmlContent(& $unsubscribeUrl, & $manageSubscriptionsUrl,
+        protected static function resolvePlaceholderUrlsForHtmlContent(& $unsubscribeUrl,& $manageSubscriptionsUrl,
                                                                                                         $isHtmlContent)
+        {
+            static::resolveUnsubscribeUrlForHtmlContent($unsubscribeUrl, $isHtmlContent);
+            static::resolveManageSubscriptionsUrlForHtmlContent($manageSubscriptionsUrl, $isHtmlContent);
+        }
+
+        protected static function resolveUnsubscribeUrlForHtmlContent(& $unsubscribeUrl, $isHtmlContent)
         {
             if ($isHtmlContent)
             {
                 $unsubscribeTranslated          = Zurmo::t('MarketingListsModule', 'Unsubscribe');
-                $manageSubscriptionsTranslated  = Zurmo::t('MarketingListsModule', 'Manage Subscriptions');
                 $unsubscribeUrl = ZurmoHtml::link($unsubscribeTranslated, $unsubscribeUrl);
+            }
+        }
+
+        protected static function resolveManageSubscriptionsUrlForHtmlContent(& $manageSubscriptionsUrl, $isHtmlContent)
+        {
+            if ($isHtmlContent)
+            {
+                $manageSubscriptionsTranslated  = Zurmo::t('MarketingListsModule', 'Manage Subscriptions');
                 $manageSubscriptionsUrl = ZurmoHtml::link($manageSubscriptionsTranslated, $manageSubscriptionsUrl);
             }
         }
 
-        protected static function resolveFooterTagsWithUrls(& $placeholderContent, $unsubscribeUrl, $manageSubscriptionsUrl)
+        protected static function resolveUnsubscribeAndManageSubscriptionPlaceholdersToUrls(& $content,
+                                                                                            $unsubscribeUrl,
+                                                                                            $manageSubscriptionsUrl)
         {
-            $unsubscribeUrlPlaceholder      = AutoresponderOrCampaignMailFooterContentUtil::UNSUBSCRIBE_URL_PLACEHOLDER;
-            $manageSubscriptionsPlaceholder = AutoresponderOrCampaignMailFooterContentUtil::
-                                                                                    MANAGE_SUBSCRIPTIONS_URL_PLACEHOLDER;
-            $placeholderContent = str_replace($unsubscribeUrlPlaceholder, $unsubscribeUrl, $placeholderContent);
-            $placeholderContent = str_replace($manageSubscriptionsPlaceholder, $manageSubscriptionsUrl,
-                                                                                                $placeholderContent);
+            static::resolveUnsubscribePlaceholderToUrl($content, $unsubscribeUrl);
+            static::resolveManageSubscriptionsPlaceholderToUrl($content, $manageSubscriptionsUrl);
         }
 
-        protected static function addNewLine(& $content, $isHtmlContent)
+        protected static function resolveUnsubscribePlaceholderToUrl(& $content, $unsubscribeUrl)
         {
-            if ($isHtmlContent)
-            {
-                $content = ZurmoHtml::tag('br') . $content;
-            }
-            else
-            {
-                $content = PHP_EOL . $content;
-            }
+            $placeholder      = UnsubscribeAndManageSubscriptionsPlaceholderUtil::UNSUBSCRIBE_URL_PLACEHOLDER;
+            $content          = str_replace($placeholder, $unsubscribeUrl, $content);
         }
 
-        protected static function resolveFooterPlaceholderContentByType($isHtmlContent)
+        protected static function resolveManageSubscriptionsPlaceholderToUrl(& $content, $manageSubscriptionsUrl)
         {
-            return AutoresponderOrCampaignMailFooterContentUtil::getContentByType($isHtmlContent);
+            $placeholder    = UnsubscribeAndManageSubscriptionsPlaceholderUtil::MANAGE_SUBSCRIPTIONS_URL_PLACEHOLDER;
+            $content        = str_replace($placeholder, $manageSubscriptionsUrl, $content);
         }
 
-        public static function resolveHashForFooter($personId, $marketingListId, $modelId, $modelType,
-                                                                                            $createNewActivity = true)
+        protected static function resolveDefaultFooterPlaceholderContentByType($isHtmlContent)
+        {
+            return UnsubscribeAndManageSubscriptionsPlaceholderUtil::getContentByType($isHtmlContent, true);
+        }
+
+        public static function resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, $modelId,
+                                                                                   $modelType, $createNewActivity = true)
         {
             $queryStringArray       = compact('personId', 'marketingListId', 'modelId', 'modelType', 'createNewActivity');
             return static::resolveHashForQueryStringArray($queryStringArray);
@@ -431,7 +466,7 @@ PTN;
             $routeParams    = array('hash'  => $hash);
             if ($preview)
             {
-                $routeParams['preview'] = $preview;
+                $routeParams['preview'] = intval($preview);
             }
             return $routeParams;
         }

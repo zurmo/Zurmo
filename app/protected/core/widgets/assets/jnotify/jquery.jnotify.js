@@ -59,7 +59,8 @@
                 type: 'message',
                 showIcon: true,
                 permanent: false,
-                disappearTime: 3000
+                disappearTime: 3000,
+                removeExisting: false
             };
 
             var options = jQuery.extend({}, defaults, options);
@@ -87,7 +88,7 @@
                     break;
             }
 
-            if (notifyWrapper.hasClass('notify-wrapper-oneattime')) {
+            if (notifyWrapper.hasClass('notify-wrapper-oneattime') || options.removeExisting) {
                 this.children().remove();
             }
 

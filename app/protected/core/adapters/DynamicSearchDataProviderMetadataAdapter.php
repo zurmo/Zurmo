@@ -77,7 +77,7 @@
             $structure                  = $this->dynamicStructure;
             $correctlyPositionedClauses = array();
             $this->processData($this->sanitizedDynamicSearchAttributes, $clauseCount, $correctlyPositionedClauses, $metadata);
-            krsort($correctlyPositionedClauses);
+            krsort($correctlyPositionedClauses);            
             //Resolve any unused clauses first before replacing real clauses.
             foreach ($correctlyPositionedClauses as $position => $correctlyPositionedClauseData)
             {
@@ -91,10 +91,10 @@
             $alphaToNumberMap = array();
             foreach ($correctlyPositionedClauses as $position => $correctlyPositionedClauseData)
             {
-                $alphaCode = static::getAlphaCodeByInteger((int)$correctlyPositionedClauseData[$position]);
+                $alphaCode = static::getAlphaCodeByInteger((int)$position);
                 $correctlyPositionedClauses[$position][$position] = $alphaCode;
                 $alphaToNumberMap[] = array($alphaCode => $correctlyPositionedClauseData[$position]);
-            }
+            }            
             //Replace clauses still used.
             foreach ($correctlyPositionedClauses as $position => $correctlyPositionedClauseData)
             {

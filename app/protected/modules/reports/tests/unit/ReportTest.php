@@ -138,7 +138,7 @@
         public function testGetReportableModulesAndLabelsForCurrentUser()
         {
             $modulesAndLabels = Report::getReportableModulesAndLabelsForCurrentUser();
-            $this->assertCount(8, $modulesAndLabels);
+            $this->assertCount(9, $modulesAndLabels);
             Yii::app()->user->userModel = User::getByUsername('billy');
             $modulesAndLabels = Report::getReportableModulesAndLabelsForCurrentUser();
             $this->assertCount(0, $modulesAndLabels);
@@ -147,7 +147,7 @@
         public function testGetReportableModulesClassNamesCurrentUserHasAccessTo()
         {
             $modulesAndLabels = Report::getReportableModulesClassNamesCurrentUserHasAccessTo();
-            $this->assertCount(8, $modulesAndLabels);
+            $this->assertCount(9, $modulesAndLabels);
             Yii::app()->user->userModel = User::getByUsername('billy');
             $modulesAndLabels = Report::getReportableModulesClassNamesCurrentUserHasAccessTo();
             $this->assertCount(0, $modulesAndLabels);

@@ -121,6 +121,7 @@
                 {
                     $valueElement->setIdAttributeId('value');
                     $valueElement->setNameAttributeName('stringifiedModelForValue');
+                    $valueElement->doNotHideSelectLinkWhenDisabled();
                 }
                 if ($valueElement instanceof MixedNumberTypesElement)
                 {
@@ -135,7 +136,8 @@
                 else
                 {
                     $startingDivStyleFirstValue     = null;
-                    if (in_array($this->model->getOperator(), array(OperatorRules::TYPE_IS_NULL, OperatorRules::TYPE_IS_NOT_NULL)))
+                    if (!in_array($this->model->getOperator(),
+                                    OperatorRules::getOperatorsWhereValueIsRequired()))
                     {
                         $startingDivStyleFirstValue         = "display:none;";
                         $valueElement->params['disabled']   = 'disabled';

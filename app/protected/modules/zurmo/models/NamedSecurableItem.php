@@ -37,6 +37,12 @@
     class NamedSecurableItem extends SecurableItem
     {
         /**
+         * @see self::checkPermissionsHasAnyOf($requiredPermissions)
+         * @var bool
+         */
+        public $allowChangePermissionsRegardlessOfUser = false;
+
+        /**
          * Given a name, check the cache if the model is cached and return. Otherwise check the database for the record,
          * cache and return this model.
          * @param string $name
@@ -146,6 +152,31 @@
                 return $this->unrestrictedGet('name');
             }
             return parent::__get($attributeName);
+        }
+
+        /**
+         * Override to handle situation where the user should have permissions regardless of the permission afforded that
+         * user. This can happen if a user can modify groups, which would include modifying the NamedSecurableItems for the
+         * various modules, but does not have access to all those modules.
+         * @param $requiredPermissions
+         * @throws AccessDeniedSecurityException
+         */
+        protected function checkPermissionsHasAnyOf($requiredPermissions)
+        {
+            assert('is_int($requiredPermissions)');
+            $currentUser = Yii::app()->user->userModel;
+            $effectivePermissions = $this->getEffectivePermissions($currentUser);
+            if (($effectivePermissions & $requiredPermissions) == 0)
+            {
+                if ($this->allowChangePermissionsRegardlessOfUser)
+                {
+                    //Do nothing. Allow override permission.
+                }
+                else
+                {
+                    throw new AccessDeniedSecurityException($currentUser, $requiredPermissions, $effectivePermissions);
+                }
+            }
         }
     }
 ?>

@@ -51,7 +51,7 @@
 
         protected function renderContent()
         {
-            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId, 
+            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId,
                                                                             Yii::app()->user->userModel->id);
             $content = '<ul class="available-portlets">';
             $modules = Module::getModuleObjects();
@@ -91,9 +91,9 @@
                     }
                 }
             }
-            if(empty($sortablePortlets))
-            {               
-                $messageView = new NoPortletsToPlaceView();                     
+            if (empty($sortablePortlets))
+            {
+                $messageView = new NoPortletsToPlaceView();
                 return $messageView->render();
             }
             //Sort by title
@@ -110,7 +110,7 @@
             $content .= '</ul>';
             return $content;
         }
-        
+
         private function resolveLayoutIdInAllowedOnPortletViewClassNames($className)
         {
             if (in_array($this->uniqueLayoutId, $className::getAllowedOnPortletViewClassNames()))

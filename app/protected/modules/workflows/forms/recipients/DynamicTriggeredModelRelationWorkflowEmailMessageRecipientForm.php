@@ -204,7 +204,7 @@
         public function resolveRecipients(RedBeanModel $model)
         {
             $recipients = array();
-            if ($model instanceof Contact && $model->primaryEmail->emailAddress !== null)
+            if ($model instanceof Contact && $model->primaryEmail->emailAddress != null)
             {
                 $recipient                  = new EmailMessageRecipient();
                 $recipient->toAddress       = $model->primaryEmail->emailAddress;

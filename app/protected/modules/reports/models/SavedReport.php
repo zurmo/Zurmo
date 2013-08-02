@@ -120,41 +120,6 @@
             );
         }
 
-        public static function getContactIdsByReportId($id)
-        {
-            $contactIds         = array();
-            $savedReport        = SavedReport::getById($id);
-            $report             = SavedReportToReportAdapter::makeReportBySavedReport($savedReport);
-            $attributeName      = null;
-            foreach ($report->getDisplayAttributes() as $key => $displayAttribute)
-            {
-                if ($displayAttribute->getAttributeIndexOrDerivedType() == 'id')
-                {
-                    $attributeName      = ReportResultsRowData::resolveAttributeNameByKey($key);
-                    break;
-                }
-            }
-            if (!$attributeName)
-            {
-                $moduleClassName                                = $report->getModuleClassName();
-                $modelClassName                                 = $moduleClassName::getPrimaryModelName();
-                $displayAttribute                               = new DisplayAttributeForReportForm($moduleClassName,
-                                                                                        $modelClassName,
-                                                                                        $report->getType());
-                $displayAttribute->attributeIndexOrDerivedType  = 'id';
-                $report->addDisplayAttribute($displayAttribute);
-                $attributeName                                  = ReportResultsRowData::resolveAttributeNameByKey(($key + 1));
-            }
-            $reportDataProvider             = new RowsAndColumnsReportDataProvider($report);
-            $reportResultsRowDataItems      = $reportDataProvider->getData();
-            foreach ($reportResultsRowDataItems as $reportResultsRowDataItem)
-            {
-                $contact        = $reportResultsRowDataItem->getModel($attributeName);
-                $contactIds[]   = $contact->id;
-            }
-            return $contactIds;
-        }
-
         public static function getGamificationRulesType()
         {
             return 'ReportGamification';

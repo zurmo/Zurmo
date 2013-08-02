@@ -55,7 +55,9 @@
         }
 
         /**
-         * Decrypt value, using CSecurityManager::decrypt method
+         * Decrypt value, using CSecurityManager::decrypt method.
+         * Ignoring error from calling decrypt, since we cannot catch certain errors such as
+         * mcrypt_generic_init(): Iv size incorrect;
          * @param string $value
          * @param string $salt
          * @return mixed
@@ -66,7 +68,7 @@
             {
                 return $value;
             }
-            return Yii::app()->getSecurityManager()->decrypt(base64_decode($value), $salt);
+            return @Yii::app()->getSecurityManager()->decrypt(base64_decode($value), $salt);
         }
 
         /**

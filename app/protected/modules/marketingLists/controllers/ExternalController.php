@@ -120,7 +120,7 @@
             if ($members)
             {
                 $this->toggleUnsubscribedForMembers($members, $newUnsubcribedValue);
-                $this->toggleOptOutForContact($contact, $optOut, $newUnsubcribedValue);                
+                $this->toggleOptOutForContact($contact, $optOut, $newUnsubcribedValue);
                 $this->createActivityIfRequired($createNewActivity, $newUnsubcribedValue, $modelId, $modelType, $personId);
             }
             $message = $this->resolveStatusMessage($newUnsubcribedValue, $optOut);
@@ -189,7 +189,7 @@
         {
             $statusMessage = Zurmo::t('MarketingListsModule', 'You have been subscribed.');
             if ($unsubscribed)
-            {                               
+            {
                 $statusMessage = Zurmo::t('MarketingListsModule', 'You have been unsubscribed.');
             }
             if ($optOut)
@@ -223,7 +223,7 @@
         {
             if ($message)
             {
-                Yii::app()->user->setFlash('notification', $message);                
+                Yii::app()->user->setFlash('notification', $message);
             }
         }
 

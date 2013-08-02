@@ -99,8 +99,7 @@
 
         protected static function resolveAjaxOptionsForSelectList()
         {
-            $singularTitle = ProductTemplate::getModelLabelByTypeAndLanguage('Singular');
-            $title = Zurmo::t('ProductTemplatesModule', $singularTitle . ' Search',
+            $title = Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Search',
                             LabelUtil::getTranslationParamsForAllModules());
             return ModalView::getAjaxOptionsForModalLink($title);
         }

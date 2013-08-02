@@ -606,6 +606,7 @@
                     case 'CExistValidator':
                     case 'CFileValidator':
                     case 'CFilterValidator':
+                        break;
                     case 'CNumberValidator':
                     case 'CRangeValidator':
                     case 'CUniqueValidator':

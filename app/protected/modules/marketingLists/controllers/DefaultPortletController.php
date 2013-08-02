@@ -65,7 +65,7 @@
             echo CJSON::encode($countArray);
         }
 
-        public function actionSubscribeContacts($marketingListId, $id, $type)
+        public function actionSubscribeContacts($marketingListId, $id, $type, $page = 1, $subscribedCount = 0, $skippedCount = 0)
         {
             assert('is_int($id)');
             assert('$type === "contact" || $type === "report"');
@@ -76,17 +76,51 @@
             $contactIds = array($id);
             if  ($type === 'report')
             {
-                $contactIds = SavedReport::getContactIdsByReportId($id);
+                $attributeName      = null;
+                $pageSize           = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                      'reportResultsListPageSize', get_class($this->getModule()));
+                $reportDataProvider = MarketingListMembersUtil::makeReportDataProviderAndResolveAttributeName($id, $pageSize, $attributeName);
+                $contactIds         = MarketingListMembersUtil::getContactIdsByReportDataProviderAndAttributeName(
+                                      $reportDataProvider, $attributeName);
+                $pageCount = $reportDataProvider->getPagination()->getPageCount();
+                $subscriberInformation = $this->addNewSubscribers($marketingListId, $contactIds);
+                if ($pageCount == $page || $pageCount == 0)
+                {
+                    $subscriberInformation = array('subscribedCount' => $subscribedCount + $subscriberInformation['subscribedCount'],
+                                                   'skippedCount'    => $skippedCount    + $subscriberInformation['skippedCount']);
+                    $message = $this->renderCompleteMessageBySubscriberInformation($subscriberInformation);
+                    echo CJSON::encode(array('message' => $message, 'type' => 'message'));
+                }
+                else
+                {
+                    $percentageComplete = (round($page / $pageCount, 2) * 100) . ' %';
+                    $message            = Zurmo::t('MarketingListsModule', 'Processing: {percentageComplete} complete',
+                                          array('{percentageComplete}' => $percentageComplete));
+                    echo CJSON::encode(array('message'         => $message,
+                                             'type'            => 'message',
+                                             'nextPage'        => $page + 1,
+                                             'subscribedCount' => $subscribedCount + $subscriberInformation['subscribedCount'],
+                                             'skippedCount'    => $skippedCount    + $subscriberInformation['skippedCount']));
+                }
             }
-            $subscriberInformation = $this->addNewSubscribers($marketingListId, $contactIds);
+            else
+            {
+                $subscriberInformation = $this->addNewSubscribers($marketingListId, $contactIds);
+                $message = $this->renderCompleteMessageBySubscriberInformation($subscriberInformation);
+                echo CJSON::encode(array('message' => $message, 'type' => 'message'));
+            }
+        }
+
+        protected function renderCompleteMessageBySubscriberInformation(array $subscriberInformation)
+        {
             $message = Zurmo::t('MarketingListsModule', '{subscribedCount} subscribed.',
-                                                array('{subscribedCount}' => $subscriberInformation['subscribedCount']));
+                array('{subscribedCount}' => $subscriberInformation['subscribedCount']));
             if (array_key_exists('skippedCount', $subscriberInformation) && $subscriberInformation['skippedCount'])
             {
-                $message .= ' ' . Zurmo::t('MarketingListsModule', '{skippedCount} skipped.',
-                                                        array('{skippedCount}' => $subscriberInformation['skippedCount']));
+                $message .= ' ' . Zurmo::t('MarketingListsModule', '{skippedCount} skipped, already in the list.',
+                        array('{skippedCount}' => $subscriberInformation['skippedCount']));
             }
-            echo CJSON::encode(array('message' => $message, 'type' => 'message'));
+            return $message;
         }
 
         protected function addNewSubscribers($marketingListId, $contactIds)

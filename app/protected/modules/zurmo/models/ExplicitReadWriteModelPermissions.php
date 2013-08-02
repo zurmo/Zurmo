@@ -73,6 +73,7 @@
         /**
          * Add a permitable object to the read only array.
          * @param object $permitable
+         * @throws NotSupportedException
          */
         public function addReadOnlyPermitable($permitable)
         {
@@ -83,13 +84,14 @@
             }
             else
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
         }
 
         /**
          * Add a permitable object to the read write array.
          * @param object $permitable
+         * @throws NotSupportedException
          */
         public function addReadWritePermitable($permitable)
         {
@@ -100,13 +102,14 @@
             }
             else
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
         }
 
             /**
          * Add a permitable object that needs to be removed from the securable item.
          * @param object $permitable
+         * @throws NotSupportedException
          */
         public function addReadOnlyPermitableToRemove($permitable)
         {
@@ -117,13 +120,14 @@
             }
             else
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
         }
 
         /**
          * Add a permitable object that needs to be removed from the securable item.
          * @param object $permitable
+         * @throws NotSupportedException
          */
         public function addReadWritePermitableToRemove($permitable)
         {
@@ -134,7 +138,7 @@
             }
             else
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
         }
 

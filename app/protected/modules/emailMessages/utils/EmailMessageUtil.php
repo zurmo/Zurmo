@@ -225,7 +225,6 @@
             }
             if ($showLink && !($model instanceof Account))
             {
-
                 $url               = Yii::app()->createUrl('/emailMessages/default/createEmailMessage',
                                                            array('toAddress'             => $emailAddress,
                                                                  'relatedId'             => $model->id,

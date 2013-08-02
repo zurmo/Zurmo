@@ -123,7 +123,7 @@
                 return array();
             }
             $recipients = array();
-            if ($user->primaryEmail->emailAddress !== null)
+            if ($user->primaryEmail->emailAddress != null)
             {
                 $recipient                  = new EmailMessageRecipient();
                 $recipient->toAddress       = $user->primaryEmail->emailAddress;

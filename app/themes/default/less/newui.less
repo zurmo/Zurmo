@@ -56,7 +56,7 @@
 .symbly( @size : 32px ) {
 	font-weight:normal;
 	font-size:@size;
-	font-family: "ZurmoGamificationSymblyReguRg";
+	font-family: "zurmo_gamification_symbly_rRg";
 }
 
 /*=Variables*/
@@ -145,7 +145,7 @@ footer, header, hgroup, menu, nav, section {
 
 /*=Login*/
 #LoginView{
-	min-width:900px;
+	//min-width:900px;
 	height:100%;
 	margin:30px;
 	.b-shadow(0 0 12px 5px rgba(153, 153, 153, 0.3)); /*999*/
@@ -215,8 +215,8 @@ footer, header, hgroup, menu, nav, section {
 
 #login-box{
 	//float:left;
-	width:500px;
-	margin:150px auto 0 -250px;
+	max-width:475px;
+	margin:150px auto 0 -237px;
 	height:200px;
 	position:relative;
 	left:50%;
@@ -2168,6 +2168,16 @@ td.empty{
 		line-height: 60px !important;
 	}
 	p{
+		font-size: 14px;
+		line-height: 21px;
+	}
+}
+
+.splash-view{
+	.general-issue-notice p{
+		margin: 0;
+		float: none;
+		width: 100%;
 		font-size: 14px;
 		line-height: 21px;
 	}

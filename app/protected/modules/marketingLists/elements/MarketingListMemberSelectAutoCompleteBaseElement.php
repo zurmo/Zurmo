@@ -98,8 +98,44 @@
         protected function getWidgetSelectActionJS()
         {
             // Begin Not Coding Standard
-            return 'js: function(event, ui) {
-                            var searchBox           = $(this);
+            return 'js: function(event, ui)
+                    {
+                        subscribeContactsToMarketingList' . $this->getSelectType() . ' ($(this), event, ui, 1, 0, 0)
+                    }';
+            // End Not Coding Standard
+        }
+
+        protected function registerScripts()
+        {
+            $this->registerSubscribeContactsAjaxScript();
+            $scriptName = $this->getListViewGridId() . '-updateFlashBar';
+            if (Yii::app()->clientScript->isScriptRegistered($scriptName))
+            {
+                return;
+            }
+            else
+            {
+                Yii::app()->clientScript->registerScript($scriptName, '
+                    function updateFlashBar(data, flashBarId)
+                    {
+                        $("#" + flashBarId).jnotifyAddMessage(
+                        {
+                            text: data.message,
+                            permanent: true,
+                            showIcon: true,
+                            type: data.type,
+                            removeExisting: true
+                        });
+                    }
+                ');
+            }
+        }
+
+        protected function registerSubscribeContactsAjaxScript()
+        {
+            // Begin Not Coding Standard
+            $script = 'function subscribeContactsToMarketingList' . $this->getSelectType() . ' (object, event, ui, page, subscribedCount, skippedCount) {
+                            var searchBox           = object;
                             var listGridViewId      = "' . $this->getListViewGridId() .'";
                             var notificationBarId   = "' . static::NOTIFICATION_BAR_ID . '";
                             var radioButtonClass    = "' . $this->getRadioButtonClass() . '";
@@ -108,6 +144,11 @@
                             var selectType          = "' . $this->getSelectType() . '";
                             var disableTextBox      = "' . static::DISABLE_TEXT_BOX_WHEN_AJAX_IN_PROGRESS . '";
                             var disableRadioButton  = "' . static::DISABLE_RADIO_BUTTON_WHEN_AJAX_IN_PROGRESS . '";
+                            var event               = event;
+                            var ui                  = ui;
+                            var page                = page;
+                            var subscribedCount     = subscribedCount;
+                            var skippedCount        = skippedCount;
                             $.ajax(
                                 {
                                     url:        url,
@@ -115,11 +156,14 @@
                                     data:       {
                                                     marketingListId: modelId,
                                                     id: ui.item.id,
-                                                     type: selectType
+                                                    type: selectType,
+                                                    page: page,
+                                                    subscribedCount: subscribedCount,
+                                                    skippedCount: skippedCount
                                                 },
                                     beforeSend: function(request, settings)
                                                 {
-                                                    $(this).makeSmallLoadingSpinner(listGridViewId);
+                                                    $(searchBox).makeSmallLoadingSpinner(listGridViewId);
                                                     $("#" + listGridViewId).addClass("loading");
                                                     if (disableTextBox == true)
                                                     {
@@ -134,11 +178,19 @@
                                                 {
                                                     $("#" + listGridViewId).find(".pager").find(".refresh").find("a").click();
                                                     updateFlashBar(data, notificationBarId);
+                                                    //todo: this is only a check if reporting.
+                                                    if(data.nextPage)
+                                                    {
+                                                        subscribeContactsToMarketingList' . $this->getSelectType() . '
+                                                            (object, event, ui, data.nextPage, data.subscribedCount, data.skippedCount);
+                                                    }
                                                 },
                                     error:      function(request, status, error)
                                                 {
                                                     var data = {' . // Not Coding Standard
-                                                                '   "message" : "' . Zurmo::t('MarketingListsModule', 'There was an error processing your request'). '",
+                                                                '   "message" : "' .
+                                                                        Zurmo::t('MarketingListsModule',
+                                                                            'There was an error processing your request'). '",
                                                                     "type"    : "error"
                                                                 };
                                                     updateFlashBar(data, notificationBarId);
@@ -156,30 +208,7 @@
                             );
                         }';
             // End Not Coding Standard
-        }
-
-        protected function registerScripts()
-        {
-            $scriptName = $this->getListViewGridId() . '-updateFlashBar';
-            if (Yii::app()->clientScript->isScriptRegistered($scriptName))
-            {
-                return;
-            }
-            else
-            {
-                Yii::app()->clientScript->registerScript($scriptName, '
-                    function updateFlashBar(data, flashBarId)
-                    {
-                        $("#" + flashBarId).jnotifyAddMessage(
-                        {
-                            text: data.message,
-                            permanent: false,
-                            showIcon: true,
-                            type: data.type
-                        });
-                    }
-                ');
-            }
+            Yii::app()->clientScript->registerScript('SubscribeContactsToMarketingListAjaxScript' . $this->getSelectType(), $script);
         }
 
         protected function getModelId()

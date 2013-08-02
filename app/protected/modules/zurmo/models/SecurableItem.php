@@ -291,7 +291,7 @@
             assert("($permissions & ~Permission::ALL) == 0");
             assert('$permissions != Permission::NONE');
             assert('in_array($type, array(Permission::ALLOW, Permission::DENY))');
-            self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
+            $this->checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
             if ($this instanceof NamedSecurableItem)
             {
                 PermissionsCache::forgetAll();
@@ -327,7 +327,7 @@
             assert("($permissions & ~Permission::ALL) == 0");
             assert('$permissions != Permission::NONE');
             assert('in_array($type, array(Permission::ALLOW, Permission::DENY, Permission::ALLOW_DENY))');
-            self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
+            $this->checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
             if ($this instanceof NamedSecurableItem)
             {
                 PermissionsCache::forgetAll();
@@ -361,7 +361,7 @@
 
         public function removeAllPermissions()
         {
-            self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
+            $this->checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
             PermissionsCache::forgetAll();
             $this->permissions->removeAll();
         }
@@ -374,7 +374,7 @@
                 // Anyone can get the id and owner, createdByUser, and modifiedByUser anytime.
                 !in_array($attributeName, array('id', 'owner', 'createdByUser', 'modifiedByUser')))
             {
-                self::checkPermissionsHasAnyOf(Permission::READ);
+                $this->checkPermissionsHasAnyOf(Permission::READ);
             }
             return parent::__get($attributeName);
         }
@@ -383,22 +383,22 @@
         {
             if ($attributeName == 'owner')
             {
-                self::checkPermissionsHasAnyOf(Permission::CHANGE_OWNER);
+                $this->checkPermissionsHasAnyOf(Permission::CHANGE_OWNER);
             }
             elseif ($attributeName == 'permissions')
             {
-                self::checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
+                $this->checkPermissionsHasAnyOf(Permission::CHANGE_PERMISSIONS);
             }
             else
             {
-                self::checkPermissionsHasAnyOf(Permission::WRITE);
+                $this->checkPermissionsHasAnyOf(Permission::WRITE);
             }
             parent::__set($attributeName, $value);
         }
 
         public function delete()
         {
-            self::checkPermissionsHasAnyOf(Permission::DELETE);
+            $this->checkPermissionsHasAnyOf(Permission::DELETE);
             return parent::delete();
         }
 

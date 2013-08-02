@@ -43,7 +43,7 @@
 
         public static function getDisplayName()
         {
-            return Zurmo::t('JobsManagerModule', 'New stable Zurmo release available');
+            return Zurmo::t('JobsManagerModule', 'New stable Zurmo release available', LabelUtil::getTranslationParamsForAllModules());
         }
 
         public static function getType()

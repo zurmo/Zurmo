@@ -44,13 +44,15 @@
             if (RightsUtil::doesUserHaveAllowByRightName('ProductsModule', ProductsModule::getCreateRight(),
                                                         Yii::app()->user->userModel))
             {
-                $items[] = array('label'    => Zurmo::t('ProductsModule', 'Create Product'),
+                $items[] = array('label'    => Zurmo::t('ProductsModule', 'Create ProductsModuleSingularLabel',
+                                               LabelUtil::getTranslationParamsForAllModules()),
                                   'url'     => Yii::app()->createUrl('products/default/create'));
             }
             if (RightsUtil::doesUserHaveAllowByRightName('ProductTemplatesModule', ProductTemplatesModule::getCreateRight(),
                                                         Yii::app()->user->userModel))
             {
-                $items[] = array('label'   => Zurmo::t('ProductTemplatesModule', 'Create Catalog Item'),
+                $items[] = array('label'   => Zurmo::t('ProductTemplatesModule', 'Create ProductTemplatesModuleSingularLabel',
+                                              LabelUtil::getTranslationParamsForAllModules()),
                                  'url'     => Yii::app()->createUrl('productTemplates/default/create'));
 
                 $items[] = array('label'   => Zurmo::t('ProductTemplatesModule', 'Create Category'),

@@ -292,10 +292,7 @@
                 {
                     $classString  = "juiportlet-columns-" . $this->uniqueLayoutId . " ";
                     $classString .= "juiportlet-widget-column" . $column . " ";
-                    if ($totalColumns > 1)
-                    {
-                        $classString .= "juiportlet-column " . $columnStyle[$column];
-                    }
+                    $classString .= "juiportlet-column " . $columnStyle[$column];
                     $content .= "<ul class=\"". $classString . "\">\n";
                     foreach ($columnPortlets as $position => $item)
                     {

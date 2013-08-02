@@ -44,11 +44,12 @@
          * additional after save processing to occur that is attribute specific.
          * @param RedBeanModel $model
          * @param array $attributeValueData
+         * @throws NotImplementedException
          */
         public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
         {
             assert('is_array($attributeValueData)');
-            throw notImplementedException();
+            throw new NotImplementedException();
         }
     }
 ?>

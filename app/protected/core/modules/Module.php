@@ -254,7 +254,7 @@
             assert('is_bool($isEnabled)');
             if (!$isEnabled && !$this->canDisable())
             {
-                throw NotSupportedException();
+                throw new NotSupportedException();
             }
             if ($isEnabled)
             {
@@ -338,7 +338,7 @@
          */
         public static function getStrongerPolicy($policyName, array $values)
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         /**

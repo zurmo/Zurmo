@@ -51,7 +51,7 @@
             $queueJobLogs    = JobLog::getByType('CampaignQueueMessagesInOutbox', 1);
             $processJobLogs  = JobLog::getByType('ProcessOutboundEmail', 1);
 
-            if(count($generateJobLogs) == 0 || count($markJobLogs) == 0 || count($queueJobLogs) == 0 || count($processJobLogs) == 0)
+            if (count($generateJobLogs) == 0 || count($markJobLogs) == 0 || count($queueJobLogs) == 0 || count($processJobLogs) == 0)
             {
                 Yii::app()->user->setFlash('notification',
                     Zurmo::t('CampaignsModule', 'Campaigns will not run properly until scheduled jobs are set up. Contact your administrator.')

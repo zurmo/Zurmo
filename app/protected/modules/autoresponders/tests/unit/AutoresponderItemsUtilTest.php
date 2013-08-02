@@ -402,7 +402,7 @@
             AutoresponderItemsUtil::processDueItem($autoresponderItem);
             $this->assertEquals(1, $autoresponderItem->processed);
             $personId                   = $contact->getClassId('Person');
-            $activities                = AutoresponderItemActivity::getByTypeAndModelIdAndPersonIdAndUrl(
+            $activities                 = AutoresponderItemActivity::getByTypeAndModelIdAndPersonIdAndUrl(
                                                                                 AutoresponderItemActivity::TYPE_SKIP,
                                                                                 $autoresponderItem->id,
                                                                                 $personId);
@@ -471,7 +471,7 @@
         }
 
         /**
-         * @//depends testProcessDueAutoresponderItemWithReturnPath
+         * @depends testProcessDueAutoresponderItemWithReturnPath
          */
         public function testProcessDueAutoresponderItemWithModelUrlMergeTags()
         {
@@ -506,6 +506,198 @@
                                                             '/contacts/default/details?id=' . $contact->id) !== false);
             $this->assertTrue(strpos($emailMessage->content->htmlContent,
                                                             '/contacts/default/details?id=' . $contact->id) !== false);
+        }
+
+        /**
+         * @depends testProcessDueAutoresponderItemWithModelUrlMergeTags
+         */
+        public function testProcessDueAutoresponderItemWithUnsubscribeUrlMergeTag()
+        {
+            $email                      = new Email();
+            $email->emailAddress        = 'demo@zurmo.com';
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 10', $this->user);
+            $contact->primaryEmail      = $email;
+            $this->assertTrue($contact->save());
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 10',
+                                                                                            'description',
+                                                                                            'CustomFromName',
+                                                                                            'custom@from.com');
+            $autoresponder              = AutoresponderTestHelper::createAutoresponder('subject 10',
+                                                                'Unsubscribe: {{UNSUBSCRIBE_URL}}',
+                                                                'Unsubscribe: {{UNSUBSCRIBE_URL}}',
+                                                                1,
+                                                                Autoresponder::OPERATION_SUBSCRIBE,
+                                                                true,
+                                                                $marketingList);
+            $processed                  = 0;
+            $processDateTime            = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $autoresponderItem          = AutoresponderItemTestHelper::createAutoresponderItem($processed,
+                                                                                                $processDateTime,
+                                                                                                $autoresponder,
+                                                                                                $contact);
+            AutoresponderItemsUtil::processDueItem($autoresponderItem);
+            $this->assertEquals(1, $autoresponderItem->processed);
+            $textContent                = $autoresponderItem->emailMessage->content->textContent;
+            $htmlContent                = $autoresponderItem->emailMessage->content->htmlContent;
+            $this->assertNotEquals($autoresponder->textContent, $textContent);
+            $this->assertNotEquals($autoresponder->htmlContent, $htmlContent);
+            $this->assertTrue(strpos($textContent, 'Unsubscribe: localhost') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($htmlContent, 'Unsubscribe: <a href="localhost') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Unsubscribe</a>') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Unsubscribe</a>'));
+            $this->assertTrue(strpos($htmlContent, '<img width="1" height="1" src="localhost') !== false);
+            $this->assertTrue(strpos($htmlContent, '/tracking/default/track?id=') !== false);
+            $this->assertTrue(strpos($htmlContent, '/marketingLists/external/manageSubscriptions') === false);
+        }
+
+        /**
+         * @depends testProcessDueAutoresponderItemWithUnsubscribeUrlMergeTag
+         */
+        public function testProcessDueAutoresponderItemWithManageSubscriptionsUrlMergeTag()
+        {
+            $email                      = new Email();
+            $email->emailAddress        = 'demo@zurmo.com';
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 11', $this->user);
+            $contact->primaryEmail      = $email;
+            $this->assertTrue($contact->save());
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 11',
+                                                                                                'description',
+                                                                                                'CustomFromName',
+                                                                                                'custom@from.com');
+            $autoresponder              = AutoresponderTestHelper::createAutoresponder('subject 11',
+                                                                                'Manage: {{MANAGE_SUBSCRIPTIONS_URL}}',
+                                                                                'Manage: {{MANAGE_SUBSCRIPTIONS_URL}}',
+                                                                                1,
+                                                                                Autoresponder::OPERATION_SUBSCRIBE,
+                                                                                true,
+                                                                                $marketingList);
+            $processed                  = 0;
+            $processDateTime            = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $autoresponderItem          = AutoresponderItemTestHelper::createAutoresponderItem($processed,
+                                                                                                $processDateTime,
+                                                                                                $autoresponder,
+                                                                                                $contact);
+            AutoresponderItemsUtil::processDueItem($autoresponderItem);
+            $this->assertEquals(1, $autoresponderItem->processed);
+            $textContent                = $autoresponderItem->emailMessage->content->textContent;
+            $htmlContent                = $autoresponderItem->emailMessage->content->htmlContent;
+            $this->assertNotEquals($autoresponder->textContent, $textContent);
+            $this->assertNotEquals($autoresponder->htmlContent, $htmlContent);
+            $this->assertTrue(strpos($textContent, 'Manage: localhost') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, 'Manage: <a href="localhost') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Manage Subscriptions</a>') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Manage Subscriptions</a>'));
+            $this->assertTrue(strpos($htmlContent, '<img width="1" height="1" src="localhost') !== false);
+            $this->assertTrue(strpos($htmlContent, '/tracking/default/track?id=') !== false);
+            $this->assertTrue(strpos($htmlContent, '/marketingLists/external/unsubscribe') === false);
+        }
+
+        /**
+         * @depends testProcessDueAutoresponderItemWithManageSubscriptionsUrlMergeTag
+         */
+        public function testProcessDueAutoresponderItemWithUnsubscribeAndManageSubscriptionsUrlMergeTags()
+        {
+            $email                      = new Email();
+            $email->emailAddress        = 'demo@zurmo.com';
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 12', $this->user);
+            $contact->primaryEmail      = $email;
+            $this->assertTrue($contact->save());
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 12',
+                                                                                            'description',
+                                                                                            'CustomFromName',
+                                                                                            'custom@from.com');
+            $autoresponder              = AutoresponderTestHelper::createAutoresponder('subject 12',
+                                                                            'Unsubscribe: {{UNSUBSCRIBE_URL}},' . // Not Coding Standard
+                                                                                ' Manage: {{MANAGE_SUBSCRIPTIONS_URL}}',
+                                                                            'Unsubscribe: {{UNSUBSCRIBE_URL}},' . // Not Coding Standard
+                                                                                ' Manage: {{MANAGE_SUBSCRIPTIONS_URL}}',
+                                                                            1,
+                                                                            Autoresponder::OPERATION_SUBSCRIBE,
+                                                                            true,
+                                                                            $marketingList);
+            $processed                  = 0;
+            $processDateTime            = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $autoresponderItem          = AutoresponderItemTestHelper::createAutoresponderItem($processed,
+                                                                                                $processDateTime,
+                                                                                                $autoresponder,
+                                                                                                $contact);
+            AutoresponderItemsUtil::processDueItem($autoresponderItem);
+            $this->assertEquals(1, $autoresponderItem->processed);
+            $textContent                = $autoresponderItem->emailMessage->content->textContent;
+            $htmlContent                = $autoresponderItem->emailMessage->content->htmlContent;
+            $this->assertNotEquals($autoresponder->textContent, $textContent);
+            $this->assertNotEquals($autoresponder->htmlContent, $htmlContent);
+            $this->assertTrue(strpos($textContent, 'Unsubscribe: localhost') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($htmlContent, 'Unsubscribe: <a href="localhost') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Unsubscribe</a>') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Unsubscribe</a>'));
+            $this->assertTrue(strpos($htmlContent, '<img width="1" height="1" src="localhost') !== false);
+            $this->assertTrue(strpos($htmlContent, '/tracking/default/track?id=') !== false);
+            $this->assertTrue(strpos($textContent, ', Manage: localhost') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, ', Manage: <a href="localhost') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Manage Subscriptions</a>') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Manage Subscriptions</a>'));
+            $this->assertTrue(strpos($htmlContent, '<img width="1" height="1" src="localhost') !== false);
+            $this->assertTrue(strpos($htmlContent, '/tracking/default/track?id=') !== false);
+        }
+
+        /**
+         * @depends testProcessDueAutoresponderItemWithUnsubscribeAndManageSubscriptionsUrlMergeTags
+         */
+        public function testProcessDueAutoresponderItemWithoutUnsubscribeAndManageSubscriptionsUrlMergeTags()
+        {
+            $email                      = new Email();
+            $email->emailAddress        = 'demo@zurmo.com';
+            $contact                    = ContactTestHelper::createContactByNameForOwner('contact 13', $this->user);
+            $contact->primaryEmail      = $email;
+            $this->assertTrue($contact->save());
+            $marketingList              = MarketingListTestHelper::createMarketingListByName('marketingList 13',
+                                                                                            'description',
+                                                                                            'CustomFromName',
+                                                                                            'custom@from.com');
+            $autoresponder              = AutoresponderTestHelper::createAutoresponder('subject 13',
+                                                                                    'Plain Text',
+                                                                                    'HTML',
+                                                                                    1,
+                                                                                    Autoresponder::OPERATION_SUBSCRIBE,
+                                                                                    true,
+                                                                                    $marketingList);
+            $processed                  = 0;
+            $processDateTime            = DateTimeUtil::convertTimestampToDbFormatDateTime(time());
+            $autoresponderItem          = AutoresponderItemTestHelper::createAutoresponderItem($processed,
+                                                                                                $processDateTime,
+                                                                                                $autoresponder,
+                                                                                                $contact);
+            AutoresponderItemsUtil::processDueItem($autoresponderItem);
+            $this->assertEquals(1, $autoresponderItem->processed);
+            $textContent                = $autoresponderItem->emailMessage->content->textContent;
+            $htmlContent                = $autoresponderItem->emailMessage->content->htmlContent;
+            $this->assertNotEquals($autoresponder->textContent, $textContent);
+            $this->assertNotEquals($autoresponder->htmlContent, $htmlContent);
+            $this->assertTrue(strpos($textContent, 'Plain Text') !== false);
+            $this->assertTrue(strpos($textContent, '/marketingLists/external/unsubscribe?hash=') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($textContent, '/marketingLists/external/manageSubscriptions?hash=') !== false);
+            $this->assertEquals(1, substr_count($textContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, 'HTML<br /><img width="1" height="1" src="localhost') !== false);
+            $this->assertTrue(strpos($htmlContent, '/tracking/default/track?id=') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/tracking/default/track?id='));
+            $this->assertTrue(strpos($htmlContent, '/marketingLists/external/unsubscribe?hash=') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/unsubscribe?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Unsubscribe</a><br /><a href="localhost') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Unsubscribe</a><br /><a href="localhost'));
+            $this->assertTrue(strpos($htmlContent, '/marketingLists/external/manageSubscriptions?hash=') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '/marketingLists/external/manageSubscriptions?hash='));
+            $this->assertTrue(strpos($htmlContent, '">Manage Subscriptions</a>') !== false);
+            $this->assertEquals(1, substr_count($htmlContent, '">Manage Subscriptions</a>'));
         }
     }
 ?>

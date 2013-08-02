@@ -84,7 +84,7 @@
                 'account'           => Zurmo::t('AccountsModule', 'AccountsModuleSingularLabel', $params, null, $language),
                 'contact'           => Zurmo::t('ContactsModule', 'ContactsModuleSingularLabel', $params, null, $language),
                 'opportunity'       => Zurmo::t('OpportunitiesModule', 'OpportunitiesModuleSingularLabel', $params, null, $language),
-                'productTemplate'   => Zurmo::t('ProductTemplatesModule', 'Catalog Item', $params, null, $language),
+                'productTemplate'   => Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel', $params, null, $language),
                 'productCategories' => Zurmo::t('ProductTemplatesModule', 'Product Categories', array(), null, $language),
                 'sellPrice'         => Zurmo::t('ProductTemplatesModule', 'Sell Price', array(), null, $language),
                 'stage'             => Zurmo::t('ProductsModule', 'Stage', array(), null, $language)

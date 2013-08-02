@@ -152,8 +152,6 @@
             $beansWithErrors = ImportDatabaseUtil::getSubset($import->getTempTableName(),     "status = "
                                                                  . ImportRowDataResultsUtil::ERROR);
             $this->assertEquals(0, count($beansWithErrors));
-
-
         }
 
         /**

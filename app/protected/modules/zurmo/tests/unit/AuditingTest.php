@@ -517,5 +517,18 @@
             $auditEvents = AuditEvent::getTailDistinctEventsByEventName('Item Viewed', Yii::app()->user->userModel, 5);
             $this->assertEquals(2, count($auditEvents));
         }
+
+        /**
+         * When an owner is defaulted to a model in the user interface, it should still be treated as a 'new' change.
+         * Previously it was not, and you would have to change the owner value before saving to trigger the
+         * originalAttributeValues array to pick up the change in owner. This was having a negative affect
+         * on the workflow rules and how they operated when the filter was owner.
+         */
+        public function testOwnerAuditsEvenWhenDefaulted()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account = new Account();
+            $this->assertEquals('User', $account->originalAttributeValues['owner'][0]);
+        }
     }
 ?>

@@ -92,11 +92,9 @@
         protected static function resolveMergeTagToStandardOrRelatedAttribute($attributeAccessorString, $model, $language, $timeQualifier)
         {
             $attributeName = strtok($attributeAccessorString, '->');
-            $modelAttributeAdapter = new ModelAttributesAdapter($model);
-            if (array_key_exists($attributeName, static::$specialAttributesResolver) && empty($timeQualifier))
+            if (SpecialMergeTagsAdapter::isSpecialMergeTag($attributeName, $timeQualifier))
             {
-                $methodName = static::$specialAttributesResolver[$attributeName];
-                return static::$methodName($model);
+                return SpecialMergeTagsAdapter::resolve($attributeName, $model);
             }
             else
             {
@@ -139,7 +137,7 @@
                     }
                     return static::resolveMergeTagToStandardOrRelatedAttribute($attributeAccessorString, $model, $language, $timeQualifier);
                 }
-                elseif ($modelAttributeAdapter->isStandardAttribute($attributeName))
+                else
                 {
                     if ($attributeName === $attributeAccessorString) // we don't have any accessor operator after the attributeName e.g. its the last in list
                     {
@@ -149,12 +147,6 @@
                     {
                         return static::PROPERTY_NOT_FOUND;
                     }
-                }
-                else
-                {
-                    // Don't really need this as null would be return implicitly if we exclude this,
-                    // so basically this is just to avoid IDE warnings to not returning anything
-                    return null;
                 }
             }
         }

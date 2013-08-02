@@ -132,7 +132,7 @@
             $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
             $this->setGetArray(array('moduleClassName' => 'AccountsModule',
                                      'viewClassName'   => 'AccountConvertToView'));
-            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');                        
+            $this->runControllerWithNoExceptionsAndGetContent('designer/default/LayoutEdit');
         }
 
         /**

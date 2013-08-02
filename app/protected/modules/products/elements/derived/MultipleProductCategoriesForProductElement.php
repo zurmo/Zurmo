@@ -62,12 +62,8 @@
                                         'id'                        => $this->getIdForIdField(),
                                         'jsonEncodedIdsAndLabels'   => CJSON::encode($this->getExistingProductCategoriesRelationsIdsAndLabels()),
                                         'sourceUrl'                 => Yii::app()->createUrl('productTemplates/default/autoCompleteAllProductCategoriesForMultiSelectAutoComplete'),
-                                        'htmlOptions'               => array(
-                                                                                'disabled' => $this->getDisabledValue(),
-                                                                            ),
-                                        'hintText'                  => Zurmo::t('ProductsModule',
-                                                                                'Type a ' . ProductCategory::getModelLabelByTypeAndLanguage('SingularLowerCase'),
-                                                                LabelUtil::getTranslationParamsForAllModules())
+                                        'htmlOptions'               => array('disabled' => $this->getDisabledValue()),
+                                        'hintText'                  => Zurmo::t('ProductTemplatesModule', 'Type a category')
             ));
             $cClipWidget->endClip();
             $content = $cClipWidget->getController()->clips['ModelElement'];

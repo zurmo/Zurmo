@@ -41,7 +41,8 @@
          */
         public static function getAttributeTypeDisplayName()
         {
-            return Zurmo::t('DesignerModule', 'Catalog Item Status Dropdown');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Status Dropdown', $params);
         }
 
         /**
@@ -49,7 +50,8 @@
          */
         public static function getAttributeTypeDisplayDescription()
         {
-            return Zurmo::t('DesignerModule', 'Catalog Item Status Dropdown Values');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Status Dropdown Values', $params);
         }
 
         /**

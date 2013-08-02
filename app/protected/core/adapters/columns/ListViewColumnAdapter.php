@@ -58,12 +58,12 @@
 
         public function renderGridViewData()
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public function renderJQGridData()
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /**

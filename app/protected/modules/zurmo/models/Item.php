@@ -107,7 +107,7 @@
 
         public function delete()
         {
-            if($this->isAudited)
+            if ($this->isAudited)
             {
                 AuditEvent::logAuditEvent('ZurmoModule', ZurmoModule::AUDIT_EVENT_ITEM_DELETED, strval($this), $this);
             }
@@ -186,7 +186,7 @@
         protected function afterSave()
         {
             parent::afterSave();
-            if($this->isAudited)
+            if ($this->isAudited)
             {
                 $this->logAuditEventsListForCreatedAndModifed($this->isNewModel);
                 AuditUtil::clearRelatedModelsOriginalAttributeValues($this);

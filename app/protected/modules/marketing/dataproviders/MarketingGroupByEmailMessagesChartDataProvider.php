@@ -164,9 +164,9 @@
                 3 => array(
                     'attributeName' => 'campaignItems',
                     'relatedModelData' => array(
-                        'attributeName'     => 'processed',                        
+                        'attributeName'     => 'processed',
                         'operatorType'      => 'equals',
-                        'value'             => true,                        
+                        'value'             => true,
                     )
                 ),
             );
@@ -225,9 +225,9 @@
                 3 => array(
                     'attributeName' => 'autoresponderItems',
                     'relatedModelData' => array(
-                        'attributeName'     => 'processed',                        
+                        'attributeName'     => 'processed',
                         'operatorType'      => 'equals',
-                        'value'             => true,                        
+                        'value'             => true,
                     )
                 ),
             );

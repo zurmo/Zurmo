@@ -319,9 +319,8 @@
             $this->assertTrue(strpos($content, '<td colspan="1"><input id="Campaign_subject" name="Campaign[subject]" ' .
                                                 'type="text" maxlength="64"') !== false);
             $this->assertTrue(strpos($content, '<tr><th>Enable Tracking<span id="enable-tracking-tooltip" ' .
-                                                'class="tooltip" title="Enabling tracking would record when recipients' .
-                                                ' open email or click any links in outgoing message.">' .
-                                                '?</span></th>') !== false);
+                                                'class="tooltip" title="Check to track when recipients open ' .
+                                                'an email or click any links.">?</span></th>') !== false);
             $this->assertTrue(strpos($content, '<td colspan="1"><input id="ytCampaign_enableTracking" type="hidden" ' .
                                                 'value="0" name="Campaign[enableTracking]"') !== false);
             $this->assertTrue(strpos($content, '<label class="hasCheckBox c_on"><input id="Campaign_enableTracking" ' .
@@ -458,6 +457,9 @@
             $this->assertEquals(3, count($campaigns));
         }
 
+        /**
+         * @depends testSuperUserCreateAction
+         */
         public function testSuperUserDetailsAction()
         {
             $campaignId = self::getModelIdByModelNameAndName ('Campaign', 'New Campaign using Create');
@@ -499,7 +501,7 @@
                                                 'FrameView PortletFrameView MetadataView">') !== false);
             $this->assertTrue(strpos($content, '<div class="juiportlet-columns"> ') !== false);
             $this->assertTrue(strpos($content, '<ul class="juiportlet-columns-CampaignDetailsAndRelationsViewLeft' .
-                                                'BottomView juiportlet-widget-column1 ">') !== false);
+                                                'BottomView juiportlet-widget-column1 juiportlet-column juiportlet-column-no-split">') !== false);
             $this->assertTrue(strpos($content, '<li class="juiportlet-widget CampaignOverallMetricsView" id="Campaign' .
                                                 'DetailsAndRelationsViewLeftBottomView') !== false);
             $this->assertTrue(strpos($content, '<div class="juiportlet-widget-head">') !== false);
@@ -618,9 +620,9 @@
             $this->assertTrue(strpos($content, '<td colspan="1"><input id="Campaign_subject" name="Campaign[subject]" ' .
                                                 'type="text" maxlength="64" value="New Campaign ' .
                                                 'using Create Subject"') !== false);
-            $this->assertTrue(strpos($content, '<th>Enable Tracking<span id="enable-tracking-tooltip" class="tooltip" ' .
-                                                'title="Enabling tracking would record when recipients open email or ' .
-                                                'click any links in outgoing message.">?</span></th>') !== false);
+            $this->assertTrue(strpos($content, '<tr><th>Enable Tracking<span id="enable-tracking-tooltip" ' .
+                                                'class="tooltip" title="Check to track when recipients open ' .
+                                                'an email or click any links.">?</span></th>') !== false);
             $this->assertTrue(strpos($content, '<td colspan="1"><input id="ytCampaign_enableTracking" type="hidden" ' .
                                                 'value="0" name="Campaign[enableTracking]"') !== false);
             $this->assertTrue(strpos($content, '<label class="hasCheckBox c_on"><input id="Campaign_enableTracking" ' .

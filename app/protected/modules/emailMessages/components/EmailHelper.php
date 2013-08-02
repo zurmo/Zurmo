@@ -123,6 +123,14 @@
         public function init()
         {
             $this->loadOutboundSettings();
+            $this->loadDefaultFromAndToAddresses();
+        }
+
+        /**
+         * Used to load defaultFromAddress and defaultTestToAddress
+         */
+        public function loadDefaultFromAndToAddresses()
+        {
             $this->defaultFromAddress   = EmailHelper::resolveDefaultEmailAddress('notification');
             $this->defaultTestToAddress = EmailHelper::resolveDefaultEmailAddress('testJobEmail');
         }
@@ -210,6 +218,7 @@
          * send immediately, consider using @sendImmediately
          * @param EmailMessage $emailMessage
          * @throws NotSupportedException
+         * @throws FailedToSaveModelException
          * @return boolean
          */
         public function send(EmailMessage $emailMessage)
@@ -225,7 +234,7 @@
             $saved                  = $emailMessage->save();
             if (!$saved)
             {
-                throw new NotSupportedException();
+                throw new FailedToSaveModelException();
             }
             return true;
         }
@@ -235,6 +244,7 @@
          * job.
          * @param EmailMessage $emailMessage
          * @throws NotSupportedException - if the emailMessage does not properly save.
+         * @throws FailedToSaveModelException
          * @return null
          */
         public function sendImmediately(EmailMessage $emailMessage)
@@ -249,7 +259,7 @@
             $saved = $emailMessage->save();
             if (!$saved)
             {
-                throw new NotSupportedException();
+                throw new FailedToSaveModelException();
             }
         }
 
@@ -287,7 +297,7 @@
             $saved = $emailMessage->save();
             if (!$saved)
             {
-                throw new NotSupportedException();
+                throw new FailedToSaveModelException();
             }
         }
 
@@ -301,19 +311,13 @@
             $mailer->security = $this->outboundSecurity;
             $mailer->Subject  = $emailMessage->subject;
             $mailer->headers  = unserialize($emailMessage->headers);
-            if ($emailMessage->content->htmlContent == null && $emailMessage->content->textContent != null)
+            if (!empty($emailMessage->content->textContent))
             {
-                $mailer->body     = $emailMessage->content->textContent;
                 $mailer->altBody  = $emailMessage->content->textContent;
             }
-            elseif ($emailMessage->content->htmlContent != null && $emailMessage->content->textContent == null)
+            if (!empty($emailMessage->content->htmlContent))
             {
                 $mailer->body     = $emailMessage->content->htmlContent;
-            }
-            elseif ($emailMessage->content->htmlContent != null && $emailMessage->content->textContent != null)
-            {
-                $mailer->body     = $emailMessage->content->htmlContent;
-                $mailer->altBody  = $emailMessage->content->textContent;
             }
             $mailer->From = array($emailMessage->sender->fromAddress => $emailMessage->sender->fromName);
             foreach ($emailMessage->recipients as $recipient)

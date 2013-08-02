@@ -286,18 +286,14 @@
         {
             assert('is_string($attribute)');
             $triggerRules = TriggerRulesFactory::createTriggerRulesByTrigger($trigger);
-            if ($workflow->getType() == Workflow::TYPE_BY_TIME)
+            if ($trigger instanceof TimeTriggerForWorkflowForm)
             {
                 return $triggerRules->evaluateTimeTriggerBeforeSave($model, $attribute,
                        $workflow->doesTimeTriggerRequireChangeToProcess());
             }
-            elseif ($workflow->getType() == Workflow::TYPE_ON_SAVE)
-            {
-                return $triggerRules->evaluateBeforeSave($model, $attribute);
-            }
             else
             {
-                throw new NotSupportedException();
+                return $triggerRules->evaluateBeforeSave($model, $attribute);
             }
         }
     }

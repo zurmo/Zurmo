@@ -37,7 +37,7 @@
     /**
      * Class that builds demo emailTemplates.
      */
-    class EmailTemplatesDemoDataMaker extends DemoDataMaker
+    class EmailTemplatesDemoDataMaker extends MarketingDemoDataMaker
     {
         protected $index;
 
@@ -55,7 +55,7 @@
 
             $emailTemplates = array();
             $types          = array_keys(EmailTemplate::getTypeDropDownArray());
-            for ($this->index = 0; $this->index < 6; $this->index++)
+            for ($this->index = 0; $this->index < 7; $this->index++)
             {
                 $emailTemplate              = new EmailTemplate();
                 $emailTemplate->type        = $types[$this->index % 2];
@@ -95,8 +95,9 @@
             {
                 $model->language            = $this->seedData['language'][$this->index];
             }
-            $model->textContent         = $this->seedData['textContent'][0];
-            $model->htmlContent         = $this->seedData['htmlContent'][0];
+            $model->textContent         = $this->seedData['textContent'][$this->index % 2];
+            $model->htmlContent         = $this->seedData['htmlContent'][$this->index % 2];
+            $this->populateMarketingModelWithFiles($model);
         }
     }
 ?>

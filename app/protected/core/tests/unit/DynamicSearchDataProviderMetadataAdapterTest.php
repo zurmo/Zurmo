@@ -592,5 +592,49 @@
             $this->assertEquals('o', DynamicSearchDataProviderMetadataAdapter::numberToLetter(15));
             $this->assertEquals('ss', DynamicSearchDataProviderMetadataAdapter::numberToLetter(45));
         }
+        
+        public function testGetAdaptedDataProviderMetadataForAttributesMappedToRealAttributesMetadata()
+        {
+            $super = User::getByUsername('super');
+            Yii::app()->user->userModel = $super;
+            $sanitizedDynamicSearchAttributes = array(array('IIIName'                      => 'IL', 
+                                                            'structurePosition'             => 1),
+                                                      array('IIIName'                      => 'CA',
+                                                            'structurePosition'             => 2));
+            $dynamicStructure = '1 OR 2';
+            $metadata         = array('clauses' => array(), 'structure' => '');
+            $metadataAdapter = new DynamicSearchDataProviderMetadataAdapter(
+                $metadata,
+                new IIISearchFormTestModel(new III(false)),
+                (int)Yii::app()->user->userModel->id,
+                $sanitizedDynamicSearchAttributes,
+                $dynamicStructure);
+            $metadata = $metadataAdapter->getAdaptedDataProviderMetadata();
+            $compareClauses = array(
+                1 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'IL',
+                ),
+                2 => array(
+                    'attributeName'        => 'iiiMember2',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'IL',
+                ),
+                3 => array(
+                    'attributeName'        => 'iiiMember',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'CA',
+                ),
+                4 => array(
+                    'attributeName'        => 'iiiMember2',
+                    'operatorType'         => 'startsWith',
+                    'value'                => 'CA',
+                ),
+            );                                              
+            $compareStructure = '((1 or 2) or (3 or 4))';           
+            $this->assertEquals($compareClauses, $metadata['clauses']);
+            $this->assertEquals($compareStructure, $metadata['structure']);
+        }
     }
 ?>

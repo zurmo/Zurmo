@@ -44,7 +44,7 @@
          */
         public static function getDisplayName()
         {
-           return Zurmo::t('JobsManagerModule', 'Check if there is newer Zurmo version available Job');
+           return Zurmo::t('JobsManagerModule', 'Check if there is newer Zurmo version available Job', LabelUtil::getTranslationParamsForAllModules());
         }
 
         /**

@@ -522,6 +522,33 @@
 	<td>2000</td>
 	<td></td>
 </tr>
+<!--to check if we cancel unlink, then it wont unlink contact-->
+<tr>
+	<td>click</td>
+	<td>link=Unlink</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForConfirmation</td>
+	<td>Are you sure you want to unlink this contact?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>chooseCancelOnNextConfirmation</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Changing Test Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--unlick contact from account-->
 <tr>
 	<td>click</td>
 	<td>link=Unlink</td>
@@ -543,8 +570,13 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForTextNotPresent</td>
+	<td>assertText</td>
+	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[2]/li[3]/div[2]/div/div/table/tbody/tr[1]/td[1]/div/a</td>
 	<td>Changing Test Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[2]/li[3]/div[2]/div/div/table/tbody/tr[2]</td>
 	<td></td>
 </tr>
 <!-- Creating contact for testing delete-->

@@ -48,12 +48,17 @@
 
         protected function renderContent()
         {
-            $content        = null;
-            EmailMessageActivityUtil::resolveFooterPlaceholders($content, $this->placeholderContent, 0,
-                                                                    0, 0, 'AutoresponderItem', $this->isHtmlContent, 1);
+            EmailMessageActivityUtil::resolveUnsubscribeAndManageSubscriptionPlaceholders($this->placeholderContent,
+                                                                                            0,
+                                                                                            0,
+                                                                                            0,
+                                                                                            'AutoresponderItem',
+                                                                                            $this->isHtmlContent,
+                                                                                            true,
+                                                                                            true);
             $content        = ZurmoHtml::tag('div', array('id' => 'footer-preview-modal-content',
                                                             'class' => 'footer-preview-modal'),
-                                                    $content);
+                                                    $this->placeholderContent);
             return $content;
         }
     }

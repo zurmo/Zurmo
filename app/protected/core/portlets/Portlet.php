@@ -282,7 +282,7 @@
                 return false;
             }
         }
-               
+
         public static function getPlacedViewTypesByLayoutIdAndUser($uniqueLayoutId, $userId)
         {
             $portlets        = static::getByLayoutIdAndUserSortedById($uniqueLayoutId,

@@ -41,21 +41,22 @@
     {
         protected function renderEditable()
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         protected function renderControlEditable()
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         /**
          * Todo: implement.
          * @return The element's content.
+         * @throws NotImplementedException
          */
         protected function renderControlNonEditable()
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected function renderLabel()

@@ -62,7 +62,8 @@
          */
         protected function getModalTitleForSelectingModel()
         {
-            return Zurmo::t('ProductTemplatesModule', 'Catalog Item Search');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Search', $params);
         }
 
         /**
@@ -84,7 +85,7 @@
          */
         protected function getOnSelectOptionForAutoComplete($idInputName)
         {
-            $url = Yii::app()->createUrl("productTemplates/default/details");
+            $url = Yii::app()->createUrl("productTemplates/default/getProductTemplateDataForProduct");
             return 'js:function(event, ui){ jQuery("#' . $idInputName . '").val(ui.item["id"]).trigger("change");
                         copyProductTemplateDataForProduct(ui.item["id"], \'' . $url . '\')}';
         }

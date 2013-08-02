@@ -61,7 +61,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}reportmodeltestitem{$q}.{$q}string{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}reportmodeltestitem{$q}.{$q}string{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -84,8 +84,8 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("(day({$q}item{$q}.{$q}createddatetime{$q} - INTERVAL " .
-                                abs($offsetInSeconds) . " SECOND) = 'a value')", $content);
+            $this->assertEquals("((day({$q}item{$q}.{$q}createddatetime{$q} - INTERVAL " .
+                                abs($offsetInSeconds) . " SECOND) = 'a value'))", $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
             Yii::app()->user->userModel->timeZone = $tempTimeZone;
@@ -108,8 +108,8 @@
             $filter2->value                        = '54.24';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}reportmodeltestitem{$q}.{$q}string{$q} = 'a value') and " .
-                                                     "({$q}reportmodeltestitem{$q}.{$q}integer{$q} = '54.24')";
+            $compareContent                        = "(({$q}reportmodeltestitem{$q}.{$q}string{$q} = 'a value') and " .
+                                                     "({$q}reportmodeltestitem{$q}.{$q}integer{$q} = '54.24'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
@@ -127,7 +127,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}reportmodeltestitem{$q}.{$q}reportmodeltestitem7_id{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}reportmodeltestitem{$q}.{$q}reportmodeltestitem7_id{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -144,7 +144,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}currencyvalue{$q}.{$q}value{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}currencyvalue{$q}.{$q}value{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -162,8 +162,8 @@
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $filter->currencyIdForValue            = '6';
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "(({$q}currencyvalue{$q}.{$q}value{$q} = 'a value') and " .
-                                                     "({$q}currencyvalue{$q}.{$q}currency_id{$q} = '6'))";
+            $compareContent                        = "((({$q}currencyvalue{$q}.{$q}value{$q} = 'a value') and " .
+                                                     "({$q}currencyvalue{$q}.{$q}currency_id{$q} = '6')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
@@ -181,7 +181,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}reportmodeltestitem{$q}.{$q}reportmodeltestitem7_id{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}reportmodeltestitem{$q}.{$q}reportmodeltestitem7_id{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -198,7 +198,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}address{$q}.{$q}street1{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}address{$q}.{$q}street1{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -215,7 +215,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}customfield{$q}.{$q}value{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}customfield{$q}.{$q}value{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -232,8 +232,8 @@
             $filter->value                         = '1991-03-04';
             $filter->valueType                     = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59'))";
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+                                                     "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());;
@@ -252,10 +252,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
@@ -273,7 +273,7 @@
             $filter->value                         = 'green';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "({$q}person{$q}.{$q}lastname{$q} = 'green')";
+            $compareContent                        = "(({$q}person{$q}.{$q}lastname{$q} = 'green'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());;
@@ -292,8 +292,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}person{$q}.{$q}lastname{$q} = 'green') and " .
-                                                     "({$q}person1{$q}.{$q}lastname{$q} = 'blue')";
+            $compareContent                        = "(({$q}person{$q}.{$q}lastname{$q} = 'green') and " .
+                                                     "({$q}person1{$q}.{$q}lastname{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -311,7 +311,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}reportmodeltestitem2{$q}.{$q}phone{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}reportmodeltestitem2{$q}.{$q}phone{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
 
@@ -324,8 +324,8 @@
             $filter2->value                        = 'a value';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}reportmodeltestitem2{$q}.{$q}phone{$q} = 'a value') and " .
-                                                     "({$q}reportmodeltestitem{$q}.{$q}integer{$q} = 'a value')";
+            $compareContent                        = "(({$q}reportmodeltestitem2{$q}.{$q}phone{$q} = 'a value') and " .
+                                                     "({$q}reportmodeltestitem{$q}.{$q}integer{$q} = 'a value'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
@@ -343,7 +343,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}address{$q}.{$q}street1{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}address{$q}.{$q}street1{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -360,7 +360,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}person{$q}.{$q}lastname{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}person{$q}.{$q}lastname{$q} = 'a value'))", $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
 
@@ -378,8 +378,8 @@
             $filter2->value                        = 'a value 2';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}person{$q}.{$q}lastname{$q} = 'a value') and " .
-                                                     "({$q}person1{$q}.{$q}lastname{$q} = 'a value 2')";
+            $compareContent                        = "(({$q}person{$q}.{$q}lastname{$q} = 'a value') and " .
+                                                     "({$q}person1{$q}.{$q}lastname{$q} = 'a value 2'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(8, $joinTablesAdapter->getLeftTableJoinCount());
@@ -403,9 +403,9 @@
             $filter3->value                        = 'a value 3';
             $filter3->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "({$q}person{$q}.{$q}lastname{$q} = 'a value') and " .
+            $compareContent                        = "(({$q}person{$q}.{$q}lastname{$q} = 'a value') and " .
                                                      "({$q}person1{$q}.{$q}lastname{$q} = 'a value 2') and " .
-                                                     "({$q}person2{$q}.{$q}lastname{$q} = 'a value 3')";
+                                                     "({$q}person2{$q}.{$q}lastname{$q} = 'a value 3'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(10, $joinTablesAdapter->getLeftTableJoinCount());
@@ -428,10 +428,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -455,10 +455,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -482,10 +482,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -509,10 +509,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(5, $joinTablesAdapter->getLeftTableJoinCount());
@@ -536,10 +536,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -563,10 +563,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -590,10 +590,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -617,10 +617,10 @@
             $filter2->value                        = '1991-03-05';
             $filter2->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-05 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59'))";
+                                                     "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-05 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(5, $joinTablesAdapter->getLeftTableJoinCount());
@@ -649,12 +649,12 @@
             $filter3->value                        = '1991-03-06';
             $filter3->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-05 00:00:00') and " .
                                                      "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-06 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -683,12 +683,12 @@
             $filter3->value                        = '1991-03-06';
             $filter3->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-05 00:00:00') and " .
                                                      "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-06 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -717,12 +717,12 @@
             $filter3->value                        = '1991-03-06';
             $filter3->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-05 00:00:00') and " .
                                                      "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-06 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -751,12 +751,12 @@
             $filter3->value                        = '1991-03-06';
             $filter3->valueType                    = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "(({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}modifieddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}modifieddatetime{$q} <= '1991-03-04 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-05 00:00:00') and " .
                                                      "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-05 23:59:59')) and " .
                                                      "(({$q}item1{$q}.{$q}modifieddatetime{$q} >= '1991-03-06 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59'))";
+                                                     "({$q}item1{$q}.{$q}modifieddatetime{$q} <= '1991-03-06 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(5, $joinTablesAdapter->getLeftTableJoinCount());
@@ -780,8 +780,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(3, $joinTablesAdapter->getLeftTableJoinCount());
@@ -805,8 +805,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -830,8 +830,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -855,8 +855,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}customfield1{$q}.{$q}value{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(3, $joinTablesAdapter->getLeftTableJoinCount());
@@ -879,8 +879,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
-                                                     "({$q}item{$q}.{$q}modifiedbyuser__user_id{$q} = 'blue')";
+            $compareContent                        = "(({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
+                                                     "({$q}item{$q}.{$q}modifiedbyuser__user_id{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
@@ -898,8 +898,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
-                                                     "({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'blue')";
+            $compareContent                        = "(({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
+                                                     "({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(0, $joinTablesAdapter->getLeftTableJoinCount());
@@ -922,8 +922,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
-                                                     "({$q}item1{$q}.{$q}modifiedbyuser__user_id{$q} = 'blue')";
+            $compareContent                        = "(({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
+                                                     "({$q}item1{$q}.{$q}modifiedbyuser__user_id{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -946,8 +946,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
-                                                     "({$q}ownedsecurableitem1{$q}.{$q}owner__user_id{$q} = 'blue')";
+            $compareContent                        = "(({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
+                                                     "({$q}ownedsecurableitem1{$q}.{$q}owner__user_id{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
@@ -970,8 +970,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
-                                                     "({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'blue')";
+            $compareContent                        = "(({$q}item{$q}.{$q}createdbyuser__user_id{$q} = 'green') and " .
+                                                     "({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -989,7 +989,7 @@
             $filter->value                         = 'green';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "({$q}account1{$q}.{$q}name{$q} = 'green')";
+            $compareContent                        = "(({$q}account1{$q}.{$q}name{$q} = 'green'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1019,9 +1019,9 @@
             $filter3->value                        = 'yellow';
             $filter3->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2, $filter3));
-            $compareContent                        = "({$q}opportunity{$q}.{$q}name{$q} = 'green') and " .
+            $compareContent                        = "(({$q}opportunity{$q}.{$q}name{$q} = 'green') and " .
                                                      "({$q}opportunity1{$q}.{$q}name{$q} = 'blue') and " .
-                                                     "({$q}account1{$q}.{$q}name{$q} = 'yellow')";
+                                                     "({$q}account1{$q}.{$q}name{$q} = 'yellow'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(5, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1038,7 +1038,7 @@
             $filter->value                         = 'green';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1056,7 +1056,7 @@
             $filter->value                         = 'green';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "({$q}meeting{$q}.{$q}name{$q} = 'green')";
+            $compareContent                        = "(({$q}meeting{$q}.{$q}name{$q} = 'green'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(3, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1078,8 +1078,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}meeting{$q}.{$q}name{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}meeting{$q}.{$q}name{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1097,7 +1097,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}reportmodeltestitem5{$q}.{$q}name{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}reportmodeltestitem5{$q}.{$q}name{$q} = 'a value'))", $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -1119,8 +1119,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}meeting{$q}.{$q}name{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}meeting{$q}.{$q}name{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(8, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1137,8 +1137,8 @@
             $filter->value                         = '1991-03-04';
             $filter->valueType                     = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "(({$q}activity{$q}.{$q}latestdatetime{$q} >= '1991-03-04 00:00:00') and " .
-                                                     "({$q}activity{$q}.{$q}latestdatetime{$q} <= '1991-03-04 23:59:59'))";
+            $compareContent                        = "((({$q}activity{$q}.{$q}latestdatetime{$q} >= '1991-03-04 00:00:00') and " .
+                                                     "({$q}activity{$q}.{$q}latestdatetime{$q} <= '1991-03-04 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(3, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1155,8 +1155,8 @@
             $filter->value                         = '1991-03-04';
             $filter->valueType                     = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "(({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
-                                                     "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59'))";
+            $compareContent                        = "((({$q}item1{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+                                                     "({$q}item1{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')))";
             $leftTablesAndAliases                  = $joinTablesAdapter->getLeftTablesAndAliases();
             $fromTablesAndAliases                  = $joinTablesAdapter->getFromTablesAndAliases();
             $this->assertEquals($compareContent, $content);
@@ -1191,8 +1191,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}account{$q}.{$q}name{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}account{$q}.{$q}name{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(6, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1214,8 +1214,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
-                                                     "({$q}opportunity{$q}.{$q}name{$q} = 'blue')";
+            $compareContent                        = "(({$q}customfield{$q}.{$q}value{$q} = 'green') and " .
+                                                     "({$q}opportunity{$q}.{$q}name{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(7, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1238,8 +1238,8 @@
             $filter2->value                        = 'blue';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "({$q}reportmodeltestitem{$q}.{$q}phone{$q} = 'green') and " .
-                                                     "({$q}customfield{$q}.{$q}value{$q} = 'blue')";
+            $compareContent                        = "(({$q}reportmodeltestitem{$q}.{$q}phone{$q} = 'green') and " .
+                                                     "({$q}customfield{$q}.{$q}value{$q} = 'blue'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(7, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1272,8 +1272,8 @@
             $filter->value                         = '1991-03-04';
             $filter->valueType                     = MixedDateTypesSearchFormAttributeMappingRules::TYPE_ON;
             $content                               = $builder->makeQueryContent(array($filter));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
-                                                     "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59'))";
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+                                                     "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(2, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1290,7 +1290,7 @@
             $filter->value                         = 'a value';
             $filter->operator                      = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter));
-            $this->assertEquals("({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'a value')", $content);
+            $this->assertEquals("(({$q}ownedsecurableitem{$q}.{$q}owner__user_id{$q} = 'a value'))", $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(4, $joinTablesAdapter->getLeftTableJoinCount());
         }
@@ -1311,9 +1311,9 @@
             $filter2->value                        = 'a value';
             $filter2->operator                     = OperatorRules::TYPE_EQUALS;
             $content                               = $builder->makeQueryContent(array($filter, $filter2));
-            $compareContent                        = "(({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
+            $compareContent                        = "((({$q}item{$q}.{$q}createddatetime{$q} >= '1991-03-04 00:00:00') and " .
                                                      "({$q}item{$q}.{$q}createddatetime{$q} <= '1991-03-04 23:59:59')) and " .
-                                                     "({$q}account{$q}.{$q}name{$q} = 'a value')";
+                                                     "({$q}account{$q}.{$q}name{$q} = 'a value'))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(1, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(5, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1349,10 +1349,10 @@
             $content                               = $builder->makeQueryContent(array($filter));
             $leftTablesAndAliases                  = $joinTablesAdapter->getLeftTablesAndAliases();
             $fromTablesAndAliases                  = $joinTablesAdapter->getFromTablesAndAliases();
-            $compareContent = "(1 = (select 1 from {$q}customfieldvalue{$q} customfieldvalue where " .
+            $compareContent = "((1 = (select 1 from {$q}customfieldvalue{$q} customfieldvalue where " .
                               "{$q}customfieldvalue{$q}.{$q}multiplevaluescustomfield_id{$q} = {$q}" .
                               "multiplevaluescustomfield{$q}.id and {$q}customfieldvalue{$q}.{$q}value{$q}" .
-                              " IN('a','b') limit 1))"; // Not Coding Standard
+                              " IN('a','b') limit 1)))"; // Not Coding Standard
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
@@ -1377,10 +1377,10 @@
             $content                               = $builder->makeQueryContent(array($filter));
             $leftTablesAndAliases                  = $joinTablesAdapter->getLeftTablesAndAliases();
             $fromTablesAndAliases                  = $joinTablesAdapter->getFromTablesAndAliases();
-            $compareContent =   "(1 = (select 1 from {$q}customfieldvalue{$q} customfieldvalue where " .
+            $compareContent =   "((1 = (select 1 from {$q}customfieldvalue{$q} customfieldvalue where " .
                                 "{$q}customfieldvalue{$q}.{$q}multiplevaluescustomfield_id{$q} = {$q}" .
                                 "multiplevaluescustomfield{$q}.id and {$q}customfieldvalue{$q}.{$q}value{$q}" .
-                                " = 'a' limit 1))";
+                                " = 'a' limit 1)))";
             $this->assertEquals($compareContent, $content);
             $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
             $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());

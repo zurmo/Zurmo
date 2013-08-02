@@ -106,5 +106,10 @@
         {
             return array('MarketingListsDemoDataMaker', 'MarketingListMembersDemoDataMaker');
         }
+
+        public static function isReportable()
+        {
+            return true;
+        }
     }
 ?>

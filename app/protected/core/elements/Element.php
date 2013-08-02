@@ -372,7 +372,7 @@
             }
             elseif (!is_string($inputIdPrefix))
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
             return $inputIdPrefix;
         }
@@ -408,7 +408,7 @@
             }
             elseif (!is_string($inputNamePrefix))
             {
-                throw notSupportedException();
+                throw new NotSupportedException();
             }
             return $inputNamePrefix;
         }

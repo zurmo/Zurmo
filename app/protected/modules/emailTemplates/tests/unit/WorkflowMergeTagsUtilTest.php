@@ -125,6 +125,15 @@
             $user1->currency                                    = $currencies[0];
             $user1->manager                                     = $users[0];
 
+            //Custom attribute                                             
+            $attributeForm                                  = new TextAttributeForm();
+            $attributeForm->attributeName                   = 'custom';
+            $attributeForm->attributeLabels                 = array('en' => 'test label en');            
+            $modelAttributesAdapterClassName                = 
+                    $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new EmailTemplateModelTestItem());            
+            $adapter->setAttributeMetadataFromForm($attributeForm);                                    
+
             $model                                              = new EmailTemplateModelTestItem();
             $model->string                                      = 'abc';
             $model->firstName                                   = 'James';
@@ -152,6 +161,7 @@
             $model->multiDropDown->values->add($multiDropDownCustomFieldValue3);
             $model->tagCloud->values->add($tagCustomFieldValue1);
             $model->tagCloud->values->add($tagCustomFieldValue2);
+            $model->customCstm                                  = 'text custom';
             $saved                                              = $model->save();
             assert('$saved'); // Not Coding Standard
             self::$emailTemplate                                = $model;
@@ -228,6 +238,8 @@
             self::$emailTemplate->tagCloud->values->remove($tagCustomFieldValue2);
             self::$emailTemplate->tagCloud->values->add($tagCustomFieldValue3);
             self::$emailTemplate->tagCloud->values->add($tagCustomFieldValue4);
+
+            self::$emailTemplate->customCstm                    = 'text custom changed';
 
             self::$content                                      = 'Current: [[STRING]] [[FIRST^NAME]] [[LAST^NAME]] ' .
                 '[[PHONE]] Old: [[WAS%STRING]] [[WAS%FIRST^NAME]] ' .
@@ -775,6 +787,91 @@
             $this->assertNotEquals($resolvedContent, $content);
             $this->assertNotEmpty($this->invalidTags);
             $this->assertEquals('WAS%MODEL^URL', $this->invalidTags[0]);
+        }
+
+        /**
+         * @depends testModelUrlMergeTag
+         */
+        public function testModelCustomAttribute()
+        {
+            $content                = 'customCstm: Current: [[CUSTOM^CSTM]] Old: [[WAS%CUSTOM^CSTM]]';
+            $compareContent         = 'customCstm: Current: text custom changed Old: text custom';
+            $mergeTagsUtil          = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW, null, $content);
+            $this->assertTrue($mergeTagsUtil instanceof MergeTagsUtil);
+            $this->assertTrue($mergeTagsUtil instanceof WorkflowMergeTagsUtil);
+            $resolvedContent        = $mergeTagsUtil->resolveMergeTags(self::$emailTemplate, $this->invalidTags);
+            $this->assertTrue($resolvedContent !== false);
+            $this->assertNotEquals($resolvedContent, $content);
+            $this->assertEquals($compareContent, $resolvedContent);
+            $this->assertEmpty($this->invalidTags);
+        }
+
+        /**
+         * @depends testModelCustomAttribute
+         */
+        public function testApplicationNameMergeTag()
+        {
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'applicationName', 'Demo App');
+            $content                        = '[[APPLICATION^NAME]]';
+            $expectedContent                = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
+            $mergeTagsUtil                  = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW, null, $content);
+            $this->assertTrue($mergeTagsUtil instanceof MergeTagsUtil);
+            $this->assertTrue($mergeTagsUtil instanceof WorkflowMergeTagsUtil);
+            $resolvedContent                = $mergeTagsUtil->resolveMergeTags(self::$emailTemplate, $this->invalidTags);
+            $this->assertTrue($resolvedContent !== false);
+            $this->assertNotEquals($resolvedContent, $content);
+            $this->assertEquals($expectedContent, $resolvedContent);
+            $this->assertEmpty($this->invalidTags);
+        }
+
+        /**
+         * @depends testApplicationNameMergeTag
+         */
+        public function testCurrentYearMergeTag()
+        {
+            $content                        = '[[CURRENT^YEAR]]';
+            $expectedContent                = date('Y');
+            $mergeTagsUtil                  = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW, null, $content);
+            $this->assertTrue($mergeTagsUtil instanceof MergeTagsUtil);
+            $this->assertTrue($mergeTagsUtil instanceof WorkflowMergeTagsUtil);
+            $resolvedContent                = $mergeTagsUtil->resolveMergeTags(self::$emailTemplate, $this->invalidTags);
+            $this->assertTrue($resolvedContent !== false);
+            $this->assertNotEquals($resolvedContent, $content);
+            $this->assertEquals($expectedContent, $resolvedContent);
+            $this->assertEmpty($this->invalidTags);
+        }
+
+        /**
+         * @depends testCurrentYearMergeTag
+         */
+        public function testLastYearMergeTag()
+        {
+            $content                        = '[[LAST^YEAR]]';
+            $expectedContent                = date('Y') - 1;
+            $mergeTagsUtil                  = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW, null, $content);
+            $this->assertTrue($mergeTagsUtil instanceof MergeTagsUtil);
+            $this->assertTrue($mergeTagsUtil instanceof WorkflowMergeTagsUtil);
+            $resolvedContent                = $mergeTagsUtil->resolveMergeTags(self::$emailTemplate, $this->invalidTags);
+            $this->assertTrue($resolvedContent !== false);
+            $this->assertNotEquals($resolvedContent, $content);
+            $this->assertEquals($expectedContent, $resolvedContent);
+            $this->assertEmpty($this->invalidTags);
+        }
+
+        /**
+         * @depends testLastYearMergeTag
+         */
+        public function testBaseUrlMergeTag()
+        {
+            $content                        = '[[BASE^URL]]';
+            $mergeTagsUtil                  = MergeTagsUtilFactory::make(EmailTemplate::TYPE_WORKFLOW, null, $content);
+            $this->assertTrue($mergeTagsUtil instanceof MergeTagsUtil);
+            $this->assertTrue($mergeTagsUtil instanceof WorkflowMergeTagsUtil);
+            $resolvedContent                = $mergeTagsUtil->resolveMergeTags(self::$emailTemplate, $this->invalidTags);
+            $this->assertTrue($resolvedContent !== false);
+            $this->assertNotEquals($resolvedContent, $content);
+            $this->assertTrue(strpos($resolvedContent, 'localhost') === 0);
+            $this->assertEmpty($this->invalidTags);
         }
     }
 ?>

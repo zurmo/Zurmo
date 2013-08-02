@@ -143,5 +143,45 @@
         {
             return true;
         }
+
+        public static function makeReportDataProviderAndResolveAttributeName($id, $pageSize, & $attributeName)
+        {
+            assert('is_int($pageSize)');
+            $savedReport = SavedReport::getById($id);
+            $report      = SavedReportToReportAdapter::makeReportBySavedReport($savedReport);
+            foreach ($report->getDisplayAttributes() as $key => $displayAttribute)
+            {
+                if ($displayAttribute->getAttributeIndexOrDerivedType() == 'id')
+                {
+                    $attributeName = ReportResultsRowData::resolveAttributeNameByKey($key);
+                    break;
+                }
+            }
+            if ($attributeName == null)
+            {
+                $moduleClassName                                = $report->getModuleClassName();
+                $modelClassName                                 = $moduleClassName::getPrimaryModelName();
+                $displayAttribute                               = new DisplayAttributeForReportForm($moduleClassName,
+                                                                  $modelClassName,
+                                                                  $report->getType());
+                $displayAttribute->attributeIndexOrDerivedType  = 'id';
+                $report->addDisplayAttribute($displayAttribute);
+                $attributeName                                  = ReportResultsRowData::resolveAttributeNameByKey(($key + 1));
+            }
+            return ReportDataProviderFactory::makeByReport($report, $pageSize);
+        }
+
+        public static function getContactIdsByReportDataProviderAndAttributeName(
+                               RowsAndColumnsReportDataProvider $reportDataProvider, $attributeName)
+        {
+            $contactIds = array();
+            $reportResultsRowDataItems = $reportDataProvider->getData();
+            foreach ($reportResultsRowDataItems as $reportResultsRowDataItem)
+            {
+                $contact      = $reportResultsRowDataItem->getModel($attributeName);
+                $contactIds[] = $contact->id;
+            }
+            return $contactIds;
+        }
     }
 ?>

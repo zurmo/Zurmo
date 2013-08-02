@@ -112,7 +112,7 @@
                 'defaultSortAttribute' => 'type',
                 'elements' => array(
                     'description'     => 'TextArea',
-                    'endDateTimex'    => 'DateTime',
+                    'endDateTime'     => 'DateTime',
                     'startDateTime'   => 'DateTime',
                 ),
             );

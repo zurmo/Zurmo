@@ -44,11 +44,11 @@
             $this->emailBox = EmailBoxUtil::getDefaultEmailBoxByUser($user);
         }
 
-        protected function populateMarketingItems($marketingItemClassName)
+        protected function populateMarketingItems($marketingItemClassName, $subject = null)
         {
             foreach ($marketingItemClassName::getAll() as $marketingItem)
             {
-                $marketingItem->emailMessage = $this->makeEmailMessage($marketingItem->contact);
+                $marketingItem->emailMessage = $this->makeEmailMessage($marketingItem->contact, $subject);
                 $saved = $marketingItem->unrestrictedSave();
                 if (!$saved)
                 {
@@ -57,14 +57,18 @@
             }
         }
 
-        protected function makeEmailMessage(Contact $contact)
+        protected function makeEmailMessage(Contact $contact, $subject = null)
         {
             $interval = mt_rand(1, 30) * 86400;
+            if (!isset($subject))
+            {
+                $subject = 'A test archived sent email';
+            }
             //#1 Create Archived - Sent
             $emailMessage              = new EmailMessage();
             $emailMessage->setScenario('importModel');
             $emailMessage->owner       = $contact->owner;
-            $emailMessage->subject     = 'A test archived sent email';
+            $emailMessage->subject     = $subject;
             $emailContent              = new EmailMessageContent();
             $emailContent->textContent = 'My First Message';
             $emailContent->htmlContent = 'Some fake HTML content';

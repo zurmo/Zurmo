@@ -692,5 +692,23 @@
             $account = Account::getById($id);
             $this->assertEquals('https://www.zurmo.com',  $account->website);
         }
+
+        /**
+         * Should not throw exception, should cast down ok
+         * @depends testWebsiteCanBeSavedWithoutUrlScheme
+         */
+        public function testCastDown()
+        {
+            $user                 = User::getByUsername('steven');
+            $account              = new Account();
+            $account->owner       = $user;
+            $account->name        = 'Account';
+            $this->assertTrue($account->save());
+            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem('Account');
+            $itemId               = $account->getClassId('Item');
+            $item                 = Item::getById($itemId);
+            $castedDownModel      = $item->castDown(array($modelDerivationPathToItem));
+            $this->assertEquals('Account', get_class($castedDownModel));
+        }
     }
 ?>

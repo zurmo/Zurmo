@@ -42,8 +42,7 @@
             {
                 return $this->getFormattedAttributeLabel();
             }
-            $title                  = Zurmo::t('ZurmoModule', 'Enabling tracking would record when recipients open' .
-                                                                    ' email or click any links in outgoing message.');
+            $title                  = Zurmo::t('ZurmoModule', 'Check to track when recipients open an email or click any links.');
             $content                = Zurmo::t('ZurmoModule', 'Enable Tracking');
             $content                .= ZurmoHtml::tag('span', array('id' => 'enable-tracking-tooltip',
                                                         'class' => 'tooltip',

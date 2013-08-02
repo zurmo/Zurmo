@@ -64,7 +64,7 @@
             $totalPrice = ProductElementUtil::getProductPortletTotalPrice($product, 0);
             $this->assertEquals($totalPrice, "$1,001.08"); // Not Coding Standard
         }
-        
+
         public function testResolveProductHasManyProductCategoriesFromPost()
         {
             $super = User::getByUsername('super');

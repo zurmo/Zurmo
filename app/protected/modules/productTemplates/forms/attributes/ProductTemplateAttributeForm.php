@@ -49,7 +49,8 @@
          */
         public static function getAttributeTypeDisplayDescription()
         {
-            return Zurmo::t('ProductTemplatesModule', 'A catalog item field');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'A ProductTemplatesModuleSingularLowerCaseLabel field', $params);
         }
 
         /**

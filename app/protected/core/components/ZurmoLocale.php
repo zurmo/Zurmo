@@ -105,7 +105,7 @@
          */
         public static function getSelectableLocaleIds()
         {
-            return array('en_au', 'en_ca', 'en_gb', 'en_us');
+            return array('de_de', 'en_au', 'en_ca', 'en_gb', 'en_us', 'es_es', 'fr_fr', 'it_it', 'nl_nl');
         }
 
         /**

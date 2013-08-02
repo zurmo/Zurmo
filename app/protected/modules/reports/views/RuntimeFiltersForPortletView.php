@@ -223,7 +223,7 @@
             $applyElement          = new SaveButtonActionElement(null, null, null, $params);
             return $resetElement->render() . $applyElement->render();
         }
-        
+
         protected function renderModalContainer()
         {
             return ZurmoHtml::tag('div', array(

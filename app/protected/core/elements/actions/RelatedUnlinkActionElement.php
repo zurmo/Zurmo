@@ -57,7 +57,6 @@
             $htmlOptions        = parent::getHtmlOptions();
             $htmlOptions['id']      = $this->getLinkId();
             $htmlOptions['onclick'] = 'if (!$(this).onAjaxSubmitRelatedListAction("' . $confirmTitle . '", "' . $this->getGridId() . '")){return;};';
-            $htmlOptions['namespace']   = 'portlet';
             return $htmlOptions;
         }
 

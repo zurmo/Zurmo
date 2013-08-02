@@ -62,7 +62,8 @@
                     'serializedData',
                 ),
                 'relations' => array(
-                    'modelItem'       => array(RedBeanModel::HAS_ONE,   'Item',          RedBeanModel::NOT_OWNED),
+                    'modelItem'       => array(RedBeanModel::HAS_ONE,   'Item',          RedBeanModel::NOT_OWNED,
+                                               RedBeanModel::LINK_TYPE_SPECIFIC, 'modelItem'),
                     'savedWorkflow'   => array(RedBeanModel::HAS_ONE,   'SavedWorkflow', RedBeanModel::NOT_OWNED),
                     'triggeredByUser' => array(RedBeanModel::HAS_ONE,   'User',          RedBeanModel::NOT_OWNED,
                                                RedBeanModel::LINK_TYPE_SPECIFIC, 'triggeredByUser'),

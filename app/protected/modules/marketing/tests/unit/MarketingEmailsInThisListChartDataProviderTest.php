@@ -45,13 +45,10 @@
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
 
-            $emailBox = EmailBoxUtil::getDefaultEmailBoxByUser(User::getByUsername('super'));
-            ContactTestHelper
-                    ::createContactByNameForOwner('contact01', Yii::app()->user->userModel);
-            ContactTestHelper
-                    ::createContactByNameForOwner('contact02', Yii::app()->user->userModel);
-            ContactTestHelper
-                    ::createContactByNameForOwner('contact03', Yii::app()->user->userModel);
+            EmailBoxUtil::getDefaultEmailBoxByUser(User::getByUsername('super'));
+            ContactTestHelper::createContactByNameForOwner('contact01', Yii::app()->user->userModel);
+            ContactTestHelper::createContactByNameForOwner('contact02', Yii::app()->user->userModel);
+            ContactTestHelper::createContactByNameForOwner('contact03', Yii::app()->user->userModel);
         }
 
         public function setUp()
@@ -287,13 +284,13 @@
                     break;
             }
             $beginDate                  = $this->getBeginDateByConditionAndGroupingBy(
-                    $emailMessageSentDateTime,
-                    $condition,
-                    $groupingBy);
+                                            $emailMessageSentDateTime,
+                                            $condition,
+                                            $groupingBy);
             $endDate                    = $this->getEndDateByConditionAndGroupingBy(
-                    $emailMessageSentDateTime,
-                    $condition,
-                    $groupingBy);
+                                            $emailMessageSentDateTime,
+                                            $condition,
+                                            $groupingBy);
             $chartDataProvider          = new MarketingEmailsInThisListChartDataProvider();
             $chartDataProvider->setBeginDate($beginDate);
             $chartDataProvider->setEndDate  ($endDate);
@@ -302,7 +299,6 @@
             $chartDateProviderForMarketingList = clone $chartDataProvider;
 
             $combinedChartData          = $chartDataProvider->getChartData();
-
             $chartDataProvider->setCampaign($this->campaign);
             $campaignChartData          = $chartDataProvider->getChartData();
 
@@ -532,8 +528,8 @@
         {
             $emailMessage                            = $this->createEmailMessage($contact, $emailMessageSentDateTime);
             $autoresponderItem                       = new AutoresponderItem();
-            $autoresponderItem->contact              = $contact;                        
-            $autoresponderItem->processed            = true;            
+            $autoresponderItem->contact              = $contact;
+            $autoresponderItem->processed            = true;
             $autoresponderItem->emailMessage         = $emailMessage;
             $autoresponderItem->processDateTime      = DateTimeUtil
                         ::convertTimestampToDbFormatDateTime(time());;

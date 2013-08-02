@@ -84,7 +84,7 @@
             {
                 $modalId = $this->modalId;
             }
-            $url = Yii::app()->createUrl("productTemplates/default/details");
+            $url = Yii::app()->createUrl("productTemplates/default/getProductTemplateDataForProduct");
             $string  = 'ZurmoHtml::link(';
             $string .= $attributeString . ', ';
             $string .= '"javascript:transferModalValues(\"#' . $modalId . '\", " . CJavaScript::encode(array(\'' . $this->sourceIdFieldId . '\' => $data->id, \'' . $this->sourceNameFieldId . '\' => strval(' . $attributeString . '))) . ");

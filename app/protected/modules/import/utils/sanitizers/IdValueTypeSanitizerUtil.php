@@ -73,10 +73,11 @@
          * @param string $attributeName
          * @param mixed $value
          * @param mixed $mappingRuleData - array or null
+         * @throws NotImplementedException
          */
         public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
         {
-            throw notImplementedException();
+            throw new NotImplementedException();
         }
     }
 ?>

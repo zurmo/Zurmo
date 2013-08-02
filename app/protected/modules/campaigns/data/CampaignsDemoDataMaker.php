@@ -37,7 +37,7 @@
     /**
      * Class that builds demo campaigns.
      */
-    class CampaignsDemoDataMaker extends DemoDataMaker
+    class CampaignsDemoDataMaker extends MarketingDemoDataMaker
     {
         protected $index;
 
@@ -99,6 +99,7 @@
             $model->fromName                = $this->seedData['fromName'][$this->index];
             $model->fromAddress             = $this->seedData['fromAddress'][$this->index];
             $model->enableTracking          = (rand() % 2);
+            $this->populateMarketingModelWithFiles($model);
         }
     }
 ?>

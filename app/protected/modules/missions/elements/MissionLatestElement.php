@@ -42,21 +42,22 @@
     {
         protected function renderEditable()
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         protected function renderControlEditable()
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         /**
          * Render the full name as a non-editable display
          * @return The element's content.
+         * @throws NotSupportedException
          */
         protected function renderControlNonEditable()
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
         }
 
         protected function renderLabel()

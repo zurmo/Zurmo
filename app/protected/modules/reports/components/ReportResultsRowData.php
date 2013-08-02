@@ -398,6 +398,9 @@
         }
 
         /**
+         * The check for OwnedModel below, is because it is possible that something like Address 'state' would be coming
+         * into this method for retrieval. but depending how things are called, it might need to use the penultimate
+         * relation instead of looking for the attribute on the $model.
          * @param RedBeanModel $model
          * @param string $attribute
          * @param DisplayAttributeForReportForm $displayAttribute
@@ -407,7 +410,8 @@
         protected function resolveModelAttributeValueForPenultimateRelation(RedBeanModel $model, $attribute,
                                                                             DisplayAttributeForReportForm $displayAttribute)
         {
-            if ($model->isAttribute($attribute))
+            if ($model->isAttribute($attribute) &&
+                !is_subclass_of($displayAttribute->getResolvedAttributeModelClassName(), 'OwnedModel'))
             {
                 return $model->$attribute;
             }

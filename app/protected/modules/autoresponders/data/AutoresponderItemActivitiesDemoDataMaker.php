@@ -72,7 +72,7 @@
                 $activities[]                   = $activity->id;
             }
             $demoDataHelper->setRangeByModelName('AutoresponderItemActivity', $activities[0], $activities[count($activities)-1]);
-            $this->populateMarketingItems('AutoresponderItem');
+            $this->populateMarketingItems('AutoresponderItem', $activity->autoresponderItem->autoresponder->subject);
         }
 
         public function populateModel(& $model)

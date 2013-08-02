@@ -64,7 +64,7 @@
 
         public function populateModel(& $model)
         {
-            throw notImplementedException();
+            throw new NotImplementedException();
         }
     }
 ?>

@@ -137,6 +137,7 @@
             assert('is_int($permission)');
             assert('is_int($value) || $value == null');
             $item = NamedSecurableItem::getByName($moduleClassName);
+            $item->allowChangePermissionsRegardlessOfUser = true;
             if (!empty($value) && $value    == Permission::ALLOW)
             {
                 $item->addPermissions   ($permitable, $permission, Permission::ALLOW);

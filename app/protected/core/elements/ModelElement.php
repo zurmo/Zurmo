@@ -83,6 +83,13 @@
          */
         protected static $nonEditableActionType = 'Details';
 
+        protected $hideSelectLinkWhenDisabled = true;
+
+        public function doNotHideSelectLinkWhenDisabled()
+        {
+            $this->hideSelectLinkWhenDisabled = false;
+        }
+
         public function setIdAttributeId($idAttributeId)
         {
             assert('is_string($idAttributeId)');
@@ -375,7 +382,7 @@
 
         protected function getSelectLinkStartingStyle()
         {
-            if ($this->getDisabledValue() == 'disabled')
+            if ($this->getDisabledValue() == 'disabled' && $this->hideSelectLinkWhenDisabled)
             {
                 return 'display:none';
             }

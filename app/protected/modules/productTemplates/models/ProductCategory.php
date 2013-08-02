@@ -81,20 +81,22 @@
 
         /**
          * Returns the display name for the model class.
+         * @param null}string $language
          * @return dynamic label name based on module.
          */
         protected static function getLabel($language = null)
         {
-            return 'Product Category';
+            return Zurmo::t('ProductTemplatesModule', 'Product Category', array(), null, $language);
         }
 
         /**
          * Returns the display name for plural of the model class.
+         * @param null}string $language
          * @return dynamic label name based on module.
          */
         protected static function getPluralLabel($language = null)
         {
-            return 'Product Categories';
+            return Zurmo::t('ProductTemplatesModule', 'Product Categories', array(), null, $language);
         }
 
         /**

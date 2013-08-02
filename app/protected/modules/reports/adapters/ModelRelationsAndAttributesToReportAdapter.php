@@ -496,7 +496,7 @@
                 }
                 else
                 {
-                    throw new NotSupportedException();
+                    throw new NotSupportedException($relation);
                 }
             }
             return $relations;

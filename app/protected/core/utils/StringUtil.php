@@ -100,4 +100,21 @@
         {
             return strtolower(preg_replace('/[^\da-z]/i', '', Yii::app()->label));
         }
+
+        /**
+         * used to add a new line to content.
+         * @param $content
+         * @param $isHtmlContent
+         */
+        public static function prependNewLine(& $content, $isHtmlContent)
+        {
+            if ($isHtmlContent)
+            {
+                $content = ZurmoHtml::tag('br') . $content;
+            }
+            else
+            {
+                $content = PHP_EOL . $content;
+            }
+        }
     }

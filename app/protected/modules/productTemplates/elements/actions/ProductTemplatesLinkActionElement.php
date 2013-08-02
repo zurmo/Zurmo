@@ -44,7 +44,8 @@
          */
         protected function getDefaultLabel()
         {
-            return Zurmo::t('ProductTemplatesModule', 'Catalog Items');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', $params);
         }
 
         /**

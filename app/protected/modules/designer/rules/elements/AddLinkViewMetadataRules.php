@@ -52,7 +52,8 @@
         {
             $modelNames = static::getAcceptableModelsForAttributeNames();
             if ($elementInformation['attributeName'] == 'name' ||
-            $elementInformation['type'] == 'FullName' || in_array($elementInformation['type'], $modelNames))
+            $elementInformation['type'] == 'FullName' || in_array($elementInformation['type'], $modelNames) ||
+            $elementInformation['attributeName'] == 'firstName' || $elementInformation['attributeName'] == 'lastName')
             {
                 $elementMetadata['isLink'] = true;
             }

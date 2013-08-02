@@ -61,7 +61,7 @@
 
         public static function isCacheable()
         {
-            return true;
+            return false;
         }
     }
 ?>

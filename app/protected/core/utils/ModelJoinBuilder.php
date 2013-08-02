@@ -782,9 +782,10 @@
         {
             assert('is_string($modelClassName)');
             assert('is_string($attributeModelClassName)');
-            $attributeTableName = $attributeModelClassName::getTableName($attributeModelClassName);
-            $tableAliasName     = $attributeTableName;
+            $attributeTableName       = $attributeModelClassName::getTableName($attributeModelClassName);
+            $tableAliasName           = $attributeTableName;
             $castedDownModelClassName = $modelClassName;
+            $onTableAliasName         = null;
             while (get_parent_class($modelClassName) != $attributeModelClassName &&
                 get_parent_class($modelClassName) != 'RedBeanModel')
             {
@@ -796,15 +797,15 @@
                     $castedUpAttributeTableName = $modelClassName::getTableName($modelClassName);
                     if (!$this->joinTablesAdapter->isTableInFromTables($castedUpAttributeTableName))
                     {
-                        if ($castedDownModelClassName::getCanHaveBean())
+                        if ($onTableAliasName == null && $castedDownModelClassName::getCanHaveBean())
                         {
                             $onTableAliasName = $castedDownModelClassName::getTableName($castedDownModelClassName);
                         }
-                        elseif ($castedDownFurtherModelClassName::getCanHaveBean())
+                        elseif ($onTableAliasName == null && $castedDownFurtherModelClassName::getCanHaveBean())
                         {
                             $onTableAliasName = $castedDownModelClassName::getTableName($castedDownFurtherModelClassName);
                         }
-                        else
+                        elseif ($onTableAliasName == null)
                         {
                             throw new NotSupportedException();
                         }
@@ -817,11 +818,13 @@
             }
             if (!$this->joinTablesAdapter->isTableInFromTables($attributeTableName))
             {
-                $modelClassName   = static::resolveModelClassNameThatCanHaveTable($modelClassName, $castedDownModelClassName);
+                if ($onTableAliasName == null)
+                {
+                    $modelClassName   = static::resolveModelClassNameThatCanHaveTable($modelClassName, $castedDownModelClassName);
+                    $onTableAliasName = $modelClassName::getTableName($modelClassName);
+                }
                 $tableAliasName   = $this->joinTablesAdapter->addFromTableAndGetAliasName(
-                    $attributeTableName,
-                    self::resolveForeignKey($attributeTableName),
-                    $modelClassName::getTableName($modelClassName));
+                                    $attributeTableName, self::resolveForeignKey($attributeTableName), $onTableAliasName);
             }
             return $tableAliasName;
         }

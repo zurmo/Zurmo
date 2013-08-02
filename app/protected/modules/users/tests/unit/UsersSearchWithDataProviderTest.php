@@ -39,16 +39,18 @@
      */
     class UsersSearchWithDataProviderTest extends ZurmoBaseTest
     {
+        private $user1;
+
+        private $user2;
+
+        private $user3;
+
+        private $super;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
-            $super = User::getByUsername('super');
-            Yii::app()->user->userModel = $super;
-        }
-
-        public function testDefaultFullnameOrderOnUsers()
-        {
             $super                              = User::getByUsername('super');
             Yii::app()->user->userModel         = $super;
 
@@ -57,29 +59,70 @@
             $user1->firstName                   = 'abel';
             $user1->lastName                    = 'zitabina';
             $user1->setPassword('myuser');
-            $this->assertTrue($user1->save());
+            $user1->save();
 
             $user2                              = new User();
             $user2->username                    = 'user2';
             $user2->firstName                   = 'zitabina';
             $user2->lastName                    = 'abel';
             $user2->setPassword('myuser');
-            $this->assertTrue($user2->save());
+            $user2->save();
 
             $user3                              = new User();
             $user3->username                    = 'user3';
             $user3->firstName                   = 'abel';
             $user3->lastName                    = 'abel';
             $user3->setPassword('myuser');
-            $this->assertTrue($user3->save());
+            $user3->save();
+        }
 
+        public function setUp()
+        {
+            parent::setUp();
+            $this->super                        = User::getByUsername('super');
+            Yii::app()->user->userModel         = $this->super;
+            $this->user1                        = User::getByUsername('user1');
+            $this->user2                        = User::getByUsername('user2');
+            $this->user3                        = User::getByUsername('user3');
+        }
+
+        public function testDefaultFullnameOrderOnUsers()
+        {
             $searchAttributeData        = array();
             $dataProvider               = new RedBeanModelDataProvider('User', null, false, $searchAttributeData);
             $data                       = $dataProvider->getData();
-            $this->assertEquals($user3, $data[0]);
-            $this->assertEquals($user1, $data[1]);
-            $this->assertEquals($super, $data[2]);
-            $this->assertEquals($user2, $data[3]);
+            $this->assertTrue($this->user3->id == $data[0]->id || $this->user3->id == $data[1]->id);
+            $this->assertTrue($this->user2->id == $data[1]->id || $this->user2->id == $data[0]->id);
+            $this->assertEquals($this->super, $data[2]);
+            $this->assertEquals($this->user1, $data[3]);
+        }
+
+        /**
+         * @depends testDefaultFullnameOrderOnUsers
+         */
+        public function testFirstNameOrderOnUsers()
+        {
+            $searchAttributeData                = array();
+            $dataProvider                       = new RedBeanModelDataProvider('User', 'firstName', false, $searchAttributeData);
+            $data                               = $dataProvider->getData();
+            $this->assertEquals($this->user3, $data[0]);
+            $this->assertEquals($this->user1, $data[1]);
+            $this->assertEquals($this->super, $data[2]);
+            $this->assertEquals($this->user2, $data[3]);
+        }
+
+        /**
+         * @depends testDefaultFullnameOrderOnUsers
+         */
+        public function testLastNameOrderOnUsers()
+        {
+            $searchAttributeData                = array();
+            $dataProvider                       = new RedBeanModelDataProvider('User', 'lastName', false, $searchAttributeData);
+            $data                               = $dataProvider->getData();
+            $this->assertTrue($this->user3->id == $data[0]->id || $this->user3->id == $data[1]->id);
+            $this->assertTrue($this->user2->id == $data[1]->id || $this->user2->id == $data[0]->id);
+            $this->assertEquals($this->super, $data[2]);
+            $this->assertEquals($this->user1, $data[3]);
         }
     }
 ?>

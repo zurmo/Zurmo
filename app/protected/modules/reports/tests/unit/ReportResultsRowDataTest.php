@@ -272,5 +272,40 @@
             //Test a viaSelect attriubte
             $this->assertEquals('Integer -(Max)', $reportResultsRowData->getAttributeLabel('col1'));
         }
+
+        /**
+         * There was a bug with showing address->state on a contact rows and columns report. it was showing the
+         * contact->state instead. this test passes after this bug was fixed
+         */
+        public function testDisplayingAOwnedModelAttributeThatIsAlsoDefinedAsAnAttributeOnTheOwningModel()
+        {
+            $contactStates = ContactState::getByName('Qualified');
+            $contact = new Contact();
+            $contact->owner         = Yii::app()->user->userModel;
+            $contact->title->value  = 'Mr.';
+            $contact->firstName     = 'Super';
+            $contact->lastName      = 'Man';
+            $contact->jobTitle      = 'Superhero';
+            $contact->description   = 'Some Description';
+            $contact->department    = 'Red Tape';
+            $contact->officePhone   = '1234567890';
+            $contact->mobilePhone   = '0987654321';
+            $contact->officeFax     = '1222222222';
+            $contact->state         = $contactStates[0];
+            $contact->primaryAddress->state = 'IL';
+            $this->assertTrue($contact->save());
+            $displayAttribute    = new DisplayAttributeForReportForm('ContactsModule', 'Contact',
+                                   Report::TYPE_ROWS_AND_COLUMNS);
+            $displayAttribute->setModelAliasUsingTableAliasName('abc');
+            $displayAttribute->attributeIndexOrDerivedType = 'primaryAddress___state';
+            $this->assertEquals('col0', $displayAttribute->columnAliasName);
+
+            $reportResultsRowData = new ReportResultsRowData(array($displayAttribute), 4);
+            $reportResultsRowData->addModelAndAlias($contact, 'abc');
+
+            $model = $reportResultsRowData->getModel('attribute0');
+            $this->assertEquals('IL', $model->primaryAddress->state);
+            $this->assertEquals('IL', $reportResultsRowData->attribute0);
+        }
     }
 ?>

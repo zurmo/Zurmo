@@ -58,7 +58,8 @@
          */
         protected function getDefaultLabel()
         {
-            return Zurmo::t('ProductsModule', 'Select From Catalog');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductsModule', 'Select ProductTemplatesModuleSingularLabel', $params);
         }
     }
 ?>

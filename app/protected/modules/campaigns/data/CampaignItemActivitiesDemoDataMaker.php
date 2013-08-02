@@ -72,7 +72,7 @@
                 $activities[]                   = $activity->id;
             }
             $demoDataHelper->setRangeByModelName('CampaignItemActivity', $activities[0], $activities[count($activities)-1]);
-            $this->populateMarketingItems('CampaignItem');
+            $this->populateMarketingItems('CampaignItem', $activity->campaignItem->campaign->subject);
         }
 
         public function populateModel(& $model)

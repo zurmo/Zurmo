@@ -40,7 +40,7 @@
         {
             return Zurmo::t('DesignerModule', 'Lead to Account Convert View');
         }
-        
+
         public function getNonPlaceableLayoutAttributeNames()
         {
             return array(
@@ -52,27 +52,27 @@
                 'owner'
             );
         }
-        
+
         public function canAddPanels()
         {
             return false;
-        }     
-        
+        }
+
         public function canRemovePanels()
         {
             return false;
         }
-        
+
         public function canMovePanels()
         {
             return false;
         }
-        
+
         public function requireAllRequiredFieldsInLayout()
         {
             return true;
         }
-        
+
         public function canModifyCellSettings()
         {
             return false;
@@ -82,11 +82,10 @@
         {
             return false;
         }
-        
+
         public function getSavableMetadataRules()
         {
             return array('AddBlankForDropDown');
         }
-                
     }
 ?>

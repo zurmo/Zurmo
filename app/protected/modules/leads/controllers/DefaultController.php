@@ -341,7 +341,7 @@
                 {
                     $account = Account::getById(intval($selectAccountForm->accountId));
                     $this->actionSaveConvertedContact($contact, $account);
-                }                
+                }
             }
             elseif (isset($_POST['Account']))
             {

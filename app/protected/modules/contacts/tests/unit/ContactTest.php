@@ -748,5 +748,20 @@
             $this->assertTrue($contact->save());
             $this->assertEquals($beforeCount, AuditEvent::getCount());
         }
+
+        public function testJobTitleLength()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $user                       = Yii::app()->user->userModel;
+            $contactStates              = ContactState::getByName('Qualified');
+            $contact = new Contact();
+            $contact->owner = $user;
+            $contact->title->value       = 'Mr.';
+            $contact->firstName          = 'length';
+            $contact->lastName           = 'username';
+            $contact->jobTitle           = 'S';
+            $contact->state              = $contactStates[0];
+            $this->assertTrue($contact->save());
+        }
     }
 ?>

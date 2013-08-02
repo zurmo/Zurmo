@@ -32,14 +32,15 @@
     {
         protected function getCreateLinkDisplayLabel()
         {
-            return Zurmo::t('ProductTemplatesModule', 'Create Catalog Item', LabelUtil::getTranslationParamsForAllModules());
+            return Zurmo::t('ProductTemplatesModule', 'Create ProductTemplatesModuleSingularLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
         protected function getMessageContent()
         {
-            return Zurmo::t('ProductTemplatesModule', '<h2>"I would sooner read a time-table or a catalog than nothing at all.
-                They are much more entertaining than half the novels that are written."</h2><i>- William Somerset Maugham</i>
-                <div class="large-icon"></div><p>Be the first to create a product Catalog Item, and entertain William at the same time.</p>');
+            return Zurmo::t('ProductTemplatesModule', '<h2>"I would sooner read a time-table or a catalog than nothing at all.' .
+                            ' They are much more entertaining than half the novels that are written."</h2><i>- William Somerset Maugham</i>' .
+                            '<div class="large-icon"></div><p>Be the first to create a product ProductTemplatesModuleSingularLabel, and' .
+                            'entertain William at the same time.</p>', LabelUtil::getTranslationParamsForAllModules());
         }
     }
 ?>

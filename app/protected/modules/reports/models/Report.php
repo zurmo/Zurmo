@@ -733,6 +733,7 @@
             $structure = '(' . $structure . ')';
             if ($this->filtersStructure != null)
             {
+                $this->filtersStructure  = '(' . $this->filtersStructure . ')';
                 $this->filtersStructure .= ' AND ';
             }
             $this->filtersStructure .= $structure;

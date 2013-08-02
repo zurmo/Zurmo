@@ -40,7 +40,7 @@
 
         const CONFIG_MODULE_NAME     = 'AutorespondersModule';
 
-        const CONFIG_DEFAULT_VALUE   = 200;
+        const CONFIG_DEFAULT_VALUE   = 100;
 
         public static function getBatchSize($returnDefaultIfMissing = true, $setDefaultIfMissing = false)
         {

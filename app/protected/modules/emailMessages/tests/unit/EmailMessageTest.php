@@ -379,7 +379,7 @@
             $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
             $this->assertEquals(0, Yii::app()->emailHelper->getSentCount());
         }
-        
+
         public function testCrudForHasOneAndHasManyEmailMessageRelations()
         {
             $super          = User::getByUsername('super');
@@ -387,96 +387,104 @@
             $emailMessage   = EmailMessageTestHelper::createDraftSystemEmail('test crud relations', $super);
             $this->assertTrue($emailMessage->save());
             $emailMessageId = $emailMessage->id;
-            
+            $emailMessage->forgetAll();
+
             //Check read hasOne relation
             $emailMessage       = EmailMessage::getById($emailMessageId);
-            $emailMessageSender = $emailMessage->sender;            
+            $emailMessageSender = $emailMessage->sender;
             $this->assertEquals('system@somewhere.com', $emailMessageSender->fromAddress);
-            
+
             //Check update hasOne relation
             $emailMessageSender->fromAddress = 'system@somewhere.org';
             $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $emailMessage       = EmailMessage::getById($emailMessageId);
-            $emailMessageSender = $emailMessage->sender;            
+            $emailMessageSender = $emailMessage->sender;
             $this->assertEquals('system@somewhere.org', $emailMessageSender->fromAddress);
-            
+
             //Check delete hasOne relation
             $emailMessageSender2  = new EmailMessageSender();
             $emailMessageSender2->fromAddress = 'system@somewhere.org';
             $emailMessageSender2->fromName    = 'system name';
             $emailMessage->sender = $emailMessageSender2;
-            $this->assertTrue($emailMessage->save());            
+            $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $found                = true;
             try
             {
-                EmailMessageSender::getById($emailMessageSender->id);                         
+                EmailMessageSender::getById($emailMessageSender->id);
             }
             catch (NotFoundException $exception)
             {
-                $found = false;                
+                $found = false;
             }
             $this->assertFalse($found);
-            
+
             //Check read hasMany relation
             $emailMessage       = EmailMessage::getById($emailMessageId);
             $recipients         = $emailMessage->recipients;
             $recipient          = $recipients[0];
             $this->assertCount (1, $recipients);
             $this->assertEquals('billy@fakeemail.com', $recipient->toAddress);
-            
+
             //Check update hasMany relation
             $recipient->toAddress = 'billy@fakeemail.org';
             $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $emailMessage         = EmailMessage::getById($emailMessageId);
-            $recipient            = $emailMessage->recipients[0];            
+            $recipient            = $emailMessage->recipients[0];
             $this->assertEquals('billy@fakeemail.org', $recipient->toAddress);
-            
-            //Check add hasMany relation            
+
+            //Check add hasMany relation
             $recipient              = new EmailMessageRecipient();
             $recipient->toAddress   = 'anne@fakeemail.com';
             $recipient->toName      = 'Anne Frank';
             $recipient->type        = EmailMessageRecipient::TYPE_BCC;
             $emailMessage->recipients->add($recipient);
             $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $emailMessage           = EmailMessage::getById($emailMessageId);
-            $recipients             = $emailMessage->recipients;                        
+            $recipients             = $emailMessage->recipients;
             $recipient              = $recipients[1];
-            $this->assertCount (2, $recipients);                        
-            
+            $this->assertCount (2, $recipients);
+
             //Check update hasMany relation with more than one model set
             $recipient->toAddress = 'anne@fakeemail.org';
             $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $emailMessage         = EmailMessage::getById($emailMessageId);
-            $recipient            = $emailMessage->recipients[1];            
+            $recipient            = $emailMessage->recipients[1];
             $this->assertEquals('anne@fakeemail.org', $recipient->toAddress);
-            
-            //Check delete hasMany relation            
+
+            //Check delete hasMany relation
             $emailMessage->recipients->remove($recipient);
-            $this->assertTrue($emailMessage->save());            
+            $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $found                = true;
             try
             {
-                EmailMessageRecipient::getById($recipient->id);                         
+                EmailMessageRecipient::getById($recipient->id);
             }
             catch (NotFoundException $exception)
             {
-                $found = false;                
+                $found = false;
             }
             $this->assertFalse($found);
-            
+
             //Check delete last hasMany relation model
             $emailMessage         = EmailMessage::getById($emailMessageId);
             $recipient             = $emailMessage->recipients[0];
             $emailMessage->recipients->remove($recipient);
-            $this->assertTrue($emailMessage->save());            
+            $this->assertTrue($emailMessage->save());
+            $emailMessage->forgetAll();
             $found                = true;
             try
             {
-                EmailMessageRecipient::getById($recipient->id);                         
+                EmailMessageRecipient::getById($recipient->id);
             }
             catch (NotFoundException $exception)
             {
-                $found = false;                
+                $found = false;
             }
             $this->assertFalse($found);
             $this->assertCount(0, $emailMessage->recipients);

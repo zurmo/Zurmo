@@ -75,7 +75,7 @@
                     'firstName'      => Zurmo::t('ZurmoModule', 'First Name', array(), null, $language),
                     'fullName'       => Zurmo::t('ZurmoModule', 'Name', array(), null, $language),
                     'jobTitle'       => Zurmo::t('ZurmoModule', 'Job Title', array(), null, $language),
-                    'lastname'       => Zurmo::t('ZurmoModule', 'Last Name', array(), null, $language),
+                    'lastName'       => Zurmo::t('ZurmoModule', 'Last Name', array(), null, $language),
                     'mobilePhone'    => Zurmo::t('ZurmoModule', 'Mobile Phone', array(), null, $language),
                     'officePhone'    => Zurmo::t('ZurmoModule', 'Office Phone', array(), null, $language),
                     'officeFax'      => Zurmo::t('ZurmoModule', 'Office Fax', array(), null, $language),
@@ -133,10 +133,10 @@
                     array('firstName',      'type',   'type' => 'string'),
                     array('firstName',      'length', 'min'  => 1, 'max' => 32),
                     array('jobTitle',       'type',   'type' => 'string'),
-                    array('jobTitle',       'length', 'min'  => 3, 'max' => 64),
+                    array('jobTitle',       'length', 'min'  => 1, 'max' => 64),
                     array('lastName',       'required'),
                     array('lastName',       'type',   'type' => 'string'),
-                    array('lastName',       'length', 'min'  => 2, 'max' => 32),
+                    array('lastName',       'length', 'min'  => 1, 'max' => 32),
                     array('mobilePhone',    'type',   'type' => 'string'),
                     array('mobilePhone',    'length', 'min'  => 1, 'max' => 24),
                     array('officePhone',    'type',   'type' => 'string'),
@@ -168,9 +168,9 @@
          */
         public static function getSortAttributesByAttribute($attribute)
         {
-            if ($attribute == 'lastName')
+            if ($attribute == 'firstName')
             {
-                return array('firstName', $attribute);
+                return array('firstName', 'lastName');
             }
             return parent::getSortAttributesByAttribute($attribute);
         }

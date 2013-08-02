@@ -153,6 +153,7 @@
          * @param string $relationAttributeName
          * @param string $relationModelId
          * @param string $relationModuleId
+         * @param null|string $relationModelClassName
          */
         public function actionSelectFromRelatedListSave($modelId, $portletId, $uniqueLayoutId,
                                                         $relationAttributeName, $relationModelId, $relationModuleId, $relationModelClassName = null)
@@ -178,6 +179,7 @@
             {
                 $this->processSelectFromRelatedListSaveAlreadyConnected($model);
             }
+            $isViewLocked = ZurmoDefaultViewUtil::getLockKeyForDetailsAndRelationsView('lockPortletsForDetailsAndRelationsView');
             $this->redirect(array('/' . $relationModuleId . '/defaultPortlet/modalRefresh',
                                 'id'                   => $relationModelId,
                                 'portletId'            => $portletId,
@@ -185,7 +187,7 @@
                                 'redirectUrl'          => $redirectUrl,
                                 'portletParams'        => array(  'relationModuleId' => $relationModuleId,
                                                                   'relationModelId'  => $relationModelId),
-                                'portletsAreRemovable' => false));
+                                'portletsAreRemovable' => !$isViewLocked));
         }
 
         protected function processSelectFromRelatedListSaveFails(RedBeanModel $model)

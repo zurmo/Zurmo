@@ -45,7 +45,7 @@
             $itemId                     = $item->id;
             $itemClass                  = get_class($item);
             assert('$itemClass === "AutoresponderItem" || $itemClass === "CampaignItem"');
-            $contact                                = $item->contact;
+            $contact                    = $item->contact;
             if (empty($contact) || $contact->id < 0)
             {
                 throw new NotFoundException();
@@ -54,7 +54,11 @@
             $itemOwnerModel             = $item->$ownerModelRelationName;
             assert('is_object($itemOwnerModel)');
             assert('get_class($itemOwnerModel) === "Autoresponder" || get_class($itemOwnerModel) === "Campaign"');
-            if ($contact->primaryEmail->optOut)
+            if ($contact->primaryEmail->optOut ||
+               (get_class($itemOwnerModel) === "Campaign" && MarketingListMember::getByMarketingListIdContactIdAndSubscribed(
+                                                                                $itemOwnerModel->marketingList->id,
+                                                                                $contact->id,
+                                                                                true) != false))
             {
                 $activityClass  = $itemClass . 'Activity';
                 $personId       = $contact->getClassId('Person');
@@ -70,10 +74,10 @@
                 $htmlContent                = null;
                 if (($itemClass == 'CampaignItem' && $itemOwnerModel->supportsRichText) || ($itemClass == 'AutoresponderItem'))
                 {
-                    $htmlContent = $itemOwnerModel->htmlContent;   
-                }                
+                    $htmlContent = $itemOwnerModel->htmlContent;
+                }
                 static::resolveContent($textContent, $htmlContent, $contact, $itemOwnerModel->enableTracking,
-                                       (int)$itemId, $itemClass, (int)$marketingList->id);                
+                                       (int)$itemId, $itemClass, (int)$marketingList->id);
                 try
                 {
                     $item->emailMessage = static::resolveEmailMessage($textContent, $htmlContent, $itemOwnerModel,
@@ -182,7 +186,7 @@
                 $sender->fromAddress        = $itemOwnerModel->fromAddress;
                 $sender->fromName           = $itemOwnerModel->fromName;
                 return $sender;
-            }            
+            }
             if (!empty($marketingList->fromName) && !empty($marketingList->fromAddress))
             {
                 $sender->fromAddress        = $marketingList->fromAddress;
@@ -199,7 +203,7 @@
 
         protected static function resolveRecipient(EmailMessage $emailMessage, Contact $contact)
         {
-            if ($contact->primaryEmail->emailAddress !== null)
+            if ($contact->primaryEmail->emailAddress != null)
             {
                 $recipient                  = new EmailMessageRecipient();
                 $recipient->toAddress       = $contact->primaryEmail->emailAddress;

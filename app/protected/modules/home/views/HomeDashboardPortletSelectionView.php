@@ -51,7 +51,7 @@
 
         protected function renderContent()
         {
-            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId, 
+            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId,
                                                                             Yii::app()->user->userModel->id);
             $content = '<ul class="available-portlets">';
             $modules = Module::getModuleObjects();
@@ -97,6 +97,6 @@
             }
             $content .= '</ul>';
             return $content;
-        }       
+        }
     }
 ?>

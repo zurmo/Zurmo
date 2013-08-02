@@ -41,7 +41,7 @@
     {
         public static function createApiCall($url, $method, $headers, $data = array())
         {
-            throw NotSupportedException();
+            throw new NotSupportedException();
             exit;
         }
     }

@@ -39,6 +39,52 @@
      */
     class ZurmoControllerUtil
     {
+        public static function updatePermissionsWithDefaultForModelByUser(SecurableItem $model, User $user)
+        {
+            if ($model instanceof SecurableItem && count($model->permissions) === 0 && !Yii::app()->request->isPostRequest)
+            {
+                $defaultPermission  = UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting(
+                                                                                        $user);
+                $nonEveryoneGroup   = UserConfigurationFormAdapter::resolveAndGetValue($user,
+                                                                                        'defaultPermissionGroupSetting',
+                                                                                        false);
+                $type               = static::resolveDefaultPermissionToExplicitReadWriteModelPermissionsUtilType(
+                                                                                                    $defaultPermission);
+                $postData           =  array('explicitReadWriteModelPermissions' =>
+                                                    compact('type', 'nonEveryoneGroup'),
+                                        );
+                $explicitReadWritePermissions   = self::resolveAndMakeExplicitReadWriteModelPermissions($postData,
+                                                                                                        $model);
+                $updated    = ExplicitReadWriteModelPermissionsUtil::resolveExplicitReadWriteModelPermissions($model,
+                                                                                        $explicitReadWritePermissions);
+                if (!$updated)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
+
+        public static function updatePermissionsWithDefaultForModelByCurrentUser(SecurableItem $model)
+        {
+            static::updatePermissionsWithDefaultForModelByUser($model, Yii::app()->user->userModel);
+        }
+
+        protected static function resolveDefaultPermissionToExplicitReadWriteModelPermissionsUtilType($defaultPermission)
+        {
+            if ($defaultPermission == UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_EVERYONE)
+            {
+                return ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_EVERYONE_GROUP;
+            }
+            elseif ($defaultPermission == UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_OWNER_AND_USERS_IN_GROUP)
+            {
+                return ExplicitReadWriteModelPermissionsUtil::MIXED_TYPE_NONEVERYONE_GROUP;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public function saveModelFromPost($postData, $model, & $savedSuccessfully, & $modelToStringValue)
         {
             $sanitizedPostData                 = PostUtil::sanitizePostByDesignerTypeForSavingModel(

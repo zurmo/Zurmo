@@ -181,7 +181,8 @@
                 }
                 if ($configurationForm->aTestToAddress != null)
                 {
-                    $emailHelper = new EmailHelper;
+                    $emailHelper = new EmailHelper();
+                    $emailHelper->loadDefaultFromAndToAddresses();
                     $emailHelper->outboundHost     = $configurationForm->host;
                     $emailHelper->outboundPort     = $configurationForm->port;
                     $emailHelper->outboundUsername = $configurationForm->username;
@@ -204,14 +205,29 @@
                                                                       $configurationForm->aTestToAddress);
                     }
                     $messageContent  = null;
-                    if (!$emailMessage->hasSendError())
+                    if (!($emailMessage->hasErrors() || $emailMessage->hasSendError()))
                     {
                         $messageContent .= Zurmo::t('EmailMessagesModule', 'Message successfully sent') . "\n";
                     }
                     else
                     {
                         $messageContent .= Zurmo::t('EmailMessagesModule', 'Message failed to send') . "\n";
-                        $messageContent .= $emailMessage->error     . "\n";
+                        if ($emailMessage->hasSendError())
+                        {
+                            $messageContent .= $emailMessage->error     . "\n";
+                        }
+                        else
+                        {
+                            $errors = $emailMessage->getErrors();
+                            $data = array();
+                            foreach ($errors as $attributeNameWithErrors)
+                            {
+                                foreach ($attributeNameWithErrors as $attributeError)
+                                {
+                                    $messageContent .= reset($attributeError) . "\n";
+                                }
+                            }
+                        }
                     }
                 }
                 else

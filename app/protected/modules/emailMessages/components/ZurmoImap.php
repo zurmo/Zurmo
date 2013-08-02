@@ -279,7 +279,7 @@
                 $imapMessage->senderEmail = $imapMessage->fromName;
             }
 
-            $subject                    = imap_mime_header_decode($mailHeaderInfo->subject);            
+            $subject                    = imap_mime_header_decode($mailHeaderInfo->subject);
             $imapMessage->subject       = $subject[0]->text;
             $imapMessage->textBody      = $this->getPart($messageNumber, 'TEXT/PLAIN', $structure);
             $imapMessage->htmlBody      = $this->getPart($messageNumber, 'TEXT/HTML', $structure);

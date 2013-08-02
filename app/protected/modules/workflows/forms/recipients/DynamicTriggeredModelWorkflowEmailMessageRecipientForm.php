@@ -57,7 +57,7 @@
         public function makeRecipients(RedBeanModel $model, User $triggeredByUser)
         {
             $recipients = array();
-            if ($model instanceof Contact && $model->primaryEmail->emailAddress !== null)
+            if ($model instanceof Contact && $model->primaryEmail->emailAddress != null)
             {
                 $recipient                  = new EmailMessageRecipient();
                 $recipient->toAddress       = $model->primaryEmail->emailAddress;

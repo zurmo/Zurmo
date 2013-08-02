@@ -154,7 +154,7 @@
                 }
                 else
                 {
-                    throw NotSupportedException();
+                    throw new NotSupportedException();
                 }
             }
             return $attributeNames;

@@ -37,10 +37,12 @@
 
         protected function getMessageContent()
         {
+            $params = LabelUtil::getTranslationParamsForAllModules();
             return Zurmo::t('ProductsModule', '<h2>"A person buying ordinary products in a supermarket is in touch with his deepest emotions."</h2>' .
                 '<i>- John Kenneth Galbraith</i>' .
                 '<div class="large-icon"></div><p>' .
-                'A CRM is sort of like a supermarket, so why not be in touch with your deepest emotions and be the first to create a Product?</p>');
+                'A CRM is sort of like a supermarket, so why not be in touch with your deepest emotions ' .
+                'and be the first to create a ProductsModuleSingularLabel?</p>', $params);
         }
     }
 ?>

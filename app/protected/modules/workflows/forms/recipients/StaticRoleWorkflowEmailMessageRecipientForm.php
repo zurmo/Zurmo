@@ -80,7 +80,7 @@
             $recipients = array();
             foreach ($role->users as $user)
             {
-                if ($user->primaryEmail->emailAddress !== null)
+                if ($user->primaryEmail->emailAddress != null)
                 {
                     $recipient                  = new EmailMessageRecipient();
                     $recipient->toAddress       = $user->primaryEmail->emailAddress;

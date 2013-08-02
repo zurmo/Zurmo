@@ -53,7 +53,7 @@
             $model              = RandomDataUtil::getRandomValueFromArray(CampaignItem::getAll());
             $modelId            = $model->id;
             $modelType          = get_class($model);
-            $hash               = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, $modelId, $modelType, false);
+            $hash               = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, $modelId, $modelType, false);
             echo 'index.php/marketingLists/external/manageSubscriptions?hash=' . $hash;
         }
     }

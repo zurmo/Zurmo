@@ -41,6 +41,12 @@
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
+            if (!RedBeanDatabase::isFrozen())
+            {
+                // TODO: @Shoaibi: High: get rid of this for God's sake.
+                $campaignItem = CampaignItemTestHelper::createCampaignItem(0);
+                $campaignItem->delete();
+            }
         }
 
         public function setUp()
@@ -207,7 +213,7 @@
             $campaign           = Campaign::getByName('Active, Due With Members');
             $this->assertEquals(Campaign::STATUS_PROCESSING, $campaign[0]->status);
             $allCampaignItems   = CampaignItem::getAll();
-            $this->assertNotEmpty(CampaignItem::getAll());
+            $this->assertNotEmpty($allCampaignItems);
             $this->assertCount(5, $allCampaignItems);
             $campaignItems      = CampaignItem::getByProcessedAndCampaignId(0, $campaign[0]->id);
             $this->assertNotEmpty($campaignItems);
@@ -226,7 +232,7 @@
             for ($index = 6; $index < 9; $index++)
             {
                 $contact        = ContactTestHelper::createContactByNameForOwner('campaignContact 0' . $index,
-                    $this->user);
+                                                                                $this->user);
                 $contactIds[] = $contact->id;
                 $contact->forgetAll();
             }
@@ -266,7 +272,7 @@
                 $this->assertEmpty($campaignItems);
             }
 
-            AutoresponderOrCampaignBatchSizeConfigUtil::setBatchSize(1);
+            AutoresponderOrCampaignBatchSizeConfigUtil::setBatchSize(10);
             $job    = new CampaignGenerateDueCampaignItemsJob();
             $this->assertTrue($job->run());
             foreach ($campaignIds as $index => $campaignId)
@@ -275,8 +281,14 @@
                 $campaignItems      = CampaignItem::getByProcessedAndCampaignId(0, $campaignId);
                 if ($index === 0)
                 {
+                    $expectedCount  = AutoresponderOrCampaignBatchSizeConfigUtil::getBatchSize();
+                    $memberCount    = count($campaign->marketingList->marketingListMembers);
+                    if ($memberCount < $expectedCount)
+                    {
+                        $expectedCount = $memberCount;
+                    }
                     $this->assertNotEmpty($campaignItems);
-                    $this->assertCount(3, $campaignItems);
+                    $this->assertCount($expectedCount, $campaignItems);
                     $this->assertEquals(Campaign::STATUS_PROCESSING, $campaign->status);
                 }
                 else
@@ -288,13 +300,27 @@
 
             AutoresponderOrCampaignBatchSizeConfigUtil::setBatchSize(null);
             $this->assertTrue($job->run());
-            foreach ($campaignIds as $campaignId)
+            foreach ($campaignIds as $index =>  $campaignId)
             {
                 $campaign           = Campaign::getById($campaignId);
                 $campaignItems      = CampaignItem::getByProcessedAndCampaignId(0, $campaignId);
-                $this->assertNotEmpty($campaignItems);
-                $this->assertCount(3, $campaignItems);
-                $this->assertEquals(Campaign::STATUS_PROCESSING, $campaign->status);
+                if ($index < 2)
+                {
+                    $expectedCount  = AutoresponderOrCampaignBatchSizeConfigUtil::getBatchSize();
+                    $memberCount    = count($campaign->marketingList->marketingListMembers);
+                    if ($memberCount < $expectedCount)
+                    {
+                        $expectedCount = $memberCount;
+                    }
+                    $this->assertNotEmpty($campaignItems);
+                    $this->assertCount($expectedCount, $campaignItems);
+                    $this->assertEquals(Campaign::STATUS_PROCESSING, $campaign->status);
+                }
+                else
+                {
+                    $this->assertEmpty($campaignItems);
+                    $this->assertEquals(Campaign::STATUS_ACTIVE, $campaign->status);
+                }
             }
             // TODO: @Shoaibi: Medium: Add tests for the other campaign type.
         }

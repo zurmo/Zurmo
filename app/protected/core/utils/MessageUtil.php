@@ -354,17 +354,17 @@
                                     if ($translatedLabels[$attributeName] == $attributeLabel ||
                                        $translatedLabel != $attributeLabel)
                                     {
-                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                        $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] = $attributeLabel;
                                     }
                                     else
                                     {
-                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] =
+                                        $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] =
                                         $translatedLabels[$attributeName];
                                     }
                                 }
                                 else
                                 {
-                                    $fileNamesToCategoriesToMessages[$entry]['Default'][] = $attributeLabel;
+                                    $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] = $attributeLabel;
                                 }
                                //Find attributes that are a CustomField relation. This means there is drop down values
                                //that will need to be translated.
@@ -379,7 +379,7 @@
                                     $customFieldDataNames = unserialize($customFieldData->serializedData);
                                     foreach ($customFieldDataNames as $dataName)
                                     {
-                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $dataName;
+                                        $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] = $dataName;
                                     }
                                 }
                            }
@@ -396,14 +396,14 @@
                             $labelsData = getSecurableModuleRightsPoliciesAndAuditEventLabels($moduleClassName);
                             if (!empty($labelsData))
                             {
-                                if (isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                                if (isset($fileNamesToCategoriesToMessages[$fullEntryName]['Default']))
                                 {
-                                    $fileNamesToCategoriesToMessages[$entry]['Default'] =
-                                    array_merge($fileNamesToCategoriesToMessages[$entry]['Default'], $labelsData);
+                                    $fileNamesToCategoriesToMessages[$fullEntryName]['Default'] =
+                                    array_merge($fileNamesToCategoriesToMessages[$fullEntryName]['Default'], $labelsData);
                                 }
                                 else
                                 {
-                                    $fileNamesToCategoriesToMessages[$entry]['Default'] = $labelsData;
+                                    $fileNamesToCategoriesToMessages[$fullEntryName]['Default'] = $labelsData;
                                 }
                             }
                         }
@@ -415,21 +415,21 @@
                             $states              = $stateModelClassName::getAll();
                             foreach ($states as $state)
                             {
-                                $fileNamesToCategoriesToMessages[$entry]['Default'][] = $state->name;
+                                $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] = $state->name;
                             }
                         }
                         //check for menu labels
                         if (!$moduleReflectionClass->isAbstract())
                         {
-                            if (isset($fileNamesToCategoriesToMessages[$entry]['Default']))
+                            if (isset($fileNamesToCategoriesToMessages[$fullEntryName]['Default']))
                             {
-                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
-                                array_merge($fileNamesToCategoriesToMessages[$entry]['Default'],
+                                $fileNamesToCategoriesToMessages[$fullEntryName]['Default'] =
+                                array_merge($fileNamesToCategoriesToMessages[$fullEntryName]['Default'],
                                             getModuleMenuLabelNamesByModuleName($moduleClassName));
                             }
                             else
                             {
-                                $fileNamesToCategoriesToMessages[$entry]['Default'] =
+                                $fileNamesToCategoriesToMessages[$fullEntryName]['Default'] =
                                     getModuleMenuLabelNamesByModuleName($moduleClassName);
                             }
                         }
@@ -449,7 +449,7 @@
                                 {
                                     if (isset($panel['title']))
                                     {
-                                        $fileNamesToCategoriesToMessages[$entry]['Default'][] = $panel['title'];
+                                        $fileNamesToCategoriesToMessages[$fullEntryName]['Default'][] = $panel['title'];
                                     }
                                 }
                             }
@@ -470,15 +470,15 @@
                                 {
                                     $category = $forcedCategory;
                                 }
-                                if (!isset($fileNamesToCategoriesToMessages[$entry][$category]))
+                                if (!isset($fileNamesToCategoriesToMessages[$fullEntryName][$category]))
                                 {
-                                    $fileNamesToCategoriesToMessages[$entry][$category] = array();
+                                    $fileNamesToCategoriesToMessages[$fullEntryName][$category] = array();
                                 }
                                 //Remove extra lines caused by ' . ' which is used for line breaks in php. Minimum 3 spaces
                                 //will avoid catching 2 spaces between words which can be legitimate.
                                 $massagedString = preg_replace('/[\p{Z}\s]{3,}/u', ' ', $matches[2][$index]); // Not Coding Standard
                                 $massagedString = str_replace("' . '", '', $massagedString);
-                                $fileNamesToCategoriesToMessages[$entry][$category][] = $massagedString;
+                                $fileNamesToCategoriesToMessages[$fullEntryName][$category][] = $massagedString;
                                 if ($matches[2][$index] != $massagedString && strpos($matches[2][$index], "' .") === false)
                                 {
                                     echo 'The following message should be using proper line breaks: ' . $matches[2][$index] . "\n";

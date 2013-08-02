@@ -111,7 +111,7 @@
             {
                 return true;
             }
-            return RightsUtil::doesUserHaveAllowByRightName('GroupsModule', $actionType, Yii::app()->user->userModel);
+            return RightsUtil::doesUserHaveAllowByRightName('GroupsModule', GroupsModule::RIGHT_DELETE_GROUPS, Yii::app()->user->userModel);
         }
 
         /**

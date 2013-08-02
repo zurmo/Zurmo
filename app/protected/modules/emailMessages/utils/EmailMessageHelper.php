@@ -148,11 +148,10 @@
             $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
             $emailMessage->folder      = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_DRAFT);
             $validated                 = $emailMessage->validate();
-            if (!$validated)
+            if ($validated)
             {
-                throw new NotSupportedException();
+                $emailHelper->sendImmediately($emailMessage);
             }
-            $emailHelper->sendImmediately($emailMessage);
             return $emailMessage;
         }
     }

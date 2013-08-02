@@ -41,7 +41,8 @@
          */
         public static function getAttributeTypeDisplayName()
         {
-            return Zurmo::t('DesignerModule', 'Catalog Item Price Frequency Dropdown');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Price Frequency Dropdown', $params);
         }
 
         /**
@@ -49,7 +50,8 @@
          */
         public static function getAttributeTypeDisplayDescription()
         {
-            return Zurmo::t('DesignerModule', 'Catalog Item Price Frequency Dropdown Values');
+            $params = LabelUtil::getTranslationParamsForAllModules();
+            return Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel Price Frequency Dropdown Values', $params);
         }
 
         /**

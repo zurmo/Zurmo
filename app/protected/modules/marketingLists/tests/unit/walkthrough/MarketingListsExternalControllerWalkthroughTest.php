@@ -284,7 +284,7 @@
             $contact    = ContactTestHelper::createContactByNameForOwner('contact 01', Yii::app()->user->userModel);
             Yii::app()->user->userModel = null;
             $personId   = $contact->getClassId('Person');
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter($personId, 100, 1, 'AutoresponderItem', false);
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, 100, 1, 'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
             ));
@@ -301,7 +301,7 @@
             $contact    = ContactTestHelper::createContactByNameForOwner('contact 02', Yii::app()->user->userModel);
             Yii::app()->user->userModel = null;
             $personId   = $contact->getClassId('Person');
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter($personId, 100, 1, 'AutoresponderItem', false);
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, 100, 1, 'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
             ));
@@ -318,7 +318,7 @@
             $contact    = ContactTestHelper::createContactByNameForOwner('contact 03', Yii::app()->user->userModel);
             Yii::app()->user->userModel = null;
             $personId   = $contact->getClassId('Person');
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter($personId, 100, 1, 'AutoresponderItem', false);
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, 100, 1, 'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
             ));
@@ -334,7 +334,7 @@
             $contact    = ContactTestHelper::createContactByNameForOwner('contact 04', Yii::app()->user->userModel);
             Yii::app()->user->userModel = null;
             $personId   = $contact->getClassId('Person');
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter($personId, 100, 1, 'AutoresponderItem', false);
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, 100, 1, 'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
             ));
@@ -381,7 +381,7 @@
                                                                                     'from@domain.com',
                                                                                     true);
             Yii::app()->user->userModel = null;
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter(100, $marketingList->id, 1,
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls(100, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -402,7 +402,7 @@
                                                                                     'from@domain.com',
                                                                                     false);
             Yii::app()->user->userModel = null;
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter(100, $marketingList->id, 1,
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls(100, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -423,7 +423,7 @@
                                                                                     'from@domain.com',
                                                                                     true);
             Yii::app()->user->userModel = null;
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter(100, $marketingList->id, 1,
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls(100, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -444,7 +444,7 @@
                                                                                     'from@domain.com',
                                                                                     false);
             Yii::app()->user->userModel = null;
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter(100, $marketingList->id, 1,
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls(100, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -474,7 +474,7 @@
                 MarketingListMemberTestHelper::createMarketingListMember($unsubscribed, $marketingList, $contact);
             }
             Yii::app()->user->userModel = null;
-            $hash       = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingList->id, 1,
+            $hash       = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -551,7 +551,7 @@
             $member[0]->delete();
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingList->id, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingList->id, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -583,7 +583,7 @@
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
             // we set modelId to 0 and createNewActivity to true, so if it tries to create activity it will throw NotFoundException
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 0,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 0,
                                                                                             'AutoresponderItem', true);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -626,7 +626,7 @@
             $this->assertEquals(0, $member[0]->unsubscribed);
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -686,7 +686,7 @@
                                                                             $personId);
             $this->assertEmpty($autoresponderItemActivities);
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId,
                                                                                 $marketingListId,
                                                                                 $autoresponderItem->id,
                                                                                 'AutoresponderItem',
@@ -757,7 +757,7 @@
                                                                             $personId);
             $this->assertEmpty($autoresponderItemActivities);
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -807,7 +807,7 @@
             $this->assertEquals(1, $member[0]->unsubscribed);
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -851,7 +851,7 @@
             $this->assertEquals(1, $member[0]->unsubscribed);
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -884,7 +884,7 @@
             $member[0]->delete();
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -929,7 +929,7 @@
             $member[0]->delete();
             $personId       = $contact->getClassId('Person');
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -966,7 +966,7 @@
                 }
             }
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListIds[0],
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListIds[0],
                                                                                         1, 'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,
@@ -1041,7 +1041,7 @@
                                                                                                     1);
             $this->assertNotEmpty($member);
             Yii::app()->user->userModel = null;
-            $hash           = EmailMessageActivityUtil::resolveHashForFooter($personId, $marketingListId, 1,
+            $hash           = EmailMessageActivityUtil::resolveHashForUnsubscribeAndManageSubscriptionsUrls($personId, $marketingListId, 1,
                                                                                             'AutoresponderItem', false);
             $this->setGetArray(array(
                 'hash'    => $hash,

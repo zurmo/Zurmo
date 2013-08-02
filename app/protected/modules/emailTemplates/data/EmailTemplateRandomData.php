@@ -45,6 +45,7 @@
             'Note',
             'Task',
             'Opportunity',
+            'Contact',
         ),
         'name'                  => array(
             'Happy Birthday',
@@ -53,6 +54,7 @@
             'Sales decrease',
             'Missions alert',
             'Inbox Update',
+            'Introducing Zurmo',
         ),
         'subject'               => array(
             'Happy Birthday',
@@ -61,6 +63,7 @@
             'Q4 Sales decrease',
             'Upcoming Missions',
             'New Inbox Module is live',
+            'Lets explore Zurmo',
         ),
         'language'              => array(
             'en',
@@ -68,13 +71,24 @@
             'it',
             'fr',
             'de',
+            'en',
+        ),
+        'textContent'           => array(
+            'Zurmo\'s source code is hosted on bitbucket while we use mercurial for version control.',
+            'Our goal with Zurmo is to provide an easy-to-use, easy-to-customize CRM application that can be ' .
+                'adapted to any business use case. We have taken special care to think through many different use' .
+                ' cases and have designed a system that we believe provides a high degree of flexibility and a wide' .
+                ' range of out-of-the-box use cases. Zurmo is capable of supporting your complex business processes, ' .
+                'yet very simple to use.',
         ),
         'htmlContent'           => array(
             '<img src="http://zurmo.com/img/logo.png" alt="zurmo" />\'s source code is hosted on bitbucket while we use ' .
                 '<img src="http://www.selenic.com/hg-logo/droplets-50.png" alt="mercurial" /> for version control.',
-        ),
-        'textContent'           => array(
-            'Zurmo\'s source code is hosted on bitbucket while we use mercurial for version control.',
+            '<strong>Our goal with Zurmo is to provide an easy-to-use, easy-to-customize CRM application that can be ' .
+                'adapted to any business use case. We have taken special care to think through many different use' .
+                ' cases and have designed a system that we believe provides a high degree of flexibility and a wide' .
+                ' range of out-of-the-box use cases. Zurmo is capable of supporting your complex business processes, ' .
+                'yet very simple to use.</strong>'
         ),
     );
 ?>

@@ -71,6 +71,7 @@
                 {
                     throw new NoCurrentUserSecurityException();
                 }
+                AuditUtil::saveOriginalAttributeValue($this, 'owner', $currentUser);
                 $this->unrestrictedSet('owner', $currentUser);
             }
         }
@@ -143,7 +144,7 @@
         {
             if ($attributeName == 'owner')
             {
-                self::checkPermissionsHasAnyOf(Permission::CHANGE_OWNER);
+                $this->checkPermissionsHasAnyOf(Permission::CHANGE_OWNER);
                 $this->isSetting = true;
                 try
                 {
@@ -174,7 +175,8 @@
                 {
                     ReadPermissionsOptimizationUtil::ownedSecurableItemCreated($this);
                 }
-                elseif (isset($this->originalAttributeValues['owner']))
+                elseif (isset($this->originalAttributeValues['owner']) &&
+                              $this->originalAttributeValues['owner'][1] > 0)
                 {
                     ReadPermissionsOptimizationUtil::ownedSecurableItemOwnerChanged($this,
                                                             User::getById($this->originalAttributeValues['owner'][1]));

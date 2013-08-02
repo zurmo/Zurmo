@@ -49,7 +49,7 @@
          */
         protected function sendEmail(Mailer $mailer, EmailMessage $emailMessage)
         {
-            if (!$this->sendEmailThroughTransport)
+            if (!$this->sendEmailThroughTransport) 
             {
                 $emailMessage->error    = null;
                 $emailMessage->folder   = EmailFolder::getByBoxAndType($emailMessage->folder->emailBox, EmailFolder::TYPE_SENT);
@@ -87,8 +87,8 @@
             assert('is_string($htmlContent)');
             assert('$textContent != ""  || $htmlContent != ""');
             assert('(is_array($cc) && !empty($cc)) || is_string($cc) || !isset($cc)');
-            assert('(is_array($bcc) && !empty($bcc)) || is_string($bcc) || !isset($bcc)');            
-            assert('isset($to) || isset($cc) || isset($bcc)');            
+            assert('(is_array($bcc) && !empty($bcc)) || is_string($bcc) || !isset($bcc)');
+            assert('isset($to) || isset($cc) || isset($bcc)');
             assert('is_array($attachments) || !isset($attachments)');
 
             $mailer           = $this->getOutboundMailer();

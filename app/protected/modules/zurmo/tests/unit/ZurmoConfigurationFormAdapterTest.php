@@ -73,8 +73,8 @@
             $this->assertEquals(53,                              $form->dashboardListPageSize);
             $this->assertEquals('demoCompany',                   $form->applicationName);
             $this->assertEquals(AutoresponderOrCampaignBatchSizeConfigUtil::CONFIG_DEFAULT_VALUE, $form->autoresponderOrCampaignBatchSize);
-            $this->assertEquals(AutoresponderOrCampaignMailFooterContentUtil::getContentByType(false), $form->autoresponderOrCampaignFooterPlainText);
-            $this->assertEquals(AutoresponderOrCampaignMailFooterContentUtil::getContentByType(true), $form->autoresponderOrCampaignFooterRichText);
+            $this->assertEquals(UnsubscribeAndManageSubscriptionsPlaceholderUtil::getContentByType(false), $form->autoresponderOrCampaignFooterPlainText);
+            $this->assertEquals(UnsubscribeAndManageSubscriptionsPlaceholderUtil::getContentByType(true), $form->autoresponderOrCampaignFooterRichText);
             $this->assertEquals($logoFileName,                   $form->logoFileData['name']);
             $form->timeZone              = 'America/Chicago';
             $form->listPageSize          = 60;

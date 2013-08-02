@@ -55,7 +55,12 @@
 
         protected function getDefaultRoute()
         {
-            if (Yii::app()->request->getParam('redirectUrl') != null)
+            if (Yii::app()->controller->action->id == 'copy')
+            {
+                $getData = GetUtil::getData();
+                return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/details/', array('id' => $getData['id']));
+            }
+            elseif (Yii::app()->request->getParam('redirectUrl') != null)
             {
                 return Yii::app()->request->getParam('redirectUrl');
             }

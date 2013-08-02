@@ -173,7 +173,6 @@
             {
                 // AS of 2.0.13 they should be able to get it back.
                 $account->owner = new User();
-
             }
             catch (AccessDeniedSecurityException $e)
             {

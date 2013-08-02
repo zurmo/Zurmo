@@ -452,7 +452,7 @@ HTML;
 
         public function testTextContentGetsCustomFooterAppended()
         {
-            AutoresponderOrCampaignMailFooterContentUtil::setContentByType('PlainTextFooter', false);
+            UnsubscribeAndManageSubscriptionsPlaceholderUtil::setContentByType('PlainTextFooter', false);
             $content    = 'This is some text content';
             $result     = static::resolveContent($content, true, false);
             $this->assertTrue($result);
@@ -466,7 +466,7 @@ HTML;
          */
         public function testHtmlContentGetsCustomFooterAppended()
         {
-            AutoresponderOrCampaignMailFooterContentUtil::setContentByType('RichTextFooter', true);
+            UnsubscribeAndManageSubscriptionsPlaceholderUtil::setContentByType('RichTextFooter', true);
             $content    = 'This is some html content';
             $result     = static::resolveContent($content, true, true);
             $this->assertTrue($result);

@@ -94,8 +94,6 @@
             $content = $this->runControllerWithNoExceptionsAndGetContent('autoresponders/default/create');
             $compareContent = 'Autoresponders will not run properly until scheduled jobs are set up. Contact your administrator.';
             $this->assertTrue(strpos($content, $compareContent) !== false);
-
-
         }
 
         /**

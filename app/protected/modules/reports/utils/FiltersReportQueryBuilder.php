@@ -75,7 +75,7 @@
             {
                 return null;
             }
-            return $content;
+            return '(' . $content . ')';
         }
     }
 ?>

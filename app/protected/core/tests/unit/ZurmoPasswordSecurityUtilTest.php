@@ -57,5 +57,14 @@
             $decryptedString = ZurmoPasswordSecurityUtil::decrypt($encryptedString, '567');
             $this->assertTrue($string != $decryptedString);
         }
+
+        /**
+         * In the event that the value is not properly encrypted it will just return an empty string
+         */
+        public function testDecryptWithMalformedEncryptedValue()
+        {
+            $decryptedString = ZurmoPasswordSecurityUtil::decrypt('aweaweawe', 'someKey');
+            $this->assertEquals('', $decryptedString);
+        }
     }
 ?>

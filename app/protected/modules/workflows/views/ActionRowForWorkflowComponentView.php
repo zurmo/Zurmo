@@ -114,6 +114,7 @@
             $content .= $this->renderMergeTagGuideContent();
             $content .= $this->renderAttributesRowsContent($this->makeAttributeRows());
             $content .= $this->renderSaveActionElementsContent($rowId);
+            $content .= $this->renderDeleteActionElementsContent();
             $content .= '</div>';
             $content  =  ZurmoHtml::tag('div', array('class' => 'dynamic-row'), $content);
             return ZurmoHtml::tag('li', array('id' => $rowId, 'class' => 'expanded-row'), $content);
@@ -279,6 +280,15 @@
                                      'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $element               = new SaveButtonActionElement(null, null, null, $params);
             return $element->render();
+        }
+        
+        /**         
+         * @return string
+         */
+        protected function renderDeleteActionElementsContent()
+        {
+            return ZurmoHtml::link(Zurmo::t('Core', 'Delete'), '#', 
+                                   array('class' => 'remove-action-row-link simple-link'));
         }
     }
 ?>

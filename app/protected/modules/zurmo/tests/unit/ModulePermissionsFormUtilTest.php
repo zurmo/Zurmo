@@ -1158,5 +1158,37 @@
            $attributeName = FormModelUtil::getDerivedAttributeNameFromTwoStrings('x', 'y');
            $this->assertEquals('x__y', $attributeName);
        }
+
+        /**
+         * Should not throw an exception AccessDeniedSecurityException
+         */
+        public function testARegularUserWhoCanAccessGroupsCanProperlyModifyModulePermission()
+       {
+           $nobody = UserTestHelper::createBasicUser('nobody');
+           $nobody->setRight('GroupsModule', GroupsModule::RIGHT_ACCESS_GROUPS);
+           $nobody->setRight('GroupsModule', GroupsModule::RIGHT_CREATE_GROUPS);
+           $nobody->setRight('GroupsModule', GroupsModule::RIGHT_DELETE_GROUPS);
+           $this->assertTrue($nobody->save());
+
+           Yii::app()->user->userModel = $nobody;
+           $group = new Group();
+           $group->name = 'newGroup2';
+           $saved = $group->save();
+           $this->assertTrue($saved);
+           $group->forget();
+           $newItem = NamedSecurableItem::getByName('SomeModule');
+           $this->assertEquals(array(Permission::NONE, Permission::NONE),
+               $newItem->getExplicitActualPermissions($group)
+           );
+           $newItem->forget();
+           $fakePost = array(
+               'SomeModule__' . Permission::CHANGE_PERMISSIONS    => strval(Permission::ALLOW),
+               'SomeModule__' . Permission::CHANGE_OWNER          => strval(Permission::ALLOW),
+           );
+           $validatedPost = ModulePermissionsFormUtil::typeCastPostData($fakePost);
+           $saved = ModulePermissionsFormUtil::setPermissionsFromCastedPost($validatedPost, $group);
+           $this->assertTrue($saved);
+           //Success, an exception was not thrown. AccessDeniedSecurityException
+       }
     }
 ?>

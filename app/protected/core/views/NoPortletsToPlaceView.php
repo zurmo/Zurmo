@@ -39,12 +39,12 @@
      */
     class NoPortletsToPlaceView extends View
     {
-        public $cssClasses = array('splash-view');        
+        public $cssClasses = array('splash-view');
 
         protected function renderContent()
-        {                     
-            $content = '<div class="' . $this->getIconName() . '">';
-            $content .= $this->getMessageContent();            
+        {
+            $content = '<div class="general-issue-notice ' . $this->getIconName() . '">';
+            $content .= $this->getMessageContent();
             $content .= '</div>';
             return $content;
         }
@@ -53,10 +53,13 @@
         {
             return 'Portlet';
         }
-        
+
         protected function getMessageContent()
         {
-            return Zurmo::t('Core', '<h2>There are no more portlets to add</h2><p></p>');
+            $message  = Zurmo::t('Core', 'There are no more portlets to add');
+            $content  = ZurmoHtml::tag('span', array('class' => 'icon-notice'), '');
+            $content .= ZurmoHtml::tag('p', array(), $message);
+            return $content;
         }
     }
 ?>

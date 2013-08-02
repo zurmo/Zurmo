@@ -32,14 +32,19 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+            //Make sure everyone group is created
+            $group = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $group->save();
 
             //Setup test data owned by the super user.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             $contact = ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
             ProductTestHelper::createProductByNameForOwner("My Product 1", $super);
+            //Setup test data owned by the super user.
+            ProductTemplateTestHelper::createProductTemplateByName('My Product Template');
         }
 
-        public function testSuperUserAllDefaultControllerActions()
+        public function testSuperUserEditControllerAction()
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
@@ -71,6 +76,76 @@
             //Test having a failed validation on the product during save.
             $this->setGetArray (array('id'      => $superProductId));
             $content = $this->runControllerWithRedirectExceptionAndGetContent('products/default/edit');
+        }
+
+        public function testSuperUserEditProductPortletControllerAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $products           = Product::getAll();
+            $this->assertEquals(1, count($products));
+            $superProductId     = self::getModelIdByModelNameAndName('Product', 'My Product 1');
+            $this->setGetArray(array('attribute' => 'sellPrice', 'item' => $superProductId, 'value' => '300.54'));
+            $this->runControllerWithNoExceptionsAndGetContent('products/default/update', true);
+
+            //Save product.
+            $superProduct       = Product::getById($superProductId);
+            $this->assertEquals(300.54, $superProduct->sellPrice->value);
+
+            $this->setGetArray(array('attribute' => 'sellPrice', 'item' => $superProductId, 'value' => '3000.54'));
+            $this->runControllerWithNoExceptionsAndGetContent('products/default/update', true);
+
+            //Save product.
+            $superProduct       = Product::getById($superProductId);
+            $this->assertEquals(3000.54, $superProduct->sellPrice->value);
+
+            $this->setGetArray(array('attribute' => 'quantity', 'item' => $superProductId, 'value' => '10'));
+            $this->runControllerWithNoExceptionsAndGetContent('products/default/update', true);
+            //Save product.
+            $superProduct       = Product::getById($superProductId);
+            $this->assertEquals(10, $superProduct->quantity);
+        }
+
+        public function testSuperUserCreateProductFromProductTemplateControllerAction()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+
+            $products           = Product::getAll();
+            $this->assertEquals(1, count($products));
+
+            $superProductTemplateId  = self::getModelIdByModelNameAndName('ProductTemplate', 'My Product Template');
+            $productTemplate    = ProductTemplate::getById($superProductTemplateId);
+            $productCategory    = ProductCategoryTestHelper::createProductCategoryByName("Test Category");
+            $productCategoryII  = ProductCategoryTestHelper::createProductCategoryByName("Test CategoryII");
+            $productTemplate->productCategories->add($productCategory);
+            $productTemplate->productCategories->add($productCategoryII);
+            $productTemplate->save();
+            $superProductTemplateId   = $productTemplate->id;
+            $productTemplate->forget();
+            unset($productTemplate);
+
+            $accountId = self::getModelIdByModelNameAndName('Account', 'superAccount');
+            $this->setGetArray(array('relationModuleId'         => 'accounts',
+                                      'portletId'               => '1',
+                                      'uniqueLayoutId'          => 'AccountDetailsAndRelationsView_1',
+                                      'id'                      => $superProductTemplateId,
+                                      'relationModelId'         => $accountId,
+                                      'relationAttributeName'   => 'account',
+                                      'relationModelClassName'  => 'Account',
+                                      'redirect'                => '0'
+                                    )
+                              );
+            $this->runControllerWithNoExceptionsAndGetContent('products/default/createProductFromProductTemplate', true);
+            $products           = Product::getAll();
+            $this->assertEquals(2, count($products));
+
+            $latestProduct = $products[1];
+            $productSavedCategory   = $latestProduct->productCategories[0];
+            $productSavedCategoryII = $latestProduct->productCategories[1];
+            $this->assertEquals('Test Category',   $productSavedCategory->name);
+            $this->assertEquals('Test CategoryII', $productSavedCategoryII->name);
+            $this->assertEquals('My Product Template', $latestProduct->name);
+            $this->assertEquals(500.54, $latestProduct->sellPrice->value);
         }
     }
 ?>

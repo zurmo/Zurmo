@@ -175,7 +175,7 @@
         protected static function resolveAjaxOptionsForSelectList()
         {
             $title = Zurmo::t('ProductsModule', 'ProductsModuleSingularLabel Search',
-                            LabelUtil::getTranslationParamsForAllModules());
+                              LabelUtil::getTranslationParamsForAllModules());
             return ModalView::getAjaxOptionsForModalLink($title);
         }
 
@@ -237,7 +237,6 @@
             assert('is_array($columns)');
             $gridViewParams = parent::getCGridViewParams();
             $gridViewParams['id']              = $this->getGridViewId();
-            $gridViewParams['dataProvider']    = $this->getProductsDataProvider($this->configurationForm);
             $gridViewParams['pager']           = $this->getCGridViewPagerParams();
             $gridViewParams['afterAjaxUpdate'] = $this->getCGridViewAfterAjaxUpdate();
             $gridViewParams['columns']         = $columns;
@@ -430,10 +429,9 @@
 
         /**
          * Makes product search attributes data
-         * @param ProductsConfigurationForm $form
          * @return string
          */
-        protected function makeProductSearchAttributeData($form)
+        protected function makeSearchAttributeData()
         {
             $searchAttributeData = array();
             $searchAttributeData['clauses'][1] = array(
@@ -442,13 +440,13 @@
                                                         'operatorType'         => 'equals',
                                                         'value'                => (int)$this->params['relationModel']->id,
                                                     );
-            if ($form->filteredByStage != ProductsConfigurationForm::FILTERED_BY_ALL_STAGES)
+            if ($this->configurationForm->filteredByStage != ProductsConfigurationForm::FILTERED_BY_ALL_STAGES)
             {
                 $searchAttributeData['clauses'][2] = array(
                                                             'attributeName'        => 'stage',
                                                             'relatedAttributeName' => 'value',
                                                             'operatorType'         => 'equals',
-                                                            'value'                => $form->filteredByStage,
+                                                            'value'                => $this->configurationForm->filteredByStage,
                                                          );
                 $searchAttributeData['structure'] = '1 and 2';
             }
@@ -457,19 +455,6 @@
                 $searchAttributeData['structure'] = '1';
             }
             return $searchAttributeData;
-        }
-
-        /**
-         * @param ProductsConfigurationForm $form
-         * @return DataProvider
-         */
-        protected function getProductsDataProvider($form)
-        {
-            if ($this->dataProvider == null)
-            {
-                $this->dataProvider = $this->makeDataProviderBySearchAttributeData($this->makeProductSearchAttributeData($form));
-            }
-            return $this->dataProvider;
         }
 
         /**

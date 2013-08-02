@@ -57,7 +57,7 @@
 
         public static function canSaveMetadata()
         {
-            return false;
+            return true;
         }
 
         public function onCreated()

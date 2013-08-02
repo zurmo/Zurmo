@@ -84,11 +84,11 @@
                 $textClass = null;
                 $htmlClass = 'active-tab';
             }
-            $textTabHyperLink   = ZurmoHtml::link($this->renderTextContentAreaLabel(), 
-                                                  '#tab1', 
+            $textTabHyperLink   = ZurmoHtml::link($this->renderTextContentAreaLabel(),
+                                                  '#tab1',
                                                   array('class' => $textClass));
-            $htmlTabHyperLink   = ZurmoHtml::link($this->renderHtmlContentAreaLabel(), 
-                                                  '#tab2', 
+            $htmlTabHyperLink   = ZurmoHtml::link($this->renderHtmlContentAreaLabel(),
+                                                  '#tab2',
                                                   array('class' => $htmlClass));
             $tagsGuideLink      = null;
             if ($this->form)
@@ -154,7 +154,7 @@
             $activeTab = $this->getActiveTab();
             return $this->resolveTabbedContent($this->renderTextContentArea(), $this->renderHtmlContentArea(), $activeTab);
         }
-        
+
         protected function getActiveTab()
         {
             if (empty($this->model->textContent))

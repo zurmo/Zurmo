@@ -68,7 +68,7 @@
             assert('is_bool($isRequired)');
             assert('is_bool($isAudited)');
             assert('$mixedRule === null || is_array($mixedRule)');
-            $metadata = $modelClassName::getMetadata();
+            $metadata   = $modelClassName::getMetadata();
             assert('isset($metadata[$modelClassName])');
             if (!isset   (             $metadata[$modelClassName]['members']) ||
                 !in_array($memberName, $metadata[$modelClassName]['members']))
