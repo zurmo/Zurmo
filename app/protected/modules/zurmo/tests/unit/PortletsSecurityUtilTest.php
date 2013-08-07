@@ -78,5 +78,17 @@
             $resolvedPortlets = PortletsSecurityUtil::resolvePortletsForCurrentUser($portlets);
             $this->assertEquals($portlets, $resolvedPortlets);
         }
+
+        public function testDoesCurrentUserHavePermissionToAddPortlet()
+        {
+            $betty                      = User::getByUsername('betty');
+            Yii::app()->user->userModel = $betty;
+            $portletRules = new RelatedListPortletRules('ProductsForAccountRelatedListView');
+            $this->assertFalse(PortletsSecurityUtil::doesCurrentUserHavePermissionToAddPortlet($portletRules));
+            $betty->setRight('ProductsModule', ProductsModule::RIGHT_ACCESS_PRODUCTS);
+            $saved = $betty->save();
+            $this->assertTrue($saved);
+            $this->assertTrue(PortletsSecurityUtil::doesCurrentUserHavePermissionToAddPortlet($portletRules));
+        }
     }
 ?>

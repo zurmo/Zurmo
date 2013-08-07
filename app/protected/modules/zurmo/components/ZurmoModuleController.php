@@ -227,12 +227,11 @@
                 throw new NotSupportedException();
             }
             $stateMetadataAdapterClassName = $this->getModule()->getStateMetadataAdapterClassName();
-
             $dataProvider = $this->getDataProviderByResolvingSelectAllFromGet(
                 $searchForm,
                 $pageSize,
                 Yii::app()->user->userModel->id,
-                null,
+                $stateMetadataAdapterClassName,
                 $stickySearchKey
             );
 

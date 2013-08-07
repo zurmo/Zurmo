@@ -137,7 +137,8 @@
                 {
                     $startingDivStyleFirstValue     = null;
                     if (!in_array($this->model->getOperator(),
-                                    OperatorRules::getOperatorsWhereValueIsRequired()))
+                                    OperatorRules::getOperatorsWhereValueIsRequired()) &&
+                        $this->model->getOperator() != null)
                     {
                         $startingDivStyleFirstValue         = "display:none;";
                         $valueElement->params['disabled']   = 'disabled';

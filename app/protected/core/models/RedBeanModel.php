@@ -1737,6 +1737,18 @@
         }
 
         /**
+         * Method to call to clear out validators from memory. Can help with performance. Used by async export
+         * for example.
+         */
+        public function forgetValidators()
+        {
+            if(!empty($this->validators))
+            {
+                $this->validators = array();
+            }
+        }
+
+        /**
          * See the yii documentation.
          */
         public function createValidators()

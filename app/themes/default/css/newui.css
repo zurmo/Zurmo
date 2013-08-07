@@ -9466,6 +9466,10 @@ div.wide.form label.hasCheckBox {
   width: 600px;
   height: 400px;
 }
+.mapCanvasPortlet {
+  width: 100%;
+  height: 400px;
+}
 /*=tasks portelt*/
 .OpenTasksRelatedListView .button-column,
 .OpenTasksRelatedListView .checkbox-column {
@@ -11438,6 +11442,9 @@ div.hasHalfs > div input {
 }
 .juiportlet-column-no-split {
   width: 100%;
+}
+.juiportlet-column-no-split .juiportlet-widget {
+  margin-right: 0 !important;
 }
 .juiportlet-column-split-left-75 {
   width: 65%;
@@ -14480,6 +14487,7 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
 .AttributeEditView .sortable .remove-sortable-item-link {
   position: absolute;
   left: 3px;
+  top: 0;
   line-height: 1;
   z-index: 100;
 }

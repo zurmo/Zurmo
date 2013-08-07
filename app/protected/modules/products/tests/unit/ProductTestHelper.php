@@ -45,5 +45,23 @@
             assert('$saved');
             return $product;
         }
+
+        public static function createProductStagesIfDoesNotExist()
+        {
+            $salesStagesFieldData = CustomFieldData::getByName('ProductStages');
+            $stageValues = array(
+                'Open',
+                'Lost',
+                'Won',
+            );
+            if (count(unserialize($salesStagesFieldData->serializedData)) == 0)
+            {
+                $salesStagesFieldData = CustomFieldData::getByName('ProductStages');
+                $salesStagesFieldData->defaultValue = $stageValues[0];
+                $salesStagesFieldData->serializedData = serialize($stageValues);
+                $saved = $salesStagesFieldData->save();
+                assert('$saved');
+            }
+        }
     }
 ?>

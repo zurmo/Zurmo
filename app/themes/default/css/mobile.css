@@ -570,7 +570,7 @@ body > div {
   content: "n";
   font-weight: normal;
   font-size: 30px;
-  font-family: "ZurmoGamificationSymblyReguRg";
+  font-family: "zurmo_gamification_symbly_rRg";
   line-height: 26px;
   margin-left: -1px;
   background: none;
@@ -729,7 +729,7 @@ body > div {
   border-radius: 4px;
   font-weight: normal;
   font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
+  font-family: "zurmo_gamification_symbly_rRg";
   -webkit-text-shadow: none !important;
   -moz-text-shadow: none !important;
   -o-text-shadow: none !important;
@@ -1046,7 +1046,7 @@ div:not(#MashableInboxActionBarForViews) .toolbar-mbmenu .options-menu > li > a:
   content: "{";
   font-weight: normal;
   font-size: 24px;
-  font-family: "ZurmoGamificationSymblyReguRg";
+  font-family: "zurmo_gamification_symbly_rRg";
   left: -5px;
   top: -1px;
   margin-left: 10px;

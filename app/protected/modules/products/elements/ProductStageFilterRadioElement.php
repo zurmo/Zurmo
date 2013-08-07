@@ -50,7 +50,7 @@
             $content = $this->form->radioButtonList(
                 $this->model,
                 $this->attribute,
-                $this->getArray(),
+                $this->getStageDropDownArray(),
                 $this->getEditableHtmlOptions()
             );
             return ZurmoHtml::tag('strong', array(), Zurmo::t('ProductsModule', 'View')) . ':' . $content;
@@ -94,13 +94,13 @@
          * Gets array for stages
          * @return array
          */
-        protected function getArray()
+        protected function getStageDropDownArray()
         {
-            $data = array(ProductsConfigurationForm::FILTERED_BY_ALL_STAGES => Zurmo::t('ProductsModule', 'All'),
-                          ProductsConfigurationForm::OPEN_STAGE             => Zurmo::t('ProductsModule', 'Open'),
-                          ProductsConfigurationForm::LOST_STAGE             => Zurmo::t('ProductsModule', 'Lost'),
-                          ProductsConfigurationForm::WON_STAGE              => Zurmo::t('ProductsModule', 'Won'));
-
+            $customFieldData            = CustomFieldData::getByName('ProductStages');
+            $customFieldIndexedData     = CustomFieldDataUtil::getDataIndexedByDataAndTranslatedLabelsByLanguage($customFieldData,
+                                                                                                                    Yii::app()->language);
+            $data                       = array_merge(array(ProductsConfigurationForm::FILTERED_BY_ALL_STAGES
+                                                                            => Zurmo::t('ProductsModule', 'All')), $customFieldIndexedData);
             return $data;
         }
     }

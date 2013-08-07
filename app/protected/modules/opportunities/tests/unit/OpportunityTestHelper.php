@@ -92,7 +92,7 @@
             }
         }
 
-            public static function createOpportunitySourcesIfDoesNotExist()
+        public static function createOpportunitySourcesIfDoesNotExist()
         {
             $sourceFieldData = CustomFieldData::getByName('LeadSources');
             $sourceValues = array(

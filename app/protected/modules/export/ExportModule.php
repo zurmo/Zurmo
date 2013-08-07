@@ -43,7 +43,7 @@
 
         // Used to determine if data will be exported directly in browser
         // or to be exported via asynchronous via background job.
-        public static $asynchronusThreshold = 2500;
+        public static $asynchronusThreshold = 1000;
 
         public static function getTranslatedRightsLabels()
         {

@@ -73,6 +73,7 @@
 
         /**
          * @param integer $level
+         * @return bool
          */
         public static function isLastLevel($level)
         {
@@ -86,6 +87,8 @@
 
         /**
          * @param integer $level
+         * @return mixed
+         * @throws NotSupportedException
          */
         public static function getMinimumPointsForLevel($level)
         {

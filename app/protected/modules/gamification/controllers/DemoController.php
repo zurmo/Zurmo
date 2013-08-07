@@ -63,6 +63,7 @@
             $gameNotification->user     = Yii::app()->user->userModel;
             $gameNotification->setBadgeGradeChangeByTypeAndNewGrade('LoginUser', 5);
             $saved                      = $gameNotification->save();
+            echo "Demo data has been loaded. Go back to the application.";
         }
     }
 ?>

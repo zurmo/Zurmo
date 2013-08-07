@@ -88,7 +88,7 @@
         {
             assert('is_string($containerId)');
             assert('is_string($apiKey) || $apiKey == null');
-            assert('is_string($address) || $address == null');
+            assert('$address instanceof Address || is_string($address) || $address == null');
             assert('is_numeric($latitude) || $latitude == null');
             assert('is_numeric($longitude) || $longitude == null');
 
@@ -138,7 +138,7 @@
             $(document).ready(loadGoogleMap);
             ";
             // Register the javascripts
-            Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_READY);
+            Yii::app()->getClientScript()->registerScript("GoogleMapScript". $containerId, $mapScript, CClientScript::POS_END);
         }
     }
 ?>

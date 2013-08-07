@@ -38,7 +38,8 @@
 
             //Setup test data owned by the super user.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
-            $contact = ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
+            ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
+            ProductTestHelper::createProductStagesIfDoesNotExist();
             ProductTestHelper::createProductByNameForOwner("My Product 1", $super);
             //Setup test data owned by the super user.
             ProductTemplateTestHelper::createProductTemplateByName('My Product Template');

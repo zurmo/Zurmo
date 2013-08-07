@@ -62,5 +62,20 @@
                                                                $postData[$this->productCategoryFormName]);
             }
         }
+
+        /**
+         * Resolve stage default value
+         * @param RedBeanModel $product
+         * @return string
+         */
+        public function resolveStageDefaultValue($product)
+        {
+           $customFieldData    = CustomFieldData::getByName('ProductStages');
+           $dropDownArray      = unserialize($customFieldData->serializedData);
+           if($product->stage->value == null)
+           {
+               $product->stage->value = $dropDownArray[0];
+           }
+        }
     }
 ?>
