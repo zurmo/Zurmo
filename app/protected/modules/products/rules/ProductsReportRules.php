@@ -47,7 +47,11 @@
             $metadata = array(
                 'Product' => array(
                     'nonReportable' =>
-                    array('products', 'product'),
+                        array('products', 'product'),
+                    'availableOperatorsTypes' =>
+                        array('type' => ModelAttributeToOperatorTypeUtil::AVAILABLE_OPERATORS_TYPE_DROPDOWN),
+                    'filterValueElementTypes' =>
+                        array('type' => 'ProductTemplateTypeStaticDropDownForWizardModel'),
                 )
             );
             return array_merge(parent::getDefaultMetadata(), $metadata);

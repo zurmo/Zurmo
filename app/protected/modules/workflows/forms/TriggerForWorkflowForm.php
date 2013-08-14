@@ -439,7 +439,10 @@
             {
                 if (isset($rule[0], $rule[1]))
                 {
-                    $validators->add(CValidator::createValidator($rule[1], $this, $rule[0], array_slice($rule, 2)));
+                    if($rule[1] != 'unique')
+                    {
+                        $validators->add(CValidator::createValidator($rule[1], $this, $rule[0], array_slice($rule, 2)));
+                    }
                 }
                 else
                 {
@@ -459,9 +462,8 @@
         private function resolveAndValidateValueData(Array $rules, & $passedValidation, $ruleAttributeName)
         {
             $modelToWorkflowAdapter = $this->makeResolvedAttributeModelRelationsAndAttributesToWorkflowAdapter();
-            $rules                = array_merge($rules,
-                $modelToWorkflowAdapter->getTriggerRulesByAttribute(
-                    $this->getResolvedAttribute(), $ruleAttributeName));
+            $rules                = array_merge($rules, $modelToWorkflowAdapter->getTriggerRulesByAttribute(
+                                    $this->getResolvedAttribute(), $ruleAttributeName));
             $validators           = $this->createValueValidatorsByRules($rules);
             foreach ($validators as $validator)
             {
@@ -483,7 +485,7 @@
                 $this->getAttribute() != null) ||
                 ($this->getAttribute() == null &&
                     $this->getAttributeAndRelationData()) == 2 &&
-                    $modelClassName::isOwnedRelation($this->getPenultimateRelation()))
+                    $modelClassName::isOwnedRelation($this->getResolvedRealAttributeNameForPenultimateRelation()))
             {
                 return true;
             }
@@ -500,7 +502,7 @@
                 $this->getAttribute() != null) ||
                 ($this->getAttribute() == null &&
                     $this->getAttributeAndRelationData()) == 2 &&
-                    $modelClassName::isOwnedRelation($this->getPenultimateRelation()))
+                    $modelClassName::isOwnedRelation($this->getResolvedRealAttributeNameForPenultimateRelation()))
             {
                 return true;
             }

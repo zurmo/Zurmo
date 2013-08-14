@@ -46,8 +46,6 @@
          */
         protected function renderControlEditable()
         {
-            assert('empty($this->model->{$this->attribute}) || is_string($this->model->{$this->attribute}) ||
-            is_integer($this->model->{$this->attribute})');
             $htmlOptionsFromParams   = $this->getHtmlOptions();
             $htmlOptions             = array();
             $htmlOptions['id']       = $this->getEditableInputId();

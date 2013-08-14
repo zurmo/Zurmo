@@ -62,6 +62,8 @@
                 throw new NotSupportedException();
             }
             ContactsModule::loadStartingData();
+            $everyoneGroup        = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            assert($everyoneGroup->save()); // Not Coding Standard
         }
 
         public function testSuperUserCompleteMatchVariations()
@@ -209,7 +211,7 @@
             $userCanDelete->setRight('ContactsModule', ContactsModule::RIGHT_CREATE_CONTACTS);
             $userCanDelete->setRight('LeadsModule', LeadsModule::RIGHT_ACCESS_LEADS);
             $message1 = EmailMessageTestHelper::createArchivedUnmatchedReceivedMessage($userCanDelete);
-            $this->setGetArray(array('id' => $message1->id));
+            $this->setGetArray(array('id' => $message1->id, 'redirect' => false));
             $this->runControllerWithNoExceptionsAndGetContent('emailMessages/default/delete', true);
        }
     }

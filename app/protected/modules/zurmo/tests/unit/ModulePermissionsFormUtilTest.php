@@ -1190,5 +1190,127 @@
            $this->assertTrue($saved);
            //Success, an exception was not thrown. AccessDeniedSecurityException
        }
+
+        public function testSetModulePermissionsFormFromExplicitDenyDirectlyToExplicitAllowFromPost()
+        {
+            $group = Group::getByName('modulePermissionsGroup');
+            $data = PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
+            $form = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
+            $compareData = array(
+                'AccountsModule' => array(
+                    Permission::CHANGE_OWNER => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::CHANGE_PERMISSIONS => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::DELETE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::READ => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::WRITE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                ),
+            );
+            $this->assertEquals($compareData['AccountsModule'], $form->data['AccountsModule']);
+
+            //Now set the read permission to deny
+            $fakePost = array(
+                'AccountsModule__' . Permission::READ    => strval(Permission::DENY),
+            );
+            $validatedPost = ModulePermissionsFormUtil::typeCastPostData($fakePost);
+            $saved = ModulePermissionsFormUtil::setPermissionsFromCastedPost($validatedPost, $group);
+            $this->assertTrue($saved);
+
+            //Now the read should explicitly be deny
+            $data = PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
+            $form = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
+            $compareData = array(
+                'AccountsModule' => array(
+                    Permission::CHANGE_OWNER => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::CHANGE_PERMISSIONS => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::DELETE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::READ => array(
+                        'explicit'    => Permission::DENY,
+                        'inherited'   => null,
+                        'actual'      => Permission::DENY,
+                    ),
+                    Permission::WRITE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                ),
+            );
+            $this->assertEquals($compareData['AccountsModule'], $form->data['AccountsModule']);
+
+            //Now set the read to explicit All, which skips removing the permission (prior to fixing the bug here:
+            //https://www.pivotaltracker.com/story/show/54420494
+            $fakePost = array(
+                'AccountsModule__' . Permission::READ    => strval(Permission::ALLOW),
+            );
+            $validatedPost = ModulePermissionsFormUtil::typeCastPostData($fakePost);
+            $saved = ModulePermissionsFormUtil::setPermissionsFromCastedPost($validatedPost, $group);
+            $this->assertTrue($saved);
+
+            //Now the read should explicitly be deny
+            $data = PermissionsUtil::getAllModulePermissionsDataByPermitable($group);
+            $form = ModulePermissionsFormUtil::makeFormFromPermissionsData($data);
+            $compareData = array(
+                'AccountsModule' => array(
+                    Permission::CHANGE_OWNER => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::CHANGE_PERMISSIONS => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::DELETE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                    Permission::READ => array(
+                        'explicit'    => Permission::ALLOW,
+                        'inherited'   => null,
+                        'actual'      => Permission::ALLOW,
+                    ),
+                    Permission::WRITE => array(
+                        'explicit'    => null,
+                        'inherited'   => null,
+                        'actual'      => null,
+                    ),
+                ),
+            );
+            $this->assertEquals($compareData['AccountsModule'], $form->data['AccountsModule']);
+        }
     }
 ?>

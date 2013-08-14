@@ -45,9 +45,11 @@
          */
         protected function afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions)
         {
-            assert('$model instanceof Item');
             parent::afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions);
-            FileModelUtil::resolveModelsHasManyFilesFromPost($model, 'files', 'filesIds');
+            if($model instanceof Item)
+            {
+                FileModelUtil::resolveModelsHasManyFilesFromPost($model, 'files', 'filesIds');
+            }
         }
     }
 ?>

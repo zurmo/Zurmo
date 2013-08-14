@@ -81,6 +81,37 @@
             );
         }
 
+        private static function getServicesToCheckAfterInstallation()
+        {
+            return array(   'WebServer',
+                            'Php',
+                            'PhpTimeZone',
+                            'PhpMemoryBytes',
+                            'PhpFileUploads',
+                            'PhpUploadSize',
+                            'PhpPostSize',
+                            'ServerVariable',
+                            'PCRE',
+                            'SPL',
+                            'Ctype',
+                            'InstanceFolders',
+                            'APC',
+                            'Soap',
+                            'Curl',
+                            'Yii',
+                            'RedBean',
+                            'MbString',
+                            'Memcache',
+                            'SetIncludePath',
+                            'IMAP',
+                            'Pdo',
+                            'PdoMysql',
+                            'Ldap',
+                            'Mcrypt',
+                            'HostInfo'
+            );
+        }
+
         private static function getAdditionalServicesToCheck()
         {
             return array('Database',
@@ -108,7 +139,17 @@
             {
                 $servicesToCheck                                                  = self::getAdditionalServicesToCheck();
             }
+            return static::processServicesAndGetResultsData($servicesToCheck, $form);
+        }
 
+        public static function checkServicesAfterInstallationAndGetResultsDataForDisplay()
+        {
+            $servicesToCheck = self::getServicesToCheckAfterInstallation();
+            return static::processServicesAndGetResultsData($servicesToCheck);
+        }
+
+        protected static function processServicesAndGetResultsData(array $servicesToCheck, $form = null)
+        {
             $resultsData                                                       = array();
             $resultsData[self::CHECK_PASSED]                                   = array();
             $resultsData[self::CHECK_FAILED]                                   = array();
@@ -131,18 +172,18 @@
                 if ($serviceHelper->runCheckAndGetIfSuccessful())
                 {
                     $resultsData[self::CHECK_PASSED][] = array('service' => $service,
-                                                                      'message' => $serviceHelper->getMessage());
+                        'message' => $serviceHelper->getMessage());
                 }
                 elseif ($serviceHelper->didCheckProduceWarningStatus())
                 {
                     $resultsData[self::CHECK_WARNING][]  = array('service' => $service,
-                                                                      'message' => $serviceHelper->getMessage());
+                        'message' => $serviceHelper->getMessage());
                 }
                 else
                 {
                     $serviceType  = $serviceHelper->getServiceType();
                     $resultsData[self::CHECK_FAILED][$serviceType][] = array('service' => $service,
-                                                                      'message' => $serviceHelper->getMessage());
+                        'message' => $serviceHelper->getMessage());
                 }
             }
             return $resultsData;

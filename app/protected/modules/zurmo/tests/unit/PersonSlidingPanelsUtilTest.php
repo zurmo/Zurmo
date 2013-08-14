@@ -36,6 +36,18 @@
 
     class PersonSlidingPanelsUtilTest extends ZurmoBaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setUp()
+        {
+            parent::setUp();
+            Yii::app()->user->userModel = User::getByUsername('super');
+        }
+
         public function testGetSlideToSecondPanelLabel()
         {
             $this->assertEquals(
@@ -54,7 +66,25 @@
         {
             $this->assertContains(
                     '<a id="sliding-panel-toggle" class="vertical-forward-pager slide-to-second-panel"',
-                    PersonSlidingPanelsUtil::renderToggleLinkContent());
+                    PersonSlidingPanelsUtil::renderToggleLinkContent(55));
+        }
+
+        public function testGetAndSetShouldSlideToSecondPanel()
+        {
+            $this->assertTrue(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel(10));
+            $this->assertTrue(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel('aString'));
+
+            PersonSlidingPanelsUtil::setShouldSlideToSecondPanelForCurrentUser(10, false);
+            $this->assertFalse(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel(10));
+            $this->assertTrue(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel('aString'));
+
+            PersonSlidingPanelsUtil::setShouldSlideToSecondPanelForCurrentUser('aString', false);
+            $this->assertFalse(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel('aString'));
+
+            PersonSlidingPanelsUtil::setShouldSlideToSecondPanelForCurrentUser(10, true);
+            PersonSlidingPanelsUtil::setShouldSlideToSecondPanelForCurrentUser('aString', true);
+            $this->assertTrue(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel(10));
+            $this->assertTrue(PersonSlidingPanelsUtil::resolveShouldSlideToSecondPanel('aString'));
         }
     }
 ?>

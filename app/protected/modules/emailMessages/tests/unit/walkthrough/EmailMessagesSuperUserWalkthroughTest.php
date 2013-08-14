@@ -61,6 +61,8 @@
             $contact->primaryEmail->emailAddress = 'test@contact.com';
             $saved = $contact->save();
             assert($saved); // Not Coding Standard
+            $everyoneGroup        = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            assert($everyoneGroup->save()); // Not Coding Standard
         }
 
         public function testSuperUserCreateMessageAndViewDetails()

@@ -55,5 +55,42 @@
         {
             return Zurmo::t('Core', 'Switch to Business Card View');
         }
+
+        /**
+         * @param $portletId - unique id
+         * @param $content
+         * @return string
+         */
+        public static function makeFirstSlidingPanelContent($portletId, $content)
+        {
+            if(static::resolveShouldSlideToSecondPanel($portletId))
+            {
+                $extraClass = null;
+            }
+            else
+            {
+                $extraClass = ' showing-panel';
+            }
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel' . $extraClass, 'id' => 'zurmoView'), $content);
+        }
+
+        /**
+         * @param $portletId - unique id
+         * @param $content
+         * @return string
+         */
+        public static function makeSecondSlidingPanelContent($portletId, $content)
+        {
+            if(static::resolveShouldSlideToSecondPanel($portletId))
+            {
+                $extraClass = ' showing-panel';
+            }
+            else
+            {
+                $extraClass = null;
+            }
+            return ZurmoHtml::tag('div', array('class' => 'sliding-panel business-card' . $extraClass,
+                                               'id'    => 'businessCardView'), $content);
+        }
     }
 ?>

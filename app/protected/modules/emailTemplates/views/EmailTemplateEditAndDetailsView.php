@@ -42,7 +42,7 @@
                 'global' => array(
                     'toolbar' => array(
                         'elements' => array(
-                            array('type'    => 'EmailTemplateCancelLink', 'renderType' => 'Edit'),
+                            array('type'    => 'EmailTemplateCancelLink', 'renderType' => 'Edit', 'modelType' => 'eval:$this->getModelType()'),
                             array('type'    => 'SaveButton', 'renderType' => 'Edit'),
                             array('type'    => 'EditLink', 'renderType' => 'Details'),
                             array('type'    => 'EmailTemplateDeleteLink'),
@@ -183,6 +183,11 @@
         protected function alwaysShowErrorSummary()
         {
             return true;
+        }
+        
+        protected function getModelType()
+        {
+            return $this->model->type;
         }
     }
 ?>

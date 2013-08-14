@@ -313,7 +313,7 @@
 
         protected function getDefaultRouteForDelete()
         {
-            $params = array('id' => $this->uniqueId);
+            $params = array('id' => $this->uniqueId, 'redirect' => false);
             return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/delete/', $params);
         }
 

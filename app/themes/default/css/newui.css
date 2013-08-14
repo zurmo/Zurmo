@@ -7919,7 +7919,7 @@ body div.form-toolbar a.simple-link:not(.z-button) span.z-label {
 body div.form-toolbar a.simple-link:not(.z-button) span.z-label:before {
   content: "" !important;
 }
-a.simple-link {
+.zurmo body a.simple-link {
   background: none !important;
   background-image: none !important;
   -webkit-box-shadow: none  !important;
@@ -7939,7 +7939,7 @@ a.simple-link {
   font-size: 11px;
   font-weight: normal;
 }
-a.simple-link:before {
+.zurmo body a.simple-link:before {
   content: "" !important;
 }
 .normal-size {
@@ -11159,16 +11159,24 @@ div.hasHalfs > div input {
   background-image: linear-gradient(0deg, #969696, #afafaf) !important;
 }
 /*=About*/
+#RunJobView,
+#DiagnosticCheckServicesView,
 #AboutView {
   position: relative;
 }
+#RunJobView #ZurmoLogo,
+#DiagnosticCheckServicesView #ZurmoLogo,
 #AboutView #ZurmoLogo {
   width: 300px;
 }
+#RunJobView #ZurmoLogo strong,
+#DiagnosticCheckServicesView #ZurmoLogo strong,
 #AboutView #ZurmoLogo strong {
   float: right;
   margin-top: 26px;
 }
+#RunJobView h1,
+#DiagnosticCheckServicesView h1,
 #AboutView h1 {
   text-indent: 15px;
   font-size: 15px;
@@ -11190,6 +11198,8 @@ div.hasHalfs > div input {
   box-shadow: inset 0 1px 0 0 #ffffff;
   border-bottom: 1px solid #ccc;
 }
+#RunJobView > div,
+#DiagnosticCheckServicesView > div,
 #AboutView > div {
   margin-right: 0;
   margin-bottom: 20px;
@@ -11209,9 +11219,13 @@ div.hasHalfs > div input {
   background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
 }
+#RunJobView #aboutText,
+#DiagnosticCheckServicesView #aboutText,
 #AboutView #aboutText {
   position: relative;
 }
+#RunJobView #leftCol,
+#DiagnosticCheckServicesView #leftCol,
 #AboutView #leftCol {
   padding: 15px 0 50px 15px;
   width: 65%;
@@ -11220,9 +11234,13 @@ div.hasHalfs > div input {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+#RunJobView #leftCol > div,
+#DiagnosticCheckServicesView #leftCol > div,
 #AboutView #leftCol > div {
   margin-bottom: 20px;
 }
+#RunJobView #rightCol,
+#DiagnosticCheckServicesView #rightCol,
 #AboutView #rightCol {
   float: right;
   width: 30%;
@@ -11231,12 +11249,16 @@ div.hasHalfs > div input {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+#RunJobView #rightCol > div,
+#DiagnosticCheckServicesView #rightCol > div,
 #AboutView #rightCol > div {
   padding: 8px 10px;
   background: #F4F4F4;
   margin-bottom: 15px;
   float: left;
 }
+#RunJobView #aboutContactDetails,
+#DiagnosticCheckServicesView #aboutContactDetails,
 #AboutView #aboutContactDetails {
   width: 100%;
   float: left;
@@ -11246,19 +11268,31 @@ div.hasHalfs > div input {
   position: absolute;
   bottom: 0;
 }
+#RunJobView #aboutContactDetails span,
+#DiagnosticCheckServicesView #aboutContactDetails span,
 #AboutView #aboutContactDetails span {
   margin: 0 10px;
 }
+#RunJobView p,
+#DiagnosticCheckServicesView p,
 #AboutView p,
+#RunJobView ul,
+#DiagnosticCheckServicesView ul,
 #AboutView ul {
   font-size: 12px;
   line-height: 21px;
   font-weight: normal;
 }
+#RunJobView p a,
+#DiagnosticCheckServicesView p a,
 #AboutView p a,
+#RunJobView ul a,
+#DiagnosticCheckServicesView ul a,
 #AboutView ul a {
   text-decoration: underline !important;
 }
+#RunJobView ul,
+#DiagnosticCheckServicesView ul,
 #AboutView ul {
   margin-top: 4px;
   padding-left: 20px;
@@ -12392,6 +12426,43 @@ table.configuration-list td:last-child a .z-label:before {
 .jobHasNeverRun {
   color: #b38b01;
 }
+.button-column-right {
+  text-align: right !important;
+}
+.run-button span:before {
+  content: "";
+  margin-right: 0px;
+}
+.run-button span:after {
+  content: "7";
+  font-weight: normal;
+  font-size: 18px;
+  font-family: "zurmo_gamification_symbly_rRg";
+  margin-left: 5px;
+  position: relative;
+  top: 1px;
+  font-weight: normal !important;
+}
+#logging-table,
+#complete-table {
+  margin-bottom: 15px;
+}
+#logging-table h3,
+#complete-table h3 {
+  margin-bottom: 8px;
+}
+#logging-table a,
+#complete-table a {
+  margin-right: 15px;
+}
+#logging-table ol,
+#complete-table ol {
+  list-style: decimal inside;
+}
+#logging-table li,
+#complete-table li {
+  margin-bottom: 5px;
+}
 /*Languages*/
 #LanguagesCollectionView {
   padding-bottom: 0 !important;
@@ -13047,6 +13118,16 @@ table.configuration-list td:last-child a .z-label:before {
   padding: 15px;
   white-space: normal;
   word-break: break-all;
+}
+/*Diagnostics*/
+#DiagnosticCheckServicesView table {
+  margin-top: 15px;
+}
+#DiagnosticCheckServicesView .fail,
+#DiagnosticCheckServicesView .warning,
+#DiagnosticCheckServicesView .pass {
+  display: block;
+  text-align: center;
 }
 .available-portlets {
   padding: 20px;
@@ -15963,6 +16044,9 @@ a.close-ModalGameNotification.simple-link {
 }
 .UserSocialItemsForPortletView .empty {
   display: none;
+}
+#UsersPageView .juiportlet-columns {
+  padding-right: 20px;
 }
 #UserDetailsView {
   padding: 0 20px 20px 0;
@@ -19397,7 +19481,7 @@ a + .autoresponder-stats {
   box-sizing: border-box;
   position: relative;
 }
-.business-card {
+div.showing-panel {
   display: block;
 }
 .business-card .gravatar {
@@ -19867,6 +19951,434 @@ div.special-pager .hidden.next:after {
 }
 .mini-button .show {
   display: block;
+}
+#game-dashboard {
+  position: relative;
+  z-index: 100;
+}
+#game-dashboard * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#game-dashboard #overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+#game-dashboard #dashboard {
+  width: 1200px;
+  height: 600px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: -290px auto auto -600px;
+  -webkit-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12), 0 0 1px 0 #ccc;
+  -moz-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12), 0 0 1px 0 #ccc;
+  -o-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12), 0 0 1px 0 #ccc;
+  -ms-box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12), 0 0 1px 0 #ccc;
+  box-shadow: inset 0 0 0 2px #ffffff,  0 0 9px 5px rgba(153, 153, 153, 0.12), 0 0 1px 0 #ccc;
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#game-dashboard #dashboard > div {
+  padding: 15px;
+}
+#game-dashboard ul {
+  list-style: none;
+}
+#game-dashboard h2 {
+  margin-bottom: 15px;
+}
+/*User Card*/
+#user-card {
+  height: 84%;
+  width: 20%;
+  float: left;
+  border-right: 1px solid #ccc;
+  text-align: center;
+}
+#user-card h3 {
+  margin: 15px 0;
+}
+#user-card ul {
+  font-size: 14px;
+  font-weight: bold;
+}
+#user-card ul li {
+  line-height: 1.75;
+}
+#mini-stats-card {
+  margin-top: 10px;
+  background: rgba(240, 240, 240, 0.9);
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+  zoom: 1;
+}
+#mini-stats-card:before {
+  content: "";
+  display: table;
+}
+#mini-stats-card:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#mini-stats-card .level {
+  padding: 10px;
+}
+#mini-stats-card strong {
+  font-size: 36px;
+  line-height: 1;
+  display: block;
+}
+#mini-stats-card strong + span {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #999;
+  margin: 0 0 10px 0;
+}
+#mini-stats-card .percentHolder {
+  text-align: left;
+  margin-bottom: 5px;
+}
+#mini-stats-card .percentHolder + span {
+  font-weight: bold;
+}
+#mini-stats-card .num-badges,
+#mini-stats-card .num-collections {
+  padding: 5px;
+  float: left;
+  width: 50%;
+  border-top: 1px solid #fff;
+}
+#mini-stats-card .num-badges {
+  border-right: 1px solid #ffffff;
+}
+/*Badges*/
+#achievements-list {
+  overflow-y: scroll;
+  height: 84%;
+  width: 30%;
+  float: left;
+  border-right: 1px solid #ccc;
+}
+#achievements-list li {
+  zoom: 1;
+}
+#achievements-list li:before {
+  content: "";
+  display: table;
+}
+#achievements-list li:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#achievements-list li + li {
+  padding-top: 20px;
+}
+#achievements-list .badge {
+  float: left;
+  margin-right: 15px;
+}
+#achievements-list .badge-grade {
+  right: auto;
+  left: -8px;
+}
+#achievements-list h3,
+#achievements-list p {
+  margin-bottom: 5px;
+}
+#achievements-list p {
+  line-height: 1.4;
+}
+#achievements-list p + span {
+  font-size: 11px;
+  color: #aaa;
+}
+/*Coins*/
+#z-coins {
+  width: 15%;
+  height: 25%;
+  float: left;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+  text-align: center;
+}
+#z-coins a {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 11px;
+}
+#z-coin {
+  display: block;
+  width: 85px;
+  height: 85px;
+  line-height: 85px;
+  font-size: 36px;
+  font-style: italic;
+  background: gold;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  margin: 0 auto 7px auto;
+}
+#z-coin:hover {
+  -webkit-animation: spinCoin 1s infinite;
+}
+/*Leaderboard*/
+#leaderboard {
+  width: 35%;
+  height: 25%;
+  float: left;
+  border-bottom: 1px solid #ccc;
+}
+.leaderboard-rank {
+  float: left;
+  width: 120px;
+  margin-right: 15px;
+  padding: 10px;
+  text-align: center;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+.leaderboard-rank:last-child {
+  margin-right: 0;
+}
+.leaderboard-rank strong,
+.leaderboard-rank span {
+  display: block;
+}
+.leaderboard-rank strong {
+  font-size: 24px;
+  line-height: 1.5;
+}
+.leaderboard-rank span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #999;
+}
+/*Stats*/
+#stats {
+  width: 50%;
+  height: 59%;
+  float: left;
+}
+.stat-row {
+  width: 70%;
+  padding: 0 0 30px 0;
+  white-space: nowrap;
+}
+.stat-row h3 {
+  width: 35%;
+  text-align: right;
+  display: inline-block;
+}
+.stat-row .stat-level,
+.stat-row .stat-points {
+  float: none;
+  display: inline-block;
+  width: 5%;
+  text-align: center;
+}
+.stat-row .stat-level {
+  font-weight: bold;
+}
+.stat-row .stat-points {
+  width: 10%;
+  position: relative;
+  top: -8px;
+}
+.stat-row .stat-points em {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  text-align: center;
+  font-size: 11px;
+  width: 100%;
+  font-style: normal;
+}
+.stat-row .percentHolder {
+  width: 45%;
+  float: right;
+}
+/*Collections*/
+#collections {
+  width: 100%;
+  height: 16%;
+  float: left;
+  border-top: 1px solid #ccc;
+  padding: 0 !important;
+  position: relative;
+  z-index: 100;
+}
+#carousel-wrapper {
+  width: 92%;
+  height: 100%;
+  float: left;
+}
+#carousel {
+  height: 100%;
+  position: relative;
+}
+.nav-button {
+  width: 4%;
+  height: 100%;
+  text-align: center;
+  line-height: 96px;
+  font-size: 30px;
+  float: left;
+  display: block;
+  -webkit-text-shadow: 0 -1px 0 #ffffff;
+  -moz-text-shadow: 0 -1px 0 #ffffff;
+  -o-text-shadow: 0 -1px 0 #ffffff;
+  -ms-text-shadow: 0 -1px 0 #ffffff;
+  text-shadow: 0 -1px 0 #ffffff;
+  -webkit-box-shadow: 0 0 4px 0 #cccccc;
+  -moz-box-shadow: 0 0 4px 0 #cccccc;
+  -o-box-shadow: 0 0 4px 0 #cccccc;
+  -ms-box-shadow: 0 0 4px 0 #cccccc;
+  box-shadow: 0 0 4px 0 #cccccc;
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+  position: relative;
+  z-index: 10;
+}
+.collection-panel {
+  position: relative;
+  width: 350px;
+  height: 100%;
+  float: left;
+}
+.collection-panel .badge {
+  margin: 0;
+  float: left;
+  margin-right: 15px;
+}
+.collection-panel > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  padding: 15px 15px;
+  background-color: #f5f5f5 ;
+  background-repeat: no-repeat ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(80%, #f5f5f5), to(#f5f5f5)) ;
+  background-image: -webkit-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -moz-linear-gradient(top, #ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -ms-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: -o-linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  background-image: linear-gradient(#ffffff, #f5f5f5 80%, #f5f5f5) ;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+  -webkit-box-shadow: inset 0 0 1px 0 #cccccc;
+  -moz-box-shadow: inset 0 0 1px 0 #cccccc;
+  -o-box-shadow: inset 0 0 1px 0 #cccccc;
+  -ms-box-shadow: inset 0 0 1px 0 #cccccc;
+  box-shadow: inset 0 0 1px 0 #cccccc;
+}
+.collection-panel > div:hover {
+  -webkit-animation-name: slideCollectionUp;
+  -webkit-animation-duration: .25s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-play-state: running;
+  -webkit-animation-fill-mode: forwards;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 5px 0 #aaaaaa;
+  -moz-box-shadow: 0 0 5px 0 #aaaaaa;
+  -o-box-shadow: 0 0 5px 0 #aaaaaa;
+  -ms-box-shadow: 0 0 5px 0 #aaaaaa;
+  box-shadow: 0 0 5px 0 #aaaaaa;
+}
+.collection-panel .number-collected {
+  margin: 10px 0;
+}
+.collection-panel .number-collected .have-it,
+.collection-panel .number-collected .have-it-not {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  background: green;
+}
+.collection-panel .number-collected .have-it-not {
+  background: #ccc;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+.collection-panel .number-collected .total-completed {
+  float: right;
+}
+.collection-items {
+  margin-top: 30px;
+}
+.collection-items .collection-item {
+  width: 40px;
+  height: 40px;
+  background: pink;
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
 }
 /*********************************************************************************
  * Zurmo is a customer relationship management program developed by

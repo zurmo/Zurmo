@@ -79,6 +79,14 @@
             else
             {
                 $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/newui.css');
+                if (file_exists($absoluteBaseUrl . '/' . $theme . '/css/commercial.css'))
+                {
+                    $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/commercial.css');
+                }
+                if (file_exists($absoluteBaseUrl . '/' . $theme . '/css/custom.css'))
+                {
+                    $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/custom.css');
+                }
                 if (Yii::app()->userInterface->isMobile())
                 {
                     $cs->registerCssFile($absoluteBaseUrl . '/' . $theme . '/css/mobile.css');

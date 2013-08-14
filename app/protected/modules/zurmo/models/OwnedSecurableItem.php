@@ -42,17 +42,17 @@
         /**
          * @var bool
          */
-        private $treatCreatedByUserAsOwnerForPermissions = false;
+        private $treatCurrentUserAsOwnerForPermissions = false;
 
         /**
-         * Set when the createdByUser needs to operate like the owner. This can be when a user is creating a new model
-         * that he/she does not own.  The createdByUser still needs to be able to set permissions for example
+         * Set when the current user needs to operate like the owner. This can be when a user is creating a new model
+         * that he/she does not own.  The current user still needs to be able to set permissions for example
          * @param boolean $value
          */
-        public function setTreatCreatedByUserAsOwnerForPermissions($value)
+        public function setTreatCurrentUserAsOwnerForPermissions($value)
         {
             assert('is_bool($value)');
-            $this->treatCreatedByUserAsOwnerForPermissions = $value;
+            $this->treatCurrentUserAsOwnerForPermissions = $value;
         }
 
         protected function constructDerived($bean, $setDefaults)
@@ -101,9 +101,10 @@
             //If the record has not been created yet, then the created user should have full access
             //Or if the record has not been created yet and doesn't have a createdByUser than any user can
             //have full access
-            elseif (($this->id < 0 || $this->treatCreatedByUserAsOwnerForPermissions) &&
+            elseif ((($this->id < 0) &&
                    (($createdByUser->id > 0 &&
                     $createdByUser->isSame($permitable)) || $createdByUser->id < 0))
+                    || $this->treatCurrentUserAsOwnerForPermissions)
             {
                 return Permission::ALL;
             }

@@ -987,5 +987,36 @@
             $validated = $filter->validate();
             $this->assertTrue($validated);
         }
+
+        /**
+         * @depends testValidateEmailAttribute
+         */
+        public function testValidateAttributeWithUniqueValidator()
+        {
+            $filter                              = new FilterForReportForm('ReportsTestModule', 'ReportModelTestItem',
+                                                   Report::TYPE_ROWS_AND_COLUMNS);
+            $filter->attributeIndexOrDerivedType = 'modifiedByUser___username';
+            $validated = $filter->validate();
+            $this->assertFalse($validated);
+            $errors    = $filter->getErrors();
+            $compareErrors                       = array('operator'  => array('Operator cannot be blank.'));
+            $this->assertEquals($compareErrors, $errors);
+
+            $filter->operator                    = OperatorRules::TYPE_EQUALS;
+            $validated                           = $filter->validate();
+            $this->assertFalse($validated);
+            $errors                              = $filter->getErrors();
+            $compareErrors                       = array('value'     => array('Value cannot be blank.'));
+            $this->assertEquals($compareErrors, $errors);
+
+            $filter->value                       = 'jason';
+            $validated                           = $filter->validate();
+            $this->assertTrue($validated);
+            //Test when not null is set as attribute, now the value is not required
+            $filter->operator                    = OperatorRules::TYPE_IS_NOT_NULL;
+            $filter->value                       = null;
+            $validated = $filter->validate();
+            $this->assertTrue($validated);
+        }
     }
 ?>

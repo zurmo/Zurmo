@@ -116,7 +116,7 @@ EOD;
             $messageLoggerClassName = 'MessageLogger';
         }
         echo "\n";
-        JobsManagerUtil::runFromJobManagerCommand($args[1], $timeLimit, $messageLoggerClassName);
+        JobsManagerUtil::runFromJobManagerCommandOrBrowser($args[1], $timeLimit, $messageLoggerClassName);
     }
 }
 ?>

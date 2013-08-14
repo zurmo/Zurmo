@@ -40,9 +40,9 @@
     class ZurmoControllerUtil
     {
         public static function updatePermissionsWithDefaultForModelByUser(SecurableItem $model, User $user)
-        {
-            if ($model instanceof SecurableItem && count($model->permissions) === 0 && !Yii::app()->request->isPostRequest)
-            {
+        {                        
+            if ($model instanceof SecurableItem && count($model->permissions) === 0)
+            {                
                 $defaultPermission  = UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting(
                                                                                         $user);
                 $nonEveryoneGroup   = UserConfigurationFormAdapter::resolveAndGetValue($user,

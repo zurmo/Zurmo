@@ -269,6 +269,14 @@
             else
             {
                 $cs->registerCssFile($themeBaseUrl . '/css/newui.css');
+                if (file_exists($themeBaseUrl . '/css/commercial.css'))
+                {
+                    $cs->registerCssFile($themeBaseUrl . '/css/commercial.css');
+                }
+                if (file_exists($themeBaseUrl . '/css/custom.css'))
+                {
+                    $cs->registerCssFile($themeBaseUrl . '/css/custom.css');
+                }
                 if (Yii::app()->userInterface->isMobile())
                 {
                     $cs->registerCssFile($themeBaseUrl . '/css/mobile.css');

@@ -61,5 +61,9 @@
     {
         $common_config = CMap::mergeArray($common_config, require(COMMON_ROOT . '/protected/config/commercialConsole.php'));
     }
+    if (is_file(INSTANCE_ROOT . '/protected/config/customConsole.php'))
+    {
+        $common_config = CMap::mergeArray($common_config, require(COMMON_ROOT . '/protected/config/customConsole.php'));
+    }
     return $common_config
 ?>

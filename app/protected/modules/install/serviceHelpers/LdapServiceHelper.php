@@ -52,7 +52,7 @@
             {
                 $this->message = Zurmo::t('InstallModule', 'Ldap is not installed.');
             }
-            return $passed;
+            //return $passed;
         }
     }
 ?>

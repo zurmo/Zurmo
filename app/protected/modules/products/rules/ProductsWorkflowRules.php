@@ -44,7 +44,14 @@
          */
         public static function getDefaultMetadata()
         {
-            $metadata = array();
+            $metadata = array(
+                'Product' => array(
+                    'availableOperatorsTypes' =>
+                        array('type' => ModelAttributeToOperatorTypeUtil::AVAILABLE_OPERATORS_TYPE_DROPDOWN),
+                    'triggerValueElementTypes' =>
+                        array('type' => 'ProductTemplateTypeStaticDropDownForWizardModel'),
+                )
+            );
             return array_merge(parent::getDefaultMetadata(), $metadata);
         }
     }

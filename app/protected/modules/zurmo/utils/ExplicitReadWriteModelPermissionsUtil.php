@@ -223,8 +223,8 @@
         /**
          * Given a SecurableItem, add and remove permissions
          * based on what the provided ExplicitReadWriteModelPermissions indicates should be done.
-         * Sets @see SecurableItem->setTreatCreatedByUserAsOwnerForPermissions as true in order to ensure the createdByUser
-         * can effectively add permissions even if the createdByUser is no longer the owner.
+         * Sets @see SecurableItem->setTreatCurrentUserAsOwnerForPermissions as true in order to ensure the current user
+         * can effectively add permissions even if the current user is no longer the owner.
          * @param SecurableItem $securableItem
          * @param ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions
          * @return boolean
@@ -234,7 +234,7 @@
                                   ExplicitReadWriteModelPermissions $explicitReadWriteModelPermissions)
         {
             assert('$securableItem->id > 0');
-            $securableItem->setTreatCreatedByUserAsOwnerForPermissions(true);
+            $securableItem->setTreatCurrentUserAsOwnerForPermissions(true);
             $saveSecurableItem = false;
             if ($explicitReadWriteModelPermissions->getReadOnlyPermitablesCount() > 0)
             {
@@ -325,7 +325,6 @@
                     }
                 }
             }
-            $securableItem->setTreatCreatedByUserAsOwnerForPermissions(false);
             if ($saveSecurableItem)
             {
                 $setBackToProcess     = false;
@@ -339,8 +338,10 @@
                 {
                     $securableItem->setProcessWorkflowOnSave();
                 }
+                $securableItem->setTreatCurrentUserAsOwnerForPermissions(false);
                 return $saved;
             }
+            $securableItem->setTreatCurrentUserAsOwnerForPermissions(false);
             return true;
         }
 

@@ -153,20 +153,19 @@
 
         protected function makeFirstSlidingPanelContent($content)
         {
-            return ZurmoHtml::tag('div', array('class' => 'sliding-panel', 'id' => 'zurmoView'), $content);
+            return PersonSlidingPanelsUtil::makeFirstSlidingPanelContent((int)$this->params['portletId'], $content);
         }
 
         protected function makeSecondSlidingPanelContent()
         {
             $layout  = new PersonCardViewLayout($this->model);
             $content = $layout->renderContent();
-            return ZurmoHtml::tag('div', array('class' => 'sliding-panel business-card showing-panel',
-                                               'id'    => 'businessCardView'), $content);
+            return PersonSlidingPanelsUtil::makeSecondSlidingPanelContent((int)$this->params['portletId'], $content);
         }
 
         protected function renderAfterDetailsTable()
         {
-            return PersonSlidingPanelsUtil::renderToggleLinkContent();
+            return PersonSlidingPanelsUtil::renderToggleLinkContent((int)$this->params['portletId']);
         }
     }
 ?>

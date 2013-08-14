@@ -44,22 +44,27 @@
          * tool to run jobs.  Based on the 'type' specified this method will call to run the monitor or a
          * regular non-monitor job.
          * @param string $type
-         * @param timeLimit $timeLimit
+         * @param int $timeLimit
+         * @param $messageLoggerClassName
+         * @param string $template
+         * @param string $lineBreak
          */
-        public static function runFromJobManagerCommand($type, $timeLimit, $messageLoggerClassName)
+        public static function runFromJobManagerCommandOrBrowser($type, $timeLimit, $messageLoggerClassName,
+                                                                 $template = "{message}\n", $lineBreak = "\n")
         {
             assert('is_string($type)');
             assert('is_int($timeLimit)');
             assert('is_string($messageLoggerClassName) && (
                     is_subclass_of($messageLoggerClassName, "MessageLogger") ||
                     $messageLoggerClassName == "MessageLogger")');
+            assert('is_string($template)');
+            assert('is_string($lineBreak)');
             set_time_limit($timeLimit);
-            $template        = "{message}\n";
             $messageStreamer = new MessageStreamer($template);
             $messageStreamer->setExtraRenderBytes(0);
             $messageStreamer->add(Zurmo::t('JobsManagerModule', 'Script will run at most for {seconds} seconds.',
                                   array('{seconds}' => $timeLimit)));
-            echo "\n";
+            echo $lineBreak;
             $messageStreamer->add(Zurmo::t('JobsManagerModule', '{dateTimeString} Starting job type: {type}',
                                   array('{type}' => $type,
                                          '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));

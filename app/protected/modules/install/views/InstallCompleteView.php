@@ -39,7 +39,7 @@
      */
     class InstallCompleteView extends View
     {
-        private $controlerId;
+        private $controllerId;
 
         private $moduleId;
 

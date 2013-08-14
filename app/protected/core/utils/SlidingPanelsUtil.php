@@ -39,6 +39,7 @@
      */
     abstract class SlidingPanelsUtil
     {
+        const SHOULD_SLIDE_TO_FIRST_PANEL_KEY_NAME = 'slideToFirstPanel';
         /**
          * Implement in child class
          * @throws NotImplementedException
@@ -58,18 +59,54 @@
         }
 
         /**
+         * @param $portletId - unique id
          * @return string
          */
-        public static function renderToggleLinkContent()
+        public static function renderToggleLinkContent($portletId)
         {
-            static::registerSlidingPanelsScript();
-            $content  = ZurmoHtml::tag('span', array(), static::getSlideToSecondPanelLabel());
+            if(static::resolveShouldSlideToSecondPanel($portletId))
+            {
+                $slideToSecond = true;
+            }
+            else
+            {
+                $slideToSecond = false;
+            }
+            static::registerSlidingPanelsScript($portletId);
+            if($slideToSecond)
+            {
+                $label      = static::getSlideToSecondPanelLabel();
+                $extraClass = ' slide-to-second-panel';
+            }
+            else
+            {
+                $label      = static::getSlideToFirstPanelLabel();
+                $extraClass = null;
+            }
+            $content  = ZurmoHtml::tag('span', array(), $label);
             $content  = ZurmoHtml::link($content, '#', array('id'    => 'sliding-panel-toggle',
-                                                             'class' => 'vertical-forward-pager slide-to-second-panel'));
+                                                             'class' => 'vertical-forward-pager' . $extraClass));
             return $content;
         }
 
-        protected static function registerSlidingPanelsScript()
+        public static function setShouldSlideToSecondPanelForCurrentUser($portletId, $shouldSlideToSecondPanel)
+        {
+            assert('is_bool($shouldSlideToSecondPanel)');
+            LatestActivitiesPortletPersistentConfigUtil::
+                setForCurrentUserByPortletIdAndKey($portletId, static::SHOULD_SLIDE_TO_FIRST_PANEL_KEY_NAME, !$shouldSlideToSecondPanel);
+        }
+
+        /**
+         * @param $portletId - unique id
+         * @return bool
+         */
+        public static function resolveShouldSlideToSecondPanel($portletId)
+        {
+            return !(LatestActivitiesPortletPersistentConfigUtil::
+                getForCurrentUserByPortletIdAndKey($portletId, static::SHOULD_SLIDE_TO_FIRST_PANEL_KEY_NAME, true));
+        }
+
+        protected static function registerSlidingPanelsScript($portletId)
         {
             $script = "
                 $('#sliding-panel-toggle').click(function()
@@ -81,17 +118,37 @@
                         $(this).removeClass('slide-to-second-panel');
                         $(this).addClass('slide-to-first-panel');
                         $(this).find('span').text('" . static::getSlideToFirstPanelLabel() . "');
+                        " . static::getAjaxSubmitScript($portletId, false) . "
                     }
                     else
                     {
                         $(this).removeClass('slide-to-first-panel');
                         $(this).addClass('slide-to-second-panel');
                         $(this).find('span').text('" . static::getSlideToSecondPanelLabel() . "');
+                        " . static::getAjaxSubmitScript($portletId, true) . "
                     }
                     return false;
                 });
             ";
             Yii::app()->getClientScript()->registerScript('slidingPanelsScript', $script);
+        }
+
+        /**
+         * @param $portletId - unique id
+         * @param bool $shouldSlideToSecondPanel
+         * @return string
+         */
+        protected static function getAjaxSubmitScript($portletId, $shouldSlideToSecondPanel)
+        {
+            assert('is_bool($shouldSlideToSecondPanel)');
+            $urlScript = 'js:$.param.querystring("' . static::getAjaxUpdateSlidingPanelShowingByDefaultUrl() . '", "' .
+                         'portletId=' . $portletId . '&shouldSlideToSecondPanel=' . $shouldSlideToSecondPanel . '")'; // Not Coding Standard
+            return ZurmoHtml::ajax(array('type' => 'GET', 'url' =>  $urlScript));
+        }
+
+        protected  static function getAjaxUpdateSlidingPanelShowingByDefaultUrl()
+        {
+            return Yii::app()->createUrl('/zurmo/default/ajaxUpdateSlidingPanelShowingByDefault');
         }
     }
 ?>

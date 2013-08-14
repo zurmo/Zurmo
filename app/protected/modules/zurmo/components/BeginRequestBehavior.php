@@ -112,6 +112,11 @@
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleInstallCheck'));
         }
 
+        /**
+         * @see CommandBeginRequestBehavior, make sure if you change this array, you add anything needed
+         * for the command behavior as well.
+         * @param CComponent $owner
+         */
         protected function attachNonApiRequestBehaviorsForInstalledApplication(CComponent $owner)
         {
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));

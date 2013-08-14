@@ -36,6 +36,11 @@
 
     class ProductSelectFromRelatedListAjaxLinkActionElement extends SelectFromRelatedListAjaxLinkActionElement
     {
+        public function getActionType()
+        {
+            return 'Create';
+        }
+
         /**
          * @return string
          */

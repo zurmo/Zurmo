@@ -141,5 +141,21 @@
             $model->hasMany2[0]->primaryAddress->street1 = 'bValue';
             $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
         }
+
+        public function testTriggerOnAnInferredModel()
+        {
+            $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___name';
+            $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
+                              'NotesModule', 'Note');
+            $model           = new Note();
+            $relatedModel    = new Account();
+            $relatedModel->name = 'cValue';
+            $model->activityItems->add($relatedModel);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $relatedModel->name = 'bValue';
+            $this->assertTrue($relatedModel->save());
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
     }
 ?>

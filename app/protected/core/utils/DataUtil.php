@@ -57,7 +57,7 @@
                         if ($model->isAttribute($attributeName) && $model->isAttributeSafe($attributeName))
                         {
                             $designerType = ModelAttributeToDesignerTypeUtil::getDesignerType(
-                                                $model, $attributeName);
+                                                $model, $attributeName);                            
                             if ($designerType == 'Date' && !empty($value))
                             {
                                 $data[$attributeName] = DateTimeUtil::resolveValueForDateDBFormatted($value);
@@ -79,7 +79,7 @@
                         {
                             //In the event that a designer type does not exist.
                             $designerType = null;
-                        }
+                        }                        
                         if ($model->isAttributeSafe($attributeName) && $designerType != 'TagCloud')
                         {
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['firstDate']) &&
@@ -88,14 +88,14 @@
                                 $data[$attributeName]['firstDate'] = DateTimeUtil::
                                                                          resolveValueForDateDBFormatted(
                                                                          $value['firstDate']);
-                            }
+                            }                            
                             if ($designerType == 'MixedDateTypesForSearch' && isset($value['secondDate']) &&
                             $value['secondDate'] != null)
                             {
                                 $data[$attributeName]['secondDate'] = DateTimeUtil::
                                                                      resolveValueForDateDBFormatted(
                                                                      $value['secondDate']);
-                            }
+                            }                            
                         }
                         elseif (isset($value['values']) && is_string($value['values']) && $designerType == 'TagCloud')
                         {
@@ -107,8 +107,15 @@
                             {
                                 $data[$attributeName]['values'] = explode(',', $data[$attributeName]['values']); // Not Coding Standard
                             }
+                        }                        
+                        if ($designerType == 'CheckBox')
+                        {     
+                            $data[$attributeName] = (bool) $value['value'];                                
                         }
-                        array_walk_recursive($data[$attributeName], array('DataUtil', 'purifyHtmlAndModifyInput'));
+                        else 
+                        {
+                            array_walk_recursive($data[$attributeName], array('DataUtil', 'purifyHtmlAndModifyInput'));
+                        }
                     }
                 }
             }

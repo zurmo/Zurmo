@@ -253,7 +253,7 @@
                 $attributeAndRelationData = $trigger->getAttributeAndRelationData();
                 if (count($attributeAndRelationData) == 2)
                 {
-                    $penultimateRelation = $trigger->getPenultimateRelation();
+                    $penultimateRelation = $trigger->getResolvedRealAttributeNameForPenultimateRelation();
                     $resolvedAttribute   = $trigger->getResolvedAttributeRealAttributeName();
                     if ($model->$penultimateRelation instanceof RedBeanMutableRelatedModels)
                     {

@@ -51,7 +51,15 @@
 
         protected function getDefaultRoute()
         {
-            if (!empty($this->modelId))
+            if (Yii::app()->request->getParam('type') == EmailTemplate::TYPE_WORKFLOW)
+            {
+                return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/listForWorkflow');
+            }
+            elseif ($this->params['modelType'] == EmailTemplate::TYPE_WORKFLOW)
+            {
+                return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/listForWorkflow');
+            }
+            elseif (!empty($this->modelId))
             {
                 return Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId);
             }

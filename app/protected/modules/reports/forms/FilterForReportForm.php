@@ -369,7 +369,10 @@
             {
                 if (isset($rule[0], $rule[1]))
                 {
-                    $validators->add(CValidator::createValidator($rule[1], $this, $rule[0], array_slice($rule, 2)));
+                    if($rule[1] != 'unique')
+                    {
+                        $validators->add(CValidator::createValidator($rule[1], $this, $rule[0], array_slice($rule, 2)));
+                    }
                 }
                 else
                 {
@@ -389,9 +392,8 @@
         private function resolveAndValidateValueData(Array $rules, & $passedValidation, $ruleAttributeName)
         {
             $modelToReportAdapter = $this->makeResolvedAttributeModelRelationsAndAttributesToReportAdapter();
-            $rules                = array_merge($rules,
-                $modelToReportAdapter->getFilterRulesByAttribute(
-                    $this->getResolvedAttribute(), $ruleAttributeName));
+            $rules                = array_merge($rules, $modelToReportAdapter->getFilterRulesByAttribute(
+                                        $this->getResolvedAttribute(), $ruleAttributeName));
             $validators           = $this->createValueValidatorsByRules($rules);
             foreach ($validators as $validator)
             {

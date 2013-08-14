@@ -46,3 +46,12 @@
 	font-style: normal;
 	unicode-range: U+00-FFFF; /*http://www.tamasoft.co.jp/en/general-info/unicode.html*/
 }
+
+
+@-webkit-keyframes slideCollectionUp {
+	100% { -webkit-transform:translate(0, -50%); }
+}
+
+@-webkit-keyframes spinCoin {
+	100% { -webkit-transform:rotateY(360deg); }
+}

@@ -162,6 +162,7 @@
         {
             $message              = new NotificationMessage();
             $prefixContent        = Zurmo::t('JobsManagerModule', 'Stuck Job| Stuck Jobs', array(count($jobTitleLabels)));
+            $url                  = Yii::app()->createAbsoluteUrl('jobsManager/default/list/');
             $message->textContent = $prefixContent;
             $message->htmlContent = $prefixContent;
             $textContent          = null;
@@ -181,6 +182,8 @@
             }
             $message->textContent .= ': ' . $textContent;
             $message->htmlContent .= ': ' . $htmlContent;
+            $message->textContent .= "\n" . ZurmoHtml::link(Zurmo::t('Core', 'View Job Manager'), $url);
+            $message->htmlContent .= "<br/>" . ZurmoHtml::link(Zurmo::t('Core', 'View Job Manager'), $url);
             $rules = new StuckJobsNotificationRules();
             NotificationsUtil::submit($message, $rules);
         }

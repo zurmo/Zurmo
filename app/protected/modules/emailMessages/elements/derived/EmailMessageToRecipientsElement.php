@@ -42,23 +42,27 @@
         protected function renderControlNonEditable()
         {
             assert('$this->model instanceof EmailMessage');
-            return Yii::app()->format->html(EmailMessageMashableActivityRules::
-                        getRecipientsContent($this->model->recipients, EmailMessageRecipient::TYPE_TO));
+            $recipientsContent = EmailMessageMashableActivityRules::
+                                 getRecipientsContent($this->model->recipients, EmailMessageRecipient::TYPE_TO);
+            if($recipientsContent == null && $this->form != null)
+            {
+                $recipientsContent = '&nbsp;';
+            }
+            return Yii::app()->format->html($recipientsContent);
         }
 
         protected function renderControlEditable()
         {
-            throw new NotImplementedException();
+            return $this->renderControlNonEditable();
         }
 
         protected function renderError()
         {
-            throw new NotImplementedException();
         }
 
         protected function renderLabel()
         {
-            return Zurmo::t('EmailMessagesModule', 'To');
+            return $this->resolveNonActiveFormFormattedLabel(Zurmo::t('EmailMessagesModule', 'To'));
         }
 
         public static function getDisplayName()

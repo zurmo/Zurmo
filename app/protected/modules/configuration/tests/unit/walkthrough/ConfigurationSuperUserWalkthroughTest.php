@@ -53,6 +53,7 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             $this->runControllerWithNoExceptionsAndGetContent('configuration/default');
             $this->runControllerWithNoExceptionsAndGetContent('configuration/default/index');
+            //$this->runControllerWithNoExceptionsAndGetContent('configuration/default/runDiagnostic'); //can only run through browser
         }
     }
 ?>

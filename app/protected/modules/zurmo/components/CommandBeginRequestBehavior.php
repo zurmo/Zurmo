@@ -62,6 +62,9 @@
         protected function attachNonApiRequestBehaviorsForInstalledApplication(CComponent $owner)
         {
             $owner->attachEventHandler('onBeginRequest', array($this, 'handleSetupDatabaseConnection'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadActivitiesObserver'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadConversationsObserver'));
+            $owner->attachEventHandler('onBeginRequest', array($this, 'handleLoadWorkflowsObserver'));
         }
     }
 ?>

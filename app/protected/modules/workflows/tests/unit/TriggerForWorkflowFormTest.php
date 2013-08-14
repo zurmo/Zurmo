@@ -41,7 +41,18 @@
             $trigger     = new TriggerForWorkflowForm('AccountsModule', 'Account', Workflow::TYPE_ON_SAVE);
             $trigger->attributeIndexOrDerivedType = 'owner__User';
             $trigger->setOperator(OperatorRules::TYPE_CHANGES);
-            $validated   = $trigger->validateValue();
+            $validated   = $trigger->validate();
+            $this->assertTrue($validated);
+            $this->assertCount(0, $trigger->getErrors());
+        }
+
+        public function testValidateAttributeWithUniqueValidator()
+        {
+            $trigger     = new TriggerForWorkflowForm('AccountsModule', 'Account', Workflow::TYPE_ON_SAVE);
+            $trigger->attributeIndexOrDerivedType = 'owner___username';
+            $trigger->setOperator(OperatorRules::TYPE_CHANGES);
+            $trigger->value = 'jason';
+            $validated   = $trigger->validate();
             $this->assertTrue($validated);
             $this->assertCount(0, $trigger->getErrors());
         }

@@ -42,13 +42,13 @@
         // TODO: @Shoaibi: Low: Write unit tests
         /**
          * Set a persistent config value for current user against portletId and keyName.
-         * @param $portletId integer Id of the portlet to set value against
+         * @param $portletId integer Id of the portlet or string representation of the unique id of the portlet to set value against
          * @param $keyName string Name of the key that should be set
          * @param $value string|integer|boolean Value that should be assigned to keyName config
          */
         public static function setForCurrentUserByPortletIdAndKey($portletId, $keyName, $value)
         {
-            assert('is_int($portletId)');
+            assert('is_int($portletId) || is_string($portletId)');
             assert('is_string($keyName)');
             $moduleName = static::getModuleName();
             $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
@@ -58,14 +58,14 @@
 
         /**
          * Get a persistent config value for current user against portletId and keyName.
-         * @param $portletId integer  Id of the portlet to get value against
+         * @param $portletId integer Id of the portlet or string representation of the unique id of the portlet to get value against
          * @param $keyName string Name of the key that should be returned
          * @param bool $returnBoolean bool Force return value to be boolean (explicit type casting)
          * @return bool|null|string
          */
         public static function getForCurrentUserByPortletIdAndKey($portletId, $keyName, $returnBoolean = false)
         {
-            assert('is_int($portletId)');
+            assert('is_int($portletId) || is_string($portletId)');
             assert('is_string($keyName)');
             $moduleName = static::getModuleName();
             $keyName = static::resolveKeyNameByPortletId($portletId, $keyName);
@@ -79,7 +79,7 @@
 
         protected static function resolveKeyNameByPortletId($portletId, $keyName)
         {
-            assert('is_int($portletId)');
+            assert('is_int($portletId) || is_string($portletId)');
             assert('is_string($keyName)');
             return $portletId . '_' . $keyName;
         }

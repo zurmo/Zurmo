@@ -38,107 +38,34 @@
      * View used during the installation to show in the user interface what services are correctly or incorrectly
      * installed or missing.  This is the second step during the installation process.
      */
-    class InstallCheckServicesView extends View
+    class InstallCheckServicesView extends CheckServicesView
     {
-        private $controlerId;
-
-        private $moduleId;
-
-        private $checkResultsDisplayData;
-
-        public function __construct($controllerId, $moduleId, $checkResultsDisplayData)
+        protected function renderIntroductionContent()
         {
-            assert('is_string($controllerId) && $controllerId != ""');
-            assert('is_string($moduleId) && $moduleId != ""');
-            assert('is_array($checkResultsDisplayData)');
-            $this->controllerId = $controllerId;
-            $this->moduleId     = $moduleId;
-            $this->checkResultsDisplayData = $checkResultsDisplayData;
-        }
-
-        protected function renderContent()
-        {
-            $failedIndexId   = CheckServicesUtil::CHECK_FAILED;
-            $passedIndexId   = CheckServicesUtil::CHECK_PASSED;
-            $warningIndexId  = CheckServicesUtil::CHECK_WARNING;
-            $requiredIndexId = ServiceHelper::REQUIRED_SERVICE;
-            $optionalIndexId = ServiceHelper::OPTIONAL_SERVICE;
-            $currentPageUrl  = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/checkSystem/');
-            $nextPageUrl     = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/settings/');
-            $content  = '<div class="MetadataView">';
-            $content .= '<table>';
-            $content .= '<tr><td>';
-            $content .= Zurmo::t('InstallModule', 'Below you will find the results of the system check. If any required ' .
-                                          'services are not setup correctly, you will need to make sure they are ' .
-                                          'installed correctly before you can continue.');
+            $content  = Zurmo::t('InstallModule', 'Below you will find the results of the system check. If any required ' .
+                'services are not setup correctly, you will need to make sure they are ' .
+                'installed correctly before you can continue.');
             $content .= '<br/><br/>';
             $content .= Zurmo::t('InstallModule', 'It is highly recommended that all optional services are installed and ' .
-                                          'working before continuing.');
-            $content .= '<br/><br/>';
-            if (count($this->checkResultsDisplayData[$failedIndexId]) > 0)
-            {
-                if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) > 0)
-                {
-                    $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                            Zurmo::t('InstallModule', 'Failed Required Services'),
-                                            $this->checkResultsDisplayData[$failedIndexId][$requiredIndexId],
-                                            '<span class="fail">' . Zurmo::t('InstallModule', 'FAIL') . '</span>');
-                    $content .= '<br/><br/>';
-                }
-                if (count($this->checkResultsDisplayData[$failedIndexId][$optionalIndexId]) > 0)
-                {
-                    $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                            Zurmo::t('InstallModule', 'Failed Optional Services'),
-                                            $this->checkResultsDisplayData[$failedIndexId][$optionalIndexId],
-                                            '<span class="fail">' . Zurmo::t('InstallModule', 'FAIL') . '</span>');
-                    $content .= '<br/>';
-                }
-            }
-            if (count($this->checkResultsDisplayData[$warningIndexId]) > 0)
-            {
-                $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                        Zurmo::t('InstallModule', 'Service Status Partially Known'),
-                                        $this->checkResultsDisplayData[$warningIndexId],
-                                        '<span class="warning">' . Zurmo::t('InstallModule', 'WARNING') . '</span>');
-                $content .= '<br/>';
-            }
+                'working before continuing.');
+            return $content;
+        }
 
-            if (count($this->checkResultsDisplayData[$passedIndexId]) > 0)
-            {
-                $content .= $this->renderServiceGroupDisplayByServiceDataAndCheckResult(
-                                        Zurmo::t('InstallModule', 'Correctly Installed Services'),
-                                        $this->checkResultsDisplayData[$passedIndexId],
-                                        '<span class="pass">' . Zurmo::t('InstallModule', 'PASS') . '</span>');
-            }
-            $content .= '<br/><br/>';
+        protected function renderActionBarContent()
+        {
+            $failedIndexId   = CheckServicesUtil::CHECK_FAILED;
+            $requiredIndexId = ServiceHelper::REQUIRED_SERVICE;
+            $currentPageUrl  = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/checkSystem/');
+            $nextPageUrl     = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/settings/');
+            $content = '<br/><br/>';
             $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('InstallModule', 'Recheck System')),
-                                        $currentPageUrl, array('class' => 'z-button'));
+                $currentPageUrl, array('class' => 'z-button'));
             if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
             {
                 $content .= ' <span class="install-or">' . Zurmo::t('InstallModule', 'or') . '</span> ';
                 $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('InstallModule', 'Continue')),
-                                        $nextPageUrl, array('class' => 'z-button'));
+                    $nextPageUrl, array('class' => 'z-button'));
             }
-            $content .= '</td></tr></table>';
-            $content .= '</div>';
-            return $content;
-        }
-
-        protected function renderServiceGroupDisplayByServiceDataAndCheckResult($groupLabel, $groupData,
-                                                                                $checkResultLabel)
-        {
-            assert('is_string($groupLabel) && $groupLabel != ""');
-            assert('is_array($groupData)');
-            assert('is_string($checkResultLabel) && $checkResultLabel != ""');
-            $content  = '<table>' . "\n";
-            $content .= '<colgroup><col/><col style="width:100px;" /></colgroup>' . "\n";
-            $content .= '<tr><td>' . $groupLabel . '</td><td></td></tr>' . "\n";
-            foreach ($groupData as $serviceDisplayData)
-            {
-                $content .= '<tr><td>' . Yii::app()->format->formatNtext($serviceDisplayData['message']) . '</td>' . "\n";
-                $content .= '<td>' . $checkResultLabel . '</td></tr>' . "\n";
-            }
-            $content .= '</table>' . "\n";
             return $content;
         }
     }

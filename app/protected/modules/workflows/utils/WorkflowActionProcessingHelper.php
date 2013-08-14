@@ -268,11 +268,12 @@
         /**
          * @param RedBeanModel $model
          * @param $relation
+         * @param null $modelToForgetCache
          * @return bool true if the $model passed in needs to be saved again. Otherwise false if not.
          * @throws NotSupportedException
          * @throws FailedToSaveModelException
          */
-        protected function resolveCreateModel(RedBeanModel $model, $relation)
+        protected function resolveCreateModel(RedBeanModel $model, $relation, & $modelToForgetCache = null)
 
         {
             assert('is_string($relation)');
@@ -321,6 +322,7 @@
                 }
                 self::processActionAttributesForActionAfterSave($this->action, $newModel, $this->triggeredByUser, $this->triggeredModel);
                 $model->{$relation}->add($newModel);
+                $modelToForgetCache = $newModel;
                 return true;
             }
             elseif ($modelClassName::isRelationTypeAHasOneVariant($relation) &&
@@ -345,6 +347,13 @@
             }
         }
 
+        /**
+         * Notice the use of $modelToForgetCache. This was needed to avoid a caching issue with the following example.
+         * If an opportunity fires, and a related account's opportunity is created. This new opportunity had a cached
+         * model for account that was null.  So this is fixed by forgetting the new model after it is added to the account.
+         * @throws FailedToSaveModelException
+         * @throws NotSupportedException
+         */
         protected function processCreateRelatedAction()
         {
             if ($this->action->relationFilter != ActionForWorkflowForm::RELATION_FILTER_ALL)
@@ -400,12 +409,17 @@
                    !$modelClassName::isOwnedRelation($this->action->relation))
             {
                 $relatedModel = $this->triggeredModel->{$this->action->relation};
-                if ($this->resolveCreateModel($relatedModel, $this->action->relatedModelRelation))
+                $modelToForgetCache = null;
+                if ($this->resolveCreateModel($relatedModel, $this->action->relatedModelRelation, $modelToForgetCache))
                 {
                     $saved = $relatedModel->save();
                     if (!$saved)
                     {
                         throw new FailedToSaveModelException();
+                    }
+                    if($modelToForgetCache instanceof RedBeanModel)
+                    {
+                        $modelToForgetCache->forget();
                     }
                 }
             }

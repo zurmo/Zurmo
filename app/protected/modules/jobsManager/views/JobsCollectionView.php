@@ -49,18 +49,23 @@
 
         protected $jobsData = array();
 
-        public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null)
+        protected $showRunJobLink;
+
+        public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null,
+                                    $showRunJobLink = false)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($monitorJobData)');
             assert('is_array($jobsData) && count($jobsData) > 0');
             assert('$messageBoxContent == null || is_string($messageBoxContent)');
+            assert('is_bool($showRunJobLink)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->monitorJobData         = $monitorJobData;
             $this->jobsData               = $jobsData;
             $this->messageBoxContent      = $messageBoxContent;
+            $this->showRunJobLink         = $showRunJobLink;
         }
 
         protected function renderContent()
@@ -125,14 +130,27 @@
             assert('is_string($jobLabelHeaderContent)');
             $content  = '<table>';
             $content .= '<colgroup>';
-            $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:30%" />';
-            $content .= '<col style="width:10%" />';
+            if($this->showRunJobLink)
+            {
+                $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:20%" />';
+                $content .= '<col style="width:10%" />';
+                $content .= '<col style="width:10%" />';
+            }
+            else
+            {
+                $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:30%" />';
+                $content .= '<col style="width:10%" />';
+            }
             $content .= '</colgroup>';
             $content .= '<tbody>';
             $content .= '<tr><th>' . $jobLabelHeaderContent . '</th>';
             $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Last Completed Run') . '</th>';
             $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
+            if($this->showRunJobLink)
+            {
+                $content .= '<th>&#160;</th>';
+            }
             $content .= '</tr>';
             foreach ($jobsData as $type => $jobData)
             {
@@ -141,7 +159,15 @@
                 $content .=          '&#160;' . ZurmoHtml::encode($jobData['label']) . '</td>';
                 $content .= '<td>' . $jobData['lastCompletedRunEncodedContent'] . '</td>';
                 $content .= '<td>' . ZurmoHtml::encode($jobData['statusContent']) . '</td>';
-                $content .= '<td>' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
+                $content .= '<td class="button-column-right">' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
+                if($this->showRunJobLink)
+                {
+                    $runJobLink = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Run')),
+                                    Yii::app()->createUrl(
+                                        $this->moduleId . '/' . $this->controllerId . '/runJob', array('type' => $type)),
+                                    array('class' => 'z-button run-button'));
+                    $content .= '<td class="button-column-right">' . $runJobLink . '</td>';
+                }
                 $content .= '</tr>';
             }
             $content .= '</tbody>';

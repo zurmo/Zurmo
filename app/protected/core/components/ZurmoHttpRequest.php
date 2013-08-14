@@ -93,5 +93,63 @@
                 return false;
             }
         }
+
+        /**
+         * Inspects server to return what the real host info is, regardless of the what the configuration file says it is
+         */
+        public function getRealHostInfo()
+        {
+            $secure = $this->getIsSecureConnection();
+            if($secure)
+            {
+                $http = 'https';
+            }
+            else
+            {
+                $http = 'http';
+            }
+            if(isset($_SERVER['HTTP_HOST']))
+            {
+                return $http . '://' . $_SERVER['HTTP_HOST'];
+            }
+
+            else
+            {
+                $hostInfo = $http.'://'.$_SERVER['SERVER_NAME'];
+                if($secure)
+                {
+                    $port= $this->getSecurePort();
+                }
+                else
+                {
+                    $port= $this->getPort();
+                }
+                if(($port!==80 && !$secure) || ($port!==443 && $secure))
+                {
+                    $hostInfo .= ':' . $port;
+                }
+                return $hostInfo;
+            }
+        }
+
+        /**
+         * Inspects server to return what the real script url  is, regardless of the what the configuration file says it is
+         */
+        public function getRealScriptUrl()
+        {
+            $scriptName=basename($_SERVER['SCRIPT_FILENAME']);
+            if(basename($_SERVER['SCRIPT_NAME'])===$scriptName)
+                return $_SERVER['SCRIPT_NAME'];
+            elseif(basename($_SERVER['PHP_SELF'])===$scriptName)
+                return $_SERVER['PHP_SELF'];
+            elseif(isset($_SERVER['ORIG_SCRIPT_NAME']) && basename($_SERVER['ORIG_SCRIPT_NAME'])===$scriptName)
+                return $_SERVER['ORIG_SCRIPT_NAME'];
+            elseif(($pos=strpos($_SERVER['PHP_SELF'],'/'.$scriptName))!==false)
+                return substr($_SERVER['SCRIPT_NAME'],0,$pos).'/'.$scriptName;
+            elseif(isset($_SERVER['DOCUMENT_ROOT']) && strpos($_SERVER['SCRIPT_FILENAME'],$_SERVER['DOCUMENT_ROOT'])===0)
+                return str_replace('\\','/',str_replace($_SERVER['DOCUMENT_ROOT'],'',$_SERVER['SCRIPT_FILENAME']));
+            else
+                throw new CException(Yii::t('yii','CHttpRequest is unable to determine the entry script URL.'));
+        }
     }
 ?>

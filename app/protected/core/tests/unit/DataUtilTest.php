@@ -116,7 +116,7 @@
             $data = array(
                 'firstName' => 'Steve',
                 'lastName' => 'Thunder<SCRIPT>alert(\'XSS\')</SCRIPT>',
-                'boolean' => '0',
+                'boolean' => array('value' => 0),
                 'date' => '3/25/11',
                 'dateTime' => '04/05/11 5:00 AM',
                 'float' => '3.68',
@@ -135,7 +135,7 @@
             $compareData = array(
                 'firstName' => 'Steve',
                 'lastName' => 'Thunder',
-                'boolean' => '0',
+                'boolean' => false,
                 'date' => DateTimeUtil::resolveValueForDateDBFormatted('3/25/11'),
                 'dateTime' => DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('04/05/11 5:00 AM'),
                 'float' => '3.68',

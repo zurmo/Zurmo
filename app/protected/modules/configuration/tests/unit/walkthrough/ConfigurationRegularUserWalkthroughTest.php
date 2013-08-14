@@ -50,6 +50,7 @@
             $nobody = $this->logoutCurrentUserLoginNewUserAndGetByUsername('nobody');
             $this->runControllerShouldResultInAccessFailureAndGetContent('configuration/default');
             $this->runControllerShouldResultInAccessFailureAndGetContent('configuration/default/index');
+            $this->runControllerShouldResultInAccessFailureAndGetContent('configuration/default/runDiagnostic');
         }
     }
 ?>
