@@ -64,27 +64,26 @@
         }
 
         /**
-         * @param Workflow $workflow
+         * @param EmailMessageForWorkflowForm $emailMessageForWorkflowForm
          * @param RedBeanModel $model
          * @param User $triggeredByUser
          */
-        public static function processOnWorkflowMessageInQueueJob(Workflow $workflow, RedBeanModel $model, User $triggeredByUser)
+        public static function processOnWorkflowMessageInQueueJob(EmailMessageForWorkflowForm $emailMessageForWorkflowForm,
+                                                                  RedBeanModel $model, User $triggeredByUser)
         {
-            foreach ($workflow->getEmailMessages() as $emailMessage)
+            try
             {
-                try
+                $emailMessageForWorkflowForm->getEmailMessageRecipientFormsCount();
+                if ($emailMessageForWorkflowForm->getEmailMessageRecipientFormsCount() > 0)
                 {
-                    if ($emailMessage->getEmailMessageRecipientFormsCount() > 0)
-                    {
-                        $helper = new WorkflowEmailMessageProcessingHelper($emailMessage, $model, $triggeredByUser);
-                        $helper->process();
-                    }
+                    $helper = new WorkflowEmailMessageProcessingHelper($emailMessageForWorkflowForm, $model, $triggeredByUser);
+                    $helper->process();
                 }
-                catch (Exception $e)
-                {
-                    WorkflowUtil::handleProcessingException($e,
-                        'application.modules.workflows.utils.WorkflowEmailMessagesUtil.processOnWorkflowMessageInQueueJob');
-                }
+            }
+            catch (Exception $e)
+            {
+                WorkflowUtil::handleProcessingException($e,
+                    'application.modules.workflows.utils.WorkflowEmailMessagesUtil.processOnWorkflowMessageInQueueJob');
             }
         }
 
@@ -123,6 +122,22 @@
                     throw new FailedToSaveModelException();
                 }
             }
+        }
+
+        /**
+         * @param WorkflowMessageInQueue $workflowMessageInQueue
+         * @param Workflow $workflow
+         * @return EmailMessageForWorkflowForm
+         */
+        public static function makeEmailMessageForWorkflowFormByQueueModelAndWorkflow(
+                                WorkflowMessageInQueue $workflowMessageInQueue, Workflow $workflow)
+        {
+            $moduleClassName             = $workflow->getModuleClassName();
+            $emailMessageForWorkflowForm = new EmailMessageForWorkflowForm($moduleClassName::getPrimaryModelName(),
+                                           $workflow->getType(), 0);
+            $unserializedData = unserialize($workflowMessageInQueue->serializedData);
+            $emailMessageForWorkflowForm->setAttributes(reset($unserializedData));
+            return $emailMessageForWorkflowForm;
         }
     }
 ?>

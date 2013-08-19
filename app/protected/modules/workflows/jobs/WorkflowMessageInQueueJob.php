@@ -131,7 +131,9 @@
             {
                 return;
             }
-            WorkflowEmailMessagesUtil::processOnWorkflowMessageInQueueJob($workflow, $model,
+            $emailMessageForWorkflowForm = WorkflowEmailMessagesUtil::
+                                       makeEmailMessageForWorkflowFormByQueueModelAndWorkflow($workflowMessageInQueue, $workflow);
+            WorkflowEmailMessagesUtil::processOnWorkflowMessageInQueueJob($emailMessageForWorkflowForm, $model,
                                        self::resolveTriggeredByUser($workflowMessageInQueue));
         }
 

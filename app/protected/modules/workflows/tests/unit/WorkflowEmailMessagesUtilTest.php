@@ -260,5 +260,41 @@
             $this->assertEquals('laura@something.com',   $queuedEmailMessages[0]->recipients[1]->toAddress);
             $this->assertEquals($contact2->id,           $queuedEmailMessages[0]->recipients[1]->personOrAccount->id);
         }
+
+        public function testMakeEmailMessageForWorkflowFormByQueueModelAndWorkflow()
+        {
+            $model        = ContactTestHelper::createContactByNameForOwner('Jason', Yii::app()->user->userModel);
+            $savedWorkflow                  = new SavedWorkflow();
+            $savedWorkflow->name            = 'some workflow';
+            $savedWorkflow->description     = 'description';
+            $savedWorkflow->moduleClassName = 'WorkflowsTestModule';
+            $savedWorkflow->triggerOn       = Workflow::TRIGGER_ON_NEW;
+            $savedWorkflow->type            = 'some type';
+            $savedWorkflow->order           = 1;
+            $savedWorkflow->serializedData  = serialize(array('something'));
+            $savedWorkflow->isActive        = true;
+            $saved                          = $savedWorkflow->save();
+            $this->assertTrue($saved);
+            $emailMessage = null;
+            $emailMessage['emailTemplateId'] = 5;
+            $emailMessage['sendFromType']    = EmailMessageForWorkflowForm::SEND_FROM_TYPE_DEFAULT;
+            $emailMessage['sendAfterDurationSeconds'] = '0';
+            $emailMessage[EmailMessageForWorkflowForm::EMAIL_MESSAGE_RECIPIENTS] =
+                                array(
+                                    array('type'          => WorkflowEmailMessageRecipientForm::TYPE_DYNAMIC_TRIGGERED_MODEL,
+                                        'audienceType'    => EmailMessageRecipient::TYPE_TO),
+                                );
+            $workflowMessageInQueue = WorkflowTestHelper::createExpiredWorkflowMessageInQueue($model, $savedWorkflow, serialize(array($emailMessage)));
+            $workflow               = new Workflow();
+            $workflow->setModuleClassName('WorkflowsTestModule');
+            $workflow->setType(Workflow::TYPE_ON_SAVE);
+            $emailMessageForWorkflowForm = WorkflowEmailMessagesUtil::
+                                                makeEmailMessageForWorkflowFormByQueueModelAndWorkflow(
+                                                $workflowMessageInQueue, $workflow);
+            $this->assertEquals(5, $emailMessageForWorkflowForm->emailTemplateId);
+            $this->assertEquals(EmailMessageForWorkflowForm::SEND_FROM_TYPE_DEFAULT, $emailMessageForWorkflowForm->sendFromType);
+            $this->assertEquals(0, $emailMessageForWorkflowForm->sendAfterDurationSeconds);
+            $this->assertEquals(1, count($emailMessageForWorkflowForm->getEmailMessageRecipients()));
+        }
     }
 ?>

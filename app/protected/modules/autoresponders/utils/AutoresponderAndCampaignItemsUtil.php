@@ -106,7 +106,6 @@
             // TODO: @Shoaibi/@Jason: High: we might add support for language
             $language               = null;
             $errorOnFirstMissing    = true;
-            $invalidTags            = null; // this could be an empty array, only used when $errorOnFirstMissing is false
             $templateType           = EmailTemplate::TYPE_CONTACT;
             $invalidTags            = array();
             $textMergeTagsUtil      = MergeTagsUtilFactory::make($templateType, $language, $textContent);

@@ -57,7 +57,9 @@
 
         /**
          * Test sending an email that should go out as a processing that this job would typically do.
-         * Also tests that item does not get trashed when deleting the WorkflowMessageInQueue
+         * Also tests that item does not get trashed when deleting the WorkflowMessageInQueue.
+         * Also tests that if there is more than one emailmessage against the workflow, that it does not send
+         * to all of them
          * @depends testWorkflowMessageInQueueProperlySavesWithoutTrashingRelatedModelItem
          */
         public function testRun()
@@ -97,6 +99,14 @@
                     array('type'          => WorkflowEmailMessageRecipientForm::TYPE_DYNAMIC_TRIGGERED_MODEL,
                         'audienceType'    => EmailMessageRecipient::TYPE_TO),
                 );
+            $emailMessages[1]['emailTemplateId'] = $emailTemplate->id;
+            $emailMessages[1]['sendFromType']    = EmailMessageForWorkflowForm::SEND_FROM_TYPE_DEFAULT;
+            $emailMessages[1]['sendAfterDurationSeconds'] = '10000';
+            $emailMessages[1][EmailMessageForWorkflowForm::EMAIL_MESSAGE_RECIPIENTS] =
+                array(
+                    array('type'          => WorkflowEmailMessageRecipientForm::TYPE_DYNAMIC_TRIGGERED_MODEL,
+                        'audienceType'    => EmailMessageRecipient::TYPE_TO),
+                );
             $savedWorkflow                  = new SavedWorkflow();
             $savedWorkflow->name            = 'some workflow';
             $savedWorkflow->description     = 'description';
@@ -110,7 +120,7 @@
             $savedWorkflow->isActive        = true;
             $saved                          = $savedWorkflow->save();
             $this->assertTrue($saved);
-            WorkflowTestHelper::createExpiredWorkflowMessageInQueue($model, $savedWorkflow);
+            WorkflowTestHelper::createExpiredWorkflowMessageInQueue($model, $savedWorkflow, serialize(array($emailMessages[1])));
 
             RedBeanModelsCache::forgetAll(true); //simulates page change, required to confirm Item does not get trashed
             $this->assertEquals(1, count(WorkflowMessageInQueue::getAll()));
