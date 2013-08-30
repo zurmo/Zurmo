@@ -49,29 +49,25 @@
          * If the attribute specified is required and the value is null, attempt to utilize a default value if it is
          * specified. If it is not specified or the default value specified is not a valid custom field data value, then
          * an InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
             if ($value != null)
             {
                 return $value;
             }
             assert('$value == null || $value instanceof OwnedCustomField');
-            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
-            if ($mappingRuleData['defaultValue'] != null)
+            if ($this->mappingRuleData['defaultValue'] != null)
             {
                 try
                 {
                     $customField        = new OwnedCustomField();
-                    $customField->value = $mappingRuleData['defaultValue'];
+                    $customField->value = $this->mappingRuleData['defaultValue'];
                     $customField->data  = CustomFieldDataModelUtil::
-                                          getDataByModelClassNameAndAttributeName($modelClassName, $attributeName);
+                                          getDataByModelClassNameAndAttributeName($this->modelClassName, $this->attributeName);
                 }
                 catch (NotSupportedException $e)
                 {
@@ -81,14 +77,14 @@
             }
             else
             {
-                $model = new $modelClassName(false);
-                if (!$model->isAttributeRequired($attributeName))
+                $modelClassName = $this->modelClassName;
+                $model          = new $modelClassName(false);
+                if (!$model->isAttributeRequired($this->attributeName))
                 {
                     return $value;
                 }
                 throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Pick list value required, but missing.'));
             }
-            return $value;
         }
     }
 ?>

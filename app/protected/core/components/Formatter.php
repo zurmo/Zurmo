@@ -39,6 +39,15 @@
      */
     class Formatter extends CFormatter
     {
+        public function resolveForUrl($url)
+        {
+            if (strpos($url, 'http://') !== 0 && strpos($url, 'https://') !== 0)
+            {
+                $url = 'http://' . $url;
+            }
+            return $url;
+        }
+
         /**
          * Formats the value as a hyperlink.
          * @param mixed $value the value to be formatted
@@ -46,11 +55,7 @@
          */
         public function formatUrl($value, $htmlOptions = array())
         {
-            $url = $value;
-            if (strpos($url, 'http://') !== 0 && strpos($url, 'https://') !== 0)
-            {
-                $url = 'http://' . $url;
-            }
+            $url = $this->resolveForUrl($value);
             return ZurmoHtml::link(ZurmoHtml::encode($value), $url, $htmlOptions);
         }
 
@@ -80,6 +85,12 @@
         public function formatEmail($value, $email = '', $htmlOptions = array())
         {
             return CHtml::mailto($value, $email, $htmlOptions);
+        }
+
+        public function formatDecimal($value)
+        {
+            $formatter = new ZurmoNumberFormatter(Yii::app()->getLocale());
+            return $formatter->formatDecimal($value);
         }
     }
 ?>

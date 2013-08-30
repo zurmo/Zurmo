@@ -336,16 +336,21 @@
         {
             if ((bool)$this->resolveValueForOperator() === false)
             {
-                $resolvedOperatorType = OperatorRules::TYPE_DOES_NOT_EQUAL;
+                $this->clauses[1] = array(  'attributeName'        => $this->getRealAttributeName(),
+                                            'operatorType'         => OperatorRules::TYPE_EQUALS,
+                                            'value'                => '0');
+                $this->clauses[2] = array(  'attributeName'        => $this->getRealAttributeName(),
+                                            'operatorType'         => OperatorRules::TYPE_IS_NULL,
+                                            'value'                => null);
+                $this->structure  = '1 or 2';
             }
             else
             {
-                $resolvedOperatorType = OperatorRules::TYPE_EQUALS;
+                $this->clauses[1] = array('attributeName'        => $this->getRealAttributeName(),
+                                          'operatorType'         => OperatorRules::TYPE_EQUALS,
+                                          'value'                => true);
+                $this->structure  = '1';
             }
-            $this->clauses[1] = array('attributeName'        => $this->getRealAttributeName(),
-                                      'operatorType'         => $resolvedOperatorType,
-                                      'value'                => true);
-            $this->structure  = '1';
         }
 
         protected function resolveRelatedIdAttributeClauseAndStructure()

@@ -632,7 +632,7 @@
         {
             assert('is_string($onTableAliasName)');
             $onTableJoinIdName  = 'id';
-            $tableJoinIdName    = self::resolveForeignKey($onTableAliasName);
+            $tableJoinIdName    = $this->modelAttributeToDataProviderAdapter->getColumnName();
             $onTableAliasName   = $this->joinTablesAdapter->addLeftTableAndGetAliasName(
                                   $this->modelAttributeToDataProviderAdapter->getRelationTableName(),
                                   $onTableJoinIdName,

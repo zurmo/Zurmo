@@ -52,7 +52,7 @@
             //Setup test data owned by the super user.
             AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             AddressGeoCodeTestHelper::createAndRemoveAccountWithAddress($super);
-            
+
             //Setup default dashboard.
             Dashboard::getByLayoutIdAndUser(Dashboard::DEFAULT_USER_LAYOUT_ID, $super);
         }
@@ -61,10 +61,10 @@
         {
             //Lougout previous use and log in as super user
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
-            
+
             //Retriving the super account id.
             $superAccountId = self::getModelIdByModelNameAndName ('Account', 'superAccount');
-            
+
             //Create address array for the super account id.
             $address = array('street1'    => '123 Knob Street',
                              'street2'    => 'Apartment 4b',
@@ -94,10 +94,10 @@
 
             $content = $this->runControllerWithNoExceptionsAndGetContent('maps/default/mapAndPoint');
             $this->assertTrue(strpos($content, 'plotMap') > 0);
-            
+
             $accounts = Account::getAll();
             $this->assertEquals(1, count($accounts));
-            
+
             //Load Model Detail Views
             $this->setGetArray(array('id' => $superAccountId, 'lockPortlets' => '0'));
             $this->resetPostArray();
@@ -113,7 +113,7 @@
             {
                 $portlet->delete();
             }
-            
+
             $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition(
                                     'AccountDetailsAndRelationsView', $super->id, array());
             $this->assertFalse  (array_key_exists(2, $portlets) );
@@ -128,9 +128,9 @@
 
             $portlets = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition(
                                     'AccountDetailsAndRelationsView', $super->id, array());
-            
+
             $this->assertEquals (1, count($portlets[2]));
-            
+
             //Load Model Detail Views
             $this->setGetArray(array('id' => $superAccountId, 'lockPortlets' => '0'));
             $this->resetPostArray();

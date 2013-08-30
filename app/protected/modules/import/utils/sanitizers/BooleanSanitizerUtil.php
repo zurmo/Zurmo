@@ -35,20 +35,11 @@
      ********************************************************************************/
 
     /**
-     * Sanitizer for boolean type attributes.
+     * Sanitizer for boolean type attributes.  There is a variety of values that are accepted and
+     * converted into the boolean values at import time.
      */
     class BooleanSanitizerUtil extends SanitizerUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'Boolean';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'Boolean';
-        }
-
         /**
          * THE KEYS MUST MATCH THE KEYS IN getAcceptableValues() to have the correct mapping
          * This method and getAcceptableValues() to be split because of some type casting
@@ -99,29 +90,38 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            assert('is_string($this->columnName)');
+            $acceptableValues = BooleanSanitizerUtil::getAcceptableValues();
+            if (!in_array(strtolower($rowBean->{$this->columnName}), $acceptableValues))
+            {
+                $label = Zurmo::t('ImportModule', 'Is an invalid check box value. This will be set to false upon import.');
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
          * Given a value, attempt to convert the value to either true/false based on a mapping array of possible
          * boolean values.  If the value is not present, attemp to utilize the default value specified.
          * If the value presented is not a valid mapping value then a
          * InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData["defaultValue"] == null || $mappingRuleData["defaultValue"] == "1" ||
-                    $mappingRuleData["defaultValue"] == "0"');
             $acceptableValues = BooleanSanitizerUtil::getAcceptableValues();
             $acceptableValuesResolvingValues = BooleanSanitizerUtil::getAcceptableValuesResolvingValues();
             if ($value == null)
             {
-                if ($mappingRuleData['defaultValue'] != null)
+                if (isset($this->mappingRuleData['defaultValue']) && $this->mappingRuleData['defaultValue'] != null)
                 {
-                    $key = array_search($mappingRuleData['defaultValue'], $acceptableValues);
-                    return $acceptableValuesResolvingValues[$mappingRuleData['defaultValue']];
+                    $key = array_search($this->mappingRuleData['defaultValue'], $acceptableValues);
+                    return $acceptableValuesResolvingValues[$this->mappingRuleData['defaultValue']];
                 }
                 else
                 {
@@ -137,6 +137,13 @@
                 $key = array_search(strtolower($value), $acceptableValues);
                 return $acceptableValuesResolvingValues[$key];
             }
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('!isset($this->mappingRuleData["defaultValue"]) ||
+                    $this->mappingRuleData["defaultValue"] == null || $this->mappingRuleData["defaultValue"] == "1" ||
+                    $this->mappingRuleData["defaultValue"] == "0"');
         }
     }
 ?>

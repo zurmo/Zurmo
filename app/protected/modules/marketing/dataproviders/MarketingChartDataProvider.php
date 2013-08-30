@@ -159,7 +159,7 @@
         }
 
         /**
-         * @param $date
+         * @param string $date
          * @return null\
          */
         protected static function resolveAbbreviatedMonthDisplayLabel($date)
@@ -170,7 +170,7 @@
         }
 
         /**
-         * @param $date
+         * @param string $date
          * @return null
          */
         protected static function resolveAbbreviatedDayMonthDisplayLabel($date)
@@ -205,7 +205,7 @@
         }
 
         /**
-         * @param $beginDate
+         * @param string $beginDate
          */
         public function setBeginDate($beginDate)
         {
@@ -213,12 +213,18 @@
             $this->beginDate = $beginDate;
         }
 
+        /**
+         * @param string endDate
+         */
         public function setEndDate($endDate)
         {
             assert('is_string($endDate)');
             $this->endDate = $endDate;
         }
 
+        /**
+         * @param string $groupBy
+         */
         public function setGroupBy($groupBy)
         {
             assert('is_string($groupBy)');

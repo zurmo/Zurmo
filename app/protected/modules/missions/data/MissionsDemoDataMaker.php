@@ -46,6 +46,9 @@
             return array('users', 'groups');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');

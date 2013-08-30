@@ -270,6 +270,12 @@
             }
         }
 
+        /**
+         * @param string $levelType
+         * @param GameLevel $currentGameLevel
+         * @param array $pointSumsIndexedByType
+         * @throws FailedToSaveModelException
+         */
         protected function resolveLevelChangeByType($levelType, GameLevel $currentGameLevel, $pointSumsIndexedByType)
         {
             assert('is_string($levelType) && $levelType != null');
@@ -305,6 +311,11 @@
             }
         }
 
+        /**
+         * @param string $levelType
+         * @param array $pointSumsIndexedByType
+         * @return int|number
+         */
         protected static function resolveSummationValueByLevelTypeAndPointSums($levelType, $pointSumsIndexedByType)
         {
             assert('is_string($levelType) && $levelType != null');
@@ -326,6 +337,10 @@
             }
         }
 
+        /**
+         * @param int $nextLevelValue
+         * @throws FailedToSaveModelException
+         */
         protected static function processLevelChangeGameNotification($nextLevelValue)
         {
             assert('is_int($nextLevelValue)');

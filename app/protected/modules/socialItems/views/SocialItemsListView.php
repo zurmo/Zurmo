@@ -85,6 +85,17 @@
          */
         protected $emptyText = '';
 
+        /**
+         * @param RedBeanModelDataProvider $dataProvider
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $paginationRoute
+         * @param array $paginationParams
+         * @param string $redirectUrl
+         * @param string $uniquePageId
+         * @param array $params
+         * @param bool $renderToUserString
+         */
         public function __construct(RedBeanModelDataProvider $dataProvider,
                                     $controllerId,
                                     $moduleId,

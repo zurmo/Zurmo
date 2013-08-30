@@ -37,51 +37,12 @@
     /**
      * View when a user first comes to the marketing dashboard. Provides an overview of how marketing works
      */
-    class MarketingDashboardIntroView extends View
+    class MarketingDashboardIntroView extends IntroView
     {
-        const PANEL_ID            = 'marketing-intro-content';
-
-        const LINK_ID             = 'hide-marketing-intro';
-
-        const HIDDEN_COOKIE_VALUE = 'hidden';
-
-        /**
-         * @var string
-         */
-        protected $cookieValue;
-
-        /**
-         * @return string
-         */
-        public static function resolveCookieId()
+        protected function renderIntroContent()
         {
-            return self::PANEL_ID . '-panel';
-        }
-
-        public function __construct($cookieValue)
-        {
-            assert('$cookieValue == null || is_string($cookieValue)');
-            $this->cookieValue = $cookieValue;
-        }
-
-        /**
-         * @return bool|string
-         */
-        protected function renderContent()
-        {
-            $this->registerScripts();
-            if ($this->cookieValue == self::HIDDEN_COOKIE_VALUE)
-            {
-                $style = "style=display:none;"; // Not Coding Standard
-            }
-            else
-            {
-                $style = null;
-            }
-            $content  = '<div id="' . self::PANEL_ID . '" ' . $style . '>';
-            $content .= '<h1>' . Zurmo::t('MarketingModule', 'How does Email Marketing work in Zurmo?', LabelUtil::getTranslationParamsForAllModules()). '</h1>';
-
-            $content .= '<div id="marketing-intro-steps" class="clearfix">';
+            $content  = '<h1>' . Zurmo::t('MarketingModule', 'How does Email Marketing work in Zurmo?', LabelUtil::getTranslationParamsForAllModules()). '</h1>';
+            $content .= '<div id="marketing-intro-steps" class="module-intro-steps clearfix">';
             $content .= '<div class="third"><h3>' . Zurmo::t('Core', 'Step') . '<strong>1<span>➜</span></strong></h3>';
             $content .= '<p><strong>' . Zurmo::t('MarketingModule', 'Group') . '</strong>';
             $content .= Zurmo::t('MarketingModule', 'Group together the email recipients into a list, use different lists for different purposes');
@@ -93,39 +54,25 @@
                         'rich HTML templates or plain text');
             $content .= '</p>';
             $content .= '</div>';
-            $content .= '<div class="third"><h3>' . Zurmo::t('Core', 'Step') . '<strong>3</strong></h3>';
+            $content .= '<div class="third"><h3>' . Zurmo::t('Core', 'Step') . '<strong>3<span>➜</span></strong></h3>';
             $content .= '<p><strong>' . Zurmo::t('MarketingModule', 'Launch') . '</strong>';
             $content .= Zurmo::t('MarketingModule', 'Create a campaign where you can schedule your email to go out, pick the List(s) of recipients, ' .
                         'add and schedule autoresponders and track your overall campaign performance');
             $content .= '</p>';
             $content .= '</div>';
             $content .= '</div>';
-            $content .= $this->renderHideLinkContent();
-            $content .= '</div>';
-            return $content;
-        }
-
-        /**
-         * @return string
-         */
-        protected function renderHideLinkContent()
-        {
-            $label    = '<span></span>' . Zurmo::t('MarketingModule', 'Dismiss');
-            $content  = '<div class="' . self::LINK_ID . '">'.ZurmoHtml::link($label, '#');
-            $content .= '</div>';
+            $this->registerScripts();
             return $content;
         }
 
         protected function registerScripts()
         {
-            $script = "$('." . self::LINK_ID . "').click(function()
-            {
-                        $('#" . self::PANEL_ID . "').slideToggle();
-                        document.cookie = '" . self::resolveCookieId() . "=" . static::HIDDEN_COOKIE_VALUE . "';
-                        $('#" . self::PANEL_ID . "-checkbox-id').attr('checked', false).parent().removeClass('c_on');
-                        return false;
-            })";
-            Yii::app()->clientScript->registerScript(self::LINK_ID, $script);
+            $content  = "$(this).resolveHighestAndEqualize($('.module-intro-steps'));";
+            $content .= "$(window).resize(function()
+                         {
+                             $(this).resolveHighestAndEqualize($('.module-intro-steps'));
+                         });";
+            Yii::app()->clientScript->registerScript($this->moduleName, $content);
         }
     }
 ?>

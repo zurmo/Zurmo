@@ -117,6 +117,8 @@
         /**
          * Override in child if you want to have bonus points. This will return the bonus points applicable given
          * a $level
+         * @param int $level
+         * @throws NotImplementedException
          */
         public static function getLevelBonusPointValue($level)
         {

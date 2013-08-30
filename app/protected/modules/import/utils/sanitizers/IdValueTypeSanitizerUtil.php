@@ -38,18 +38,19 @@
      * Sanitizer for attributes that are models, and handling the values that represent the ids of those models.
      * If you are importing a related account on a contact, this would be used for the account id, not the contact id.
      * To sanitize for the contact id in this example, you would use  @see SelfIdValueTypeSanitizerUtil
+     *
+     * Data analyzer for columns mapped to attributes that are either ids or relation ids.  For importing ids, there
+     * are several approved value types including a zurmo model id as well as an external system id that can be used to
+     * maintain key integerity during the entirety of a data import.
      */
     abstract class IdValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'IdValueType';
-        }
+        /**
+         * Identifies the type of value provided. IdValueTypeMappingRuleForm::ZURMO_MODEL_ID or
+         * IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID
+         * @var integer
+         */
+        protected $type;
 
         public static function getLinkedMappingRuleType()
         {
@@ -65,19 +66,82 @@
         }
 
         /**
-         * Override in children classes as needed.
-         * @see SelfIdValueTypeSanitizerUtil
-         * @see ModelDerivedIdValueTypeSanitizerUtil
-         * @see ModelIdValueTypeSanitizerUtil
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param mixed $mappingRuleData - array or null
-         * @throws NotImplementedException
+         * @param RedBean_OODBBean $rowBean
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            throw new NotImplementedException();
+            if ($rowBean->{$this->columnName} == null)
+            {
+                $found = false;
+            }
+            elseif ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                $found = $this->resolveFoundIdByValue($rowBean->{$this->columnName});
+            }
+            else
+            {
+                $found = $this->resolveFoundExternalSystemIdByValue($rowBean->{$this->columnName});
+            }
+            if ($found)
+            {
+                $this->resolveForFoundModel();
+            }
+            else
+            {
+                $this->resolveForUnfoundModel($rowBean);
+            }
+            if ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                if (strlen($rowBean->{$this->columnName}) > $this->externalSystemIdMaxLength)
+                {
+                    $label = Zurmo::t('ImportModule', 'Is too long.');
+                    $this->shouldSkipRow      = true;
+                    $this->analysisMessages[] = $label;
+                }
+            }
+        }
+
+        protected function resolveForUnfoundModel(RedBean_OODBBean $rowBean)
+        {
+            if ($rowBean->{$this->columnName} != null)
+            {
+                $label = Zurmo::t('ImportModule', 'Was not found and this row will be skipped during import.');
+                $this->shouldSkipRow      = true;
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
+         * Ensure the type is an accepted type.
+         * @param unknown_type integer
+         */
+        protected function ensureTypeValueIsValid($type)
+        {
+            assert('$type == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $type == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
+                    $this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
+        }
+
+        protected function init()
+        {
+            parent::init();
+            $modelClassName                = $this->modelClassName;
+            $model                         = new $modelClassName(false);
+            $this->attributeModelClassName = $this->resolveAttributeModelClassName($model, $this->attributeName);
+            $this->ensureTypeValueIsValid($this->mappingRuleData["type"]);
+            if ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            {
+                $modelClassName  = $this->attributeModelClassName;
+                $tableColumnName = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+                RedBeanColumnTypeOptimizer::externalIdColumn($modelClassName::getTableName($modelClassName),
+                                                             $tableColumnName,
+                                                             $this->externalSystemIdMaxLength);
+            }
         }
     }
 ?>

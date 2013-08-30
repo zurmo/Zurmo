@@ -55,6 +55,11 @@
      */
     class RequiredAttributesValidViewUtil
     {
+        /**
+         * @param String $moduleClassName
+         * @param String $viewClassName
+         * @throws NotSupportedException
+         */
         public static function setAsMissingRequiredAttributes($moduleClassName, $viewClassName)
         {
             assert('is_string($moduleClassName)');
@@ -77,6 +82,11 @@
             ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, $value);
         }
 
+        /**
+         * @param String $moduleClassName
+         * @param String $viewClassName
+         * @throws NotSupportedException
+         */
         public static function removeAttributeAsMissingRequiredAttribute($moduleClassName, $viewClassName)
         {
             assert('is_string($moduleClassName)');
@@ -106,6 +116,10 @@
             ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, $value);
         }
 
+        /**
+         * @param String $moduleClassName
+         * @param String $viewClassName
+         */
         public static function setAsContainingRequiredAttributes($moduleClassName, $viewClassName)
         {
             assert('is_string($moduleClassName)');
@@ -114,6 +128,11 @@
             ZurmoConfigurationUtil::setByModuleName($moduleClassName, $key, null);
         }
 
+        /**
+         * @param String $moduleClassName
+         * @param String $viewClassName
+         * @return bool
+         */
         public static function isViewMissingRequiredAttributes($moduleClassName, $viewClassName)
         {
             assert('is_string($moduleClassName)');
@@ -127,6 +146,11 @@
             return false;
         }
 
+        /**
+         * @param String $moduleClassName
+         * @param String $viewClassName
+         * @return string
+         */
         public static function resolveValidView($moduleClassName, $viewClassName)
         {
             assert('is_string($moduleClassName)');
@@ -143,6 +167,10 @@
                                                         array('{view}' => $viewDisplayName));
         }
 
+        /**
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
         public static function resolveToSetAsMissingRequiredAttributesByModelClassName($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');
@@ -184,6 +212,10 @@
             }
         }
 
+        /**
+         * @param string $modelClassName
+         * @param string $attributeName
+         */
         public static function resolveToRemoveAttributeAsMissingRequiredAttribute($modelClassName, $attributeName)
         {
             assert('is_string($modelClassName)');

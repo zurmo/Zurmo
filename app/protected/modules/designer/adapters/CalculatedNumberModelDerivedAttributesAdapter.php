@@ -39,6 +39,10 @@
      */
     class CalculatedNumberModelDerivedAttributesAdapter extends ModelAttributesAdapter
     {
+        /**
+         * @param CalculatedNumberAttributeForm $attributeForm
+         * @throws NotSupportedException
+         */
         public function setAttributeMetadataFromForm(AttributeForm $attributeForm)
         {
             assert('$attributeForm instanceof CalculatedNumberAttributeForm');

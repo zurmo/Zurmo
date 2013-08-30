@@ -47,6 +47,11 @@
 
         protected $params;
 
+        /**
+         * @param string $controllerId
+         * @param string moduleId
+         * @param array $params
+         */
         public function __construct($controllerId, $moduleId, $params)
         {
             assert('isset($params["controllerId"])');

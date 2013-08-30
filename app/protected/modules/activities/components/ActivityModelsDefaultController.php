@@ -60,6 +60,12 @@
             return $this->getModule()->getPluralCamelCasedName() . 'PageView';
         }
 
+        /**
+         * @param $relationAttributeName
+         * @param $relationModelId
+         * @param $relationModuleId
+         * @param $redirectUrl
+         */
         public function actionCreateFromRelation($relationAttributeName, $relationModelId, $relationModuleId, $redirectUrl)
         {
             $modelClassName   = $this->getModule()->getPrimaryModelName();
@@ -70,6 +76,10 @@
             $this->actionCreateByModel($activity, $redirectUrl);
         }
 
+        /**
+         * @param Activity $activity
+         * @param $redirectUrl
+         */
         protected function actionCreateByModel(Activity $activity, $redirectUrl)
         {
             $titleBarAndEditView = $this->makeEditAndDetailsView(
@@ -80,6 +90,10 @@
             echo $view->render();
         }
 
+        /**
+         * @param $id
+         * @param null $redirectUrl
+         */
         public function actionDetails($id, $redirectUrl = null)
         {
             $modelClassName    = $this->getModule()->getPrimaryModelName();
@@ -93,6 +107,10 @@
             echo $view->render();
         }
 
+        /**
+         * @param $id
+         * @param null $redirectUrl
+         */
         public function actionEdit($id, $redirectUrl = null)
         {
             $modelClassName    = $this->getModule()->getPrimaryModelName();
@@ -101,6 +119,10 @@
             $this->processEdit($activity, $redirectUrl);
         }
 
+        /**
+         * @param $id
+         * @param null $redirectUrl
+         */
         public function actionCopy($id, $redirectUrl = null)
         {
             $modelClassName   = $this->getModule()->getPrimaryModelName();
@@ -115,6 +137,10 @@
             $this->processEdit($copyToActivity, $redirectUrl);
         }
 
+        /**
+         * @param Activity $activity
+         * @param null $redirectUrl
+         */
         protected function processEdit(Activity $activity, $redirectUrl = null)
         {
             $pageViewClassName = $this->getPageViewClassName();
@@ -125,6 +151,10 @@
             echo $view->render();
         }
 
+        /**
+         * @param $id
+         * @param null $redirectUrl
+         */
         public function actionDelete($id, $redirectUrl = null)
         {
             if ($redirectUrl == null)

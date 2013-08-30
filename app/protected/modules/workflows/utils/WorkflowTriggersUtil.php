@@ -216,12 +216,18 @@
                     if ($model->$penultimateRelation instanceof RedBeanMutableRelatedModels)
                     {
                         //ManyMany or HasMany
-                        foreach ($model->{$penultimateRelation} as $resolvedModel)
+                        $penultimateModelClassName = $trigger->getResolvedAttributeModelClassName();
+                        $resolvedModels = static::resolveRelatedModelsForInferredRelations(
+                            $attributeAndRelationData[0], $model, $penultimateRelation, $penultimateModelClassName);
+                        foreach ($resolvedModels as $resolvedModel)
                         {
-                            if (self::resolveIsTrueByEvaluationRules($workflow, $trigger, $resolvedModel, $resolvedAttribute) &&
-                               $trigger->relationFilter == TriggerForWorkflowForm::RELATION_FILTER_ANY)
+                            if (get_class($resolvedModel) == $penultimateModelClassName)
                             {
-                                return true;
+                                if (self::resolveIsTrueByEvaluationRules($workflow, $trigger, $resolvedModel, $resolvedAttribute) &&
+                                    $trigger->relationFilter == TriggerForWorkflowForm::RELATION_FILTER_ANY)
+                                {
+                                    return true;
+                                }
                             }
                         }
                         return false;
@@ -240,15 +246,21 @@
                     if ($model->{$firstRelation} instanceof RedBeanMutableRelatedModels)
                     {
                         //ManyMany or HasMany
-                        foreach ($model->{$firstRelation} as $relatedModel)
+                        $resolvedAttributeModelClassName = $trigger->getPenultimateModelClassName();
+                        $resolvedModels = static::resolveRelatedModelsForInferredRelations($attributeAndRelationData[0],
+                                          $model, $firstRelation, $resolvedAttributeModelClassName);
+                        foreach ($resolvedModels as $relatedModel)
                         {
-                            $resolvedModel  = $relatedModel->{$penultimateRelation};
-                            if (self::resolveIsTrueByEvaluationRules($workflow, $trigger,
-                                                                    $resolvedModel,
-                                                                    $resolvedAttribute) &&
-                                $trigger->relationFilter == TriggerForWorkflowForm::RELATION_FILTER_ANY)
+                            if (get_class($relatedModel) == $trigger->getPenultimateModelClassName())
                             {
-                                return true;
+                                $resolvedModel  = $relatedModel->{$penultimateRelation};
+                                if (self::resolveIsTrueByEvaluationRules($workflow, $trigger,
+                                                                        $resolvedModel,
+                                                                        $resolvedAttribute) &&
+                                    $trigger->relationFilter == TriggerForWorkflowForm::RELATION_FILTER_ANY)
+                                {
+                                    return true;
+                                }
                             }
                         }
                         return false;
@@ -270,6 +282,37 @@
                 $attribute     = $trigger->getResolvedAttributeRealAttributeName();
                 $resolvedModel = $model;
                 return self::resolveIsTrueByEvaluationRules($workflow, $trigger, $resolvedModel, $attribute);
+            }
+        }
+
+        protected static function resolveRelatedModelsForInferredRelations($attribute, $model, $relation, $resolvedAttributeModelClassName)
+        {
+            if (ModelRelationsAndAttributesToWorkflowAdapter::isAttributeInferred($attribute))
+            {
+                $relatedModels = array();
+                foreach ($model->{$relation} as $item)
+                {
+                    if (get_class($item) == $resolvedAttributeModelClassName)
+                    {
+                        $relatedModels[] = $item;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            $modelDerivationPathToItem = RuntimeUtil::getModelDerivationPathToItem($resolvedAttributeModelClassName);
+                            $relatedModels[]           = $item->castDown(array($modelDerivationPathToItem));
+                        }
+                        catch (NotFoundException $e)
+                        {
+                        }
+                    }
+                }
+                return $relatedModels;
+            }
+            else
+            {
+                return $model->{$relation};
             }
         }
 

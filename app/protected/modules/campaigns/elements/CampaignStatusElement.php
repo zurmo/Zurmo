@@ -39,7 +39,7 @@
         /**
          * Called from outside to render status value as label. @see CampaignStatusListViewColumnAdapter
          * Called from outside to render status value as label. @see CampaignStatusListViewColumnAdapter
-         * @param string $status
+         * @param int $status
          * @return string, translated status if available otherwise just return status value
          */
         public static function renderNonEditableStringContent($status)

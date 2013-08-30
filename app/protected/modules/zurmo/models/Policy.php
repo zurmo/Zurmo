@@ -40,6 +40,12 @@
         const NO   = 0;
         const YES  = 1;
 
+        /**
+         * @param string $moduleName
+         * @param string $policyName
+         * @return An
+         * @throws NotFoundException
+         */
         public static function getByModuleNameAndPolicyName($moduleName, $policyName)
         {
             assert('is_string($moduleName)');
@@ -55,6 +61,9 @@
             return self::makeModel($bean);
         }
 
+        /**
+         * @param string $moduleName
+         */
         public static function removeAllForModule($moduleName)
         {
             assert('is_string($moduleName)');

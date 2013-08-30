@@ -60,10 +60,16 @@
             {
                 $data[OperatorRules::TYPE_STARTS_WITH] =
                     OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_STARTS_WITH);
+                $data[OperatorRules::TYPE_DOES_NOT_STARTS_WITH] =
+                    OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_DOES_NOT_STARTS_WITH);
                 $data[OperatorRules::TYPE_ENDS_WITH] =
                     OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_ENDS_WITH);
+                $data[OperatorRules::TYPE_DOES_NOT_ENDS_WITH] =
+                    OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_DOES_NOT_ENDS_WITH);
                 $data[OperatorRules::TYPE_CONTAINS] =
                     OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_CONTAINS);
+                $data[OperatorRules::TYPE_DOES_NOT_CONTAINS] =
+                    OperatorRules::getTranslatedTypeLabel(OperatorRules::TYPE_DOES_NOT_CONTAINS);
             }
             elseif ($type == ModelAttributeToOperatorTypeUtil::AVAILABLE_OPERATORS_TYPE_NUMBER)
             {

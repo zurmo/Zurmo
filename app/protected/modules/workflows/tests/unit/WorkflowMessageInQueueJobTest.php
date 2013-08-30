@@ -68,9 +68,9 @@
             $emailTemplate                 = new EmailTemplate();
             $emailTemplate->name           = 'the name';
             $emailTemplate->modelClassName = 'Account';
-            $emailTemplate->textContent    = 'some content';
             $emailTemplate->type           = 2;
             $emailTemplate->subject        = 'subject';
+            $emailTemplate->textContent    = 'sample text content';
             $saved                         = $emailTemplate->save();
             $this->assertTrue($saved);
             $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
@@ -84,7 +84,7 @@
             $model = Contact::getById($modelId);
             $trigger = array('attributeIndexOrDerivedType' => 'firstName',
                              'operator'                    => OperatorRules::TYPE_EQUALS,
-                             'value'                       => 'jason');
+                             'durationInterval'             => '333');
             $actions     = array(array('type' => ActionForWorkflowForm::TYPE_UPDATE_SELF,
                                        ActionForWorkflowForm::ACTION_ATTRIBUTES =>
                                             array('description' => array('shouldSetValue'    => '1',
@@ -141,7 +141,7 @@
             $timeTrigger = array('attributeIndexOrDerivedType' => 'string',
                                     'operator'                    => OperatorRules::TYPE_EQUALS,
                                     'value'                       => '514',
-                                    'durationSeconds'             => '333');
+                                    'durationInterval'             => '333');
             $actions     = array(array('type' => ActionForWorkflowForm::TYPE_UPDATE_SELF,
                                     ActionForWorkflowForm::ACTION_ATTRIBUTES =>
                                     array('string' => array('shouldSetValue'    => '1',

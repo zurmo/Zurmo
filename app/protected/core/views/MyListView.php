@@ -150,6 +150,7 @@
         public function getConfigurationView()
         {
             $searchForm   = $this->getSearchModel();
+            $searchForm->getModel()->setScenario('searchModel');
             $formModel    = new MyListForm();
             if ($this->viewData != null)
             {
@@ -241,6 +242,13 @@
         public static function getDesignerRulesType()
         {
             return 'MyListView';
+        }
+
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
         }
 
         /**

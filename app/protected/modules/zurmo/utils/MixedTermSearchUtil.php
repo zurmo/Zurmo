@@ -40,6 +40,11 @@
      */
     class MixedTermSearchUtil
     {
+        /**
+         * @param Module $module
+         * @param string $partialTerm
+         * @return array
+         */
         public static function getGlobalSearchAttributeByModuleAndPartialTerm(Module $module, $partialTerm)
         {
             assert('is_string($partialTerm)');

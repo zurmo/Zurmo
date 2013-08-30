@@ -43,7 +43,7 @@
          * Defines the last level for the level type.
          * @var integer
          */
-        protected static $lastLevel     = 15;
+        protected static $lastLevel     = 50;
 
         /**
          * Array of data that provides the point value required to move up to each level.
@@ -99,7 +99,7 @@
                                                  48 => 569000,
                                                  49 => 599700,
                                                  50 => 631400);
- 
+
         public static function getDisplayLabel()
         {
             return Zurmo::t('GamificationModule', 'General');

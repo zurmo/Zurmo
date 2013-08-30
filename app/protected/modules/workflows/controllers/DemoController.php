@@ -46,7 +46,7 @@
          */
         public function actionLoadByTimeWorkflowInQueue()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }
@@ -95,7 +95,7 @@
          */
         public function actionLoadWorkflowMessageInQueue()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }

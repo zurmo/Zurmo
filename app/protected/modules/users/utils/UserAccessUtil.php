@@ -36,6 +36,9 @@
 
     class UserAccessUtil
     {
+        /**
+         * @param int $userId
+         */
         public static function resolveCanCurrentUserAccessAction($userId)
         {
             if (Yii::app()->user->userModel->id == $userId ||
@@ -47,6 +50,81 @@
             $view = new AccessFailurePageView($messageView);
             echo $view->render();
             Yii::app()->end(0, false);
+        }
+
+        public static function resolveCanCurrentUserAccessRootUser(User $user, $renderAccessViewOnFailure = true)
+        {
+            if (!$user->isRootUser)
+            {
+                return true;
+            }
+            if ($user->id != Yii::app()->user->userModel->id)
+            {
+                if (!$renderAccessViewOnFailure)
+                {
+                    return false;
+                }
+                else
+                {
+                    $messageView = new AccessFailureView();
+                    $view = new AccessFailurePageView($messageView);
+                    echo $view->render();
+                    Yii::app()->end(0, false);
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static function resolveAccessingASystemUser($user, $renderAccessViewOnFailure = true)
+        {
+            if (!$user->isSystemUser)
+            {
+                return true;
+            }
+            elseif (!$renderAccessViewOnFailure)
+            {
+                return false;
+            }
+            else
+            {
+                $messageView = new AccessFailureView();
+                $view = new AccessFailurePageView($messageView);
+                echo $view->render();
+                Yii::app()->end(0, false);
+            }
+        }
+
+        /**
+         * @see ActionBarForUserEditAndDetailsView, most pill box links are only available to a user viewing the profile
+         * under certain conditions.
+         * @param User $user
+         * @return boolean if the current user can view the edit type links or not
+         */
+        public static function canCurrentUserViewALinkRequiringElevatedAccess(User $user)
+        {
+            if (Yii::app()->user->userModel->id == $user->id ||
+                RightsUtil::canUserAccessModule('UsersModule', Yii::app()->user->userModel))
+            {
+                if (!$user->isRootUser)
+                {
+                    return true;
+                }
+                elseif ($user->id != Yii::app()->user->userModel->id)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 ?>

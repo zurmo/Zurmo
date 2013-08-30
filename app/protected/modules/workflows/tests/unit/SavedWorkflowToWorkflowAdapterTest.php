@@ -79,7 +79,7 @@
 
             $trigger = new TimeTriggerForWorkflowForm('WorkflowsTestModule', 'WorkflowModelTestItem', $workflow->getType());
             $trigger->attributeIndexOrDerivedType = 'date';
-            $trigger->durationSeconds             = 500;
+            $trigger->durationInterval             = 500;
             $trigger->valueType                   = 'Is Time For';
             $workflow->setTimeTrigger($trigger);
 
@@ -93,7 +93,8 @@
             $workflow->addAction($action);
 
             $message       = new EmailMessageForWorkflowForm('WorkflowModelTestItem', Workflow::TYPE_ON_SAVE);
-            $message->sendAfterDurationSeconds = 86400;
+            $message->sendAfterDurationInterval = 86400;
+            $message->sendAfterDurationType     = TimeDurationUtil::DURATION_TYPE_WEEK;
             $message->emailTemplateId          = 5;
             $message->sendFromType             = EmailMessageForWorkflowForm::SEND_FROM_TYPE_DEFAULT;
             $recipients = array(array('type' => WorkflowEmailMessageRecipientForm::TYPE_DYNAMIC_TRIGGERED_MODEL_USER,
@@ -169,7 +170,8 @@
                                                        ),
                                                   )));
             $compareData['EmailMessages'] = array(array('emailTemplateId' => 5,
-                                                         'sendAfterDurationSeconds' => 86400,
+                                                         'sendAfterDurationInterval' => 86400,
+                                                         'sendAfterDurationType'     => TimeDurationUtil::DURATION_TYPE_WEEK,
                                                          'sendFromType' => 'Default',
                                                          'sendFromName' => null,
                                                          'sendFromAddress' => null,
@@ -179,7 +181,9 @@
                                                                 'type' => 'DynamicTriggeredModelUser',
                                                                 'audienceType' => 1,
                                                             ))));
-            $compareData['TimeTrigger'] = array('durationSeconds' => 500,
+            $compareData['TimeTrigger'] = array('durationInterval' => 500,
+                                                'durationSign'     => TimeDurationUtil::DURATION_SIGN_POSITIVE,
+                                                'durationType'     => TimeDurationUtil::DURATION_TYPE_DAY,
                                                 'currencyIdForValue' => null,
                                                 'value'              => null,
                                                 'secondValue'        => null,

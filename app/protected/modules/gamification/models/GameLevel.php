@@ -223,6 +223,7 @@
 
         /**
          * Add specified value.
+         * @param int $value
          */
         public function addValue($value)
         {

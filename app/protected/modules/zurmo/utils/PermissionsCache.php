@@ -50,6 +50,12 @@
 
         public static $cacheType = 'P:';
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param Permitable $permitable
+         * @return mixed
+         * @throws NotFoundException
+         */
         public static function getCombinedPermissions(SecurableItem $securableItem, Permitable $permitable)
         {
             if ($securableItem->getClassId('SecurableItem') == 0 ||
@@ -102,6 +108,11 @@
             throw new NotFoundException();
         }
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param Permitable $permitable
+         * @param int $combinedPermissions
+         */
         public static function cacheCombinedPermissions(SecurableItem $securableItem, Permitable $permitable, $combinedPermissions)
         {
             assert('is_int($combinedPermissions) || ' .
@@ -174,7 +185,7 @@
         /**
          * Given the name of a named securable item, return the cached entry if available.
          * @param string $namedSecurableItemName
-         * @param object $permitable
+         * @param Permitable $permitable
          * @throws NotFoundException
          */
         public static function getNamedSecurableItemActualPermissions($namedSecurableItemName, $permitable)

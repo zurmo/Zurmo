@@ -57,6 +57,28 @@
             DisplayAttributeForReportForm::resetCount();
         }
 
+        public function testHasManyWithLinkTypeSpecificDefinedOnBothSides()
+        {
+            $q                                     = DatabaseCompatibilityUtil::getQuote();
+            $joinTablesAdapter                     = new RedBeanModelJoinTablesQueryAdapter('ReportModelTestItem2');
+            $selectQueryAdapter                    = new RedBeanModelSelectQueryAdapter();
+            $builder                               = new DisplayAttributesReportQueryBuilder($joinTablesAdapter, $selectQueryAdapter);
+            $displayAttribute                      = new DisplayAttributeForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                                                         Report::TYPE_ROWS_AND_COLUMNS);
+            $displayAttribute->attributeIndexOrDerivedType  = 'hasMany2___FullName';
+            $content                               = $builder->makeQueryContent(array($displayAttribute));
+            $compareContent = "select {$q}reportmodeltestitem{$q}.{$q}id{$q} reportmodeltestitemid ";
+            $this->assertEquals($compareContent, $content);
+            $this->assertEquals(0, $joinTablesAdapter->getFromTableJoinCount());
+            $this->assertEquals(1, $joinTablesAdapter->getLeftTableJoinCount());
+            $leftTablesAndAliases = $joinTablesAdapter->getLeftTablesAndAliases();
+            $this->assertEquals('reportmodeltestitem',            $leftTablesAndAliases[0]['tableName']);
+            $this->assertEquals('reportmodeltestitem',            $leftTablesAndAliases[0]['tableAliasName']);
+            $this->assertEquals('hasone_reportmodeltestitem2_id', $leftTablesAndAliases[0]['tableJoinIdName']);
+            $this->assertEquals('reportmodeltestitem2',           $leftTablesAndAliases[0]['onTableAliasName']);
+            $this->assertEquals('id',                             $leftTablesAndAliases[0]['onTableJoinIdName']);
+        }
+
         public function testAttributeOnHasManyOwnedModelWithNoBeanSkips()
         {
             $q                                     = DatabaseCompatibilityUtil::getQuote();

@@ -64,6 +64,9 @@
          */
         protected static $maximumGroupsPerChart = 100;
 
+        /**
+         * @param int $value
+         */
         public static function setMaximumGroupsPerChart($value)
         {
             assert('is_int($value)');

@@ -67,8 +67,9 @@
          * (non-PHPdoc)
          * @see NonDerivedAttributeImportRules::resolveValueForImport()
          */
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             assert('is_array($columnMappingData)');
             $sanitizerUtilTypes = static::getSanitizerUtilTypesInProcessingOrder();
             if (count($sanitizerUtilTypes) == 1 && $sanitizerUtilTypes[0] == 'SelfIdValueType')
@@ -81,6 +82,7 @@
                                                             $this->getModelClassName(),
                                                             $this->getModelAttributeName(),
                                                             $value,
+                                                            $columnName,
                                                             $columnMappingData,
                                                             $importSanitizeResultsUtil);
                     if ($value != null)

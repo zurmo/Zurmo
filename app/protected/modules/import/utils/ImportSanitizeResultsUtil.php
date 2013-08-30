@@ -43,7 +43,7 @@
          * Messages generated through sanitizing the row data.
          * @var unknown_type
          */
-        private $messages;
+        private $messages = array();
 
         /**
          * Some sanitization routines, if they run into an error, means the entire row should be skipped for

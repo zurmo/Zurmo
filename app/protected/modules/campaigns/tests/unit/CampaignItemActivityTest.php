@@ -195,7 +195,8 @@
                                                                             $campaignItem->id,
                                                                             $person->id,
                                                                             $url,
-                                                                            $sourceIP);
+                                                                            $sourceIP,
+                                                                            $campaignItem);
             $this->assertTrue($saved);
 
             $contact            = ContactTestHelper::createContactByNameForOwner('contact 02', $this->user);
@@ -207,7 +208,8 @@
                                                                             $campaignItem->id,
                                                                             $personId,
                                                                             $url,
-                                                                            $sourceIP);
+                                                                            $sourceIP,
+                                                                            $campaignItem);
             $this->assertTrue($saved);
 
             // test that creating the one with url created one with open too:

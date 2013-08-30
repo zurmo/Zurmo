@@ -39,16 +39,6 @@
      */
     class FullNameSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'FullName';
-        }
-
         /**
          * If a full name is invalid, then skip the entire row during import.
          */
@@ -58,19 +48,49 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            if ($rowBean->{$this->columnName} == null)
+            {
+                return;
+            }
+            $modelClassName     = $this->modelClassName;
+            $model              = new $modelClassName(false);
+            $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
+            $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
+            $lastNameMinLength  = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, 'lastName');
+            @list($firstName, $lastName) = explode(' ', trim($rowBean->{$this->columnName}));
+            if ($lastName == null)
+            {
+                $lastName  = $firstName;
+                $firstName = null;
+            }
+            if (strlen($lastName) > $lastNameMaxLength || strlen($firstName) > $firstNameMaxLength)
+            {
+                $label = Zurmo::t('ImportModule', 'Is too long.');
+                $this->shouldSkipRow      = true;
+                $this->analysisMessages[] = $label;
+            }
+            if (strlen($lastName) < $lastNameMinLength)
+            {
+                $label = Zurmo::t('ImportModule', 'Is too short.');
+                $this->shouldSkipRow      = true;
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
          * Given a value that is a full name, split the full name into the first and last name parts.  Validate that
          * the first and last name are not too large for their attributes.  If they are too large or the full name
          * does not valid properly, then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null');
-            assert('$mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
@@ -83,25 +103,31 @@
             }
             if ($lastName == null)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The full name must contain a last name, which is required.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Full Name must contain a Last Name, which is required.'));
             }
+            $modelClassName     = $this->modelClassName;
             $model              = new $modelClassName(false);
             $firstNameMaxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'firstName');
             $lastNameMaxLength  = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, 'lastName');
             $lastNameMinLength  = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, 'lastName');
             if (strlen($lastName) > $lastNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last name specified is too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last Name specified is too long.'));
             }
             if (strlen($lastName) < $lastNameMinLength)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last name specified is too short.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Last Name specified is too short.'));
             }
             if ($firstName != null && strlen($firstName) > $firstNameMaxLength)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'First name specified is too long.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'First Name specified is too long.'));
             }
             return $value;
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData == null');
         }
     }
 ?>

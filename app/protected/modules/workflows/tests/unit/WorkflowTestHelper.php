@@ -83,7 +83,7 @@
         public static function createExpiredWorkflowMessageInQueue(RedBeanModel $model, SavedWorkflow $savedWorkflow,
                                                                    $serializedData = array())
         {
-            if(empty($serializedData))
+            if (empty($serializedData))
             {
                 $serializedData = serialize(array('something'));
             }

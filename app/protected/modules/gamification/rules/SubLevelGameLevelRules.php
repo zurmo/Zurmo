@@ -49,6 +49,10 @@
             return GamePoint::TYPE_USER_ADOPTION;
         }
 
+        /**
+         * @param int $level
+         * @return int|void
+         */
         public static function getLevelBonusPointValue($level)
         {
             assert('is_int($level)');

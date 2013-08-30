@@ -86,7 +86,6 @@
             echo $view->render();
         }
 
-
         public function actionDetails($id, $redirectUrl = null)
         {
             $emailMessage          = EmailMessage::getById(intval($id));
@@ -402,7 +401,6 @@
                     {
                         throw new FailedToSaveModelException();
                     }
-                    ZurmoControllerUtil::updatePermissionsWithDefaultForModelByCurrentUser($emailMessage);
                 }
             }
             else
@@ -410,6 +408,7 @@
                 static::attemptToMatchAndSaveLeadOrContact($emailMessage, 'Contact', (int)$id);
                 static::attemptToMatchAndSaveLeadOrContact($emailMessage, 'Lead', (int)$id);
             }
+            ZurmoControllerUtil::updatePermissionsWithDefaultForModelByCurrentUser($emailMessage);
         }
 
         protected static function attemptToMatchAndSaveLeadOrContact($emailMessage, $type, $emailMessageId)
@@ -556,7 +555,7 @@
             }
             return $personOrAccount;
         }
-        
+
         protected function actionValidateCreateEmailMessage($postData, CreateEmailMessageForm $emailMessageForm)
         {
             if (isset($postData['ajax']) && $postData['ajax'] == 'edit-form')
@@ -584,7 +583,7 @@
             $pageSize               = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                                                 'autoCompleteListPageSize', get_class($this->getModule()));
             $usersByFullName        = UserSearch::getUsersByPartialFullName($term, $pageSize);
-            $usersByEmailAddress    = UserSearch::getUsersByEmailAddress($term, 'contains');
+            $usersByEmailAddress    = UserSearch::getUsersByEmailAddress($term, 'contains', true);
             $contacts               = ContactSearch::getContactsByPartialFullNameOrAnyEmailAddress($term, $pageSize, null, 'contains');
             $autoCompleteResults    = array();
             foreach ($usersByEmailAddress as $user)
@@ -642,7 +641,7 @@
             }
             ControllerSecurityUtil::resolveAccessCanCurrentUserDeleteModel($emailMessage);
             $emailMessage->delete();
-            if($redirect)
+            if ($redirect)
             {
                 $this->redirect($redirectUrl);
             }
@@ -652,6 +651,5 @@
         {
             return new FileZurmoControllerUtil();
         }
-
     }
 ?>

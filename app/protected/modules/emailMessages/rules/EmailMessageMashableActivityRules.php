@@ -61,6 +61,10 @@
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 
+        /**
+         * @param array $relationItemIds
+         * @return array
+         */
         public function resolveSearchAttributesDataByRelatedItemIds($relationItemIds)
         {
             assert('is_array($relationItemIds)');
@@ -86,6 +90,27 @@
         public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
+            return $searchAttributeData;
+        }
+
+        public function resolveSearchAttributeDataForAllLatestActivities($searchAttributeData)
+        {
+            assert('is_array($searchAttributeData)');
+            $box                 = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $searchAttributeData = parent::resolveSearchAttributeDataForAllLatestActivities($searchAttributeData);
+            $clausesCount = count($searchAttributeData['clauses']);
+            $searchAttributeData['clauses'][$clausesCount + 1] = array(
+                'attributeName'        => 'folder',
+                    'relatedModelData'  => array(
+                        'attributeName' => 'emailBox',
+                        'operatorType'  => 'doesNotEqual',
+                        'value'         => $box->id),
+            );
+            if ($searchAttributeData['structure'] != null)
+            {
+                $searchAttributeData['structure'] .= ' and ';
+            }
+            $searchAttributeData['structure'] .=  ($clausesCount + 1);
             return $searchAttributeData;
         }
 
@@ -178,7 +203,6 @@
                     }
                     else
                     {
-
                         try
                         {
                             $castedDownModel = self::castDownItem($recipient->personOrAccount);

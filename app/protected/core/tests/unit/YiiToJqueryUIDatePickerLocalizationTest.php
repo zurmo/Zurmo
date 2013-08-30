@@ -96,7 +96,7 @@
         {
             $timeFormat = 'HH:mm';
             $this->assertEquals(
-                    'hh:mm',
+                    'HH:mm',
                      YiiToJqueryUIDatePickerLocalization::resolveTimeFormat($timeFormat));
             $timeFormat = 'h:mm a';
             $this->assertEquals(
@@ -104,7 +104,7 @@
                      YiiToJqueryUIDatePickerLocalization::resolveTimeFormat($timeFormat));
             $timeFormat = 'H:mm';
             $this->assertEquals(
-                    'h:mm',
+                    'H:mm',
                      YiiToJqueryUIDatePickerLocalization::resolveTimeFormat($timeFormat));
             $timeFormat = 'ah:mm';
             $this->assertEquals(
@@ -112,7 +112,7 @@
                      YiiToJqueryUIDatePickerLocalization::resolveTimeFormat($timeFormat));
             $timeFormat = 'HH.mm';
             $this->assertEquals(
-                    'hh.mm',
+                    'HH.mm',
                      YiiToJqueryUIDatePickerLocalization::resolveTimeFormat($timeFormat));
         }
     }

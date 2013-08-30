@@ -36,6 +36,12 @@
 
     class TitleBarAndLeaderboardView extends GridView
     {
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $leaderboardData
+         * @param string $activeActionElementType
+         */
         public function __construct(
             $controllerId,
             $moduleId,

@@ -51,6 +51,14 @@
 
         protected $showRunJobLink;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $monitorJobData
+         * @param array $jobsData
+         * @param null|string $messageBoxContent
+         * @param bool $showRunJobLink
+         */
         public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null,
                                     $showRunJobLink = false)
         {
@@ -124,13 +132,18 @@
                                           self::renderMonitorJobHeaderContent());
         }
 
+        /**
+         * @param array $jobsData
+         * @param string $jobLabelHeaderContent
+         * @return string
+         */
         protected function renderJobLayout($jobsData, $jobLabelHeaderContent)
         {
             assert('is_array($jobsData)');
             assert('is_string($jobLabelHeaderContent)');
             $content  = '<table>';
             $content .= '<colgroup>';
-            if($this->showRunJobLink)
+            if ($this->showRunJobLink)
             {
                 $content .= '<col style="width:40%" /><col style="width:20%" /><col style="width:20%" />';
                 $content .= '<col style="width:10%" />';
@@ -147,7 +160,7 @@
             $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Last Completed Run') . '</th>';
             $content .= '<th>' . Zurmo::t('JobsManagerModule', 'Status') . '</th>';
             $content .= '<th>&#160;</th>';
-            if($this->showRunJobLink)
+            if ($this->showRunJobLink)
             {
                 $content .= '<th>&#160;</th>';
             }
@@ -160,7 +173,7 @@
                 $content .= '<td>' . $jobData['lastCompletedRunEncodedContent'] . '</td>';
                 $content .= '<td>' . ZurmoHtml::encode($jobData['statusContent']) . '</td>';
                 $content .= '<td class="button-column-right">' . $this->resolveActionContentByStatus($type, $jobData['status']) . '</td>';
-                if($this->showRunJobLink)
+                if ($this->showRunJobLink)
                 {
                     $runJobLink = ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Run')),
                                     Yii::app()->createUrl(

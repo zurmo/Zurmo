@@ -48,6 +48,9 @@
             return array('marketingLists');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -85,6 +88,9 @@
             $demoDataHelper->setRangeByModelName('Autoresponder', $autoresponders[0], $autoresponders[count($autoresponders)-1]);
         }
 
+        /**
+         * @param Autoresponder $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof Autoresponder');
@@ -97,7 +103,8 @@
             $model->subject                 = $this->seedData['subject'][$this->index];
             $model->htmlContent             = $this->seedData['htmlContent'][$this->index];
             $model->textContent             = $this->seedData['textContent'][$this->index];
-            $model->secondsFromOperation    = $this->seedData['secondsFromOperation'][$this->index];
+            $model->fromOperationDurationInterval    = mt_rand(1, 30);
+            $model->fromOperationDurationType        = TimeDurationUtil::DURATION_TYPE_DAY;
             $model->operationType           = $this->seedData['operationType'][$this->index];
             $model->enableTracking          = (rand() % 2);
             $this->populateMarketingModelWithFiles($model);

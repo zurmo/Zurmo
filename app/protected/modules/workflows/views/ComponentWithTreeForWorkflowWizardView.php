@@ -167,7 +167,7 @@
                 });
                 $(".remove-dynamic-row-link.' . static::getTreeType() . '").live("click", function()
                 {
-                    size = $(this).parent().parent().parent().find("li").size();
+                    var size = $("#' . get_class($this) . ' .dynamic-rows > ul > li").length;
                     $(this).parent().parent().remove(); //removes the <li>
                     if (size < 2)
                     {
@@ -204,7 +204,8 @@
                                   '", "nodeId=" + ui.helper.attr("id") + "&rowNumber="  + $(\'#' . $rowCounterInputId . '\').val())',
                     'beforeSend' => 'js:function()
                     {
-                       // attachLoadingSpinner("' . $this->form->getId() . '", true, "dark"); - add spinner to block anything else
+                        $(".ui-overlay-block").fadeIn(50);
+                        $(this).makeLargeLoadingSpinner(true, ".ui-overlay-block"); //- add spinner to block anything else
                     }',
                     'success' => 'js:function(data)
                     {
@@ -212,6 +213,8 @@
                         $(".droppable-dynamic-rows-container.' . static::getTreeType() . '").parent().find(".dynamic-rows").find("ul:first").append(data);
                         ' . $this->getWorkflowAttributeRowAddOrRemoveExtraScript() . '
                         $(".' . static::getZeroComponentsClassName() . '").hide();
+                        $(this).makeLargeLoadingSpinner(false, ".ui-overlay-block");
+                        $(".ui-overlay-block").fadeOut(50);
                     }'
             ));
         }
@@ -229,7 +232,8 @@
                                         "nodeId=" + event.currentTarget.id + "&rowNumber=" + $(\'#' . $rowCounterInputId . '\').val())',
                     'beforeSend' => 'js:function()
                     {
-                       // attachLoadingSpinner("' . $this->form->getId() . '", true, "dark"); - add spinner to block anything else
+                        $(".ui-overlay-block").fadeIn(50);
+                        $(this).makeLargeLoadingSpinner(true, ".ui-overlay-block"); //- add spinner to block anything else
                     }',
                     'success' => 'js:function(data)
                     {
@@ -237,6 +241,8 @@
                         $(".droppable-dynamic-rows-container.' . static::getTreeType() . '").parent().find(".dynamic-rows").find("ul:first").append(data);
                         ' . $this->getWorkflowAttributeRowAddOrRemoveExtraScript() . '
                         $(".' . static::getZeroComponentsClassName() . '").hide();
+                        $(this).makeLargeLoadingSpinner(false, ".ui-overlay-block");
+                        $(".ui-overlay-block").fadeOut(50);
                     }'
             ));
         }

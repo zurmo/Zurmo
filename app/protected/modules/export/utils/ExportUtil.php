@@ -36,6 +36,10 @@
 
     class ExportUtil
     {
+        /**
+         * @param CDataProvider $dataProvider
+         * @return array
+         */
         public static function getDataForExport(CDataProvider $dataProvider)
         {
             $totalItems = intval($dataProvider->calculateTotalItemCount());
@@ -43,6 +47,10 @@
             return $dataProvider->getData();
         }
 
+        /**
+         * @param CDataProvider $dataProvider
+         * @return string
+         */
         public static function getSerializedDataForExport(CDataProvider $dataProvider)
         {
             $totalItems = intval($dataProvider->calculateTotalItemCount());

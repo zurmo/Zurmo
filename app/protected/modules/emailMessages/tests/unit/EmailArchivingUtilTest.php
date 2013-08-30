@@ -227,6 +227,23 @@ Cc: 'John Wein' <john@example.com>, Peter Smith <peter@example.com>
             $recipients = EmailArchivingUtil::resolveEmailRecipientsFromEmailMessage($imapMessage);
             $this->assertEquals($imapMessage->to, $recipients);
 
+            // Check without to recipients.
+            $imapMessage->to = array();
+            $imapMessage->cc = array(
+                array('email' => 'info@example.com')
+            );
+            $recipients = EmailArchivingUtil::resolveEmailRecipientsFromEmailMessage($imapMessage);
+            $this->assertEquals($imapMessage->cc, $recipients);
+
+            //Test when email and name are the same
+            $imapMessage->to = array(
+                array('name'  => 'info@example.com',
+                      'email' => 'info@example.com')
+            );
+            $imapMessage->cc = array();
+            $recipients = EmailArchivingUtil::resolveEmailRecipientsFromEmailMessage($imapMessage);
+            $this->assertEquals($imapMessage->to, $recipients);
+
             $imapMessage->subject = "FW: Test subject";
             $imapMessage->to[0]['email'] = 'dropbox@emample.com';
             $recipients = EmailArchivingUtil::resolveEmailRecipientsFromEmailMessage($imapMessage);

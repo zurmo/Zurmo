@@ -42,6 +42,10 @@
      */
     class GroupModulePermissionsDataToEditViewAdapater
     {
+        /**
+         * @param array $data
+         * @return array
+         */
         public static function resolveData($data)
         {
             assert('is_array($data)');

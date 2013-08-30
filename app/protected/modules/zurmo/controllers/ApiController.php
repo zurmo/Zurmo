@@ -53,6 +53,7 @@
             }
             if ($identity->errorCode == UserIdentity::ERROR_NONE)
             {
+                Yii::app()->licenseManager->resolveUserIdentityApiAuthenticationForError($identity);
                 Yii::app()->user->login($identity);
                 $data['sessionId'] = Yii::app()->getSession()->getSessionID();
                 $data['token'] = Yii::app()->session['token'];

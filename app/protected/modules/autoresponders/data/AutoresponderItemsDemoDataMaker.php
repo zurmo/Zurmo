@@ -46,6 +46,9 @@
             return array('contacts', 'marketingLists');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -85,6 +88,9 @@
             $demoDataHelper->setRangeByModelName('AutoresponderItem', $items[0], $items[count($items)-1]);
         }
 
+        /**
+         * @param AutoresponderItem $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof AutoresponderItem');

@@ -157,6 +157,14 @@
         }
 
         /**
+         * @return string
+         */
+        public function getModuleClassName()
+        {
+            return $this->moduleClassName;
+        }
+
+        /**
          * @return ReportRules
          */
         public function getRules()

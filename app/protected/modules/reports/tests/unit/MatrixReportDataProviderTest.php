@@ -192,7 +192,7 @@
             $report->addGroupBy($groupBy);
             $reportDataProvider = new MatrixReportDataProvider($report);
             $data               = $reportDataProvider->makeAxisCrossingColumnCountAndLeadingHeaderRowsData();
-            $compareData        = array('rows' => array(), 'axisCrossingColumnCount' => 0);
+            $compareData        = array('rows' => array(), 'axisCrossingColumnCount' => 0, 'renderTotalColumn' => true);
             $this->assertEquals($compareData, $data);
         }
 

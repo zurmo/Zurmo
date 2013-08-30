@@ -34,7 +34,7 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    class Account extends OwnedSecurableItem
+    class Account extends OwnedSecurableItem implements StarredInterface
     {
         public static function getByName($name)
         {
@@ -194,6 +194,11 @@
                     'website'         => Zurmo::t('ZurmoModule',    'Website',  array(), null, $language),
                 )
             );
+        }
+
+        public static function hasReadPermissionsSubscriptionOptimization()
+        {
+            return true;
         }
     }
 ?>

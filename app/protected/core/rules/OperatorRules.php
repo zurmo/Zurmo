@@ -45,9 +45,15 @@
 
         const TYPE_STARTS_WITH                    = 'startsWith';
 
+        const TYPE_DOES_NOT_STARTS_WITH           = 'doesNotStartsWith';
+
         const TYPE_ENDS_WITH                      = 'endsWith';
 
+        const TYPE_DOES_NOT_ENDS_WITH             = 'doesNotEndsWith';
+
         const TYPE_CONTAINS                       = 'contains';
+
+        const TYPE_DOES_NOT_CONTAINS              = 'doesNotContains';
 
         const TYPE_GREATER_THAN_OR_EQUAL_TO       = 'greaterThanOrEqualTo';
 
@@ -97,8 +103,11 @@
             return array(OperatorRules::TYPE_EQUALS                      => Zurmo::t('Core', 'Equals'),
                          OperatorRules::TYPE_DOES_NOT_EQUAL              => Zurmo::t('Core', 'Does Not Equal'),
                          OperatorRules::TYPE_STARTS_WITH                 => Zurmo::t('Core', 'Starts With'),
+                         OperatorRules::TYPE_DOES_NOT_STARTS_WITH        => Zurmo::t('Core', 'Does Not Starts With'),
                          OperatorRules::TYPE_ENDS_WITH                   => Zurmo::t('Core', 'Ends With'),
+                         OperatorRules::TYPE_DOES_NOT_ENDS_WITH          => Zurmo::t('Core', 'Does Not Ends With'),
                          OperatorRules::TYPE_CONTAINS                    => Zurmo::t('Core', 'Contains'),
+                         OperatorRules::TYPE_DOES_NOT_CONTAINS           => Zurmo::t('Core', 'Does Not Contains'),
                          OperatorRules::TYPE_GREATER_THAN_OR_EQUAL_TO    => Zurmo::t('Core', 'Greater Than Or Equal To'),
                          OperatorRules::TYPE_LESS_THAN_OR_EQUAL_TO       => Zurmo::t('Core', 'Less Than Or Equal To'),
                          OperatorRules::TYPE_GREATER_THAN                => Zurmo::t('Core', 'Greater Than'),
@@ -123,8 +132,11 @@
             return array(OperatorRules::TYPE_EQUALS,
                          OperatorRules::TYPE_DOES_NOT_EQUAL,
                          OperatorRules::TYPE_STARTS_WITH,
+                         OperatorRules::TYPE_DOES_NOT_STARTS_WITH,
                          OperatorRules::TYPE_ENDS_WITH,
+                         OperatorRules::TYPE_DOES_NOT_ENDS_WITH,
                          OperatorRules::TYPE_CONTAINS,
+                         OperatorRules::TYPE_DOES_NOT_CONTAINS,
                          OperatorRules::TYPE_GREATER_THAN_OR_EQUAL_TO,
                          OperatorRules::TYPE_LESS_THAN_OR_EQUAL_TO,
                          OperatorRules::TYPE_GREATER_THAN,
@@ -149,8 +161,11 @@
             return array(   OperatorRules::TYPE_EQUALS,
                             OperatorRules::TYPE_DOES_NOT_EQUAL,
                             OperatorRules::TYPE_STARTS_WITH,
+                            OperatorRules::TYPE_DOES_NOT_STARTS_WITH,
                             OperatorRules::TYPE_ENDS_WITH,
+                            OperatorRules::TYPE_DOES_NOT_ENDS_WITH,
                             OperatorRules::TYPE_CONTAINS,
+                            OperatorRules::TYPE_DOES_NOT_CONTAINS,
                             OperatorRules::TYPE_GREATER_THAN_OR_EQUAL_TO,
                             OperatorRules::TYPE_LESS_THAN_OR_EQUAL_TO,
                             OperatorRules::TYPE_GREATER_THAN,

@@ -85,12 +85,12 @@
         public static function resolveTimeFormat($timeFormat)
         {
             $patterns = array(
-                '/[H]/',
                 '/[a]{1}/',
+                '/[z]{4}/',
             );
             $replacements = array(
-                'h',
                 'tt',
+                'z',
             );
             return preg_replace($patterns, $replacements, $timeFormat);
         }

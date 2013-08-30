@@ -63,7 +63,7 @@
          */
         public static function makeFirstSlidingPanelContent($portletId, $content)
         {
-            if(static::resolveShouldSlideToSecondPanel($portletId))
+            if (static::resolveShouldSlideToSecondPanel($portletId))
             {
                 $extraClass = null;
             }
@@ -81,7 +81,7 @@
          */
         public static function makeSecondSlidingPanelContent($portletId, $content)
         {
-            if(static::resolveShouldSlideToSecondPanel($portletId))
+            if (static::resolveShouldSlideToSecondPanel($portletId))
             {
                 $extraClass = ' showing-panel';
             }

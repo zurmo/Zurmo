@@ -39,43 +39,52 @@
      */
     class ProductTemplateTypeSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'ProductTemplateType';
+            if ($rowBean->{$this->columnName} != null)
+            {
+                $resolvedAcceptableValues = ArrayUtil::resolveArrayToLowerCase(static::getAcceptableValues());
+                if (!in_array(strtolower($rowBean->{$this->columnName}), $resolvedAcceptableValues))
+                {
+                    $label = Zurmo::t('ImportModule',
+                                      '{attributeLabel} specified is invalid and this row will be skipped during import.',
+                                      array('{attributeLabel}' => ProductTemplate::getAnAttributeLabel('type')));
+                    $this->shouldSkipRow      = true;
+                    $this->analysisMessages[] = $label;
+                }
+            }
         }
 
         /**
          * Given a type, attempt to resolve it as a valid type.  If the type is invalid, a
          * InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
             try
             {
-                if (strtolower($value) == strtolower(ProductTemplate::TYPE_PRODUCT))
+                if (strtolower($value) == strtolower(ProductTemplate::TYPE_PRODUCT) ||
+                    strtolower($value) == strtolower('Product'))
                 {
                     return ProductTemplate::TYPE_PRODUCT;
                 }
-                elseif (strtolower($value) == strtolower(ProductTemplate::TYPE_SERVICE))
+                elseif (strtolower($value) == strtolower(ProductTemplate::TYPE_SERVICE) ||
+                        strtolower($value) == strtolower('Service'))
                 {
                     return ProductTemplate::TYPE_SERVICE;
                 }
-                elseif (strtolower($value) == strtolower(ProductTemplate::TYPE_SUBSCRIPTION))
+                elseif (strtolower($value) == strtolower(ProductTemplate::TYPE_SUBSCRIPTION) ||
+                        strtolower($value) == strtolower('Subscription'))
                 {
                     return ProductTemplate::TYPE_SUBSCRIPTION;
                 }
@@ -86,8 +95,18 @@
             }
             catch (NotFoundException $e)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'The type specified is invalid.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'Type specified is invalid.'));
             }
+        }
+
+        protected static function getAcceptableValues()
+        {
+            return array(ProductTemplate::TYPE_PRODUCT,
+                         ProductTemplate::TYPE_SERVICE,
+                         ProductTemplate::TYPE_SUBSCRIPTION,
+                         'Product',
+                         'Service',
+                         'Subscription');
         }
     }
 ?>

@@ -157,7 +157,7 @@
             }
             else
             {
-                return Zurmo::t('JobsManagerModule', 'Not Running');
+                return Zurmo::t('JobsManagerModule', 'Idle');
             }
         }
 

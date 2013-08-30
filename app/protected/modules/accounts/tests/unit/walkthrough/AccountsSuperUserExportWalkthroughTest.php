@@ -39,7 +39,7 @@
      */
     class AccountsSuperUserExportWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
-        protected static $asynchronusThreshold;
+        protected static $asynchronousThreshold;
 
         public static function setUpBeforeClass()
         {
@@ -51,13 +51,13 @@
             //Setup test data owned by the super user.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
 
-            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
-            ExportModule::$asynchronusThreshold = 3;
+            self::$asynchronousThreshold = ExportModule::$asynchronousThreshold;
+            ExportModule::$asynchronousThreshold = 3;
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
+            ExportModule::$asynchronousThreshold = self::$asynchronousThreshold;
             parent::tearDownAfterClass();
         }
 
@@ -156,7 +156,7 @@
                 }
             }
             $accounts = array();
-            for ($i = 0; $i <= (ExportModule::$asynchronusThreshold + 1); $i++)
+            for ($i = 0; $i <= (ExportModule::$asynchronousThreshold + 1); $i++)
             {
                 $accounts[] = AccountTestHelper::createAccountByNameForOwner('superAccount' . $i, $super);
             }
@@ -251,7 +251,7 @@
                 $exportItem->delete();
             }
             $numberOfRecords    = rand (12, 100);
-            ExportModule::$asynchronusThreshold = $numberOfRecords - 1;
+            ExportModule::$asynchronousThreshold = $numberOfRecords - 1;
             for ($i = 1; $i <= $numberOfRecords; $i++)
             {
                 $randomData = RandomDataUtil::getRandomDataByModuleAndModelClassNames('AccountsModule', 'Account');

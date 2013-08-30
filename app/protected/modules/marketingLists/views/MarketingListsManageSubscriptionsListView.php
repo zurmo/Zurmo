@@ -78,7 +78,12 @@
 
         public function getTitle()
         {
-            return Zurmo::t('MarketingListsModule', 'My Subscriptions');
+            $applicationName    = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
+            if ($applicationName != null)
+            {
+                $applicationName = ' - ' . $applicationName;
+            }
+            return Zurmo::t('MarketingListsModule', 'My Subscriptions') . $applicationName;
         }
 
         protected function renderContent()

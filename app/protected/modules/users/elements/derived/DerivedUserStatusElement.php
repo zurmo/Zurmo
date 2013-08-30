@@ -84,7 +84,8 @@
 
         protected function renderError()
         {
-            return null;
+            return $this->form->error($this->model, 'isActive',
+                array('inputID' => $this->getEditableInputId('userStatus')));
         }
 
         protected function assertModelIsValid()

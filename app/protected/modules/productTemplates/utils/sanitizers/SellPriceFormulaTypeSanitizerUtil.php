@@ -39,51 +39,57 @@
      */
     class SellPriceFormulaTypeSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'SellPriceFormulaType';
+            $resolvedAcceptableValues = ArrayUtil::resolveArrayToLowerCase(static::getAcceptableValues());
+            if (!in_array(strtolower($rowBean->{$this->columnName}), $resolvedAcceptableValues))
+            {
+                $label = Zurmo::t('ImportModule',
+                                  '{attributeLabel} specified is invalid and this row will be skipped during import.',
+                                  array('{attributeLabel}' => ProductTemplate::getAnAttributeLabel('sellPriceFormula')));
+                $this->shouldSkipRow      = true;
+                $this->analysisMessages[] = $label;
+            }
         }
 
         /**
-         * Given a user status, attempt to resolve it as a valid status.  If the status is invalid, a
-         * InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
             try
             {
-                if (strtolower($value) == strtolower(SellPriceFormula::TYPE_EDITABLE))
+                if (strtolower($value) == strtolower(SellPriceFormula::TYPE_EDITABLE) ||
+                    strtolower($value) == strtolower('Editable'))
                 {
                     return SellPriceFormula::TYPE_EDITABLE;
                 }
-                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_DISCOUNT_FROM_LIST))
+                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_DISCOUNT_FROM_LIST) ||
+                    strtolower($value) == strtolower('Discount From List Percent'))
                 {
                     return SellPriceFormula::TYPE_DISCOUNT_FROM_LIST;
                 }
-                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_MARKUP_OVER_COST))
+                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_MARKUP_OVER_COST) ||
+                    strtolower($value) == strtolower('Markup Over Cost Percent'))
                 {
                     return SellPriceFormula::TYPE_MARKUP_OVER_COST;
                 }
-                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_PROFIT_MARGIN))
+                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_PROFIT_MARGIN) ||
+                    strtolower($value) == strtolower('Profit Margin Percent'))
                 {
                     return SellPriceFormula::TYPE_PROFIT_MARGIN;
                 }
-                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_MARKUP_OVER_COST))
+                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_MARKUP_OVER_COST) ||
+                    strtolower($value) == strtolower('Same As List'))
                 {
                     return SellPriceFormula::TYPE_MARKUP_OVER_COST;
                 }
@@ -94,8 +100,23 @@
             }
             catch (NotFoundException $e)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'The sell price formula type specified is invalid.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule',
+                                                                   'Sell Price Formula type specified is invalid.'));
             }
+        }
+
+        protected static function getAcceptableValues()
+        {
+            return array(SellPriceFormula::TYPE_EDITABLE,
+                         SellPriceFormula::TYPE_DISCOUNT_FROM_LIST,
+                         SellPriceFormula::TYPE_MARKUP_OVER_COST,
+                         SellPriceFormula::TYPE_PROFIT_MARGIN,
+                         SellPriceFormula::TYPE_SAME_AS_LIST,
+                        'Editable',
+                        'Discount From List Percent',
+                        'Markup Over Cost Percent',
+                        'Profit Margin Percent',
+                        'Same As List');
         }
     }
 ?>

@@ -49,29 +49,11 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'relations' => array(
-                    'campaignItem'                     => array(RedBeanModel::HAS_ONE,     'CampaignItem'),
+                    static::getRelationName()     => array(static::HAS_ONE,  static::getRelatedModelClassName()),
                 ),
+                'indexes' => static::getIndexesDefinition(),
             );
             return $metadata;
-        }
-
-        public static function getByTypeAndModelIdAndPersonIdAndUrl($type, $modelId, $personId, $url = null,
-                                                                    $sortBy = 'latestDateTime', $pageSize = null)
-        {
-            $modelRelationName = 'campaignItem';
-            return parent::getChildActivityByTypeAndModelIdAndModelRelationNameAndPersonIdAndUrl($type, $modelId,
-                                                                $modelRelationName, $personId, $url, $sortBy, $pageSize);
-        }
-
-        public static function createNewActivity($type, $modelId, $personId, $url = null, $sourceIP = null)
-        {
-            $relatedModel = CampaignItem::getById(intval($modelId));
-            if (!$relatedModel)
-            {
-                throw new NotFoundException();
-            }
-            $relationName = 'campaignItem';
-            return parent::createNewChildActivity($type, $personId, $url, $relationName, $relatedModel, $sourceIP);
         }
 
         protected static function getLabel($language = null)
@@ -86,6 +68,11 @@
         protected static function getPluralLabel($language = null)
         {
             return Zurmo::t('CampaignsModule', 'Campaign Item Activities', array(), null, $language);
+        }
+
+        protected static function getRelationName()
+        {
+            return 'campaignItem';
         }
     }
 ?>

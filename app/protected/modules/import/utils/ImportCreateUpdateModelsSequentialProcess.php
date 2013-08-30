@@ -38,21 +38,12 @@
      * Sequential processing for the final step of creating and updating models for each row of data to be imported.
      * There is one step of looping over the data from the data provider.
      */
-    class ImportCreateUpdateModelsSequentialProcess extends SequentialProcess
+    class ImportCreateUpdateModelsSequentialProcess extends ImportSequentialProcess
     {
-        protected $import;
-
-        protected $mappingData;
-
-        protected $importRules;
-
-        protected $dataProvider;
-
         protected $explicitReadWriteModelPermissions;
 
-        public function __construct(Import $import, $dataProvider)
+        public function __construct(Import $import, ImportDataProvider $dataProvider)
         {
-            assert('$dataProvider instanceof AnalyzerSupportedDataProvider');
             $unserializedData             = unserialize($import->serializedData);
             $this->import                 = $import;
             $this->mappingData            = $unserializedData['mappingData'];
@@ -77,35 +68,19 @@
 
         protected function steps()
         {
-            return array('processRows', 'completeImport');
+            return array('processRows', 'complete');
         }
 
         protected function stepMessages()
         {
-            return array('processRows'    => Zurmo::t('ImportModule', 'Processing'),
-                         'completeImport' => Zurmo::t('ImportModule', 'Completing...')
+            return array('processRows'  => Zurmo::t('ImportModule', 'Processing'),
+                         'complete'     => Zurmo::t('ImportModule', 'Completing...')
                     );
-        }
-
-        protected function completeImport()
-        {
-            $this->nextStep    = null;
-            $this->nextMessage = null;
-            $this->complete    = true;
-            return null;
         }
 
         protected function processRows($params)
         {
-            $completionPosition = 1;
-            if (!isset($params['page']))
-            {
-                $page = 0;
-            }
-            else
-            {
-                $page = $params['page'];
-            }
+            $page = static::resolvePageByParams($params);
             $this->dataProvider->getPagination()->setCurrentPage($page);
             $importResultsUtil = new ImportResultsUtil($this->import);
             $messageLogger     = new ImportMessageLogger();
@@ -116,40 +91,7 @@
                                              $this->explicitReadWriteModelPermissions,
                                              $messageLogger);
             $importResultsUtil->processStatusAndMessagesForEachRow();
-
-            $pageCount                             = $this->dataProvider->getPagination()->getPageCount();
-            $pageSize                              = $this->dataProvider->getPagination()->getPageSize();
-            $totalItemCount                        = $this->dataProvider->getTotalItemCount();
-            $this->subSequenceCompletionPercentage = (($page + 1) / $pageCount) * 100;
-
-            if (($page + 1) == $pageCount)
-            {
-                $this->nextStep    = 'completeImport';
-                $this->setNextMessageByStep($this->nextStep);
-                return null;
-            }
-            else
-            {
-                $params['page'] = ($page + 1);
-                $this->nextStep = 'processRows';
-                $this->setNextMessageByStep($this->nextStep);
-                $startItemCount = (($page + 1) * $pageSize) + 1;
-                if (($startItemCount + ($pageSize - 1) > $totalItemCount))
-                {
-                    $endItemCount = $totalItemCount;
-                }
-                else
-                {
-                    $endItemCount = ($page + 2) * $pageSize;
-                }
-                $labelParams = array('{startItemCount}' => $startItemCount,
-                                     '{endItemCount}'   => $endItemCount,
-                                     '{totalItemCount}' => $totalItemCount);
-                $nextMessage = ' ' . Zurmo::t('ImportModule', 'Record(s) {startItemCount} - {endItemCount} of {totalItemCount}',
-                                     $labelParams);
-                $this->nextMessage .= $nextMessage;
-                return $params;
-            }
+            return $this->resolveNextPagingAndParams($page, $params);
         }
     }
 ?>

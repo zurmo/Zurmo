@@ -121,6 +121,7 @@
             $content      = null;
             $model        = $this->mashableInboxForm;
             $content      = $this->renderSearchView($model, $form);
+            $content     .= $this->renderStarredFilterHidenField($model, $form);
             $element      = new MashableInboxOptionsByModelRadioElement($model, 'optionForModel', $form, array(), $this->getArrayForByModelRadioElement());
             $element->editableTemplate =  '<div id="MashableInboxForm_optionForModel_area">{content}</div>';
             $content     .= '<div class="filters-bar">';
@@ -196,8 +197,6 @@
 
         private function registerFormScript($form)
         {
-            $listViewId       = $this->listView->getGridViewId();
-            $ajaxSubmitScript = "$('#{$listViewId}').yiiGridView('update', {data: $('#" . $form->getId() . "').serialize()});";
             $script = "
                     $('#MashableInboxForm_optionForModel_area').find('input:checked').next().addClass('ui-state-active');
                     $('#MashableInboxForm_filteredBy_area').find('input:checked').next().addClass('ui-state-active');
@@ -205,13 +204,13 @@
                     $('#MashableInboxForm_optionForModel_area').change(
                         function()
                         {
-                            " . $ajaxSubmitScript . "
+                            " . $this->getAjaxSubmitScript($form) . "
                         }
                     );
                     $('#MashableInboxForm_filteredBy_area').change(
                         function()
                         {
-                            " . $ajaxSubmitScript . "
+                            " . $this->getAjaxSubmitScript($form) . "
                         }
                     );
                 ";
@@ -243,6 +242,33 @@
                             );
                 ";
             return $script;
+        }
+
+        /**
+         * Render a checkBox to filter models by starred only
+         * @param  ZurmoActiveForm $form
+         * @return string
+         */
+        protected function renderStarredFilterHidenField($model, $form)
+        {
+            $content = null;
+            $modelsImplementsStarredInterface = false;
+            if (isset($this->modelClassName))
+            {
+                $modelsImplementsStarredInterface = in_array('StarredInterface', class_implements(new $this->modelClassName()));
+            }
+            if ($modelsImplementsStarredInterface)
+            {
+                $content .= $form->hiddenField($model, 'filterByStarred', array('class' => $form->id . '_filterByStarred'));
+            }
+            return $content;
+        }
+
+        private function getAjaxSubmitScript($form)
+        {
+            $listViewId       = $this->listView->getGridViewId();
+            $ajaxSubmitScript = "$('#{$listViewId}').yiiGridView('update', {data: $('#" . $form->getId() . "').serialize()});";
+            return $ajaxSubmitScript;
         }
     }
 ?>

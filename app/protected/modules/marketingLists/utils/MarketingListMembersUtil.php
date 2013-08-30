@@ -39,6 +39,12 @@
      */
     class MarketingListMembersUtil
     {
+        /**
+         * @param int $marketingListId
+         * @param string $filterBySubscriptionType
+         * @param string $filterBySearchTerm
+         * @return array
+         */
         public static function makeSearchAttributeData($marketingListId, $filterBySubscriptionType, $filterBySearchTerm)
         {
             assert('is_int($marketingListId)');
@@ -144,6 +150,12 @@
             return true;
         }
 
+        /**
+         * @param $id
+         * @param int $pageSize
+         * @param $attributeName
+         * @return MatrixReportDataProvider|RowsAndColumnsReportDataProvider|SummationReportDataProvider
+         */
         public static function makeReportDataProviderAndResolveAttributeName($id, $pageSize, & $attributeName)
         {
             assert('is_int($pageSize)');
@@ -171,6 +183,11 @@
             return ReportDataProviderFactory::makeByReport($report, $pageSize);
         }
 
+        /**
+         * @param RowsAndColumnsReportDataProvider $reportDataProvider
+         * @param string $attributeName
+         * @return array
+         */
         public static function getContactIdsByReportDataProviderAndAttributeName(
                                RowsAndColumnsReportDataProvider $reportDataProvider, $attributeName)
         {

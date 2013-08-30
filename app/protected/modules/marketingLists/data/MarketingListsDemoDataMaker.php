@@ -48,6 +48,9 @@
             return array('users');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -71,6 +74,9 @@
             $demoDataHelper->setRangeByModelName('MarketingList', $marketingLists[0], $marketingLists[count($marketingLists)-1]);
         }
 
+        /**
+         * @param RedBeanModel $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof MarketingList');

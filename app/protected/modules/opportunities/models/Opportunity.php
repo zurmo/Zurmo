@@ -34,7 +34,7 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    class Opportunity extends OwnedSecurableItem
+    class Opportunity extends OwnedSecurableItem implements StarredInterface
     {
         public static function getByName($name)
         {
@@ -54,7 +54,7 @@
         {
             if (parent::beforeSave())
             {
-                if (array_key_exists('value', $this->stage->originalAttributeValues))
+                if (!isset($this->originalAttributeValues['probability']))
                 {
                     $this->resolveStageToProbability();
                 }

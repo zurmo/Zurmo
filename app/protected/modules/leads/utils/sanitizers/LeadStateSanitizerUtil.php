@@ -39,16 +39,6 @@
      */
     class LeadStateSanitizerUtil extends ContactStateSanitizerUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'LeadState';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'LeadState';
-        }
-
         protected static function resolvesValidStateByOrder($stateOrder, $startingOrder)
         {
             if ($stateOrder < $startingOrder)
@@ -56,6 +46,11 @@
                 return true;
             }
             return false;
+        }
+
+        protected function resolveStates()
+        {
+            return LeadsUtil::getLeadStateDataFromStartingStateOnAndKeyedById();
         }
     }
 ?>

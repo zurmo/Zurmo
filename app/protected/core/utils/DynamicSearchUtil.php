@@ -73,6 +73,7 @@
                 $viewClassName::
                 resolveAttributeIndexOrDerivedTypeAndLabelsForDynamicSearchRow($attributeIndexOrDerivedTypeAndLabels);
             }
+            asort($attributeIndexOrDerivedTypeAndLabels);
             return $attributeIndexOrDerivedTypeAndLabels;
         }
 

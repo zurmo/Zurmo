@@ -59,5 +59,11 @@
             $resultsUtil->setModelShouldNotBeSaved();
             $this->assertEquals(false, $resultsUtil->shouldSaveModel());
         }
+
+        public function testGetMessages()
+        {
+            $util = new ImportSanitizeResultsUtil();
+            $this->assertTrue(is_array($util->getMessages()));
+        }
     }
 ?>

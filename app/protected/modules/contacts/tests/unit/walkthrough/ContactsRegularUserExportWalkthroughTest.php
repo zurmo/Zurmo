@@ -39,21 +39,21 @@
      */
     class ContactsRegularUserExportWalkthroughTest extends ZurmoRegularUserWalkthroughBaseTest
     {
-        protected static $asynchronusThreshold;
+        protected static $asynchronousThreshold;
 
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             SecurityTestHelper::createSuperAdmin();
 
-            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
-            ExportModule::$asynchronusThreshold = 3;
+            self::$asynchronousThreshold = ExportModule::$asynchronousThreshold;
+            ExportModule::$asynchronousThreshold = 3;
             ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
+            ExportModule::$asynchronousThreshold = self::$asynchronousThreshold;
             parent::tearDownAfterClass();
         }
 

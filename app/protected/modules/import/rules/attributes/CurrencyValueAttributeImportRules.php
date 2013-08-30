@@ -57,12 +57,14 @@
          * handle rate and currency code.  Eventually this will be exposed in the user interface
          *
          * @param mixed $value
+         * @param string $columnName
          * @param array $columnMappingData
          * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
          * @return array
          */
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             $attributeNames = $this->getRealModelAttributeNames();
             $modelClassName = $this->getModelClassName();
             $parts          = explode(FormModelUtil::DELIMITER, $value);
@@ -90,7 +92,7 @@
             $sanitizedValue = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, $this->getModelAttributeName(),
-                                                            $value, $columnMappingData, $importSanitizeResultsUtil);
+                                                            $value, $columnName, $columnMappingData, $importSanitizeResultsUtil);
             if ($sanitizedValue == null)
             {
                 $sanitizedValue = 0;

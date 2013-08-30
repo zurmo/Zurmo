@@ -179,7 +179,7 @@
                                                     $("#" + listGridViewId).find(".pager").find(".refresh").find("a").click();
                                                     updateFlashBar(data, notificationBarId);
                                                     //todo: this is only a check if reporting.
-                                                    if(data.nextPage)
+                                                    if (data.nextPage)
                                                     {
                                                         subscribeContactsToMarketingList' . $this->getSelectType() . '
                                                             (object, event, ui, data.nextPage, data.subscribedCount, data.skippedCount);

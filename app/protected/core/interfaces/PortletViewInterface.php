@@ -49,6 +49,8 @@
 
         public static function getModuleClassName();
 
+        public static function getPortletDescription();
+
         public function renderPortletHeadContent();
 
         public function getPortletParams();

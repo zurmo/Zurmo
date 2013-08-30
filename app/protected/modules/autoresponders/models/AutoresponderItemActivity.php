@@ -49,29 +49,11 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'relations' => array(
-                    'autoresponderItem'   => array(RedBeanModel::HAS_ONE, 'AutoresponderItem', RedBeanModel::NOT_OWNED),
+                    static::getRelationName()     => array(static::HAS_ONE,  static::getRelatedModelClassName()),
                 ),
+                'indexes' => static::getIndexesDefinition(),
             );
             return $metadata;
-        }
-
-        public static function getByTypeAndModelIdAndPersonIdAndUrl($type, $modelId, $personId, $url = null,
-                                                                    $sortBy = 'latestDateTime', $pageSize = null)
-        {
-            $modelRelationName = 'autoresponderItem';
-            return parent::getChildActivityByTypeAndModelIdAndModelRelationNameAndPersonIdAndUrl($type, $modelId,
-                                                                $modelRelationName, $personId, $url, $sortBy, $pageSize);
-        }
-
-        public static function createNewActivity($type, $modelId, $personId, $url = null, $sourceIP = null)
-        {
-            $relatedModel = AutoresponderItem::getById(intval($modelId));
-            if (!$relatedModel)
-            {
-                throw new NotFoundException();
-            }
-            $relationName = 'autoresponderItem';
-            return parent::createNewChildActivity($type, $personId, $url, $relationName, $relatedModel, $sourceIP);
         }
 
         protected static function getLabel($language = null)
@@ -87,6 +69,11 @@
         protected static function getPluralLabel($language = null)
         {
             return Zurmo::t('AutorespondersModule', 'Autoresponder Item Activities', array(), null, $language);
+        }
+
+        protected static function getRelationName()
+        {
+            return 'autoresponderItem';
         }
     }
 ?>

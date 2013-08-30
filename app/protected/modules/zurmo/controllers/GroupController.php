@@ -157,7 +157,11 @@
             {
                 $castedPostData = GroupUserMembershipFormUtil::typeCastPostData($_POST[$postVariableName]);
                 GroupUserMembershipFormUtil::setFormFromCastedPost($membershipForm, $castedPostData);
-                if (GroupUserMembershipFormUtil::setMembershipFromForm($membershipForm, $group))
+                if (null != $message = GroupUserMembershipFormUtil::validateMembershipChange($membershipForm, $group))
+                {
+                    Yii::app()->user->setFlash('notification', $message);
+                }
+                elseif (GroupUserMembershipFormUtil::setMembershipFromForm($membershipForm, $group))
                 {
                         $this->clearCaches();
                         Yii::app()->user->setFlash('notification',
@@ -367,16 +371,16 @@
             Yii::app()->end(0, false);
         }
 
-        protected static function getGroupsOrderedByNonDeletablesFirst($includeEveryoneGroup = true)
+        protected static function getGroupsOrderedByNonDeletablesFirst($includeEveryoneAndSuperAdministratorGroups = true)
         {
-            if ($includeEveryoneGroup)
+            if ($includeEveryoneAndSuperAdministratorGroups)
             {
                 $groups = array(Group::getByName(Group::EVERYONE_GROUP_NAME),
                                 Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME));
             }
             else
             {
-                $groups = array(Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME));
+                $groups = array();
             }
             $where    = Group::getTableName('Group') . ".name NOT IN( '" . Group::EVERYONE_GROUP_NAME . "', '" . Group::SUPER_ADMINISTRATORS_GROUP_NAME . "')";
             $orderBy  = Group::getTableName('Group') . '.name asc';

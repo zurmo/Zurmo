@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateConversation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create</td></tr>
+</thead><tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<!--create test account-->
+<tr>
+	<td>open</td>
+	<td>index.php/accounts/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Create Account</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Account_name</td>
+	<td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>my account ${randomSuffix}</td>
+	<td></td>
+</tr>
+<!--create test opportunities-->
+<tr>
+  <td>open</td>
+  <td>index.php/opportunities/default/create</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForTextPresent</td>
+  <td>Create Opportunity</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>Opportunity_name</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>Opportunity_amount_value</td>
+  <td>500.34</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>Opportunity_account_SelectLink</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>AccountsSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForValue</td>
+  <td>Opportunity_account_name</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>assertNotValue</td>
+  <td>Opportunity_account_id</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>id=Opportunity_closeDate</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='ui-datepicker-div']/table/tbody/tr/td[3]/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>select</td>
+  <td>Opportunity_stage_value</td>
+  <td>label=Negotiating</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>select</td>
+  <td>Opportunity_source_value</td>
+  <td>label=Tradeshow</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>Opportunity_owner_SelectLink</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>UsersSearchForm_anyMixedAttributes</td>
+  <td>Sam Smith</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>UsersSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+    <td>waitForText</td>
+    <td>//div[@id='UsersModalListView']/div/table/tbody/tr/td/a</td>
+    <td>Sam Smith</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>link=Sam Smith</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForValue</td>
+  <td>Opportunity_owner_name</td>
+  <td>Sam Smith</td>
+</tr>
+<tr>
+  <td>assertNotValue</td>
+  <td>Opportunity_owner_id</td>
+  <td></td>
+</tr>
+<tr>
+  <td>clickAndWait</td>
+  <td>save</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForPageToLoad</td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='OpportunityDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<!--create conversation-->
+<tr>
+	<td>open</td>
+	<td>index.php/conversations/default/create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Create Conversation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Subject cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Conversation_subject</td>
+	<td>New Conversation ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=Conversation_description</td>
+	<td>This is a new conversation.<br />It was created by a functional test.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=More Details</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Attachments</td>
+	<td></td>
+</tr>
+<!--select account for conversation-->
+<tr>
+  <td>click</td>
+  <td>ConversationItemForm_Account_SelectLink</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>AccountsSearchForm_anyMixedAttributes</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>AccountsSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForValue</td>
+  <td>ConversationItemForm_Account_name</td>
+  <td>my account ${randomSuffix}</td>
+</tr>
+<!--select opportunity for conversation-->
+<tr>
+  <td>click</td>
+  <td>ConversationItemForm_Opportunity_SelectLink</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+  <td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>OpportunitiesSearchForm_anyMixedAttributes</td>
+    <td>\10</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td/a</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForValue</td>
+  <td>ConversationItemForm_Opportunity_name</td>
+  <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>New Conversation ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>Comment_description</td>
+  <td>Test Comment by super user</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--Add user to conversation-->
+<tr>
+	<td>type</td>
+	<td>id=token-input-ConversationParticipantsForm_item_ids</td>
+	<td>jil</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ConversationParticipantsForm_item_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ConversationParticipantsForm_item_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Jill Smith</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

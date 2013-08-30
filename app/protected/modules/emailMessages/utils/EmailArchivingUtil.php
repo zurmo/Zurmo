@@ -133,16 +133,20 @@
             }
             else
             {
+                $emailRecipients = array();
                 // Zurmo user sent email, so recipients are in 'To' and 'CC' fields
-                foreach ($emailMessage->to as $key => $value)
+                if (!empty($emailMessage->to))
                 {
-                    $emailMessage->to[$key]['type'] = EmailMessageRecipient::TYPE_TO;
-                    if ($value['email'] == Yii::app()->imap->imapUsername)
+                    foreach ($emailMessage->to as $key => $value)
                     {
-                        unset($emailMessage->to[$key]);
+                        $emailMessage->to[$key]['type'] = EmailMessageRecipient::TYPE_TO;
+                        if ($value['email'] == Yii::app()->imap->imapUsername)
+                        {
+                            unset($emailMessage->to[$key]);
+                        }
                     }
+                    $emailRecipients = array_merge($emailRecipients, $emailMessage->to);
                 }
-                $emailRecipients = $emailMessage->to;
                 if (!empty($emailMessage->cc))
                 {
                     foreach ($emailMessage->cc as $key => $value)
@@ -153,7 +157,20 @@
                             unset($emailMessage->cc[$key]);
                         }
                     }
-                    $emailRecipients = ArrayUtil::arrayUniqueRecursive(array_merge($emailRecipients, $emailMessage->cc));
+                    $emailRecipients = array_merge($emailRecipients, $emailMessage->cc);
+                }
+            }
+            if (count($emailRecipients) == 0)
+            {
+                throw new NotSupportedException();
+            }
+            $emailRecipients = ArrayUtil::arrayUniqueRecursive($emailRecipients);
+            //After removing duplicates email get removed if its the same as name
+            foreach ($emailRecipients as $key => $emailRecipient)
+            {
+                if (!isset($emailRecipient['email']))
+                {
+                    $emailRecipients[$key]['email'] = $emailRecipient['name'];
                 }
             }
             return $emailRecipients;

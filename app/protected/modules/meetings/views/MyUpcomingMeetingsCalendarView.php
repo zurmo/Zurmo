@@ -39,6 +39,11 @@
      */
     class MyUpcomingMeetingsCalendarView extends UpcomingMeetingsCalendarView
     {
+        /**
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
+         */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -59,6 +64,10 @@
             return $metadata;
         }
 
+        /**
+         * @param null|string $stringTime
+         * @return array
+         */
         protected function makeSearchAttributeData($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');

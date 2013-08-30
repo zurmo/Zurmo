@@ -140,6 +140,13 @@
             }
         }
 
+        /**
+         * @param int $newStatus
+         * @param int $missionId
+         * @param string $label
+         * @param string $updateDivId
+         * @return string
+         */
         protected static function renderAjaxStatusActionChangeLink($newStatus, $missionId, $label, $updateDivId)
         {
             assert('is_int($newStatus)');

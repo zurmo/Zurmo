@@ -127,5 +127,45 @@
             $this->assertEquals(2, $group->users ->count());
             $this->assertEquals(0, $group->groups ->count());
         }
+
+        public function testValidateMembershipChange()
+        {
+            $bill = User::getByUsername('billy');
+            $jim  = User::getByUsername('jimmy');
+            $fakePostData = array(
+                'userMembershipData'    => array(0 => $bill->id),
+                'userNonMembershipData' => array(0 => $jim->id)
+            );
+            $form = new GroupUserMembershipForm();
+            $this->assertEmpty($form->userMembershipData);
+            $this->assertEmpty($form->userNonMembershipData);
+
+            $bill->setIsSystemUser();
+            $bill->firstName = 'Billy';
+            $bill->lastName = 'Billium';
+            $bill->save();
+            $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            $content = GroupUserMembershipFormUtil::validateMembershipChange($form, $group);
+            $this->assertTrue(strpos($content, 'There must be at') === 0);
+
+            $group->users->add($bill);
+            $this->assertTrue($group->save());
+            $form = GroupUserMembershipFormUtil::setFormFromCastedPost($form, $fakePostData);
+            $content = GroupUserMembershipFormUtil::validateMembershipChange($form, $group);
+            $this->assertTrue(strpos($content, 'You cannot remove') === false);
+
+            //Now add jimmy as a super user.
+            $group->users->add($jim);
+            $this->assertTrue($group->save());
+            $fakePostData = array(
+                'userMembershipData'    => array(0 => $bill->id, 1 => $jim->id)
+            );
+            $form = GroupUserMembershipFormUtil::setFormFromCastedPost($form, $fakePostData);
+
+            //Now try to remove bill, it should pass ok validation because it won't really let you when it sets to form
+            unset($form->userMembershipData[$bill->id]);
+            $content = GroupUserMembershipFormUtil::validateMembershipChange($form, $group);
+            $this->assertTrue(strpos($content, 'You cannot remove') === false);
+        }
     }
 ?>

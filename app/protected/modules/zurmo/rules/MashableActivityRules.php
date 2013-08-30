@@ -81,6 +81,17 @@
         }
 
         /**
+         * Override if you need to filter specifically for showing all latest activities that are not filtered by
+         * a related model
+         * @param $searchAttributeData
+         * @return mixed
+         */
+        public function resolveSearchAttributeDataForAllLatestActivities($searchAttributeData)
+        {
+            return $searchAttributeData;
+        }
+
+        /**
          * Override to customize summary content.
          * @param string $ownedByFilter
          * @param string $viewModuleClassName
@@ -100,6 +111,10 @@
             }
         }
 
+        /**
+         * @param array $modelsAndStringData
+         * @return null|string
+         */
         protected static function resolveStringValueModelsDataToStringContent($modelsAndStringData)
         {
             assert('is_array($modelsAndStringData)');
@@ -115,6 +130,10 @@
             return $content;
         }
 
+        /**
+         * @param array $searchAttributesData
+         * @param $ownedByFilter
+         */
         public static function resolveSearchAttributesDataByOwnedByFilter(& $searchAttributesData, $ownedByFilter)
         {
             assert('is_array($searchAttributesData)');
@@ -135,6 +154,10 @@
             }
         }
 
+        /**
+         * @param array $searchAttributesData
+         * @param int $userId
+         */
         protected static function resolveSearchAttributesDataByOwnedByFilterClauses(& $searchAttributesData, $userId)
         {
             assert('is_array($searchAttributesData)');

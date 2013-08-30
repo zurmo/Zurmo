@@ -63,13 +63,35 @@
             {
                 throw new NotSupportedException();
             }
-            $view = new TitleBarAndLeaderboardView(
-                            $this->getId(),
-                            $this->getModule()->getId(),
-                            GamePointUtil::getUserLeaderboardData($type),
-                            $activeActionElementType);
-            $view = new LeaderboardPageView(ZurmoDefaultViewUtil::
-                                            makeStandardViewForCurrentUser($this, $view));
+            $metadata = array(); //can put the typing information here easily. from the type.
+            $pageSize                         = Yii::app()->pagination->resolveActiveForCurrentUserByType(
+                                                'listPageSize', get_class($this->getModule()));
+            $gameLevel                        = new GameLevel(false);
+            $dataProvider = RedBeanModelDataProviderUtil::makeDataProvider( $metadata,
+                                                                            get_class($gameLevel),
+                                                                            'LeaderboardDataProvider',
+                                                                            'notUsed',
+                                                                            true,
+                                                                            $pageSize);
+            $dataProvider->setType($type);
+            if (isset($_GET['ajax']) && $_GET['ajax'] == 'list-view')
+            {
+                $listView            = new LeaderboardListView($this->getId(), $this->getModule()->getId(),
+                                                               get_class($gameLevel), $dataProvider, array());
+                $view = new AccountsPageView($listView);
+            }
+            else
+            {
+                $mixedView = new LeaderboardActionBarAndListView(
+                                    $this->getId(),
+                                    $this->getModule()->getId(),
+                                    $gameLevel,
+                                    'GamificationModule',
+                                    $dataProvider,
+                                    $activeActionElementType);
+                $view = new AccountsPageView(ZurmoDefaultViewUtil::
+                            makeStandardViewForCurrentUser($this, $mixedView));
+            }
             echo $view->render();
         }
     }

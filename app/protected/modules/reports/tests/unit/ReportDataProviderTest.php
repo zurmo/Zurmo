@@ -36,6 +36,8 @@
 
     class ReportDataProviderTest extends ZurmoBaseTest
     {
+        public $freeze = false;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
@@ -66,6 +68,27 @@
             {
                 throw new FailedToSaveModelException();
             }
+        }
+
+        public function setUp()
+        {
+            parent::setUp();
+            $freeze = false;
+            if (RedBeanDatabase::isFrozen())
+            {
+                RedBeanDatabase::unfreeze();
+                $freeze = true;
+            }
+            $this->freeze = $freeze;
+        }
+
+        public function teardown()
+        {
+            if ($this->freeze)
+            {
+                RedBeanDatabase::freeze();
+            }
+            parent::teardown();
         }
 
         public function testResolveFiltersForReadPermissionsWithoutAnyExistingFiltersForASuperUser()
@@ -258,6 +281,40 @@
             $this->assertEquals(OperatorRules::TYPE_ONE_OF,         $filters[2]->operator);
             $this->assertEquals($stateAdapter->getStateIds(),       $filters[2]->value);
             $this->assertEquals('1 and (2 and 3)', $filtersStructure);
+        }
+
+        public function testSqlQueryWithLinkTypeSpecificOnRelatedModels()
+        {
+            $quote = DatabaseCompatibilityUtil::getQuote();
+            Yii::app()->user->userModel = User::getByUsername('super');
+
+            $reportModelTestItem2          = new ReportModelTestItem2();
+            $reportModelTestItem2->name    = 'name';
+            $this->assertTrue($reportModelTestItem2->save());
+            $reportModelTestItem           = new ReportModelTestItem();
+            $reportModelTestItem->lastName = 'lastName';
+            $reportModelTestItem->string   = 'string';
+            $reportModelTestItem->hasOne   = $reportModelTestItem2;
+            $this->assertTrue($reportModelTestItem->save());
+
+            $report = new Report();
+            $report->setType(Report::TYPE_ROWS_AND_COLUMNS);
+            $report->setModuleClassName('ReportsTest2Module');
+            $report->setFiltersStructure('');
+            $displayAttribute1    = new DisplayAttributeForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                                     Report::TYPE_ROWS_AND_COLUMNS);
+            $displayAttribute1->setModelAliasUsingTableAliasName('relatedModel');
+            $displayAttribute1->attributeIndexOrDerivedType = 'hasMany2___FullName';
+            $report->addDisplayAttribute($displayAttribute1);
+
+            $dataProvider = new RowsAndColumnsReportDataProvider($report);
+            $content = $dataProvider->makeSqlQueryForDisplay();
+            $compareContent = "select {$quote}reportmodeltestitem{$quote}.{$quote}id{$quote} reportmodeltestitemid " .
+                              "from {$quote}reportmodeltestitem2{$quote} " .
+                              "left join {$quote}reportmodeltestitem{$quote} on " .
+                              "{$quote}reportmodeltestitem{$quote}.{$quote}hasone_reportmodeltestitem2_id{$quote} " .
+                              "= {$quote}reportmodeltestitem2{$quote}.{$quote}id{$quote}  limit 10 offset 0";
+            $this->assertEquals($compareContent, $content);
         }
     }
 ?>

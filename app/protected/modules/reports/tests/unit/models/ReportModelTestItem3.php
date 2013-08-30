@@ -52,6 +52,7 @@
                 ),
                 'relations' => array(
                     'hasMany1' => array(RedBeanModel::MANY_MANY, 'ReportModelTestItem'),
+                    'hasMany2' => array(RedBeanModel::MANY_MANY, 'ReportModelTestItem2'),
                 )
             );
             return $metadata;

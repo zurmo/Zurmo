@@ -95,6 +95,9 @@
             return $this->tempTableName;
         }
 
+        /**
+         * @param string $name
+         */
         public function setTempTableName($name)
         {
             assert('is_string($name)');

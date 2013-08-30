@@ -38,7 +38,7 @@
 </tr>
 <tr>
         <td>clickAndWait</td>
-        <td>link=Next</td>
+        <td>link=Upload File</td>
         <td></td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@
 </tr>
 <tr>
         <td>clickAndWait</td>
-        <td>link=Next</td>
+        <td>link=Select Permissions</td>
         <td></td>
 </tr>
 <tr>
@@ -83,7 +83,7 @@
 </tr>
 <tr>
         <td>verifyTextPresent</td>
-        <td>Step 3 of 6</td>
+        <td>Import Wizard - Select Permissions</td>
         <td></td>
 </tr>
 <tr>
@@ -93,7 +93,7 @@
 </tr>
 <tr>
         <td>clickAndWait</td>
-        <td>link=Next</td>
+        <td>link=Map Fields</td>
         <td></td>
 </tr>
 <tr>
@@ -332,8 +332,23 @@
         <td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[1]/strong</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[2]/strong</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[3]/strong</td>
+	<td>0</td>
+</tr>
+<tr>
         <td>clickAndWait</td>
-        <td>link=Next</td>
+        <td>link=Import Data</td>
         <td></td>
 </tr>
 <tr>
@@ -348,13 +363,23 @@
 </tr>
 <tr>
         <td>verifyTextPresent</td>
-        <td>Congratulations!</td>
+        <td>Congratulations! Your import is complete. Below is a summary of the results.</td>
         <td></td>
 </tr>
 <tr>
-        <td>assertTextPresent</td>
-        <td>Rows with errors: 0</td>
-        <td></td>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[1]/strong</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[2]/strong</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form[@id='edit-form']/div[2]/div/ul/li[3]/strong</td>
+	<td>0</td>
 </tr>
 <tr>
         <td>clickAndWait</td>
@@ -403,7 +428,7 @@
 </tr>
 <tr>
         <td>waitForText</td>
-        <td>//div[@id='list-view']/table/tbody/tr/td[2]/a</td>
+        <td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
         <td>account1</td>
 </tr>
 </tbody></table>

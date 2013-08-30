@@ -65,14 +65,28 @@
          */
         protected function renderEditableSecondValueContent()
         {
-            $htmlOptions          = $this->getHtmlOptionsForSecondValue();
-            $htmlOptions['empty'] = Zurmo::t('Core', '(None)');
-            $dropDownArray = $this->model->getDynamicTypeValueDropDownArray();
-            $inputContent  = $this->form->dropDownList($this->model, 'value', $dropDownArray, $htmlOptions);
-            $error         = $this->form->error($this->model, 'value',
-                             array('inputID' => $this->getSecondValueEditableInputId()), true, true,
-                             $this->getSecondValueEditableInputId());
-            return $inputContent . $error;
+            $htmlOptions                        = array('inputPrefix' => $this->resolveInputNamePrefix());
+            $durationElement                    = new WorkflowActionAttributeDurationElement($this->model,
+                                                  null, $this->form, $htmlOptions);
+            $durationElement->editableTemplate  = '{content}{error}';
+            $durationContent                    = $durationElement->render();
+            $error                              = $this->form->error($this->model, 'value',
+                                                  array('inputID' => $this->getSecondValueEditableInputId()), true, true,
+                                                  $this->getSecondValueEditableInputId());
+            return $durationContent . $error;
+        }
+
+        /**
+         * @return array
+         */
+        protected function getHtmlOptionsForSecondValue()
+        {
+            $htmlOptions = array('inputPrefix' => $this->resolveInputNamePrefix());
+            if ($this->shouldDisableSecondValueInputs())
+            {
+                $htmlOptions['disabled'] = 'disabled';
+            }
+            return $htmlOptions;
         }
     }
 ?>

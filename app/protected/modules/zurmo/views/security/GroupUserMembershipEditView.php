@@ -43,6 +43,11 @@
         /**
          * Constructs a user membershipview specifying the controller as
          * well as the model that will have its details displayed.
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param GroupUserMembershipForm $model
+         * @param null|string $modelId
+         * @param string $title
          */
         public function __construct($controllerId, $moduleId, $model, $modelId, $title)
         {

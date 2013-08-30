@@ -47,6 +47,11 @@
 
         protected $supportsSlidingPanels = true;
 
+        /**
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
+         */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -123,6 +128,13 @@
         }
 
         /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
+        }
+
+        /**
          * Override and return null so we can render the actionElementMenu in the portletHeaderContent
          * @return null
          */
@@ -154,6 +166,7 @@
             $content .= $this->makeSecondSlidingPanelContent();
             return $content;
         }
+
         protected function makeFirstSlidingPanelContent($content)
         {
             return PersonSlidingPanelsUtil::makeFirstSlidingPanelContent((int)$this->params['portletId'], $content);

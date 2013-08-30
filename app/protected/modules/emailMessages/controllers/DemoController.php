@@ -44,7 +44,7 @@
          */
         public function actionLoadEmailMessagesSampler()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }
@@ -175,7 +175,7 @@
          */
         public function actionLoadUnmatchedSampler()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }
@@ -240,7 +240,7 @@
 
         public function actionSendDemoEmailNotifications()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }

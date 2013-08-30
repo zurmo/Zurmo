@@ -52,8 +52,7 @@
                 return null;
             }
             $moduleClassName = self::resolveModuleClassName($attribute, $data);
-            return Yii::app()->createUrl('/' . $moduleClassName::getDirectoryName() . '/default/details',
-                                         array('id' => $data->getModel($attribute)->id));
+            return static::makeUrl($data->getModel($attribute)->id, $moduleClassName);
         }
 
         protected static function resolveModuleClassName($attribute, ReportResultsRowData $data)
@@ -67,6 +66,74 @@
             {
                 return $data->getModel($attribute)->getModuleClassName();
             }
+        }
+
+        public static function makeStringForLinkOrLinks($attribute, ReportResultsRowData $data,
+                                                        $shouldRenderMultipleLinks, $attributeString)
+        {
+            assert('is_string($attribute)');
+            if (null == $model = $data->getModel($attribute))
+            {
+                return null;
+            }
+            $modelClassName  = get_class($data->getModel($attribute));
+            $moduleClassName = self::resolveModuleClassName($attribute, $data);
+            return static::makeStringForMultipleLinks($attributeString,
+                                                      $modelClassName,
+                                                      $moduleClassName,
+                                                      $shouldRenderMultipleLinks);
+        }
+
+        public static function makeStringForMultipleLinks($value, $modelClassName, $moduleClassName, $shouldRenderMultipleLinks = true)
+        {
+            assert('is_string($modelClassName)');
+            $models          = $modelClassName::getByName(strval($value));
+            if (count($models) <= 1 || !$shouldRenderMultipleLinks)
+            {
+                $url = static::makeUrl($models[0]->id, $moduleClassName);
+                return ZurmoHtml::link($value, $url, array("target" => "new"));
+            }
+            else
+            {
+                $qtipContent = null;
+                $count       = 1;
+                foreach ($models as $model)
+                {
+                    if ($count > 10)
+                    {
+                        $qtipContent    .= Zurmo::t('ReportsModule', 'There are more results. ' .
+                                                    'Only displaying the first {count}.', array('{count}' => $count - 1));
+                        break;
+                    }
+                    $id              = $model->id;
+                    $url             = static::makeUrl($id, $moduleClassName);
+                    $qtipContent    .= ZurmoHtml::link('Link ' . $count++, $url, array("target" => "new")) . '<br />';
+                }
+                $content     = '<span id="report-multiple-link-' . $moduleClassName . '-' . $id . '">';
+                $content    .= $value;
+                $content    .= '<span class="tooltip">' . count($models) . '</span>';
+                $content    .= '</span>';
+                $options     = array('content'  => array(
+                                                    'title' => $value,
+                                                    'text'  => $qtipContent,
+                                                  ),
+                                     'position' => array('my'  => 'bottom right',
+                                                         'at'  => 'top right'),
+                                     'hide'     => array('event' => 'click unfocus'),
+                                     'show'     => array('event' => 'click', 'solo' => true),
+                                     );
+                $qtip        = new ZurmoTip();
+                $qtip->addQTip("#report-multiple-link-" . $moduleClassName . "-" . $id, $options);
+                return $content;
+            }
+        }
+
+        protected static function makeUrl($id, $moduleClassName)
+        {
+            assert('is_int($id)');
+            assert('is_string($moduleClassName)');
+            return Yii::app()->createUrl('/' . $moduleClassName::getDirectoryName() . '/default/details',
+                                         array('id' => $id));
         }
     }
 ?>

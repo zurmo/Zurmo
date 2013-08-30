@@ -67,7 +67,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '500.34',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('500.34', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -80,7 +80,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '$500.34',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('500.34', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -93,7 +93,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'currencyValue', '15,500.34', // Not Coding Standard
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('15500.34', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -111,7 +111,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -126,7 +126,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(true, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -141,7 +141,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', 'yes',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(true, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -156,7 +156,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', 'yes',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(true, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -171,7 +171,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', 'blah',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null,    $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -189,7 +189,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', 'blah',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -209,7 +209,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'boolean', 'no',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(false, $sanitizedValue);
             $this->assertTrue($sanitizedValue !== null);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
@@ -230,7 +230,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -247,7 +247,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2010-05-04', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -264,7 +264,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', '02-20-2005',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2005-02-20', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -281,7 +281,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', '02-2005-06',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $this->assertEquals(0, count($messages));
@@ -298,7 +298,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'date', '02-2005-06',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $this->assertEquals(0, count($messages));
@@ -317,7 +317,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -334,7 +334,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2010-05-04 05:00', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -351,7 +351,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', '02-20-2005 04:22:00',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -368,7 +368,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', '02-2005-06',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $this->assertEquals(0, count($messages));
@@ -385,7 +385,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dateTime', '02-2005-06',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $this->assertEquals(0, count($messages));
@@ -401,7 +401,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'createdDateTime', '02-20-2005 04:22:00',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -418,7 +418,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'modifiedDateTime', '02-20-2005 04:22:00',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('2005-02-20 04:22:00', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -427,19 +427,19 @@
 
         public function testSanitizeValueBySanitizerTypesForDropDownTypeThatIsNotRequired()
         {
-            $importInstructionsData = array('DropDown' => array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array()));
+            $customFieldsInstructionData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES => array());
 
             //Test a non-required dropDown with no value and no default value.
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => null)),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -450,12 +450,12 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('Test1', $sanitizedValue->value);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -466,12 +466,12 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test2')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'Demo',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('Demo', $sanitizedValue->value);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -485,12 +485,12 @@
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test3')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'NotThere',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -500,20 +500,20 @@
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Now use a value that is missing, but there are instructions to add it, and confirm it is added.
-            $importInstructionsData = array('DropDown' =>
-                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array('NewValue')));
+            $customFieldsInstructionData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES => array('NewValue'));
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $this->assertEquals(5, count(unserialize($customFieldData->serializedData)));
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'NewValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
+            $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals('NewValue', $sanitizedValue->value);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -525,21 +525,20 @@
 
             //Now use a value that is missing, but there is valid instructions on how to map it. Use different casing
             //to increase test coverage. (sample instead of Sample)
-            $importInstructionsData = array('DropDown' =>
-                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
-                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array('MappedValue' => 'sample')));
+            $customFieldsInstructionData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES => array(),
+                                                 CustomFieldsInstructionData::MAP_MISSING_VALUES => array('MappedValue' => 'sample'));
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'MappedValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('Sample', $sanitizedValue->value);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -549,21 +548,20 @@
             $this->assertEquals(6, count($values));
 
             //Now use a value that is missing, there are instructions on how to map it, but the mapping is invalid.
-            $importInstructionsData = array('DropDown' =>
-                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
-                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array('MappedValue' => 'SampleX')));
+            $customFieldsInstructionData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES => array(),
+                                                 CustomFieldsInstructionData::MAP_MISSING_VALUES => array('MappedValue' => 'SampleX'));
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', 'MappedValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -576,21 +574,20 @@
             $this->assertEquals(6, count($values));
 
             //Test using no value, and relying on the defaultValue to populate
-            $importInstructionsData = array('DropDown' =>
-                                      array(DropDownSanitizerUtil::ADD_MISSING_VALUE  => array(),
-                                            DropDownSanitizerUtil::MAP_MISSING_VALUES => array()));
+            $customFieldsInstructionData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES => array(),
+                                                 CustomFieldsInstructionData::MAP_MISSING_VALUES => array());
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
             $this->assertEquals(6, count(unserialize($customFieldData->serializedData)));
             $importSanitizeResultsUtil = new ImportSanitizeResultsUtil();
             $columnMappingData         = array('type' => 'importColumn', 'mappingRulesData' => array(
                                                'DefaultValueDropDownModelAttributeMappingRuleForm' =>
                                                array('defaultValue' => 'Test1')),
-                                               'importInstructionsData' => $importInstructionsData);
+                                               'customFieldsInstructionData' => $customFieldsInstructionData);
             $sanitizerUtilTypes        = DropDownAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'dropDown', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('Test1', $sanitizedValue->value);
             $this->assertTrue($sanitizedValue instanceof OwnedCustomField);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
@@ -612,7 +609,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Email', 'emailAddress', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -627,7 +624,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Email', 'emailAddress', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('a@a.com', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -642,7 +639,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Email', 'emailAddress', 'c@c.com',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('c@c.com', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -659,7 +656,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'Email', 'emailAddress', 'abcxco@',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -679,12 +676,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - A full name value is required but missing.';
+            $compareMessage = 'ImportModelTestItem - Full name value required, but missing.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required FullName with no value, but a valid default value
@@ -696,7 +693,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('something valid', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -711,7 +708,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, 'aValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('aValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -726,7 +723,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, 'first last',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('first last', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -742,12 +739,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last name specified is too long.';
+            $compareMessage = 'ImportModelTestItem - Last Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required FullName with a value that is too long and a specified default value. The specified
@@ -761,12 +758,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last name specified is too long.';
+            $compareMessage = 'ImportModelTestItem - Last Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //A first name that is too large, but the last name is ok.
@@ -779,12 +776,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - First name specified is too long.';
+            $compareMessage = 'ImportModelTestItem - First Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
@@ -812,7 +809,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, 'qweqwe',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -829,7 +826,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -845,7 +842,7 @@
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null,
                                          $importModelTestItem3Model2->id,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem3Model2, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -860,7 +857,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', null, 'Q',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem3Model3, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -878,7 +875,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -893,7 +890,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(45.65, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -908,7 +905,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', '23.67',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('23.67', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -917,7 +914,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', 23.67,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(23.67, $sanitizedValue);
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
@@ -925,7 +922,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', 25,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(25, $sanitizedValue);
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
@@ -941,7 +938,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'float', 'abc',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -960,7 +957,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -975,7 +972,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(41, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -990,7 +987,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', '34',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('34', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -999,18 +996,18 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', 654,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(654, $sanitizedValue);
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(0, count($messages));
-            //Now try a float for an integer. This should work ok.
+            //Now try a float for an integer. This should not work ok
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', 25.54,
-                                         $columnMappingData, $importSanitizeResultsUtil);
-            $this->assertEquals(25.54, $sanitizedValue);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
+            $this->assertNull($sanitizedValue);
             $messages = $importSanitizeResultsUtil->getMessages();
-            $this->assertEquals(0, count($messages));
+            $this->assertEquals(1, count($messages));
 
             //Test a non-required integer with an invalid value and a default value.  The default value should not
             //be picked up, it should be ignored.  On the first sanitization failure, sanitization will stop, this is
@@ -1023,12 +1020,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'integer', 'abc',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Integer Invalid number format.';
+            $compareMessage = 'ImportModelTestItem - Integer Invalid integer format.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
@@ -1056,12 +1053,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'qweqwe',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Has One The id specified did not match any existing records.';
+            $compareMessage = 'ImportModelTestItem - Has One Id specified did not match any existing records.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required related model with no value.
@@ -1073,7 +1070,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1088,7 +1085,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', $importModelTestItem2Model2->id,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem2Model2, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1103,7 +1100,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'R',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem2Model3, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1118,7 +1115,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'bbb',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem2Model2, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1133,7 +1130,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'hasOne', 'rrr',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('rrr', $sanitizedValue->name);
             $this->assertEquals('ImportModelTestItem2', get_class($sanitizedValue));
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
@@ -1165,12 +1162,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'id', 'xasdasd',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Id The id specified did not match any existing records.';
+            $compareMessage = 'ImportModelTestItem - Id Id specified did not match any existing records.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test the id attribute with no value.
@@ -1182,7 +1179,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'id', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1197,7 +1194,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'id', $importModelTestItem1Model2->id,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem1Model2->id, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1212,7 +1209,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'id', 'J',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($importModelTestItem1Model3->id, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1230,7 +1227,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1248,7 +1245,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('something valid', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1263,7 +1260,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', 'aValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('aValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1278,7 +1275,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', 'bValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('bValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1294,7 +1291,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 64), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1311,7 +1308,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'string', $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 64), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1329,7 +1326,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1344,7 +1341,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('something valid', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1359,7 +1356,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', 'aValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('aValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1374,7 +1371,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', 'bValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('bValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1390,7 +1387,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 14), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1407,7 +1404,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'phone', $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 14), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1423,7 +1420,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'textArea', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1436,7 +1433,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'textArea', 'bValue',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('bValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1450,7 +1447,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'textArea', $value,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 65000), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1468,7 +1465,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'url', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1483,7 +1480,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'url', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('abc.com', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1498,7 +1495,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'url', 'gre.com',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('http://gre.com', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1515,7 +1512,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'url', 'abcxco@',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(null, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1549,12 +1546,12 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Owner This id is required and was not specified.';
+            $compareMessage = 'ImportModelTestItem - Owner Id is required and was not specified.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a required string with no value, but a valid default value, a user id.
@@ -1569,7 +1566,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', null,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($billy, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1587,7 +1584,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', $billy->id,
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($billy, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1605,7 +1602,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', 'K',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($jimmy, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
@@ -1623,7 +1620,7 @@
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
                                          $sanitizerUtilTypes, 'ImportModelTestItem', 'owner', 'sally',
-                                         $columnMappingData, $importSanitizeResultsUtil);
+                                         'column_0', $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals($sally, $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();

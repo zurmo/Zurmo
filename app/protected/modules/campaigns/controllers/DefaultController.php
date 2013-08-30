@@ -108,7 +108,7 @@
             else
             {
                 $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider,
-                             'SecuredActionBarForMarketingSearchAndListView', null, 'CampaignsLink');
+                             'SecuredActionBarForMarketingListsSearchAndListView', null, 'CampaignsLink');
                 $breadcrumbLinks = static::getListBreadcrumbLinks();
                 $view      = new CampaignsPageView(MarketingDefaultViewUtil::
                                  makeViewWithBreadcrumbsForCurrentUser($this, $mixedView, $breadcrumbLinks,
@@ -119,18 +119,31 @@
 
         public function actionCreate()
         {
-           $breadcrumbLinks            = static::getDetailsAndEditBreadcrumbLinks();
-           $breadcrumbLinks[]          = Zurmo::t('CampaignsModule', 'Create');
-           $campaign                   = new Campaign();
-           $campaign->status           = Campaign::STATUS_ACTIVE;
-           $campaign->supportsRichText = true;
-           $campaign->enableTracking   = true;
-           $editView                   = new CampaignEditView($this->getId(), $this->getModule()->getId(),
-                                                 $this->attemptToSaveModelFromPost($campaign),
-                                                 Zurmo::t('Default', 'Create Campaign'));
-            $view               = new CampaignsPageView(MarketingDefaultViewUtil::
-                                  makeViewWithBreadcrumbsForCurrentUser($this, $editView,
-                                  $breadcrumbLinks, 'MarketingBreadCrumbView'));
+            $this->actionCreateByModel(new Campaign());
+        }
+
+        public function actionCreateFromRelation($relationAttributeName, $relationModelId, $relationModuleId, $redirectUrl)
+        {
+            $campaign             = $this->resolveNewModelByRelationInformation( new Campaign(),
+                                    $relationAttributeName,
+                                    (int)$relationModelId,
+                                    $relationModuleId);
+            $this->actionCreateByModel($campaign, $redirectUrl);
+        }
+
+        protected function actionCreateByModel(Campaign $campaign, $redirectUrl = null)
+        {
+            $breadcrumbLinks            = static::getDetailsAndEditBreadcrumbLinks();
+            $breadcrumbLinks[]          = Zurmo::t('CampaignsModule', 'Create');
+            $campaign->status           = Campaign::STATUS_ACTIVE;
+            $campaign->supportsRichText = true;
+            $campaign->enableTracking   = true;
+            $editView                   = new CampaignEditView($this->getId(), $this->getModule()->getId(),
+                                          $this->attemptToSaveModelFromPost($campaign, $redirectUrl),
+                                          Zurmo::t('Default', 'Create Campaign'));
+            $view                       = new CampaignsPageView(MarketingDefaultViewUtil::
+                                          makeViewWithBreadcrumbsForCurrentUser($this, $editView,
+                                          $breadcrumbLinks, 'MarketingBreadCrumbView'));
             echo $view->render();
         }
 

@@ -68,10 +68,13 @@
                 $portletCollection = Portlet::getByLayoutIdAndUserSortedByColumnIdAndPosition($_GET['uniqueLayoutId'], Yii::app()->user->userModel->id, array());
                 if (!empty($portletCollection))
                 {
-                    foreach ($portletCollection[$maximumColumns] as $position => $portlet)
+                    if (isset($portletCollection[$maximumColumns]))
                     {
-                        $portlet->position = $portlet->position + 1;
-                        $portlet->save();
+                        foreach ($portletCollection[$maximumColumns] as $position => $portlet)
+                        {
+                            $portlet->position = $portlet->position + 1;
+                            $portlet->save();
+                        }
                     }
                 }
             }

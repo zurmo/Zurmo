@@ -38,26 +38,48 @@
      * A data provider that manages import data during the import process.  The data provider will retrieve data
      * from the temporary import table that is created when a csv is uploaded.
      */
-    class ImportDataProvider extends AnalyzerSupportedDataProvider
+    class ImportDataProvider extends CDataProvider
     {
         private $tableName;
 
         private $excludeFirstRow;
 
-        private $filterByStatus;
+        private $filteredByStatus;
 
-        public function __construct($tableName, $excludeFirstRow = false, array $config = array(), $filterByStatus = null)
+        private $filteredByAnalysisStatus;
+
+        public function getTableName()
+        {
+            return $this->tableName;
+        }
+
+        /**
+         * @param string $tableName
+         * @param bool $excludeFirstRow
+         * @param array $config
+         * @param null|int $filteredByStatus
+         * @param null|int $filteredByAnalysisStatus
+         */
+        public function __construct($tableName, $excludeFirstRow = false, array $config = array(), $filteredByStatus = null,
+                                    $filteredByAnalysisStatus = null)
         {
             assert('is_string($tableName) && $tableName != ""');
             assert('is_bool($excludeFirstRow)');
-            assert('is_int($filterByStatus) || $filterByStatus == null');
-            $this->tableName       = $tableName;
-            $this->excludeFirstRow = $excludeFirstRow;
-            $this->filterByStatus  = $filterByStatus;
+            assert('is_int($filteredByStatus) || $filteredByStatus == null');
+            assert('is_int($filteredByAnalysisStatus) || $filteredByAnalysisStatus == null');
+            $this->tableName              = $tableName;
+            $this->excludeFirstRow        = $excludeFirstRow;
+            $this->filteredByStatus         = $filteredByStatus;
+            $this->filteredByAnalysisStatus = $filteredByAnalysisStatus;
             foreach ($config as $key => $value)
             {
                 $this->$key = $value;
             }
+        }
+
+        public function hasHeaderRow()
+        {
+            return $this->excludeFirstRow;
         }
 
         /**
@@ -111,9 +133,6 @@
             return $keys;
         }
 
-        /**
-         * @see AnalyzerSupportedDataProvider::getCountByWhere()
-         */
         public function getCountByWhere($where)
         {
             assert('$where != null');
@@ -121,9 +140,6 @@
             return ImportDatabaseUtil::getCount($this->tableName, $where);
         }
 
-        /**
-         * @see AnalyzerSupportedDataProvider::getCountDataByGroupByColumnName()
-         */
         public function getCountDataByGroupByColumnName($groupbyColumnName, $where = null)
         {
             assert(is_string($groupbyColumnName)); // Not Coding Standard
@@ -148,13 +164,21 @@
                 }
                 $where .= 'id != 1';
             }
-            if ($this->filterByStatus)
+            if ($this->filteredByStatus)
             {
                 if ($where != null)
                 {
                     $where .= ' and ';
                 }
-                $where .= 'status = ' . $this->filterByStatus;
+                $where .= 'status = ' . $this->filteredByStatus;
+            }
+            if ($this->filteredByAnalysisStatus)
+            {
+                if ($where != null)
+                {
+                    $where .= ' and ';
+                }
+                $where .= 'analysisstatus = ' . $this->filteredByAnalysisStatus;
             }
         }
     }

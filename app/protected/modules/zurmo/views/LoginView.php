@@ -39,6 +39,11 @@
         private $controller;
         private $formModel;
 
+        /**
+         * @param CController $controller
+         * @param CFormModel $formModel
+         * @param null|string  $extraHeaderContent
+         */
         public function __construct(CController $controller, CFormModel $formModel, $extraHeaderContent = null)
         {
             assert('is_string($extraHeaderContent) || $extraHeaderContent == null');

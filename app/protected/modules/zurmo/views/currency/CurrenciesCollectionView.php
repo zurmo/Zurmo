@@ -46,6 +46,12 @@
 
         protected $currencies;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $currencies
+         * @param null|string $messageBoxContent
+         */
         public function __construct($controllerId, $moduleId, $currencies, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');

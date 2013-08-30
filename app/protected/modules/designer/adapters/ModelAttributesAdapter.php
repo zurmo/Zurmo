@@ -250,6 +250,9 @@
             }
         }
 
+        /**
+         * @param string $attributeName
+         */
         public function removeAttributeMetadata($attributeName)
         {
             assert('is_string($attributeName) && $attributeName != ""');

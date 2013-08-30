@@ -40,31 +40,36 @@
         {
             return array(
                 'name'  => $this->attribute,
-                'value' => 'IntegerForReportListViewColumnAdapter::renderNonEditableStatically($data, "' . $this->attribute . '")',
+                'value' => array($this, 'renderDataCellContent'),
                 'type'  => 'raw',
             );
         }
 
-        public static function renderNonEditableStatically($model, $attribute)
+        public function renderDataCellContent($data, $row)
         {
-            assert('$model instanceof ReportResultsRowData');
-            if (null === $displayAttributeKey = $model::resolveKeyByAttributeName($attribute))
+            assert('$data instanceof ReportResultsRowData');
+            if (null === $displayAttributeKey = $data::resolveKeyByAttributeName($this->attribute))
             {
-                return $model->{$attribute};
+                return $data->{$this->attribute};
             }
-            $displayAttributes = $model->getDisplayAttributes();
+            $displayAttributes = $data->getDisplayAttributes();
             $displayAttribute  = $displayAttributes[$displayAttributeKey];
             $realAttributeName = $displayAttribute->getResolvedAttribute();
-            if ($model->getModel($attribute) instanceof RedBeanModel &&
-               $model->getModel($attribute)->isAttributeFormattedAsProbability($realAttributeName))
+            if ($data->getModel($this->attribute) instanceof RedBeanModel &&
+                $data->getModel($this->attribute)->isAttributeFormattedAsProbability($realAttributeName))
             {
-                $resolvedValue = NumberUtil::divisionForZero($model->{$attribute}, 100);
+                $resolvedValue = NumberUtil::divisionForZero($data->{$this->attribute}, 100);
                 return Yii::app()->numberFormatter->formatPercentage($resolvedValue);
             }
             else
             {
-                return Yii::app()->format->formatNumber((int)$model->{$attribute});
+                return $this->renderValue($data->{$this->attribute});
             }
+        }
+
+        public function renderValue($value)
+        {
+            return Yii::app()->numberFormatter->formatDecimal((int)$value);
         }
     }
 ?>

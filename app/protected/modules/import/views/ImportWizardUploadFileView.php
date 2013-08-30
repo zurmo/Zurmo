@@ -71,5 +71,23 @@
         {
             return $this->getPreviousPageLinkContentByControllerAction('step1');
         }
+
+        protected function renderPreviousPageLinkLabel()
+        {
+            return Zurmo::t('Core', 'Select Module');
+        }
+
+        protected function renderNextPageLinkLabel()
+        {
+            $importRulesClassName  = ImportRulesUtil::getImportRulesClassNameByType($this->model->importRulesType);
+            if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+            {
+                return Zurmo::t('ZurmoModule', 'Map Fields');
+            }
+            else
+            {
+                return Zurmo::t('ZurmoModule', 'Select Permissions');
+            }
+        }
     }
 ?>

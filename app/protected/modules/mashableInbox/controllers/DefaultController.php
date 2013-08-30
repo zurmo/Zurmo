@@ -171,7 +171,8 @@
                 $listView           = $mashableUtilRules->getListView(
                                                       $mashableInboxForm->optionForModel,
                                                       $mashableInboxForm->filteredBy,
-                                                      $mashableInboxForm->searchTerm);
+                                                      $mashableInboxForm->searchTerm,
+                                                      $mashableInboxForm->filterByStarred);
             }
             else
             {

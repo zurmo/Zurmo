@@ -59,9 +59,14 @@
         public $emailTemplateId;
 
         /**
-         * @var int
+         * @var integer.
          */
-        public $sendAfterDurationSeconds;
+        public $sendAfterDurationInterval;
+
+        /**
+         * @var string
+         */
+        public $sendAfterDurationType = TimeDurationUtil::DURATION_TYPE_DAY;
 
         /**
          * @var string
@@ -113,6 +118,17 @@
         {
             assert('is_int($attributeName)');
             return self::EMAIL_MESSAGE_RECIPIENTS . '_' .  $attributeName . '_';
+        }
+
+        /**
+         * @param integer $initialTimeStamp
+         * @return integer timestamp based on durationInterval, durationSign, and durationType
+         */
+        public function resolveNewTimeStampForDuration($initialTimeStamp)
+        {
+            assert('is_int($initialTimeStamp)');
+            return TimeDurationUtil::resolveNewTimeStampForDuration($initialTimeStamp, (int)$this->sendAfterDurationInterval,
+                   TimeDurationUtil::DURATION_SIGN_POSITIVE, $this->sendAfterDurationType);
         }
 
         /**
@@ -176,12 +192,16 @@
         public function rules()
         {
             return array_merge(parent::rules(), array(
-                array('emailTemplateId',          'required'),
-                array('sendAfterDurationSeconds', 'type', 'type' => 'integer'),
-                array('sendFromType',             'type',  'type' => 'string'),
-                array('sendFromType',             'validateSendFromType'),
-                array('sendFromName',             'type',  'type' => 'string'),
-                array('sendFromAddress',          'type',  'type' => 'string'),
+                array('emailTemplateId',           'required'),
+                array('sendAfterDurationInterval', 'type', 'type' => 'integer'),
+                array('sendAfterDurationInterval', 'numerical', 'min' => 0),
+                array('sendAfterDurationInterval', 'required'),
+                array('sendAfterDurationType',     'type', 'type' => 'string'),
+                array('sendAfterDurationType',     'required'),
+                array('sendFromType',              'type',  'type' => 'string'),
+                array('sendFromType',              'validateSendFromType'),
+                array('sendFromName',              'type',  'type' => 'string'),
+                array('sendFromAddress',           'type',  'type' => 'string'),
             ));
         }
 
@@ -190,11 +210,11 @@
          */
         public function attributeLabels()
         {
-            return array('emailTemplateId'          => Zurmo::t('WorkflowsModule', 'Template'),
-                         'sendAfterDurationSeconds' => Zurmo::t('WorkflowsModule', 'Send'),
-                         'sendFromType'             => Zurmo::t('WorkflowsModule', 'Send From'),
-                         'sendFromName'             => Zurmo::t('WorkflowsModule', 'From Name'),
-                         'sendFromAddress'          => Zurmo::t('WorkflowsModule', 'From Address'),
+            return array('emailTemplateId'           => Zurmo::t('WorkflowsModule', 'Template'),
+                         'sendAfterDurationInterval' => Zurmo::t('WorkflowsModule', 'Send After'),
+                         'sendFromType'              => Zurmo::t('WorkflowsModule', 'Send From'),
+                         'sendFromName'              => Zurmo::t('WorkflowsModule', 'From Name'),
+                         'sendFromAddress'           => Zurmo::t('WorkflowsModule', 'From Address'),
             );
         }
 
@@ -207,7 +227,8 @@
         public function setAttributes($values, $safeOnly = true)
         {
             $recipients = null;
-            if (isset($values[self::EMAIL_MESSAGE_RECIPIENTS]))
+            if (isset($values[self::EMAIL_MESSAGE_RECIPIENTS]) &&
+                is_array($values[self::EMAIL_MESSAGE_RECIPIENTS]))
             {
                 $recipients = $values[self::EMAIL_MESSAGE_RECIPIENTS];
                 unset($values[self::EMAIL_MESSAGE_RECIPIENTS]);
@@ -308,16 +329,6 @@
             $data                               = array();
             $data[self::SEND_FROM_TYPE_DEFAULT] = Zurmo::t('WorkflowsModule', 'Default System From Name/Address');
             $data[self::SEND_FROM_TYPE_CUSTOM]  = Zurmo::t('WorkflowsModule', 'Custom From Name/Address');
-            return $data;
-        }
-
-        /**
-         * @return array
-         */
-        public function getSendAfterDurationValuesAndLabels()
-        {
-            $data = array();
-            WorkflowUtil::resolveSendAfterDurationData($data);
             return $data;
         }
 

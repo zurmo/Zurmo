@@ -62,12 +62,21 @@
             }
         }
 
-        public static function getUserLeaderboardData($type)
+        /**
+         * @param string $type
+         * @param int $startingRank
+         * @param null|int $offset
+         * @param null|int $count
+         * @return array
+         */
+        public static function getUserLeaderboardData($type, $startingRank = 1, $offset = null, $count = null)
         {
             assert('is_string($type)');
-            $sql             = static::makeUserLeaderboardSqlQuery($type);
+            assert('$offset  === null || is_integer($offset)  && $offset  >= 0');
+            assert('$count   === null || is_integer($count)   && $count   >= 1');
+            $sql             = static::makeUserLeaderboardSqlQuery($type, $offset, $count);
             $rows            = R::getAll($sql);
-            $rank            = 1;
+            $rank            = $startingRank;
             $leaderboardData = array();
             foreach ($rows as $row)
             {
@@ -81,15 +90,34 @@
             return $leaderboardData;
         }
 
-        protected static function makeUserLeaderboardSqlQuery($type)
+        public static function getUserLeaderboardCount($type)
+        {
+            $sql = self::makeUserLeaderboardCountSqlQuery($type);
+            $count = R::getCell($sql);
+            if ($count === null || (is_array($count) && count($count) == 0))
+            {
+                $count = 0;
+            }
+            return $count;
+        }
+
+        /**
+         * @param string $type
+         * @param null|int $offset
+         * @param null|int $count
+         * @return string
+         */
+        protected static function makeUserLeaderboardSqlQuery($type, $offset = null, $count = null)
         {
             assert('is_string($type)');
+            assert('$offset  === null || is_integer($offset)  && $offset  >= 0');
+            assert('$count   === null || is_integer($count)   && $count   >= 1');
             $quote                     = DatabaseCompatibilityUtil::getQuote();
-            $where                     = null;
+            $where                     = '_user.hidefromleaderboard is null OR _user.hidefromleaderboard = 0';
             $selectDistinct            = false;
             $orderBy                   = "points desc";
             $joinTablesAdapter         = new RedBeanModelJoinTablesQueryAdapter('GamePointTransaction');
-            static::resolveLeaderboardWhereClausesByType($type, $joinTablesAdapter, $where);
+            static::resolveLeaderboardWhereClausesByType($type, $where);
             $selectQueryAdapter        = new RedBeanModelSelectQueryAdapter($selectDistinct);
             $selectQueryAdapter->addClause('_user', 'id', 'userid');
             $selectQueryAdapter->addSummationClause('gamepointtransaction', 'value', 'points');
@@ -98,17 +126,37 @@
             $joinTablesAdapter->addFromTableAndGetAliasName('_user', 'id', 'permitable', 'permitable_id');
             $groupBy                   = "{$quote}_user{$quote}.{$quote}id{$quote}";
             $sql                       = SQLQueryUtil::makeQuery('gamepointtransaction', $selectQueryAdapter,
-                                                                 $joinTablesAdapter, null, null, $where, $orderBy, $groupBy);
+                                         $joinTablesAdapter, $offset, $count, $where, $orderBy, $groupBy);
             return $sql;
         }
 
-        protected static function resolveLeaderboardWhereClausesByType($type,
-                                                                       RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter,
-                                                                       & $where)
+        /**
+         * @param string $type
+         * @return string
+         */
+        protected static function makeUserLeaderboardCountSqlQuery($type)
+        {
+            assert('is_string($type)');
+            $quote                     = DatabaseCompatibilityUtil::getQuote();
+            $where                     = '_user.hidefromleaderboard is null OR _user.hidefromleaderboard = 0';
+            $selectDistinct            = true;
+            $joinTablesAdapter         = new RedBeanModelJoinTablesQueryAdapter('GamePointTransaction');
+            static::resolveLeaderboardWhereClausesByType($type, $where);
+            $selectQueryAdapter        = new RedBeanModelSelectQueryAdapter($selectDistinct);
+            $selectQueryAdapter->addCountClause('_user', 'id');
+            $joinTablesAdapter->addFromTableAndGetAliasName('gamepoint', 'gamepoint_id', 'gamepointtransaction');
+            $joinTablesAdapter->addFromTableAndGetAliasName('permitable', 'person_item_id', 'gamepoint', 'item_id');
+            $joinTablesAdapter->addFromTableAndGetAliasName('_user', 'id', 'permitable', 'permitable_id');
+            $sql                       = SQLQueryUtil::makeQuery('gamepointtransaction', $selectQueryAdapter,
+                                         $joinTablesAdapter, null, null, $where);
+            return $sql;
+        }
+
+        protected static function resolveLeaderboardWhereClausesByType($type, & $where)
         {
             if ($type == static::LEADERBOARD_TYPE_OVERALL)
             {
-                //Nothing to add to the where clause.
+                $where = '(' . $where . ')';
                 return;
             }
             $quote = DatabaseCompatibilityUtil::getQuote();
@@ -145,6 +193,10 @@
             }
         }
 
+        /**
+         * @param User $user
+         * @return array
+         */
         public static function getUserRankingData(User $user)
         {
             $weeklyData  = self::getUserLeaderboardData(GamePointUtil::LEADERBOARD_TYPE_WEEKLY);

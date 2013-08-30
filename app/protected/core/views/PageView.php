@@ -73,6 +73,7 @@
                        $this->renderXHtmlHead()      .
                        $this->renderXHtmlBodyStart() .
                        parent::render()              .
+                       $this->renderXHtmlBeforeBodyEnd() .
                        $this->renderXHtmlBodyEnd()   .
                        $this->renderXHtmlEnd();
             Yii::app()->getClientScript()->render($content);
@@ -232,6 +233,14 @@
         }
 
         /**
+         * Renders the XHtml before the ending body tag
+         */
+        protected function renderXHtmlBeforeBodyEnd()
+        {
+            return Yii::app()->userInterface->renderXHtmlBeforeBodyEndContent();
+        }
+
+        /**
          * Renders the XHtml header element containing the title
          * and the default stylesheets screen, print, and ie. Additional
          * stylesheets can be specified by overriding getStyles() in
@@ -254,6 +263,22 @@
             $cs->registerCssFile($themeBaseUrl . '/css/keyframes.css');
 
             $specialCssContent = null;
+            $publishedAssetsPath = Yii::app()->assetManager->publish(
+                    Yii::getPathOfAlias("application.core.views.assets.fonts"));
+            $specialCssContent .= "<style>" .
+                                    "@font-face" .
+                                    "{" .
+                                        "font-family: 'zurmo_gamification_symbly_rRg';" .
+                                        "src: url('{$publishedAssetsPath}/zurmogamificationsymblyregular-regular-webfont.eot');" .
+                                        "src: url('{$publishedAssetsPath}/zurmogamificationsymblyregular-regular-webfont.eot?#iefix') format('embedded-opentype'), " .
+                                        "url('{$publishedAssetsPath}/zurmogamificationsymblyregular-regular-webfont.woff') format('woff'), " .
+                                        "url('{$publishedAssetsPath}/zurmogamificationsymblyregular-regular-webfont.ttf') format('truetype'), " .
+                                        "url('{$publishedAssetsPath}/zurmogamificationsymblyregular-regular-webfont.svg#zurmo_gamification_symbly_rRg') format('svg');" .
+                                        "font-weight: normal;" .
+                                        "font-style: normal;" .
+                                        "unicode-range: U+00-FFFF;" . // Not Coding Standard
+                                    "}" .
+                                  "</style>";
             if (!MINIFY_SCRIPTS && Yii::app()->isApplicationInstalled())
             {
                 $specialCssContent .= '<link rel="stylesheet/less" type="text/css" id="newui" href="' .
@@ -269,11 +294,11 @@
             else
             {
                 $cs->registerCssFile($themeBaseUrl . '/css/newui.css');
-                if (file_exists($themeBaseUrl . '/css/commercial.css'))
+                if (file_exists("themes/$themeName/css/commercial.css"))
                 {
                     $cs->registerCssFile($themeBaseUrl . '/css/commercial.css');
                 }
-                if (file_exists($themeBaseUrl . '/css/custom.css'))
+                if (file_exists("themes/$themeName/css/custom.css"))
                 {
                     $cs->registerCssFile($themeBaseUrl . '/css/custom.css');
                 }

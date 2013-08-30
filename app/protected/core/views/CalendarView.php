@@ -171,6 +171,13 @@
             return null;
         }
 
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
+        }
+
         public function getModelClassName()
         {
             $moduleClassName = $this->getActionModuleClassName();

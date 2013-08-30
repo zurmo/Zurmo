@@ -41,14 +41,11 @@
      */
     class FullNameRequiredSanitizerUtil extends RequiredSanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return false;
-        }
-
-        public static function supportsBatchAttributeValuesDataAnalysis()
-        {
-            return false;
         }
 
         public static function getLinkedMappingRuleType()
@@ -59,25 +56,21 @@
         /**
          * Resolves that the value is not null or the value is null and a valid default value is available for the full
          * name. If not, then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null');
-            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
             if ($value == null)
             {
-                if ($mappingRuleData['defaultValue'] != '')
+                if ($this->mappingRuleData['defaultValue'] != '')
                 {
-                    $value = $mappingRuleData['defaultValue'];
+                    $value = $this->mappingRuleData['defaultValue'];
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'A full name value is required but missing.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Full name value required, but missing.'));
                 }
             }
             return $value;

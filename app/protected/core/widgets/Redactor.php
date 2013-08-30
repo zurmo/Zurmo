@@ -44,7 +44,7 @@
 
         public $content;
 
-        public $buttons = "['html', 'html', '|', 'formatting', 'bold', 'italic', 'deleted', '|',
+        public $buttons = "['html', '|', 'formatting', 'bold', 'italic', 'deleted', '|',
                            'unorderedlist', 'orderedlist', 'outdent', 'indent', '|', 'table', 'link', '|',
                            'fontcolor', 'backcolor', '|', 'alignleft', 'aligncenter', 'alignright', 'justify', '|',
                            'horizontalrule']";

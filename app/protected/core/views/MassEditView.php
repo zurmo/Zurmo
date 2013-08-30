@@ -95,31 +95,36 @@
             {
                 foreach ($panel['rows'] as $row)
                 {
-                    $content .= '<tr>';
                     foreach ($row['cells'] as $cell)
                     {
                         if (is_array($cell['elements']))
                         {
                             foreach ($cell['elements'] as $elementInformation)
                             {
-                                $elementclassname = $elementInformation['type'] . 'Element';
-                                $params = array_slice($elementInformation, 2);
-                                if (empty($this->activeAttributes[$elementInformation['attributeName']]))
+                                $elementClassName = $elementInformation['type'] . 'Element';
+                                $realAttributeName = $this->resolveRealAttributeName($elementClassName, $elementInformation['attributeName']);
+                                if ($realAttributeName != null)
                                 {
-                                    $params['disabled'] = true;
-                                    $checked = false;
+                                    $content .= '<tr>';
+                                    $params = array_slice($elementInformation, 2);
+                                    if (empty($this->activeAttributes[$elementInformation['attributeName']]))
+                                    {
+                                        $params['disabled'] = true;
+                                        $checked = false;
+                                    }
+                                    else
+                                    {
+                                        $checked = true;
+                                    }
+                                    $element  = new $elementClassName($this->model, $elementInformation['attributeName'], $form, $params);
+                                    $content .= $this->renderActiveAttributesCheckBox($element->getEditableNameIds(),
+                                                $elementInformation, $checked, $realAttributeName);
+                                    $content .= $element->render();
+                                    $content .= '</tr>';
                                 }
-                                else
-                                {
-                                    $checked = true;
-                                }
-                                $element  = new $elementclassname($this->model, $elementInformation['attributeName'], $form, $params);
-                                $content .= $this->renderActiveAttributesCheckBox($element->getEditableNameIds(), $elementInformation, $checked);
-                                $content .= $element->render();
                             }
                         }
                     }
-                    $content .= '</tr>';
                 }
             }
             $content .= '</tbody>';
@@ -127,13 +132,12 @@
             return $content;
         }
 
-        protected function renderActiveAttributesCheckBox($elementIds, $elementInformation, $checked)
+        protected function renderActiveAttributesCheckBox($elementIds, $elementInformation, $checked, $realAttributeName)
         {
             $checkBoxHtmlOptions         = array();
-            $checkBoxHtmlOptions['id']   = "MassEdit_" . $elementInformation['attributeName'];
+            $checkBoxHtmlOptions['id']   = "MassEdit_" . $realAttributeName;
             $enableInputsScript          = "";
             $disableInputsScript         = "";
-            $disableTagCloudInputsScript = "";
             foreach ($elementIds as $id)
             {
                 if ($elementInformation['type'] == 'DropDown' || $elementInformation['type'] == 'RadioDropDown')
@@ -184,12 +188,46 @@ $('#{$checkBoxHtmlOptions['id']}').click(function()
 );
 END;
             Yii::app()->clientScript->registerScript($checkBoxHtmlOptions['id'], $massEditScript);
-            return "<th>" . ZurmoHtml::checkBox("MassEdit[" . $elementInformation['attributeName'] . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
+            return "<th>" . ZurmoHtml::checkBox("MassEdit[" . $realAttributeName . "]", $checked, $checkBoxHtmlOptions) ."</th>  \n";
         }
 
         public static function getDesignerRulesType()
         {
             return 'MassEditView';
+        }
+
+        /**
+         * If the attributeName is 'null', then ascertain if this is a derived attribute and get the real attribute.
+         * If it is a derived attribute but has more than one model attribute name, then send back null since this is
+         * not valid for a mass update
+         * @param string $elementClassName
+         * @param null|string $attributeName
+         * @return mixed
+         */
+        protected function resolveRealAttributeName($elementClassName, $attributeName)
+        {
+            assert('is_string($elementClassName)');
+            if ($attributeName == 'null')
+            {
+                $classToEvaluate        = new ReflectionClass($elementClassName);
+                if ($classToEvaluate->implementsInterface('DerivedElementInterface'))
+                {
+                    $modelAttributeNames = $elementClassName::getModelAttributeNames();
+                    if (count($modelAttributeNames) == 0 || count($modelAttributeNames) > 1)
+                    {
+                        return null;
+                    }
+                    return $modelAttributeNames[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return $attributeName;
+            }
         }
     }
 ?>

@@ -44,7 +44,7 @@
             assert('$this->model instanceof EmailMessage');
             $recipientsContent = EmailMessageMashableActivityRules::
                                  getRecipientsContent($this->model->recipients, EmailMessageRecipient::TYPE_TO);
-            if($recipientsContent == null && $this->form != null)
+            if ($recipientsContent == null && $this->form != null)
             {
                 $recipientsContent = '&nbsp;';
             }

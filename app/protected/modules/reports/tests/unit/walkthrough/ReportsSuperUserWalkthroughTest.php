@@ -191,22 +191,58 @@
         /**
          * @depends testCreateActionForRowsAndColumns
          */
-        public function testExportActionForAsynchronous()
+        public function testExportAction()
         {
             if (RedBeanDatabase::isFrozen())
             {
                 return;
             }
+
+            $notificationsBeforeCount        = count(Notification::getAll());
+            $notificationMessagesBeforeCount = count(NotificationMessage::getAll());
+
             $savedReports = SavedReport::getAll();
             $this->assertEquals(2, count($savedReports));
             $this->setGetArray(array('id' => $savedReports[0]->id));
             //Test where there is no data to export
             $this->runControllerWithRedirectExceptionAndGetContent('reports/default/export');
-            //todo: can do more export related tests for better coverage
+            $this->assertContains('There is no data to export.',
+                Yii::app()->user->getFlash('notification'));
+
+            $reportModelTestItem            = new ReportModelTestItem();
+            $reportModelTestItem->string    = 'string1';
+            $reportModelTestItem->lastName  = 'xLast1';
+            $this->assertTrue($reportModelTestItem->save());
+
+            $reportModelTestItem            = new ReportModelTestItem();
+            $reportModelTestItem->string    = 'string2';
+            $reportModelTestItem->lastName  = 'xLast2';
+            $this->assertTrue($reportModelTestItem->save());
+
+            $content = $this->runControllerWithExitExceptionAndGetContent('reports/default/export');
+            $this->assertEquals('Testing download.', $content);
+
+            ExportModule::$asynchronousThreshold = 1;
+            $this->runControllerWithRedirectExceptionAndGetUrl('reports/default/export');
+
+            // Start background job
+            $job = new ExportJob();
+            $this->assertTrue($job->run());
+
+            $exportItems = ExportItem::getAll();
+            $this->assertEquals(1, count($exportItems));
+            $fileModel = $exportItems[0]->exportFileModel;
+            $this->assertEquals(1, $exportItems[0]->isCompleted);
+            $this->assertEquals('csv', $exportItems[0]->exportFileType);
+            $this->assertEquals('reports', $exportItems[0]->exportFileName);
+            $this->assertTrue($fileModel instanceOf ExportFileModel);
+
+            $this->assertEquals($notificationsBeforeCount + 1, count(Notification::getAll()));
+            $this->assertEquals($notificationMessagesBeforeCount + 1, count(NotificationMessage::getAll()));
         }
 
         /**
-         * @depends testExportActionForAsynchronous
+         * @depends testExportAction
          */
         public function testActionRelationsAndAttributesTree()
         {

@@ -36,18 +36,33 @@
 
     class CloseTaskCheckBoxListViewColumnAdapter extends CheckBoxListViewColumnAdapter
     {
+        public static function renderCloseCheckBox($checkboxId, $modelId, $completedValue)
+        {
+            $htmlOptions = array('class'    => 'close-task-checkbox',
+                                 'onclick'  => "closeOpenTaskByCheckBoxClick('" . $checkboxId . "', '" . $modelId . "')");
+            if ($completedValue == true)
+            {
+                $htmlOptions['disabled']   = 'disabled';
+                $htmlOptions['labelClass'] = 'disabled';
+                Yii::app()->clientScript->registerScript('closeTaskCheckBoxScriptStartingState' . $checkboxId, "
+                    $('#" . $checkboxId ."').parentsUntil('tr').parent().children().css('text-decoration', 'line-through');
+                ", CClientScript::POS_END);
+            }
+            return ZurmoHtml::checkBox($checkboxId, $completedValue, $htmlOptions);
+        }
+
         public function renderGridViewData()
         {
             return array(
                 'name'        => $this->attribute,
                 'header'      => Zurmo::t('TasksModule', 'Close'),
-                'value'       => $this->resolveToRenderCheckBox('Task', '$data->' . 'id'),
+                'value'       => $this->resolveToRenderCheckBox('Task', '$data->' . 'id', '$data->completed'),
                 'type'        => 'raw',
                 'htmlOptions' => array('class' => 'checkbox-column')
             );
         }
 
-        protected function resolveToRenderCheckBox($modelClassName, $modelId)
+        protected function resolveToRenderCheckBox($modelClassName, $modelId, $completedValue)
         {
             if (!ActionSecurityUtil::canCurrentUserPerformAction( 'Edit', new $modelClassName(false)))
             {
@@ -55,10 +70,8 @@
             }
             $checkboxId = 'closeTask' . $modelId;
             // Begin Not Coding Standard
-            $content    = 'ZurmoHtml::checkBox("' . $checkboxId . '", false,
-                                       array("class" => "close-task-checkbox",
-                                             "onclick" => "closeOpenTaskByCheckBoxClick(\'' . $checkboxId . '\', \'' . $modelId . '\')"))';
-
+            $content    = 'CloseTaskCheckBoxListViewColumnAdapter::renderCloseCheckBox("' .
+                          $checkboxId . '", "' . $modelId . '", "' . $completedValue . '")';
             Yii::app()->clientScript->registerScript('closeTaskCheckBoxScript', "
                 function closeOpenTaskByCheckBoxClick(checkboxId, modelId)
                 {

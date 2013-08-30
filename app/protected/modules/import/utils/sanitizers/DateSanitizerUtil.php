@@ -39,16 +39,6 @@
      */
     class DateSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'Date';
-        }
-
         /**
          * @see DateTimeParser
          */
@@ -71,30 +61,44 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            if ($rowBean->{$this->columnName} != null &&
+                CDateTimeParser::parse($rowBean->{$this->columnName}, $this->mappingRuleData['format']) === false)
+            {
+                $label = Zurmo::t('ImportModule', 'Is an invalid date format. This value will be skipped during import.');
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
          * Given a value, attempt to convert the value to a db date format based on the format provided.  If the value
          * does not convert properly, meaning the value is not really in the format specified, then a
          * InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('isset($mappingRuleData["format"])');
             if ($value == null)
             {
                 return $value;
             }
-            $timeStamp = CDateTimeParser::parse($value, $mappingRuleData['format']);
+            $timeStamp = CDateTimeParser::parse($value, $this->mappingRuleData['format']);
             if ($timeStamp === false)
             {
                 throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid date format.'));
             }
             $dbDateValue = DateTimeUtil::convertTimestampToDbFormatDate($timeStamp);
             return $dbDateValue;
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('isset($this->mappingRuleData["format"])');
         }
     }
 ?>

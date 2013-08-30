@@ -35,7 +35,7 @@
      ********************************************************************************/
 
     /**
-     * Base view for teh completion view after a sequential process is complete.  This view will hide the progress
+     * Base view for the completion view after a sequential process is complete.  This view will hide the progress
      * bar and the general message that was displayed throughout the process.
      * @see SequentialProcessView
      * @see SequentialProcessContainerView
@@ -44,7 +44,8 @@
     {
         protected function registerScripts()
         {
-            $script   = '$(\'#' . $this->getProgressBarId() . '\').parent().hide()';
+            $script   = '$(\'#' . $this->getProgressBarId() . '\').parent().hide();';
+            $script  .= '$(".progressbar-container").hide();';
             Yii::app()->clientScript->registerScript('sequentialProcess', $script);
         }
     }

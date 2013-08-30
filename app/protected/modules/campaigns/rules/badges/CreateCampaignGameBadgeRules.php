@@ -60,6 +60,10 @@
             return Zurmo::t('CampaignsModule', '{n} Campaign created|{n} Campaigns created', array($value));
         }
 
+        /**
+         * @param array $userPointsByType
+         * @param array $userScoresByType
+          */
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)
         {
             assert('is_array($userPointsByType)');

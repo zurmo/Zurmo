@@ -41,26 +41,53 @@
      */
     class ImportWizardCreateUpdateModelsCompleteView extends ImportWizardView
     {
-        protected $modelsCreated    = 0;
+        /**
+         * @var ImportDataProvider
+         */
+        protected $dataProvider;
 
-        protected $modelsUpdated    = 0;
+        /**
+         * @var null|array
+         */
+        protected $mappingData;
 
-        protected $rowsWithErrors   = 0;
+        /**
+         * @var int
+         */
+        protected $modelsCreated  = 0;
 
-        protected $importErrorsListView;
+        /**
+         * @var int
+         */
+        protected $modelsUpdated  = 0;
 
-        public function __construct($controllerId, $moduleId, ImportWizardForm $model,
-                                    $modelsCreated = 0, $modelsUpdated = 0, $rowsWithErrors = 0,
-                                    ImportErrorsListView $importErrorsListView)
+        /**
+         * @var int
+         */
+        protected $rowsWithErrors = 0;
+
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param ImportWizardForm $model
+         * @param ImportDataProvider $dataProvider
+         * @param array $mappingData
+         * @param int $modelsCreated
+         * @param int $modelsUpdated
+         * @param int $rowsWithErrors
+         */
+        public function __construct($controllerId, $moduleId, ImportWizardForm $model, ImportDataProvider $dataProvider,
+                                    array $mappingData, $modelsCreated = 0, $modelsUpdated = 0, $rowsWithErrors = 0)
         {
             assert('is_int($modelsCreated)');
             assert('is_int($modelsUpdated)');
             assert('is_int($rowsWithErrors)');
             parent::__construct($controllerId, $moduleId, $model);
+            $this->dataProvider             = $dataProvider;
+            $this->mappingData              = $mappingData;
             $this->modelsCreated            = $modelsCreated;
             $this->modelsUpdated            = $modelsUpdated;
             $this->rowsWithErrors           = $rowsWithErrors;
-            $this->importErrorsListView     = $importErrorsListView;
         }
 
         /**
@@ -72,37 +99,68 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
+            $content  = Zurmo::t('ImportModule', 'Congratulations! Your import is complete.  Below is a summary of the results.');
+            $content  = ZurmoHtml::tag('h3', array(), $content);
+            $content .= $this->renderStatusGroupsContent();
+            return $content;
+        }
+
+        protected function renderStatusGroupsContent()
+        {
             $content  = null;
-            $content .= '<h3>' . Zurmo::t('ImportModule', 'Congratulations! Your import is complete.  Below is a summary of the results.') . '</h3>';
             $content .= '<ul class="import-summary">';
-            $content .= '<li>' . Zurmo::t('ImportModule', 'Records created: {created}', array('{created}' => $this->modelsCreated)) . '</li>';
-            $content .= '<li>' . Zurmo::t('ImportModule', 'Records updated: {updated}', array('{updated}' => $this->modelsUpdated)) . '</li>';
-            $content .= '<li>' . Zurmo::t('ImportModule', 'Rows with errors: {errors}', array('{errors}' => $this->rowsWithErrors)) . '</li>';
+
+            $label    = Zurmo::t('ImportModule', 'Created');
+            $count    = ZurmoHtml::tag('strong', array(), $this->modelsCreated);
+            $led      = ZurmoHtml::tag('i', array('class' => 'led state-true'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
+            $label    = Zurmo::t('ImportModule', 'Updated');
+            $count    = ZurmoHtml::tag('strong', array(), $this->modelsUpdated);
+            $led      = ZurmoHtml::tag('i', array('class' => 'led'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
+            $label    = Zurmo::t('ImportModule', 'Skipped');
+            $count    = ZurmoHtml::tag('strong', array(), $this->rowsWithErrors);
+            $led      = ZurmoHtml::tag('i', array('class' => 'led state-false'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
             $content .= '</ul>';
-            $content .= $this->renderErrorListContent();
             return $content;
         }
 
-        protected function renderActionElementBar($renderedInForm)
+        protected function renderAfterFormLayout($form)
         {
-            assert('$renderedInForm == true');
-            if ($this->rowsWithErrors > 0)
+            $view = new ImportResultsImportTempTableListView($this->controllerId, $this->moduleId, $this->dataProvider,
+                    $this->mappingData, $this->model->importRulesType, $this->resolveConfigurationForm(), $form, $this->model->id);
+            return $view->render();
+        }
+
+        protected function resolveConfigurationForm()
+        {
+            $configurationForm = new ImportResultsConfigurationForm();
+            $this->resolveConfigFormFromRequest($configurationForm);
+            return $configurationForm;
+        }
+
+        protected function resolveConfigFormFromRequest(& $configurationForm)
+        {
+            $excludeFromRestore = array();
+            if (isset($_GET[get_class($configurationForm)]))
             {
-                return $this->renderActionLinksContent();
+                $configurationForm->setAttributes($_GET[get_class($configurationForm)]);
             }
-        }
-
-        protected function renderErrorListContent()
-        {
-            $content  = '<h3>' . Zurmo::t('ImportModule', 'Information about the rows with errors') . '</h3>';
-            $content .= $this->importErrorsListView->render();
-            return $content;
         }
 
         /**
          * Override because there is no link to go to. This is the last step.
          */
         protected function renderNextPageLinkContent()
+        {
+            return null;
+        }
+
+        protected function renderTitleContent()
         {
             return null;
         }

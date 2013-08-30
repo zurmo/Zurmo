@@ -184,9 +184,9 @@
         public static function getLayoutTypesData()
         {
             return array(
-                '100'   => Zurmo::t('HomeModule', '1 Column'),
-                '50,50' => Zurmo::t('HomeModule', '2 Columns'), // Not Coding Standard
-                '75,25' => Zurmo::t('HomeModule', '2 Columns Left Strong'), // Not Coding Standard
+                '100'   => Zurmo::t('HomeModule', '{number} Column', array('{number}' => 1)),
+                '50,50' => Zurmo::t('HomeModule', '{number} Columns', array('{number}' => 2)), // Not Coding Standard
+                '75,25' => Zurmo::t('HomeModule', '{number} Columns Left Strong', array('{number}' => 2)), // Not Coding Standard
             );
         }
 

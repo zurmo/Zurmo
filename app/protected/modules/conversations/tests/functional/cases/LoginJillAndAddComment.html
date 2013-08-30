@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>LoginSuperUser</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Login as Super User</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>500</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>index.php/zurmo/default/login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginForm_username</td>
+	<td>jill</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginForm_password</td>
+	<td>jill</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='HeaderLinksView']/div/div[2]/ul/li/a/span</td>
+	<td>jill</td>
+</tr>
+<!--Add comment from jill's account-->
+<tr>
+	<td>open</td>
+	<td>index.php/mashableInbox/default?clearingSearch=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='MashableInboxActionBarForViews']/div[1]/div/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Combined</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Conversations</td>
+	<td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>MashableInboxForm_searchTerm</td>
+  <td>New Conversation ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>keyUp</td>
+    <td>MashableInboxForm_searchTerm</td>
+    <td>\10</td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+  <td>waitForText</td>
+  <td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
+  <td>New Conversation ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>verifyTextPresent</td>
+  <td>New Conversation ${randomSuffix}</td>
+  <td></td>
+</tr>
+<tr>
+  <td>verifyValue</td>
+  <td>MashableInboxForm_searchTerm</td>
+  <td>New Conversation ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>assertText</td>
+  <td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
+  <td>New Conversation ${randomSuffix}</td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//div[@id='list-view']/table/tbody/tr/td[3]/a</td>
+  <td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>New Conversation ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+  <td>type</td>
+  <td>Comment_description</td>
+  <td>Test Comment by jill</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Test Comment by jill</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Sign out</td>
+	<td></td>
+</tr>
+<tr>
+  <td>waitForCondition</td>
+  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+  <td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

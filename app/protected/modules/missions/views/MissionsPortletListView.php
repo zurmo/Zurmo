@@ -78,6 +78,17 @@
          */
         protected $containerModuleClassName;
 
+        /**
+         * @param RedBeanModelDataProvider $dataProvider
+         * @param MissionsListConfigurationForm $configurationForm
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $portletDetailsUrl
+         * @param string $redirectUrl
+         * @param string $uniquePageId
+         * @param array $params
+         * @param string $containerModuleClassName
+         */
         public function __construct(RedBeanModelDataProvider      $dataProvider,
                                     MissionsListConfigurationForm $configurationForm,
                                     $controllerId,

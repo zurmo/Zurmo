@@ -47,6 +47,11 @@
             );
         }
 
+        /**
+         * @param Autoresponder $autoresponder
+         * @param string $redirectUrl
+         * @return string $content
+         */
         public static function resolveSubjectAndMetricsSummary(Autoresponder $autoresponder, $redirectUrl)
         {
             $content  = static::resolveSubjectWithRedirectURl($autoresponder->subject, $autoresponder->id, $redirectUrl);
@@ -65,36 +70,43 @@
 
         protected static function renderExtraInfoContent(Autoresponder $autoresponder)
         {
-            $operationValuesAndLabels = Autoresponder::getOperationTypeDropDownArray();
+            $operationValuesAndLabels   = Autoresponder::getOperationTypeDropDownArray();
+            $durationTypeValueAndLabels = TimeDurationUtil::getValueAndLabels();
             if (!isset($operationValuesAndLabels[$autoresponder->operationType]))
             {
                 return;
             }
-            $intervalValuesAndLabels = Autoresponder::getIntervalDropDownArray();
-            if (!isset($intervalValuesAndLabels[$autoresponder->secondsFromOperation]))
+            if (!isset($durationTypeValueAndLabels[$autoresponder->fromOperationDurationType]))
             {
                 return;
             }
-            $content = null;
-            $content .= Zurmo::t('AutorespondersModule',
-                                 'Send {timeFrame} after {operation}',
-                                 array('{timeFrame}' => $intervalValuesAndLabels[$autoresponder->secondsFromOperation],
-                                       '{operation}' => $operationValuesAndLabels[$autoresponder->operationType]));
-            return $content;
+            if ($autoresponder->fromOperationDurationInterval == 0)
+            {
+                return Zurmo::t('AutorespondersModule', 'Send immediately after {operation}',
+                                array('{operation}' => $operationValuesAndLabels[$autoresponder->operationType]));
+            }
+            else
+            {
+                $content = Zurmo::t('AutorespondersModule', 'Send {interval} {type} after {operation}',
+                                    array('{interval}'  => $autoresponder->fromOperationDurationInterval,
+                                          '{type}'      => $durationTypeValueAndLabels[$autoresponder->fromOperationDurationType],
+                                          '{operation}' => $operationValuesAndLabels[$autoresponder->operationType]));
+                return $content;
+            }
         }
 
         protected static function renderMetricsContent(Autoresponder $autoresponder)
         {
             $dataProvider = new AutoresponderGroupedChartDataProvider($autoresponder);
             $data = $dataProvider->getChartData();
-            $sentQuantity         = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::SENT]);
-            $openQuantity         = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::UNIQUE_OPENS]);
+            $sentQuantity         = Yii::app()->numberFormatter->formatDecimal((int)$data[MarketingChartDataProvider::SENT]);
+            $openQuantity         = Yii::app()->numberFormatter->formatDecimal((int)$data[MarketingChartDataProvider::UNIQUE_OPENS]);
             $openRate             = round(NumberUtil::divisionForZero($openQuantity, $sentQuantity) * 100, 2);
-            $clickQuantity        = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::UNIQUE_CLICKS]);
+            $clickQuantity        = Yii::app()->numberFormatter->formatDecimal((int)$data[MarketingChartDataProvider::UNIQUE_CLICKS]);
             $clickRate            = round(NumberUtil::divisionForZero($clickQuantity, $sentQuantity) * 100, 2);
-            $unsubscribedQuantity = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::UNSUBSCRIBED]);
+            $unsubscribedQuantity = Yii::app()->numberFormatter->formatDecimal((int)$data[MarketingChartDataProvider::UNSUBSCRIBED]);
             $unsubscribedRate     = round(NumberUtil::divisionForZero($unsubscribedQuantity, $sentQuantity) * 100, 2);
-            $bouncedQuantity      = Yii::app()->format->formatNumber((int)$data[MarketingChartDataProvider::BOUNCED]);
+            $bouncedQuantity      = Yii::app()->numberFormatter->formatDecimal((int)$data[MarketingChartDataProvider::BOUNCED]);
             $bouncedRate          = round(NumberUtil::divisionForZero($bouncedQuantity, $sentQuantity) * 100, 2);
 
             $content = null;

@@ -53,6 +53,15 @@
 
         protected $inputContent;
 
+        /**
+         * @param array $searchableAttributeIndicesAndDerivedTypes
+         * @param int $rowNumber
+         * @param string $suffix
+         * @param string $formModelClassName
+         * @param string $ajaxOnChangeUrl
+         * @param null|string $selectedAttribute
+         * @param null|string $inputContent
+         */
         public function __construct($searchableAttributeIndicesAndDerivedTypes, $rowNumber,
                                     $suffix, $formModelClassName, $ajaxOnChangeUrl, $selectedAttribute = null, $inputContent = null)
         {

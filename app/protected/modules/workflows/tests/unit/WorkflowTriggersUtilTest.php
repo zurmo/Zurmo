@@ -36,6 +36,12 @@
 
     class WorkflowTriggersUtilTest extends WorkflowTriggersUtilBaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            ContactsModule::loadStartingData();
+        }
+
         public function testResolveStructureToPHPString()
         {
             $this->assertEquals('1', WorkflowTriggersUtil::resolveStructureToPHPString('1'));
@@ -142,7 +148,7 @@
             $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
         }
 
-        public function testTriggerOnAnInferredModel()
+        public function testTriggerOnAnInferredModelWithASingleModelRelated()
         {
             $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___name';
             $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
@@ -154,6 +160,150 @@
             $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
 
             $relatedModel->name = 'bValue';
+            $this->assertTrue($relatedModel->save());
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * In the case of having both an account and contact related to the note, it should properly check the related
+         * account and not the related contact.
+         */
+        public function testTriggerOnAnInferredModelWithAMultipleModelsRelated()
+        {
+            $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___name';
+            $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
+                               'NotesModule', 'Note');
+            $model           = new Note();
+            $model->description = 'description';
+            $relatedModel    = new Account();
+            $relatedModel->name = 'cValue';
+            $model->activityItems->add($relatedModel);
+            $relatedModel2    = new Contact();
+            $relatedModel2->lastName = 'someLastName';
+            $relatedModel2->state  = ContactsUtil::getStartingState();
+            $model->activityItems->add($relatedModel2);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            //Just testing that since nothing changed on the related model, it should still evaluate as true
+            $relatedModel2->lastName = 'someLastName2';
+            $this->assertTrue($relatedModel->save());
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $relatedModel->name = 'bValue';
+            $this->assertTrue($relatedModel->save());
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @see testTriggerOnAnInferredModelWithAMultipleModelsRelated.  The difference here is that the model being
+         * tested is the ownedModel which is a different if clause inside WorkflowTriggersUtil::isTriggerTrueByModel
+         */
+        public function testTriggerOnAnInferredModelsOwnedModelWithAMultipleModelsRelated()
+        {
+            $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___billingAddress___street1';
+            $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
+                               'NotesModule', 'Note');
+            $model           = new Note();
+            $relatedModel    = new Account();
+            $relatedModel->name = 'dValue';
+            $relatedModel->billingAddress->street1 = 'cValue';
+            $model->activityItems->add($relatedModel);
+            $relatedModel2    = new Opportunity();
+            $relatedModel2->name = 'someName';
+            $model->activityItems->add($relatedModel2);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            //Just testing that since nothing changed on the related model, it should still evaluate as true
+            $relatedModel2->name = 'someLastName2';
+            $this->assertTrue($relatedModel->save());
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $relatedModel->billingAddress->street1 = 'bValue';
+            $this->assertTrue($relatedModel->save());
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @see testTriggerOnAnInferredModelWithAMultipleModelsRelated. Saving Note first, then retrieving. This
+         * means the activityItems are 'Item' model and need to be casted down.
+         */
+        public function testTriggerOnAnAlreadySavedInferredModelWithAMultipleModelsRelated()
+        {
+            $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___name';
+            $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
+                               'NotesModule', 'Note');
+            $model           = new Note();
+            $model->description = 'description';
+            $relatedModel    = new Account();
+            $relatedModel->name = 'cValue';
+            $this->assertTrue($relatedModel->save());
+            $model->activityItems->add($relatedModel);
+            $relatedModel2    = new Contact();
+            $relatedModel2->lastName = 'someLastName';
+            $relatedModel2->state  = ContactsUtil::getStartingState();
+            $this->assertTrue($relatedModel2->save());
+            $model->activityItems->add($relatedModel2);
+            $saved = $model->save();
+            $this->assertTrue($saved);
+            $modelId = $model->id;
+            $model->forget();
+            unset($model);
+
+            $model = Note::getById($modelId);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            //Just testing that since nothing changed on the related model, it should still evaluate as true
+            $relatedModel2->lastName = 'someLastName2';
+            $this->assertTrue($relatedModel->save());
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $relatedModel->name = 'bValue';
+            $this->assertTrue($relatedModel->save());
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @see testTriggerOnAnInferredModelsOwnedModelWithAMultipleModelsRelated. Saving Note first, then retrieving. This
+         * means the activityItems are 'Item' model and need to be casted down.
+         */
+        public function testTriggerOnAnAlreadySavedInferredModelsOwnedModelWithAMultipleModelsRelated()
+        {
+            $attributeIndexOrDerivedType = 'Account__activityItems__Inferred___billingAddress___street1';
+            $workflow        = self::makeOnSaveWorkflowAndTriggerWithoutValueType($attributeIndexOrDerivedType, 'equals', 'cValue',
+                               'NotesModule', 'Note');
+            $model           = new Note();
+            $model->description = 'description';
+            $relatedModel    = new Account();
+            $relatedModel->name = 'dValue';
+            $relatedModel->billingAddress->street1 = 'cValue';
+            $this->assertTrue($relatedModel->save());
+            $model->activityItems->add($relatedModel);
+            $currencies                    = Currency::getAll();
+            $currencyValue                 = new CurrencyValue();
+            $currencyValue->value          = 100;
+            $currencyValue->currency       = $currencies[0];
+            $relatedModel2                 = new Opportunity();
+            $relatedModel2->name           = 'someName';
+            $relatedModel2->amount         = $currencyValue;
+            $relatedModel2->closeDate      = '2011-01-01';
+            $relatedModel2->stage->value   = 'Verbal';
+            $this->assertTrue($relatedModel2->save());
+            $model->activityItems->add($relatedModel2);
+            $saved = $model->save();
+            $this->assertTrue($saved);
+            $modelId = $model->id;
+            $model->forget();
+            unset($model);
+
+            $model = Note::getById($modelId);
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            //Just testing that since nothing changed on the related model, it should still evaluate as true
+            $relatedModel2->name = 'someLastName2';
+            $this->assertTrue($relatedModel->save());
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+
+            $relatedModel->billingAddress->street1 = 'bValue';
             $this->assertTrue($relatedModel->save());
             $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
         }

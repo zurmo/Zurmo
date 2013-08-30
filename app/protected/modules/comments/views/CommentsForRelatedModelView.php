@@ -54,6 +54,15 @@
 
         protected $uniquePageId;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $commentsData
+         * @param Item $relatedModel
+         * @param int $pageSize
+         * @param array $getParams
+         * @param null|string $uniquePageId
+         */
         public function __construct($controllerId, $moduleId, $commentsData, Item $relatedModel, $pageSize, $getParams, $uniquePageId = null)
         {
             assert('is_string($controllerId)');

@@ -206,8 +206,12 @@
         /**
         * Get info about imap mail box
         */
-        public function getMessageBoxStats()
+        public function resolveMessageBoxStats()
         {
+            if ($this->imapStream == null)
+            {
+                return false;
+            }
             return imap_check($this->imapStream);
         }
 
@@ -295,16 +299,19 @@
 
         /**
          * Get all messages, that satisfy some criteria, for example: 'ALL', 'UNSEEN', 'SUBJECT "Hello"'
-         * @param array $searchCriteria the find conditions and params
+         * @param string $searchCriteria
          * @param int $messagesSinceTimestamp
          * @return array the messages that was found
          */
         public function getMessages($searchCriteria = 'ALL', $messagesSinceTimestamp = 0)
         {
             $messages = array();
-            $imapInfo = $this->getMessageBoxStats();
+            if ($this->imapStream == null)
+            {
+                return $messages;
+            }
+            $this->resolveMessageBoxStats();
             $messageNumbers = imap_search($this->imapStream, $searchCriteria);
-
             if (is_array($messageNumbers) && count($messageNumbers) > 0)
             {
                 foreach ($messageNumbers as $messageNumber)
@@ -324,6 +331,10 @@
          */
         public function expungeMessages()
         {
+            if ($this->imapStream == null)
+            {
+                return false;
+            }
             imap_expunge($this->imapStream);
             return true;
         }
@@ -351,9 +362,14 @@
         /**
          * Delete message on IMAP server
          * @param int $msgUid
+         * @return mixed bool false if there is no imapStream available, otherwise result of imap_delete
          */
         public function deleteMessage($msgUid)
         {
+            if ($this->imapStream == null)
+            {
+                return false;
+            }
             imap_delete($this->imapStream, $msgUid, FT_UID);
         }
 
@@ -428,6 +444,10 @@
          */
         protected function getMessageUId($msgNo)
         {
+            if ($this->imapStream == null)
+            {
+                return false;
+            }
             return imap_uid($this->imapStream, $msgNo);
         }
 
@@ -441,13 +461,16 @@
          */
         protected function mailCount($query)
         {
+            if ($this->imapStream == null)
+            {
+                return false;
+            }
             return imap_num_msg($this->imapStream);
         }
 
         /**
-         *
-         * Get mime type.
-         * @param object $structure
+         * @param $structure
+         * @return string
          */
         protected function getMimeType($structure)
         {
@@ -461,12 +484,11 @@
         }
 
         /**
-         *
-         * Get message part
-         * @param int $msgNumber
-         * @param string $mimeType
-         * @param structure $structure
-         * @param int $partNumber
+         * @param $msgNumber
+         * @param $mimeType
+         * @param null $structure
+         * @param bool $partNumber
+         * @return bool|string
          */
         protected function getPart($msgNumber, $mimeType, $structure = null, $partNumber = false)
         {

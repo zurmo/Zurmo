@@ -43,7 +43,6 @@
                 is_subclass_of($elementclassname, 'CheckBoxElement'))
             {
                 $elementMetadata['type']     = 'BooleanStaticDropDown';
-                $elementMetadata['addBlank'] = true;
             }
         }
     }

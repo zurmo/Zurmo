@@ -39,6 +39,10 @@
      */
     class ReadOptimizationModelWhereAndJoinBuilder extends ModelWhereAndJoinBuilder
     {
+        /**
+         * @param ReadOptimizationDerivedAttributeToDataProviderAdapter $modelAttributeToDataProviderAdapter
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         */
         public function __construct(ReadOptimizationDerivedAttributeToDataProviderAdapter
                                     $modelAttributeToDataProviderAdapter,
                                     RedBeanModelJoinTablesQueryAdapter
@@ -47,6 +51,14 @@
             parent::__construct($modelAttributeToDataProviderAdapter, $joinTablesAdapter);
         }
 
+        /**
+         * @param $operatorType
+         * @param $value
+         * @param $clausePosition
+         * @param $where
+         * @param null $onTableAliasName
+         * @param bool $resolveAsSubquery
+         */
         public function resolveJoinsAndBuildWhere($operatorType, $value, & $clausePosition, & $where,
                                                   $onTableAliasName = null, $resolveAsSubquery = false)
         {

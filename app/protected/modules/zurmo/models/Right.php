@@ -40,6 +40,12 @@
         const ALLOW = 0x1;
         const DENY  = 0x2;
 
+        /**
+         * @param string $moduleName
+         * @param string $rightName
+         * @return An
+         * @throws NotFoundException
+         */
         public static function getByModuleNameAndRightName($moduleName, $rightName)
         {
             assert('is_string($moduleName)');

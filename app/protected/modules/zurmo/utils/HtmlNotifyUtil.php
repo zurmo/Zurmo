@@ -39,6 +39,10 @@
      */
     class HtmlNotifyUtil
     {
+        /**
+         * @param string $message
+         * @return string
+         */
         public static function renderHighlightBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
@@ -48,6 +52,10 @@
             return ZurmoHtml::tag('div', array('class' => 'ui-notice ui-widget'), $innerDiv );
         }
 
+        /**
+         * @param string $message
+         * @return string
+         */
         public static function renderAlertBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');
@@ -58,6 +66,10 @@
             return ZurmoHtml::tag('div', array('class' => 'ui-widget'), $innerDiv );
         }
 
+        /**
+         * @param string $message
+         * @return string
+         */
         public static function renderWarningBoxByMessage($message)
         {
             assert('$message != null && is_string($message)');

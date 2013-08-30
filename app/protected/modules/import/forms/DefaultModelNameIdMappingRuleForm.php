@@ -55,6 +55,10 @@
          */
         protected $moduleIdOfDefaultModel;
 
+        /**
+         * @param string $modelClassName
+         * @param string $modelAttributeName
+         */
         public function __construct($modelClassName, $modelAttributeName)
         {
             parent::__construct($modelClassName, $modelAttributeName);
@@ -87,7 +91,6 @@
                                                          $this->modelAttributeName,
                                                          'defaultModelStringifiedName',
                                                          $requiredRuleIsApplicable);
-                                                         return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
             return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
         }
 

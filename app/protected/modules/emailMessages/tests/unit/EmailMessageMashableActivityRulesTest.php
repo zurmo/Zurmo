@@ -150,5 +150,23 @@
             $data = EmailMessage::getSubset($joinTablesAdapter, 0, 5, $where, null);
             $this->assertEquals(0, count($data));
         }
+
+        public function testResolveSearchAttributeDataForAllLatestActivities()
+        {
+            $box                              = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $rules                            = new EmailMessageMashableActivityRules();
+            $searchAttributeData              = array();
+            $searchAttributeData['clauses']   = array();
+            $searchAttributeData['structure'] = null;
+            $searchAttributeData = $rules->resolveSearchAttributeDataForAllLatestActivities($searchAttributeData);
+            $compareData = array('clauses' =>
+                                    array(1 =>
+                                        array('attributeName'    => 'folder',
+                                              'relatedModelData' => array('attributeName' => 'emailBox',
+                                                                          'operatorType'  => 'doesNotEqual',
+                                                                          'value'         => $box->id))),
+                                 'structure' => '1');
+            $this->assertEquals($compareData, $searchAttributeData);
+        }
     }
 ?>

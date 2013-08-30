@@ -39,6 +39,9 @@
      */
     class CurrencyValueModelAttributesAdapter extends ModelAttributesAdapter
     {
+        /**
+         * @param CurrencyValueAttributeForm $attributeForm
+         */
         public function setAttributeMetadataFromForm(AttributeForm $attributeForm)
         {
             assert('$attributeForm instanceof CurrencyValueAttributeForm');

@@ -92,6 +92,11 @@
             }
         }
 
+        public function getFilterByStarred()
+        {
+            return SearchUtil::getFilterByStarredFromGetArray(get_class($this->model));
+        }
+
         public function hasKanbanBoard()
         {
             if ($this->model->getKanbanBoard() == null)
@@ -178,8 +183,7 @@
         {
             assert('is_string($name)');
             $sortDescending =  SearchUtil::resolveSortDescendingFromGetArray($name);
-
-            if ($sortDescending === false)
+            if (!isset($sortDescending))
             {
                 if (!empty($this->model->sortDescending))
                 {
@@ -190,8 +194,12 @@
                     $sortDescending = false;
                 }
             }
-
             return $sortDescending;
+        }
+
+        public function resolveFilterByStarredFromSourceData()
+        {
+            SearchUtil::resolveFilterByStarredFromGetArray($this->model, get_class($this->model));
         }
     }
 ?>

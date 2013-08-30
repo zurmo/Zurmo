@@ -36,43 +36,47 @@
 
     /**
      * Sanitizer for attributes that are ids. This would be used if mapping an id for the model that is being imported.
+     *
+     * Override to handle when the value is an id that represents the model itself.
      */
     class SelfIdValueTypeSanitizerUtil extends IdValueTypeSanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'SelfIdValueType';
-        }
-
         public static function getLinkedMappingRuleType()
         {
             return 'IdValueType';
         }
 
+        protected function resolveForUnfoundModel(RedBean_OODBBean $rowBean)
+        {
+            if ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            {
+                $label = Zurmo::t('ImportModule', 'Was not found and this row will be skipped during import.');
+                $this->shouldSkipRow = true;
+            }
+            else
+            {
+                $label = Zurmo::t('ImportModule', 'Was not found and will create a new record during import.');
+            }
+            $this->analysisMessages[] = $label;
+        }
+
         /**
          * Given a value that is either a zurmo id or an external system id, resolve that the
          * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
+         * @throws ExternalSystemIdNotFoundException
+         * @throws NotFoundException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName) && $attributeName == "id"');
-            assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
-                    $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
+            assert('is_string($this->attributeName) && $this->attributeName == "id"');
             if ($value == null)
             {
                 return $value;
             }
-            if ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
@@ -80,19 +84,20 @@
                     {
                         throw new NotFoundException();
                     }
+                    $modelClassName = $this->modelClassName;
                     $modelClassName::getById((int)$value);
                     return (int)$value;
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Id specified did not match any existing records.'));
                 }
             }
-            elseif ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            elseif ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 try
                 {
-                    $model = static::getModelByExternalSystemIdAndModelClassName($value, $modelClassName);
+                    $model = static::getModelByExternalSystemIdAndModelClassName($value, $this->modelClassName);
                     return $model->id;
                 }
                 catch (NotFoundException $e)

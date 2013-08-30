@@ -62,13 +62,14 @@
             return array('UserStatus');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             assert('is_array($columnMappingData)');
             $modelClassName = $this->getModelClassName();
             $value          = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                            $modelClassName, null, $value, $columnMappingData,
+                                                            $modelClassName, null, $value, $columnName, $columnMappingData,
                                                             $importSanitizeResultsUtil);
             if ($value == null)
             {
@@ -88,6 +89,10 @@
             return array('status' => $value);
         }
 
+        /**
+         * @param RedBeanModel $model
+         * @param array $attributeValueData
+         */
         public static function processAfterSaveAction(RedBeanModel $model, $attributeValueData)
         {
             assert('$model instanceof User');

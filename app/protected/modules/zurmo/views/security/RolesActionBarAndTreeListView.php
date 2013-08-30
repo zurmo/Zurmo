@@ -38,6 +38,11 @@
     {
         protected $cssClasses =  array( 'AdministrativeArea');
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $roles
+         */
         public function __construct($controllerId, $moduleId, $roles)
         {
             assert('$controllerId != null');

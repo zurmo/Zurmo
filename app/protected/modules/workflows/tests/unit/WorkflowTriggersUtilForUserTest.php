@@ -99,6 +99,50 @@
         /**
          * @depends testTriggerBeforeSaveOwner
          */
+        public function testTriggerBeforeSaveCreatedByUser()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            //First test equals
+            $workflow = self::makeOnSaveWorkflowAndTriggerWithoutValueType('createdByUser', 'equals', self::$superUserId);
+            $model           = new Account();
+            $model->name     = 'name';
+            $model->owner    = User::getByUsername('bobby');
+            $this->assertTrue($model->save());
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+            $modelId = $model->id;
+            $model->forget();
+
+            Yii::app()->user->userModel = User::getByUsername('bobby');
+            $model = Account::getById($modelId);
+            $model->name = 'name2';
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @depends testTriggerBeforeSaveCreatedByUser
+         */
+        public function testTriggerBeforeSaveModifiedByUser()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            //First test equals
+            $workflow = self::makeOnSaveWorkflowAndTriggerWithoutValueType('modifiedByUser', 'equals', self::$superUserId);
+            $model           = new Account();
+            $model->name     = 'name';
+            $model->owner    = User::getByUsername('bobby');
+            $this->assertTrue(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+            $this->assertTrue($model->save());
+            $modelId = $model->id;
+            $model->forget();
+
+            Yii::app()->user->userModel = User::getByUsername('bobby');
+            $model = Account::getById($modelId);
+            $model->name = 'name2';
+            $this->assertFalse(WorkflowTriggersUtil::areTriggersTrueBeforeSave($workflow, $model));
+        }
+
+        /**
+         * @depends testTriggerBeforeSaveModifiedByUser
+         */
         public function testTimeTriggerBeforeSaveEqualsWithSameCast()
         {
             $workflow = self::makeOnSaveWorkflowAndTimeTriggerWithoutValueType('user__User', 'equals', self::$superUserId, 500);

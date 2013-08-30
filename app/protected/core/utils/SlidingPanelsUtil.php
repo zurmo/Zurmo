@@ -40,6 +40,7 @@
     abstract class SlidingPanelsUtil
     {
         const SHOULD_SLIDE_TO_FIRST_PANEL_KEY_NAME = 'slideToFirstPanel';
+
         /**
          * Implement in child class
          * @throws NotImplementedException
@@ -64,7 +65,7 @@
          */
         public static function renderToggleLinkContent($portletId)
         {
-            if(static::resolveShouldSlideToSecondPanel($portletId))
+            if (static::resolveShouldSlideToSecondPanel($portletId))
             {
                 $slideToSecond = true;
             }
@@ -73,7 +74,7 @@
                 $slideToSecond = false;
             }
             static::registerSlidingPanelsScript($portletId);
-            if($slideToSecond)
+            if ($slideToSecond)
             {
                 $label      = static::getSlideToSecondPanelLabel();
                 $extraClass = ' slide-to-second-panel';

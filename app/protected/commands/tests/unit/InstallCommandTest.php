@@ -137,7 +137,7 @@
                                    Yii::app()->tempDb->password,
                                    true);
             $count   = R::getRow('select count(*) count from _user');
-            $this->assertEquals(9, $count['count']);
+            $this->assertEquals(10, $count['count']);
         }
     }
 ?>

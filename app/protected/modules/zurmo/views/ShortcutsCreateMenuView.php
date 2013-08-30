@@ -44,6 +44,11 @@
 
         protected $displayName;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $menuItems
+         */
         public function __construct($controllerId, $moduleId, $menuItems)
         {
             assert('is_string($controllerId)');

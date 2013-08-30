@@ -39,16 +39,6 @@
      */
     class NumberSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'Number';
-        }
-
         /**
          * If a number value is invalid, then skip the entire row during import.
          */
@@ -58,28 +48,55 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            if ($rowBean->{$this->columnName} == null)
+            {
+                return;
+            }
+            $type      = $this->resolveType();
+            $validator = new RedBeanModelNumberValidator();
+            if ($type == 'Integer')
+            {
+                if (!preg_match($validator->integerPattern, $rowBean->{$this->columnName}))
+                {
+                    $label = Zurmo::t('ImportModule', 'Is invalid.');
+                    $this->shouldSkipRow      = true;
+                    $this->analysisMessages[] = $label;
+                }
+            }
+            else
+            {
+                if (!preg_match($validator->numberPattern, $rowBean->{$this->columnName}))
+                {
+                    $label = Zurmo::t('ImportModule', 'Is invalid.');
+                    $this->shouldSkipRow      = true;
+                    $this->analysisMessages[] = $label;
+                }
+            }
+        }
+
+        /**
          * Given a value, resolve that the value is a correctly formatted number. If not, an
          * InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData == null');
+            assert('$this->mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
             $sanitizedValue = str_replace('$', '', $value);
             $sanitizedValue = str_replace(',', '', $sanitizedValue); // Not Coding Standard
-            $model          = new $modelClassName(false);
-            $type           = ModelAttributeToMixedTypeUtil::getType($model, $attributeName);
+            $type           = $this->resolveType();
             $validator      = new RedBeanModelNumberValidator();
-            if ($validator->integerOnly === true)
+            if ($type == 'Integer')
             {
                 if (!preg_match($validator->integerPattern, $sanitizedValue))
                 {
@@ -94,6 +111,13 @@
                 }
             }
             return $sanitizedValue;
+        }
+
+        protected function resolveType()
+        {
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            return ModelAttributeToMixedTypeUtil::getType($model, $this->attributeName);
         }
     }
 ?>

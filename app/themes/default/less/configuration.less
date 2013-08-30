@@ -428,6 +428,7 @@ table.configuration-list{
         margin-right:5px;
     }
     table{
+	    table-layout:auto;
         border-top:1px solid #DFDFDF;
         &:first-child{
             border-top:none;
@@ -606,7 +607,7 @@ table.configuration-list{
 .breadcrumbs{
     padding:0 0 15px 0;
     font-size:11px;
-   
+
 }
 
 /*designer*/
@@ -860,10 +861,7 @@ table.configuration-list{
 		padding:0;
 	}
 	h3{
-		margin:15px 0 0 15px;
-	}
-	.required-fields{
-		margin:5px 0 0 15px;
+		margin:0;
 	}
 	table{
 		border-left:1px solid #DFDFDF;
@@ -909,7 +907,7 @@ table.configuration-list{
 			border: none;
 		}
 		table, td, th, input, label{
-			margin:0 !important;
+			margin:0;
 		}
 		td, th{
 			padding:0 !important;
@@ -923,11 +921,24 @@ table.configuration-list{
 		label{
 			line-height: 26px;
 		}
+		th:first-child{
+			padding-left: 0 !important;
+		}
 	}
 	#sample-column-header{
 		a{
 			++.z-link;
 		}
+	}
+}
+
+.mapping-rules.multiple{
+	table{
+		width: 49% !important;
+		float: left !important;
+	}
+	table + table{
+		float:right !important;
 	}
 }
 
@@ -942,12 +953,41 @@ table.configuration-list{
 }
 
 /*=Step 5, process details*/
-
 #sequential-process-spinner{
     .z-spinner{
         display: block;
         margin:-1px 10px 0 0;
     }
+}
+
+#import-temp-table-list-view{
+	text-align: center;
+	table{
+		table-layout:auto;
+		border-bottom: 1px solid #CCCCCC;
+		background: #fafafa;
+	}
+	tr:first-child th{
+		line-height: 1;
+		padding: 5px;
+		text-align: center;
+	}
+	td{
+		text-align: center;
+		vertical-align: middle;
+	}
+	.drillDownContent{
+		min-height: 0;
+	}
+	.pager{
+		.b-shadow(inset 0 -1px 0 #dfdfdf);
+		border-top: none;
+		border-left: 1px solid #DFDFDF;
+		border-right: 1px solid #DFDFDF;
+		li{
+			border-bottom: 1px solid #DFDFDF;
+		}
+	}
 }
 
 #ImportWizardDataAnalysisCompleteView{
@@ -961,9 +1001,6 @@ table.configuration-list{
                 display:none;
             }
         }
-    }
-    .attributesContainer{
-        padding-bottom: 0;
     }
 }
 
@@ -982,15 +1019,19 @@ table.configuration-list{
 }
 
 .process-container-view{
-    padding:15px 15px 0 15px;
+    //padding:15px 15px 0 15px;
 }
 
 #sequenceProcess{
-	padding:15px 0 0 0;
+	//padding:15px 0 0 0;
+}
+
+.progressbar-container{
+	padding: 15px;
 }
 
 .process-message{
-	margin-left: 15px;
+	padding: 0 15px 15px 15px;
 }
 
 #ImportSequentialProcessContainerView{
@@ -1007,13 +1048,13 @@ table.configuration-list{
         }
     }
 	td{
-		padding: 0;
+		padding: 5px !important;
 		h3{
 			margin: 0 !important;
 		}
 	}
     h3, h3 + span{
-        margin-bottom:15px;
+        margin:0;
         display:block;
         position:relative;
     }
@@ -1038,14 +1079,12 @@ table.configuration-list{
     }
     table tr:first-child{
         th{
-            padding:0 0 0 15px !important;
+            //padding:0 0 0 15px !important;
             font-weight:bold !important;
         }
     }
     td{
-        text-align:left;
-        padding:10px 15px !important;
-        font-weight:normal !important;
+        padding:5px !important;
     }
     th{
         text-align:left;
@@ -1058,14 +1097,76 @@ table.configuration-list{
 	}
 }
 
-.import-summary{
-    margin:0 0 15px 15px;
-    line-height:150%;
-    li{
-        margin-bottom: 3px;
-    }
+
+
+#import-temp-table-list-view-rowDrillDown{
+	width: 30px;
 }
 
+.icon-import-mapping{
+	display: block;
+	//.symbly(24px);
+	font-weight: bold;
+	padding: 3px 0 5px 0;
+}
+
+.import-notifications{
+	text-align: left;
+	padding: 7px 5px 5px 40px;
+	li + li{
+		margin-top: 5px;
+	}
+}
+
+.import-summary{
+	width: 60%;
+    margin:20px auto 0 auto;
+    line-height:150%;
+	list-style: none;
+    li{
+	    text-align: center;
+	    position: relative;
+        margin:0 1% 3px 1%;
+	    width: 31%;
+	    float: left;
+	    background: #f0f0f0;
+	    .radius(3px);
+	    padding:10px 10px 10px 10px;
+	    ++.border-box;
+	    .b-shadow(~'inset 0 0 0 1px rgba(204, 204, 204, 0.3) , 1px 1px 1px 0px rgba(153, 153, 153, 0.0)');
+	    > strong{
+		    display: block;
+		    font-weight: bold;
+		    font-size: 26px;
+		    margin-bottom: 5px;
+	    }
+    }
+	.led{
+		//float: right;
+		display: block;
+		margin-top: 5px;
+		width: 100%;
+		height: 2px;
+		background: #ffd900;
+		.b-shadow(0 1px 0 0 #f3f3f3);
+		&.state-true{
+			background: #97c43d;
+			.b-shadow(0 1px 0 0 #f3f3f3);
+		}
+		&.state-false{
+			background: #c43d53;
+			.b-shadow(0 1px 0 0 #f3f3f3);
+		}
+	}
+}
+
+.import-results-toolbar{
+	border:1px solid #DFDFDF;
+	border-bottom: none;
+	.ui-buttonset{
+		padding-top: 10px;
+	}
+}
 
 .ui-progressbar{
      //background: url(../images/ajax-loader.gif) left top no-repeat;
@@ -1080,9 +1181,21 @@ table.configuration-list{
 
 #ImportErrorsListView{
     margin-bottom:15px;
-    > #list-view{
-        .b-shadow(none);
+	#list-view{
+        .b-shadow(none) !important;
+		.unstyle-panel();
     }
+	.items{
+	//	background: #fff;
+		table-layout: fixed;
+	}
+	tr{
+		td:first-child, th:first-child{
+			width: 35px !important;
+			//text-align: center;
+			//table-layout: fixed;
+		}
+	}
 }
 
 /*Theme Chooser*/

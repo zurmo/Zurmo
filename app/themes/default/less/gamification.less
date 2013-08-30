@@ -31,29 +31,30 @@
 // feasible for technical reasons, the Appropriate Legal Notices must display the words
 // "Copyright Zurmo Inc. 2013. All rights reserved".
 
-#LeaderboardView{
-	.items{
-		td:first-child, th:first-child{
-			padding-left:15px;
-		}
+#LeaderboardListView{
+	.pager{
+		border: 1px solid #dfdfdf;
+		border-top:none;
 	}
-    .user-label{
-        img{
-            margin-right:10px;
-            width: 24px;
-            height: 24px;
-            display: inline-block;
-            float: left;
-        }
-        span{
-            line-height: 24px;
-            display: inline-block;
-            float: left;
-        }
-    }
-    .ranking{
-        float: none;
-    }
+}
+
+.user-label{
+	img{
+		margin-right:10px;
+		width: 24px;
+		height: 24px;
+		display: inline-block;
+	}
+	span{
+		line-height: 30px;
+		display: inline-block;
+	}
+}
+
+.UserLeaderboardRankingForPortletView{
+	.ranking{
+		float: right;
+	}
 }
 
 .icon-leaderboard-weekly:before{
@@ -86,7 +87,7 @@
 }
 
 .ranking{
-    float: right;
+    //float: right;
     margin-right: 5px;
 	display:block;
 	color:#fff;

@@ -184,6 +184,10 @@
             return array();
         }
 
+        /**
+         * @param string $value
+         * @return int
+         */
         public static function getProbabilityByStageValue($value)
         {
             assert('is_string($value) || $value == null');

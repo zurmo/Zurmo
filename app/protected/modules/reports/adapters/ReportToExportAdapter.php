@@ -35,51 +35,66 @@
      ********************************************************************************/
 
     /**
-     * Helper class used to convert models into arrays
+     * Abstract class used to convert report models into arrays
      */
-    class ReportToExportAdapter
+    abstract class ReportToExportAdapter
     {
-        protected $reportResultsRowData;
+        protected $dataProvider;
+
+        protected $dataForExport;
+
+        protected $headerData;
+
+        protected $data;
 
         protected $report;
 
-        public function __construct(ReportResultsRowData $reportResultsRowData, Report $report)
+        public function __construct(ReportDataProvider $dataProvider, Report $report)
         {
-            $this->reportResultsRowData = $reportResultsRowData;
-            $this->report               = $report;
+            $this->dataProvider     = $dataProvider;
+            $this->report           = $report;
+            $this->dataForExport    = $dataProvider->getData(true);
+            $this->makeData();
         }
 
         public function getData()
         {
-            $data   = array();
-            foreach ($this->reportResultsRowData->getDisplayAttributes() as $key => $displayAttribute)
-            {
-                $resolvedAttributeName = $displayAttribute->resolveAttributeNameForGridViewColumn($key);
-                $className             = $this->resolveExportClassNameForListViewColumnAdapter($displayAttribute);
-                $params                = array();
-                $this->resolveParamsForCurrencyTypes($displayAttribute, $params);
-                $adapter = new $className($this->reportResultsRowData, $resolvedAttributeName, $params);
-                $adapter->resolveData($data);
-            }
-            return $data;
+            return $this->data;
         }
 
         public function getHeaderData()
         {
-            $data   = array();
-            foreach ($this->reportResultsRowData->getDisplayAttributes() as $key => $displayAttribute)
-            {
-                $resolvedAttributeName = $displayAttribute->resolveAttributeNameForGridViewColumn($key);
-                $className             = $this->resolveExportClassNameForListViewColumnAdapter($displayAttribute);
-                $params                = array();
-                $this->resolveParamsForCurrencyTypes($displayAttribute, $params);
-                $adapter = new $className($this->reportResultsRowData, $resolvedAttributeName, $params);
-                $adapter->resolveHeaderData($data);
-            }
-            return $data;
+            return $this->headerData;
         }
 
-        protected function resolveExportClassNameForListViewColumnAdapter(DisplayAttributeForReportForm $displayAttribute)
+        /**
+         * Override if needed to adapt the way data is made for export
+         */
+        protected function makeData()
+        {
+            foreach ($this->dataForExport as $reportResultsRowData)
+            {
+                $data             = array();
+                $this->headerData = array();
+                foreach ($reportResultsRowData->getDisplayAttributes() as $key => $displayAttribute)
+                {
+                    $resolvedAttributeName = $displayAttribute->resolveAttributeNameForGridViewColumn($key);
+                    $className             = $this->resolveExportClassNameForReportToExportValueAdapter($displayAttribute);
+                    $params                = array();
+                    $this->resolveParamsForCurrencyTypes($displayAttribute, $params);
+                    $adapter = new $className($reportResultsRowData, $resolvedAttributeName, $params);
+                    $adapter->resolveData($data);
+                    $adapter->resolveHeaderData($this->headerData);
+                }
+                $this->data[] = $data;
+            }
+        }
+
+        /**
+         * @param DisplayAttributeForReportForm $displayAttribute
+         * @return string
+         */
+        protected function resolveExportClassNameForReportToExportValueAdapter(DisplayAttributeForReportForm $displayAttribute)
         {
             $displayElementType = $displayAttribute->getDisplayElementType();
             if (@class_exists($displayElementType . 'ForReportToExportValueAdapter'))
@@ -92,6 +107,10 @@
             }
         }
 
+        /**
+         * @param DisplayAttributeForReportForm $displayAttribute
+         * @param array $params
+         */
         protected function resolveParamsForCurrencyTypes(DisplayAttributeForReportForm $displayAttribute, & $params)
         {
             assert('is_array($params)');

@@ -39,38 +39,12 @@
      */
     class TextAreaTruncateSanitizerUtil extends TruncateSanitizerUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'TextAreaTruncate';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'TextAreaTruncate';
-        }
-
         /**
-         * Given a value, resolve that the value not too large for a text area type attribute.  If
-         * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
-         * @param mixed $value
-         * @param array $mappingRuleData
+         * @return int|null minimum length
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        protected function getMaximumLength()
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData == null');
-            if ($value == null)
-            {
-                return $value;
-            }
-            if (strlen($value) < 65000)
-            {
-                return $value;
-            }
-            return substr($value, 0, 65000);
+            return 65000;
         }
     }
 ?>

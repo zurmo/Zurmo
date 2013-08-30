@@ -142,5 +142,12 @@
                 $this->assertEquals(34, $value);
             }
         }
+
+        public function testCacheBoolean()
+        {
+            GeneralCache::cacheEntry('ABoolean', true);
+            $boolean = GeneralCache::getEntry('ABoolean');
+            $this->assertTrue($boolean);
+        }
     }
 ?>

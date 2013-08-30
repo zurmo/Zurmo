@@ -37,7 +37,7 @@
     /**
      * Base model for working with a conversation
      */
-    class Conversation extends OwnedSecurableItem implements MashableActivityInterface, MashableInboxInterface
+    class Conversation extends OwnedSecurableItem implements MashableActivityInterface, MashableInboxInterface, StarredInterface
     {
         public static function getMashableActivityRulesType()
         {

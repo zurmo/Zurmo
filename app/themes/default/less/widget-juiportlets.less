@@ -51,7 +51,6 @@
 	list-style: none;
 	float:left;
 	width:100%;
-
 }
 
 .juiportlet-widget-column2 {
@@ -66,9 +65,6 @@
 
 .juiportlet-column-no-split {
 	width: 100%;
-	.juiportlet-widget {
-		margin-right: 0 !important;
-	}
 }
 
 .juiportlet-column-split-left-75 {
@@ -146,7 +142,7 @@
 	padding:10px 15px 0 15px;
 }
 
-.juiportlet-widget-content .items{
+.juiportlet-widget-coifrntent .items{
 	//width:100%;
 	border:none !important;
 	thead > tr{
@@ -164,9 +160,7 @@
 }
 
 /*ICONS..*/
-
-.juiportlet-widget.OpportunitiesForContactRelatedListView,
-.juiportlet-widget.OpportunitiesForAccountRelatedListView{
+.type-opportunities{
 	h3:before{
 		content: "9";
 	}
@@ -175,94 +169,83 @@
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.ContactsForOpportunityRelatedListView,
-.juiportlet-widget.ContactsForAccountRelatedListView{
-	h3:before{
-		content: "e";
-	}
+.type-contacts{
 	.icon-empty:before{
 		content: "e";
 		.view-toolbar-icons(45px);
 	}
 }
+.juiportlet-widget-head.type-contacts{
+	h3{
+		padding-left: 30px;
+		position: relative;
+		&:before{
+			content: "e";
+			.symbly(32px);
+			color:#7A7A7A;
+			line-height: 100%;
+			position: absolute;
+			top: 6px;
+			left: 0;
+		}
+	}
+}
 
-.juiportlet-widget.TasksMyListView,
-.juiportlet-widget.OpenTasksForOpportunityRelatedListView,
-.juiportlet-widget.OpenTasksForContactRelatedListView,
-.juiportlet-widget.OpenTasksForAccountRelatedListView{
+.type-tasks{
 	.icon-empty:before{
 		content: "4";
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.AllLatestActivitiesForPortletView,
-.juiportlet-widget.OpportunityLatestActivitiesForPortletView,
-.juiportlet-widget.AccountLatestActivitiesForPortletView,
-.juiportlet-widget.ContactLatestActivitiesForPortletView{
+.type-activities{
 	.icon-empty:before{
 		content: '\00A5';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.ProductsForAccountRelatedListView{
+.type-products{
 	.icon-empty:before{
 		content: '\003E';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.AllSocialItemsForPortletView{
-	.empty{
-		display: none;
-	}
+.type-socialItems{
 	.icon-empty:before{
 		content: 'u';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.MyMissionsForPortletView{
+.type-missions{
 	.icon-empty:before{
 		content: 'Q';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.LeadsMyListView{
+.type-leads{
 	.icon-empty:before{
 		content: '.';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.AccountsMyListView{
+.type-accounts{
 	.icon-empty:before{
 		content: 'P';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.ContactsMyListView{
+.type-contacts{
 	.icon-empty:before{
 		content: "e";
 		.view-toolbar-icons(45px);
 	}
 }
-
-#ProductTemplatesModalListView{
+.type-products{
 	.icon-empty:before{
 		content: '\00AC';
 		.view-toolbar-icons(45px);
 	}
 }
-
-.juiportlet-widget.OpportunitiesForContactRelatedListView,
-.juiportlet-widget.OpportunitiesForAccountRelatedListView,
-.juiportlet-widget.ContactsForOpportunityRelatedListView,
-.juiportlet-widget.ContactsForAccountRelatedListView{
+.type-opportunities{
     h3{
 	    padding-left: 30px;
 	    position: relative;
@@ -274,5 +257,11 @@
 			top: 6px;
 			left: 0;
 		}
+	}
+}
+.type-campaigns{
+	.icon-empty:before{
+		content: '\002C';
+		.view-toolbar-icons(45px);
 	}
 }

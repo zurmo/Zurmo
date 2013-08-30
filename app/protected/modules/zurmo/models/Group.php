@@ -49,6 +49,11 @@
         protected $isEveryone            = false;
         protected $isSuperAdministrators = false;
 
+        /**
+         * @param string $name
+         * @return An|Group
+         * @throws NotFoundException
+         */
         public static function getByName($name)
         {
             assert('is_string($name)');
@@ -80,6 +85,27 @@
             return $group;
         }
 
+        public static function isUserASuperAdministrator(User $user)
+        {
+            if ($user->id < 0)
+            {
+                throw new NotSupportedException();
+            }
+            $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            if ($user->groups->contains($superGroup))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /**
+         * @param RedBean_OODBBean $bean
+         * @param bool $setDefaults
+         */
         protected function constructDerived($bean, $setDefaults)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');
@@ -227,6 +253,11 @@
             return $this->getActualRight($moduleName, $rightName) == Right::ALLOW ? Right::ALLOW : Right::DENY;
         }
 
+        /**
+         * @param string $moduleName
+         * @param string $rightName
+         * @return int
+         */
         public function getActualRight($moduleName, $rightName)
         {
             assert('is_string($moduleName)');
@@ -256,6 +287,11 @@
             return Right::NONE;
         }
 
+        /**
+         * @param string $moduleName
+         * @param string $rightName
+         * @return int
+         */
         public function getInheritedActualRight($moduleName, $rightName)
         {
             assert('is_string($moduleName)');
@@ -280,6 +316,12 @@
             }
         }
 
+        /**
+         * @param string $moduleName
+         * @param string $rightName
+         * @return int|void
+         * @throws NotSupportedException
+         */
         protected function getInheritedActualRightIgnoringEveryone($moduleName, $rightName)
         {
             assert('is_string($moduleName)');
@@ -312,6 +354,11 @@
             }
         }
 
+        /**
+         * @param string $moduleName
+         * @param string $policyName
+         * @return mixed|null|string
+         */
         public function getInheritedActualPolicy($moduleName, $policyName)
         {
             assert('is_string($moduleName)');
@@ -325,6 +372,11 @@
             return parent::getInheritedActualPolicy($moduleName, $policyName);
         }
 
+        /**
+         * @param string $moduleName
+         * @param string $policyName
+         * @return null
+         */
         public function getInheritedActualPolicyIgnoringEveryone($moduleName, $policyName)
         {
             assert('is_string($moduleName)');

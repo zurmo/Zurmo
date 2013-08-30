@@ -37,23 +37,11 @@
     /**
      * Form to work with date attributes
      */
-    class DateWorkflowActionAttributeForm extends WorkflowActionAttributeForm
+    class DateWorkflowActionAttributeForm extends DurationEnabledWorkflowActionAttributeForm
     {
         const TYPE_DYNAMIC_FROM_TRIGGERED_DATE = 'DynamicFromTriggeredDate';
 
         const TYPE_DYNAMIC_FROM_EXISTING_DATE = 'DynamicFromExistingDate';
-
-        /**
-         * @return array
-         */
-        public function getDynamicTypeValueDropDownArray()
-        {
-            $data       = array();
-            WorkflowUtil::resolveNegativeDurationAsDistanceFromPointData($data, false);
-            $data[0]    = Zurmo::t('WorkflowsModule', '0 days');
-            WorkflowUtil::resolvePositiveDurationAsDistanceFromPointData($data, false);
-            return $data;
-        }
 
         /**
          * @return string
@@ -79,8 +67,7 @@
                 }
                 else
                 {
-                    $validator             = CValidator::createValidator('TypeValidator', $this, 'alternateValue', array('type' => 'integer'));
-                    $validator->allowEmpty = false;
+                    $validator = CValidator::createValidator('CRequiredValidator', $this, 'durationInterval');
                     $validator->validate($this);
                     return !$this->hasErrors();
                 }
@@ -103,7 +90,8 @@
             }
             elseif ($this->type == self::TYPE_DYNAMIC_FROM_TRIGGERED_DATE)
             {
-                $adapter->getModel()->{$attribute} = DateTimeUtil::convertTimestampToDbFormatDate(time() + $this->value);
+                $newTimeStamp = $this->resolveNewTimeStampForDuration(time());
+                $adapter->getModel()->{$attribute} = DateTimeUtil::convertTimestampToDbFormatDate($newTimeStamp);
             }
             elseif ($this->type == self::TYPE_DYNAMIC_FROM_EXISTING_DATE)
             {
@@ -111,7 +99,8 @@
                 {
                     $existingTimeStamp = DateTimeUtil::convertDbFormatDateTimeToTimestamp(
                                             DateTimeUtil::resolveDateAsDateTime($adapter->getModel()->{$attribute}));
-                    $newDate           = DateTimeUtil::convertTimestampToDbFormatDate($existingTimeStamp + $this->value);
+                    $newTimeStamp      = $this->resolveNewTimeStampForDuration($existingTimeStamp);
+                    $newDate           = DateTimeUtil::convertTimestampToDbFormatDate($newTimeStamp);
                     $adapter->getModel()->{$attribute} = $newDate;
                 }
             }

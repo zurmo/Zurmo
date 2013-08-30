@@ -191,10 +191,11 @@
         {
             $columns = $this->getCGridViewColumns();
             assert('is_array($columns)');
+            $listTypeCssClass = 'type-' . $this->moduleId;
             $params = array(
                 'id' => $this->getGridViewId(),
                 'htmlOptions' => array(
-                    'class' => 'cgrid-view'
+                    'class' => 'cgrid-view ' . $listTypeCssClass
                 ),
                 'loadingCssClass'      => 'loading',
                 'dataProvider'         => $this->getDataProvider(),
@@ -211,6 +212,7 @@
                 'summaryText'          => static::getSummaryText(),
                 'summaryCssClass'      => static::getSummaryCssClass(),
                 'summaryCloneId'       => $this->getSummaryCloneId(),
+                'tableColumnGroup'     => $this->getTableColumnGroup(),
             );
             return $this->resolveCGridViewParamsForKanbanBoard($params);
         }
@@ -239,6 +241,11 @@
         public function getSummaryCloneId()
         {
             return  $this->getGridViewId() . "-summary-clone";
+        }
+
+        public function getTableColumnGroup()
+        {
+            return array();
         }
 
         protected function getCGridViewPagerParams()

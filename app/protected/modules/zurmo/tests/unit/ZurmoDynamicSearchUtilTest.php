@@ -68,6 +68,44 @@
                 'account___name' => 'Account - Name',
             );
             $this->assertEquals($compareData, $searchableAttributesAndLabels);
+
+            //Should sort by values
+            $searchableAttributesAndLabels = DynamicSearchUtil::
+                                             getSearchableAttributesAndLabels('ContactsSearchView', 'Contact');
+            $compareData = array(
+                'account'                    => 'Account',
+                'account___name'             => 'Account - Name',
+                'anyCity'                    => 'Any City',
+                'anyCountry'                 => 'Any Country',
+                'anyEmail'                   => 'Any Email Address',
+                'anyInvalidEmail'            => 'Any Invalid Email',
+                'anyOptOutEmail'             => 'Any Opted Out Email',
+                'anyPostalCode'              => 'Any Postal Code',
+                'anyState'                   => 'Any State',
+                'anyStreet'                  => 'Any Street',
+                'companyName'                => 'Company Name',
+                'createdByUser'              => 'Created By User',
+                'createdDateTime__DateTime'  => 'Created Date Time',
+                'department'                 => 'Department',
+                'firstName'                  => 'First Name',
+                'googleWebTrackingId'        => 'Google Web Tracking Id',
+                'industry'                   => 'Industry',
+                'jobTitle'                   => 'Job Title',
+                'lastName'                   => 'Last Name',
+                'mobilePhone'                => 'Mobile Phone',
+                'modifiedByUser'             => 'Modified By User',
+                'modifiedDateTime__DateTime' => 'Modified Date Time',
+                'fullName'                   => 'Name',
+                'officeFax'                  => 'Office Fax',
+                'officePhone'                => 'Office Phone',
+                'ownedItemsOnly'             => 'Only Items I Own',
+                'owner'                      => 'Owner',
+                'title'                      => 'Salutation',
+                'source'                     => 'Source',
+                'ContactStateDropDown'       => 'Status',
+                'website'                    => 'Website',
+            );
+            $this->assertEquals(array_values($compareData), array_values($searchableAttributesAndLabels));
         }
 
         public function testResolveAndAddViewDefinedNestedAttributes()

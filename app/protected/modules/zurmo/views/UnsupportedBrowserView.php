@@ -38,6 +38,9 @@
     {
         private $browserName;
 
+        /**
+         * @param string $browserName
+         */
         public function __construct($browserName)
         {
             assert('is_string($browserName)');

@@ -36,6 +36,9 @@
 
     class AddressRedBeanModelAttributeValueToExportValueAdapter extends RedBeanModelAttributeValueToExportValueAdapter
     {
+        /**
+         * @param array $data
+         */
         public function resolveData(& $data)
         {
             assert('$this->model->{$this->attribute} instanceof Address');

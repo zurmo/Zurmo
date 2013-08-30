@@ -34,7 +34,7 @@
 @keyframes throb {
 	50%   { box-shadow:0 0 15px 2px #7cb830; }
 }
-
+/*
 @font-face {
 	font-family: 'zurmo_gamification_symbly_rRg';
 	src: url('../fonts/zurmogamificationsymblyregular-regular-webfont.eot');
@@ -44,9 +44,9 @@
 	     url('../fonts/zurmogamificationsymblyregular-regular-webfont.svg#zurmo_gamification_symbly_rRg') format('svg');
 	font-weight: normal;
 	font-style: normal;
-	unicode-range: U+00-FFFF; /*http://www.tamasoft.co.jp/en/general-info/unicode.html*/
+	unicode-range: U+00-FFFF; //http://www.tamasoft.co.jp/en/general-info/unicode.html
 }
-
+*/
 
 @-webkit-keyframes slideCollectionUp {
 	100% { -webkit-transform:translate(0, -50%); }

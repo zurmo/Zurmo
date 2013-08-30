@@ -53,6 +53,17 @@
 
         protected $requiredAttributesLabelsData;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param ImportWizardForm $model
+         * @param null $sampleColumnPagerContent
+         * @param array $mappingDataMetadata
+         * @param array $mappingDataMappingRuleFormsAndElementTypes
+         * @param array $mappableAttributeIndicesAndDerivedTypes
+         * @param array $requiredAttributesLabelsData
+         * @param $title
+         */
         public function __construct($controllerId,
                                     $moduleId,
                                     ImportWizardForm $model,
@@ -171,6 +182,14 @@
             return $headerColumns;
         }
 
+        /**
+         * @param $mappingFormLayoutUtil
+         * @param $mappingDataMetadata
+         * @param $firstRowIsHeaderRow
+         * @param $importRulesType
+         * @param $id
+         * @return array
+         */
         protected function resolveMappingDataMetadataWithRenderedElements($mappingFormLayoutUtil, $mappingDataMetadata,
                                                                           $firstRowIsHeaderRow, $importRulesType, $id)
         {
@@ -208,6 +227,10 @@
             return $metadata;
         }
 
+        /**
+         * @param int $columnCount
+         * @return string
+         */
         protected function renderAddExtraColumnContent($columnCount)
         {
             assert('is_int($columnCount)');
@@ -236,6 +259,10 @@
             return $content;
         }
 
+        /**
+         * @param string $columnName
+         * @return array
+         */
         protected function resolveMappingRuleFormsAndElementTypesByColumn($columnName)
         {
             assert('is_string($columnName)');
@@ -263,6 +290,24 @@
                 $previousStep = 'step3';
             }
             return $this->getPreviousPageLinkContentByControllerAction($previousStep);
+        }
+
+        protected function renderPreviousPageLinkLabel()
+        {
+            $importRulesClassName  = ImportRulesUtil::getImportRulesClassNameByType($this->model->importRulesType);
+            if (!is_subclass_of($importRulesClassName::getModelClassName(), 'SecurableItem'))
+            {
+                return Zurmo::t('ZurmoModule', 'Upload File');
+            }
+            else
+            {
+                return Zurmo::t('ZurmoModule', 'Select Permissions');
+            }
+        }
+
+        protected function renderNextPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Analyze Data');
         }
     }
 ?>

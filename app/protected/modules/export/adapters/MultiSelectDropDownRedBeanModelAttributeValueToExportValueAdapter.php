@@ -36,6 +36,9 @@
 
     class MultiSelectDropDownRedBeanModelAttributeValueToExportValueAdapter extends DropDownRedBeanModelAttributeValueToExportValueAdapter
     {
+        /**
+         * @param array $data
+         */
         public function resolveData(& $data)
         {
             assert('$this->model->{$this->attribute} instanceof OwnedMultipleValuesCustomField');

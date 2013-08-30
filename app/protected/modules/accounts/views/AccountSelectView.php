@@ -47,6 +47,10 @@
 
         /**
          * Construct the view to display an input to select an account
+         * @param $controllerId
+         * @param $moduleId
+         * @param $modelId
+         * @param $model
          */
         public function __construct($controllerId, $moduleId, $modelId, $model)
         {

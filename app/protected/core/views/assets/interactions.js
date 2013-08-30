@@ -427,7 +427,7 @@ $.fn.resolvePaddingForHasLangLabel = function(context){
  * @state (Bool) true/false, activate/deactivate the spinner.
  * @domObject (String), the object's seletor where the spinner runs inside it. The CSS selector (with . or #).
  * @styleObject (Object) key-value pairs for the spinner's styles.
- * @spinnerClassName (String) Optional, used mostly for the Big-Spinners. The CSS selector for the actuall spinner (with . or #).
+ * @spinnerClassName (String) Optional, used mostly for the Big-Spinners. The CSS selector for the actual spinner (with . or #).
  */
 
 $.fn.resolveSpinner = function(state, domObject, styleObject, spinnerClassName){
@@ -858,3 +858,23 @@ $.fn.readCookie = function(name)
     }
     return null;
 };
+
+/**
+ * Mostly used for intro boxes (products, marketing etc.)
+ * takes a container div/element, finds highest element and sets teh same height on the other siblings
+ * @param context a DOM object representing the container.
+ */
+
+$.fn.resolveHighestAndEqualize = function(context)
+{
+    var elementsToCompare = context.children();
+    var heights = [];
+    elementsToCompare.each(function() {
+        heights.push($(this).height());
+    });
+
+    var largest = Math.max.apply(Math, heights); // 306
+    elementsToCompare.each(function() {
+        $(this).css({'min-height': largest});
+    });
+}

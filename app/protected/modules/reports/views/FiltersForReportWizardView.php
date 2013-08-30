@@ -90,43 +90,27 @@
                                                  'trackableStructurePosition' => true)));
         }
 
-        protected function registerScripts()
-        {
-            parent::registerScripts();
-            Yii::app()->clientScript->registerScript('showStructurePanels' . $this->form->getId(), "
-                $('#show-filters-structure-div-link').click( function()
-                    {
-                        $('#show-filters-structure-div').show();
-                        $('#show-filters-structure-div-link').hide();
-                        return false;
-                    }
-                );");
-        }
-
         /**
          * @return string
          */
         protected function renderStructureContent()
         {
-            $style1 = '';
-            $style2 = 'display:none;';
             if (count($this->model->filters) > 0)
             {
-                $style3 = '';
+                $style = '';
             }
             else
             {
-                $style3 = 'display:none;';
+                $style = 'display:none;';
             }
-            $content  = ZurmoHtml::link(Zurmo::t('ReportsModule', 'Modify Structure'), '#',
-                            array('id'    => 'show-filters-structure-div-link',
-                                  'style' => $style1));
-            $content .= ZurmoHtml::tag('div',
-                            array('id'    => 'show-filters-structure-div',
-                                  'class' => 'has-lang-label',
-                                  'style' => $style2), $this->renderStructureInputContent());
-            $content  = ZurmoHtml::tag('div', array('id'    => 'show-filters-structure-wrapper',
-                                                     'style' => $style3), $content);
+            $content  = ZurmoHtml::tag('div',
+                                       array('id'    => 'show-filters-structure-div',
+                                             'class' => 'has-lang-label'),
+                                       $this->renderStructureInputContent());
+            $content  = ZurmoHtml::tag('div',
+                                       array('id'    => 'show-filters-structure-wrapper',
+                                             'style' => $style),
+                                       $content);
             return $content;
         }
 

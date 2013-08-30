@@ -51,6 +51,10 @@
             return $content;
         }
 
+        /**
+         * @param array $data
+         * @return string|void
+         */
         protected function renderTreeListView($data)
         {
             assert('is_array($data)');

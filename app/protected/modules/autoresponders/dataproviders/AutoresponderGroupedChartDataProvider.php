@@ -59,6 +59,10 @@
             return $data;
         }
 
+        /**
+         * @param Autoresponder $autoresponder
+         * @return array
+         */
         protected static function makeSearchAttributeData(Autoresponder $autoresponder)
         {
             assert('$autoresponder->id > 0');

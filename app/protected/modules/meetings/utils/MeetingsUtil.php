@@ -36,6 +36,11 @@
 
     class MeetingsUtil
     {
+        /**
+         * @param Meeting $meeting
+         * @param string $link
+         * @return string
+         */
         public static function renderDaySummaryContent(Meeting $meeting, $link)
         {
             $content = null;

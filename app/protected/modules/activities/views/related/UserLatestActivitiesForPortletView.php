@@ -41,6 +41,9 @@
     {
        /**
          * Some extra assertions are made to ensure this view is used in a way that it supports.
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
          */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
@@ -81,6 +84,11 @@
                                                             'id' => $this->params['relationModel']->id)));
         }
 
+        /**
+         * @param string $uniquePageId
+         * @param LatestActivitiesConfigurationForm $form
+         * @return RedBeanModelsDataProvider
+         */
         protected function getDataProvider($uniquePageId, $form)
         {
             assert('is_string($uniquePageId)');

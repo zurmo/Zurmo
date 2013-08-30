@@ -42,7 +42,7 @@
          */
         public function actionLoadGameNotificationsSampler()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }

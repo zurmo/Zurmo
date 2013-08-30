@@ -39,6 +39,12 @@
      */
     class ModalSearchListControllerUtil
     {
+        /**
+         * @param CController $controller
+         * @param $modalListLinkProvider
+         * @param null $stateMetadataAdapterClassName
+         * @return rendered
+         */
         public static function setAjaxModeAndRenderModalSearchList(CController $controller, $modalListLinkProvider,
                                                  $stateMetadataAdapterClassName = null)
         {

@@ -41,6 +41,9 @@
     {
         protected $recentlyViewedItems;
 
+        /**
+         * @param array $recentlyViewedItems
+         */
         public function __construct($recentlyViewedItems)
         {
             assert('is_array($recentlyViewedItems)');

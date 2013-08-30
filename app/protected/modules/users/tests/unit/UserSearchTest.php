@@ -73,5 +73,42 @@
             $this->assertEquals(1, count($users));
             $this->assertEquals($user->id, $users[0]->id);
         }
+
+        /**
+         * Test users count using NonSystemUsersStateMetadataAdapter
+         */
+        public function testGetUsersListUsingNonSystemUsersStateMetadataAdapter()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $users                      = User::getAll();
+            $this->assertEquals(5, count($users));
+            $user                       = UserTestHelper::createBasicUser('mysysuser');
+            $user->setIsSystemUser();
+            $this->assertTrue($user->save());
+
+            $nonSystemUsersStateMetadataAdapter = new NonSystemUsersStateMetadataAdapter(array('clauses' => array(), 'structure' => ''));
+            $metadata                           = $nonSystemUsersStateMetadataAdapter->getAdaptedDataProviderMetadata();
+            $joinTablesAdapter                  = new RedBeanModelJoinTablesQueryAdapter('User');
+            $where  = RedBeanModelDataProvider::makeWhere('User', $metadata, $joinTablesAdapter);
+            $models = User::getSubset($joinTablesAdapter, null, null, $where, null);
+            $this->assertEquals(5, count($models));
+
+            $actualUsers = User::getAll();
+            $this->assertEquals(6, count($actualUsers));
+
+            unset($user);
+            $user   = User::getByUsername('mysysuser');
+            $this->assertTrue((bool)$user->isSystemUser);
+
+            $user->setIsNotSystemUser();
+            $this->assertTrue($user->save());
+            unset($user);
+            $user   = User::getByUsername('mysysuser');
+            $this->assertEquals(0, $user->isSystemUser);
+
+            $where  = RedBeanModelDataProvider::makeWhere('User', $metadata, $joinTablesAdapter);
+            $models = User::getSubset($joinTablesAdapter, null, null, $where, null);
+            $this->assertEquals(6, count($models));
+        }
     }
 ?>

@@ -201,7 +201,8 @@
                                                                                             $autoresponderItem->id,
                                                                                             $person->id,
                                                                                             $url,
-                                                                                            $sourceIP);
+                                                                                            $sourceIP,
+                                                                                            $autoresponderItem);
             $this->assertTrue($saved);
 
             // now try same thing but with a url this time.
@@ -213,7 +214,8 @@
                                                                                             $autoresponderItem->id,
                                                                                             $personId,
                                                                                             $url,
-                                                                                            $sourceIP);
+                                                                                            $sourceIP,
+                                                                                            $autoresponderItem);
             $this->assertTrue($saved);
 
             // test that creating the one with url created one with open too:

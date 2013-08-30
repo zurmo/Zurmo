@@ -50,6 +50,10 @@
             return self::getByNameOrEquivalent('name', $name);
         }
 
+        /**
+         * @param User $user
+         * @param string $viewClassName
+         */
         public static function getByOwnerAndViewClassName(User $user, $viewClassName)
         {
             assert('$user->id > 0');

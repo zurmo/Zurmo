@@ -39,16 +39,6 @@
      */
     class RequiredSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsBatchAttributeValuesDataAnalysis()
-        {
-            return false;
-        }
-
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'Required';
-        }
-
         public static function getLinkedMappingRuleType()
         {
             return 'DefaultValueModelAttribute';
@@ -63,36 +53,61 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            if (isset($this->mappingRuleData['defaultValue']) && $this->mappingRuleData['defaultValue'] != null)
+            {
+                return;
+            }
+            $modelClassName  = $this->modelClassName;
+            $model = new $modelClassName(false);
+            if (!$model->isAttributeRequired($this->attributeName))
+            {
+                return;
+            }
+            if ($rowBean->{$this->columnName} == null)
+            {
+                $label = Zurmo::t('ImportModule', 'Is  required.');
+                $this->shouldSkipRow      = true;
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
          * Resolves that the value is not null or the value is null and a valid default value is available for
          * the model id. If not, then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null || is_string($attributeName)');
-            assert('$mappingRuleData["defaultValue"] == null || is_string($mappingRuleData["defaultValue"])');
             if ($value != null)
             {
                 return $value;
             }
-            if ($mappingRuleData['defaultValue'] != null)
+            if (isset($this->mappingRuleData['defaultValue']) && $this->mappingRuleData['defaultValue'] != null)
             {
-                return $mappingRuleData['defaultValue'];
+                return $this->mappingRuleData['defaultValue'];
             }
             else
             {
+                $modelClassName  = $this->modelClassName;
                 $model = new $modelClassName(false);
-                if (!$model->isAttributeRequired($attributeName))
+                if (!$model->isAttributeRequired($this->attributeName))
                 {
                     return $value;
                 }
                 throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule',
-                'This field is required and neither a value nor a default value was specified.'));
+                          'This field is required and neither a value nor a default value was specified.'));
             }
+        }
+
+        public function shouldSanitizeValue()
+        {
+            return true;
         }
     }
 ?>

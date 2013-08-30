@@ -55,6 +55,11 @@
             $this->treatCurrentUserAsOwnerForPermissions = $value;
         }
 
+        /**
+         * @param RedBean_OODBBean $bean
+         * @param bool $setDefaults
+         * @throws NoCurrentUserSecurityException
+         */
         protected function constructDerived($bean, $setDefaults)
         {
             assert('$bean === null || $bean instanceof RedBean_OODBBean');
@@ -103,8 +108,8 @@
             //have full access
             elseif ((($this->id < 0) &&
                    (($createdByUser->id > 0 &&
-                    $createdByUser->isSame($permitable)) || $createdByUser->id < 0))
-                    || $this->treatCurrentUserAsOwnerForPermissions)
+                    $createdByUser->isSame($permitable)) || $createdByUser->id < 0)) ||
+                    $this->treatCurrentUserAsOwnerForPermissions)
             {
                 return Permission::ALL;
             }
@@ -219,6 +224,17 @@
 
         /**
          * Override to add ReadPermissionOptimization query parts.
+         * @param string $tableName
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param null|int  $offset
+         * @param null|int  $count
+         * @param null|string $where
+         * @param null|string $orderBy
+         * @param bool $selectCount
+         * @param bool $selectDistinct
+         * @param array $quotedExtraSelectColumnNameAndAliases
+         * @return string
+         * @throws NoCurrentUserSecurityException
          */
         public static function makeSubsetOrCountSqlQuery($tableName,
                                                          RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter = null,
@@ -323,6 +339,16 @@
                     'owner' => Zurmo::t('ZurmoModule', 'Owner', array(), null, $language),
                 )
             );
+        }
+
+        /**
+         * Should model have read permission subscription table or not.
+         * This feature is used to track of created/deleted models, so we can easily sync Zurmo with Google Apps or Outlook
+         * @return bool
+         */
+        public static function hasReadPermissionsSubscriptionOptimization()
+        {
+            return false;
         }
     }
 ?>

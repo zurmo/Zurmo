@@ -34,7 +34,7 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    class LeadsListView extends SecuredListView
+    class LeadsListView extends StarredListView
     {
         public static function getDefaultMetadata()
         {

@@ -66,6 +66,10 @@
             return JobsUtil::resolveStringContentByType($this->type);
         }
 
+        /**
+         * @param string $type
+         * @param null|int $pageSize
+         */
         public static function getByType($type, $pageSize = null)
         {
             assert('is_string($type)');

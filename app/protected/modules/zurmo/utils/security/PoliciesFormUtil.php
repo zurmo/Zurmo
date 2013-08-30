@@ -175,6 +175,12 @@
             return $saved;
         }
 
+        /**
+         * @param PoliciesForm $form
+         * @param array $validatedAndCastedPostData
+         * @return PoliciesForm
+         * @throws NotSupportedException
+         */
         public static function loadFormFromCastedPost(PoliciesForm $form, array $validatedAndCastedPostData)
         {
             $delimiter = FormModelUtil::DELIMITER;

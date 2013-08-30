@@ -41,14 +41,45 @@
      */
     class ImportWizardDataAnalysisCompleteView extends ImportWizardView
     {
+        /**
+         * @var array
+         */
         protected $columnNamesAndAttributeIndexOrDerivedTypeLabels;
 
+        /**
+         * @var ImportDataProvider
+         */
+        protected $dataProvider;
+
+        /**
+         * @var null|array
+         */
+        protected $mappingData;
+
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param ImportWizardForm $model
+         * @param null $columnNamesAndAttributeIndexOrDerivedTypeLabels
+         * @param ImportDataProvider $dataProvider
+         * @param array $mappingData
+         */
         public function __construct($controllerId, $moduleId, ImportWizardForm $model,
-                                    $columnNamesAndAttributeIndexOrDerivedTypeLabels)
+                                    $columnNamesAndAttributeIndexOrDerivedTypeLabels, ImportDataProvider $dataProvider,
+                                    array $mappingData)
         {
             assert('is_array($columnNamesAndAttributeIndexOrDerivedTypeLabels)');
             parent::__construct($controllerId, $moduleId, $model);
             $this->columnNamesAndAttributeIndexOrDerivedTypeLabels = $columnNamesAndAttributeIndexOrDerivedTypeLabels;
+            $this->dataProvider = $dataProvider;
+            $this->mappingData  = $mappingData;
+        }
+
+        public static function resolveConfigurationForm()
+        {
+            $configurationForm = new ImportResultsConfigurationForm();
+            static::resolveConfigFormFromRequest($configurationForm);
+            return $configurationForm;
         }
 
         /**
@@ -60,33 +91,27 @@
         protected function renderFormLayout($form = null)
         {
             assert('$form instanceof ZurmoActiveForm');
-            $content  = '<table>'     . "\n";
-            $content .= '<tbody>'     . "\n";
-            $content .= '<tr><td><h3>' . "\n";
-            if (count($this->model->dataAnalyzerMessagesData) == 0)
-            {
-                $content .= Zurmo::t('ImportModule', 'Data Analysis is complete. Click "Next" to import your data.');
-            }
-            else
-            {
-                $content .= Zurmo::t('ImportModule', 'Data Analysis is complete. There are some issues with your data, please review them below. ' .
-                                              'When you are ready, click "Next" to import your data.');
-            }
-            $content .= '</h3></td></tr>'   . "\n";
-            foreach ($this->model->dataAnalyzerMessagesData as $columnName => $messagesData)
-            {
-                $label =  $this->columnNamesAndAttributeIndexOrDerivedTypeLabels[$columnName];
-                $content .= '<tr><td>'    . "\n";
-                $content .= '<strong>' . $columnName . ' >>> ' . $label . '</strong><br />';
-                foreach ($messagesData as $messageData)
-                {
-                    $content .= $messageData['message'] . "<br />";
-                }
-                $content .= '</td></tr>'  . "\n";
-            }
-            $content .= '</tbody>'    . "\n";
-            $content .= '</table>'    . "\n";
+            $content  = Zurmo::t('ImportModule', 'Data Analysis is complete. Please review the results below. ' .
+                                          'When you are ready, click "Next" to import your data.');
+            $content  = ZurmoHtml::tag('h3', array(), $content);
+            $content .= $this->renderStatusGroupsContent();
             return $content;
+        }
+
+        protected function renderAfterFormLayout($form)
+        {
+            $view = new AnalysisResultsImportTempTableListView($this->controllerId, $this->moduleId, $this->dataProvider,
+                        $this->mappingData, $this->model->importRulesType, static::resolveConfigurationForm(), $form, $this->model->id);
+            return $view->render();
+        }
+
+        protected static function resolveConfigFormFromRequest(& $configurationForm)
+        {
+            $excludeFromRestore = array();
+            if (isset($_GET[get_class($configurationForm)]))
+            {
+                $configurationForm->setAttributes($_GET[get_class($configurationForm)]);
+            }
         }
 
         /**
@@ -96,12 +121,65 @@
         {
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/step6/',
                                            array('id' => $this->model->id));
-            return ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ImportModule', 'Next')), $route);
+            return ZurmoHtml::link(ZurmoHtml::wrapLabel($this->renderNextPageLinkLabel()), $route, array('class' => 'green-button'));
         }
 
         protected function renderPreviousPageLinkContent()
         {
             return $this->getPreviousPageLinkContentByControllerAction('step4');
+        }
+
+        protected function renderStatusGroupsContent()
+        {
+            $groupData = $this->dataProvider->getCountDataByGroupByColumnName('analysisStatus');
+            $content  = null;
+            $content .= '<ul class="import-summary">';
+
+            $label    = Zurmo::t('ImportModule', 'Ok');
+            $count    = ZurmoHtml::tag('strong', array(), self::findCountByGroupDataAndStatus($groupData, ImportDataAnalyzer::STATUS_CLEAN));
+            $led      = ZurmoHtml::tag('i', array('class' => 'led state-true'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
+            $label    = Zurmo::t('ImportModule', 'Warning');
+            $count    = ZurmoHtml::tag('strong', array(), self::findCountByGroupDataAndStatus($groupData, ImportDataAnalyzer::STATUS_WARN));
+            $led      = ZurmoHtml::tag('i', array('class' => 'led'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
+            $label    = Zurmo::t('ImportModule', 'Skip');
+            $count    = ZurmoHtml::tag('strong', array(), self::findCountByGroupDataAndStatus($groupData, ImportDataAnalyzer::STATUS_SKIP));
+            $led      = ZurmoHtml::tag('i', array('class' => 'led state-false'), '');
+            $content .= ZurmoHtml::tag('li', array(), $count . $label . $led );
+
+            $content .= '</ul>';
+            return $content;
+        }
+
+        protected function findCountByGroupDataAndStatus(array $groupData, $status)
+        {
+            assert('is_int($status)');
+            foreach ($groupData as $group)
+            {
+                if ((int)$group['analysisStatus'] === $status)
+                {
+                    return (int)$group['count'];
+                }
+            }
+            return 0;
+        }
+
+        protected function renderPreviousPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Map Fields');
+        }
+
+        protected function renderNextPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Import Data');
+        }
+
+        protected function renderTitleContent()
+        {
+            return null;
         }
     }
 ?>

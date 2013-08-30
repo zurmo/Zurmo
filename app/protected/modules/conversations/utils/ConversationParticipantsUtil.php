@@ -143,6 +143,10 @@
             return $newPeopleIndexedByItemId;
         }
 
+        /**
+         * @param Conversation $conversation
+         * @param array $people
+         */
         public static function resolveEmailInvitesByPeople($conversation, $people)
         {
             assert('$conversation instanceof Conversation && $conversation->id > 0');
@@ -181,6 +185,10 @@
             return $conversationParticipant;
         }
 
+        /**
+         * @param Conversation $conversation
+         * @param $person
+         */
         public static function sendEmailInviteToParticipant(Conversation $conversation, $person)
         {
             assert('$conversation->id > 0');
@@ -260,12 +268,20 @@
             return $content;
         }
 
+        /**
+         * @param int $id
+         * @return mixed
+         */
         public static function getUrlToConversationDetailAndRelationsView($id)
         {
             assert('is_int($id)');
             return Yii::app()->createAbsoluteUrl('conversations/default/details/', array('id' => $id));
         }
 
+        /**
+         * @param Conversation $conversation
+         * @return array
+         */
         public static function getConversationParticipants(Conversation $conversation)
         {
             $participants = array();

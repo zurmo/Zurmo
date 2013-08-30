@@ -38,6 +38,11 @@
     {
         const DEFAULT_USER_LAYOUT_ID = 1;
 
+        /**
+         * @param int $layoutId
+         * @param User $user
+         * @throws NotFoundException
+         */
         public static function getByLayoutIdAndUser($layoutId, $user)
         {
             assert('is_integer($layoutId) && $layoutId >= 1');
@@ -67,6 +72,10 @@
             return self::makeModel($bean);
         }
 
+        /**
+         * @param int $userId
+         * @return array
+         */
         public static function getRowsByUserId($userId)
         {
             assert('is_integer($userId) && $userId >= 1');
@@ -172,9 +181,9 @@
         public static function getLayoutTypesData()
         {
             return array(
-                '100'   => Zurmo::t('HomeModule', '1 Column'),
-                '50,50' => Zurmo::t('HomeModule', '2 Columns'), // Not Coding Standard
-                '75,25' => Zurmo::t('HomeModule', '2 Columns Left Strong'), // Not Coding Standard
+                '100'   => Zurmo::t('HomeModule', '{number} Column', array('{number}' => 1)),
+                '50,50' => Zurmo::t('HomeModule', '{number} Columns', array('{number}' => 2)), // Not Coding Standard
+                '75,25' => Zurmo::t('HomeModule', '{number} Columns Left Strong', array('{number}' => 2)), // Not Coding Standard
             );
         }
 

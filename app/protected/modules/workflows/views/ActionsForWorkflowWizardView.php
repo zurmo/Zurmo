@@ -427,11 +427,10 @@
                 $(".remove-dynamic-row-link, .remove-action-row-link").live("click", function()
                 {
                     $("#' . self::ACTION_TYPE_NAME . '").val("").removeAttr("disabled");
-                    size = $(this).parents("ul").find("li").size();
-                    console.log(size);
-                    $(this).parentsUntil("ul").siblings().show();
                     $(this).parents("li").remove(); //removes the <li>
-                    if (size <= 2)
+                    $(this).parentsUntil("ul").siblings().show();
+                    var size = $("#' . get_class($this) . ' .dynamic-rows > ul > li").length;
+                    if (size < 1)
                     {
                         $(".' . static::getZeroComponentsClassName() . '").show();
                     }

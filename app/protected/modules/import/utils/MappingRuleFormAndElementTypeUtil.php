@@ -41,8 +41,11 @@
     {
         /**
          * Given an array of AttributeImportRules an attribute index or derived type, make a MappingRuleForm
-         * @param array $attributeImportRules
-         * @param string $attributeIndexOrDerivedType
+         * @param $attributeImportRules
+         * @param $attributeIndexOrDerivedType
+         * @param $columnType
+         * @return array
+         * @throws NotSupportedException
          */
         public static function makeCollectionByAttributeImportRules($attributeImportRules, $attributeIndexOrDerivedType, $columnType)
         {

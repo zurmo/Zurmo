@@ -48,6 +48,11 @@
 
         abstract protected function getCreateLinkDisplayLabel();
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $modelClassName
+         */
         public function __construct($controllerId, $moduleId, $modelClassName)
         {
             assert('is_string($controllerId)');

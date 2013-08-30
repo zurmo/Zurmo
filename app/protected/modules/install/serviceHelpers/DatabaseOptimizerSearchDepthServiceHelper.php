@@ -43,6 +43,9 @@
         protected $required = false;
         protected $form;
 
+        /**
+         * @param InstallSettingsForm $form
+         */
         public function __construct($form)
         {
             assert('$form instanceof InstallSettingsForm');

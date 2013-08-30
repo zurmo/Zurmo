@@ -172,13 +172,13 @@
             $this->assertEquals('imap', $messageBoxStatDetails->Driver);
         }
 
-        public function testGetMessageBoxStats()
+        public function testResolveMessageBoxStats()
         {
             $this->skipTestIfMissingSettings();
             $imap = EmailMessageTestHelper::resolveImapObject();
             $this->assertTrue($imap->connect());
 
-            $messageBoxStat = $imap->getMessageBoxStats();
+            $messageBoxStat = $imap->resolveMessageBoxStats();
             $this->assertTrue($messageBoxStat instanceof stdClass);
             $this->assertEquals('imap', $messageBoxStat->Driver);
         }

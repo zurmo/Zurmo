@@ -55,8 +55,36 @@
             {
                 throw new NotSupportedException();
             }
-            return (array_key_exists($attribute, $model->originalAttributeValues)  || !$changeRequiredToProcess) &&
+            return ($this->resolveAttributeValueIsChanged($model, $attribute)  || !$changeRequiredToProcess) &&
                    (DateTimeUtil::isDateTimeValueNull($model, $attribute) === false);
+        }
+
+        /**
+         * Resolves for special attributes.
+         * CreatedDateTime should resolve true if the model is new, otherwise false
+         * ModifiedDateTime should always resolve as true because it would always change
+         * @param RedBeanModel $model
+         * @param $attribute
+         * @return bool
+         */
+        protected function resolveAttributeValueIsChanged(RedBeanModel $model, $attribute)
+        {
+            if ($attribute === 'createdDateTime' && $model->id < 0 )
+            {
+                return true;
+            }
+            elseif ($attribute === 'createdDateTime')
+            {
+                return false;
+            }
+            elseif ($attribute === 'modifiedDateTime')
+            {
+                return true;
+            }
+            else
+            {
+                return array_key_exists($attribute, $model->originalAttributeValues);
+            }
         }
     }
 ?>

@@ -39,7 +39,7 @@
      */
     class UsersRegularUserExportWalkthroughTest extends ZurmoRegularUserWalkthroughBaseTest
     {
-        protected static $asynchronusThreshold;
+        protected static $asynchronousThreshold;
 
         public static function setUpBeforeClass()
         {
@@ -48,14 +48,14 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
-            ExportModule::$asynchronusThreshold = 5;
+            self::$asynchronousThreshold = ExportModule::$asynchronousThreshold;
+            ExportModule::$asynchronousThreshold = 5;
             ReadPermissionsOptimizationUtil::rebuild();
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
+            ExportModule::$asynchronousThreshold = self::$asynchronousThreshold;
             parent::tearDownAfterClass();
         }
 
@@ -79,7 +79,7 @@
                 }
             }
             $users = array();
-            for ($i = 0; $i <= (ExportModule::$asynchronusThreshold - 3); $i++)
+            for ($i = 0; $i <= (ExportModule::$asynchronousThreshold - 3); $i++)
             {
                 $users[] = UserTestHelper::createBasicUser('aUser' . $i);
             }

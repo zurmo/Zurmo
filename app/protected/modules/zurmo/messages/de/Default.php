@@ -297,7 +297,7 @@
             => 'Globale Konfiguration',
         'Global configuration saved successfully.'
             => 'Globale Konfiguration wurde erfolgreich gespeichert.',
-        'Global search'
+        'Global Search'
             => 'Globale Suche',
         'Go to Search'
             => 'Zugang Suche',

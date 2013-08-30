@@ -55,7 +55,7 @@
             assert('is_object($itemOwnerModel)');
             assert('get_class($itemOwnerModel) === "Autoresponder" || get_class($itemOwnerModel) === "Campaign"');
             if ($contact->primaryEmail->optOut ||
-               (get_class($itemOwnerModel) === "Campaign" && MarketingListMember::getByMarketingListIdContactIdAndSubscribed(
+               (get_class($itemOwnerModel) === "Campaign" && MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed(
                                                                                 $itemOwnerModel->marketingList->id,
                                                                                 $contact->id,
                                                                                 true) != false))
@@ -174,6 +174,10 @@
             $explicitReadWriteModelPermissions  = ExplicitReadWriteModelPermissionsUtil::makeBySecurableItem($marketingList);
             ExplicitReadWriteModelPermissionsUtil::resolveExplicitReadWriteModelPermissions($emailMessage,
                                                                                     $explicitReadWriteModelPermissions);
+            if (!$emailMessage->save())
+            {
+                throw new FailedToSaveModelException("Unable to save EmailMessage");
+            }
             return $emailMessage;
         }
 
@@ -219,7 +223,8 @@
             {
                 foreach ($itemOwnerModel->files as $file)
                 {
-                    $emailMessage->files->add($file);
+                    $emailMessageFile   = FileModelUtil::makeByFileModel($file);
+                    $emailMessage->files->add($emailMessageFile);
                 }
             }
         }
@@ -243,7 +248,11 @@
         protected static function markItemAsProcessed($item)
         {
             $item->processed   = 1;
-            return $item->unrestrictedSave();
+            if (!$item->unrestrictedSave())
+            {
+                throw new FailedToSaveModelException("Unable to save " . get_class($item));
+            }
+            return true;
         }
 
         protected static function resolveItemOwnerModelRelationName($itemClass)

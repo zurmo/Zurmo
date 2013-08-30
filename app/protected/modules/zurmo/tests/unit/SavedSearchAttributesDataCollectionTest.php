@@ -48,6 +48,21 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        public function testGetSanitizedDynamicSearchAttributes()
+        {
+            $model                 = new AccountsSearchForm(new Account());
+            $model->dynamicClauses = array(array('anyOptOut' => '1'));
+            $dataCollection        = new SavedSearchAttributesDataCollection($model);
+            $sanitizedDynamicSearchAttributes = $dataCollection->getSanitizedDynamicSearchAttributes();
+            $this->assertTrue($sanitizedDynamicSearchAttributes[0]['anyOptOut'] === '1');
+            $model                 = new AccountsSearchForm(new Account());
+            $model->dynamicClauses = array(array('anyOptOut' => ''));
+            $dataCollection        = new SavedSearchAttributesDataCollection($model);
+            $sanitizedDynamicSearchAttributes = $dataCollection->getSanitizedDynamicSearchAttributes();
+            $this->assertTrue($sanitizedDynamicSearchAttributes[0]['anyOptOut'] !== null);
+            $this->assertTrue($sanitizedDynamicSearchAttributes[0]['anyOptOut'] == null);
+        }
+
         public function testGetDynamicSearchAttributes()
         {
             //getDynamicSearchAttributes()

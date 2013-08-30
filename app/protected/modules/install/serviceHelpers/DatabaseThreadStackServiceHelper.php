@@ -44,6 +44,9 @@
 
         protected $minimumRequiredThreadStackValue = 524288;
 
+        /**
+         * @param InstallSettingsForm $form
+         */
         public function __construct($form)
         {
             assert('$form instanceof InstallSettingsForm');

@@ -184,7 +184,7 @@
         {
             return true;
         }
-        
+
         protected function getModelType()
         {
             return $this->model->type;

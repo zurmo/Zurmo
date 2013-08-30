@@ -43,7 +43,7 @@
             => 'Un archivo se debe cargar para continuar con el proceso de importación.',
         'A file must be uploaded with at least one row to import.'
             => 'Un archivo debe ser cargado con al menos una fila a la importación.',
-        'A full name value is required but missing.'
+        'Full name value required, but missing.'
             => 'El campo de nombre completo es necesario.',
         'Access Import Tool'
             => 'Acceso a herramienta de importación',

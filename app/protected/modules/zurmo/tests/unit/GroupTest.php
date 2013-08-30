@@ -771,5 +771,13 @@
             // Which shows the group having been deleted.
             $this->assertEquals(0, count($user->groups));
         }
+
+        public function testIsUserASuperAdministrator()
+        {
+            $this->assertEquals('super', Yii::app()->user->userModel->username);
+            $this->assertTrue(Group::isUserASuperAdministrator(Yii::app()->user->userModel));
+            $user = User::getByUsername('dood1');
+            $this->assertFalse(Group::isUserASuperAdministrator($user));
+        }
     }
 ?>

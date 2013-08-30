@@ -44,6 +44,10 @@
 
         protected $model;
 
+        /**
+         * @param User $user
+         * @param Item $model
+         */
         public function __construct($user, $model)
         {
             assert('$model instanceof Item');

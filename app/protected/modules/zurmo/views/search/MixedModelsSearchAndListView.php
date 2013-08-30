@@ -68,7 +68,7 @@
         }
 
         /**
-         * Render a group of lists that contais the search result from GlobalList
+         * Render a group of lists that contains the search result from GlobalList
          *
          */
         protected function renderListViews()

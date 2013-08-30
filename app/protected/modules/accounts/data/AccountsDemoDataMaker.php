@@ -46,6 +46,9 @@
             return array('users');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -64,6 +67,9 @@
             $demoDataHelper->setRangeByModelName('Account', $accounts[0], $accounts[count($accounts)-1]);
         }
 
+        /**
+         * @param RedBeanModel $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof Account');

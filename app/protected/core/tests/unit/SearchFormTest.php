@@ -91,6 +91,7 @@
                                  'dynamicStructure',
                                  'dynamicClauses',
                                  'anyMixedAttributes',
+                                 'filterByStarred',
                                  'date__Date',
                                  'date2__Date',
                                  'dateTime__DateTime',
@@ -198,7 +199,8 @@
             $compareData = array(SearchForm::ANY_MIXED_ATTRIBUTES_SCOPE_NAME,
                                  SearchForm::SELECTED_LIST_ATTRIBUTES,
                                  KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES,
-                                 KanbanBoard::SELECTED_THEME);
+                                 KanbanBoard::SELECTED_THEME,
+                                 'filterByStarred');
             $this->assertEquals($compareData, $data);
         }
     }

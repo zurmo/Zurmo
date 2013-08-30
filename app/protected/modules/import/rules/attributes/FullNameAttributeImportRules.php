@@ -62,15 +62,23 @@
             return array('FullName', 'FullNameRequired');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        /**
+         * @param mixed $value
+         * @param string $columnName
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         * @return array|void
+         */
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             $attributeNames = $this->getRealModelAttributeNames();
             assert('$attributeNames[0] == "firstName"');
             assert('$attributeNames[1] == "lastName"');
             $modelClassName = $this->getModelClassName();
             $sanitizedValue = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                   $modelClassName, null, $value, $columnMappingData,
+                                                   $modelClassName, null, $value, $columnName, $columnMappingData,
                                                    $importSanitizeResultsUtil);
             @list($firstName, $lastName) = explode(' ', trim($sanitizedValue));
             if ($lastName == null)

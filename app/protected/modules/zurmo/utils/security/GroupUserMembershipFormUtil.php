@@ -42,7 +42,24 @@
     class GroupUserMembershipFormUtil
     {
         /**
-         * @return a GroupUserMembershipForm
+         * Used to properly type cast incoming POST data
+         */
+        public static function typeCastPostData($postData)
+        {
+            assert('is_array($postData)');
+            if (isset($postData['userMembershipData']))
+            {
+                foreach ($postData['userMembershipData'] as $index => $userId)
+                {
+                    $postData['userMembershipData'][$index] = intval($userId);
+                }
+            }
+            return $postData;
+        }
+
+        /**
+         * @param $group
+         * @return GroupUserMembershipForm
          */
         public static function makeFormFromGroup($group)
         {
@@ -58,8 +75,33 @@
         }
 
         /**
+         * @param GroupUserMembershipForm $form
+         * @param Group $group
+         * @return null|string $message. If message present than validation failed.
+         */
+        public static function validateMembershipChange(GroupUserMembershipForm $form, Group $group)
+        {
+            if ($group->name == Group::SUPER_ADMINISTRATORS_GROUP_NAME)
+            {
+                if (count($form->userMembershipData) == 0)
+                {
+                    return Zurmo::t('ZurmoModule', 'There must be at least one super administrator');
+                }
+                foreach ($group->users as $index => $user)
+                {
+                    if (empty($form->userMembershipData[$user->id]) && ($user->isRootUser))
+                    {
+                        return Zurmo::t('ZurmoModule', 'You cannot remove {user} from this group', array('{user}' => strval($user)));
+                    }
+                }
+            }
+        }
+
+        /**
          * Takes post data and prepares it for setting the membership on the group.
          * Adds and removes users to group based on a form's userMembershipData
+         * @param $form
+         * @param $group
          * @return boolean. True if membership was set successfully.
          */
         public static function setMembershipFromForm($form, $group)
@@ -70,7 +112,7 @@
             $addedUsers   = array();
             foreach ($group->users as $index => $user)
             {
-                if (empty($form->userMembershipData[$user->id]))
+                if (empty($form->userMembershipData[$user->id]) && !$user->isSystemUser && !$user->isRootUser)
                 {
                     $group->users->removeByIndex($index);
                     $removedUsers[] = $user;
@@ -99,6 +141,9 @@
 
         /**
          * Set the userMembershipData attribute on the GroupUserMembershipForm
+         * @param GroupUserMembershipForm $membershipForm
+         * @param array $postData
+         * @return GroupUserMembershipForm
          */
         public static function setFormFromCastedPost(GroupUserMembershipForm $membershipForm, array $postData)
         {
@@ -120,7 +165,10 @@
             $data = array();
             foreach ($users as $user)
             {
-                $data[$user->id] = strval($user);
+                if (!$user->isSystemUser)
+                {
+                    $data[$user->id] = strval($user);
+                }
             }
             return $data;
         }
@@ -141,28 +189,12 @@
             $data     = array();
             foreach ($allUsers as $user)
             {
-                if (empty($userData[$user->id]))
+                if (empty($userData[$user->id]) && !$user->isSystemUser)
                 {
                     $data[$user->id] = strval($user);
                 }
             }
             return $data;
-        }
-
-        /**
-         * Used to properly type cast incoming POST data
-         */
-        public static function typeCastPostData($postData)
-        {
-            assert('is_array($postData)');
-            if (isset($postData['userMembershipData']))
-            {
-                foreach ($postData['userMembershipData'] as $index => $userId)
-                {
-                    $postData['userMembershipData'][$index] = intval($userId);
-                }
-            }
-            return $postData;
         }
     }
 ?>

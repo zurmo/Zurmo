@@ -39,6 +39,11 @@
      */
     class JobLogViewUtil
     {
+        /**
+         * @param JobLog $jobLog
+         * @return string
+         * @throws NotSupportedException
+         */
         public static function renderStatusAndMessageListContent(JobLog $jobLog)
         {
             if ($jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)

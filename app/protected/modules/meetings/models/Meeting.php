@@ -166,5 +166,10 @@
         {
             return 'MeetingGamification';
         }
+
+        public static function hasReadPermissionsSubscriptionOptimization()
+        {
+            return true;
+        }
     }
 ?>

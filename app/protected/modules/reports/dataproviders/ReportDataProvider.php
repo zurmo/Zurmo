@@ -63,6 +63,12 @@
         protected $offset;
 
         /**
+         * Set to true if you dataProvider should get grand totals
+         * @var bool
+         */
+        protected $haveGrandTotals = false;
+
+        /**
          * @var array
          */
         private $_rowsData;
@@ -238,6 +244,18 @@
         }
 
         /**
+        * Override so when refresh is true it resets _rowsData
+         */
+        public function getData($refresh = false)
+        {
+            if ($refresh)
+            {
+                $this->_rowsData = null;
+            }
+            return parent::getData($refresh);
+        }
+
+        /**
          * @return array
          */
         protected function fetchData()
@@ -274,6 +292,12 @@
             return $offset;
         }
 
+        public function setOffset($offset)
+        {
+            assert('is_int($offset)');
+            $this->offset = $offset;
+        }
+
         /**
          * @return int|null
          */
@@ -294,8 +318,8 @@
         }
 
         /**
-         * @param $offset
-         * @param $limit
+         * @param int $offset
+         * @param int $limit
          * @return array
          */
         protected function runQueryAndGetResolveResultsData($offset, $limit)
@@ -330,8 +354,18 @@
             return $resultsData;
         }
 
+        public function runQueryAndGrandTotalsData()
+        {
+            if (!$this->haveGrandTotals)
+            {
+                return null;
+            }
+            $rows = $this->getGrandTotalsRowsData();
+            return $rows;
+        }
+
         /**
-         * @param $offset
+         * @param int $offset
          * @return int
          */
         protected static function resolveIdByOffset($offset)
@@ -358,6 +392,12 @@
             return $this->_rowsData;
         }
 
+        protected function getGrandTotalsRowsData()
+        {
+            $sql = $this->makeSqlQueryForGrandTotals();
+            return R::getAll($sql);
+        }
+
         /**
          * See the yii documentation.
          * @return array
@@ -374,8 +414,8 @@
 
         /**
          * @param RedBeanModelSelectQueryAdapter $selectQueryAdapter
-         * @param $offset
-         * @param $limit
+         * @param int $offset
+         * @param int $limit
          * @return string
          */
         protected function makeSqlQueryForFetchingData(RedBeanModelSelectQueryAdapter $selectQueryAdapter, $offset, $limit)
@@ -421,6 +461,40 @@
             }
             return                    SQLQueryUtil::makeQuery($modelClassName::getTableName($modelClassName),
                                       $selectQueryAdapter, $joinTablesAdapter, null, null, $where, $orderBy, $groupBy);
+        }
+
+        protected function getDisplayAttributesForGrandTotals()
+        {
+            $displayAttributes = $this->resolveDisplayAttributes();
+            foreach ($displayAttributes as $key => $displayAttribute)
+            {
+                foreach ($this->resolveGroupBys() as $groupBy)
+                {
+                    if ($displayAttribute->attributeIndexOrDerivedType == $groupBy->attributeIndexOrDerivedType)
+                    {
+                        unset($displayAttributes[$key]);
+                    }
+                }
+            }
+            return $displayAttributes;
+        }
+
+        protected function makeSqlQueryForGrandTotals()
+        {
+            $selectQueryAdapter     = new RedBeanModelSelectQueryAdapter();
+            $moduleClassName        = $this->report->getModuleClassName();
+            $modelClassName         = $moduleClassName::getPrimaryModelName();
+            $joinTablesAdapter      = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+            $builder                = new DisplayAttributesReportQueryBuilder($joinTablesAdapter, $selectQueryAdapter,
+                                          $this->report->getCurrencyConversionType());
+            $builder->makeQueryContent($this->getDisplayAttributesForGrandTotals());
+            $where                  = $this->makeFiltersContent($joinTablesAdapter);
+            $orderBy                = null;
+            $groupBy                = $this->makeGroupBysContentForGrandTotals($joinTablesAdapter);
+            $offset                 = null;
+            $limit                  = null;
+            return                    SQLQueryUtil::makeQuery($modelClassName::getTableName($modelClassName),
+                                      $selectQueryAdapter, $joinTablesAdapter, $offset, $limit, $where, $orderBy, $groupBy);
         }
 
         /**
@@ -473,14 +547,23 @@
          * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
          * @return null|string
          */
+        protected function makeGroupBysContentForGrandTotals(RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter)
+        {
+            return null;
+        }
+
+        /**
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @return null|string
+         */
         protected function makeGroupBysContentForCount(RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter)
         {
             return $this->makeGroupBysContent($joinTablesAdapter);
         }
 
         /**
-         * @param $attributeIndexOrDerivedTypePrefix
-         * @param $attributeOrDerivedAttributeType
+         * @param string|null $attributeIndexOrDerivedTypePrefix
+         * @param string $attributeOrDerivedAttributeType
          * @return FilterForReportForm
          * @throws NotSupportedException
          */
@@ -532,8 +615,8 @@
         }
 
         /**
-         * @param $attributeIndexOrDerivedTypePrefix
-         * @param $variableStateData
+         * @param string $attributeIndexOrDerivedTypePrefix
+         * @param array $variableStateData
          * @return FilterForReportForm
          */
         protected function resolveFilterForVariableStateAttributeIndex($attributeIndexOrDerivedTypePrefix, $variableStateData)

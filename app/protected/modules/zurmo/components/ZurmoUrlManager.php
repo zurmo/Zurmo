@@ -35,14 +35,14 @@
      ********************************************************************************/
 
     /**
-     * ZurmoUrlManagerr.
+     * ZurmoUrlManager.
      */
     class ZurmoUrlManager
     {
         public static function getPositionOfPathInUrl($keyword)
         {
-            $reqestedUrl = Yii::app()->getRequest()->getUrl();
-            $position = strpos(trim($reqestedUrl, '/'), trim($keyword, '/'));
+            $requestedUrl = Yii::app()->getRequest()->getUrl();
+            $position = strpos(trim($requestedUrl, '/'), trim($keyword, '/'));
             return $position;
         }
     }

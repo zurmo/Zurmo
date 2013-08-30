@@ -41,6 +41,7 @@
     {
         /**
          * @param $dataProvider
+         * @param ReportDataProvider $dataProvider
          */
         public function __construct($dataProvider)
         {

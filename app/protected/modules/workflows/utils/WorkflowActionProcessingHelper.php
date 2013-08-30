@@ -417,7 +417,7 @@
                     {
                         throw new FailedToSaveModelException();
                     }
-                    if($modelToForgetCache instanceof RedBeanModel)
+                    if ($modelToForgetCache instanceof RedBeanModel)
                     {
                         $modelToForgetCache->forget();
                     }

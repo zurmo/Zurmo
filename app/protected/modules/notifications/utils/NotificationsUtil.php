@@ -105,6 +105,10 @@
             return $content;
         }
 
+        /**
+         * @param Notification $notification
+         * @return string
+         */
         public static function renderShortenedListViewContent(Notification $notification)
         {
             $content = strval($notification);
@@ -128,6 +132,10 @@
             return $content;
         }
 
+        /**
+         * @param Notification $notification
+         * @return string
+         */
         public static function renderListViewContent(Notification $notification)
         {
             $content = strval($notification);

@@ -39,6 +39,10 @@
      */
     class MashableActivityRulesFactory
     {
+        /**
+         * @param string $modelClassName
+         * @return mixed
+         */
         public static function createMashableActivityRulesByModel($modelClassName)
         {
             assert('$modelClassName !== null');

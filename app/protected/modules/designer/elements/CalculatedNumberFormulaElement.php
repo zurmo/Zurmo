@@ -54,28 +54,47 @@
         protected function renderAvailableAttributesContent()
         {
             $modelClassName = $this->model->getModelClassName();
-            $model          = new $modelClassName(false);
-            $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
-            $attributeData  = $adapter->getAttributes();
-            $title          = Zurmo::t('DesignerModule', 'Create a math formula that is calculated from other fields.' .
-                                   ' Use the Formula Name from the Available Fields grid below to create your formula.' .
-                                   ' Example formula (field1 * field2) / field3');
+            $model                         = new $modelClassName(false);
+            $adapter                       = new ModelNumberOrCurrencyAttributesAdapter($model);
+            $attributeDataNumerOrCurrency  = $adapter->getAttributes();
+            $title          = Zurmo::t('DesignerModule', 'Create a formula that is evaluated based on other fields. ' .
+                                                         'The formula can be a math expression calculated from number ' .
+                                                         'fields, for example, you can use an expression like ' .
+                                                         '(field1 * field2) / field3. The formula can also include an if ' .
+                                                         'statement, use the IF(condition;trueValue;falseValue) syntax. ' . // Not Coding Standard
+                                                         'Within the condition and values you can use strings, string fields, ' .
+                                                         'number fields or math expressions. Strings should be surrounded by ' .
+                                                         '\'. In the condition you can ' .
+                                                         'use the operators <, >, ==, !=, <= and >=. An example of an if ' . // Not Coding Standard
+                                                         'statement is IF(field1 == field4;field2/365;0)'); // Not Coding Standard
             $spanContent    = '<span id="formula-tooltip" class="tooltip" title="' . $title . '">?</span>';
+            $content        = null;
+            $adapter        = new ModelAttributesAdapter($model);
+            $attributeData  = $adapter->getAttributes();
             if (count($attributeData) > 0)
             {
-                $content  = '<strong>' . Zurmo::t('DesignerModule', 'Available Fields:') . '</strong> ' . $spanContent;
+                $content .= '<strong>' . Zurmo::t('DesignerModule', 'Available Fields For Formula:') . '</strong> ';
+                $content .= $spanContent;
                 $content .= '<table id="available-fields">';
                 $content .= '<tr><th>' . Zurmo::t('DesignerModule', 'Field Name') . '</th>';
-                $content .= '<th>' . Zurmo::t('DesignerModule', 'Formula Name') . '</th></tr>';
+                $content .= '<th>' . Zurmo::t('DesignerModule', 'Formula Name') . '</th>';
+                $content .= '<th>' . Zurmo::t('DesignerModule', 'Can be used in math expression') . '</th></tr>';
                 foreach ($attributeData as $attributeName => $data)
                 {
-                    $content .= '<tr><td>' . $data['attributeLabel'] . '</td><td>' . $attributeName . '</td></tr>';
+                    $content .= '<tr><td>' . $data['attributeLabel'] . '</td>';
+                    $content .= '<td>' . $attributeName . '</td>';
+                    $canBeUsedInMathExpression = Zurmo::t('DesignerModule', 'No');
+                    if (in_array($attributeName, array_keys($attributeDataNumerOrCurrency)))
+                    {
+                        $canBeUsedInMathExpression = Zurmo::t('DesignerModule', 'Yes');
+                    }
+                    $content .= '<td>' . $canBeUsedInMathExpression . '</td></tr>';
                 }
                 $content .= '</table>';
             }
             else
             {
-                $content  = '<span class="error">' . Zurmo::t('DesignerModule', 'There are no fields in this module to be used in a formula.');
+                $content .= '<span class="error">' . Zurmo::t('DesignerModule', 'There are no fields in this module to be used in an expression.');
                 $content .= '</span>';
             }
             $qtip = new ZurmoTip();

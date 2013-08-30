@@ -151,7 +151,8 @@
                     'textContent'                   => 'TextArea',
                 ),
                 'relations' => array(
-                    'files'                         => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED),
+                    'files'                         => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED,
+                                                            RedBeanModel::LINK_TYPE_POLYMORPHIC, 'relatedModel'),
                 ),
             );
             return $metadata;
@@ -209,6 +210,10 @@
             return self::getSubset($joinTablesAdapter, null, null, $where, 'name');
         }
 
+        /**
+         * @param int $type
+         * @return array
+         */
         public static function getDataAndLabelsByType($type)
         {
             assert('is_int($type)');

@@ -46,6 +46,9 @@
             return array('opportunities');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -84,6 +87,10 @@
             $demoDataHelper->setRangeByModelName('Meeting', $meetings[0], $meetings[count($meetings)-1]);
         }
 
+        /**
+         * @param RedBeanModel $model
+         * @param bool $setInFuture
+         */
         public function populateModel(& $model, $setInFuture = true)
         {
             assert('$model instanceof Meeting');

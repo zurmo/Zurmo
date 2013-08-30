@@ -99,6 +99,15 @@
                                     )
                                 ),
                                 array('cells' =>
+                                array(
+                                    array(
+                                        'elements' => array(
+                                            array('attributeName' => 'hideFromLeaderboard', 'type' => 'CheckBox'),
+                                        ),
+                                    ),
+                                )
+                                ),
+                                array('cells' =>
                                     array(
                                         array(
                                             'elements' => array(
@@ -112,6 +121,15 @@
                                         array(
                                             'elements' => array(
                                                 array('attributeName' => 'enableDesktopNotifications', 'type' => 'DesktopNotification'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'hideFromSelecting', 'type' => 'HideFromSelecting'),
                                             ),
                                         ),
                                     )

@@ -281,13 +281,13 @@
             $element               = new SaveButtonActionElement(null, null, null, $params);
             return $element->render();
         }
-        
-        /**         
+
+        /**
          * @return string
          */
         protected function renderDeleteActionElementsContent()
         {
-            return ZurmoHtml::link(Zurmo::t('Core', 'Delete'), '#', 
+            return ZurmoHtml::link(Zurmo::t('Core', 'Delete'), '#',
                                    array('class' => 'remove-action-row-link simple-link'));
         }
     }

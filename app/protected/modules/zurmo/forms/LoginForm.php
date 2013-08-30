@@ -67,6 +67,10 @@
             {
                 $this->addError('password', Zurmo::t('ZurmoModule', 'Incorrect username or password.'));
             }
+            else
+            {
+                Yii::app()->licenseManager->resolveUserIdentityAuthenticationForError($this, $this->_identity);
+            }
         }
 
         public function login()
@@ -87,6 +91,7 @@
                 if ($group->contains($user))
                 {
                     ZurmoModule::checkAndUpdateZurmoInfo();
+                    Yii::app()->licenseManager->checkAndUpdateLicenseInfo();
                 }
                 return true;
             }

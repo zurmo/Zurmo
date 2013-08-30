@@ -39,40 +39,78 @@
      */
     class MinimumLengthSanitizerUtil extends SanitizerUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        /**
+         * If a model id value is invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
         {
-            return 'MinimumLength';
+            return true;
         }
 
-        public static function getBatchAttributeValueDataAnalyzerType()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return 'MinimumLength';
+            $minimumLength = $this->getMinimumLength();
+            if (strlen($rowBean->{$this->columnName}) < $minimumLength && strlen($rowBean->{$this->columnName}) > 0)
+            {
+                $label = Zurmo::t('ImportModule', 'Is too short. Minimum length is {minimumLength}.',
+                                  array('{minimumLength}' => $minimumLength));
+
+                if ($this->isAttributeRequired())
+                {
+                    $this->shouldSkipRow      = true;
+                }
+                else
+                {
+                    $this->shouldSkipRow      = false;
+                }
+                $this->analysisMessages[] = $label;
+            }
         }
 
         /**
          * Given a value, resolve that the value not too large for the attribute based on the attribute's type.  If
          * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData == null');
-            $model     = new $modelClassName(false);
-            $minLength = StringValidatorHelper::getMinLengthByModelAndAttributeName($model, $attributeName);
+            assert('$this->mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
-            if (strlen($value) >= $minLength)
+            if (strlen($value) >= $this->getMinimumLength())
             {
                 return $value;
             }
             throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Value is too short.'));
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData == null');
+        }
+
+        /**
+         * @return int|null minimum length
+         */
+        protected function getMinimumLength()
+        {
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            return StringValidatorHelper::getMinLengthByModelAndAttributeName($model, $this->attributeName);
+        }
+
+        protected function isAttributeRequired()
+        {
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            return $model->isAttributeRequired($this->attributeName);
         }
     }
 ?>

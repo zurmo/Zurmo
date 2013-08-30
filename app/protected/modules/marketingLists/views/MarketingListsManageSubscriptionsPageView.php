@@ -36,16 +36,17 @@
 
     class MarketingListsManageSubscriptionsPageView extends ZurmoPageView
     {
+        /**
+         * @param CController $controller
+         * @param MetadataView $listView
+         */
         public function __construct(CController $controller, MetadataView $listView)
         {
-            $applicationName    = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'applicationName');
-            $header             = new HeaderLinksView(array(), array(), $applicationName);
             $flashMessageView   = new FlashMessageView($controller);
-            $gridView           = new GridView(4, 1);
-            $gridView->setView($header, 0, 0);
-            $gridView->setView($listView, 1, 0);
-            $gridView->setView($flashMessageView, 2, 0);
-            $gridView->setView(new FooterView(false), 3, 0);
+            $gridView           = new GridView(3, 1);
+            $gridView->setView($listView, 0, 0);
+            $gridView->setView($flashMessageView, 1, 0);
+            $gridView->setView(new FooterView(false), 2, 0);
             $this->registerScripts();
             parent::__construct($gridView);
         }

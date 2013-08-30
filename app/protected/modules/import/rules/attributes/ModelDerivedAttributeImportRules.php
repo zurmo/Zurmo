@@ -72,14 +72,22 @@
             throw new NotImplementedException();
         }
 
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        /**
+         * @param mixed $value
+         * @param string $columnName
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         * @return array|void
+         */
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             $modelClassName        = $this->getModelClassName();
             $derivedModelClassName = static::getDerivedModelClassName();
             $sanitizedValue = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
                                                             $modelClassName, null,
-                                                            $value, $columnMappingData, $importSanitizeResultsUtil);
+                                                            $value, $columnName, $columnMappingData, $importSanitizeResultsUtil);
              if ($sanitizedValue == null &&
                 $columnMappingData['mappingRulesData']
                                   ['DefaultModelNameIdDerivedAttributeMappingRuleForm']['defaultModelId'] != null)

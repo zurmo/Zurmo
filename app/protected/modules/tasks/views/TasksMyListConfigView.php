@@ -49,6 +49,7 @@
                         ),
                     ),
                     'nonPlaceableAttributeNames' => array(
+                        'anyMixedAttributes',
                         'latestDateTime',
                     ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,

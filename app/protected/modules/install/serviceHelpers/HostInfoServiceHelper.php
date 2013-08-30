@@ -43,11 +43,11 @@
         {
             $hostInfoIsIncorrect = true;
             $ScriptUrlIsCorrect  = true;
-            if(Yii::app()->request->getHostInfo() != Yii::app()->request->getRealHostInfo())
+            if (Yii::app()->request->getHostInfo() != Yii::app()->request->getRealHostInfo())
             {
                 $hostInfoIsIncorrect = false;
             }
-            if(Yii::app()->request->getScriptUrl() != Yii::app()->request->getRealScriptUrl())
+            if (Yii::app()->request->getScriptUrl() != Yii::app()->request->getRealScriptUrl())
             {
                 $ScriptUrlIsCorrect = false;
             }

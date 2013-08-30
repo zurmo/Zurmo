@@ -39,6 +39,10 @@
      */
     class ActivityMashableActivityRules extends MashableActivityRules
     {
+        /**
+         * @param int $relationItemId
+         * @return array
+         */
         public function resolveSearchAttributesDataByRelatedItemId($relationItemId)
         {
             assert('is_int($relationItemId)');
@@ -54,6 +58,10 @@
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 
+        /**
+         * @param array $relationItemIds
+         * @return array
+         */
         public function resolveSearchAttributesDataByRelatedItemIds($relationItemIds)
         {
             assert('is_array($relationItemIds)');
@@ -69,6 +77,10 @@
             return $this->resolveSearchAttributeDataForLatestActivities($searchAttributeData);
         }
 
+        /**
+         * @param array $searchAttributeData
+         * @return array
+         */
         public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');
@@ -123,6 +135,11 @@
             }
         }
 
+        /**
+         * @param RedBeanModel $model
+         * @param string $castDownModelClassName
+         * @return null|string
+         */
         protected static function getActivityItemsStringContentByModelClassName(RedBeanModel $model, $castDownModelClassName)
         {
             assert('is_string($castDownModelClassName)');
@@ -154,6 +171,11 @@
             return self::resolveStringValueModelsDataToStringContent($existingModels);
         }
 
+        /**
+         * @param array $relationModelClassNames
+         * @param RedBeanModel $model
+         * @return string
+         */
         protected static function getFirstActivityItemStringContent($relationModelClassNames, RedBeanModel $model)
         {
             assert('is_array($relationModelClassNames)');

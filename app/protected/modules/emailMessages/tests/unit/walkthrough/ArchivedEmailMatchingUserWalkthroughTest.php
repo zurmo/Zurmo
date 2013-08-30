@@ -77,6 +77,7 @@
             $startingContactState = ContactsUtil::getStartingState();
             $startingLeadState    = LeadsUtil::getStartingState();
             //test validating selecting an existing contact
+
             $this->setGetArray(array('id' => $message1->id));
             $this->setPostArray(array('ajax' => 'select-contact-form-' . $message1->id,
                                     'AnyContactSelectForm' => array($message1->id => array(
@@ -115,6 +116,44 @@
             $this->assertTrue($message1->sender->personOrAccount->isSame($contact));
             $this->assertEquals('Archived', $message1->folder);
 
+            //assert subject of the email going to edit.
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            $this->assertEquals('A test unmatched archived received email', $message1->subject);
+
+            //edit subject of email message.
+            $this->setGetArray(array('id' => $message1->id));
+            $createEmailMessageFormData = array('subject'        => 'A test unmatched archived received email edited');
+            $this->setPostArray(array('ajax' => 'edit-form', 'EmailMessage' => $createEmailMessageFormData));
+            $this->runControllerWithRedirectExceptionAndGetUrl('emailMessages/default/edit');
+
+            //assert subject is edited or not.
+            $this->setGetArray(array('id' => $contact->id));
+            $this->runControllerWithNoExceptionsAndGetContent('contacts/default/details');
+            $this->assertEquals('A test unmatched archived received email edited', $message1->subject);
+
+            //delete email message.
+            $this->setGetArray(array('id' => $message1->id));
+            $this->runControllerWithRedirectExceptionAndGetUrl('emailMessages/default/delete', true);
+
+            //assert subject not present.
+            try
+            {
+                EmailMessage::getById($message1->id);
+                $this->fail();
+            }
+            catch (NotFoundException $e)
+            {
+                //success
+            }
+
+            //Test the default permission was setted
+            $everyoneGroup        = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                    makeBySecurableItem($message1);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertEquals($everyoneGroup, $readWritePermitables[$everyoneGroup->id]);
+
             //test creating new contact and saving
             $this->assertEquals(1, Contact::getCount());
             $this->setGetArray(array('id' => $message2->id));
@@ -130,6 +169,12 @@
             $this->assertTrue($message2->sender->personOrAccount->isSame($contact));
             $this->assertEquals('Archived', $message2->folder);
 
+            //Test the default permission was setted
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                    makeBySecurableItem($message2);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertEquals($everyoneGroup, $readWritePermitables[$everyoneGroup->id]);
+
             //test creating new lead and saving
             $this->assertEquals(2, Contact::getCount());
             $this->setGetArray(array('id' => $message3->id));
@@ -144,6 +189,12 @@
             $contact  = $contacts[0];
             $this->assertTrue($message3->sender->personOrAccount->isSame($contact));
             $this->assertEquals('Archived', $message3->folder);
+
+            //Test the default permission was setted
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                    makeBySecurableItem($message3);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertEquals($everyoneGroup, $readWritePermitables[$everyoneGroup->id]);
         }
 
         /**

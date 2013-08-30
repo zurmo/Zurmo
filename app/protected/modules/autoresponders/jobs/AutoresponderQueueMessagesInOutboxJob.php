@@ -53,11 +53,21 @@
          */
         public function run()
         {
+            $processed = $this->processRun();
+            $this->forgetModelsWithForgottenValidators();
+            $this->modelIdentifiersForForgottenValidators = array();
+            return $processed;
+        }
+
+        protected function processRun()
+        {
             $batchSize = $this->resolveBatchSize();
             $autoresponderItemsToProcess    = AutoresponderItem::getByProcessedAndProcessDateTime(
                                                                                         0,
                                                                                         time(),
                                                                                         $batchSize);
+            $startingMemoryUsage = memory_get_usage();
+            $modelsProcessedCount = 0;
             foreach ($autoresponderItemsToProcess as $autoresponderItem)
             {
                 try
@@ -73,13 +83,30 @@
                     $this->errorMessage = $e->getMessage();
                     return false;
                 }
+                $this->runGarbageCollection($autoresponderItem);
+                $modelsProcessedCount++;
             }
+            $this->addMaxmimumProcessingCountMessage($modelsProcessedCount, $startingMemoryUsage);
             return true;
         }
 
         protected function processAutoresponderItemInQueue(AutoresponderItem $autoresponderItem)
         {
             AutoresponderItemsUtil::processDueItem($autoresponderItem);
+        }
+
+        /**
+         * Not pretty, but gets the job done. Solves memory leak problem.
+         * @param AutoresponderItem $autoresponderItem
+         */
+        protected function runGarbageCollection($autoresponderItem)
+        {
+            assert('$autoresponderItem instanceof AutoresponderItem');
+            $autoresponderItem->autoresponder->marketingList->forgetValidators();
+            $autoresponderItem->autoresponder->forgetValidators();
+            $this->modelIdentifiersForForgottenValidators[$autoresponderItem->autoresponder->marketingList->getModelIdentifier()] = true;
+            $this->modelIdentifiersForForgottenValidators[$autoresponderItem->autoresponder->getModelIdentifier()] = true;
+            parent::runGarbageCollection($autoresponderItem);
         }
     }
 ?>

@@ -43,7 +43,7 @@
     {
         public function testTimeTriggerBeforeSaveEquals()
         {
-            $workflow = self::makeOnSaveWorkflowAndTimeTriggerForDateOrDateTime('date', 'Is Time For', null, 500);
+            $workflow = self::makeOnSaveWorkflowAndTimeTriggerForDateOrDateTime('date', 'Is Time For', null, 1);
             $model           = new WorkflowModelTestItem();
             $model->lastName = 'someLastName';
             $model->string   = 'something';
@@ -67,7 +67,7 @@
          */
         public function testTimeTriggerBeforeSaveEqualsWithANonTimeTrigger()
         {
-            $workflow = self::makeOnSaveWorkflowAndTimeTriggerForDateOrDateTime('date', 'Is Time For', null, 500);
+            $workflow = self::makeOnSaveWorkflowAndTimeTriggerForDateOrDateTime('date', 'Is Time For', null, 1);
             $trigger = new TriggerForWorkflowForm('WorkflowsTestModule', 'WorkflowModelTestItem', $workflow->getType());
             $trigger->attributeIndexOrDerivedType = 'lastName';
             $trigger->value                       = 'Green';

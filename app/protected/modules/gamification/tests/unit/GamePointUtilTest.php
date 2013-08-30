@@ -76,6 +76,17 @@
             $this->assertTrue(count($data) > 0);
         }
 
+        public function testGetUserLeaderboardCount()
+        {
+            $count = GamePointUtil::getUserLeaderboardCount(GamePointUtil::LEADERBOARD_TYPE_WEEKLY);
+            $this->assertTrue(Yii::app()->gameHelper->enabled); //test to see if enabled when running all tests
+            $this->assertEquals(1, $count);
+            $count = GamePointUtil::getUserLeaderboardCount(GamePointUtil::LEADERBOARD_TYPE_MONTHLY);
+            $this->assertEquals(1, $count);
+            $count = GamePointUtil::getUserLeaderboardCount(GamePointUtil::LEADERBOARD_TYPE_OVERALL);
+            $this->assertEquals(1, $count);
+        }
+
         public function testGetUserRankingData()
         {
             $super = User::getByUsername('super');

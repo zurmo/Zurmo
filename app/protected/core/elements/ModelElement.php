@@ -264,17 +264,26 @@
             {
                 if ($this->showLinkOnNonEditable())
                 {
-                    return ZurmoHtml::link(
-                        Yii::app()->format->text($this->model->{$this->attribute}),
-                        Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->controllerId .
-                        '/details/', array('id' => $this->model->{$this->attribute}->id))
-                    );
+                    return $this->makeNonEditableLink();
                 }
                 else
                 {
                     return Yii::app()->format->text($this->model->{$this->attribute});
                 }
             }
+        }
+
+        protected function makeNonEditableLink()
+        {
+            return ZurmoHtml::link(Yii::app()->format->text($this->model->{$this->attribute}),
+                                   $this->makeNonEditableLinkUrl()
+            );
+        }
+
+        protected function makeNonEditableLinkUrl()
+        {
+            return Yii::app()->createUrl($this->resolveModuleId() . '/' . $this->controllerId .
+                                         '/details/', array('id' => $this->model->{$this->attribute}->id));
         }
 
         /**

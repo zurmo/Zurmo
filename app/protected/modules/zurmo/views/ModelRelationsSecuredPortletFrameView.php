@@ -54,6 +54,18 @@
 
         private $portletsAreRemovable;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $uniqueLayoutId
+         * @param array $params
+         * @param array $metadata
+         * @param bool $portletsAreCollapsible
+         * @param bool $portletsAreMovable
+         * @param bool $showAsTabs
+         * @param string $layoutType
+         * @param bool $portletsAreRemovable
+         */
         public function __construct($controllerId, $moduleId, $uniqueLayoutId, $params, $metadata,
                                     $portletsAreCollapsible = true, $portletsAreMovable = true, $showAsTabs = false, $layoutType = '100',
                                     $portletsAreRemovable = true)

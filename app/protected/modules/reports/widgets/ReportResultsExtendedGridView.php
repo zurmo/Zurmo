@@ -34,8 +34,6 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    Yii::import('zii.widgets.grid.CGridView');
-
     /**
      * Extends the yii CGridView to provide additional functionality.
      * @see CGridView class
@@ -125,6 +123,16 @@
                     }
                 }
                 $previousGroupByValuesCount = count($this->leadingHeaders['rows'][$i]['groupByValues']);
+                if ($i == 0 && isset($this->leadingHeaders['renderTotalColumn']) && $this->leadingHeaders['renderTotalColumn'])
+                {
+                    $lastRow         = end($this->leadingHeaders['rows']);
+                    $colSpanForTotal = $lastRow['colSpan'];
+                    echo ZurmoHtml::tag('th',
+                                        array('class' => 'total-column',
+                                              'colspan' => $colSpanForTotal,
+                                              'rowspan' => count($this->leadingHeaders['rows'])),
+                                        Zurmo::t('ReportsModule', 'Total'));
+                }
                 echo '</tr>';
             }
         }

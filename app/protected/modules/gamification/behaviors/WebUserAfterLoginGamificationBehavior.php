@@ -80,6 +80,11 @@
             }
         }
 
+        /**
+         * @param $gameScore
+         * @param string $category
+         * @throws FailedToSaveModelException
+         */
         public static function resolveSaveGameScoreAndAddPointsByCategory($gameScore, $category)
         {
             assert('is_string($category)');

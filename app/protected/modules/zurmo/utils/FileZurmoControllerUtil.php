@@ -46,7 +46,7 @@
         protected function afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions)
         {
             parent::afterSetAttributesDuringSave($model, $explicitReadWriteModelPermissions);
-            if($model instanceof Item)
+            if ($model instanceof Item)
             {
                 FileModelUtil::resolveModelsHasManyFilesFromPost($model, 'files', 'filesIds');
             }

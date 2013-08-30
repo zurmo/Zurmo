@@ -91,6 +91,8 @@
                     $searchAttributesData['structure'] = null;
                     $searchAttributesData =    // Not Coding Standard
                         $mashableActivityRules->resolveSearchAttributeDataForLatestActivities($searchAttributesData);
+                    $searchAttributesData =    // Not Coding Standard
+                        $mashableActivityRules->resolveSearchAttributeDataForAllLatestActivities($searchAttributesData);
                 }
                 $mashableActivityRules->resolveSearchAttributesDataByOwnedByFilter($searchAttributesData, $ownedByFilter);
 

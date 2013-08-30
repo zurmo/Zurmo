@@ -58,6 +58,11 @@
             throw new NotSupportedException();
         }
 
+        /**
+         * @param object $auditableModel
+         * @param $attributeName
+         * @param $value
+         */
         public static function saveOriginalAttributeValue($auditableModel, $attributeName, $value)
         {
             assert('$auditableModel instanceof Item             ||
@@ -89,6 +94,11 @@
             }
         }
 
+        /**
+         * @param Item $item
+         * @param array $attributeNames
+         * @param RedBeanModel $ownedModel
+         */
         public static function logAuditEventsListForChangedAttributeValues(Item $item, array $attributeNames = array(), RedBeanModel $ownedModel = null)
         {
             assert('$item->id > 0');
@@ -175,6 +185,13 @@
             }
         }
                                                 // TODO - collections
+        /**
+         * @param $attributeModel
+         * @param $attributeName
+         * @param $value
+         * @param string $format
+         * @return string
+         */
         public static function stringifyValue(/*RedBeanModel*/ $attributeModel, $attributeName, $value, $format = 'long')
         {
             assert('$format == "long" || $format == "short"');
@@ -227,6 +244,9 @@
             return $s;
         }
 
+        /**
+         * @param Item $item
+         */
         public static function clearRelatedModelsOriginalAttributeValues(Item $item)
         {
             assert('$item->id > 0');

@@ -65,6 +65,14 @@
             return $content;
         }
 
+        protected function renderTitleContent()
+        {
+            $starLink = StarredUtil::getToggleStarStatusLink($this->model, null);
+            $content  = StringUtil::renderFluidContent($this->getTitle());
+            $content .= $starLink;
+            return ZurmoHtml::tag('h1', array(), $content);
+        }
+
         protected function renderFormLayout($form = null)
         {
             $content  = $this->renderConversationContent();

@@ -167,21 +167,21 @@
             $form->shouldSetValue = true;
             $validated            = $form->validate();
             $this->assertFalse($validated);
-            $compareErrors = array('alternateValue' => array('Value must be integer.'));
+            $compareErrors = array('durationInterval' => array('Interval cannot be blank.'));
             $this->assertEquals($compareErrors, $form->getErrors());
 
             $form->value          = '';
             $validated            = $form->validate();
             $this->assertFalse($validated);
-            $compareErrors = array('alternateValue' => array('Value must be integer.'));
+            $compareErrors = array('durationInterval' => array('Interval cannot be blank.'));
             $this->assertEquals($compareErrors, $form->getErrors());
 
-            $form->value          = 0;
-            $validated            = $form->validate();
+            $form->durationInterval = 0;
+            $validated              = $form->validate();
             $this->assertTrue($validated);
 
-            $form->value          = '0';
-            $validated            = $form->validate();
+            $form->durationInterval = '0';
+            $validated              = $form->validate();
             $this->assertTrue($validated);
         }
     }

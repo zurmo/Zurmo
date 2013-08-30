@@ -301,8 +301,10 @@
                     {
                         $value = $this->selectedColumnNamesAndValues[$attributeAlias];
                     }
-
-                    $dataParams[self::resolveDataParamKeyForDrillDown($displayAttribute->attributeIndexOrDerivedType)] = $value;
+                    if ($value !== null)
+                    {
+                        $dataParams[self::resolveDataParamKeyForDrillDown($displayAttribute->attributeIndexOrDerivedType)] = $value;
+                    }
                 }
             }
             return $dataParams;
@@ -418,6 +420,12 @@
             $penultimateRelation = $displayAttribute->getPenultimateRelation();
             if (!$model->isAttribute($penultimateRelation))
             {
+                //Fallback. For some reason this could in fact reference the original $model attribute, but because it is
+                //not owned, it gets confused. todo: need to investigate this further because this is not proper.
+                if ($model->isAttribute($attribute))
+                {
+                    return $model->$attribute;
+                }
                 throw new NotSupportedException();
             }
             return $model->$penultimateRelation->$attribute;

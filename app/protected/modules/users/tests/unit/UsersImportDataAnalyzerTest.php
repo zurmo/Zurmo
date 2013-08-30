@@ -78,35 +78,58 @@
             $this->assertTrue($import->save());
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Users');
-            $config       = array('pagination' => array('pageSize' => 2));
+            $config       = array('pagination' => array('pageSize' => 15));
             //This test csv has a header row.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Run data analyzer
-            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach ($mappingData as $columnName => $columnMappingData)
-            {
-                $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
-            }
-            $messagesData = $importDataAnalyzer->getMessagesData();
-            $compareData = array(
-                'column_0' => array(
-                    array('message' => '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.',
-                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
-                ),
-                'column_1' => array(
-                    array('message' => '1 value(s) are too large for this field. These values will be truncated to a length of 32 upon import.',
-                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
-                ),
-                'column_2' => array(
-                    array('message' => '2 user status value(s) are not valid. Users that have these values will be set to active upon import.',
-                           'sanitizerUtilType' => 'UserStatus', 'moreAvailable' => false),
-                ),
-            );
-            $this->assertEquals($compareData, $messagesData);
-            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
-            $compareInstructionsData  = array();
-            $this->assertEquals($compareInstructionsData, $importInstructionsData);
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData,
+                                                         array('column_0', 'column_1', 'column_2'));
+            $importDataAnalyzer->analyzePage();
+            $data = $dataProvider->getData();
+            $this->assertEquals(10, count($data));
+
+            $this->assertNull($data[0]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[0]->analysisStatus);
+
+            $this->assertNull($data[1]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[1]->analysisStatus);
+
+            $this->assertNull($data[2]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[2]->analysisStatus);
+
+            $this->assertNull($data[3]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[3]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is too long. Maximum length is 64. This value will truncated upon import.';
+            $this->assertEquals($compareData, unserialize($data[4]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_WARN, $data[4]->analysisStatus);
+
+            $this->assertNull($data[5]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[5]->analysisStatus);
+
+            $this->assertNull($data[6]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[6]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_2']   = array();
+            $compareData['column_2'][] = 'Status value is invalid. This status will be set to active upon import.';
+            $this->assertEquals($compareData, unserialize($data[7]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_WARN, $data[7]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_1']   = array();
+            $compareData['column_1'][] = 'Is too long. Maximum length is 32. This value will truncated upon import.';
+            $this->assertEquals($compareData, unserialize($data[8]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_WARN, $data[8]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_2']   = array();
+            $compareData['column_2'][] = 'Status value is invalid. This status will be set to active upon import.';
+            $this->assertEquals($compareData, unserialize($data[9]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_WARN, $data[9]->analysisStatus);
         }
     }
 ?>

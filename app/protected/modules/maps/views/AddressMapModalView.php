@@ -43,6 +43,12 @@
 
         protected $containerIdSuffix;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $geoCodeQueryData
+         * @param null|string $containerIdSuffix
+         */
         public function __construct($controllerId, $moduleId, $geoCodeQueryData, $containerIdSuffix = null)
         {
             assert('is_array($geoCodeQueryData)');

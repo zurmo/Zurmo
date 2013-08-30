@@ -45,6 +45,11 @@
 
         protected $model;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param CFormModel $model
+         */
         public function __construct($controllerId, $moduleId, $model)
         {
             assert('$model instanceof CFormModel');

@@ -138,7 +138,7 @@
 
             $adapter = new RedBeanModelAttributeToDataProviderAdapter('QQ', 'qMany');
             $this->assertTrue(                         $adapter->relatedAttributesSortUsesTwoAttributes());
-            $this->assertEquals('q_id',                $adapter->getColumnNameByPosition(0));
+            $this->assertEquals('qq_id',                $adapter->getColumnNameByPosition(0));
             $this->assertEquals('junk',                $adapter->getColumnNameByPosition(1));
             $this->assertEquals('uniquerequiredemail', $adapter->getColumnNameByPosition(2));
         }

@@ -46,6 +46,11 @@
 
         protected $items;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $items
+         */
         public function __construct($controllerId, $moduleId, $items)
         {
             assert('$controllerId != null');

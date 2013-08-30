@@ -771,6 +771,24 @@
         }
 
         /**
+         * Passing in an attribute string such as Account__activityItems__Inferred, detect if attribute is a inferred
+         * attribute or not.
+         * @param $attribute
+         * @return bool
+         */
+        public static function isAttributeInferred($attribute)
+        {
+            assert('is_string($attribute)');
+            $delimiter                       = FormModelUtil::DELIMITER;
+            $attributeAndInferredData   = explode($delimiter, $attribute);
+            if (count($attributeAndInferredData) == 3)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * @param RedBeanModel $precedingModel
          * @param null $precedingRelation
          * @return array $sortedAttributes

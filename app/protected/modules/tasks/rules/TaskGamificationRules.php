@@ -41,6 +41,9 @@
     {
         const SCORE_TYPE_COMPLETED_TASK_ON_TIME = 'CompletedTaskOnTime';
 
+        /**
+         * @param string $modelClassName
+         */
         public function attachScoringEventsByModelClassName($modelClassName)
         {
             assert('is_string($modelClassName)');

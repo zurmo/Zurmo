@@ -53,7 +53,6 @@
         {
             $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId,
                                                                             Yii::app()->user->userModel->id);
-            $content = '<ul class="available-portlets">';
             $modules = Module::getModuleObjects();
             $sortablePortlets = array();
             foreach ($modules as $module)
@@ -84,7 +83,9 @@
                                     );
                                     $title    = $metadata['perUser']['title'];
                                     MetadataUtil::resolveEvaluateSubString($title);
-                                    $sortablePortlets[$title] = $url;
+                                    $sortablePortlets[$title] = array('url' => $url,
+                                                                      'title' => $title,
+                                                                      'portletRules' => $portletRules);
                                 }
                             }
                         }
@@ -98,17 +99,7 @@
             }
             //Sort by title
             ksort($sortablePortlets);
-            foreach ($sortablePortlets as $title => $url)
-            {
-                $onClick = 'window.location.href = "' . $url . '"';
-                $content .= '<li>';
-
-                $label    = '<span>\</span>' . $title;
-                $content .= ZurmoHtml::link(Zurmo::t('HomeModule', $label ), null, array('onclick' => $onClick));
-                $content .= '</li>';
-            }
-            $content .= '</ul>';
-            return $content;
+            return PortletUtil::renderAddPortletsContent($sortablePortlets);
         }
 
         private function resolveLayoutIdInAllowedOnPortletViewClassNames($className)

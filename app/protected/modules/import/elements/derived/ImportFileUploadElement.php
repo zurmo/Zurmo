@@ -89,6 +89,10 @@
             return $content;
         }
 
+        /**
+         * @param array $existingFilesInformation
+         * @return string
+         */
         protected function renderDelimiterAndEnclosureContent($existingFilesInformation)
         {
             assert('is_array($existingFilesInformation)');

@@ -66,6 +66,10 @@
 
         public $selectedVisibleAndOrderedTabMenuItems;
 
+        public $hideFromSelecting = false;
+
+        public $hideFromLeaderboard = false;
+
         const DEFAULT_PERMISSIONS_SETTING_OWNER                     = 1;
         const DEFAULT_PERMISSIONS_SETTING_OWNER_AND_USERS_IN_GROUP  = 2;
         const DEFAULT_PERMISSIONS_SETTING_EVERYONE                  = 3;
@@ -107,6 +111,8 @@
                 array('hideWelcomeView',                'boolean'),
                 array('turnOffEmailNotifications',      'boolean'),
                 array('enableDesktopNotifications',     'boolean'),
+                array('hideFromSelecting',              'boolean'),
+                array('hideFromLeaderboard',            'boolean'),
                 array('defaultPermissionSetting',       'numerical', 'min' => self::DEFAULT_PERMISSIONS_SETTING_OWNER,
                                                         'max' => self::DEFAULT_PERMISSIONS_SETTING_EVERYONE),
                 array('defaultPermissionGroupSetting',  'numerical', 'min' => 1),
@@ -122,6 +128,8 @@
                 'themeColor'                    => Zurmo::t('UsersModule', 'Theme'),
                 'backgroundTexture'             => Zurmo::t('UsersModule', 'Texture'),
                 'hideWelcomeView'               => Zurmo::t('UsersModule', 'Hide welcome page'),
+                'hideFromSelecting'             => Zurmo::t('UsersModule', 'Hide from selecting'),
+                'hideFromLeaderboard'           => Zurmo::t('UsersModule', 'Hide from leaderboard'),
                 'turnOffEmailNotifications'     => Zurmo::t('UsersModule', 'Turn off email notifications'),
                 'enableDesktopNotifications'    => Zurmo::t('UsersModule', 'Enable Desktop notifications')
             );

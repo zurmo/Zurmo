@@ -388,6 +388,22 @@
             $this->assertEquals(array('name', 'a'), $searchModel->getListAttributesSelector()->getSelected());
         }
 
+        public function testResolveFilterByStarredFromGetArray()
+        {
+            $searchModel  = new ASearchFormTestModel(new A());
+            $getArrayName = 'someArray';
+            SearchUtil::resolveFilterByStarredFromGetArray($searchModel, $getArrayName);
+            $this->assertNull($searchModel->filterByStarred);
+
+            $_GET['someArray']['filterByStarred'] = true;
+            SearchUtil::resolveFilterByStarredFromGetArray($searchModel, $getArrayName);
+            $this->assertTrue($searchModel->filterByStarred);
+
+            $_GET['someArray']['filterByStarred'] = false;
+            SearchUtil::resolveFilterByStarredFromGetArray($searchModel, $getArrayName);
+            $this->assertFalse($searchModel->filterByStarred);
+        }
+
         public function testGetDynamicSearchAttributesFromGetArray()
         {
             //Test without any dynamic search

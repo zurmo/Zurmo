@@ -38,7 +38,7 @@
     {
         /**
          * Create the MashableInboxRules for the model
-         * @param type $modelClassName
+         * @param string $modelClassName
          * @return MashableInboxRules
          */
         public static function createMashableInboxRulesByModel($modelClassName)
@@ -54,6 +54,9 @@
         /**
          * @param String $interfaceClassName The name of the interface to check model implementation
          * @return Array Contains the modelClassNames of models that implements the interface
+         * @param string $interfaceClassName
+         * @param bool $includeHavingRelatedItems
+         * @return array
          */
         public static function getModelDataForCurrentUserByInterfaceName($interfaceClassName, $includeHavingRelatedItems = true)
         {
@@ -84,6 +87,10 @@
             return $interfaceModelClassNames;
         }
 
+        /**
+         * @param string $modelClassName
+         * @return int
+         */
         public static function getUnreadCountForCurrentUserByModelClassName($modelClassName)
         {
             $mashableInboxRules = static::createMashableInboxRulesByModel($modelClassName);
@@ -107,6 +114,12 @@
             return ZurmoHtml::wrapLabel($unreadCount, 'unread-inbox-count');
         }
 
+        /**
+         * @param array $modelClassNames
+         * @param string $filteredBy
+         * @param string $searchTerm
+         * @return array
+         */
         public static function getSearchAttributeMetadataForMashableInboxByModelClassName($modelClassNames, $filteredBy, $searchTerm = '')
         {
             $modelClassNamesAndSearchAttributeData = array();
@@ -130,6 +143,10 @@
             return $modelClassNamesAndSearchAttributeData;
         }
 
+        /**
+         * @param array $modelClassNames
+         * @return array
+         */
         public static function getSortAttributesByMashableInboxModelClassNames($modelClassNames)
         {
             assert('is_array($modelClassNames)');
@@ -143,6 +160,10 @@
             return $modelClassNamesAndSortAttributes;
         }
 
+        /**
+         * @param RedBeanModel $model
+         * @return string
+         */
         public static function renderSummaryContent(RedBeanModel $model)
         {
             $mashableInboxRules                 = static::createMashableInboxRulesByModel(get_class($model));
@@ -170,6 +191,11 @@
             return $mashableInboxRules->getModelCreationTimeContent($model);
         }
 
+        /**
+         * @param string $template
+         * @param array $data
+         * @return string
+         */
         public static function resolveContentTemplate($template, $data)
         {
             assert('is_string($template)');
@@ -182,6 +208,12 @@
             return strtr($template, $preparedContent);
         }
 
+        /**
+         * @param array $firstMetadata
+         * @param array $secondMetadata
+         * @param bool $isAnd
+         * @return mixed
+         */
         public static function mergeMetadata($firstMetadata, $secondMetadata, $isAnd = true)
         {
             if ($firstMetadata == null && $secondMetadata == null)
@@ -216,6 +248,10 @@
             return $firstMetadata;
         }
 
+        /**
+         * @param MashableInboxForm $mashableInboxForm
+         * @param string $modelClassName
+         */
         public static function saveSelectedOptionsAsStickyData(MashableInboxForm $mashableInboxForm, $modelClassName)
         {
             assert('strlen($modelClassName) > 0 || ($modelClassName === null)');
@@ -224,6 +260,10 @@
                                                         array('optionForModel', 'filteredBy', 'searchTerm')));
         }
 
+        /**
+         * @param string $modelClassName
+         * @return MashableInboxForm
+         */
         public static function restoreSelectedOptionsAsStickyData($modelClassName)
         {
             assert('strlen($modelClassName) > 0 || ($modelClassName === null)');
@@ -234,6 +274,11 @@
             return $mashableInboxForm;
         }
 
+        /**
+         * @param string $moduleClassName
+         * @param string $modelClassName
+         * @return string
+         */
         public static function resolveKeyByModuleAndModel($moduleClassName, $modelClassName)
         {
             assert('strlen($moduleClassName) > 0');

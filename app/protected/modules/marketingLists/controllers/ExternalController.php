@@ -137,7 +137,7 @@
             }
             else
             {
-                $members    = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingListId,
+                $members    = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingListId,
                                                                                                 $contact->id,
                                                                                                 $unsubscribed);
             }

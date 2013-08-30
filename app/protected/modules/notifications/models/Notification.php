@@ -66,8 +66,20 @@
          * and that type.
          * @param string $type
          * @param User $user
+         * @return int
          */
         public static function getCountByTypeAndUser($type, User $user)
+        {
+            $models = self::getByTypeAndUser($type, $user);
+            return count($models);
+        }
+
+        /**
+         * @param $type
+         * @param User $user
+         * @return Array of models
+         */
+        public static function getByTypeAndUser($type, User $user)
         {
             assert('is_string($type) && $type != ""');
             assert('$user->id > 0');
@@ -89,7 +101,7 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter('Notification');
             $where = RedBeanModelDataProvider::makeWhere('Notification', $searchAttributeData, $joinTablesAdapter);
             $models = self::getSubset($joinTablesAdapter, null, null, $where, null);
-            return count($models);
+            return $models;
         }
 
         public static function getCountByUser(User $user)

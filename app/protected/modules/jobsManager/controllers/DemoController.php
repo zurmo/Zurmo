@@ -42,7 +42,7 @@
          */
         public function actionLoadJobLogWithErrors()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }
@@ -62,7 +62,7 @@
          */
         public function actionLoadManyJobLogs()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }

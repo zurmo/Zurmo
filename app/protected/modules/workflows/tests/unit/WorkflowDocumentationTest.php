@@ -232,5 +232,93 @@
             $this->assertEquals(700, $product->productTemplate->cost->value);
             $this->assertEquals(800, $product->productTemplate->listPrice->value);
         }
+
+        /**
+         * Tests that a bug involving createdByUser is resolved. The issue was that createdByUser is not set until
+         * after the workflow observer is called beforeSave. This behavior was changed and now this test passes
+         */
+        public function testProcessBeforeSaveOnCreatedByUserEquals()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            //Create workflow
+            $workflow = new Workflow();
+            $workflow->setDescription    ('aDescription');
+            $workflow->setIsActive       (true);
+            $workflow->setOrder          (5);
+            $workflow->setModuleClassName('AccountsModule');
+            $workflow->setName           ('myFirstWorkflow');
+            $workflow->setTriggerOn      (Workflow::TRIGGER_ON_NEW_AND_EXISTING);
+            $workflow->setType           (Workflow::TYPE_ON_SAVE);
+            $workflow->setTriggersStructure('1');
+            //Add trigger
+            $trigger = new TriggerForWorkflowForm('AccountsTestModule', 'Account', $workflow->getType());
+            $trigger->attributeIndexOrDerivedType = 'createdByUser';
+            $trigger->value                       = Yii::app()->user->userModel->id;
+            $trigger->operator                    = 'equals';
+            $workflow->addTrigger($trigger);
+            //Add action
+            $action                       = new ActionForWorkflowForm('Account', Workflow::TYPE_ON_SAVE);
+            $action->type                 = ActionForWorkflowForm::TYPE_UPDATE_SELF;
+            $attributes                   = array('name'   => array('shouldSetValue'    => '1',
+                                                  'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                  'value'  => 'jason'));
+            $action->setAttributes(array(ActionForWorkflowForm::ACTION_ATTRIBUTES => $attributes));
+            $workflow->addAction($action);
+            //Create the saved Workflow
+            $savedWorkflow = new SavedWorkflow();
+            SavedWorkflowToWorkflowAdapter::resolveWorkflowToSavedWorkflow($workflow, $savedWorkflow);
+            $saved = $savedWorkflow->save();
+            $this->assertTrue($saved);
+
+            //Confirm that the workflow processes and the attribute gets updated
+            $model = new Account();
+            $model->name   = 'aValue';
+            $this->assertTrue($model->save());
+            $this->assertEquals('jason', $model->name);
+        }
+
+        /**
+         * A test to show that the modifiedByUser works ok as a trigger with 'equals' on a newly created model.
+         * @see testProcessBeforeSaveOnCreatedByUserEquals
+         */
+        public function testProcessBeforeSaveOnModifiedByUserEquals()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            //Create workflow
+            $workflow = new Workflow();
+            $workflow->setDescription    ('aDescription');
+            $workflow->setIsActive       (true);
+            $workflow->setOrder          (5);
+            $workflow->setModuleClassName('AccountsModule');
+            $workflow->setName           ('myFirstWorkflow');
+            $workflow->setTriggerOn      (Workflow::TRIGGER_ON_NEW_AND_EXISTING);
+            $workflow->setType           (Workflow::TYPE_ON_SAVE);
+            $workflow->setTriggersStructure('1');
+            //Add trigger
+            $trigger = new TriggerForWorkflowForm('AccountsTestModule', 'Account', $workflow->getType());
+            $trigger->attributeIndexOrDerivedType = 'modifiedByUser';
+            $trigger->value                       = Yii::app()->user->userModel->id;
+            $trigger->operator                    = 'equals';
+            $workflow->addTrigger($trigger);
+            //Add action
+            $action                       = new ActionForWorkflowForm('Account', Workflow::TYPE_ON_SAVE);
+            $action->type                 = ActionForWorkflowForm::TYPE_UPDATE_SELF;
+            $attributes                   = array('name'   => array('shouldSetValue'    => '1',
+                                                  'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                  'value'  => 'jason'));
+            $action->setAttributes(array(ActionForWorkflowForm::ACTION_ATTRIBUTES => $attributes));
+            $workflow->addAction($action);
+            //Create the saved Workflow
+            $savedWorkflow = new SavedWorkflow();
+            SavedWorkflowToWorkflowAdapter::resolveWorkflowToSavedWorkflow($workflow, $savedWorkflow);
+            $saved = $savedWorkflow->save();
+            $this->assertTrue($saved);
+
+            //Confirm that the workflow processes and the attribute gets updated
+            $model = new Account();
+            $model->name   = 'aValue';
+            $this->assertTrue($model->save());
+            $this->assertEquals('jason', $model->name);
+        }
     }
 ?>

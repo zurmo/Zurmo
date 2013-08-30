@@ -36,6 +36,10 @@
 
     class JobsManagerDemoEmailNotifications extends DemoEmailNotifications
     {
+        /**
+         * @param User $userToSendTo
+         * @param MessageLogger $messageLogger
+         */
         public function run(User $userToSendTo, $messageLogger)
         {
             MonitorJob::makeJobStuckNotification(array('Process Outbound Email Job', 'Process Inbound Email Job'));

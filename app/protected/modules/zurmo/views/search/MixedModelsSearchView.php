@@ -62,7 +62,7 @@
 
         protected function renderContent()
         {
-            $titleView = new TitleBarView(Zurmo::t('ZurmoModule', 'Global search'), null, 1);
+            $titleView = new TitleBarView(Zurmo::t('ZurmoModule', 'Global Search'), null, 1);
             $content = $titleView->render();
             $model = new MixedModelsSearchForm();
             $model->setGlobalSearchAttributeNamesAndLabelsAndAll($this->moduleNamesAndLabelsAndAll);

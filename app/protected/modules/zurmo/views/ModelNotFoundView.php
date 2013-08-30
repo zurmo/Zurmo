@@ -38,6 +38,9 @@
     {
         protected $failureMessageContent;
 
+        /**
+         * @param string $failureMessageContent
+         */
         public function __construct($failureMessageContent)
         {
             assert('is_string($failureMessageContent)');

@@ -39,12 +39,12 @@
      */
     class RedBeanModelDataProvider extends CDataProvider
     {
-        private $modelClassName;
-        private $sortAttribute;
-        private $sortDescending;
-        private $searchAttributeData;
-        private $calculatedTotalItemCount;
-        private $offset;
+        protected $modelClassName;
+        protected $sortAttribute;
+        protected $sortDescending;
+        protected $searchAttributeData;
+        protected $calculatedTotalItemCount;
+        protected $offset;
 
         /**
          * @sortAttribute - Currently supports only non-related attributes.
@@ -53,7 +53,7 @@
         {
             assert('is_string($modelClassName) && $modelClassName != ""');
             assert('$sortAttribute === null || is_string($sortAttribute) && $sortAttribute != ""');
-            assert('is_bool($sortDescending)');
+            assert('is_bool($sortDescending) || $sortDescending === null');
             $this->modelClassName               = $modelClassName;
             $this->sortAttribute                = $sortAttribute;
             $this->sortDescending               = $sortDescending;
@@ -145,6 +145,7 @@
                 }
             }
             $modelClassName = $this->modelClassName;
+            $this->resolveExtraSql($joinTablesAdapter, $where);
             return $modelClassName::getSubset($joinTablesAdapter, $offset, $limit, $where, $orderBy,
                                               $this->modelClassName, $joinTablesAdapter->getSelectDistinct());
         }
@@ -224,6 +225,7 @@
             $joinTablesAdapter = new RedBeanModelJoinTablesQueryAdapter($this->modelClassName);
             $where             = $this->makeWhere($this->modelClassName, $this->searchAttributeData, $joinTablesAdapter);
             $modelClassName    = $this->modelClassName;
+            $this->resolveExtraSql($joinTablesAdapter, $where);
             return $modelClassName::getCount($joinTablesAdapter, $where, $this->modelClassName, true);
         }
 
@@ -238,6 +240,15 @@
                 $keys[] = $model->id;
             }
             return $keys;
+        }
+
+        /**
+         * Override to add extra where option to the sql
+         * @param RedBeanModelJoinTablesQueryAdapter $joinTablesAdapter
+         * @param type $where
+         */
+        protected function resolveExtraSql(RedBeanModelJoinTablesQueryAdapter &$joinTablesAdapter, &$where)
+        {
         }
     }
 ?>

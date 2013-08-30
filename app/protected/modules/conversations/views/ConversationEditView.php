@@ -105,6 +105,10 @@
             return $metadata;
         }
 
+        /**
+         * @param ZurmoActiveForm $form
+         * @return null|string
+         */
         protected function renderRightSideFormLayoutForEdit($form)
         {
             assert('$form instanceof ZurmoActiveForm');

@@ -68,6 +68,9 @@
 
         /**
          * Some extra assertions are made to ensure this view is used in a way that it supports.
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
          */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
@@ -97,6 +100,13 @@
             return $metadata;
         }
 
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
+        }
+
         public function getTitle()
         {
             $title  = Zurmo::t('ActivitiesModule', 'Latest Activities');
@@ -118,7 +128,7 @@
                 $uniquePageId  = get_called_class();
                 $latestActivitiesConfigurationForm = $this->makeLatestActivitiesConfigurationForm();
                 $latestActivitiesConfigurationForm->mashableModelClassNamesAndDisplayLabels =
-                    $mashableModelClassNamesAndDisplayLabels;
+                                                     $mashableModelClassNamesAndDisplayLabels;
                 $this->resolveLatestActivitiesConfigFormFromRequest($latestActivitiesConfigurationForm);
                 $latestActivitiesViewClassName = $this->getLatestActivitiesViewClassName();
                 $dataProvider = $this->getDataProvider($uniquePageId, $latestActivitiesConfigurationForm);
@@ -215,6 +225,11 @@
                                                         array( 'id' => $this->params['relationModel']->id));
         }
 
+        /**
+         * @param string $uniquePageId
+         * @param LatestActivitiesConfigurationForm $form
+         * @return RedBeanModelsDataProvider
+         */
         protected function getDataProvider($uniquePageId, $form)
         {
             assert('is_string($uniquePageId)');

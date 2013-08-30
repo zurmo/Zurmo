@@ -44,6 +44,11 @@
 
         protected $mappingDataMetadata;
 
+        /**
+         * @param ImportWizardForm $model
+         * @param array $mappingDataMetadata
+         * @param array $mappableAttributeIndicesAndDerivedTypes
+         */
         public function __construct(ImportWizardForm $model, $mappingDataMetadata, $mappableAttributeIndicesAndDerivedTypes)
         {
             assert('is_array($model->mappingData) && count($model->mappingData) > 0');
@@ -85,6 +90,14 @@
             DropDownUtil::registerScripts(CClientScript::POS_END);
         }
 
+        /**
+         * @param MappingFormLayoutUtil $mappingFormLayoutUtil
+         * @param array $mappingDataMetadata
+         * @param $firstRowIsHeaderRow
+         * @param $importRulesType
+         * @param int $id
+         * @return array
+         */
         protected function resolveMappingDataMetadataWithRenderedElements($mappingFormLayoutUtil, $mappingDataMetadata,
                                                                           $firstRowIsHeaderRow, $importRulesType, $id)
         {

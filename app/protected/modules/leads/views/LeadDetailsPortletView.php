@@ -43,6 +43,11 @@
         protected $viewData;
         protected $uniqueLayoutId;
 
+        /**
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
+         */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -75,6 +80,13 @@
         public static function getModuleClassName()
         {
             return 'LeadsModule';
+        }
+
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
         }
 
         protected static function resolveMetadataClassNameToUse()

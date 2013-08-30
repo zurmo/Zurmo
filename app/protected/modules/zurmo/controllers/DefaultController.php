@@ -280,6 +280,11 @@
                     $searchForm->setListAttributesSelector($listAttributesSelector);
                     unset($_POST[$formModelClassName][SearchForm::SELECTED_LIST_ATTRIBUTES]);
                 }
+                if (isset($_POST[$formModelClassName]['filterByStarred']))
+                {
+                    $searchForm->filterByStarred = $_POST[$formModelClassName]['filterByStarred'];
+                    unset($_POST[$formModelClassName]['filterByStarred']);
+                }
                 if (isset($_POST[$formModelClassName][KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES]))
                 {
                     unset($_POST[$formModelClassName][KanbanBoard::GROUP_BY_ATTRIBUTE_VISIBLE_VALUES]);
@@ -307,7 +312,7 @@
                 }
                 if (!$searchForm->validate())
                 {
-                     $errorData = array();
+                    $errorData = array();
                     foreach ($searchForm->getErrors() as $attribute => $errors)
                     {
                             $errorData[ZurmoHtml::activeId($searchForm, $attribute)] = $errors;
@@ -428,8 +433,9 @@
             Yii::app()->end(0, false);
         }
 
-        public function actionLogo($id)
+        public function actionLogo()
         {
+            $id   = (int)ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'logoThumbFileModelId');
             $logo = FileModel::getById($id);
             header("Content-Type:   $logo->type");
             header("Content-Length: $logo->size");
@@ -476,6 +482,17 @@
             }
 
             return '';
+        }
+
+        public function actionToggleStar($modelClassName, $modelId)
+        {
+            echo StarredUtil::toggleModelStarStatus($modelClassName, (int) $modelId);
+        }
+
+        public function actionToggleDismissIntroView($moduleName, $panelId)
+        {
+            $value = (bool) ZurmoConfigurationUtil::getForCurrentUserByModuleName($moduleName, $panelId);
+            ZurmoConfigurationUtil::setForCurrentUserByModuleName($moduleName, $panelId, !$value);
         }
     }
 ?>

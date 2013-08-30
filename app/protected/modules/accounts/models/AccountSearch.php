@@ -38,7 +38,9 @@
     {
         /**
          * For a given email address, run search by email address and retrieve account models.
-         */
+         * @param String $emailAddress
+         * @param null | int $pageSize
+          */
         public static function getAccountsByAnyEmailAddress($emailAddress, $pageSize = null)
         {
             assert('is_string($emailAddress)');

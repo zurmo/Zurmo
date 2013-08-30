@@ -99,6 +99,11 @@
             return $box;
         }
 
+        /**
+         * @param User $user
+         * @return EmailBox|void
+         * @throws NotSupportedException
+         */
         public static function getDefaultEmailBoxByUser(User $user)
         {
             assert('$user->id > 0');

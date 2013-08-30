@@ -62,6 +62,15 @@
 
         public $renderSpanOnEmptyText = true;
 
+        /**
+         * Populate with array of colgroup widths. An array of array(10,80,10) would create
+         * <colgroup>
+         * <col style="width:10%" /><col style="width:80%" /><col style="width:10%" />
+         * </colgroup>
+         * @var array
+         */
+        public $tableColumnGroup = array();
+
         public function init()
         {
             $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(
@@ -203,6 +212,71 @@
             else
             {
                 echo $emptyText;
+            }
+        }
+
+        /**
+         * Overridden CBaseListView::renderKeys()
+         * Sets absolute url for contextive external requests
+         */
+        public function renderKeys()
+        {
+            echo CHtml::openTag('div', array(
+                'class' => 'keys',
+                'style' => 'display:none',
+                'title' => Yii::app()->getRequest()->resolveAndGetUrl(),
+            ));
+            foreach ($this->dataProvider->getKeys() as $key)
+            {
+                echo "<span>" . CHtml::encode($key) . "</span>";
+            }
+            echo "</div>\n";
+        }
+
+        /**
+         * Renders the table header.
+         */
+        public function renderTableHeader()
+        {
+            if (!$this->hideHeader)
+            {
+                echo "<thead>\n";
+                $this->renderTableColumnGroup();
+                if ($this->filterPosition === self::FILTER_POS_HEADER)
+                {
+                    $this->renderFilter();
+                }
+                echo "<tr>\n";
+                foreach ($this->columns as $column)
+                {
+                    $column->renderHeaderCell();
+                }
+                echo "</tr>\n";
+                if ($this->filterPosition === self::FILTER_POS_BODY)
+                {
+                    $this->renderFilter();
+                }
+                echo "</thead>\n";
+            }
+            elseif ($this->filter !== null && ($this->filterPosition === self::FILTER_POS_HEADER ||
+                   $this->filterPosition === self::FILTER_POS_BODY))
+            {
+                echo "<thead>\n";
+                $this->renderFilter();
+                echo "</thead>\n";
+            }
+        }
+
+        protected function renderTableColumnGroup()
+        {
+            if (!empty($this->tableColumnGroup))
+            {
+                echo '<colgroup>';
+                foreach ($this->tableColumnGroup as $width)
+                {
+                    echo '<col style="width:' . $width . '" />';
+                }
+                echo '</colgroup>';
             }
         }
     }

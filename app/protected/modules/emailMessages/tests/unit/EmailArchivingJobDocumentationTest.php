@@ -77,6 +77,8 @@
             parent::setup();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
+            self::$user->forget();
+            self::$user = User::getByUsername('steve');
         }
 
         /**
@@ -139,7 +141,6 @@
             {
                 $message->delete();
             }
-
             $imapMessage              = new ImapMessage();
             $imapMessage->fromName    = 'steve';
             $imapMessage->fromEmail   = self::$user->primaryEmail->emailAddress;

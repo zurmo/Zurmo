@@ -68,10 +68,12 @@
          * Derived attribute import rules need to implement this method individually.  Override for each derived
          * atribute import rule and implement as needed.
          * @param mixed $value
+         * @param string $columnName
          * @param array $columnMappingData
-         * @param object $importSanitizeResultsUtil
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         * @throws NotImplementedException
          */
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             throw new NotImplementedException();
         }

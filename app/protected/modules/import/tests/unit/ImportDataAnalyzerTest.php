@@ -134,23 +134,15 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Run data analyzer
-            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach ($mappingData as $columnName => $columnMappingData)
-            {
-                $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
-            }
-            $messagesData = $importDataAnalyzer->getMessagesData();
-            $compareData = array();
-            $this->assertEquals($compareData, $messagesData);
-            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
-            $compareInstructionsData  = array('column_1' =>
-                                            array('MultiSelectDropDown' =>
-                                                array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array())));
-            $this->assertEquals($compareInstructionsData, $importInstructionsData);
-            ImportUtil::setDataAnalyzerMessagesDataToImport($import, $messagesData);
-            $compareData = unserialize($import->serializedData);
-            $compareData = $compareData['dataAnalyzerMessagesData'];
-            $this->assertEquals($compareData, $messagesData);
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData, array('column_1'));
+            $importDataAnalyzer->analyzePage();
+            $customFieldsInstructionData = $importDataAnalyzer->getCustomFieldsInstructionData();
+            $this->assertFalse($customFieldsInstructionData->hasDataByColumnName('column_1'));
+            //Confirm analysis status and message
+            $data = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[0]->analysisStatus);
+            $this->assertNull($data[0]->serializedAnalysisMessages);
         }
 
         /**
@@ -181,23 +173,15 @@
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Run data analyzer
-            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach ($mappingData as $columnName => $columnMappingData)
-            {
-                $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
-            }
-            $messagesData = $importDataAnalyzer->getMessagesData();
-            $compareData = array();
-            $this->assertEquals($compareData, $messagesData);
-            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
-            $compareInstructionsData  = array('column_1' =>
-                                            array('MultiSelectDropDown' =>
-                                                array(DropDownSanitizerUtil::ADD_MISSING_VALUE => array())));
-            $this->assertEquals($compareInstructionsData, $importInstructionsData);
-            ImportUtil::setDataAnalyzerMessagesDataToImport($import, $messagesData);
-            $compareData = unserialize($import->serializedData);
-            $compareData = $compareData['dataAnalyzerMessagesData'];
-            $this->assertEquals($compareData, $messagesData);
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData, array('column_1'));
+            $importDataAnalyzer->analyzePage();
+            $customFieldsInstructionData = $importDataAnalyzer->getCustomFieldsInstructionData();
+            $this->assertFalse($customFieldsInstructionData->hasDataByColumnName('column_1'));
+            //Confirm analysis status and message
+            $data = $dataProvider->getData();
+            $this->assertEquals(1, count($data));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[0]->analysisStatus);
+            $this->assertNull($data[0]->serializedAnalysisMessages);
         }
 
         /**
@@ -393,257 +377,318 @@
             $this->assertTrue($import->save());
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
-            $config       = array('pagination' => array('pageSize' => 2));
+            $config       = array('pagination' => array('pageSize' => 15));
             //This test csv has a header row.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Run data analyzer
-            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach ($mappingData as $columnName => $columnMappingData)
-            {
-                $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
-            }
-            $messagesData = $importDataAnalyzer->getMessagesData();
-            $compareData = array(
-                'column_0' => array(
-                    array('message'=> '1 value(s) are too short for this field. These rows will be skipped during import.', // Not Coding Standard
-                          'sanitizerUtilType' => 'MinimumLength', 'moreAvailable' => false),
-                    array('message'=> '1 value(s) are too large for this field. These values will be truncated to a length of 64 upon import.', // Not Coding Standard
-                          'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
-                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
-                          'sanitizerUtilType' => 'Required', 'moreAvailable' => false),
-                ),
-                'column_1' => array(
-                    array('message'=> '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.', // Not Coding Standard
-                           'sanitizerUtilType' => 'Truncate', 'moreAvailable' => false),
-                ),
-                'column_2' => array(
-                    array('message'=> '2 value(s) are invalid. These rows will be skipped during import.',                                      // Not Coding Standard
-                           'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
-                ),
-                'column_3' => array(
-                    array('message'=> '2 value(s) have invalid check box values. These values will be set to false upon import.',               // Not Coding Standard
-                           'sanitizerUtilType' => 'Boolean', 'moreAvailable' => false),
-                ),
-                'column_4' => array(
-                    array('message'=> '2 value(s) have invalid date formats. These values will be cleared during import.',                      // Not Coding Standard
-                           'sanitizerUtilType' => 'Date', 'moreAvailable' => false),
-                ),
-                'column_5' => array(
-                    array('message'=> '2 value(s) have invalid date time formats. These values will be cleared during import.',                 // Not Coding Standard
-                           'sanitizerUtilType' => 'DateTime', 'moreAvailable' => false),
-                ),
-                'column_6' => array(
-                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
-                           'sanitizerUtilType' => 'DropDown', 'moreAvailable' => false),
-                ),
-                'column_7' => array(
-                    array('message'=> '2 username(s) specified were not found. These values will not be used during the import.',               // Not Coding Standard
-                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
-                ),
-                'column_8' => array(
-                    array('message'=> '1 zurmo user id(s) across 7 row(s) were not found. These values will not be used during the import.',     // Not Coding Standard
-                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
-                ),
-                'column_9' => array(
-                    array('message'=> '2 external system user id(s) specified were not found. These values will not be used during the import.', // Not Coding Standard
-                           'sanitizerUtilType' => 'UserValueType', 'moreAvailable' => false),
-                    array('message'=> '1 value(s) are missing and are required. These rows will be skipped on import.', // Not Coding Standard
-                           'sanitizerUtilType' => 'ModelIdRequired', 'moreAvailable' => false),
-                    ),
-                'column_10' => array(
-                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
-                           'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
-                ),
-                'column_11' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',                         // Not Coding Standard
-                           'sanitizerUtilType' => 'SelfIdValueType', 'moreAvailable' => false),
-                ),
-                'column_12' => array(
-                    array('message'=> '5 record(s) will be updated and 7 record(s) will be skipped during import.',                              // Not Coding Standard
-                           'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
-                ),
-                'column_13' => array(
-                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',                             // Not Coding Standard
-                           'sanitizerUtilType' => 'ModelIdValueType', 'moreAvailable' => false),
-                ),
-                'column_14' => array(
-                    array('message'=> '4 record(s) will be updated and 8 record(s) will be skipped during import.',                              // Not Coding Standard
-                           'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
-                ),
-                'column_15' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be skipped during import.',                             // Not Coding Standard
-                           'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
-                ),
-                'column_16' => array(
-                    array('message'=> '1 record(s) will be updated and 11 record(s) will be created during the import.',                         // Not Coding Standard
-                           'sanitizerUtilType' => 'RelatedModelNameOrIdValueType', 'moreAvailable' => false),
-                ),
-                'column_17' => array(
-                    array('message'=> '3 record(s) will be updated and 9 record(s) will be skipped during import.',                              // Not Coding Standard
-                           'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
-                ),
-                'column_18' => array(
-                    array('message'=> '2 record(s) will be updated and 10 record(s) will be skipped during import.',                             // Not Coding Standard
-                           'sanitizerUtilType' => 'ImportModelTestItem3DerivedIdValueType', 'moreAvailable' => false),
-                ),
-                'column_19' => array(
-                    array('message'=> '1 value(s) have urls that are invalid. These values will be cleared during import.',                      // Not Coding Standard
-                          'sanitizerUtilType' => 'Url', 'moreAvailable' => false),
-                ),
-                'column_21' => array(
-                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',                                       // Not Coding Standard
-                          'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
-                ),
-                'column_22' => array(
-                    array('message'=> '1 value(s) are invalid. These rows will be skipped during import.',                                       // Not Coding Standard
-                          'sanitizerUtilType' => 'Number', 'moreAvailable' => false),
-                ),
-                'column_23' => array(
-                    array('message'=> '1 value(s) are too large for this field. These rows will be skipped during import.',                      // Not Coding Standard
-                          'sanitizerUtilType' => 'FullName', 'moreAvailable' => false),
-                ),
-                'column_24' => array(
-                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
-                           'sanitizerUtilType' => 'MultiSelectDropDown', 'moreAvailable' => false),
-                ),
-                'column_25' => array(
-                    array('message'=> '2 dropdown value(s) are missing from the field. These values will be added upon import.',                // Not Coding Standard
-                           'sanitizerUtilType' => 'MultiSelectDropDown', 'moreAvailable' => false),
-                ),
-            );
-            $this->assertEquals($compareData, $messagesData);
-            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
-            $compareInstructionsData  = array('column_6' =>
-                                            array('DropDown' =>
-                                                array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
-                                                    array('neverpresent', 'notpresent'))));
-            $compareInstructionsData['column_24'] = array('MultiSelectDropDown' =>
-                                                        array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
-                                                            array('Multi 5', 'Multi 4')));
-            $compareInstructionsData['column_25'] = array('MultiSelectDropDown' =>
-                                                        array(DropDownSanitizerUtil::ADD_MISSING_VALUE =>
-                                                            array('Cloud 5', 'Cloud 4')));
-            $this->assertEquals($compareInstructionsData, $importInstructionsData);
-            ImportUtil::setDataAnalyzerMessagesDataToImport($import, $messagesData);
-            $compareData = unserialize($import->serializedData);
-            $compareData = $compareData['dataAnalyzerMessagesData'];
-            $this->assertEquals($compareData, $messagesData);
-            $newMappingData           = ImportMappingUtil::
-                                        resolveImportInstructionsDataIntoMappingData($mappingData, $importInstructionsData);
-            $compareMappingData       = $mappingData;
-            $compareMappingData['column_6']['importInstructionsData']  = $compareInstructionsData['column_6'];
-            $compareMappingData['column_24']['importInstructionsData'] = $compareInstructionsData['column_24'];
-            $compareMappingData['column_25']['importInstructionsData'] = $compareInstructionsData['column_25'];
-            $this->assertEquals($compareMappingData, $newMappingData);
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData, array_keys($mappingData));
+            $importDataAnalyzer->analyzePage();
+            $data = $dataProvider->getData();
+            $this->assertEquals(12, count($data));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[0]->analysisStatus);
+            $compareData = array();
+            $compareData['column_10'] = array('Is an existing record and will be updated.');
+            $compareData['column_11'] = array('Was not found and will create a new record during import.');
+            $compareData['column_13'] = array('Was not found and this row will be skipped during import.');
+            $compareData['column_15'] = array('Was not found and this row will be skipped during import.');
+            $compareData['column_16'] = array('Was not found and will create a new record during import.');
+            $compareData['column_17'] = array('Is an existing record and will be updated.');
+            $compareData['column_18'] = array('Was not found and this row will be skipped during import.');
+            $this->assertEquals($compareData, unserialize($data[0]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[0]->analysisStatus);
+
+            $compareData              = array();
+            $compareData['column_1']  = array('Is too long. Maximum length is 14. This value will truncated upon import.');
+            $compareData['column_10'] = array('Is an existing record and will be updated.');
+            $compareData['column_11'] = array('Was not found and will create a new record during import.');
+            $compareData['column_13'] = array('Was not found and this row will be skipped during import.');
+            $compareData['column_15'] = array('Was not found and this row will be skipped during import.');
+            $compareData['column_16'] = array('Was not found and will create a new record during import.');
+            $compareData['column_17'] = array('Is an existing record and will be updated.');
+            $compareData['column_18'] = array('Was not found and this row will be skipped during import.');
+            $this->assertEquals($compareData, unserialize($data[1]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[1]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is too long. Maximum length is 64. This value will truncated upon import.';
+            $compareData['column_1']   = array();
+            $compareData['column_1'][] = 'Is too long. Maximum length is 14. This value will truncated upon import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Is an existing record and will be updated.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Is an existing record and will be updated.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $this->assertEquals($compareData, unserialize($data[2]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[2]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $this->assertEquals($compareData, unserialize($data[3]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[3]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $this->assertEquals($compareData, unserialize($data[4]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[4]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_2']   = array();
+            $compareData['column_2'][] = 'Is invalid.';
+            $compareData['column_4']   = array();
+            $compareData['column_4'][] = 'Is an invalid date format. This value will be skipped during import.';
+            $compareData['column_6']   = array();
+            $compareData['column_6'][] = 'notpresent is new. This value will be added upon import.';
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_9']   = array();
+            $compareData['column_9'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Is an existing record and will be updated.';
+            $this->assertEquals($compareData, unserialize($data[5]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[5]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_4']   = array();
+            $compareData['column_4'][] = 'Is an invalid date format. This value will be skipped during import.';
+            $compareData['column_5']   = array();
+            $compareData['column_5'][] = 'Is an invalid date time format. This value will be skipped during import.';
+            $compareData['column_6']   = array();
+            $compareData['column_6'][] = 'neverpresent is new. This value will be added upon import.';
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Is an existing record and will be updated.';
+            $compareData['column_24']   = array();
+            $compareData['column_24'][] = 'Multi 5 is new. This value will be added upon import.';
+            $compareData['column_25']   = array();
+            $compareData['column_25'][] = 'Cloud 5 is new. This value will be added upon import.';
+            $this->assertEquals($compareData, unserialize($data[6]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[6]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_2']   = array();
+            $compareData['column_2'][] = 'Is invalid.';
+            $compareData['column_7']   = array();
+            $compareData['column_7'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_9']   = array();
+            $compareData['column_9'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_21']   = array();
+            $compareData['column_21'][] = 'Is invalid.';
+            $compareData['column_22']   = array();
+            $compareData['column_22'][] = 'Is invalid.';
+            $compareData['column_24']   = array();
+            $compareData['column_24'][] = 'Multi 4 is new. This value will be added upon import.';
+            $compareData['column_25']   = array();
+            $compareData['column_25'][] = 'Cloud 4 is new. This value will be added upon import.';
+            $this->assertEquals($compareData, unserialize($data[7]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[7]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_3']   = array();
+            $compareData['column_3'][] = 'Is an invalid check box value. This will be set to false upon import.';
+            $compareData['column_5']   = array();
+            $compareData['column_5'][] = 'Is an invalid date time format. This value will be skipped during import.';
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Is an existing record and will be updated.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_21']   = array();
+            $compareData['column_21'][] = 'Is invalid.';
+            $compareData['column_24']   = array();
+            $compareData['column_24'][] = 'Multi 4 is new. This value will be added upon import.';
+            $compareData['column_24'][] = 'Multi 5 is new. This value will be added upon import.';
+            $compareData['column_25']   = array();
+            $compareData['column_25'][] = 'Cloud 4 is new. This value will be added upon import.';
+            $compareData['column_25'][] = 'Cloud 5 is new. This value will be added upon import.';
+            $this->assertEquals($compareData, unserialize($data[8]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[8]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_15']   = array();
+            $compareData['column_15'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Is an existing record and will be linked.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_19']   = array();
+            $compareData['column_19'][] = 'Is an invalid URL. This value will be cleared during import.';
+            $compareData['column_23']   = array();
+            $compareData['column_23'][] = 'Is too long.';
+            $this->assertEquals($compareData, unserialize($data[9]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[9]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_3']   = array();
+            $compareData['column_3'][] = 'Is an invalid check box value. This will be set to false upon import.';
+            $compareData['column_7']   = array();
+            $compareData['column_7'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_8']   = array();
+            $compareData['column_8'][] = 'Is an invalid user value. This value will be skipped during import.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_12']   = array();
+            $compareData['column_12'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_13']   = array();
+            $compareData['column_13'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_14']   = array();
+            $compareData['column_14'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_16']   = array();
+            $compareData['column_16'][] = 'Was not found and will create a new record during import.';
+            $compareData['column_17']   = array();
+            $compareData['column_17'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_18']   = array();
+            $compareData['column_18'][] = 'Was not found and this row will be skipped during import.';
+            $this->assertEquals($compareData, unserialize($data[10]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[10]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is  required.';
+            $compareData['column_9']   = array();
+            $compareData['column_9'][] = 'Is  required.';
+            $compareData['column_10']   = array();
+            $compareData['column_10'][] = 'Was not found and this row will be skipped during import.';
+            $compareData['column_11']   = array();
+            $compareData['column_11'][] = 'Was not found and will create a new record during import.';
+            $this->assertEquals($compareData, unserialize($data[11]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[11]->analysisStatus);
+
+            $customFieldsInstructionData = $importDataAnalyzer->getCustomFieldsInstructionData();
+            $this->assertTrue($customFieldsInstructionData->hasDataByColumnName('column_6'));
+            $compareData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES =>
+                                 array( 'notpresent', 'neverpresent'));
+            $this->assertEquals($compareData, $customFieldsInstructionData->getDataByColumnName('column_6'));
+            $compareData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES =>
+                                 array('Multi 5', 'Multi 4'));
+            $this->assertEquals($compareData, $customFieldsInstructionData->getDataByColumnName('column_24'));
+            $compareData = array(CustomFieldsInstructionData::ADD_MISSING_VALUES =>
+                                 array('Cloud 5', 'Cloud 4'));
+            $this->assertEquals($compareData, $customFieldsInstructionData->getDataByColumnName('column_25'));
         }
 
         /**
          * @depends testImportDataAnalysisResults
-         */
-        public function testImportDataAnalysisUsingBatchAnalyzers()
-        {
-            Yii::app()->user->userModel        = User::getByUsername('super');
-
-            $import                            = new Import();
-            $serializedData['importRulesType'] = 'ImportModelTestItem';
-            $import->serializedData            = serialize($serializedData);
-            $this->assertTrue($import->save());
-            ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName());
-            R::exec("update " . $import->getTempTableName() . " set column_8 = " .
-                     Yii::app()->user->userModel->id . " where id != 1 limit 6");
-
-            $config       = array('pagination' => array('pageSize' => 2));
-            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
-
-            //Test truncate sanitization by batch.
-            $dataAnalyzer = new TruncateBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'phone');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_1');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) are too large for this field. These values will be truncated to a length of 14 upon import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test boolean sanitization by batch.
-            $dataAnalyzer = new BooleanBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'boolean');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_3');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) have invalid check box values. These values will be set to false upon import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test date sanitization by batch.
-            $dataAnalyzer = new DateBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'date');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_4', 'ValueFormat',
-                           array('format' => 'MM-dd-yyyy'));
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) have invalid date formats. These values will be cleared during import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test datetime sanitization by batch.
-            $dataAnalyzer = new DateTimeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'dateTime');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_5', 'ValueFormat',
-                           array('format' => 'MM-dd-yyyy hh:mm'));
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) have invalid date time formats. These values will be cleared during import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test dropdown sanitization by batch.
-            $dataAnalyzer = new DropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'dropDown');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_6');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test CreatedByUser sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'createdByUser');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_7', 'UserValueTypeModelAttribute',
-                           array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME));
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test ModifiedByUser sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'modifiedByUser');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_8', 'UserValueTypeModelAttribute',
-                       array('type' => UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID));
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '5 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test owner sanitization by batch.
-            $dataAnalyzer = new UserValueTypeBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'owner');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_9', 'UserValueTypeModelAttribute',
-                       array('type' => UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID));
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) have invalid user values. These values will not be used during the import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test multi-select dropdown sanitization by batch.
-            $dataAnalyzer = new MultiSelectDropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'multiDropDown');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_24');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-
-            //Test multi-select dropdown sanitization by batch.
-            $dataAnalyzer = new MultiSelectDropDownBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'tagCloud');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_25');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 dropdown value(s) are missing from the field. These values will be added upon import.';
-            $this->assertEquals($compareMessage, $messages[0]);
-        }
-
-        /**
-         * @depends testImportDataAnalysisUsingBatchAnalyzers
          */
         public function testMinimumLengthsUsingBatchAnalyzers()
         {
@@ -653,24 +698,52 @@
             $import->serializedData            = serialize($serializedData);
             $this->assertTrue($import->save());
             ImportTestHelper::createTempTableByFileNameAndTableName('importAnalyzerMinLengthsTest.csv', $import->getTempTableName());
-            $config       = array('pagination' => array('pageSize' => 2));
+            $config       = array('pagination' => array('pageSize' => 10));
+            $mappingData = array(
+                'column_0' => array('attributeIndexOrDerivedType' => 'string',        'type' => 'importColumn',
+                    'mappingRulesData' => array(
+                        'DefaultValueModelAttributeMappingRuleForm' =>
+                        array('defaultValue' => null))),
+
+                'column_1' => array('attributeIndexOrDerivedType' => 'FullName',       'type' => 'importColumn',
+                    'mappingRulesData' => array(
+                        'FullNameDefaultValueModelAttributeMappingRuleForm' =>
+                        array('defaultValue' => null))),
+            );
+            $serializedData                = unserialize($import->serializedData);
+            $serializedData['mappingData'] = $mappingData;
+            $import->serializedData        = serialize($serializedData);
+            $this->assertTrue($import->save());
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ImportModelTestItem');
+            //This test csv has a header row.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            //Run data analyzer
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData, array_keys($mappingData));
+            $importDataAnalyzer->analyzePage();
+            $data = $dataProvider->getData();
 
-            //test that strings have minimum lengths (string min 3)
-            $dataAnalyzer = new MinimumLengthBatchAttributeValueDataAnalyzer('ImportModelTestItem', 'string');
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) are too short for this field. These rows will be skipped during import.';
-            $this->assertEquals($compareMessage, $messages[0]);
+            $this->assertNull($data[0]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[0]->analysisStatus);
 
-            //test that a full name has the minimum required last name length. (min 2)
-            $dataAnalyzer = new FullNameBatchAttributeValueDataAnalyzer('ImportModelTestItem', null);
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_1');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '2 value(s) are too short for this field. These rows will be skipped during import.';
-            $this->assertEquals($compareMessage, $messages[0]);
+            $compareData = array();
+            $compareData['column_1']   = array();
+            $compareData['column_1'][] = 'Is too short.';
+            $this->assertEquals($compareData, unserialize($data[1]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[1]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is too short. Minimum length is 3.';
+            $this->assertEquals($compareData, unserialize($data[2]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[2]->analysisStatus);
+
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is too short. Minimum length is 3.';
+            $compareData['column_1']   = array();
+            $compareData['column_1'][] = 'Is too short.';
+            $this->assertEquals($compareData, unserialize($data[3]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[3]->analysisStatus);
         }
     }
 ?>

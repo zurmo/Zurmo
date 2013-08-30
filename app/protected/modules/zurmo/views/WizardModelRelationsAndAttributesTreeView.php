@@ -64,6 +64,11 @@
             throw new NotImplementedException();
         }
 
+        /**
+         * @param string $type
+         * @param string $treeType
+         * @param string $formName
+         */
         public function __construct($type, $treeType, $formName)
         {
             assert('is_string($type)');

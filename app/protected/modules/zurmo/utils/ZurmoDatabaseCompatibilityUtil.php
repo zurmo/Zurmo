@@ -1581,6 +1581,10 @@
         );
 
         // End Not Coding Standard
+        /**
+         * @param $sql
+         * @return string
+         */
         public static function callFunction($sql)
         {
             try
@@ -1595,6 +1599,10 @@
             }
         }
 
+        /**
+         * @param $sql
+         * @return string
+         */
         public static function callProcedureWithoutOuts($sql)
         {
             try

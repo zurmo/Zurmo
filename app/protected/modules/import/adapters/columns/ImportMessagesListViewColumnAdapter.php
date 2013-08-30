@@ -38,7 +38,7 @@
     {
         public function renderGridViewData()
         {
-            assert('$this->attribute == "serializedmessages"');
+            assert('$this->attribute == "serializedMessages"');
             return array(
                 'name'  => $this->attribute,
                 'header' => Zurmo::t('ImportModule', 'Messages'),

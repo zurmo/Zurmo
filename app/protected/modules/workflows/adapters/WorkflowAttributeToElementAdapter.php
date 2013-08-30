@@ -77,11 +77,14 @@
             {
                 throw new NotSupportedException();
             }
-            $content                            = $this->getContentForTimeTriggerOrTrigger();
+            $valueElementType                   = $this->model->getValueElementType();
+            $content                            = $this->getContentForTimeTriggerOrTrigger(true);
             $params                             = array('inputPrefix' => $this->inputPrefixData);
-            $durationElement                    = new TimeTriggerDurationStaticDropDownElement($this->model,
-                                                  'durationSeconds', $this->form, $params);
+            $durationElement                    = new TimeTriggerDurationElement($this->model,
+                                                  null, $this->form, $params);
             $durationElement->editableTemplate  = '{content}{error}';
+            $durationElement->attributeLabel    = $this->model->getDisplayLabel();
+            $durationElement->valueElementType  = $this->model->getValueElementType();
             $durationContent                    = $durationElement->render();
             self::resolveDivWrapperForContent($durationContent, $content, 'dynamic-row-duration');
             return $content;
@@ -96,10 +99,11 @@
         }
 
         /**
+         * @param bool $isTimeTrigger
          * @return string
          * @throws NotSupportedException if the valueElementType is null
          */
-        protected function getContentForTimeTriggerOrTrigger()
+        protected function getContentForTimeTriggerOrTrigger($isTimeTrigger = false)
         {
             $params                                 = array('inputPrefix' => $this->inputPrefixData);
             $valueElementType                       = $this->model->getValueElementType();
@@ -129,9 +133,18 @@
                 }
                 elseif ($valueElement instanceof MixedDateTypesElement)
                 {
-                    $valueElement->editableTemplate = '<div class="dynamic-row-operator">{valueType}</div>' .
-                                                      '<div class="value-data has-date-inputs">' .
-                                                      '<div class="first-value-area">{content}{error}</div></div>';
+                    if ($isTimeTrigger)
+                    {
+                        $valueElement->editableTemplate = '<div class="dynamic-row-operator" style="display:none;">{valueType}</div>' .
+                                                          '<div class="value-data has-date-inputs">' .
+                                                          '<div class="first-value-area">{content}{error}</div></div>';
+                    }
+                    else
+                    {
+                        $valueElement->editableTemplate = '<div class="dynamic-row-operator">{valueType}</div>' .
+                                                          '<div class="value-data has-date-inputs">' .
+                                                          '<div class="first-value-area">{content}{error}</div></div>';
+                    }
                 }
                 else
                 {

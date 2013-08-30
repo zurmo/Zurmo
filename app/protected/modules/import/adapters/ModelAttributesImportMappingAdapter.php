@@ -117,6 +117,10 @@
             return $attributes;
         }
 
+        /**
+         * @param string $attributeName
+         * @return bool
+         */
         protected function isAttributeAHasOneOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
@@ -129,6 +133,10 @@
             return false;
         }
 
+        /**
+         * @param string $attributeName
+         * @return bool
+         */
         protected function isAttributeAHasOneNotOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
@@ -142,6 +150,10 @@
             return false;
         }
 
+        /**
+         * @param string $attributeName
+         * @return bool
+         */
         protected function isAttributeAnOwnedCustomFieldRelation($attributeName)
         {
             assert('is_string($attributeName)');
@@ -155,6 +167,10 @@
             return false;
         }
 
+        /**
+         * @param string $attributeName
+         * @return bool
+         */
         protected function isAttributeAnOwnedMultipleValuesCustomFieldRelation($attributeName)
         {
             assert('is_string($attributeName)');

@@ -66,5 +66,15 @@
         {
             return $this->getPreviousPageLinkContentByControllerAction('step2');
         }
+
+        protected function renderPreviousPageLinkLabel()
+        {
+            return Zurmo::t('ZurmoModule', 'Upload File');
+        }
+
+        protected function renderNextPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Map Fields');
+        }
     }
 ?>

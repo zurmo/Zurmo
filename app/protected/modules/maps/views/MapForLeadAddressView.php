@@ -34,18 +34,16 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    class MapForLeadAddressView extends MapPortletAddressView 
+    class MapForLeadAddressView extends MapPortletAddressView
     {
-        
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             parent::__construct($viewData, $params, $uniqueLayoutId);
         }
-        
+
         public static function getAllowedOnPortletViewClassNames()
         {
             return array('LeadDetailsAndRelationsView');
         }
-
     }
 ?>

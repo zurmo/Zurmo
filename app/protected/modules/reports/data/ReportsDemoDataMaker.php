@@ -54,6 +54,7 @@
             static::makeClosedWonOpportunitiesByOwner();
             static::makeClosedWonOpportunitiesByMonth();
             static::makeOpportunitiesByStage();
+            static::makeMeetingsCategoryAndMonthStartTimeByOwner();
         }
 
         public static function makeNewLeadsReport()
@@ -337,6 +338,50 @@
             $chart->firstSeries  = 'stage';
             $chart->firstRange   = 'amount__Summation';
             $report->setChart($chart);
+
+            $savedReport = new SavedReport();
+            SavedReportToReportAdapter::resolveReportToSavedReport($report, $savedReport);
+            //set explicit
+            $saved = $savedReport->save();
+            assert('$saved');
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                makeBySecurableItem($savedReport);
+            $explicitReadWriteModelPermissions->addReadWritePermitable(Group::getByName(Group::EVERYONE_GROUP_NAME));
+            $success = ExplicitReadWriteModelPermissionsUtil::
+                resolveExplicitReadWriteModelPermissions($savedReport, $explicitReadWriteModelPermissions);
+            assert('$success');
+            $saved = $savedReport->save();
+            assert('$saved');
+        }
+
+        public static function makeMeetingsCategoryAndMonthStartTimeByOwner()
+        {
+            $report                  = new Report();
+            $report->setModuleClassName('MeetingsModule');
+            $report->setName           ('Meettings Category And Month Start Time By Owner');
+            $report->setType           (Report::TYPE_MATRIX);
+            $report->setOwner          (Yii::app()->user->userModel);
+            $report->setFiltersStructure('');
+            $report->setCurrencyConversionType(Report::CURRENCY_CONVERSION_TYPE_BASE);
+
+            $groupBy = new GroupByForReportForm('MeetingsModule', 'Meeting', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'startDateTime__Month';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+
+            $groupBy = new GroupByForReportForm('MeetingsModule', 'Meeting', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'category';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+
+            $groupBy = new GroupByForReportForm('MeetingsModule', 'Meeting', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'owner__User';
+            $groupBy->axis                        = 'y';
+            $report->addGroupBy($groupBy);
+
+            $displayAttribute = new DisplayAttributeForReportForm('MeetingsModule', 'Meeting', $report->getType());
+            $displayAttribute->attributeIndexOrDerivedType = 'Count';
+            $report->addDisplayAttribute($displayAttribute);
 
             $savedReport = new SavedReport();
             SavedReportToReportAdapter::resolveReportToSavedReport($report, $savedReport);

@@ -586,12 +586,59 @@
             $user->lastName     = 'User';
             $user->setPassword($password);
             $saved = $user->save();
-            assert('$saved'); // TODO - handle this properly.
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
 
-            $group = Group::getByName('Super Administrators');
+            $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
             $group->users->add($user);
             $saved = $group->save();
-            assert('$saved'); // TODO - handle this properly.
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
+            return $user;
+        }
+
+        /**
+         * Create a system user that can be used for running jobs and workflow background processes. Block
+         * login via mobile, web, and api. Also mark user as hideFromSelecting and hideFromLeaderboard
+         * @param string $username
+         * @param string $password
+         * @return User
+         * @throws FailedToSaveModelException
+         */
+        public static function createSystemUser($username, $password)
+        {
+            $user = new User();
+            $user->username            = $username;
+            $user->firstName           = 'System';
+            $user->lastName            = 'User';
+            $user->hideFromSelecting   = true;
+            $user->hideFromLeaderboard = true;
+            $user->setIsSystemUser();
+            $user->setPassword($password);
+            $saved = $user->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
+            $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_MOBILE,  Right::DENY);
+            $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB,     Right::DENY);
+            $user->setRight('UsersModule', UsersModule::RIGHT_LOGIN_VIA_WEB_API, Right::DENY);
+            $saved = $user->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
+            $group = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
+            $group->users->add($user);
+            $saved = $group->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
             return $user;
         }
 
@@ -625,6 +672,8 @@
             ZurmoDatabaseCompatibilityUtil::createStoredFunctionsAndProcedures();
             RedBeanDatabaseBuilderUtil::autoBuildModels($rootModels, $messageLogger);
             ZurmoDatabaseCompatibilityUtil::createIndexes();
+            StarredUtil::createStarredTables();
+            ReadPermissionsSubscriptionUtil::buildTables();
         }
 
         /**
@@ -937,6 +986,8 @@
             $messageStreamer->add(Zurmo::t('InstallModule', 'Database schema creation complete.'));
             $messageStreamer->add(Zurmo::t('InstallModule', 'Rebuilding Permissions.'));
             ReadPermissionsOptimizationUtil::rebuild();
+            $messageStreamer->add(Zurmo::t('InstallModule', 'Rebuilding Read Permissions Subscription tables.'));
+            ReadPermissionsSubscriptionUtil::buildTables();
             $messageStreamer->add(Zurmo::t('InstallModule', 'Freezing database.'));
             InstallUtil::freezeDatabase();
             $messageStreamer->add(Zurmo::t('InstallModule', 'Writing Configuration File.'));
@@ -959,6 +1010,7 @@
                                             $form->submitCrashToSentry);
             $messageStreamer->add(Zurmo::t('InstallModule', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
+            InstallUtil::createSystemUser('system', md5(time() . mt_rand(1, 10000)));
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
 
             // Send notification to super admin to delete test.php file in case if this

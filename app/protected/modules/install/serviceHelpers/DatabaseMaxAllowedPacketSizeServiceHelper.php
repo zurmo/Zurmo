@@ -44,6 +44,9 @@
 
         protected $minimumUploadRequireBytes = 20000000;
 
+        /**
+         * @param InstallSettingsForm $form
+         */
         public function __construct($form)
         {
             assert('$form instanceof InstallSettingsForm');

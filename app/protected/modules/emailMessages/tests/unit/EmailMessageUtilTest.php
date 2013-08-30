@@ -110,9 +110,15 @@
             $this->assertLessThan(0, $recipients[3]->personOrAccount->id);
             $this->assertLessThan(0, $recipients[4]->personOrAccount->id);
             $this->assertLessThan(0, $recipients[5]->personOrAccount->id);
+            //The message should go to billy's box
+            $this->assertEquals(EmailBox::USER_DEFAULT_NAME, $emailMessageForm->folder->emailBox->name);
             //The message should go to the default outbox folder
             $this->assertEquals(EmailFolder::getDefaultOutboxName(), $emailMessageForm->folder->name);
             $this->assertEquals(EmailFolder::TYPE_OUTBOX, $emailMessageForm->folder->type);
+            //The sender should be populated with details from the users email account
+            $emailAccount = EmailAccount::getByUserAndName($billy);
+            $this->assertEquals($emailAccount->fromName, $emailMessageForm->sender->fromName);
+            $this->assertEquals($emailAccount->fromAddress, $emailMessageForm->sender->fromAddress);
 
             //Test with null in cc/bcc
             $emailMessage     = new EmailMessage();

@@ -55,5 +55,10 @@
             $content .= $element->render();
             return $content;
         }
+
+        protected function renderNextPageLinkLabel()
+        {
+            return Zurmo::t('ZurmoModule', 'Upload File');
+        }
     }
 ?>

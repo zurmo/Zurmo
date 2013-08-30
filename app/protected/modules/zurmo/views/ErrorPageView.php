@@ -41,6 +41,9 @@
             return 'Oh no!';
         }
 
+        /**
+         * @param string $message
+         */
         public function __construct($message)
         {
             assert('is_string($message)');

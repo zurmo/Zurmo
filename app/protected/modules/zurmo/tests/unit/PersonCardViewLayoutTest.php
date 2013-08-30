@@ -36,6 +36,18 @@
 
     class PersonCardViewLayoutTest extends ZurmoBaseTest
     {
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setUp()
+        {
+            parent::setUp();
+            Yii::app()->user->userModel = User::getByUsername('super');
+        }
+
         public function testRenderContent()
         {
             $user                   = new User();
@@ -60,7 +72,7 @@
             $address = new Address();
             $address->street1 = 'testStreet';
 
-            $user->firstName  = 'test' ;
+            $user->firstName  = 'test';
             $user->lastName   = 'me' ;
             $user->title->value = 'testTitle.';
             $user->primaryAddress = $address;

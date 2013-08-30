@@ -199,6 +199,10 @@
             return $retrievableAttributeNames;
         }
 
+        /**
+         * @param string $attributeName
+         * @return string
+         */
         protected function getRedBeanModelAttributeValueToExportValueAdapterClassName($attributeName)
         {
             assert('is_string($attributeName)');
@@ -210,6 +214,10 @@
             }
         }
 
+        /**
+         * @param string $attributeName
+         * @return bool
+         */
         protected function isHasOneVariationOwnedRelation($attributeName)
         {
             assert('is_string($attributeName)');
@@ -227,6 +235,10 @@
             return mb_convert_case($id, MB_CASE_TITLE, "UTF-8");
         }
 
+        /**
+         * @param string $attributeName
+         * @return array
+         */
         protected function getAllAttributesDataAsNull($attributeName)
         {
             $data = array();
@@ -238,6 +250,10 @@
             return $data;
         }
 
+        /**
+         * @param string $attributeName
+         * @return array
+         */
         protected function getAllAtttributesDataAsLabels($attributeName)
         {
             $data = array();

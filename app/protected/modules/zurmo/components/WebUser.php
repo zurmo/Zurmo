@@ -38,6 +38,10 @@
     {
         protected $userModel = null;
 
+        /**
+         * @param string $attributeName
+         * @return mixed|null
+         */
         public function __get($attributeName)
         {
             assert('is_string($attributeName)');

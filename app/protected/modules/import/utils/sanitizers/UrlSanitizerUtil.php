@@ -39,38 +39,45 @@
      */
     class UrlSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return false;
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'Url';
+            if ($rowBean->{$this->columnName} == null)
+            {
+                return;
+            }
+            if (false === $validatedUrl = $this->resolveValidatedUrl($rowBean->{$this->columnName}))
+            {
+                $label = Zurmo::t('ImportModule', 'Is an invalid URL. This value will be cleared during import.');
+                $this->analysisMessages[] = $label;
+                return;
+            }
+            $maximumLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
+            if (strlen($validatedUrl) > $maximumLength)
+            {
+                $label = Zurmo::t('ImportModule', 'Is too long. Minimum length is {minimumLength}.',
+                                  array('{maximumLength}' => $maximumLength));
+                $this->analysisMessages[] = $label;
+            }
         }
 
         /**
          * Given a value, resolve that the value is a correctly formatted url. If not, an
          * InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
             $maxLength = DatabaseCompatibilityUtil::getMaxVarCharLength();
-            $validator = new CUrlValidator();
-            $validator->defaultScheme = 'http';
-            $validatedUrl = $validator->validateValue($value);
-            if ($validatedUrl === false)
+            if (false === $validatedUrl = $this->resolveValidatedUrl($value))
             {
                 throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Invalid url format.'));
             }
@@ -79,6 +86,18 @@
                 throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'URL was too long.'));
             }
             return $validatedUrl;
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData == null');
+        }
+
+        protected function resolveValidatedUrl($url)
+        {
+            $validator                = new CUrlValidator();
+            $validator->defaultScheme = 'http';
+            return $validator->validateValue($url);
         }
     }
 ?>

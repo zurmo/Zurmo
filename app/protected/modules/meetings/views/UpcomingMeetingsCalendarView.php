@@ -44,12 +44,20 @@
             return $this->getDataProvider()->getData();
         }
 
+        /**
+         * @param null|string $stringTime
+         * @return MeetingsCalendarDataProvider|void
+         */
         protected function makeDataProvider($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');
             return new MeetingsCalendarDataProvider('Meeting', $this->makeSearchAttributeData($stringTime));
         }
 
+        /**
+         * @param null|string $stringTime
+         * @return array
+         */
         protected function makeSearchAttributeData($stringTime = null)
         {
             assert('is_string($stringTime) || $stringTime == null');

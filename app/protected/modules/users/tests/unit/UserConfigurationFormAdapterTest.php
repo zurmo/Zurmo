@@ -62,6 +62,18 @@
             $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'enableDesktopNotifications'));
             $this->assertNull(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'defaultPermissionGroupSetting', false));
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting($sally), UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_EVERYONE);
+            $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'hideFromSelecting'));
+            $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'hideFromLeaderboard'));
+
+            $sally->hideFromLeaderboard = true;
+            $sally->hideFromSelecting   = true;
+            $this->assertTrue($sally->save());
+
+            unset($sally);
+            $sally = User::getByUsername('sally');
+            $this->assertTrue((bool)$sally->hideFromLeaderboard);
+            $this->assertTrue((bool)$sally->hideFromSelecting);
+
             //Confirm billy's configuration is the defaults.
             $form = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($billy);
             $this->assertEquals(50,                 $form->listPageSize);
@@ -73,6 +85,9 @@
             $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($billy, 'enableDesktopNotifications'));
             $this->assertNull(UserConfigurationFormAdapter::resolveAndGetValue($billy, 'defaultPermissionGroupSetting', false));
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting($billy), UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_EVERYONE);
+            $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'hideFromSelecting'));
+            $this->assertFalse(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'hideFromLeaderboard'));
+
             //Now change configuration for Billy.
             $form->listPageSize                     = 60;
             $form->subListPageSize                  = 61;
@@ -83,6 +98,9 @@
             $form->enableDesktopNotifications       = true;
             $form->defaultPermissionSetting         = UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_OWNER_AND_USERS_IN_GROUP;
             $form->defaultPermissionGroupSetting    = 6;
+            $form->hideFromLeaderboard = true;
+            $form->hideFromSelecting   = true;
+
             UserConfigurationFormAdapter::setConfigurationFromForm($form, $billy);
             //Confirm billy's settings are changed correctly.
             $form = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($billy);
@@ -100,6 +118,8 @@
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetValue($billy, 'defaultPermissionGroupSetting', false), 6);
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting($sally), UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_EVERYONE);
             $this->assertNull(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'defaultPermissionGroupSetting', false));
+            $this->assertTrue((bool)$billy->hideFromLeaderboard);
+            $this->assertTrue((bool)$billy->hideFromSelecting);
             //Now set configuration settings for sally and confirm they are correct.
             Yii::app()->user->userModel = $sally;
             UserConfigurationFormAdapter::setConfigurationFromFormForCurrentUser($form);
@@ -113,6 +133,9 @@
             $this->assertTrue(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'enableDesktopNotifications'));
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetDefaultPermissionSetting($sally), UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_OWNER_AND_USERS_IN_GROUP);
             $this->assertEquals(UserConfigurationFormAdapter::resolveAndGetValue($sally, 'defaultPermissionGroupSetting', false), 6);
+            $this->assertTrue((bool)$billy->hideFromLeaderboard);
+            $this->assertTrue((bool)$billy->hideFromSelecting);
+
             //Now test that setting defaultPermissionSetting to owner makes the group settings null
             $form = UserConfigurationFormAdapter::makeFormFromUserConfigurationByUser($billy);
             $form->defaultPermissionSetting         = UserConfigurationForm::DEFAULT_PERMISSIONS_SETTING_OWNER;

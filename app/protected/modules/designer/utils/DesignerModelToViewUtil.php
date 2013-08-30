@@ -40,6 +40,11 @@
      */
     class DesignerModelToViewUtil
     {
+        /**
+         * @param string $viewClassName
+         * @param string $modelClassName
+         * @return ModelAttributesAdapter|ModelFormAttributesAdapter
+         */
         public static function getModelAttributesAdapter($viewClassName, $modelClassName)
         {
             $modelForViewClassName = DesignerModelToViewUtil::getModelForViewClassName($viewClassName, $modelClassName);
@@ -51,6 +56,11 @@
             return new ModelAttributesAdapter(new $modelClassName(false));
         }
 
+        /**
+         * @param string $modelForViewClassName
+         * @param string $modelClassName
+         * @return ModelAttributesAdapter|ModelFormAttributesAdapter
+         */
         public static function getModelAttributesAdapterByModelForViewClassName($modelForViewClassName, $modelClassName)
         {
             assert('is_subclass_of($modelForViewClassName, "ModelForm") || is_subclass_of($modelForViewClassName, "RedBeanModel")');

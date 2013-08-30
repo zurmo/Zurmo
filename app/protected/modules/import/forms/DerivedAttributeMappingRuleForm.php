@@ -49,6 +49,10 @@
 
         protected $derivedAttributeType;
 
+        /**
+         * @param string $modelClassName
+         * @param string $derivedAttributeType
+         */
         public function __construct($modelClassName, $derivedAttributeType)
         {
             assert('is_string($modelClassName) && $derivedAttributeType != ""');

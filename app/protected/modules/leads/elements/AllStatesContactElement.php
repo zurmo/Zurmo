@@ -56,10 +56,40 @@
                                                 LabelUtil::getTranslationParamsForAllModules());
             if ($this->form === null)
             {
-                return $this->getFormattedAttributeLabel();
+                return Yii::app()->format->text($label);
             }
             $id = $this->getIdForHiddenField();
             return $this->form->labelEx($this->model, $this->attribute, array('for' => $id, 'label' => $label));
+        }
+
+        protected function makeNonEditableLinkUrl()
+        {
+            if (LeadsUtil::isStateALead($this->resolveState()))
+            {
+                $moduleId = 'leads';
+            }
+            else
+            {
+                $moduleId = static::$moduleId;
+            }
+            return Yii::app()->createUrl($moduleId . '/' . $this->controllerId .
+                                         '/details/', array('id' => $this->model->{$this->attribute}->id));
+        }
+
+        protected function resolveState()
+        {
+            if ($this->model instanceof Contact)
+            {
+                return $this->model->state;
+            }
+            elseif ($this->model instanceof RelatedItemForm)
+            {
+                return $this->model->Contact->state;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         protected function getAutoCompleteControllerId()

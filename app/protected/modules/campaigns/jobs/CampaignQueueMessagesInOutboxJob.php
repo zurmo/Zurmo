@@ -52,12 +52,22 @@
          */
         public function run()
         {
+            $processed = $this->processRun();
+            $this->forgetModelsWithForgottenValidators();
+            $this->modelIdentifiersForForgottenValidators = array();
+            return $processed;
+        }
+
+        protected function processRun()
+        {
             $batchSize = $this->resolveBatchSize();
             $campaignItemsToProcess    = CampaignItem::getByProcessedAndStatusAndSendOnDateTime(
                                                                                         0,
                                                                                         Campaign::STATUS_PROCESSING,
                                                                                         time(),
                                                                                         $batchSize);
+            $startingMemoryUsage = memory_get_usage();
+            $modelsProcessedCount = 0;
             foreach ($campaignItemsToProcess as $campaignItem)
             {
                 try
@@ -74,7 +84,9 @@
                     return false;
                 }
                 $this->runGarbageCollection($campaignItem);
+                $modelsProcessedCount++;
             }
+            $this->addMaxmimumProcessingCountMessage($modelsProcessedCount, $startingMemoryUsage);
             return true;
         }
 
@@ -84,27 +96,17 @@
         }
 
         /**
-         * Not pretty, but gets the job done. Solves memory leak problem. Eventually refactor to share with autoresponder
-         * method and and somehow make this generic.
+         * Not pretty, but gets the job done. Solves memory leak problem.
          * @param CampaignItem $campaignItem
          */
-        protected function runGarbageCollection(CampaignItem $campaignItem)
+        protected function runGarbageCollection($campaignItem)
         {
-            $campaignItem->contact->primaryEmail->forgetValidators();
-            $campaignItem->contact->forgetValidators();
+            assert('$campaignItem instanceof CampaignItem');
             $campaignItem->campaign->marketingList->forgetValidators();
             $campaignItem->campaign->forgetValidators();
-            $campaignItem->emailMessage->content->forgetValidators();
-            $campaignItem->emailMessage->sender->forgetValidators();
-            $campaignItem->emailMessage->forgetValidators();
-
-            unset($campaignItem->emailMessage->content);
-            unset($campaignItem->emailMessage->sender);
-            unset($campaignItem->emailMessage);
-            unset($campaignItem->contact->primaryEmail);
-            unset($campaignItem->contact);
-            unset($campaignItem->campaign->marketingList);
-            unset($campaignItem->campaign);
+            $this->modelIdentifiersForForgottenValidators[$campaignItem->campaign->marketingList->getModelIdentifier()] = true;
+            $this->modelIdentifiersForForgottenValidators[$campaignItem->campaign->getModelIdentifier()] = true;
+            parent::runGarbageCollection($campaignItem);
         }
     }
 ?>

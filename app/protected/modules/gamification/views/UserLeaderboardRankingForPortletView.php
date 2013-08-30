@@ -57,6 +57,9 @@
 
         /**
          * Some extra assertions are made to ensure this view is used in a way that it supports.
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
          */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
@@ -90,6 +93,13 @@
                 ),
             );
             return $metadata;
+        }
+
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
         }
 
         public function getTitle()

@@ -39,6 +39,10 @@
      */
     class ConversationMashableActivityRules extends MashableActivityRules
     {
+        /**
+         * @param int $relationItemId
+         * @return array
+         */
         public function resolveSearchAttributesDataByRelatedItemId($relationItemId)
         {
             assert('is_int($relationItemId)');
@@ -83,6 +87,9 @@
         /**
          * (non-PHPdoc)
          * @see MashableActivityRules::getSummaryContentTemplate()
+         * @param string $ownedByFilter
+         * @param string $viewModuleClassName
+         * @return string
          */
         public function getSummaryContentTemplate($ownedByFilter, $viewModuleClassName)
         {
@@ -121,6 +128,8 @@
         /**
          * (non-PHPdoc)
          * @see MashableActivityRules::getLatestActivityExtraDisplayStringByModel()
+         * @param Conversation $model
+         * @return null|string
          */
         public function getLatestActivityExtraDisplayStringByModel($model)
         {

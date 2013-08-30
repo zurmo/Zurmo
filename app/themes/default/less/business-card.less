@@ -1,0 +1,400 @@
+.sliding-panels-container{}
+
+.sliding-panel{
+	display: none;
+	width: 100%;
+	.box-sizing();
+	position: relative;
+}
+
+div.showing-panel{
+	display: block;
+}
+
+.business-card{
+	display: block;
+	.gravatar{
+		margin-right: 12px;
+		margin-bottom:6px;
+	}
+	h2{
+		line-height: 100%;
+		padding-bottom: 15px;
+		display: inline-block;
+		.salutation{
+			font-weight: normal;
+			font-size: 80%;
+			margin-right: 5px;
+		}
+		.user-name{
+			font-weight: normal;
+			font-size: 80%;
+			margin-left: 5px;
+		}
+	}
+	.icon-star{
+		margin-left: 5px;
+	}
+	h3.position{
+		line-height: 140%;
+		font-weight: normal;
+		color: #545454 !important;
+	}
+	h4{
+		color: #545454 !important;
+		line-height: 150%;
+		margin-bottom: 15px;
+		font-size: 14px;
+	}
+	.contact-details{
+		clear: left;
+		color: #111;
+		font-size: 14px;
+		color: #666;
+		margin-bottom: 7px;
+		margin-top: 10px;
+		> span{
+			margin: 5px 20px 5px 0;
+			color: #333;
+			white-space:nowrap;
+			float:left;
+		}
+	}
+	.address{
+		clear:left;
+		margin-bottom: 15px;
+	}
+	.icon-office-phone{
+		&:before{
+			content:"W";
+			.symbly(20px);
+			padding-right: 3px;
+			color: #111;
+		}
+	}
+	.icon-mobile-phone{
+		&:before{
+			content:'\2018';
+			.symbly(21px);
+			padding-right: 3px;
+			color: #111;
+		}
+	}
+	.icon-email{
+		&:before{
+			content:"g";
+			.symbly(18px);
+			padding-right: 5px;
+			color: #111;
+		}
+	}
+	.icon-map{
+		&:before{
+			content:"L";
+			.symbly(20px);
+			padding-right: 3px;
+			color: #111;
+		}
+	}
+	.demographic-details{
+		position: absolute;
+		top: 0;
+		right: 0;
+		text-align: right;
+		.sex{
+			width: 35px;
+			height: 62px;
+			display: block;
+			text-indent: -9999px;
+			text-align: left;
+			margin-top: 0;
+			line-height: 1;
+		}
+		.male{
+			background: url(../images/people.png) right top no-repeat;
+		}
+		.female{
+			background: url(../images/people.png) right bottom no-repeat;
+		}
+		span{
+			margin-top: 13px;
+			font-weight: bold;
+			display: block;
+			float: right;
+			line-height: 150%;
+		}
+	}
+}
+
+.icon-demographic{
+
+}
+
+.icon-household{
+
+}
+
+.icon-interest{
+
+}
+
+.icon-purchase{
+
+}
+
+#business-card-buttons{
+	display: none !important;
+	display: inline-block;
+	.smaller();
+	> div{
+		display: inline-block;
+		border:1px solid #b7b7b7;
+		border-top-color: #e7e7e7;
+		border-left-color:#d7d7d7;
+		border-right-color:#d7d7d7;
+		border-radius:4px;
+		background:url(../images/view-toolbar-gradient-darker.png) left bottom repeat-x;
+		++.border-box;
+		.b-shadow(~"inset 0 0 1px 1px #efefef, 0 0 9px 5px rgba(153, 153, 153, 0.12)");
+	}
+	a{
+		text-align: center;
+		width: auto;
+		++.border-box;
+		position:relative;
+		border-left: 1px solid #bababa;
+		text-shadow:#fff 0 1px 0;
+		margin: 0;
+		padding:0 6px;
+		display:inline-block;
+		border-left:1px solid #bababa;
+		&:first-child{
+			border-left: none;
+		}
+		span{
+			font-size: 10px;
+			font-weight: bold;
+			display: none;
+		}
+		i{
+			font-style: normal;
+			.symbly(22px);
+			line-height: 1;
+			color: #656565;
+		}
+	}
+	&.center-top{
+		position: absolute;
+		top: -1px;
+		left: 50%;
+		margin-left: -72px;
+		strong{
+			margin-right: 4px;
+		}
+		> div{
+			.radius(0 0 4px 4px);
+		}
+	}
+	&.top-right{
+		position: absolute;
+		right: 12px;
+		top: 16px;
+
+		a, strong{
+			display: block;
+		}
+		strong{
+			margin-bottom: 3px;
+			font-size: 10px;
+			text-align: right;
+		}
+		a{
+			border-left: none;
+			border-top: 1px solid #bababa;
+			&:first-child{
+				border-top: none;
+			}
+			&:hover span{
+				float: left;
+				position: absolute;
+				right: 32px;
+				top: 5px;
+				display: block;
+			}
+		}
+	}
+	.active{
+		color: #97c43d;
+		.t-shadow(0 0 1px lighten(#97c43d, 25%));
+		i{
+			color: #97c43d;
+		}
+	}
+}
+
+.social-icon{
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	text-indent: -9999px;
+	margin-right: 4px;
+	&:hover{
+		.radius(3px);
+		.b-shadow(0 0 7px 0 #999);
+	}
+}
+
+.icon-bebo{ background: url(../images/social-icons/bebo.png) center center no-repeat }
+//.icon-email{ background: url(../images/social-icons/email.png) center center no-repeat }
+.icon-instagram{ background: url(../images/social-icons/instagram.png) center center no-repeat }
+.icon-picasa{ background: url(../images/social-icons/picasa.png) center center no-repeat }
+.icon-stumbleupon{ background: url(../images/social-icons/stumbleupon.png) center center no-repeat }
+.icon-behance{ background: url(../images/social-icons/behance.png) center center no-repeat }
+.icon-evernote{ background: url(../images/social-icons/evernote.png) center center no-repeat }
+.icon-lastfm{ background: url(../images/social-icons/lastfm.png) center center no-repeat }
+.icon-pinterest{ background: url(../images/social-icons/pinterest.png) center center no-repeat }
+.icon-tumblr{ background: url(../images/social-icons/tumblr.png) center center no-repeat }
+.icon-blogger{ background: url(../images/social-icons/blogger.png) center center no-repeat }
+.icon-facebook{ background: url(../images/social-icons/facebook.png) center center no-repeat }
+.icon-posterous{ background: url(../images/social-icons/posterous.png) center center no-repeat }
+.icon-twitter{ background: url(../images/social-icons/twitter.png) center center no-repeat }
+.icon-delicious{ background: url(../images/social-icons/delicious.png) center center no-repeat }
+.icon-flickr{ background: url(../images/social-icons/flickr.png) center center no-repeat }
+.icon-linkedin{ background: url(../images/social-icons/linkedin.png) center center no-repeat }
+.icon-reddit{ background: url(../images/social-icons/reddit.png) center center no-repeat }
+.icon-typepad{ background: url(../images/social-icons/typepad.png) center center no-repeat }
+.icon-designfloat{ background: url(../images/social-icons/designfloat.png) center center no-repeat }
+.icon-forrst{ background: url(../images/social-icons/forrst.png) center center no-repeat }
+.icon-myspace{ background: url(../images/social-icons/myspace.png) center center no-repeat }
+.icon-rss{ background: url(../images/social-icons/rss.png) center center no-repeat }
+.icon-vimeo{ background: url(../images/social-icons/vimeo.png) center center no-repeat }
+.icon-deviantart{ background: url(../images/social-icons/deviantart.png) center center no-repeat }
+.icon-friendfeed{ background: url(../images/social-icons/friendfeed.png) center center no-repeat }
+.icon-netvibes{ background: url(../images/social-icons/netvibes.png) center center no-repeat }
+.icon-skype{ background: url(../images/social-icons/skype.png) center center no-repeat }
+.icon-wordpress{ background: url(../images/social-icons/wordpress.png) center center no-repeat }
+.icon-digg{ background: url(../images/social-icons/digg.png) center center no-repeat }
+.icon-googleplus{ background: url(../images/social-icons/googleplus.png) center center no-repeat }
+.icon-orkut{ background: url(../images/social-icons/orkut.png) center center no-repeat }
+.icon-soundcloud{ background: url(../images/social-icons/soundcloud.png) center center no-repeat }
+.icon-yahoo{ background: url(../images/social-icons/yahoo.png) center center no-repeat }
+.icon-dribbble{ background: url(../images/social-icons/dribbble.png) center center no-repeat }
+.icon-grooveshark{ background: url(../images/social-icons/grooveshark.png) center center no-repeat }
+.icon-path{ background: url(../images/social-icons/path.png) center center no-repeat }
+.icon-spotify{ background: url(../images/social-icons/spotify.png) center center no-repeat }
+.icon-youtube{ background: url(../images/social-icons/youtube.png) center center no-repeat }
+.icon-klout{ background: url(../images/social-icons/klout.png) center center no-repeat }
+.icon-gravatar{ background: url(../images/social-icons/gravatar.png) center center no-repeat }
+.icon-plancast{ background: url(../images/social-icons/plancast.png) center center no-repeat }
+
+.back-of-card{
+	display: none;
+	h3{
+		margin-bottom: 10px;
+		margin-top: 30px;
+	}
+	ul{
+		list-style: none;
+	}
+	li{
+		font-weight: bold;
+		margin-bottom: 3px;
+		color: #666;
+	}
+	li span{
+		font-weight: normal;
+		margin-left: 5px;
+		border: 1px solid #ccc;
+		background: #eaeaea;
+		.radius(3px);
+		padding:2px 4px;
+		.smaller();
+		color: #323232;
+	}
+	.complex-data{
+		li{
+			line-height: 200%;
+			width: 33.3%;
+			float: left;
+		}
+	}
+	.simple-data{
+		li{
+			float: left;
+			width: auto;
+			margin-bottom: 7px;
+		}
+		span{
+			margin: 0 5px 0 0;
+		}
+	}
+	.half{
+		float: left;
+		width: 49%;
+		+ .half{
+			margin-left: 2%;
+		}
+	}
+}
+
+div.special-pager{
+	margin-bottom: 0 !important;
+	border-left:none !important;
+	border-right:none !important;
+	border-bottom:none !important;
+	.next span{
+		text-indent: 0 !important;
+		.smaller();
+		padding: 5px 0 5px 0 !important;
+	}
+	.next a:after,
+	.hidden.next:after{
+		display: none !important;
+	}
+}
+
+#sliding-panel-toggle{
+	++.border-box;
+	width:100%;
+	background: #fff url(../images/view-toolbar-gradient.png) left bottom repeat-x;
+	.b-shadow(inset 0 1px 0 #DFDFDF );
+	overflow: hidden;
+	display:block;
+	text-align:center;
+	font-weight:bold;
+	padding:5px 0;
+	.smaller();
+}
+
+.mini-button{
+	display: inline-block;
+	border:1px solid #b7b7b7;
+	border-top-color: #e7e7e7;
+	border-left-color:#d7d7d7;
+	border-right-color:#d7d7d7;
+	border-radius:4px;
+	background:url(../images/view-toolbar-gradient-darker.png) left bottom repeat-x;
+	++.border-box;
+	.b-shadow(inset 0 0 1px 1px #efefef);
+	color:#545454;
+	text-shadow:#fff 0 1px 0;
+	position: relative;
+	margin-left: 10px;
+	top: -2px;
+	span{
+		.smaller();
+		font-weight:bold;
+		.t-shadow(0 1px 0 #fff);
+		color:#545454;
+		display: none;
+		line-height:22px;
+		padding: 0 6px 0 28px;
+		background: url(../images/rapleaf.png) 4px center no-repeat;
+	}
+	span + span{
+		line-height:22px;
+	}
+	.show{
+		display:block;
+	}
+}

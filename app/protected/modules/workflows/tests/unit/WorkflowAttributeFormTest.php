@@ -156,11 +156,13 @@
             $this->assertFalse($validated);
 
             //Test valid date and valid format for dynamic type
-            $form->value          = -8600;
-            $validated            = $form->validate();
+            $form->durationInterval = 8600;
+            $form->durationSign     = TimeDurationUtil::DURATION_SIGN_NEGATIVE;
+            $validated              = $form->validate();
             $this->assertTrue($validated);
 
-            $form->value          = 3000;
+            $form->durationInterval = 3000;
+            $form->durationSign     = TimeDurationUtil::DURATION_SIGN_POSITIVE;
             $validated            = $form->validate();
             $this->assertTrue($validated);
         }
@@ -189,11 +191,13 @@
             $this->assertFalse($validated);
 
             //Test valid date and valid format for dynamic type
-            $form->value          = -8600;
+            $form->durationInterval = 8600;
+            $form->durationSign     = TimeDurationUtil::DURATION_SIGN_NEGATIVE;
             $validated            = $form->validate();
             $this->assertTrue($validated);
 
-            $form->value          = 3000;
+            $form->durationInterval = 3000;
+            $form->durationSign     = TimeDurationUtil::DURATION_SIGN_POSITIVE;
             $validated            = $form->validate();
             $this->assertTrue($validated);
         }

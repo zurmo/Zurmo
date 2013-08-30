@@ -47,6 +47,9 @@
         /**
          * (non-PHPdoc)
          * @see MashableActivityRules::getSummaryContentTemplate()
+         * @param string $ownedByFilter
+         * @param string $viewModuleClassName
+         * @return string
          */
         public function getSummaryContentTemplate($ownedByFilter, $viewModuleClassName)
         {

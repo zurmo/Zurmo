@@ -41,11 +41,19 @@
      */
     class PoliciesCache
     {
+        /**
+         * @param $identifier
+         * @return mixed
+         */
         public static function getEntry($identifier)
         {
             return GeneralCache::getEntry($identifier);
         }
 
+        /**
+         * @param $identifier
+         * @param $entry
+         */
         public static function cacheEntry($identifier, $entry)
         {
             GeneralCache::cacheEntry($identifier, $entry);

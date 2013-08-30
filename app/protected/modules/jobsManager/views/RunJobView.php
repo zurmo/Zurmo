@@ -47,6 +47,12 @@
 
         private $timeLimit;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $type
+         * @param int $timeLimit
+         */
         public function __construct($controllerId, $moduleId, $type, $timeLimit)
         {
             assert('is_string($controllerId) && $controllerId != ""');

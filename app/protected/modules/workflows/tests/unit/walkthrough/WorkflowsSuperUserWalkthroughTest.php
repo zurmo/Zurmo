@@ -271,7 +271,7 @@
                                                         'moduleClassName'   => 'WorkflowsTestModule');
             $this->setPostArray($data);
             $content = $this->runControllerWithNoExceptionsAndGetContent('workflows/default/addOrChangeTimeTriggerAttribute');
-            $this->assertTrue(strpos($content, '<option value="14400">for 4 hours</option>') !== false);
+            $this->assertTrue(strpos($content, 'ByTimeWorkflowWizardForm[TimeTrigger][durationInterval]') !== false);
         }
 
         /**
@@ -316,7 +316,7 @@
                                      'moduleClassName' => 'WorkflowsTestModule',
                                      'rowNumber'  => 4));
             $content = $this->runControllerWithNoExceptionsAndGetContent('workflows/default/addEmailMessage');
-            $this->assertTrue(strpos($content, '<option value="0">Immediately after workflow runs</option>') !== false);
+            $this->assertTrue(strpos($content, 'OnSaveWorkflowWizardForm[EmailMessages][4][sendAfterDurationType]') !== false);
         }
 
         /**

@@ -147,5 +147,10 @@
         {
             return 'TaskGamification';
         }
+
+        public static function hasReadPermissionsSubscriptionOptimization()
+        {
+            return true;
+        }
     }
 ?>

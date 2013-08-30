@@ -39,16 +39,6 @@
      */
     class UserValueTypeSanitizerUtil extends ExternalSystemIdSuppportedSanitizerUtil
     {
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'UserValueType';
-        }
-
-        public static function getSqlAttributeValueDataAnalyzerType()
-        {
-            return 'UserValueType';
-        }
-
         public static function getLinkedMappingRuleType()
         {
             return 'UserValueTypeModelAttribute';
@@ -76,40 +66,54 @@
         }
 
         /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
+        {
+            if ($this->mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME)
+            {
+                $compareValue = TextUtil::strToLowerWithDefaultEncoding($rowBean->{$this->columnName});
+            }
+            else
+            {
+                $compareValue = $rowBean->{$this->columnName};
+            }
+            if ($rowBean->{$this->columnName} != null && !in_array($compareValue, $this->getAcceptableValues()))
+            {
+                $label = Zurmo::t('ImportModule', 'Is an invalid user value. This value will be skipped during import.');
+                $this->analysisMessages[] = $label;
+            }
+        }
+
+        /**
          * Given a value that is either a zurmo user id, a username, or an external system user id, resolve that the
          * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID ||
-                    $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
-                    $mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
             if ($value == null)
             {
                 return $value;
             }
-            if ($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            if ($this->mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
             {
                 try
                 {
                     if ((int)$value <= 0)
                     {
-                        throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The user id specified did not match any existing records.'));
+                        throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'User Id specified did not match any existing records.'));
                     }
                     return User::getById((int)$value);
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The user id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'User Id specified did not match any existing records.'));
                 }
             }
-            elseif ($mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
+            elseif ($this->mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
             {
                 try
                 {
@@ -117,7 +121,7 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The other user id specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Other User Id specified did not match any existing records.'));
                 }
             }
             else
@@ -128,9 +132,34 @@
                 }
                 catch (NotFoundException $e)
                 {
-                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'The username specified did not match any existing records.'));
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ImportModule', 'Username specified did not match any existing records.'));
                 }
             }
+        }
+
+        protected function getAcceptableValues()
+        {
+            if ($this->mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID)
+            {
+                return UserValueTypeSanitizerUtil::getUserIds();
+            }
+            elseif ($this->mappingRuleData['type'] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID)
+            {
+                return UserValueTypeSanitizerUtil::getUserExternalSystemIds();
+            }
+            else
+            {
+                $acceptableValues = UserValueTypeSanitizerUtil::getUsernames();
+                return ArrayUtil::resolveArrayToLowerCase($acceptableValues);
+            }
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('!isset($this->mappingRuleData["type"]) ||
+                    $this->mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USER_ID ||
+                    $this->mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::EXTERNAL_SYSTEM_USER_ID ||
+                    $this->mappingRuleData["type"] == UserValueTypeModelAttributeMappingRuleForm::ZURMO_USERNAME');
         }
     }
 ?>

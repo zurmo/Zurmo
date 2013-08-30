@@ -60,11 +60,16 @@
             $compareClauses = array(
                 1 => array(
                     'attributeName'        => 'boolean',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => true,
+                    'operatorType'         => 'equals',
+                    'value'                => '0',
+                ),
+                2 => array(
+                    'attributeName'        => 'boolean',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
                 ),
             );
-            $compareStructure = '1';
+            $compareStructure = '(1 or 2)';
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }

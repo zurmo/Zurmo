@@ -39,39 +39,55 @@
      */
     class ProductTemplateStatusSanitizerUtil extends SanitizerUtil
     {
-        public static function supportsSqlAttributeValuesDataAnalysis()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return false;
+            if ($rowBean->{$this->columnName} != null)
+            {
+                $resolvedAcceptableValues = ArrayUtil::resolveArrayToLowerCase(static::getAcceptableValues());
+                if (!in_array(strtolower($rowBean->{$this->columnName}), $resolvedAcceptableValues))
+                {
+                    $label = Zurmo::t('ImportModule',
+                                      '{attributeLabel} specified is invalid and this row will be skipped during import.',
+                                      array('{attributeLabel}' => ProductTemplate::getAnAttributeLabel('status')));
+                    $this->shouldSkipRow      = true;
+                    $this->analysisMessages[] = $label;
+                }
+            }
         }
 
-        public static function getBatchAttributeValueDataAnalyzerType()
+        /**
+         * If a status value is missing or invalid, then skip the entire row during import.
+         */
+        public static function shouldNotSaveModelOnSanitizingValueFailure()
         {
-            return 'ProductTemplateStatus';
+            return true;
         }
 
         /**
          * Given a type, attempt to resolve it as a valid type.  If the type is invalid, a
          * InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$mappingRuleData == null');
             if ($value == null)
             {
                 return $value;
             }
             try
             {
-                if (strtolower($value) == strtolower(ProductTemplate::STATUS_ACTIVE))
+                if (strtolower($value) == strtolower(ProductTemplate::STATUS_ACTIVE) ||
+                    strtolower($value) == strtolower('Active'))
                 {
                     return ProductTemplate::STATUS_ACTIVE;
                 }
-                elseif (strtolower($value) == strtolower(ProductTemplate::STATUS_INACTIVE))
+                elseif (strtolower($value) == strtolower(ProductTemplate::STATUS_INACTIVE) ||
+                        strtolower($value) == strtolower('Inactive'))
                 {
                     return ProductTemplate::STATUS_INACTIVE;
                 }
@@ -82,8 +98,16 @@
             }
             catch (NotFoundException $e)
             {
-                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'The status specified is invalid.'));
+                throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'Status specified is invalid.'));
             }
+        }
+
+        protected static function getAcceptableValues()
+        {
+            return array(ProductTemplate::STATUS_ACTIVE,
+                         ProductTemplate::STATUS_INACTIVE,
+                         'Active',
+                         'Inactive');
         }
     }
 ?>

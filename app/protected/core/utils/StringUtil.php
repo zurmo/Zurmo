@@ -76,10 +76,10 @@
             }
         }
 
-        public static function renderFluidTitleContent($title)
+        public static function renderFluidContent($content)
         {
-            assert('$title == null || is_string($title)');
-            if ($title != null)
+            assert('$content == null || is_string($content)');
+            if ($content != null)
             {
                 // Begin Not Coding Standard
                 Yii::app()->clientScript->registerScript('TruncateTitleText', "
@@ -87,10 +87,17 @@
                         $('.truncated-title').ThreeDots({ max_rows:1 });
                     });");
                 // End Not Coding Standard
-                $innerContent = ZurmoHtml::wrapLabel(strip_tags($title), 'ellipsis-content');
+                $innerContent = ZurmoHtml::wrapLabel(strip_tags($content), 'ellipsis-content');
                 $content      = ZurmoHtml::wrapLabel($innerContent, 'truncated-title');
-                return          ZurmoHtml::tag('h1', array(), $content);
+                return $content;
             }
+        }
+
+        public static function renderFluidTitleContent($title)
+        {
+            assert('$title == null || is_string($title)');
+            $content = static::renderFluidContent($title);
+            return ZurmoHtml::tag('h1', array(), $content);
         }
 
         /**

@@ -39,6 +39,12 @@
      */
     class ModelRollUpUtil
     {
+        /**
+         * @param Item $model
+         * @param User $user
+         * @return array
+         * @throws NotSupportedException
+         */
         public static function getItemIdsByModelAndUser(Item $model, User $user)
         {
             $relatedItemIds = array($model->getClassId('Item'));

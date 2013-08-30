@@ -36,7 +36,6 @@
 
     class MapForAccountAddressView extends MapPortletAddressView
     {
-
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             parent::__construct($viewData, $params, $uniqueLayoutId);
@@ -58,7 +57,7 @@
 
         protected function shouldRenderMap()
         {
-            if($this->params['relationModel']->billingAddress->makeAddress() == null)
+            if ($this->params['relationModel']->billingAddress->makeAddress() == null)
             {
                 return false;
             }

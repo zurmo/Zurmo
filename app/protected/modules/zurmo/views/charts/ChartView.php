@@ -101,6 +101,11 @@
             return $params;
         }
 
+        /**
+         * @param string $moduleClassName
+         * @param string $modulePluralLabelName
+         * @return null|string
+         */
         protected function resolveContentIfCurrentUserCanAccessChartByModule($moduleClassName, $modulePluralLabelName)
         {
             assert('is_string($moduleClassName)');

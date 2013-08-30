@@ -58,7 +58,9 @@
         /**
          * Override to allow for making a default set of portlets
          * via metadata optional.
-         *
+         * @param string $uniqueLayoutId
+         * @param array $metadata
+         * @return array
          */
         protected function getPortlets($uniqueLayoutId, $metadata)
         {

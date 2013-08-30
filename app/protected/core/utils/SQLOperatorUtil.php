@@ -49,6 +49,7 @@
             if (is_string($value))
             {
                 return in_array($operatorType, array('startsWith', 'endsWith', 'equals', 'doesNotEqual', 'contains',
+                                                     'doesNotContains', 'doesNotStartsWith', 'doesNotEndsWith',
                                                      'lessThan', 'greaterThan', 'greaterThanOrEqualTo',
                                                      'lessThanOrEqualTo'));
             }
@@ -88,11 +89,20 @@
                     case 'startsWith' :
                         return 'like';
 
+                    case 'doesNotStartsWith' :
+                        return 'not like';
+
                     case 'endsWith' :
                         return 'like';
 
+                    case 'doesNotEndsWith' :
+                        return 'not like';
+
                     case 'contains' :
                         return 'like';
+
+                    case 'doesNotContains' :
+                        return 'not like';
 
                     case 'equals' :
                         return '=';
@@ -129,7 +139,7 @@
             {
                 $validOperator = SQLOperatorUtil::isValidOperatorType($operatorType);
             }
-            if ($validOperator &&  in_array($operatorType, array('endsWith', 'contains')))
+            if ($validOperator &&  in_array($operatorType, array('endsWith', 'doesNotEndsWith', 'contains', 'doesNotContains')))
             {
                 return '%';
             }
@@ -146,7 +156,7 @@
             {
                 $validOperator = SQLOperatorUtil::isValidOperatorType($operatorType);
             }
-            if ($validOperator && in_array($operatorType, array('startsWith', 'contains')))
+            if ($validOperator && in_array($operatorType, array('startsWith', 'doesNotStartsWith', 'contains', 'doesNotContains')))
             {
                 return '%';
             }
@@ -222,8 +232,11 @@
         {
             if (in_array($type, array(
                 'startsWith',
+                'doesNotStartsWith',
                 'endsWith',
+                'doesNotEndsWith',
                 'contains',
+                'doesNotContains',
                 'equals',
                 'doesNotEqual',
                 'greaterThanOrEqualTo',

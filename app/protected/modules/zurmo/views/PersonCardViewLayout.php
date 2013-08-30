@@ -57,7 +57,7 @@
 
         protected function renderFrontOfCardContent()
         {
-            $content  = $this-> resolveAvatarContent();
+            $content  = $this->resolveAvatarContent();
             $content .= $this->resolveNameContent();
             $content .= $this->resolveBackOfCardLinkContent();
             $content .= $this->resolveJobTitleContent();
@@ -85,7 +85,15 @@
         {
             $element                       = new DropDownElement($this->model, 'title', null);
             $element->nonEditableTemplate  = '{content}';
-            $salutation = $element->render();
+            if (StarredUtil::modelHasStarredInterface($this->model))
+            {
+                $starLink = StarredUtil::getToggleStarStatusLink($this->model, null);
+            }
+            else
+            {
+                $starLink = null;
+            }
+            $salutation                    = $element->render();
             if ($salutation != null)
             {
                 $spanContent = ZurmoHtml::tag('span', array('class' => 'salutation'), $element->render());
@@ -94,7 +102,7 @@
             {
                 $spanContent = null;
             }
-            return ZurmoHtml::tag('h2', array(), $spanContent . strval($this->model));
+            return ZurmoHtml::tag('h2', array(), $spanContent . strval($this->model) . $starLink);
         }
 
         protected function resolveBackOfCardLinkContent()
@@ -138,6 +146,10 @@
                 if ($departmentAndAccountContent != null && $this->model->companyName != null)
                 {
                     $departmentAndAccountContent .=  ' / ' . $this->model->companyName;
+                }
+                elseif ($departmentAndAccountContent == null && $this->model->companyName != null)
+                {
+                    $departmentAndAccountContent = $this->model->companyName;
                 }
             }
             if ($departmentAndAccountContent != null)

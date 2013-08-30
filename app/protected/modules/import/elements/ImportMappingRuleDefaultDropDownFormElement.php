@@ -57,11 +57,6 @@
             return true;
         }
 
-        protected function renderLabel()
-        {
-            return $this->getFormattedAttributeLabel();
-        }
-
         protected function getDropDownArray()
         {
             $dataAndLabels    = CustomFieldDataUtil::

@@ -155,8 +155,8 @@
             $action                       = new ActionForWorkflowForm('WorkflowModelTestItem', Workflow::TYPE_ON_SAVE);
             $action->type                 = ActionForWorkflowForm::TYPE_UPDATE_SELF;
             $attributes                   = array('string' => array('shouldSetValue'    => '1',
-                'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
-                'value'  => 'jason'));
+                                                  'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                  'value'  => 'jason'));
             $action->setAttributes(array(ActionForWorkflowForm::ACTION_ATTRIBUTES => $attributes));
             $workflow->addAction($action);
             //Create the saved Workflow

@@ -43,6 +43,10 @@
 
         protected $sourceUrl;
 
+        /**
+         * @param array $moduleNamesAndLabelsAndAll
+         * @param string $sourceUrl
+         */
         public function __construct($moduleNamesAndLabelsAndAll, $sourceUrl)
         {
             assert('is_array($moduleNamesAndLabelsAndAll)');

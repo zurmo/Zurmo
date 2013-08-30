@@ -45,8 +45,8 @@
         private $views = array();
 
         /**
-         * @param   string
-         * @param   integer
+         * @param   string $term
+         * @param   integer $pageSize
          * @param   User        User model
          * @param   array       Modules to be searched
          */
@@ -60,8 +60,9 @@
         }
 
         /**
-         * @param   string
-         * @param   bollean     Return an empty listView
+         * @param   string $moduleName
+         * @param   bool $forceEmptyResults
+         * Return an empty listView
          * @return  View
          */
         public function getListView($moduleName, $forceEmptyResults = false)
@@ -80,7 +81,7 @@
                     $this->user->id,
                     $sanitizedSearchAttributes
                  );
-            $listViewClassName = $module::getPluralCamelCasedName() . 'ListView';
+            $listViewClassName = $module::getPluralCamelCasedName() . 'ForMixedModelsSearchListView';
             $sortAttribute     = SearchUtil::resolveSortAttributeFromGetArray($modelClassName);
             $sortDescending    = SearchUtil::resolveSortDescendingFromGetArray($modelClassName);
             if ($forceEmptyResults)

@@ -40,10 +40,18 @@
      */
     abstract class StepsAndProgressBarForWizardView extends MetadataView
     {
+        protected $zeroBasedStepIndex = 0;
+
         /**
          * @return array
          */
         abstract protected function getSpanLabels();
+
+        public function __construct($zeroBasedStepIndex = 0)
+        {
+            assert('is_int($zeroBasedStepIndex)');
+            $this->zeroBasedStepIndex = $zeroBasedStepIndex;
+        }
 
         public function isUniqueToAPage()
         {
@@ -52,10 +60,9 @@
 
         protected function renderContent()
         {
-            $width = $this->getSpanPercentWidthFromCount();
-            $left  = $this->getCurrentStepIndex() * $width;
+            $width = $this->getSpanPercentWidthFromCount() * ($this->zeroBasedStepIndex + 1);
             $content = ZurmoHtml::tag('div', array('class' => 'progress-bar',
-                                                   'style' => 'width:' . $width . '%; margin-left:' . $left . '%'), '');
+                                                   'style' => 'width:' . $width . '%; margin-left:0%'), '');
             $content = ZurmoHtml::tag('div', array('class' => 'progress-back'), $content);
             $spanContent = $this->getSpanContent();
             return ZurmoHtml::tag('div', array('class' => 'progress'), $content . $spanContent);
@@ -66,11 +73,11 @@
             $width = $this->getSpanPercentWidthFromCount();
             $content = null;
             $first   = true;
-            foreach ($this->getSpanLabels() as $label)
+            foreach ($this->getSpanLabels() as $step => $label)
             {
                 $htmlOptions          = array();
                 $htmlOptions['style'] = 'width:' . $width . '%';
-                if ($first)
+                if ($this->zeroBasedStepIndex === $step)
                 {
                     $htmlOptions['class'] = 'current-step';
                 }
@@ -84,11 +91,6 @@
         {
             $width  = 100 / count($this->getSpanLabels());
             return $width;
-        }
-
-        protected function getCurrentStepIndex()
-        {
-            return 0;
         }
     }
 ?>

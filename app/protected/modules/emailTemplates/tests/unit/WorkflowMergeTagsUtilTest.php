@@ -125,14 +125,14 @@
             $user1->currency                                    = $currencies[0];
             $user1->manager                                     = $users[0];
 
-            //Custom attribute                                             
+            //Custom attribute
             $attributeForm                                  = new TextAttributeForm();
             $attributeForm->attributeName                   = 'custom';
-            $attributeForm->attributeLabels                 = array('en' => 'test label en');            
-            $modelAttributesAdapterClassName                = 
-                    $attributeForm::getModelAttributeAdapterNameForSavingAttributeFormData();
-            $adapter = new $modelAttributesAdapterClassName(new EmailTemplateModelTestItem());            
-            $adapter->setAttributeMetadataFromForm($attributeForm);                                    
+            $attributeForm->attributeLabels                 = array('en' => 'test label en');
+            $modelAttributesAdapterClassName                = $attributeForm::
+                getModelAttributeAdapterNameForSavingAttributeFormData();
+            $adapter = new $modelAttributesAdapterClassName(new EmailTemplateModelTestItem());
+            $adapter->setAttributeMetadataFromForm($attributeForm);
 
             $model                                              = new EmailTemplateModelTestItem();
             $model->string                                      = 'abc';

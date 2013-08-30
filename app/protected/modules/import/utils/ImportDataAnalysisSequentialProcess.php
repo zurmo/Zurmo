@@ -38,31 +38,49 @@
      * Sequential processing for the import data analysis.  Each step is a different column that is being mapped
      * for import.
      */
-    class ImportDataAnalysisSequentialProcess extends SequentialProcess
+    class ImportDataAnalysisSequentialProcess extends ImportSequentialProcess
     {
-        protected $import;
-
-        protected $mappingData;
-
-        protected $importRules;
-
-        protected $dataProvider;
-
         /**
-         * A filtered down array of only column names that are mapped.
+         * A filtered down array of only column names that are mapped and analyzable.
          * @var array
          */
         protected $sanitizableColumnNames;
 
-        public function __construct(Import $import, $dataProvider)
+        protected static function resolveCustomFieldsInstructionDataIntoImportAndSaveImport(
+                                  ImportDataAnalyzer $importDataAnalyzer, Import $import)
         {
-            assert('$dataProvider instanceof AnalyzerSupportedDataProvider');
+            $adapter = new ImportToCustomFieldsInstructionDataAdapter($import);
+            $adapter->appendCustomFieldsInstructionData($importDataAnalyzer->getCustomFieldsInstructionData());
+            $saved   = $import->save();
+            if (!$saved)
+            {
+                throw new FailedToSaveModelException();
+            }
+        }
+
+        protected static function resolveSanitizableColumnNames($mappingData)
+        {
+            assert('is_array($mappingData)');
+            $sanitizableColumnNames = array();
+            foreach ($mappingData as $columnName => $columnMappingData)
+            {
+                if ($columnMappingData['attributeIndexOrDerivedType'] != null &&
+                    $columnMappingData['type'] != 'extraColumn')
+                {
+                    $sanitizableColumnNames[] = $columnName;
+                }
+            }
+            return $sanitizableColumnNames;
+        }
+
+        public function __construct(Import $import, ImportDataProvider $dataProvider)
+        {
             $unserializedData             = unserialize($import->serializedData);
             $this->import                 = $import;
             $this->mappingData            = $unserializedData['mappingData'];
             $this->importRules            = ImportRulesUtil::makeImportRulesByType($unserializedData['importRulesType']);
             $this->dataProvider           = $dataProvider;
-            $this->sanitizableColumnNames = $this->resolveSanitizableColumnNames($this->mappingData);
+            $this->sanitizableColumnNames = static::resolveSanitizableColumnNames($this->mappingData);
         }
 
         public function getAllStepsMessage()
@@ -72,111 +90,24 @@
 
         protected function steps()
         {
-            return array('processColumns');
+            return array('processRows', 'complete');
         }
 
         protected function stepMessages()
         {
-            return array('processColumns' => Zurmo::t('ImportModule', 'Processing'));
+            return array('processRows' => Zurmo::t('ImportModule', 'Analyzing'),
+                         'complete'    => Zurmo::t('ImportModule', 'Finalizing Analysis...'));
         }
 
-        protected function processColumns($params)
+        protected function processRows($params)
         {
-            $completionPosition = 1;
-            if (!isset($params["columnNameToProcess"]))
-            {
-                $params["columnNameToProcess"] = $this->getNextMappedColumnName($this->mappingData);
-            }
-            else
-            {
-                assert('is_string($params["columnNameToProcess"])');
-            }
-            $completionPosition = array_search($params["columnNameToProcess"], $this->sanitizableColumnNames) + 1;
-            if ($completionPosition != count($this->sanitizableColumnNames))
-            {
-                $completionPosition++;
-            }
-            $this->subSequenceCompletionPercentage = ($completionPosition / count($this->sanitizableColumnNames)) * 100;
-            //Run data analyzer
-            if ($this->mappingData[$params["columnNameToProcess"]]['attributeIndexOrDerivedType'] == null)
-            {
-                throw new NotSupportedException();
-            }
-            $importDataAnalyzer              = new ImportDataAnalyzer($this->importRules, $this->dataProvider);
-            $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($params["columnNameToProcess"],
-                                                                         $this->mappingData[$params["columnNameToProcess"]]);
-            $messagesData                    = $importDataAnalyzer->getMessagesData();
-            $importInstructionsData          = $importDataAnalyzer->getImportInstructionsData();
-            $unserializedData                = unserialize($this->import->serializedData);
-            $unserializedData['mappingData'] = ImportMappingUtil::
-                                               resolveImportInstructionsDataIntoMappingData(
-                                               $this->mappingData, $importInstructionsData);
-            $this->import->serializedData    = serialize($unserializedData);
-            ImportUtil::setDataAnalyzerMessagesDataToImport($this->import, $messagesData, true);
-            $saved = $this->import->save();
-            if (!$saved)
-            {
-                throw new FailedToSaveModelException();
-            }
-            $nextColumnName = $this->getNextMappedColumnName($this->mappingData, $params['columnNameToProcess']);
-            if ($nextColumnName == null)
-            {
-                $this->nextStep    = null;
-                $this->nextMessage = null;
-                $this->complete    = true;
-                return null;
-            }
-            else
-            {
-                $params['columnNameToProcess'] = $nextColumnName;
-                $this->nextStep = 'processColumns';
-                $this->setNextMessageByStep($this->nextStep);
-                $attributeImportRules = AttributeImportRulesFactory::
-                                        makeByImportRulesTypeAndAttributeIndexOrDerivedType($this->importRules->getType(),
-                                        $this->mappingData[$params["columnNameToProcess"]]['attributeIndexOrDerivedType']);
-                $this->nextMessage .= ' ' . $attributeImportRules->getDisplayLabel();
-                return $params;
-            }
-        }
-
-        protected function getNextMappedColumnName($mappingData, $currentColumnName = null)
-        {
-            assert('is_array($mappingData)');
-            assert('$currentColumnName == null || is_string($currentColumnName)');
-            if ($currentColumnName == null)
-            {
-                $currentIndexPassed = true;
-            }
-            else
-            {
-                $currentIndexPassed = false;
-            }
-            foreach ($mappingData as $columnName => $notUsed)
-            {
-                if ($currentIndexPassed && $mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
-                {
-                    return $columnName;
-                }
-                if (!$currentIndexPassed && $columnName == $currentColumnName)
-                {
-                    $currentIndexPassed = true;
-                }
-            }
-            return null;
-        }
-
-        protected function resolveSanitizableColumnNames($mappingData)
-        {
-            assert('is_array($mappingData)');
-            $sanitizableColumnNames = array();
-            foreach ($mappingData as $columnName => $notUsed)
-            {
-                if ($mappingData[$columnName]['attributeIndexOrDerivedType'] != null)
-                {
-                    $sanitizableColumnNames[] = $columnName;
-                }
-            }
-            return $sanitizableColumnNames;
+            $page = static::resolvePageByParams($params);
+            $this->dataProvider->getPagination()->setCurrentPage($page);
+            $importDataAnalyzer = new ImportDataAnalyzer($this->importRules, $this->dataProvider,
+                                                         $this->mappingData, $this->sanitizableColumnNames);
+            $importDataAnalyzer->analyzePage();
+            static::resolveCustomFieldsInstructionDataIntoImportAndSaveImport($importDataAnalyzer, $this->import);
+            return $this->resolveNextPagingAndParams($page, $params);
         }
     }
 ?>

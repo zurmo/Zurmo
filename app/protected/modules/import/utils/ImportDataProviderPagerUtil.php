@@ -40,6 +40,11 @@
      */
     class ImportDataProviderPagerUtil
     {
+        /**
+         * @param ImportDataProvider $dataProvider
+         * @param string $url
+         * @return string
+         */
         public static function renderPagerAndHeaderTextContent(ImportDataProvider $dataProvider, $url)
         {
             $cs = Yii::app()->getClientScript();

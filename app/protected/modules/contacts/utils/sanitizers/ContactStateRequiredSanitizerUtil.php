@@ -48,26 +48,23 @@
         /**
          * Contact state is required.  If the value provided is null then the sanitizer will attempt use a default
          * value if provided.  If this is missing then a InvalidValueToSanitizeException will be thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null');
+            assert('$this->attributeName == null');
             assert('is_string($value) || $value == null || $value instanceof ContactState');
-            $model                  = new $modelClassName(false);
-            assert('$mappingRuleData["defaultStateId"] == null || is_string($mappingRuleData["defaultStateId"]) ||
-                    is_int($mappingRuleData["defaultStateId"])');
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
             if ($value == null)
             {
-                if ($mappingRuleData['defaultStateId'] != null)
+                if ($this->mappingRuleData['defaultStateId'] != null)
                 {
                     try
                     {
-                       $state       = ContactState::getById((int)$mappingRuleData['defaultStateId']);
+                       $state       = ContactState::getById((int)$this->mappingRuleData['defaultStateId']);
                     }
                     catch (NotFoundException $e)
                     {
@@ -83,6 +80,12 @@
                 }
             }
             return $value;
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData["defaultStateId"] == null || is_string($this->mappingRuleData["defaultStateId"]) ||
+                    is_int($this->mappingRuleData["defaultStateId"])');
         }
     }
 ?>

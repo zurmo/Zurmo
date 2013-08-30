@@ -42,6 +42,11 @@
     {
         /**
          * @return policyRules object
+         * @param string $moduleClassName
+         * @param string $policy
+         * @param numeric $explicit
+         * @param numeric $inherited
+         * @return mixed
          */
         public static function createPolicyRulesByModuleClassNameAndPolicyInformation
         (

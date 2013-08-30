@@ -46,6 +46,16 @@
 
         protected static $baseQueryStringArray;
 
+        /**
+         * @param bool $tracking
+         * @param string $content
+         * @param int $modelId
+         * @param $modelType
+         * @param int $personId
+         * @param int $marketingListId
+         * @param bool $isHtmlContent
+         * @return bool
+         */
         public static function resolveContentForTrackingAndFooter($tracking, & $content, $modelId, $modelType, $personId,
                                                                             $marketingListId, $isHtmlContent = false)
         {
@@ -61,6 +71,13 @@
             return true;
         }
 
+        /**
+         * @param $hash
+         * @param bool $validateQueryStringArray
+         * @param bool $validateForTracking
+         * @return array
+         * @throws NotSupportedException
+         */
         public static function resolveQueryStringArrayForHash($hash, $validateQueryStringArray = true,
                                                                                             $validateForTracking = true)
         {
@@ -137,6 +154,11 @@
         }
 
         // this should be protected but we use it in EmailBounceJob so it has to be public.
+        /**
+         * @param array $queryStringArray
+         * @return bool | array
+         * @throws FailedToSaveModelException
+         */
         public static function createOrUpdateActivity($queryStringArray)
         {
             $activity = static::resolveExistingActivity($queryStringArray);
@@ -219,9 +241,17 @@
         protected static function resolvePlainLinksForClickTracking(& $content, $isHtmlContent)
         {
             $spacePrefixedAndSuffixedLinkRegex = static::getPlainLinkRegex($isHtmlContent);
+            if ($isHtmlContent)
+            {
+                $callBack = 'static::resolveTrackingUrlForMatchedPlainLinkArrayWithHtmlContent';
+            }
+            else
+            {
+                $callBack = 'static::resolveTrackingUrlForMatchedHrefLinkArray';
+            }
             $content = preg_replace_callback($spacePrefixedAndSuffixedLinkRegex,
-                                                'static::resolveTrackingUrlForMatchedPlainLinkArray' ,
-                                                $content);
+                                             $callBack,
+                                             $content);
             if ($content === null)
             {
                 throw new NotSupportedException();
@@ -234,8 +264,8 @@
             {
                 $hrefPrefixedLinkRegex  = static::getHrefLinkRegex();
                 $content = preg_replace_callback($hrefPrefixedLinkRegex,
-                                                'static::resolveTrackingUrlForMatchedHrefLinkArray' ,
-                                                $content);
+                                                 'static::resolveTrackingUrlForMatchedHrefLinkArray',
+                                                 $content);
                 if ($content === null)
                 {
                     throw new NotSupportedException();
@@ -248,6 +278,14 @@
             $matchPosition  = strpos($matches[0], $matches[2]);
             $prefix = substr($matches[1], 0, $matchPosition);
             return $prefix . static::resolveTrackingUrlForLink(trim($matches[2])) . ' ';
+        }
+
+        protected static function resolveTrackingUrlForMatchedPlainLinkArrayWithHtmlContent($matches)
+        {
+            $matchPosition  = strpos($matches[0], $matches[2]);
+            $prefix = substr($matches[1], 0, $matchPosition);
+            $trackingUrl = $prefix . '<a href="' . static::resolveTrackingUrlForLink(trim($matches[2])) . '">' . trim($matches[2]) . '</a> ';
+            return $trackingUrl;
         }
 
         protected static function resolveTrackingUrlForMatchedHrefLinkArray($matches)
@@ -359,6 +397,16 @@ PTN;
                                                                     $modelType, $isHtmlContent, $replaceExisting, false);
         }
 
+        /**
+         * @param string $content
+         * @param int $personId
+         * @param int $marketingListId
+         * @param int $modelId
+         * @param $modelType
+         * @param bool $isHtmlContent
+         * @param bool $replaceExisting
+         * @param bool $preview
+         */
         public static function resolveUnsubscribeAndManageSubscriptionPlaceholders(& $content, $personId,
                                                                                       $marketingListId, $modelId,
                                                                                       $modelType, $isHtmlContent,
@@ -544,6 +592,10 @@ PTN;
             }
         }
 
+        /**
+         * @param $modelType
+         * @return string
+         */
         public static function resolveModelClassNameByModelType($modelType)
         {
             return $modelType . 'Activity';

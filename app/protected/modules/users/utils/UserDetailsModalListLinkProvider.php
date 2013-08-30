@@ -42,6 +42,11 @@
 
         protected $actionId;
 
+        /**
+         * @param $moduleId
+         * @param $controllerId
+         * @param $actionId
+         */
         public function __construct($moduleId, $controllerId, $actionId)
         {
             $this->moduleId     = $moduleId;
@@ -49,6 +54,10 @@
             $this->actionId     = $actionId;
         }
 
+        /**
+         * @param string $attributeString
+         * @return string
+         */
         public function getLinkString($attributeString)
         {
             $string  = 'ZurmoHtml::link(';

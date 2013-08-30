@@ -43,7 +43,7 @@
          */
         public function actionLoadPaginationDemoData()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }
@@ -52,7 +52,7 @@
 
         public function actionLoadMassDeleteDemoData()
         {
-            if (Yii::app()->user->userModel->username != 'super')
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
             {
                 throw new NotSupportedException();
             }

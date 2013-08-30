@@ -46,6 +46,11 @@
 
         public $effectivePermissions;
 
+        /**
+         * @param User $user
+         * @param int $requiredPermissions
+         * @param int $effectivePermissions
+         */
         public function __construct(User $user, $requiredPermissions, $effectivePermissions)
         {
             assert('is_int($requiredPermissions)');

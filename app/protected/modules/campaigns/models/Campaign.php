@@ -205,7 +205,8 @@
                 'relations' => array(
                     'campaignItems'     => array(RedBeanModel::HAS_MANY, 'CampaignItem'),
                     'marketingList'     => array(RedBeanModel::HAS_ONE, 'MarketingList', RedBeanModel::NOT_OWNED),
-                    'files'             => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED)
+                    'files'             => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED,
+                                                RedBeanModel::LINK_TYPE_POLYMORPHIC, 'relatedModel'),
                 ),
                 'elements' => array(
                     'marketingList'    => 'MarketingList',

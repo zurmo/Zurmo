@@ -65,6 +65,11 @@
             }
         }
 
+        /**
+         * @param $model
+         * @param $fileModel
+         * @return string
+         */
         public static function renderDownloadLinkContentByRelationModelAndFileModel($model, $fileModel)
         {
             assert('$model instanceof RedBeanModel');
@@ -81,6 +86,12 @@
             return $content;
         }
 
+        /**
+         * @param $model
+         * @param string $filesRelationName
+         * @param bool $showHeaderLabel
+         * @return null|string
+         */
         public static function renderFileDataDetailsWithDownloadLinksContent($model, $filesRelationName, $showHeaderLabel = false)
         {
             $content = null;

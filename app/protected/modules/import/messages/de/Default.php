@@ -43,7 +43,7 @@
             => 'Um den Import fortzusetzen eine Datei hochgeladen müss',
         'A file must be uploaded with at least one row to import.'
             => 'Eine Datei muss mit mindestens einer Reihe hochgeladen werden',
-        'A full name value is required but missing.'
+        'Full name value required, but missing.'
             => 'Ein vollständiger Name Wert ist erforderlich, aber fehlt.',
         'Access Import Tool'
             => 'Zugang Import Tool',

@@ -530,7 +530,7 @@
             $this->assertNotNull($campaignItem);
             $this->assertFalse($campaignItem->isSkipped());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_SKIP, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->isSkipped());
         }
 
@@ -628,13 +628,13 @@
             $this->assertNotNull($campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneOpenActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_SKIP, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneOpenActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneOpenActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneOpenActivity());
         }
 
@@ -662,13 +662,13 @@
             $this->assertNotNull($campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneClickActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneClickActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_CLICK, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneClickActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_CLICK, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneClickActivity());
         }
 
@@ -696,13 +696,13 @@
             $this->assertNotNull($campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneUnsubscribeActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneUnsubscribeActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_UNSUBSCRIBE, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneUnsubscribeActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_UNSUBSCRIBE, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneUnsubscribeActivity());
         }
 
@@ -730,13 +730,13 @@
             $this->assertNotNull($campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneBounceActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_OPEN, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertFalse($campaignItem->hasAtLeastOneBounceActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_BOUNCE, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneBounceActivity());
             CampaignItemActivity::createNewActivity(CampaignItemActivity::TYPE_BOUNCE, $campaignItem->id,
-                                                                                        $contact->getClassId('Person'));
+                                                            $contact->getClassId('Person'), null, null, $campaignItem);
             $this->assertTrue($campaignItem->hasAtLeastOneBounceActivity());
         }
 

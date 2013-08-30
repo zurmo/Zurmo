@@ -39,40 +39,54 @@
      */
     class TruncateSanitizerUtil extends SanitizerUtil
     {
-        public static function getSqlAttributeValueDataAnalyzerType()
+        /**
+         * @param RedBean_OODBBean $rowBean
+         */
+        public function analyzeByRow(RedBean_OODBBean $rowBean)
         {
-            return 'Truncate';
-        }
-
-        public static function getBatchAttributeValueDataAnalyzerType()
-        {
-            return 'Truncate';
+            $maximumLength = $this->getMaximumLength();
+            if (strlen($rowBean->{$this->columnName}) > $maximumLength)
+            {
+                $label = Zurmo::t('ImportModule', 'Is too long. Maximum length is {maximumLength}. This value will truncated upon import.',
+                                  array('{maximumLength}' => $maximumLength));
+                $this->analysisMessages[] = $label;
+            }
         }
 
         /**
          * Given a value, resolve that the value not too large for the attribute based on the attribute's type.  If
          * the value is too large, then it is truncated.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('is_string($attributeName)');
-            assert('$mappingRuleData == null');
-            $model     = new $modelClassName(false);
-            $maxLength = StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $attributeName);
+            assert('$this->mappingRuleData == null');
+            $maxLength = $this->getMaximumLength();
             if ($value == null)
             {
                 return $value;
             }
-            if (strlen($value) < $maxLength)
+            if (strlen($value) <= $maxLength)
             {
                 return $value;
             }
             return substr($value, 0, $maxLength);
+        }
+
+        protected function assertMappingRuleDataIsValid()
+        {
+            assert('$this->mappingRuleData == null');
+        }
+
+        /**
+         * @return int|null minimum length
+         */
+        protected function getMaximumLength()
+        {
+            $modelClassName = $this->modelClassName;
+            $model          = new $modelClassName(false);
+            return StringValidatorHelper::getMaxLengthByModelAndAttributeName($model, $this->attributeName);
         }
     }
 ?>

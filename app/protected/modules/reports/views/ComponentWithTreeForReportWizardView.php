@@ -206,7 +206,7 @@
                 });
                 $(".remove-dynamic-row-link.' . static::getTreeType() . '").live("click", function()
                 {
-                    size = $(this).parent().parent().parent().find("li").size();
+                    var size = $("#' . get_class($this) . ' .dynamic-rows > ul > li").length;
                     $(this).parent().parent().remove(); //removes the <li>
                     if (size < 2)
                     {

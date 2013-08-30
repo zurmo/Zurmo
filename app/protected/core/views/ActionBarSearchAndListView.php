@@ -41,13 +41,13 @@
     {
         public function __construct($controllerId, $moduleId, ModelForm $searchModel, RedBeanModel $listModel,
                                     $viewPrefixName, CDataProvider $dataProvider, $selectedIds,
-                                    $actionBarViewClassName, $activeActionElementType = null)
+                                    $actionBarViewClassName, $activeActionElementType = null, IntroView $introView = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_string($actionBarViewClassName)');
             assert('is_string($activeActionElementType) || $activeActionElementType == null');
-            parent::__construct(3, 1);
+
             $searchViewClassName = $viewPrefixName . 'SearchView';
             $searchView          = new $searchViewClassName($searchModel, get_class($listModel));
             $listViewClassName   = $viewPrefixName . 'ListView';
@@ -59,7 +59,11 @@
             $actionBarView       = new $actionBarViewClassName($controllerId, $moduleId, $listModel,
                                                                $listView->getGridViewId(),
                                                                $dataProvider->getPagination()->pageVar,
-                                                               $listView->getRowsAreSelectable(), $activeActionElementType);
+                                                               $listView->getRowsAreSelectable(),
+                                                               $activeActionElementType,
+                                                               $introView);
+
+            parent::__construct(3, 1);
             $this->setView($actionBarView, 0, 0);
             $this->setView($searchView, 1, 0);
             $this->setView($listView, 2, 0);

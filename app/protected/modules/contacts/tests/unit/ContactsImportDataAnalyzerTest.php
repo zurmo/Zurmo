@@ -59,8 +59,8 @@
             $mappingData = array(
                 'column_0'  => array('attributeIndexOrDerivedType' => 'ContactState',
                                          'type' => 'importColumn',
-                                      'mappingRulesData' => array(
-                                          'DefaultContactStateIdMappingRuleForm' => array('defaultStateId' => null))),
+                                         'mappingRulesData' => array(
+                                         'DefaultContactStateIdMappingRuleForm' => array('defaultStateId' => null))),
             );
             $serializedData                = unserialize($import->serializedData);
             $serializedData['mappingData'] = $mappingData;
@@ -68,54 +68,63 @@
             $this->assertTrue($import->save());
 
             $importRules  = ImportRulesUtil::makeImportRulesByType('Contacts');
-            $config       = array('pagination' => array('pageSize' => 2));
+            $config       = array('pagination' => array('pageSize' => 15));
             //This test csv has a header row.
             $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
 
             //Run data analyzer
-            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider);
-            foreach ($mappingData as $columnName => $columnMappingData)
-            {
-                $importDataAnalyzer->analyzeByColumnNameAndColumnMappingData($columnName, $columnMappingData);
-            }
-            $messagesData = $importDataAnalyzer->getMessagesData();
-            $compareData = array(
-                'column_0' => array(
-                    array('message'=> '3 value(s) are not valid. Rows that have these values will be skipped during import.', // Not Coding Standard
-                          'sanitizerUtilType' => 'ContactState', 'moreAvailable' => false),
-                ),
-            );
-            $this->assertEquals($compareData, $messagesData);
-            $importInstructionsData   = $importDataAnalyzer->getImportInstructionsData();
-            $compareInstructionsData  = array();
-            $this->assertEquals($compareInstructionsData, $importInstructionsData);
-        }
+            $importDataAnalyzer = new ImportDataAnalyzer($importRules, $dataProvider, $mappingData, array('column_0'));
+            $importDataAnalyzer->analyzePage();
+            $data = $dataProvider->getData();
+            $this->assertEquals(13, count($data));
 
-            /**
-         * @depends testImportDataAnalysisResults
-         */
-        public function testImportDataAnalysisUsingBatchAnalyzers()
-        {
-            Yii::app()->user->userModel        = User::getByUsername('super');
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is invalid.';
+            $this->assertEquals($compareData, unserialize($data[0]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[0]->analysisStatus);
 
-            $import                            = new Import();
-            $serializedData['importRulesType'] = 'ImportModelTestItem';
-            $import->serializedData            = serialize($serializedData);
-            $this->assertTrue($import->save());
-            ImportTestHelper::
-            createTempTableByFileNameAndTableName('importAnalyzerTest.csv', $import->getTempTableName(),
-                                                  Yii::getPathOfAlias('application.modules.contacts.tests.unit.files'));
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is invalid.';
+            $this->assertEquals($compareData, unserialize($data[1]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[1]->analysisStatus);
 
-            $config       = array('pagination' => array('pageSize' => 2));
-            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $compareData = array();
+            $compareData['column_0']   = array();
+            $compareData['column_0'][] = 'Is invalid.';
+            $this->assertEquals($compareData, unserialize($data[2]->serializedAnalysisMessages));
+            $this->assertEquals(ImportDataAnalyzer::STATUS_SKIP, $data[2]->analysisStatus);
 
-            //Test contact state sanitization by batch.
-            $dataAnalyzer = new ContactStateBatchAttributeValueDataAnalyzer('Contacts', null);
-            $dataAnalyzer->runAndMakeMessages($dataProvider, 'column_0');
-            $messages = $dataAnalyzer->getMessages();
-            $this->assertEquals(1, count($messages));
-            $compareMessage = '3 value(s) are not valid. Rows that have these values will be skipped during import.';
-            $this->assertEquals($compareMessage, $messages[0]);
+            $this->assertNull($data[3]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[3]->analysisStatus);
+
+            $this->assertNull($data[4]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[4]->analysisStatus);
+
+            $this->assertNull($data[5]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[5]->analysisStatus);
+
+            $this->assertNull($data[6]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[6]->analysisStatus);
+
+            $this->assertNull($data[7]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[7]->analysisStatus);
+
+            $this->assertNull($data[8]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[8]->analysisStatus);
+
+            $this->assertNull($data[9]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[9]->analysisStatus);
+
+            $this->assertNull($data[10]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[10]->analysisStatus);
+
+            $this->assertNull($data[11]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[11]->analysisStatus);
+
+            $this->assertNull($data[12]->serializedAnalysisMessages);
+            $this->assertEquals(ImportDataAnalyzer::STATUS_CLEAN, $data[12]->analysisStatus);
         }
     }
 ?>

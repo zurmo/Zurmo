@@ -47,6 +47,10 @@
          */
         protected $data;
 
+        /**
+         * @param string $modelClassName
+         * @param string $modelAttributeName
+         */
         public function __construct($modelClassName, $modelAttributeName)
         {
             parent::__construct($modelClassName, $modelAttributeName);

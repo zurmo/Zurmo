@@ -76,7 +76,7 @@
         }
 
         /**
-         * @param string $type
+         * @param int $type
          * @return string
          */
         protected static function resolveCampaignTypeSubQuery($type)
@@ -101,7 +101,7 @@
         }
 
         /**
-         * @param string $type
+         * @param int $type
          * @return string
          */
         public static function resolveAutoresponderTypeSubQuery($type)

@@ -102,7 +102,8 @@
 
         protected function makeActionBarSearchAndListView($searchModel, $dataProvider,
                                                           $actionBarViewClassName = 'SecuredActionBarForSearchAndListView',
-                                                          $viewPrefixName = null, $activeActionElementType = null)
+                                                          $viewPrefixName = null, $activeActionElementType = null,
+                                                          IntroView $introView = null)
         {
             assert('is_string($actionBarViewClassName)');
             assert('is_string($viewPrefixName) || $viewPrefixName == null');
@@ -116,6 +117,29 @@
                 $this->getId(),
                 $this->getModule()->getId(),
                 $searchModel,
+                $listModel,
+                $viewPrefixName,
+                $dataProvider,
+                GetUtil::resolveSelectedIdsFromGet(),
+                $actionBarViewClassName,
+                $activeActionElementType,
+                $introView
+            );
+        }
+
+        protected function makeActionBarAndListView($listModel, $dataProvider, $actionBarViewClassName = 'ActionBarForSearchAndListView',
+                                                    $viewPrefixName = null, $activeActionElementType = null)
+        {
+            assert('is_string($actionBarViewClassName)');
+            assert('is_string($viewPrefixName) || $viewPrefixName == null');
+            assert('is_string($activeActionElementType) || $activeActionElementType == null');
+            if ($viewPrefixName == null)
+            {
+                $viewPrefixName = $this->getModule()->getPluralCamelCasedName();
+            }
+            return new ActionBarAndListView(
+                $this->getId(),
+                $this->getModule()->getId(),
                 $listModel,
                 $viewPrefixName,
                 $dataProvider,
@@ -222,6 +246,7 @@
                 {
                     SavedSearchUtil::resolveSearchFormByStickyDataAndModel($stickySearchData, $searchModel);
                     SavedSearchUtil::resolveSearchFormByStickySortData($getData, $searchModel, $stickySearchData);
+                    SearchUtil::resolveSearchFormByStickyFilterByStarredData($getData, $searchModel, $stickySearchData);
                     $dataCollection = new SavedSearchAttributesDataCollection($searchModel);
                 }
                 else
@@ -743,6 +768,11 @@
             $this->redirect($urlParams);
         }
 
+        /**
+         * @param string $modelClassName
+         * @param int $id
+         * @return mixed
+         */
         protected static function getModelAndCatchNotFoundAndDisplayError($modelClassName, $id)
         {
             assert('is_string($modelClassName)');

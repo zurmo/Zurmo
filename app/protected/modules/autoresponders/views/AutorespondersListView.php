@@ -101,6 +101,17 @@
             return $metadata;
         }
 
+        /**
+         * @param RedBeanModelsDataProvider $dataProvider
+         * @param $configurationForm
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $portletDetailsUrl
+         * @param string $redirectUrl
+         * @param string $uniquePageId
+         * @param array $params
+         * @param string $containerModuleClassName
+         */
         public function __construct(RedBeanModelsDataProvider $dataProvider,
                                 $configurationForm,
                                 $controllerId,

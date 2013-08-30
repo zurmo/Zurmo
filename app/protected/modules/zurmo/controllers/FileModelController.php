@@ -79,6 +79,10 @@
             //todo: add error handling.
         }
 
+        /**
+         * @param string $commaSeparatedExistingModelIds
+         * @throws FailedFileUploadException
+         */
         public function actionCloneExistingFiles($commaSeparatedExistingModelIds)
         {
             assert('is_string($commaSeparatedExistingModelIds)');

@@ -53,6 +53,8 @@
             $this->assertEquals('some message', $messages[0]);
             $resultsUtil->addMessages(array('some message2', 'something else'));
             $messages = $resultsUtil->getMessages();
+
+            /** @noinspection PhpParamsInspection */
             $this->assertEquals(3, count($messages));
         }
 

@@ -55,9 +55,9 @@
             {
                 throw new NotSupportedException();
             }
-            $bUser = UserTestHelper::createBasicUser('bUser');
-            $cUser = UserTestHelper::createBasicUser('cUser');
-            $dUser = UserTestHelper::createBasicUser('dUser');
+            UserTestHelper::createBasicUser('bUser');
+            UserTestHelper::createBasicUser('cUser');
+            UserTestHelper::createBasicUser('dUser');
         }
 
         public function testSuperUserAllDefaultControllerActions()
@@ -476,6 +476,106 @@
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/emailConfiguration');
             $this->assertContains('abc email signature', $content);
+        }
+
+        /**
+         * This would check resolveCanCurrentUserAccessRootUser and resolveAccessingASystemUser
+         * in a walkthrough test
+         */
+        public function testSuperUserChangeAvatarForPermissionsAsRootAndSystemUser()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser = User::getByUsername('auser');
+            $aUser->setIsSystemUser();
+            //$aUser->setIsRootUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertFalse((bool)$aUser->isRootUser);
+            $this->assertTrue((bool)$aUser->isSystemUser);
+
+            //Super user as access to change every users avatar
+            $this->setGetArray(array('id' => $aUser->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/changeAvatar');
+            $this->assertTrue(strpos($content, 'You have tried to access a page') > 0);
+
+            $aUser->setIsNotSystemUser();
+            $aUser->setIsRootUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertFalse((bool)$aUser->isSystemUser);
+            $this->assertTrue((bool)$aUser->isRootUser);
+
+            //Super user as access to change every users avatar
+            $this->setGetArray(array('id' => $aUser->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/changeAvatar');
+            $this->assertTrue(strpos($content, 'You have tried to access a page') > 0);
+
+            $aUser->setIsNotSystemUser();
+            $aUser->setIsNotRootUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertFalse((bool)$aUser->isSystemUser);
+            $this->assertFalse((bool)$aUser->isRootUser);
+
+            //Super user as access to change every users avatar
+            $this->setGetArray(array('id' => $aUser->id));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('users/default/changeAvatar');
+            $this->assertFalse(strpos($content, 'You have tried to access a page') > 0);
+        }
+
+        //TODO: need to clarify with Jason
+        public function testCanCurrentUserViewALinkRequiringElevatedAccess()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $aUser = User::getByUsername('auser');
+            $aUser->setIsRootUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertTrue((bool)$aUser->isRootUser);
+            $this->assertFalse((bool)$aUser->isSystemUser);
+
+            $this->setGetArray(array('id' => $aUser->id));
+            $this->runControllerWithNoExceptionsAndGetContent('users/default/details');
+        }
+
+        public function testExplicitLoginPermissions()
+        {
+            $aUser = User::getByUsername('auser');
+            $aUser->setIsSystemUser();
+            $aUser->setIsNotRootUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertFalse((bool)$aUser->isRootUser);
+            $this->assertTrue((bool)$aUser->isSystemUser);
+            $this->setPostArray(array('LoginForm' => array(
+                                                        'username' => $aUser->username,
+                                                        'password' => 'bNewPassword',
+                                                        'rememberMe' => '0')));
+            $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/login');
+            $this->assertTrue(strpos($content, 'Incorrect username or password') > 0);
+
+            $aUser->setIsNotSystemUser();
+            $this->assertTrue($aUser->save());
+            unset($aUser);
+
+            $aUser = User::getByUsername('auser');
+            $this->assertFalse((bool)$aUser->isRootUser);
+            $this->assertFalse((bool)$aUser->isSystemUser);
+            $this->setPostArray(array('LoginForm' => array(
+                                                        'username' => $aUser->username,
+                                                        'password' => 'bNewPassword',
+                                                        'rememberMe' => '0')));
+            $this->runControllerWithRedirectExceptionAndGetContent('zurmo/default/login');
         }
     }
 ?>

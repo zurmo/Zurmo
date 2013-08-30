@@ -48,6 +48,15 @@
          * @param User $userToSendMessagesFrom
          * @return boolean
          */
+
+        /**
+         * Given post data and an email message, populate the sender and account on the email message if possible.
+         * Also add message recipients and any attachments.
+         * @param array $postData
+         * @param CreateEmailMessageForm $emailMessageForm
+         * @param User $userToSendMessagesFrom
+         * @return CreateEmailMessageForm
+         */
         public static function resolveEmailMessageFromPostData(Array & $postData,
                                                                CreateEmailMessageForm $emailMessageForm,
                                                                User $userToSendMessagesFrom)
@@ -78,8 +87,8 @@
             }
             $emailAccount                           = EmailAccount::getByUserAndName($userToSendMessagesFrom);
             $sender                                 = new EmailMessageSender();
-            $sender->fromName                       = Yii::app()->emailHelper->fromName;
-            $sender->fromAddress                    = Yii::app()->emailHelper->fromAddress;
+            $sender->fromName                       = $emailAccount->fromName;
+            $sender->fromAddress                    = $emailAccount->fromAddress;
             $sender->personOrAccount                = $userToSendMessagesFrom;
             $emailMessageForm->sender               = $sender;
             $emailMessageForm->account              = $emailAccount;
@@ -87,7 +96,7 @@
                                                         ArrayUtil::getArrayValue(
                                                             $postData[$postVariableName]['content'], 'htmlContent'),
                                                             null);
-            $box                                    = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            $box                                    = EmailBoxUtil::getDefaultEmailBoxByUser($userToSendMessagesFrom);
             $emailMessageForm->folder               = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX);
             return $emailMessageForm;
         }
@@ -245,6 +254,11 @@
             return $content;
         }
 
+        /**
+         * @param string $htmlContent
+         * @param string $textContent
+         * @return mixed
+         */
         public static function resolveTextContent($htmlContent, $textContent)
         {
            if ($htmlContent != null && $textContent == null)

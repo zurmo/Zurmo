@@ -32,31 +32,117 @@
 // "Copyright Zurmo Inc. 2013. All rights reserved".
 
 .available-portlets{
-	padding: 20px;
+	padding: 15px 15px 0 15px;
 	list-style: none;
 	.clearfix();
+	max-height: 400px;
+	overflow-y: scroll;
 	li{
-		width: 50%;
-		float:left;
+		//width: 50%;
+		//float:left;
 		margin-bottom:15px;
 		color:#666;
 		vertical-align:middle;
 	}
-	span{
-		.symbly(24px);
-		line-height: 11px;
-		border:none;
-		margin-right:6px;
+    h3{
+      position: relative;
+    }
+    h3 a{
+      padding-left: 40px;
+    }
+	h3 span:before{
+        content: "z";
+        .symbly(40px);
+        line-height: 1;
+        position: absolute;
+        top:-8px;
+        border:none;
 		outline: none !important;
 		display:inline-block;
+        color:#666;
+		margin: 0;
 	}
 	a{
 		outline: none !important;
 		cursor:pointer;
 		&:foucs{
 			outline: none;
+
 		}
 	}
+    div{
+      padding-left: 40px;
+    }
+	.mini-button{
+		float:right;
+		position: relative;
+		margin-left: 0;
+		top: -10px;
+		span{
+			//color:#545454;
+			display: block;
+			padding: 0 6px 0 6px;
+			background: none;
+
+		}
+	}
+
+	.icon-contacts:before{
+		content: "y";
+	}
+	.icon-leads:before{
+		content: ".";
+	}
+	.icon-opportunities:before{
+		content: "9";
+	}
+	.icon-reports:before{
+		content: '\V';
+	}
+	.icon-products:before{
+		content: '\003E';
+	}
+	.icon-rssReader:before{
+		content: "z";
+	}
+	.icon-tasks:before{
+		content: "4";
+	}
+	.icon-missions:before{
+		content: 'Q';
+	}
+	.icon-accounts:before{
+		content: "P";
+	}
+	.icon-activities:before{
+		content: '\00A5';
+	}
+	.icon-socialItems:before{
+		content: "u";
+	}
+	.icon-activities:before{
+		content: 'u';
+	}
+	.icon-iframe:before{
+		content: '\2211';
+		font-size: 48px;
+	}
+	.icon-maps:before{
+		content: 'L';
+		font-size: 46px;
+	}
+
+	/*
+	.icon-:before{
+		content: "z";
+	}
+	.icon-:before{
+		content: "z";
+	}
+	.icon-:before{
+		content: "z";
+	}
+	*/
 }
 
 /*Edit Portlet*/

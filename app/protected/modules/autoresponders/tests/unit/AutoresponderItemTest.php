@@ -118,6 +118,8 @@
          */
         public function testGetByProcessedAndTime()
         {
+            $autoresponderItems = AutoresponderItem::getAll();
+            $this->assertCount(7, $autoresponderItems);
             $marketingList                  = MarketingListTestHelper::createMarketingListByName('marketingList 01');
             $this->assertNotNull($marketingList);
             $autoresponderToday             = AutoresponderTestHelper::createAutoresponder('subject Today',
@@ -127,6 +129,8 @@
                                                                                     Autoresponder::OPERATION_UNSUBSCRIBE,
                                                                                     true,
                                                                                     $marketingList);
+            $autoresponderItems = AutoresponderItem::getAll();
+            $this->assertCount(7, $autoresponderItems);
             $this->assertNotNull($autoresponderToday);
             $autoresponderTenDaysFromNow    = AutoresponderTestHelper::createAutoresponder('subject Ten Days',
                                                                                     'text Ten Days',
@@ -136,6 +140,8 @@
                                                                                     false,
                                                                                     $marketingList);
             $this->assertNotNull($autoresponderTenDaysFromNow);
+            $autoresponderItems = AutoresponderItem::getAll();
+            $this->assertCount(7, $autoresponderItems);
             for ($i = 0; $i < 10; $i++)
             {
                 $contact = ContactTestHelper::createContactByNameForOwner('contact ' . $i, Yii::app()->user->userModel);
@@ -156,8 +162,8 @@
                 {
                     $autoresponder  = $autoresponderTenDaysFromNow;
                 }
-                $timestamp          = time() + $autoresponder->secondsFromOperation;
-                $processDateTime    = DateTimeUtil::convertTimestampToDbFormatDateTime($timestamp);
+                $timestamp          = time() - 10000000000; //forces all processed stamps to be in the past
+                $processDateTime    = DateTimeUtil::convertTimestampToDbFormatDateTime((int)$timestamp);
                 $autoresponderItem = AutoresponderItemTestHelper::createAutoresponderItem($processed,
                                                                                         $processDateTime,
                                                                                         $autoresponder);

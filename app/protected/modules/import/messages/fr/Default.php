@@ -43,7 +43,7 @@
             => 'Veuillez ajouter un fichier avant de continuer l\'importation.',
         'A file must be uploaded with at least one row to import.'
             => 'Le fichier doit contenir au moins une ligne pour importer.',
-        'A full name value is required but missing.'
+        'Full name value required, but missing.'
             => 'Le nom complet est un champ requis.',
         'Access Import Tool'
             => 'Accès à l\'outil d\'Importation',

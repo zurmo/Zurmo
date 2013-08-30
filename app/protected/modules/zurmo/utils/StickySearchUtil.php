@@ -81,6 +81,12 @@
             return (int)$finalOffset;
         }
 
+        /**
+         * @param CController $controller
+         * @param $stickySearchKey
+         * @param RedBeanModel $model
+         * @return mixed
+         */
         public static function resolveBreadCrumbViewForDetailsControllerAction(CController $controller, $stickySearchKey,
                                                                            RedBeanModel $model)
         {

@@ -153,10 +153,10 @@
         }
 
         /**
-         * Check if request is api request.
-         * @return boolean
+         * @param string $moduleName
+         * @return bool
          */
-        public static function isApiRequest()
+        public static function isApiRequest($moduleName = 'api')
         {
             // We need to catch exception and return false in case that this method is called via ConsoleApplication.
             try
@@ -168,8 +168,7 @@
                 $url = '';
             }
 
-            //if (strpos($url, '/api/') !== false || strpos($url, '/riva/') !== false)
-            if (strpos($url, '/api/') !== false)
+            if (strpos($url, '/' . $moduleName) !== false)
             {
                 return true;
             }
@@ -185,10 +184,6 @@
             if (strpos($url, '/api/') !== false)
             {
                 return 'api';
-            }
-            elseif (strpos($url, '/riva/') !== false)
-            {
-                return 'riva';
             }
             else
             {

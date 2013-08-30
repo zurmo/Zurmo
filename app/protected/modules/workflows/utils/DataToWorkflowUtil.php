@@ -232,13 +232,16 @@
             }
             $workflow->removeTimeTrigger();
             $moduleClassName = $workflow->getModuleClassName();
-            $timeTrigger     = new TimeTriggerForWorkflowForm($moduleClassName, $moduleClassName::getPrimaryModelName(),
-                                                              $workflow->getType());
-            if (null != $timeTriggerData = ArrayUtil::getArrayValue($data, ComponentForWorkflowForm::TYPE_TIME_TRIGGER))
+            if ($moduleClassName != null)
             {
-                $timeTrigger->setAttributes($timeTriggerData);
+                $timeTrigger     = new TimeTriggerForWorkflowForm($moduleClassName, $moduleClassName::getPrimaryModelName(),
+                    $workflow->getType());
+                if (null != $timeTriggerData = ArrayUtil::getArrayValue($data, ComponentForWorkflowForm::TYPE_TIME_TRIGGER))
+                {
+                    $timeTrigger->setAttributes($timeTriggerData);
+                }
+                $workflow->setTimeTrigger($timeTrigger);
             }
-            $workflow->setTimeTrigger($timeTrigger);
         }
 
         /**

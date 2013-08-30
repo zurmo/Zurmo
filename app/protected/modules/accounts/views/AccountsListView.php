@@ -34,7 +34,7 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    class AccountsListView extends SecuredListView
+    class AccountsListView extends StarredListView
     {
         public static function getDefaultMetadata()
         {

@@ -343,11 +343,7 @@
             $this->assertTrue(strpos($content, '<div id="MarketingListsManageSubscriptionsPageView" ' .
                                                     'class="ZurmoPageView PageView">') !== false);
             $this->assertTrue(strpos($content, '<div class="GridView">') !== false);
-            $this->assertTrue(strpos($content, '<div id="HeaderLinksView">') !== false);
-            $this->assertTrue(strpos($content, '<div id="corp-logo">') !== false);
-            $this->assertTrue(strpos($content, '/home/default"><img src="') !== false);
-            $this->assertTrue(strpos($content, '/themes/default/images/Zurmo_logo.png" alt="Zurmo Logo" ' .
-                                                    'height="32" width="107" /></a>') !== false);
+            $this->assertTrue(strpos($content, '<div id="HeaderLinksView">') === false);
             $this->assertTrue(strpos($content, '<div id="MarketingListsManageSubscriptionsListView" ' .
                                                     'class="MetadataView">') !== false);
             $this->assertTrue(strpos($content, '<div class="wrapper">') !== false);
@@ -484,11 +480,7 @@
             $this->assertTrue(strpos($content, '<div id="MarketingListsManageSubscriptionsPageView" ' .
                                                     'class="ZurmoPageView PageView">') !== false);
             $this->assertTrue(strpos($content, '<div class="GridView">') !== false);
-            $this->assertTrue(strpos($content, '<div id="HeaderLinksView">') !== false);
-            $this->assertTrue(strpos($content, '<div id="corp-logo">') !== false);
-            $this->assertTrue(strpos($content, '/home/default"><img src="') !== false);
-            $this->assertTrue(strpos($content, '/themes/default/images/Zurmo_logo.png" alt="Zurmo Logo" ' .
-                                                    'height="32" width="107" /></a>') !== false);
+            $this->assertTrue(strpos($content, '<div id="HeaderLinksView">') === false);
             $this->assertTrue(strpos($content, '<div id="MarketingListsManageSubscriptionsListView" ' .
                                                     'class="MetadataView">') !== false);
             $this->assertTrue(strpos($content, '<div class="wrapper">') !== false);
@@ -544,7 +536,7 @@
             $contact        = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact        = $contact[0];
-            $member         = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member         = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                         $contact->id,
                                                                                                         0);
             $this->assertNotEmpty($member);
@@ -575,7 +567,7 @@
             $contact            = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);
@@ -619,7 +611,7 @@
             $contact            = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     0);
             $this->assertNotEmpty($member);
@@ -663,7 +655,7 @@
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
             $personId           = $contact->getClassId('Person');
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     0);
             $this->assertNotEmpty($member);
@@ -733,7 +725,7 @@
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
             $marketingList->addNewMember($contact->id, false, $contact);
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                         $contact->id,
                                                                                                         0);
             $this->assertNotEmpty($member);
@@ -800,7 +792,7 @@
             $contact            = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);
@@ -844,7 +836,7 @@
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
             $marketingList->addNewMember($contact->id, true, $contact);
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);
@@ -877,7 +869,7 @@
             $contact            = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);
@@ -922,7 +914,7 @@
             $contact            = Contact::getByName('contact 05 contact 05son');
             $this->assertNotEmpty($contact);
             $contact            = $contact[0];
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);
@@ -1036,7 +1028,7 @@
             $contact            = $contact[0];
             $this->assertEquals(1, $contact->primaryEmail->optOut);
             $personId           = $contact->getClassId('Person');
-            $member             = MarketingListMember::getByMarketingListIdContactIdAndSubscribed($marketingList->id,
+            $member             = MarketingListMember::getByMarketingListIdContactIdAndUnsubscribed($marketingList->id,
                                                                                                     $contact->id,
                                                                                                     1);
             $this->assertNotEmpty($member);

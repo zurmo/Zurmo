@@ -49,6 +49,7 @@
                         ),
                     ),
                     'derivedAttributeTypes' => array(
+                        'anyMixedAttributes',
                         'LeadStateDropDown',
                     ),
                     'nonPlaceableAttributeNames' => array(

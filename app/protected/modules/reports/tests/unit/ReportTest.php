@@ -131,6 +131,30 @@
             $this->assertEquals('50',                        $filters[0]->value);
             $this->assertEquals(OperatorRules::TYPE_EQUALS,  $filters[0]->operator);
             $this->assertEquals('firstName',                 $filters[1]->getAttributeIndexOrDerivedType());
+            $this->assertEmpty  ($filters[1]->value);
+            $this->assertEquals(OperatorRules::TYPE_EQUALS,  $filters[1]->operator);
+
+            $report           = new Report();
+            $report->setType(Report::TYPE_ROWS_AND_COLUMNS);
+            $groupBy = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy->attributeIndexOrDerivedType = 'lastName';
+            $groupBy->axis                        = 'x';
+            $report->addGroupBy($groupBy);
+            $groupBy2 = new GroupByForReportForm('ReportsTestModule', 'ReportModelTestItem', $report->getType());
+            $groupBy2->attributeIndexOrDerivedType = 'firstName';
+            $groupBy2->axis                        = 'y';
+            $report->addGroupBy($groupBy2);
+            $this->assertNull($report->getFiltersStructure());
+            $getData = array('groupByRowValuelastName' => '50');
+            $this->assertCount(0, $report->getFilters());
+            $report->resolveGroupBysAsFilters($getData);
+            $this->assertEquals('(1 AND 2)', $report->getFiltersStructure());
+            $filters = $report->getFilters();
+            $this->assertCount(2, $filters);
+            $this->assertEquals('lastName',                  $filters[0]->getAttributeIndexOrDerivedType());
+            $this->assertEquals('50',                        $filters[0]->value);
+            $this->assertEquals(OperatorRules::TYPE_EQUALS,  $filters[0]->operator);
+            $this->assertEquals('firstName',                 $filters[1]->getAttributeIndexOrDerivedType());
             $this->assertNull  ($filters[1]->value);
             $this->assertEquals(OperatorRules::TYPE_IS_NULL, $filters[1]->operator);
         }

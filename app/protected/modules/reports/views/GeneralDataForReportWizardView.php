@@ -100,7 +100,7 @@
             $element  = new OwnerNameIdElement($this->model, 'null', $this->form);
             $element->editableTemplate = '{label}{content}{error}';
             $content .= $element->render().'</div>';
-            $element  = new ExplicitReadWriteModelPermissionsElement($this->model,
+            $element  = new ReportExplicitReadWriteModelPermissionsElement($this->model,
                                              'explicitReadWriteModelPermissions', $this->form);
             $element->editableTemplate = '{label}{content}{error}';
             $content .= $element->render();

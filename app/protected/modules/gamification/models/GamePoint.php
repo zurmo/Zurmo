@@ -215,6 +215,7 @@
 
         /**
          * Add specified value.
+         * @param int $value
          */
         public function addValue($value)
         {
@@ -227,6 +228,7 @@
 
         /**
          * Replace value with specified value.
+         * @param int $value
          */
         public function replaceValue($value)
         {
@@ -260,6 +262,11 @@
             }
         }
 
+        /**
+         * @param User $user
+         * @param string $levelType
+         * @return array
+         */
         public static function getSummationPointsDataByLevelTypeAndUser(User $user, $levelType)
         {
             assert('$user->id > 0');

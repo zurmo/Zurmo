@@ -48,5 +48,35 @@
             $compareContent = 'a';
             $this->assertEquals($compareContent, $content);
         }
+
+        public function testArrayUniqueRecursive()
+        {
+            $array    = array('testValue1', 'testValue2', 'testValue3');
+            $expected = array('testValue1', 'testValue2', 'testValue3');
+            $this->assertEquals($expected, ArrayUtil::arrayUniqueRecursive($array));
+
+            $array    = array('testValue1', 'testValue2', 'testValue2');
+            $expected = array('testValue1', 'testValue2');
+            $this->assertEquals($expected, ArrayUtil::arrayUniqueRecursive($array));
+
+            $array    = array('testValue1', 'testValue1', 'testValue1');
+            $expected = array('testValue1');
+            $this->assertEquals($expected, ArrayUtil::arrayUniqueRecursive($array));
+
+            $array    = array(array('testKey1'  => 'testValue1',
+                                    'testKey2'  => 'testValue2' ,
+                                    'testKey3'  => 'textValue3'));
+            $expected = array(array('testKey1'  => 'testValue1',
+                                    'testKey2'  => 'testValue2' ,
+                                    'testKey3'  => 'textValue3'));
+            $this->assertEquals($expected, ArrayUtil::arrayUniqueRecursive($array));
+
+            $array    = array(array('testKey1'  => 'testValue1',
+                                    'testKey2'  => 'testValue1' ,
+                                    'testKey3'  => 'textValue3'));
+            $expected = array(array('testKey1'  => 'testValue1',
+                                    'testKey3'  => 'textValue3'));
+            $this->assertEquals($expected, ArrayUtil::arrayUniqueRecursive($array));
+        }
     }
 ?>

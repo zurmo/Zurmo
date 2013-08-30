@@ -52,6 +52,11 @@
 
         const MERGE_USER_AND_SETTINGS_MENU_IF_MOBILE    = true;
 
+        /**
+         * @param array $settingsMenuItems
+         * @param array $userMenuItems
+         * @param string $applicationName
+         */
         public function __construct($settingsMenuItems, $userMenuItems, $applicationName)
         {
             assert('is_array($settingsMenuItems)');

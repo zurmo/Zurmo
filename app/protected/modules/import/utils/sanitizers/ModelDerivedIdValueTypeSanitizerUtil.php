@@ -45,45 +45,23 @@
             throw new NotImplementedException();
         }
 
-        public static function makeSqlAttributeValueDataAnalyzer($modelClassName, $attributeName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static function makeBatchAttributeValueDataAnalyzer($modelClassName, $attributeName)
-        {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null');
-            $batchAttributeValueDataAnalyzerType = static::getBatchAttributeValueDataAnalyzerType();
-            if ($batchAttributeValueDataAnalyzerType == null)
-            {
-                throw new NotSupportedException();
-            }
-            $batchAttributeValueDataAnalyzerClassName = $batchAttributeValueDataAnalyzerType .
-                                                        'BatchAttributeValueDataAnalyzer';
-            return new $batchAttributeValueDataAnalyzerClassName(static::getDerivedModelClassName(), 'id');
-        }
-
         /**
          * Given a value that is either a zurmo id or an external system id, resolve that the
          * value is valid.  If the value is not valid then an InvalidValueToSanitizeException is thrown.
-         * @param string $modelClassName
-         * @param string $attributeName
          * @param mixed $value
-         * @param array $mappingRuleData
+         * @return sanitized value
+         * @throws InvalidValueToSanitizeException
+         * @throws NotFoundException
          */
-        public static function sanitizeValue($modelClassName, $attributeName, $value, $mappingRuleData)
+        public function sanitizeValue($value)
         {
-            assert('is_string($modelClassName)');
-            assert('$attributeName == null');
-            assert('$mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID ||
-                    $mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID');
+            assert('$this->attributeName == null');
             $derivedModelClassName = static::getDerivedModelClassName();
             if ($value == null)
             {
                 return $value;
             }
-            if ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
+            if ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::ZURMO_MODEL_ID)
             {
                 try
                 {
@@ -98,11 +76,11 @@
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
                     throw new InvalidValueToSanitizeException(
-                    Zurmo::t('ImportModule', '{modelLabel} id specified did not match any existing records.',
-                    array('{modelLabel}' => $modelLabel)));
+                              Zurmo::t('ImportModule', '{modelLabel} id specified did not match any existing records.',
+                              array('{modelLabel}' => $modelLabel)));
                 }
             }
-            elseif ($mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
+            elseif ($this->mappingRuleData["type"] == IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID)
             {
                 try
                 {
@@ -113,10 +91,21 @@
                     $derivedModelClassName = static::getDerivedModelClassName();
                     $modelLabel            = $derivedModelClassName::getModelLabelByTypeAndLanguage('Singular');
                     throw new InvalidValueToSanitizeException(
-                    Zurmo::t('ImportModule', '{modelLabel} other id specified did not match any existing records.',
-                    array('{modelLabel}' => $modelLabel)));
+                              Zurmo::t('ImportModule', '{modelLabel} other id specified did not match any existing records.',
+                              array('{modelLabel}' => $modelLabel)));
                 }
             }
+        }
+
+        /**
+         * Override since the effective attribute is always 'id'
+         * @param RedBeanModel $model
+         * @param string $attributeName
+         * @return string $attributeModelClassName
+         */
+        protected function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
+        {
+            return static::getDerivedModelClassName();
         }
     }
 ?>

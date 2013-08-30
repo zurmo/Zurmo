@@ -128,7 +128,7 @@
         protected function shouldRenderToolBarElement($element, $elementInformation)
         {
             if (get_class($element) == 'ReportExportLinkActionElement' &&
-               ($this->model->getType() == Report::TYPE_MATRIX || !$this->userCanExportReport()))
+                !$this->userCanExportReport())
             {
                 return false;
             }

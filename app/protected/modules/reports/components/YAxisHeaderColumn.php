@@ -86,5 +86,17 @@
         {
             echo $data->getLabel($this->name);
         }
+
+        /**
+         *  Override to handle spanning of row.  Used primarily by matrix reports to render a grid
+         */
+        public function renderFooterCell()
+        {
+            if (isset($this->footer))
+            {
+                return parent::renderFooterCell();
+            }
+            return null;
+        }
     }
 ?>

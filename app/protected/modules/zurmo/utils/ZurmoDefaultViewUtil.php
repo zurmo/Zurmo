@@ -53,7 +53,7 @@
          * used by the designer page view.
          * @param CController $controller
          * @param View $containedView
-         * @param $breadcrumbLinks
+         * @param array $breadcrumbLinks
          * @param $breadcrumbViewClassName
          * @param array $cssClasses
          * @return GridView
@@ -78,7 +78,7 @@
 
          * @param CController $controller
          * @param View $containedView
-         * @param $breadcrumbLinks
+         * @param array $breadcrumbLinks
          * @param $breadcrumbViewClassName
          * @param array $cssClasses
          * @return GridView
@@ -91,7 +91,7 @@
          * @param CController $controller
          * @param View $containedView
          * @param View $secondContainedView
-         * @param $breadcrumbLinks
+         * @param array $breadcrumbLinks
          * @param $breadcrumbViewClassName
          * @param array $cssClasses
          * @return GridView
@@ -111,6 +111,18 @@
                                                             $breadcrumbLinks), 0, 0);
             $gridView->setView($containedView, 1, 0);
             $gridView->setView($secondContainedView, 2, 0);
+            return static::makeStandardViewForCurrentUser($controller, $gridView);
+        }
+
+        public static function makeTwoStandardViewsForCurrentUser(CController $controller,
+                                                                  View $containedView,
+                                                                  View $secondContainedView,
+                                                                  $cssClasses = array())
+        {
+            $gridView = new GridView(2, 1);
+            $gridView->setCssClasses($cssClasses);
+            $gridView->setView($containedView, 0, 0);
+            $gridView->setView($secondContainedView, 1, 0);
             return static::makeStandardViewForCurrentUser($controller, $gridView);
         }
 
@@ -372,12 +384,20 @@
             }
         }
 
+        /**
+         * @param $key
+         * @param bool $value
+         */
         public static function setLockKeyForDetailsAndRelationsView($key, $value)
         {
             assert('is_bool($value)');
             Yii::app()->user->setState($key, $value);
         }
 
+        /**
+         * @param $key
+         * @return mixed
+         */
         public static function getLockKeyForDetailsAndRelationsView($key)
         {
             return Yii::app()->user->getState($key);

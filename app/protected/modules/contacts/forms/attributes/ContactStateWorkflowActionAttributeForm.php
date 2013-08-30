@@ -55,7 +55,7 @@
         /**
          * Utilized to create or update model attribute values after a workflow's triggers are fired as true.
          * @param WorkflowActionProcessingModelAdapter $adapter
-         * @param $attribute
+         * @param string $attribute
          * @throws NotSupportedException
          */
         public function resolveValueAndSetToModel(WorkflowActionProcessingModelAdapter $adapter, $attribute)

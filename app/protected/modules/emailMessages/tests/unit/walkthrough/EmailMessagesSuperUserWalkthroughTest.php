@@ -132,6 +132,13 @@
             //To address must be the one in postArray
             $emailMessages = EmailMessage::getAll();
             $this->assertEquals('testNewAddress@contact.com', $emailMessages[0]->recipients[0]->toAddress);
+
+            //Test the default permission was setted
+            $everyoneGroup        = Group::getByName(Group::EVERYONE_GROUP_NAME);
+            $explicitReadWriteModelPermissions = ExplicitReadWriteModelPermissionsUtil::
+                                                    makeBySecurableItem( $emailMessages[0]);
+            $readWritePermitables = $explicitReadWriteModelPermissions->getReadWritePermitables();
+            $this->assertEquals($everyoneGroup, $readWritePermitables[$everyoneGroup->id]);
         }
     }
 ?>

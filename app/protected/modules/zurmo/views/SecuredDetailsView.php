@@ -50,6 +50,11 @@
                 $this->model, $elementInformation, Yii::app()->user->userModel);
         }
 
+        /**
+         * @param ActionElement $element
+         * @param array $elementInformation
+         * @return bool
+         */
         protected function shouldRenderToolBarElement($element, $elementInformation)
         {
             assert('$element instanceof ActionElement');

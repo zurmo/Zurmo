@@ -36,6 +36,11 @@
 
     class MobileHeaderView extends HeaderView
     {
+        /**
+         * @param array  $settingsMenuItems
+         * @param array  $userMenuItems
+         * @param string $applicationName
+         */
         public function __construct($settingsMenuItems, $userMenuItems, $applicationName)
         {
             assert('is_array($settingsMenuItems)');

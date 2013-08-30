@@ -56,5 +56,27 @@
             $this->assertTrue($validated);
             $this->assertCount(0, $trigger->getErrors());
         }
+
+        public function testRun()
+        {
+            $model       = WorkflowTestHelper::createWorkflowModelTestItem('Green', '514');
+            $timeTrigger = array('attributeIndexOrDerivedType' => 'string',
+                                 'operator'                    => OperatorRules::TYPE_EQUALS,
+                                 'value'                       => '514',
+                                 'durationInterval'             => '5');
+            $actions     = array(array('type' => ActionForWorkflowForm::TYPE_UPDATE_SELF,
+                                       ActionForWorkflowForm::ACTION_ATTRIBUTES =>
+                                            array('string' => array('shouldSetValue'    => '1',
+                                                  'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
+                                                  'value'  => 'jason'))));
+            $savedWorkflow         = WorkflowTestHelper::createByTimeSavedWorkflow($timeTrigger, array(), $actions);
+            WorkflowTestHelper::createExpiredByTimeWorkflowInQueue($model, $savedWorkflow);
+
+            $this->assertEquals(1, count(ByTimeWorkflowInQueue::getAll()));
+            $job = new ByTimeWorkflowInQueueJob();
+            $this->assertTrue($job->run());
+            $this->assertEquals(0, count(ByTimeWorkflowInQueue::getAll()));
+            $this->assertEquals('jason', $model->string);
+        }
     }
 ?>

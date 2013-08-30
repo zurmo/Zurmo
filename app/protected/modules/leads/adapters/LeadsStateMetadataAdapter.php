@@ -44,6 +44,11 @@
             return $stateOrder < $startingStateOrder;
         }
 
+        /**
+         * @param bool $userCanAccessContacts
+         * @param bool $userCanAccessLeads
+         * @return null|string
+         */
         public static function resolveStateMetadataAdapterClassNameByAccess($userCanAccessContacts, $userCanAccessLeads)
         {
             assert('is_bool($userCanAccessContacts)');

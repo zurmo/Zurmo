@@ -44,6 +44,9 @@
             throw new NotImplementedException();
         }
 
+        /**
+         * @param int $grade
+         */
         public static function getItemCountByGrade($grade)
         {
             assert('is_int($grade)');
@@ -96,6 +99,9 @@
             throw new NotImplementedException();
         }
 
+        /**
+         * @param int $value
+         */
         protected static function getBadgeGradeByValue($value)
         {
             assert('is_int($value)');

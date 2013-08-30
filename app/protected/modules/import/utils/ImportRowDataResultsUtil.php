@@ -77,6 +77,45 @@
          */
         private $status;
 
+        public static function getStatusLabelByType($type)
+        {
+            assert('is_int($type)');
+            if ($type == self::UPDATED)
+            {
+                $label = Zurmo::t('ImportModule', 'Updated');
+            }
+            elseif ($type == self::CREATED)
+            {
+                $label = Zurmo::t('ImportModule', 'Created');
+            }
+            elseif ($type == self::ERROR)
+            {
+                $label = Zurmo::t('ImportModule', 'Skipped');
+            }
+            return $label;
+        }
+
+        public static function getStatusLabelAndVisualIdentifierContentByType($type)
+        {
+            assert('is_int($type)');
+            $label = static::getStatusLabelByType($type);
+            if ($type == self::UPDATED)
+            {
+                $stageContent = ' stage-true';
+            }
+            elseif ($type == self::CREATED)
+            {
+                $stageContent = ' stage-true';
+            }
+            elseif ($type == self::ERROR)
+            {
+                $stageContent = ' stage-false';
+            }
+            $content = ZurmoHtml::tag('div', array('class' => "import-item-stage-status" . $stageContent),
+                '<i>●</i>' . ZurmoHtml::tag('span', array(), $label));
+            return ZurmoHtml::wrapAndRenderContinuumButtonContent($content);
+        }
+
         /**
          * Given an identifier of the row, set this identifier as the id.
          * @param integer $id
@@ -111,7 +150,6 @@
          */
         public function addMessages($messages)
         {
-            assert('is_array($messages) && count($messages) > 0');
             foreach ($messages as $message)
             {
                 $this->addMessage($message);
@@ -161,16 +199,28 @@
             return $this->status;
         }
 
+        /**
+         * @param string $tableName
+         * @return int
+         */
         public static function getCreatedCount($tableName)
         {
             return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::CREATED);
         }
 
+        /**
+         * @param string $tableName
+         * @return int
+         */
         public static function getUpdatedCount($tableName)
         {
             return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::UPDATED);
         }
 
+        /**
+         * @param string $tableName
+         * @return int
+         */
         public static function getErrorCount($tableName)
         {
             return ImportDatabaseUtil::getCount($tableName, "status = " . ImportRowDataResultsUtil::ERROR);

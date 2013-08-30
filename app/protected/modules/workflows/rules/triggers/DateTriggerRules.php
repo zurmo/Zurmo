@@ -88,26 +88,26 @@
                     }
                     break;
                 case MixedDateTypesSearchFormAttributeMappingRules::TYPE_CHANGES:
-                    if (array_key_exists($attribute, $model->originalAttributeValues))
+                    if ($this->resolveAttributeValueIsChanged($model, $attribute))
                     {
                         return true;
                     }
                     break;
                 case MixedDateTypesSearchFormAttributeMappingRules::TYPE_DOES_NOT_CHANGE:
-                    if (!array_key_exists($attribute, $model->originalAttributeValues))
+                    if (!$this->resolveAttributeValueIsChanged($model, $attribute))
                     {
                         return true;
                     }
                     break;
                 case MixedDateTypesSearchFormAttributeMappingRules::TYPE_BECOMES_ON:
-                    if (array_key_exists($attribute, $model->originalAttributeValues) &&
+                    if ($this->resolveAttributeValueIsChanged($model, $attribute) &&
                         static::sanitize($model->$attribute) === static::sanitizeTriggerValue($this->trigger->value))
                     {
                         return true;
                     }
                     break;
                 case MixedDateTypesSearchFormAttributeMappingRules::TYPE_WAS_ON:
-                    if (array_key_exists($attribute, $model->originalAttributeValues) &&
+                    if ($this->resolveAttributeValueIsChanged($model, $attribute) &&
                         static::sanitize($model->originalAttributeValues[$attribute]) ===
                             static::sanitizeTriggerValue($this->trigger->value))
                     {
@@ -156,6 +156,16 @@
         protected function sanitizeTriggerValue($value)
         {
             return strtotime($value);
+        }
+
+        /**
+         * @param RedBeanModel $model
+         * @param $attribute
+         * @return bool
+         */
+        protected function resolveAttributeValueIsChanged(RedBeanModel $model, $attribute)
+        {
+            return array_key_exists($attribute, $model->originalAttributeValues);
         }
     }
 ?>

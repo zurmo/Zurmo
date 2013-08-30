@@ -46,6 +46,10 @@
             );
         }
 
+        /**
+         * @param CampaignItem $campaignItem
+         * @return string
+         */
         public static function resolveContactAndMetricsSummary(CampaignItem $campaignItem)
         {
             if (ActionSecurityUtil::canCurrentUserPerformAction('Details', $campaignItem->contact))
@@ -60,6 +64,10 @@
             }
         }
 
+        /**
+         * @param Contact $contact
+         * @return string
+         */
         public static function resolveContactWithLink(Contact $contact)
         {
             $linkContent = static::renderRestrictedContactAccessLink($contact);
@@ -77,6 +85,10 @@
             return ZurmoHtml::tag('div', array('class' => 'email-recipient-name'), $linkContent);
         }
 
+        /**
+         * @param Contact $contact
+         * @return string
+         */
         protected static function renderRestrictedContactAccessLink(Contact $contact)
         {
             $title       = Zurmo::t('CampaignsModule', 'You cannot see this contact due to limited access');
@@ -90,6 +102,10 @@
             return $content;
         }
 
+        /**
+         * @param EmailMessage $emailMessage
+         * @return string
+         */
         protected static function renderRestrictedEmailMessageAccessLink(EmailMessage $emailMessage)
         {
             $title       = Zurmo::t('CampaignsModule', 'You cannot see the performance metrics due to limited access');
@@ -103,6 +119,10 @@
             return $content;
         }
 
+        /**
+         * @param Contact $contact
+         * @return string
+         */
         protected static function resolveModuleClassName(Contact $contact)
         {
             if (LeadsUtil::isStateALead($contact->state))
@@ -115,6 +135,10 @@
             }
         }
 
+        /**
+         * @param CampaignItem $campaignItem
+         * @return string
+         */
         protected static function renderMetricsContent(CampaignItem $campaignItem)
         {
             if (!ActionSecurityUtil::canCurrentUserPerformAction('Details', $campaignItem->emailMessage))
@@ -159,8 +183,7 @@
             {
                 $content = static::getAwaitingQueueingContent();
             }
-            $clearFixContent = ZurmoHtml::tag('div', array('class' => 'clearfix'), $content);
-            return ZurmoHtml::tag('div', array('class' => 'continuum'), $clearFixContent);
+            return ZurmoHtml::wrapAndRenderContinuumButtonContent($content);
         }
 
         protected static function getQueuedContent()

@@ -39,6 +39,9 @@
      */
     class Comment extends Item
     {
+        /**
+         * @param string $description
+         */
         public static function getByDescription($description)
         {
             assert('is_string($description) && $description != ""');

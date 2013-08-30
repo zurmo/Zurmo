@@ -159,9 +159,7 @@
             return $searchAttributeData;
         }
 
-        public static function getChildActivityByTypeAndModelIdAndModelRelationNameAndPersonIdAndUrl($type, $modelId,
-                                                                                           $relationName,
-                                                                                           $personId, $url = null,
+        public static function getByTypeAndModelIdAndPersonIdAndUrl($type, $modelId, $personId, $url = null,
                                                                                             $sortBy = 'latestDateTime',
                                                                                             $pageSize = null,
                                                                                             $countOnly = false)
@@ -169,8 +167,8 @@
             assert('is_int($type)');
             assert('is_int($personId) || is_string($personId)');
             assert('is_int($modelId) || is_string($modelId)');
-            assert('is_string($relationName)');
             assert('is_string($url) || $url === null');
+            $relationName   = static::getRelationName();
             $searchAttributeData = array();
             $searchAttributeData['clauses'] = array(
                 1 => array(
@@ -211,8 +209,15 @@
             return self::getSubset($joinTablesAdapter, null, $pageSize, $where, $sortBy);
         }
 
-        protected static function createNewChildActivity($type, $personId, $url, $relationName, $relatedModel, $sourceIP)
+        public static function createNewActivity($type, $modelId, $personId, $url = null, $sourceIP = null,
+                                                                                            $relatedModel = null)
         {
+            $relationName               = static::getRelationName();
+            if (!isset($relatedModel))
+            {
+                $relatedModelClassName      = static::getRelatedModelClassName();
+                $relatedModel               = $relatedModelClassName::getById(intval($modelId));
+            }
             $className                  = get_called_class();
             $activity                   = new $className();
             $activity->quantity         = 1;
@@ -237,42 +242,27 @@
             }
             else
             {
-                static::createNewOpenActivityForFirstClickTrackingActivity($type,
-                                                                            $personId,
-                                                                            $relationName,
-                                                                            $relatedModel,
-                                                                            $sourceIP);
+                static::createNewOpenActivityForFirstClickTrackingActivity($type, $personId, $relatedModel, $sourceIP);
                 return true;
             }
         }
 
-        protected static function createNewOpenActivityForFirstClickTrackingActivity($type, $personId,
-                                                                                $relationName, $relatedModel, $sourceIP)
+        protected static function createNewOpenActivityForFirstClickTrackingActivity($type, $personId, $relatedModel,
+                                                                                                            $sourceIP)
         {
-            if (static::shouldCreateOpenActivityForTrackingActivity($type, $personId, $relationName, $relatedModel->id))
+            if (static::shouldCreateOpenActivityForTrackingActivity($type, $personId, $relatedModel->id))
             {
-                return static::createNewChildActivity(static::TYPE_OPEN,
-                                                        $personId,
-                                                        null,
-                                                        $relationName,
-                                                        $relatedModel,
-                                                        $sourceIP);
+                return static::createNewActivity(static::TYPE_OPEN, $relatedModel->id, $personId, null,
+                                                    $sourceIP, $relatedModel);
             }
         }
 
-        protected static function shouldCreateOpenActivityForTrackingActivity($type, $personId, $relationName, $modelId)
+        protected static function shouldCreateOpenActivityForTrackingActivity($type, $personId, $modelId)
         {
             if ($type === static::TYPE_CLICK)
             {
-                $existingActivitiesCount = static::getChildActivityByTypeAndModelIdAndModelRelationNameAndPersonIdAndUrl(
-                                                                                                        $type,
-                                                                                                        $modelId,
-                                                                                                        $relationName,
-                                                                                                        $personId,
-                                                                                                        null,
-                                                                                                        null,
-                                                                                                        null,
-                                                                                                        true);
+                $existingActivitiesCount = static::getByTypeAndModelIdAndPersonIdAndUrl($type, $modelId, $personId, null,
+                                                                                            null, null, true);
                 return ($existingActivitiesCount == 1);
             }
             return false;
@@ -314,6 +304,28 @@
                 }
             }
             return $this->latestDateTime . ': ' . strval($this->person) . '/' . $type;
+        }
+
+        protected static function getRelationName()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected static function getRelatedModelClassName()
+        {
+            return ucfirst(static::getRelationName());
+        }
+
+        protected static function getIndexesDefinition()
+        {
+            $relatedModelClassName = static::getRelatedModelClassName();
+            $relatedColumnName = static::getTableName($relatedModelClassName) . '_id';
+            $baseColumnName = static::getTableName(get_class()) . '_id';
+            return array($baseColumnName . '_' . $relatedColumnName => array(
+                                'members' => array($baseColumnName, $relatedColumnName),
+                                'unique' => true,
+                            )
+                        );
         }
     }
 ?>

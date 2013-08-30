@@ -36,25 +36,25 @@
 
     class AutoresponderTestHelper
     {
-        public static function createAutoresponder($subject, $textContent, $htmlContent, $secondsFromOperation,
+        public static function createAutoresponder($subject, $textContent, $htmlContent, $fromOperationDurationInterval,
                                                                           $operationType, $enableTracking = false,
                                                                           $marketingList = null, $runValidation = true)
         {
             assert('is_bool($runValidation)');
-            $autoresponder  = static::populateAutoresponder($subject, $textContent, $htmlContent, $secondsFromOperation,
+            $autoresponder  = static::populateAutoresponder($subject, $textContent, $htmlContent, $fromOperationDurationInterval,
                                                                         $operationType, $enableTracking, $marketingList);
             $saved          = $autoresponder->save($runValidation);
             assert('$saved');
             return $autoresponder;
         }
 
-        public static function populateAutoresponder($subject, $textContent, $htmlContent, $secondsFromOperation,
+        public static function populateAutoresponder($subject, $textContent, $htmlContent, $fromOperationDurationInterval,
                                                         $operationType, $enableTracking = false, $marketingList = null)
         {
             assert('is_string($subject)');
             assert('is_string($textContent)');
             assert('is_string($htmlContent) || $htmlContent === null');
-            assert('is_int($secondsFromOperation)');
+            assert('is_int($fromOperationDurationInterval)');
             assert('is_int($operationType)');
             assert('is_bool($enableTracking) || is_int($enableTracking)');
             assert('is_object($marketingList) || $marketingList === null');
@@ -70,7 +70,8 @@
             $autoresponder->subject                 = $subject;
             $autoresponder->textContent             = $textContent;
             $autoresponder->htmlContent             = $htmlContent;
-            $autoresponder->secondsFromOperation    = $secondsFromOperation;
+            $autoresponder->fromOperationDurationInterval = $fromOperationDurationInterval;
+            $autoresponder->fromOperationDurationType     = TimeDurationUtil::DURATION_TYPE_DAY;
             $autoresponder->operationType           = $operationType;
             $autoresponder->enableTracking          = $enableTracking;
             $autoresponder->marketingList           = $marketingList;

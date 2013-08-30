@@ -95,6 +95,13 @@
             return $content;
         }
 
+        /**
+         * @param DropDownDependencyAttributeForm $model
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param bool $renderContainer
+         * @return string
+         */
         public static function renderContainerAndMappingLayoutContent(DropDownDependencyAttributeForm $model,
                                                                       $controllerId, $moduleId, $renderContainer = true)
         {

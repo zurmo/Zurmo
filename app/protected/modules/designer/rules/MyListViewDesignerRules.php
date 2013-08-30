@@ -46,6 +46,7 @@
 
         /**
          * Utilizes information from the view to build a display name.
+         * @param string $viewClassName
          * @return string - display name
          */
         public function resolveDisplayNameByView($viewClassName)

@@ -61,6 +61,10 @@
             return $userStatus;
         }
 
+        /**
+         * @param User $user
+         * @return string
+         */
         public static function getSelectedValueByUser(User $user)
         {
             $userStatus = self::makeByUser($user);

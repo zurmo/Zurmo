@@ -39,6 +39,9 @@
         public function testIsValidOperatorTypeByValue()
         {
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('startsWith', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('doesNotStartsWith', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('doesNotEndsWith', 'abc'));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('doesNotContains', 'abc'));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThan', 'abc'));
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('startsWith', 5));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThan', 5));
@@ -47,15 +50,18 @@
             $this->assertFalse(SQLOperatorUtil::isValidOperatorTypeByValue ('oneOf', null));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('greaterThanOrEqualTo', 'abc'));
             $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('lessThanOrEqualTo', 'abc'));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNull', null));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNotNull', null));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isEmpty', null));
-            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue ('isNotEmpty', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('isNull', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('isNotNull', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('isEmpty', null));
+            $this->assertTrue(SQLOperatorUtil::isValidOperatorTypeByValue  ('isNotEmpty', null));
         }
 
         public function testGetOperatorByType()
         {
             $this->assertEquals('>', SQLOperatorUtil::getOperatorByType('greaterThan'));
+            $this->assertEquals('not like', SQLOperatorUtil::getOperatorByType('doesNotStartsWith'));
+            $this->assertEquals('not like', SQLOperatorUtil::getOperatorByType('doesNotEndsWith'));
+            $this->assertEquals('not like', SQLOperatorUtil::getOperatorByType('doesNotContains'));
         }
 
         public function testResolveOperatorAndValueForOneOf()
@@ -138,6 +144,22 @@
             $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isNotNull'));
             $this->assertTrue(SQLOperatorUtil::doesOperatorTypeAllowNullValues('isNotEmpty'));
             $this->assertFalse(SQLOperatorUtil::doesOperatorTypeAllowNullValues('startsWith'));
+        }
+
+        public function testResolveValueLeftSideLikePartByOperatorType()
+        {
+            $this->assertEquals(null, SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType('doesNotStartsWith'));
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType('doesNotEndsWith'));
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType('doesNotContains'));
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueLeftSideLikePartByOperatorType('contains'));
+        }
+
+        public function testResolveValueRightSideLikePartByOperatorType()
+        {
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType('doesNotStartsWith'));
+            $this->assertEquals(null, SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType('doesNotEndsWith'));
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType('doesNotContains'));
+            $this->assertEquals('%',  SQLOperatorUtil::resolveValueRightSideLikePartByOperatorType('contains'));
         }
     }
 ?>

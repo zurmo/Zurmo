@@ -39,6 +39,9 @@
      */
     class ZurmoConfigurationUtil
     {
+        // TODO: @Shoaibi: Critical: 2.3: Refactor this to an extra optional parameter to all get and set methods, defaults to true
+        const ENABLE_CACHE = false;
+
         /**
          * For the current user, retrieve a configuration value by module name and key.
          * @return configuration value of specified key
@@ -67,12 +70,17 @@
             {
                 return null;
             }
-            $metadata = $moduleName::getMetadata();
-            if (isset($metadata['global']) && isset($metadata['global'][$key]))
+            $value = static::getCachedValue($moduleName, $key);
+            if ($value === null)
             {
-                return $metadata['global'][$key];
+                $metadata = $moduleName::getMetadata();
+                if (isset($metadata['global']) && isset($metadata['global'][$key]))
+                {
+                    $value = $metadata['global'][$key];
+                    static::cacheValue($moduleName, $key, $value);
+                }
             }
-            return null;
+            return $value;
         }
 
         /**
@@ -84,16 +92,21 @@
             assert('$user instanceof User && $user->id > 0');
             assert('is_string($moduleName)');
             assert('is_string($key)');
-            $metadata = $moduleName::getMetadata($user);
-            if (isset($metadata['perUser']) && isset($metadata['perUser'][$key]))
+            $value = static::getCachedValue($moduleName, $key, $user->id);
+            if ($value === null)
             {
-                return $metadata['perUser'][$key];
+                $metadata = $moduleName::getMetadata($user);
+                if (isset($metadata['perUser']) && isset($metadata['perUser'][$key]))
+                {
+                    $value = $metadata['perUser'][$key];
+                }
+                elseif (isset($metadata['global']) && isset($metadata['global'][$key]))
+                {
+                    $value = $metadata['global'][$key];
+                }
+                static::cacheValue($moduleName, $key, $value, $user->id);
             }
-            if (isset($metadata['global']) && isset($metadata['global'][$key]))
-            {
-                return $metadata['global'][$key];
-            }
-            return null;
+            return $value;
         }
 
         /**
@@ -124,6 +137,7 @@
             }
             $metadata = $moduleName::getMetadata();
             $metadata['global'][$key] = $value;
+            static::cacheValue($moduleName, $key, $value);
             $moduleName::setMetadata($metadata);
         }
 
@@ -137,7 +151,48 @@
             assert('is_string($key)');
             $metadata = $moduleName::getMetadata($user);
             $metadata['perUser'][$key] = $value;
+            static::cacheValue($moduleName, $key, $value, $user->id);
             $moduleName::setMetadata($metadata, $user);
+        }
+
+        protected static function getCacheKey($moduleName, $configKey, $userId = null)
+        {
+            $cacheKey   = "${moduleName}.{$configKey}";
+            $prefix     = 'global.';
+            if ($userId)
+            {
+                $prefix = 'perUser_' . $userId . '.';
+            }
+            $cacheKey   = get_called_class() . '.' . $prefix . $cacheKey;
+            return $cacheKey;
+        }
+
+        protected static function getCachedValue($moduleName, $configKey, $userId = null)
+        {
+            if (!static::ENABLE_CACHE)
+            {
+                return null;
+            }
+            $cacheKey   = static::getCacheKey($moduleName, $configKey, $userId);
+            $value      = null;
+            try
+            {
+                $value = GeneralCache::getEntry($cacheKey);
+            }
+            catch (NotFoundException $e)
+            {
+            }
+            return $value;
+        }
+
+        protected static function cacheValue($moduleName, $configKey, $value, $userId = null)
+        {
+            if (!static::ENABLE_CACHE)
+            {
+                return;
+            }
+            $cacheKey = static::getCacheKey($moduleName, $configKey, $userId);
+            GeneralCache::cacheEntry($cacheKey, $value);
         }
     }
 ?>

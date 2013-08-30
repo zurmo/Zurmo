@@ -238,17 +238,29 @@
                 1 => array(
                     'attributeName'        => 'primaryEmail',
                     'relatedAttributeName' => 'optOut',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1,
+                    'operatorType'         => 'equals',
+                    'value'                => '0',
                 ),
                 2 => array(
+                    'attributeName'        => 'primaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
+                ),
+                3 => array(
                     'attributeName'        => 'secondaryEmail',
                     'relatedAttributeName' => 'optOut',
-                    'operatorType'         => 'doesNotEqual',
-                    'value'                => (bool)1,
+                    'operatorType'         => 'equals',
+                    'value'                => '0',
+                ),
+                4 => array(
+                    'attributeName'        => 'secondaryEmail',
+                    'relatedAttributeName' => 'optOut',
+                    'operatorType'         => 'isNull',
+                    'value'                => null,
                 ),
             );
-            $compareStructure = '(1 or 2)';
+            $compareStructure = '((1 or 2) or (3 or 4))';
 
             $this->assertEquals($compareClauses,   $searchAttributeData['clauses']);
             $this->assertEquals($compareStructure, $searchAttributeData['structure']);

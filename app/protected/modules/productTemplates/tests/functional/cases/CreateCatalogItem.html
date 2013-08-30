@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<!--Go to create catalog item-->
+<tr>
+	<td>open</td>
+	<td>index.php/products/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Products</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Catalog Items</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Categories</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//ul[@id='MashableInboxCreateDropdown']/li/ul/li[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create Catalog Item</td>
+	<td></td>
+</tr>
+<!--check validation-->
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Name cannot be blank.</td>
+	<td></td>
+</tr>
+<!--check default values-->
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_status_value</td>
+	<td>Active</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_type_value</td>
+	<td>Product</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_priceFrequency_value</td>
+	<td>One Time</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_sellPriceFormula_type</td>
+	<td>Editable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_cost_currency_id</td>
+	<td>USD</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_listPrice_currency_id</td>
+	<td>USD</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ProductTemplate_sellPrice_currency_id</td>
+	<td>USD</td>
+</tr>
+<!--add catalog item details-->
+<tr>
+	<td>type</td>
+	<td>id=ProductTemplate_name</td>
+	<td>Test Catalog Item ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ProductTemplate_description</td>
+	<td>test description</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=token-input-ProductTemplateCategoriesForm_ProductCategory_ids</td>
+	<td>boo</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ProductTemplateCategoriesForm_ProductCategory_ids&quot;]</td>
+	<td>boo</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ProductTemplateCategoriesForm_ProductCategory_ids&quot;]</td>
+	<td>boo</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Books</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ProductTemplate_priceFrequency_value</td>
+	<td>label=Monthly</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ProductTemplate_cost_currency_id</td>
+	<td>label=CAD</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ProductTemplate_listPrice_currency_id</td>
+	<td>label=CAD</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ProductTemplate_sellPrice_currency_id</td>
+	<td>label=CAD</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ProductTemplate_cost_value</td>
+	<td>200</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ProductTemplate_listPrice_value</td>
+	<td>200</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ProductTemplate_sellPrice_value</td>
+	<td>200</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Test Catalog Item ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>
+	<td>Test Catalog Item ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[2]/td</td>
+	<td>test description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[4]/td</td>
+	<td>Active</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[5]/td</td>
+	<td>Product</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[6]/td</td>
+	<td>Monthly</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[7]/td</td>
+	<td>NA</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[8]/td</td>
+	<td>CA$200.00</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[9]/td</td>
+	<td>CA$200.00</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[10]/td</td>
+	<td>CA$200.00</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

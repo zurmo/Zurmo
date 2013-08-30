@@ -104,7 +104,7 @@
             else
             {
                 $mixedView = $this->makeActionBarSearchAndListView($searchForm, $dataProvider,
-                             'SecuredActionBarForMarketingSearchAndListView', null, $activeActionElementType);
+                             'SecuredActionBarForMarketingListsSearchAndListView', null, $activeActionElementType);
                 $view      = new EmailTemplatesPageView(MarketingDefaultViewUtil::
                              makeViewWithBreadcrumbsForCurrentUser($this, $mixedView, $breadcrumbLinks, 'MarketingBreadCrumbView'));
             }

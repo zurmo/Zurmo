@@ -65,7 +65,7 @@
             $timeTrigger = array('attributeIndexOrDerivedType' => 'string',
                                  'operator'                    => OperatorRules::TYPE_EQUALS,
                                  'value'                       => '514',
-                                 'durationSeconds'             => '333');
+                                 'durationInterval'             => '5');
             $actions     = array(array('type' => ActionForWorkflowForm::TYPE_UPDATE_SELF,
                                        ActionForWorkflowForm::ACTION_ATTRIBUTES =>
                                             array('string' => array('shouldSetValue'    => '1',

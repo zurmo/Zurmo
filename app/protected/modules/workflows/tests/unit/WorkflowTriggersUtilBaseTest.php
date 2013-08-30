@@ -83,14 +83,14 @@
 
         public static function makeOnSaveWorkflowAndTimeTriggerWithoutValueType($attributeIndexOrDerivedType, $operator,
                                                                                 $value,
-                                                                                $durationSeconds = 0,
+                                                                                $durationInterval = 0,
                                                                                 $moduleClassName   = 'WorkflowsTestModule',
                                                                                 $modelClassName    = 'WorkflowModelTestItem',
                                                                                 $secondValue       = null)
         {
             assert('is_string($attributeIndexOrDerivedType)'); // Not Coding Standard
             assert('is_string($operator)');                    // Not Coding Standard
-            assert('is_int($durationSeconds)');                // Not Coding Standard
+            assert('is_int($durationInterval)');                // Not Coding Standard
             assert('is_string($moduleClassName)');             // Not Coding Standard
             assert('is_string($modelClassName)');              // Not Coding Standard
             $workflow = new Workflow();
@@ -101,7 +101,7 @@
             $trigger->value                       = $value;
             $trigger->secondValue                 = $secondValue;
             $trigger->operator                    = $operator;
-            $trigger->durationSeconds             = $durationSeconds;
+            $trigger->durationInterval            = $durationInterval;
             $workflow->setTimeTrigger($trigger);
             return $workflow;
         }
@@ -130,16 +130,20 @@
 
          public static function makeOnSaveWorkflowAndTimeTriggerForDateOrDateTime($attributeIndexOrDerivedType, $valueType,
                                                                                  $value,
-                                                                                 $durationSeconds = 0,
+                                                                                 $durationInterval = 0,
                                                                                  $moduleClassName = 'WorkflowsTestModule',
                                                                                  $modelClassName  = 'WorkflowModelTestItem',
-                                                                                 $secondValue     = null)
+                                                                                 $secondValue     = null,
+                                                                                 $durationSign    = TimeDurationUtil::DURATION_SIGN_POSITIVE,
+                                                                                 $durationType    = TimeDurationUtil::DURATION_TYPE_DAY)
         {
             assert('is_string($attributeIndexOrDerivedType)'); // Not Coding Standard
             assert('is_string($valueType)');                   // Not Coding Standard
-            assert('is_int($durationSeconds)');                // Not Coding Standard
+            assert('is_int($durationInterval)');                // Not Coding Standard
             assert('is_string($moduleClassName)');             // Not Coding Standard
             assert('is_string($modelClassName)');              // Not Coding Standard
+            assert('is_string($durationSign)');                // Not Coding Standard
+            assert('is_string($durationType)');                // Not Coding Standard
             $workflow = new Workflow();
             $workflow->setType(Workflow::TYPE_BY_TIME);
             $workflow->setTriggersStructure('1');
@@ -148,7 +152,9 @@
             $trigger->valueType                   = $valueType;
             $trigger->value                       = $value;
             $trigger->secondValue                 = $secondValue;
-            $trigger->durationSeconds             = $durationSeconds;
+            $trigger->durationInterval            = $durationInterval;
+            $trigger->durationSign                = $durationSign;
+            $trigger->durationType                = $durationType;
             $workflow->setTimeTrigger($trigger);
             return $workflow;
         }

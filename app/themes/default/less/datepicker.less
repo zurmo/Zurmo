@@ -31,6 +31,10 @@
 // feasible for technical reasons, the Appropriate Legal Notices must display the words
 // "Copyright Zurmo Inc. 2013. All rights reserved".
 
+#ui-datepicker-div{
+	max-width: 250px;
+}
+
 .ui-datepicker{
 	z-index:10000;
 	&.ui-datepicker-inline{
@@ -157,26 +161,44 @@
 		}
 	}
 	.ui-datepicker-buttonpane{
-		border-top:1px solid #BBB;
-		padding:5px;
+		float: left;
+		width: 100%;
+		border-top:1px solid #fff;
+		padding:5px 0;
 		.clearfix();
 	}
 	.ui-datepicker-current{
 		++.z-button;
 		float:left;
-		margin:0;
+		margin:0 10px;
 	}
 	.ui-datepicker-close{
 		++.z-button;
 		float:right;
-		margin:0;
+		margin:0 10px;
 	}
 	.ui-timepicker-div{
-		padding:5px;
-		border-bottom:1px solid #FFF;
+		float: left;
+		padding:10px 5px 0 5px;
+		border-bottom:1px solid #bbb;
+		line-height: 1;
 		dt{
+			float: left;
+			width: 30%;
+			height: auto !important;
 			font-weight:bold;
 			.t-shadow( rgba( 255, 255, 255, 0.8 ) 0 1px 0 );
+		}
+		dd{
+			margin: 0 0 0 0 !important;
+			float: left;
+			width: 70%;
+			height: 25px;
+		}
+		select{
+			position: relative;
+			top: -4px;
+			width: 100%;
 		}
 	}
 	.ui-slider{
@@ -184,7 +206,7 @@
 		height:4px;
 		.radius(2px) !important;
 		position: relative;
-		margin-top:-21px;
+		top:4px;
 	}
 	.ui-slider-handle{
 		background:#fff;
@@ -239,4 +261,11 @@
 	.calendar-events-6 span:before{
 		content:"‧‧‧\202F‧‧‧";
 	}
+
+	.ui_tpicker_second,
+	.ui_tpicker_millisec,
+	.ui_tpicker_microsec{
+		display: none;
+	}
 }
+

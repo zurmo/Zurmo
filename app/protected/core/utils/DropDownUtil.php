@@ -41,9 +41,18 @@
     {
         public static function registerScripts($position = CClientScript::POS_HEAD)
         {
-            Yii::app()->clientScript->registerScriptFile(
-                Yii::app()->getAssetManager()->publish(
-                    Yii::getPathOfAlias('application.core.views.assets')) . '/dropDownInteractions.js', $position);
+            if (Yii::app()->getRequest()->isContextiveExternalRequest())
+            {
+                Yii::app()->clientScript->registerScriptFile(
+                    Yii::app()->getRequest()->getHostInfo() . Yii::app()->getAssetManager()->publish(
+                        Yii::getPathOfAlias('application.core.views.assets')) . '/dropDownInteractions.js', $position);
+            }
+            else
+            {
+                Yii::app()->clientScript->registerScriptFile(
+                    Yii::app()->getAssetManager()->publish(
+                        Yii::getPathOfAlias('application.core.views.assets')) . '/dropDownInteractions.js', $position);
+            }
         }
     }
 ?>

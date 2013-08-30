@@ -39,6 +39,9 @@
      */
     class ZurmoDemoDataMaker extends DemoDataMaker
     {
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');

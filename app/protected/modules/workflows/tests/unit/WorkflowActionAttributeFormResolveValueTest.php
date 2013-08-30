@@ -304,7 +304,7 @@
         {
             $form        = new DateWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
             $form->type  = DateWorkflowActionAttributeForm::TYPE_DYNAMIC_FROM_TRIGGERED_DATE;
-            $form->value = '86400';
+            $form->durationInterval = '1';
             $model       = new WorkflowModelTestItem();
             $model->date = '1980-06-03';
             $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
@@ -316,7 +316,7 @@
         {
             $form        = new DateWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
             $form->type  = DateWorkflowActionAttributeForm::TYPE_DYNAMIC_FROM_EXISTING_DATE;
-            $form->value = '86400';
+            $form->durationInterval = '1';
             $model       = new WorkflowModelTestItem();
             $model->date = '1980-01-05';
             $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
@@ -340,7 +340,7 @@
         {
             $form        = new DateTimeWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
             $form->type  = DateTimeWorkflowActionAttributeForm::TYPE_DYNAMIC_FROM_TRIGGERED_DATETIME;
-            $form->value = '86400';
+            $form->durationInterval = '1';
             $model       = new WorkflowModelTestItem();
             $model->date = '1980-06-03 04:00:00';
             $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);
@@ -352,7 +352,7 @@
         {
             $form        = new DateTimeWorkflowActionAttributeForm('WorkflowsTestModule', 'WorkflowModelTestItem');
             $form->type  = DateTimeWorkflowActionAttributeForm::TYPE_DYNAMIC_FROM_EXISTING_DATETIME;
-            $form->value = '86400';
+            $form->durationInterval = '1';
             $model       = new WorkflowModelTestItem();
             $model->dateTime = '1980-01-05 04:00:00';
             $adapter     = new WorkflowActionProcessingModelAdapter($model, Yii::app()->user->userModel);

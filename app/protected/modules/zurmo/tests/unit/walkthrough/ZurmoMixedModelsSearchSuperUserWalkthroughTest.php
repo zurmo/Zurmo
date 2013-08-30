@@ -62,10 +62,10 @@
                 )));
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globallist');
-            $this->assertContains('<div class="cgrid-view" id="list-view-accounts">', $content);
-            $this->assertContains('<div class="cgrid-view" id="list-view-contacts">', $content);
-            $this->assertContains('<div class="cgrid-view" id="list-view-leads">', $content);
-            $this->assertContains('<div class="cgrid-view" id="list-view-opportunities">', $content);
+            $this->assertContains('<div class="cgrid-view type-accounts" id="list-view-accounts">', $content);
+            $this->assertContains('<div class="cgrid-view type-contacts" id="list-view-contacts">', $content);
+            $this->assertContains('<div class="cgrid-view type-leads" id="list-view-leads">', $content);
+            $this->assertContains('<div class="cgrid-view type-opportunities" id="list-view-opportunities">', $content);
             //Even if there are results it should return a cgridview with no text
             $this->assertNotContains('No results found.', $content);
 
@@ -77,10 +77,10 @@
                     );
             $this->resetPostArray();
             $content = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globallist');
-            $this->assertContains('id="AccountsListView"', $content);
-            $this->assertNotContains('id="ContactsListView"', $content);
-            $this->assertNotContains('id="LeadsListView"', $content);
-            $this->assertNotContains('id="OpportunitiesListView">', $content);
+            $this->assertContains('id="AccountsForMixedModelsSearchListView"', $content);
+            $this->assertNotContains('id="ContactsForMixedModelsSearchListView"', $content);
+            $this->assertNotContains('id="LeadsForMixedModelsSearchListView"', $content);
+            $this->assertNotContains('id="OpportunitiesForMixedModelsSearchListView">', $content);
             //TODO: Should test if the accounts created is shown
         }
     }

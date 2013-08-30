@@ -39,6 +39,11 @@
      */
     class SecuredPortletFrameView extends PortletFrameView
     {
+        /**
+         * @param string $uniqueLayoutId
+         * @param array $metadata
+         * @return array
+         */
         protected function getPortlets($uniqueLayoutId, $metadata)
         {
             assert('is_string($uniqueLayoutId)');

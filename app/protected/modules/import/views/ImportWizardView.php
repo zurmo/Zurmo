@@ -43,6 +43,12 @@
 
         protected $disableFloatOnToolbar  = true;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param ImportWizardForm $model
+         * @param null|string $title
+         */
         public function __construct($controllerId, $moduleId, ImportWizardForm $model, $title = null)
         {
             assert('is_string($controllerId)');
@@ -89,20 +95,30 @@
             return null;
         }
 
-        /**
-         * Override if the view should show a next link.
-         */
-        protected function renderNextPageLinkContent()
-        {
-            return ZurmoHtml::linkButton(ZurmoHtml::wrapLabel(Zurmo::t('ImportModule', 'Next')));
-        }
-
         protected function getPreviousPageLinkContentByControllerAction($action)
         {
             assert('is_string($action)');
             $route = Yii::app()->createUrl($this->moduleId . '/' . $this->controllerId . '/' . $action . '/',
                                            array('id' => $this->model->id));
-            return ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ImportModule', 'Previous')), $route);
+            return ZurmoHtml::link(ZurmoHtml::wrapLabel($this->renderPreviousPageLinkLabel()), $route);
+        }
+
+        protected function renderPreviousPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Previous');
+        }
+
+        /**
+         * Override if the view should show a next link.
+         */
+        protected function renderNextPageLinkContent()
+        {
+            return ZurmoHtml::linkButton(ZurmoHtml::wrapLabel($this->renderNextPageLinkLabel()), array('class' => 'green-button'));
+        }
+
+        protected function renderNextPageLinkLabel()
+        {
+            return Zurmo::t('ImportModule', 'Next');
         }
 
         /**

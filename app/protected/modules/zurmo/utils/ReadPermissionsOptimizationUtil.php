@@ -249,6 +249,10 @@
             self::ownedSecurableItemOwnerChanged($ownedSecurableItem);
         }
 
+        /**
+         * @param OwnedSecurableItem $ownedSecurableItem
+         * @param User $oldUser
+         */
         public static function ownedSecurableItemOwnerChanged(OwnedSecurableItem $ownedSecurableItem, User $oldUser = null)
         {
             $modelClassName = get_class($ownedSecurableItem);
@@ -279,6 +283,10 @@
 
         // Permissions added or removed.
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param User $user
+         */
         public static function securableItemGivenPermissionsForUser(SecurableItem $securableItem, User $user)
         {
             $modelClassName = get_class($securableItem);
@@ -292,6 +300,10 @@
             }
         }
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param Group $group
+         */
         public static function securableItemGivenPermissionsForGroup(SecurableItem $securableItem, Group $group)
         {
             $modelClassName = get_class($securableItem);
@@ -312,6 +324,10 @@
             }
         }
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param User $user
+         */
         public static function securableItemLostPermissionsForUser(SecurableItem $securableItem, User $user)
         {
             $modelClassName = get_class($securableItem);
@@ -326,6 +342,10 @@
             self::garbageCollect($mungeTableName);
         }
 
+        /**
+         * @param SecurableItem $securableItem
+         * @param Group $group
+         */
         public static function securableItemLostPermissionsForGroup(SecurableItem $securableItem, Group $group)
         {
             $modelClassName = get_class($securableItem);
@@ -346,6 +366,9 @@
 
         // User operations.
 
+        /**
+         * @param $user
+         */
         public static function userBeingDeleted($user) // Call being methods before the destructive operation.
         {
             foreach (self::getMungableModelClassNames() as $modelClassName)
@@ -364,6 +387,10 @@
 
         // Group operations.
 
+        /**
+         * @param Group $group
+         * @param User $user
+         */
         public static function userAddedToGroup(Group $group, User $user)
         {
             foreach (self::getMungableModelClassNames() as $modelClassName)
@@ -383,6 +410,10 @@
             }
         }
 
+        /**
+         * @param Group $group
+         * @param User $user
+         */
         public static function userRemovedFromGroup(Group $group, User $user)
         {
             foreach (self::getMungableModelClassNames() as $modelClassName)
@@ -403,16 +434,25 @@
             }
         }
 
+        /**
+         * @param Group $group
+         */
         public static function groupAddedToGroup(Group $group)
         {
             self::groupAddedOrRemovedFromGroup(true, $group);
         }
 
+        /**
+         * @param Group $group
+         */
         public static function groupBeingRemovedFromGroup(Group $group) // Call being methods before the destructive operation.
         {
             self::groupAddedOrRemovedFromGroup(false, $group);
         }
 
+        /**
+         * @param $group
+         */
         public static function groupBeingDeleted($group) // Call being methods before the destructive operation.
         {
             if ($group->group->id > 0 && !(!RedBeanDatabase::isFrozen() && $group->group->isSame($group))) // Prevent cycles in database auto build.
@@ -524,18 +564,27 @@
 
         // Role operations.
 
+        /**
+         * @param Role $role
+         */
         public static function roleParentSet(Role $role)
         {
             assert('$role->role->id > 0');
             self::roleParentSetOrRemoved(true, $role);
         }
 
+        /**
+         * @param Role $role
+         */
         public static function roleParentBeingRemoved(Role $role) // Call being methods before the destructive operation.
         {
             assert('$role->role->id > 0');
             self::roleParentSetOrRemoved(false, $role);
         }
 
+        /**
+         * @param Role $role
+         */
         public static function roleBeingDeleted(Role $role) // Call being methods before the destructive operation.
         {
             foreach (self::getMungableModelClassNames() as $modelClassName)
@@ -694,6 +743,9 @@
             return $users;
         }
 
+        /**
+         * @param User $user
+         */
         public static function userAddedToRole(User $user)
         {
             assert('$user->role->id > 0');
@@ -728,6 +780,10 @@
             }
         }
 
+        /**
+         * @param User $user
+         * @param Role $role
+         */
         public static function userBeingRemovedFromRole(User $user, Role $role)
         {
             foreach (self::getMungableModelClassNames() as $modelClassName)
@@ -760,6 +816,10 @@
 
         ///////////////////////////////////////////////////////////////////////
 
+        /**
+         * @param Group $group
+         * @param array $groupMungeIds
+         */
         public static function getAllUpstreamGroupsRecursively(Group $group, & $groupMungeIds)
         {
             assert('is_array($groupMungeIds)');
@@ -777,6 +837,10 @@
             }
         }
 
+        /**
+         * @param User $user
+         * @return array
+         */
         public static function getUserRoleIdAndGroupIds(User $user)
         {
             if ($user->role->id > 0)
@@ -795,6 +859,10 @@
             return array($roleId, $groupIds);
         }
 
+        /**
+         * @param User $user
+         * @return array
+         */
         public static function getMungeIdsByUser(User $user)
         {
             list($roleId, $groupIds) = self::getUserRoleIdAndGroupIds($user);
@@ -1032,6 +1100,10 @@
             return RedBeanModel::getTableName($modelClassName);
         }
 
+        /**
+         * @param $modelClassName
+         * @return string
+         */
         public static function getMungeTableName($modelClassName)
         {
             assert('is_string($modelClassName) && $modelClassName != ""');

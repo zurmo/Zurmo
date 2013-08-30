@@ -62,16 +62,24 @@
             return array('Truncate');
         }
 
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        /**
+         * @param mixed $value
+         * @param string $columnName
+         * @param array $columnMappingData
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         * @return array|void
+         */
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
             $attributeNames = $this->getRealModelAttributeNames();
             assert('count($attributeNames) == 1');
             assert('$attributeNames[0] == "hash"');
+            assert('is_string($columnName)');
             assert('is_array($columnMappingData)');
             $modelClassName = $this->getModelClassName();
             $value          = ImportSanitizerUtil::
                               sanitizeValueBySanitizerTypes(static::getSanitizerUtilTypesInProcessingOrder(),
-                                                            $modelClassName, 'hash', $value, $columnMappingData,
+                                                            $modelClassName, 'hash', $value, $columnName, $columnMappingData,
                                                             $importSanitizeResultsUtil);
             if ($value == null)
             {

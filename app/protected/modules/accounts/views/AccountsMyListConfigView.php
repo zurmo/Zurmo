@@ -48,6 +48,9 @@
                             array('type' => 'SaveButton'),
                         ),
                     ),
+                    'nonPlaceableAttributeNames' => array(
+                        'anyMixedAttributes',
+                    ),
                     'panelsDisplayType' => FormLayout::PANELS_DISPLAY_TYPE_ALL,
                     'panels' => array(
                         array(

@@ -52,7 +52,7 @@
             }
             else
             {
-                return Yii::app()->format->formatNumber((int)$this->model->{$this->attribute});
+                return Yii::app()->numberFormatter->formatDecimal((int)$this->model->{$this->attribute});
             }
         }
     }

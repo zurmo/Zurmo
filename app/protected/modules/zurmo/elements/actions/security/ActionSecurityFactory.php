@@ -40,6 +40,12 @@
      */
     class ActionSecurityFactory
     {
+        /**
+         * @param string $actionType
+         * @param RedBeanModel $model
+         * @param Usert $user
+         * @return mixed
+         */
         public static function createActionSecurityFromActionType(
             $actionType,
             $model,
@@ -52,6 +58,11 @@
             return new $actionSecurityClassName($user, $model);
         }
 
+        /**
+         * @param string $actionType
+         * @param User $user
+         * @return mixed
+         */
         public static function createRightsOnlyActionSecurityFromActionType($actionType, $user)
         {
             assert('$user instanceof User && $user->id > 0');

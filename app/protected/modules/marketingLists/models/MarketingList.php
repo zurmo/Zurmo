@@ -100,6 +100,7 @@
                 'relations' => array(
                     'marketingListMembers'  => array(RedBeanModel::HAS_MANY,   'MarketingListMember', RedBeanModel::OWNED),
                     'autoresponders'        => array(RedBeanModel::HAS_MANY,   'Autoresponder', RedBeanModel::OWNED),
+                    'campaigns'             => array(RedBeanModel::HAS_MANY,   'Campaign', RedBeanModel::OWNED),
                 ),
                 'rules' => array(
                     array('name',               'required'),

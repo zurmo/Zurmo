@@ -335,6 +335,7 @@
                 else
                 {
                     $content .= $this->renderStaticSearchRows($panel, $maxCellsPerRow, $form);
+                    $content .= $this->renderStarredFilterHidenField($form);
                 }
                 if ($key == 1)
                 {
@@ -632,6 +633,22 @@
             return ZurmoHtml::tag('div', array(
                         'id' => ModelElement::MODAL_CONTAINER_PREFIX . '-' . $this->getSearchFormId()
                    ), '');
+        }
+
+        /**
+         * Render a hidden field to filter models by starred only
+         * @param  ZurmoActiveForm $form
+         * @return string
+         */
+        protected function renderStarredFilterHidenField($form)
+        {
+            $content = null;
+            if (in_array('StarredInterface', class_implements($this->model->getModel())))
+            {
+                $content .= $form->hiddenField($this->model, 'filterByStarred',
+                                               array('class' => $form->id . '_filterByStarred'));
+            }
+            return $content;
         }
     }
 ?>

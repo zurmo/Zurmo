@@ -62,7 +62,7 @@
                         array('likeContactState' => ModelAttributeToReportOperatorTypeUtil::AVAILABLE_OPERATORS_TYPE_DROPDOWN),
                     'filterValueElementTypes' =>
                         array('likeContactState' => 'AllContactStatesStaticDropDownForWizardModel'),
-                )
+                ),
             );
             return array_merge(parent::getDefaultMetadata(), $metadata);
         }

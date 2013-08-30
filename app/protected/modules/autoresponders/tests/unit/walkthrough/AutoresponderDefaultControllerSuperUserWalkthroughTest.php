@@ -151,7 +151,7 @@
             $this->assertTrue(strpos($content, 'Create Autoresponder') !== false);
             $this->assertTrue(strpos($content, '<label for="Autoresponder_operationType_value" class="required">' .
                                                 'Triggered By <span class="required">*</span></label>') !== false);
-            $this->assertTrue(strpos($content, '<label for="Autoresponder_secondsFromOperation_value" class="required">' .
+            $this->assertTrue(strpos($content, '<label for="Autoresponder_fromOperationDurationInterval" class="required">' .
                                                 'Send After <span class="required">*</span></label>') !== false);
             $this->assertTrue(strpos($content, '<label for="Autoresponder_subject" class="required">Subject ' .
                                                 '<span class="required">*</span></label>') !== false);
@@ -161,27 +161,6 @@
                                                 'id="Autoresponder_operationType_value">') !== false);
             $this->assertTrue(strpos($content, '<option value="1">Subscription to list</option>') !== false);
             $this->assertTrue(strpos($content, '<option value="2">Unsubscribed from list</option>') !== false);
-            $this->assertTrue(strpos($content, '<select name="Autoresponder[secondsFromOperation]" ' .
-                                                'id="Autoresponder_secondsFromOperation_value">') !== false);
-            $this->assertTrue(strpos($content, '<option value="3600">1 Hour</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="14400">4 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="28800">8 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="43200">12 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="86400">1 day</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="259200">3 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="345600">4 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="432000">5 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="864000">10 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="604800">1 week</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="1209600">2 weeks</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="1814400">3 weeks</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="2592000">1 month</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="5184000">2 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="7776000">3 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="10368000">4 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="12960000">5 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="15552000">6 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="31104000">1 year</option>') !== false);
             $this->assertTrue(strpos($content, '<input id="Autoresponder_subject" name="Autoresponder[subject]" ' .
                                                 'type="text" maxlength="64"') !== false);
             $this->assertTrue(strpos($content, '<select name="Autoresponder[contactEmailTemplateNames]" ' .
@@ -209,7 +188,8 @@
             // test all required fields
             $this->setPostArray(array('Autoresponder' => array(
                                                             'operationType'             => '',
-                                                            'secondsFromOperation'      => '',
+                                                            'fromOperationDurationInterval'      => '',
+                                                            'fromOperationDurationType'      => '',
                                                             'subject'                   => '',
                                                             'enableTracking'            => '',
                                                             'contactEmailTemplateNames' => '',
@@ -225,13 +205,12 @@
             $this->assertTrue(strpos($content, '<input id="Autoresponder_subject" name="Autoresponder[subject]" type="text" maxlength="64" value="" class="error"') !== false);
             $this->assertTrue(strpos($content, '<select name="Autoresponder[operationType]" ' .
                                                 'id="Autoresponder_operationType_value" class="error">') !== false);
-            $this->assertTrue(strpos($content, '<select name="Autoresponder[secondsFromOperation]" ' .
-                                                'id="Autoresponder_secondsFromOperation_value" class="error">') !== false);
 
             // try with invalid merge tags
             $this->setPostArray(array('Autoresponder' => array(
                                                             'operationType'             => 2,
-                                                            'secondsFromOperation'      => 60*60*4,
+                                                            'fromOperationDurationInterval'  => 60*60*4,
+                                                            'fromOperationDurationType'      => TimeDurationUtil::DURATION_TYPE_DAY,
                                                             'subject'                   => 'Subject 04',
                                                             'enableTracking'            => 0,
                                                             'contactEmailTemplateNames' => '',
@@ -246,7 +225,8 @@
             // try saving with valid data.
             $this->setPostArray(array('Autoresponder' => array(
                                                             'operationType'             => 2,
-                                                            'secondsFromOperation'      => 60*60*4,
+                                                            'fromOperationDurationInterval'      => 60*60*4,
+                                                            'fromOperationDurationType'      => TimeDurationUtil::DURATION_TYPE_DAY,
                                                             'subject'                   => 'Subject 04',
                                                             'enableTracking'            => 0,
                                                             'contactEmailTemplateNames' => '',
@@ -259,7 +239,8 @@
             $this->assertEquals(1, count($autoresponders));
             $this->assertTrue  ($autoresponders[0]->id > 0);
             $this->assertEquals(2, $autoresponders[0]->operationType);
-            $this->assertEquals(60*60*4, $autoresponders[0]->secondsFromOperation);
+            $this->assertEquals(60*60*4, $autoresponders[0]->fromOperationDurationInterval);
+            $this->assertEquals(TimeDurationUtil::DURATION_TYPE_DAY, $autoresponders[0]->fromOperationDurationType);
             $this->assertEquals('Subject 04', $autoresponders[0]->subject);
             $this->assertEquals(0, $autoresponders[0]->enableTracking);
             $this->assertEquals('Text Content 04', $autoresponders[0]->textContent);
@@ -312,7 +293,7 @@
             $this->assertTrue(strpos($content, 'autoresponders/default/edit?id=' . $autoresponderId) !== false);
             $this->assertTrue(strpos($content, 'autoresponders/default/delete?id=' . $autoresponderId) !== false);
             $this->assertTrue(strpos($content, '<th>Triggered By</th><td colspan="1">Unsubscribed from list</td>') !== false);
-            $this->assertTrue(strpos($content, '<th>Send After</th><td colspan="1">4 Hours</td>') !== false);
+            $this->assertTrue(strpos($content, '<th>Send After</th><td colspan="1">14400 Day(s)</td>') !== false);
             $this->assertTrue(strpos($content, '<th>Subject</th><td colspan="1">Subject 04</td>') !== false);
             $this->assertTrue(strpos($content, '<th>Enable Tracking</th>') !== false);
             $this->assertTrue(strpos($content, '<input id="ytAutoresponder_enableTracking" type="hidden" value="0" '.
@@ -369,7 +350,7 @@
             $this->assertTrue(strpos($content, '<span class="ellipsis-content">Subject 04</span>') !== false);
             $this->assertTrue(strpos($content, '<label for="Autoresponder_operationType_value" class="required">' .
                                                 'Triggered By <span class="required">*</span></label>') !== false);
-            $this->assertTrue(strpos($content, '<label for="Autoresponder_secondsFromOperation_value" class="required">' .
+            $this->assertTrue(strpos($content, '<label for="Autoresponder_fromOperationDurationInterval" class="required">' .
                                                 'Send After <span class="required">*</span></label>') !== false);
             $this->assertTrue(strpos($content, '<label for="Autoresponder_subject" class="required">Subject ' .
                                                 '<span class="required">*</span></label>') !== false);
@@ -379,27 +360,6 @@
                                                 'id="Autoresponder_operationType_value">') !== false);
             $this->assertTrue(strpos($content, '<option value="1">Subscription to list</option>') !== false);
             $this->assertTrue(strpos($content, '<option value="2" selected="selected">Unsubscribed from list</option>') !== false);
-            $this->assertTrue(strpos($content, '<select name="Autoresponder[secondsFromOperation]" ' .
-                                                'id="Autoresponder_secondsFromOperation_value">') !== false);
-            $this->assertTrue(strpos($content, '<option value="3600">1 Hour</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="14400" selected="selected">4 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="28800">8 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="43200">12 Hours</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="86400">1 day</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="259200">3 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="345600">4 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="432000">5 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="864000">10 days</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="604800">1 week</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="1209600">2 weeks</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="1814400">3 weeks</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="2592000">1 month</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="5184000">2 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="7776000">3 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="10368000">4 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="12960000">5 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="15552000">6 months</option>') !== false);
-            $this->assertTrue(strpos($content, '<option value="31104000">1 year</option>') !== false);
             $this->assertTrue(strpos($content, '<input id="Autoresponder_subject" name="Autoresponder[subject]" ' .
                                                 'type="text" maxlength="64" value="Subject 04"') !== false);
             $this->assertTrue(strpos($content, '<select name="Autoresponder[contactEmailTemplateNames]" ' .
@@ -428,7 +388,8 @@
             // modify everything:
             $this->setPostArray(array('Autoresponder' => array(
                                                             'operationType'             => 1,
-                                                            'secondsFromOperation'      => 60*60*24,
+                                                            'fromOperationDurationInterval'      => 60*60*24,
+                                                            'fromOperationDurationType'      => TimeDurationUtil::DURATION_TYPE_DAY,
                                                             'subject'                   => 'Subject 040',
                                                             'enableTracking'            => 1,
                                                             'contactEmailTemplateNames' => '',
@@ -440,7 +401,8 @@
             $this->assertEquals(1, count($autoresponders));
             $this->assertTrue  ($autoresponders[0]->id > 0);
             $this->assertEquals(1, $autoresponders[0]->operationType);
-            $this->assertEquals(60*60*24, $autoresponders[0]->secondsFromOperation);
+            $this->assertEquals(60*60*24, $autoresponders[0]->fromOperationDurationInterval);
+            $this->assertEquals(TimeDurationUtil::DURATION_TYPE_DAY, $autoresponders[0]->fromOperationDurationType);
             $this->assertEquals('Subject 040', $autoresponders[0]->subject);
             $this->assertEquals(1, $autoresponders[0]->enableTracking);
             $this->assertEquals('Text Content 040', $autoresponders[0]->textContent);
@@ -464,7 +426,8 @@
             }
             $this->setPostArray(array('Autoresponder' => array(
                                                             'operationType'             => 1,
-                                                            'secondsFromOperation'      => 60*60*24,
+                                                            'fromOperationDurationInterval'      => 60*60*24,
+                                                            'fromOperationDurationType'      => TimeDurationUtil::DURATION_TYPE_DAY,
                                                             'subject'                   => 'Subject 040',
                                                             'enableTracking'            => 1,
                                                             'contactEmailTemplateNames' => '',
@@ -477,7 +440,8 @@
             $this->assertEquals(1, count($autoresponders));
             $this->assertTrue  ($autoresponders[0]->id > 0);
             $this->assertEquals(1, $autoresponders[0]->operationType);
-            $this->assertEquals(60*60*24, $autoresponders[0]->secondsFromOperation);
+            $this->assertEquals(60*60*24, $autoresponders[0]->fromOperationDurationInterval);
+            $this->assertEquals(TimeDurationUtil::DURATION_TYPE_DAY, $autoresponders[0]->fromOperationDurationType);
             $this->assertEquals('Subject 040', $autoresponders[0]->subject);
             $this->assertEquals(1, $autoresponders[0]->enableTracking);
             $this->assertEquals('Text Content 040', $autoresponders[0]->textContent);

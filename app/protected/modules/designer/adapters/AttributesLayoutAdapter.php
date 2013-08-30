@@ -53,6 +53,13 @@
 
         protected $derivedAttributeTypes;
 
+        /**
+         * @param array $attributes
+         * @param array $metadata
+         * @param array $derivedAttributeTypes
+         * @param array $nonPlaceableAttributeNames
+         * @param array $nonPlaceableAttributeTypes
+         */
         public function __construct(
             $attributes,
             $metadata,

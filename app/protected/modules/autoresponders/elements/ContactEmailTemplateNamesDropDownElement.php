@@ -77,12 +77,16 @@
             {
                 // Begin Not Coding Standard
                 Yii::app()->clientScript->registerScript($scriptName, '
-                        function updateContentElementsWithData(textContentElement, htmlContentElement, redActorElement, subjectElement, data)
+                        function updateContentElementsWithData(textContentElement, htmlContentElement, subjectElement, data)
                         {
+                            if ($(htmlContentElement).css("display") !== "none")
+                            {
+                                $(htmlContentElement).redactor("toggle");
+                            }
                             updateElementWithData(textContentElement, data.textContent);
-                            updateElementWithData(htmlContentElement, data.htmlContent);
-                            updateElementWithData(redActorElement, data.htmlContent);
                             updateElementWithData(subjectElement, data.subject);
+                            $(htmlContentElement).redactor("set", data.htmlContent);
+                            //$(htmlContentElement).redactor("sync");
                         }
 
                         function updateElementWithData(element, data)
@@ -186,7 +190,6 @@
                                                         $(".email-template-content .big-spinner").remove();
                                                         updateContentElementsWithData(textContentElement,
                                                                                         htmlContentElement,
-                                                                                        redActorElement,
                                                                                         subjectElement,
                                                                                         data);
                                                         updateAddFilesWithDataFromAjax(data.filesIds, notificationBarId);

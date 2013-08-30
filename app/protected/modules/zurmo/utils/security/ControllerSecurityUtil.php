@@ -124,6 +124,10 @@
             Yii::app()->end(0, false);
         }
 
+        /**
+         * @param string $moduleClassName
+         * @param bool $fromAjax
+         */
         public static function resolveCanCurrentUserAccessModule($moduleClassName, $fromAjax = false)
         {
             assert('is_string($moduleClassName)');

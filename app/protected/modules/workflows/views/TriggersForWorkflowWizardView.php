@@ -98,44 +98,27 @@
                                                  'trackableStructurePosition' => true)));
         }
 
-        protected function registerScripts()
-        {
-            parent::registerScripts();
-            Yii::app()->clientScript->registerScript('showStructurePanels' . $this->form->getId(), "
-                $('#show-triggers-structure-div-link').click( function()
-                    {
-                        $('#show-triggers-structure-div').show();
-                        $('#show-triggers-structure-div-link').hide();
-                        return false;
-                    }
-                );");
-        }
-
         /**
          * @return string
          */
         protected function renderStructureContent()
         {
-            $style1 = '';
-            $style2 = 'display:none;';
             if (count($this->model->triggers) > 0)
             {
-                $style3 = '';
+                $style = '';
             }
             else
             {
-                $style3 = 'display:none;';
+                $style = 'display:none;';
             }
-            $content  = ZurmoHtml::link(Zurmo::t('WorkflowsModule', 'Modify Structure'), '#',
-                            array('id'    => 'show-triggers-structure-div-link',
-                                  'class' => 'z-link',
-                                  'style' => $style1));
-            $content .= ZurmoHtml::tag('div',
-                            array('id'    => 'show-triggers-structure-div',
-                                  'class' => 'has-lang-label',
-                                  'style' => $style2), $this->renderStructureInputContent());
-            $content  = ZurmoHtml::tag('div', array('id'    => 'show-triggers-structure-wrapper',
-                                                     'style' => $style3), $content);
+            $content  = ZurmoHtml::tag('div',
+                                       array('id'    => 'show-triggers-structure-div',
+                                             'class' => 'has-lang-label'),
+                                       $this->renderStructureInputContent());
+            $content  = ZurmoHtml::tag('div',
+                                       array('id'    => 'show-triggers-structure-wrapper',
+                                             'style' => $style),
+                                       $content);
             return $content;
         }
 

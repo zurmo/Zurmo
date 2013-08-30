@@ -84,6 +84,18 @@
             }
             else
             {
+                foreach ($superGroup->users as $user)
+                {
+                    if ($user->isSystemUser)
+                    {
+                        if ($setOnMissing)
+                        {
+                            ZurmoConfigurationUtil::setByModuleName($configModuleName, $configKey, $user->id);
+                        }
+                        return $user;
+                    }
+                }
+                //Fallback if there is no system user for some reason.
                 $user = $superGroup->users->offsetGet(0);
                 if ($setOnMissing)
                 {

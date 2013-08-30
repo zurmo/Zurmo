@@ -37,12 +37,8 @@
     /**
      * Renders an action bar specifically for the search and listview.
      */
-    class ActionBarForSearchAndListView extends ConfigurableMetadataView
+    class ActionBarForSearchAndListView extends ActionBarConfigurableMetadataView
     {
-        protected $controllerId;
-
-        protected $moduleId;
-
         /**
          * Typically the model used for the list view.
          * @var Object
@@ -68,13 +64,14 @@
         protected $listViewRowsAreSelectable;
 
         /**
-         * Used to identify the active action for the action bar elements
-         * @var mixed null or string
+         * If set an intro view will be rendered
+         * @var null|IntroView
          */
-        protected $activeActionElementType;
+        protected $introView;
 
         public function __construct($controllerId, $moduleId, RedBeanModel $model, $listViewGridId,
-                                    $pageVarName, $listViewRowsAreSelectable, $activeActionElementType = null)
+                                    $pageVarName, $listViewRowsAreSelectable, $activeActionElementType = null,
+                                    IntroView $introView = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
@@ -89,6 +86,7 @@
             $this->pageVarName               = $pageVarName;
             $this->listViewRowsAreSelectable = $listViewRowsAreSelectable;
             $this->activeActionElementType   = $activeActionElementType;
+            $this->introView                 = $introView;
         }
 
         protected function renderContent()
@@ -101,12 +99,11 @@
                 $content .= '<div class="view-toolbar">' . $secondActionElementBarContent . '</div>';
             }
             $content .= '</div>';
+            if (isset($this->introView))
+            {
+                $content .= $this->introView->render();
+            }
             return $content;
-        }
-
-        public function isUniqueToAPage()
-        {
-            return true;
         }
 
         public static function getDefaultMetadata()

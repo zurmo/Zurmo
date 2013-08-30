@@ -102,6 +102,11 @@
             }
         }
 
+        /**
+         * @param Conversation $conversation
+         * @param User $user
+         * @return A|bool
+         */
         public static function hasUserReadConversationLatest(Conversation $conversation, User $user)
         {
             assert('$conversation->id > 0');
@@ -123,6 +128,10 @@
             return false;
         }
 
+        /**
+         * @param Conversation $conversation
+         * @return array
+         */
         public static function resolvePeopleOnConversation(Conversation $conversation)
         {
             $people   = ConversationParticipantsUtil::getConversationParticipants($conversation);

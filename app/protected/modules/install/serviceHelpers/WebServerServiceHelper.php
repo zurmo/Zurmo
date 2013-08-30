@@ -67,6 +67,9 @@
          * Override to handle scenarios where the application can detect apache is installed, but is unable to resolve
          * the version.
          * @see ServiceHelper::checkServiceAndSetMessagesByMethodNameAndDisplayLabel()
+         * @param string $methodName
+         * @param string $displayLabel
+         * @return bool
          */
         protected function checkServiceAndSetMessagesByMethodNameAndDisplayLabel($methodName, $displayLabel)
         {

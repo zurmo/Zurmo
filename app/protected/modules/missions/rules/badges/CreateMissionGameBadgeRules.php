@@ -60,6 +60,11 @@
             return Zurmo::t('MissionsModule', '{n} Mission created|{n} Missions created', array($value));
         }
 
+        /**
+         * @param array $userPointsByType
+         * @param array $userScoresByType
+         * @return int|string
+         */
         public static function badgeGradeUserShouldHaveByPointsAndScores($userPointsByType, $userScoresByType)
         {
             assert('is_array($userPointsByType)');

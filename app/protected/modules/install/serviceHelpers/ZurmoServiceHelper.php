@@ -68,6 +68,11 @@
             return version_compare($actualVersion, $latestStableVersion) >= 0;
         }
 
+        /**
+         * @param string $methodName
+         * @param string $displayLabel
+         * @return bool
+         */
         protected function checkServiceAndSetMessagesByMethodNameAndDisplayLabel($methodName, $displayLabel)
         {
             assert('$this->minimumVersion != null &&

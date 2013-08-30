@@ -58,32 +58,6 @@
             );
         }
 
-        public static function getIntervalDropDownArray()
-        {
-            return array(
-                60*60           =>  Zurmo::t('AutorespondersModule', '{hourCount} Hour', array('{hourCount}' => 1)),
-                60*60*4         =>  Zurmo::t('AutorespondersModule', '{hourCount} Hours', array('{hourCount}' => 4)),
-                60*60*8         =>  Zurmo::t('AutorespondersModule', '{hourCount} Hours', array('{hourCount}' => 8)),
-                60*60*12        =>  Zurmo::t('AutorespondersModule', '{hourCount} Hours', array('{hourCount}' => 12)),
-                60*60*24        =>  Zurmo::t('AutorespondersModule', '{dayCount} day', array('{dayCount}' => 1)),
-                60*60*24*2      =>  Zurmo::t('AutorespondersModule', '{dayCount} days', array('{dayCount}' => 2)),
-                60*60*24*3      =>  Zurmo::t('AutorespondersModule', '{dayCount} days', array('{dayCount}' => 3)),
-                60*60*24*4      =>  Zurmo::t('AutorespondersModule', '{dayCount} days', array('{dayCount}' => 4)),
-                60*60*24*5      =>  Zurmo::t('AutorespondersModule', '{dayCount} days', array('{dayCount}' => 5)),
-                60*60*24*10     =>  Zurmo::t('AutorespondersModule', '{dayCount} days', array('{dayCount}' => 10)),
-                60*60*24*7      =>  Zurmo::t('AutorespondersModule', '{weekCount} week', array('{weekCount}' => 1)),
-                60*60*24*14     =>  Zurmo::t('AutorespondersModule', '{weekCount} weeks', array('{weekCount}' => 2)),
-                60*60*24*21     =>  Zurmo::t('AutorespondersModule', '{weekCount} weeks', array('{weekCount}' => 3)),
-                60*60*24*30     =>  Zurmo::t('AutorespondersModule', '{monthCount} month', array('{monthCount}' => 1)),
-                60*60*24*30*2   =>  Zurmo::t('AutorespondersModule', '{monthCount} months', array('{monthCount}' => 2)),
-                60*60*24*30*3   =>  Zurmo::t('AutorespondersModule', '{monthCount} months', array('{monthCount}' => 3)),
-                60*60*24*30*4   =>  Zurmo::t('AutorespondersModule', '{monthCount} months', array('{monthCount}' => 4)),
-                60*60*24*30*5   =>  Zurmo::t('AutorespondersModule', '{monthCount} months', array('{monthCount}' => 5)),
-                60*60*24*30*6   =>  Zurmo::t('AutorespondersModule', '{monthCount} months', array('{monthCount}' => 6)),
-                60*60*24*30*12  =>  Zurmo::t('AutorespondersModule', '{yearCount} year', array('{yearCount}' => 1)),
-            );
-        }
-
         /**
          * Returns the display name for the model class.
          * @return dynamic label name based on module.
@@ -110,7 +84,8 @@
                     'subject',
                     'htmlContent',
                     'textContent',
-                    'secondsFromOperation',
+                    'fromOperationDurationInterval',
+                    'fromOperationDurationType',
                     'operationType',
                     'enableTracking',
                 ),
@@ -124,8 +99,11 @@
                     array('textContent',            'AtLeastOneContentAreaRequiredValidator'),
                     array('htmlContent',            'AutoresponderMergeTagsValidator', 'except' => 'autoBuildDatabase'),
                     array('textContent',            'AutoresponderMergeTagsValidator', 'except' => 'autoBuildDatabase'),
-                    array('secondsFromOperation',   'required'),
-                    array('secondsFromOperation',   'type',    'type' => 'integer'),
+                    array('fromOperationDurationInterval', 'type', 'type' => 'integer'),
+                    array('fromOperationDurationInterval', 'numerical', 'min' => 0),
+                    array('fromOperationDurationInterval', 'required'),
+                    array('fromOperationDurationType',    'type', 'type' => 'string'),
+                    array('fromOperationDurationType',    'required'),
                     array('operationType',          'required'),
                     array('operationType',          'type',    'type' => 'integer'),
                     array('operationType',          'numerical'),
@@ -136,14 +114,15 @@
                 'relations' => array(
                     'autoresponderItems'    => array(RedBeanModel::HAS_MANY, 'AutoresponderItem'),
                     'marketingList'         => array(RedBeanModel::HAS_ONE, 'MarketingList', RedBeanModel::NOT_OWNED),
-                    'files'                 => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED)
+                    'files'                 => array(RedBeanModel::HAS_MANY,  'FileModel', RedBeanModel::OWNED,
+                                                    RedBeanModel::LINK_TYPE_POLYMORPHIC, 'relatedModel'),
                 ),
                 'elements' => array(
                     'htmlContent'                   => 'TextArea',
                     'textContent'                   => 'TextArea',
                     'enableTracking'                => 'CheckBox',
                 ),
-                'defaultSortAttribute' => 'secondsFromOperation',
+                'defaultSortAttribute' => 'fromOperationDurationInterval',
             );
             return $metadata;
         }
@@ -172,7 +151,7 @@
             $searchAttributeData['structure'] = '1';
             $joinTablesAdapter                = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
             $where = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
-            return self::getSubset($joinTablesAdapter, null, $pageSize, $where, 'secondsFromOperation');
+            return self::getSubset($joinTablesAdapter, null, $pageSize, $where);
         }
 
         public static function getByOperationTypeAndMarketingListId($operationType, $marketingListId, $pageSize = null)
@@ -196,7 +175,7 @@
             $searchAttributeData['structure'] = '(1 and 2)';
             $joinTablesAdapter                = new RedBeanModelJoinTablesQueryAdapter(get_called_class());
             $where = RedBeanModelDataProvider::makeWhere(get_called_class(), $searchAttributeData, $joinTablesAdapter);
-            return self::getSubset($joinTablesAdapter, null, $pageSize, $where, 'secondsFromOperation');
+            return self::getSubset($joinTablesAdapter, null, $pageSize, $where);
         }
 
         protected static function translatedAttributeLabels($language)
@@ -205,12 +184,23 @@
                 array(
                     'subject'               => Zurmo::t('EmailMessagesModule', 'Subject', null,  null, $language),
                     'operationType'         => Zurmo::t('Core', 'Triggered By', null,  null, $language),
-                    'secondsFromOperation'  => Zurmo::t('AutorespondersModule', 'Send After', null,  null, $language),
+                    'fromOperationDurationInterval' => Zurmo::t('AutorespondersModule', 'Send After', null,  null, $language),
                     'htmlContent'           => Zurmo::t('EmailMessagesModule', 'Html Content', null,  null, $language),
                     'textContent'           => Zurmo::t('EmailMessagesModule', 'Text Content', null,  null, $language),
                     'enableTracking'        => Zurmo::t('AutorespondersModule', 'Enable Tracking', null,  null, $language),
                 )
             );
+        }
+
+        /**
+         * @param integer $initialTimeStamp
+         * @return integer timestamp based on durationInterval, durationSign, and durationType
+         */
+        public function resolveNewTimeStampForDuration($initialTimeStamp)
+        {
+            assert('is_int($initialTimeStamp)');
+            return TimeDurationUtil::resolveNewTimeStampForDuration($initialTimeStamp, (int)$this->fromOperationDurationInterval,
+                        TimeDurationUtil::DURATION_SIGN_POSITIVE, $this->fromOperationDurationType);
         }
 
         public function __toString()

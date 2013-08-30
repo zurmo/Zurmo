@@ -433,7 +433,7 @@
             $this->assertTrue(strpos($content, '<div id="modalContainer-search-formmodal"></div>') !== false);
             $this->assertTrue(strpos($content, '<div id="MarketingListsModalListView" class="ModalListView ListView ' .
                                                 'ModelView ConfigurableMetadataView MetadataView">') !== false);
-            $this->assertTrue(strpos($content, '<div class="cgrid-view" id="list-viewmodal">') !== false);
+            $this->assertTrue(strpos($content, '<div class="cgrid-view type-marketingLists" id="list-viewmodal">') !== false);
             $this->assertTrue(strpos($content, '<div class="summary">1-2 of 2 result(s).</div>') !== false);
             $this->assertTrue(strpos($content, '<table class="items">') !== false);
             $this->assertTrue(strpos($content, '<th id="list-viewmodal_c0">') !== false);

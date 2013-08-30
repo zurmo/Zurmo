@@ -40,6 +40,10 @@
      */
     class PortletsSecurityUtil
     {
+        /**
+         * @param array $portlets
+         * @return array
+         */
         public static function resolvePortletsForCurrentUser(array $portlets)
         {
             $resolvedPortlets = array();

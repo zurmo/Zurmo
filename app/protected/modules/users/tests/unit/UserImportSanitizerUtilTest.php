@@ -52,7 +52,7 @@
             $sanitizerUtilTypes        = PasswordAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
-                                         $sanitizerUtilTypes, 'User', 'hash', null,
+                                         $sanitizerUtilTypes, 'User', 'hash', null, 'column_0',
                                          $columnMappingData, $importSanitizeResultsUtil);
             $this->assertNull($sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
@@ -67,7 +67,7 @@
             $sanitizerUtilTypes        = PasswordAttributeImportRules::getSanitizerUtilTypesInProcessingOrder();
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
-                                         $sanitizerUtilTypes, 'User', 'hash', 'aValue',
+                                         $sanitizerUtilTypes, 'User', 'hash', 'aValue', 'column_0',
                                          $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals('aValue', $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
@@ -83,7 +83,7 @@
             $value                     = self::getStringByLength(85);
             $sanitizedValue            = ImportSanitizerUtil::
                                          sanitizeValueBySanitizerTypes(
-                                         $sanitizerUtilTypes, 'User', 'hash', $value,
+                                         $sanitizerUtilTypes, 'User', 'hash', $value, 'column_0',
                                          $columnMappingData, $importSanitizeResultsUtil);
             $this->assertEquals(substr($value, 0, 32), $sanitizedValue);
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());

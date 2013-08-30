@@ -283,7 +283,14 @@
             {
                 $emailSenderOrRecipientEmailNotFoundInSystem = $emailRecipientNotFoundInSystem;
             }
-            $box                       = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            if ($emailOwner instanceof User)
+            {
+                $box = EmailBoxUtil::getDefaultEmailBoxByUser($emailOwner);
+            }
+            else
+            {
+                $box = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+            }
             if ($emailSenderOrRecipientEmailNotFoundInSystem)
             {
                 $emailMessage->folder  = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_ARCHIVED_UNMATCHED);

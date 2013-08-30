@@ -70,8 +70,8 @@
         {
             $content  = '<div>';
             $content .= $this->renderTitleContent();
-            $content .= '<div class="process-container-view">';
-            $content .= "<h3>" . $this->allStepsMessage . '</h3>';
+            $content .= '<div class="progressbar-container">';
+            $content .= ZurmoHtml::tag('span', array('class' => 'all-steps-message'), '<h3>' . $this->allStepsMessage . '</h3>');
             $content .= '<div class="progressbar-wrapper"><span id="progress-percent">0&#37;</span>' .
                         $this->renderProgressBarContent() . '</div>';
             $content .= '</div>';

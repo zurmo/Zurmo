@@ -87,8 +87,8 @@
         /**
          * Given an import rules type and an array of atttribute indices or derived types, make a collection
          * of AttributeImportRules.
-         * @param unknown_type $importRulesType
-         * @param unknown_type $attributeIndicesOrDerivedTypes
+         * @param string $importRulesType
+         * @param array $attributeIndicesOrDerivedTypes
          * @return array AttributeImportRules collection
          */
         public static function makeCollection($importRulesType, $attributeIndicesOrDerivedTypes)
@@ -112,6 +112,7 @@
          * Given an import rules type and attribute index or derived type, return the attribute import rules class name.
          * @param string $importRulesType
          * @param string $attributeIndexOrDerivedType
+         * @return string $attributeImportRulesClassName
          */
         public static function getClassNameByImportRulesTypeAndAttributeIndexOrDerivedType($importRulesType,
                                                                                            $attributeIndexOrDerivedType)

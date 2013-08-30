@@ -58,6 +58,14 @@
          */
         private   $placedDirectAttributeNamesAsElements = array();
 
+        /**
+         * @param string $viewClassName
+         * @param string $moduleClassName
+         * @param array $existingMetadata
+         * @param DesignerRules $designerRules
+         * @param array $placeableLayoutAttributes
+         * @param array $requiredDerivedLayoutAttributeTypes
+         */
         public function __construct($viewClassName,
             $moduleClassName,
             $existingMetadata,

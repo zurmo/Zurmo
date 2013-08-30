@@ -36,6 +36,17 @@
 
     class TitleBarAndListView extends GridView
     {
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param RedBeanModel $listModel
+         * @param string $moduleName
+         * @param CDataProvider $dataProvider
+         * @param string $listViewClassName
+         * @param string $title
+         * @param array $selectedIds
+         * @param null|string  $description
+         */
         public function __construct(
             $controllerId,
             $moduleId,

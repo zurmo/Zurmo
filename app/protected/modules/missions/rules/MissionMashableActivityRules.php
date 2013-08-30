@@ -49,6 +49,10 @@
             return array();
         }
 
+        /**
+         * @param array $searchAttributeData
+         * @return array
+         */
         public function resolveSearchAttributeDataForLatestActivities($searchAttributeData)
         {
             assert('is_array($searchAttributeData)');

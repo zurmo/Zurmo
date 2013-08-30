@@ -35,7 +35,7 @@
      ********************************************************************************/
 
     /**
-     * Activities Modules such as Meetings, Notes, and tasks
+     * Activities Modules such as Meetings, Notes, and Tasks
      * should extend this class to provide generic functionality
      * that is applicable to all activity modules.
      */
@@ -50,6 +50,12 @@
          * Override to handle the special scenario of relations for an activity. Since relations are done in the
          * ActivityItems, the relation information needs to handled in a specific way.
          * @see ZurmoModuleController->resolveNewModelByRelationInformation
+         * @param Activity $model
+         * @param string $relationModelClassName
+         * @param int $relationModelId
+         * @param string $relationModuleId
+         * @return mixed
+         * @throws NotSupportedException
          */
         protected function resolveNewModelByRelationInformation(    $model, $relationModelClassName,
                                                                     $relationModelId, $relationModuleId)
@@ -62,7 +68,8 @@
             $metadata = Activity::getMetadata();
             if (in_array($relationModelClassName, $metadata['Activity']['activityItemsModelClassNames']))
             {
-                $model->activityItems->add($relationModelClassName::getById((int)$relationModelId));
+                $relatedModel = $relationModelClassName::getById((int)$relationModelId);
+                $model->activityItems->add($relatedModel);
             }
             else
             {

@@ -87,15 +87,11 @@
                                 <h3>Special Thanks</h3>
                                 <ul>
                                     <li>Richard Baldwin  - CRM Processes</li>
-                                    <li>Camilo Calderón  - Documentation</li>
                                     <li>Nev Delap        - Infrastructure</li>
                                     <li>Sergey Fayngold  - Language Infrastructure</li>
-                                    <li>Evan Fazio       - Gamification</li>
-                                    <li>Justin Ferguson  - Documentation</li>
                                     <li>Theresa Neil     - User Interface Design</li>
                                     <li>Sérgio Peixoto   - Portuguese Translation and Development</li>
                                     <li>Mandy Robinson   - Icons</li>
-                                    <li>Hisateru Tanaka  - Japanese Translation</li>
                                     <li>Sacha Telgenhof  - Language Infrastructure</li>
                                     <li>Subtle Patterns  - Background Textures</li>
                                 </ul>

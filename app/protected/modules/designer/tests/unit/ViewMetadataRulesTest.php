@@ -93,7 +93,7 @@
             $elementInformation = array();
             $elementInformation['type'] = 'CheckBox';
             BooleanAsDropDownViewMetadataRules::resolveElementMetadata($elementInformation, $elementMetadata);
-            $this->assertTrue($elementMetadata['addBlank']);
+            $this->assertTrue(!isset($elementMetadata['addBlank']));
             $this->assertEquals('BooleanStaticDropDown', $elementMetadata['type']);
 
             $elementMetadata = array();

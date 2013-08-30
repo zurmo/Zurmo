@@ -55,6 +55,10 @@
             return $link . $details;
         }
 
+        /**
+         * @param Mission $mission
+         * @param User $user
+         */
         public static function markUserHasReadLatest(Mission $mission, User $user)
         {
             $mashableUtilRules  = MashableUtil::createMashableInboxRulesByModel('Mission');
@@ -62,6 +66,10 @@
             return $hasReadLatest;
         }
 
+        /**
+         * @param Mission $mission
+         * @param User $user
+         */
         public static function markUserHasUnreadLatest(Mission $mission, User $user)
         {
             $mashableUtilRules  = MashableUtil::createMashableInboxRulesByModel('Mission');
@@ -69,6 +77,11 @@
             return $hasReadLatest;
         }
 
+        /**
+         * @param Mission $mission
+         * @param User $user
+         * @return bool
+         */
         public static function hasUserReadMissionLatest(Mission $mission, User $user)
         {
             $mashableUtilRules  = MashableUtil::createMashableInboxRulesByModel('Mission');
@@ -76,6 +89,9 @@
             return $hasReadLatest;
         }
 
+        /**
+         * @param Mission $mission
+         */
         public static function markAllUserHasReadLatestExceptOwnerAndTakenBy(Mission $mission)
         {
             $users = User::getAll();
@@ -89,6 +105,9 @@
             }
         }
 
+        /**
+         * @param Mission $mission
+         */
         public static function markAllUserHasUnreadLatest(Mission $mission)
         {
             $users = static::resolvePeopleToSendNotificationToOnNewMission($mission);
@@ -98,6 +117,11 @@
             }
         }
 
+        /**
+         * @param int $type
+         * @return string
+         * @throws NotSupportedException
+         */
         public static function makeActiveActionElementType($type)
         {
             assert('$type == null || is_int($type)');
@@ -123,6 +147,12 @@
             }
         }
 
+        /**
+         * @param Mission $mission
+         * @param int $type
+         * @param int $pageSize
+         * @return RedBeanModelDataProvider'
+         */
         public static function makeDataProviderByType(Mission $mission, $type, $pageSize)
         {
             if ($type == null)
@@ -186,6 +216,9 @@
             NotificationsUtil::submit($message, $rules);
         }
 
+        /**
+         * @param Mission $mission
+         */
         public static function makeAndSubmitNewMissionNotificationMessage(Mission $mission)
         {
             $recipients = array();
@@ -204,6 +237,10 @@
                                                  static::getEmailContent($mission));
         }
 
+        /**
+         * @param Mission $mission
+         * @return EmailMessageContent
+         */
         public static function getEmailContent(Mission $mission)
         {
             $emailContent  = new EmailMessageContent();
@@ -230,11 +267,19 @@
             return $emailContent;
         }
 
+        /**
+         * @param Mission $mission
+         * @return string
+         */
         public static function getEmailSubject(Mission $mission)
         {
             return Zurmo::t('MissionsModule', 'New mission');
         }
 
+        /**
+         * @param Mission $mission
+         * @return array
+         */
         public static function resolvePeopleToSendNotificationToOnNewMission(Mission $mission)
         {
             $users = User::getAll();

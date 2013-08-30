@@ -118,7 +118,7 @@
             return self::getCount($joinTablesAdapter, $where, get_called_class(), true);
         }
 
-        public static function getByMarketingListIdContactIdAndSubscribed($marketingListId, $contactId, $unsubscribed)
+        public static function getByMarketingListIdContactIdAndUnsubscribed($marketingListId, $contactId, $unsubscribed)
         {
             // TODO: @Shoaibi: Critical: Add Tests to cover:
             $searchAttributeData = array();

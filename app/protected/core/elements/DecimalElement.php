@@ -45,7 +45,7 @@
          */
         protected function renderControlNonEditable()
         {
-            return Yii::app()->numberFormatter->formatDecimal((float)$this->model->{$this->attribute});
+            return Yii::app()->format->formatDecimal($this->model->{$this->attribute});
         }
     }
 ?>

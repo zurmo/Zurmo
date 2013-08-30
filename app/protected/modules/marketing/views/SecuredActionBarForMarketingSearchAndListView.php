@@ -38,62 +38,25 @@
      * Action bar view for the marketing search and list user interface. Provides buttons like create, and links to
      * queues.
      */
-    class SecuredActionBarForMarketingSearchAndListView extends SecuredActionBarForSearchAndListView
+    class SecuredActionBarForMarketingSearchAndListView extends SecuredActionBarForMarketingListsSearchAndListView
     {
-        /**
-         * Identifies whether the intro view should be hidden or show on the marketing dashboard
-         * @var null|string
-         */
-        protected $introCookieValue;
-
         /**
          * @return array
          */
         public static function getDefaultMetadata()
         {
-            $metadata = array(
-                'global' => array(
-                    'toolbar' => array(
+            $metadata = parent::getDefaultMetadata();
+            $metadata['global']['secondToolbar'] = array(
                         'elements' => array(
-                            array('type'  => 'MarketingCreateLink',
-                                'htmlOptions' => array('class' => 'icon-create'),
-                            ),
-                            array(
-                                'type'            => 'MarketingDashboardLink',
-                                'htmlOptions'     => array( 'class' => 'icon-marketing-dashboard' )
-                            ),
-                            array(
-                                'type'            => 'MarketingListsLink',
-                                'htmlOptions'     => array( 'class' => 'icon-marketing-lists' )
-                            ),
-                            array(
-                                'type'            => EmailTemplatesForMarketingLinkActionElement::getType(),
-                                'htmlOptions'     => array( 'class' => 'icon-email-templates', )
-                            ),
-                            array(
-                                'type'            => 'CampaignsLink',
-                                'htmlOptions'     => array( 'class' => 'icon-marketing-campaigns' )
+                            array('type'        => 'MarketingIntroLink',
+                                  'panelId'     => 'eval:$this->introView->getPanelId()',
+                                  'checked'     => 'eval:!$this->introView->isIntroViewDismissed()',
+                                  'moduleName'  => 'eval:$this->introView->getModuleName()',
+                                  'htmlOptions' => array('class' => 'icon-intro-change-this'), //todo: need new class name
                             ),
                         ),
-                    ),
-                    'secondToolbar' => array(
-                        'elements' => array(
-                            array('type'  => 'MarketingIntroLink',
-                                'cookieValue' => 'eval:$this->introCookieValue',
-                                'htmlOptions' => array('class' => 'icon-intro-change-this'), //todo: need new class name
-                            ),
-                        ),
-                    ),
-
-                ),
-            );
+                    );
             return $metadata;
-        }
-
-        public function setIntroCookieValue($introCookieValue)
-        {
-            assert('$introCookieValue == null || is_string($introCookieValue)');
-            $this->introCookieValue = $introCookieValue;
         }
     }
 ?>

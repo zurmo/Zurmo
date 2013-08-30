@@ -51,9 +51,7 @@
 
         protected function renderContent()
         {
-            $placedViewTypes = Portlet::getPlacedViewTypesByLayoutIdAndUser($this->uniqueLayoutId,
-                                                                            Yii::app()->user->userModel->id);
-            $content = '<ul class="available-portlets">';
+            $placedViewTypes = $this->getPlacedViewTypes();
             $modules = Module::getModuleObjects();
             foreach ($modules as $module)
             {
@@ -82,21 +80,30 @@
                                         'portletType'    => $portletRules->getType(),
                                         )
                                     );
-                                    $onClick = 'window.location.href = "' . $url . '"';
-                                    $content .= '<li>';
                                     $title    = $metadata['perUser']['title'];
                                     MetadataUtil::resolveEvaluateSubString($title);
-                                    $label    = '<span>\</span>' . $title;
-                                    $content .= ZurmoHtml::link(Zurmo::t('HomeModule', $label ), null, array('onclick' => $onClick));
-                                    $content .= '</li>';
+                                    $sortablePortlets[$title] = array('url' => $url,
+                                        'title' => $title,
+                                        'portletRules' => $portletRules);
                                 }
                             }
                         }
                     }
                 }
             }
-            $content .= '</ul>';
-            return $content;
+            return PortletUtil::renderAddPortletsContent($sortablePortlets);
+        }
+
+        protected function getPlacedViewTypes()
+        {
+            $portlets        = Portlet::getByLayoutIdAndUserSortedById($this->uniqueLayoutId,
+                                                                       Yii::app()->user->userModel->id);
+            $placedViewTypes = array();
+            foreach ($portlets as $portlet)
+            {
+                $placedViewTypes[] = $portlet->viewType;
+            }
+            return $placedViewTypes;
         }
     }
 ?>

@@ -592,12 +592,12 @@
             $this->assertEquals('o', DynamicSearchDataProviderMetadataAdapter::numberToLetter(15));
             $this->assertEquals('ss', DynamicSearchDataProviderMetadataAdapter::numberToLetter(45));
         }
-        
+
         public function testGetAdaptedDataProviderMetadataForAttributesMappedToRealAttributesMetadata()
         {
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-            $sanitizedDynamicSearchAttributes = array(array('IIIName'                      => 'IL', 
+            $sanitizedDynamicSearchAttributes = array(array('IIIName'                      => 'IL',
                                                             'structurePosition'             => 1),
                                                       array('IIIName'                      => 'CA',
                                                             'structurePosition'             => 2));
@@ -631,8 +631,8 @@
                     'operatorType'         => 'startsWith',
                     'value'                => 'CA',
                 ),
-            );                                              
-            $compareStructure = '((1 or 2) or (3 or 4))';           
+            );
+            $compareStructure = '((1 or 2) or (3 or 4))';
             $this->assertEquals($compareClauses, $metadata['clauses']);
             $this->assertEquals($compareStructure, $metadata['structure']);
         }

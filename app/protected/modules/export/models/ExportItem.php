@@ -65,6 +65,7 @@
                     'exportFileType',
                     'exportFileName',
                     'modelClassName',
+                    'processOffset',
                     'serializedData'
                 ),
                 'relations' => array(
@@ -78,12 +79,17 @@
                     array('exportFileName',   'type', 'type' => 'string'),
                     array('modelClassName',   'required'),
                     array('modelClassName',   'type', 'type' => 'string'),
+                    array('processOffset',    'type',    'type' => 'integer'),
+                    array('processOffset',    'default',    'value' => 0),
                     array('serializedData',   'required'),
                     array('serializedData',   'type', 'type' => 'string'),
                 ),
                 'defaultSortAttribute' => 'modifiedDateTime',
                 'noAudit' => array(
-                    'serializedData', 'exportFileModel'
+                    'modelClassName',
+                    'processOffset',
+                    'serializedData',
+                    'exportFileModel',
                 )
             );
             return $metadata;

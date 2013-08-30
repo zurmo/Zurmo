@@ -65,12 +65,23 @@
             $value = '/' . preg_quote($value) . '/';
         }
 
+        /**
+         * @param $language
+         * @param string $content
+         */
         public function __construct($language, $content) // TODO: @Shoaibi/@Jason Low: probably change it to locale object
         {
             $this->language = $language;
             $this->content  = $content;
         }
 
+        /**
+         * @param $model
+         * @param array $invalidTags
+         * @param null $language
+         * @param bool $errorOnFirstMissing
+         * @return bool | array
+         */
         public function resolveMergeTagsArrayToAttributes($model, & $invalidTags = array(), $language = null, $errorOnFirstMissing = false)
         {
             if (!$language)
@@ -88,6 +99,13 @@
             }
         }
 
+        /**
+         * @param $model
+         * @param array $invalidTags
+         * @param null $language
+         * @param bool $errorOnFirstMissing
+         * @return bool | string
+         */
         public function resolveMergeTags($model, & $invalidTags = array(), $language = null, $errorOnFirstMissing = false)
         {
             if (!$this->extractMergeTagsPlaceHolders() ||

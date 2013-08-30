@@ -129,6 +129,11 @@
         public static function forgetModel(RedBeanModel $model)
         {
             $modelIdentifier = $model->getModelIdentifier();
+            self::forgetModelByIdentifier($modelIdentifier);
+        }
+
+        public static function forgetModelByIdentifier($modelIdentifier)
+        {
             if (PHP_CACHING_ON)
             {
                 unset(self::$modelIdentifiersToModels[$modelIdentifier]);

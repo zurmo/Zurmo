@@ -51,6 +51,11 @@
         const LANGUAGE_STATUS_ACTIVE   = 1;
         const LANGUAGE_STATUS_INACTIVE = 2;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param null|string $messageBoxContent
+         */
         public function __construct($controllerId, $moduleId, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
@@ -230,6 +235,11 @@ EOD;
             );
         }
 
+        /**
+         * @param string $languageCode
+         * @param array $languageData
+         * @return string
+         */
         protected function renderActivateButton($languageCode, $languageData)
         {
             assert('is_string($languageCode)');
@@ -359,6 +369,12 @@ EOD;
             return $languagesData;
         }
 
+        /**
+         * @param string $text
+         * @param bool $permanent
+         * @param bool $showIcon
+         * @return string
+         */
         public static function renderFlashMessage($text, $permanent = false, $showIcon = true)
         {
             assert('is_string($text) && !empty($text)');

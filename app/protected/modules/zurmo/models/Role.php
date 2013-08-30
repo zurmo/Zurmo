@@ -36,6 +36,10 @@
 
     class Role extends Item
     {
+        /**
+         * @param string $name
+         * @throws NotFoundException
+         */
         public static function getByName($name)
         {
             assert('is_string($name)');

@@ -73,7 +73,7 @@
                                     array(
                                         array(
                                             'elements' => array(
-                                                array('attributeName' => 'serializedmessages', 'type' => 'ImportMessages'),
+                                                array('attributeName' => 'serializedMessages', 'type' => 'ImportMessages'),
                                             ),
                                         ),
                                     )

@@ -48,6 +48,13 @@
 
         protected $userId;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $groupMembership
+         * @param int $userId
+         * @param null|string $title
+         */
         public function __construct($controllerId, $moduleId, array $groupMembership, $userId, $title = null)
         {
             assert('is_string($controllerId) && $controllerId != null');

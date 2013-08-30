@@ -43,6 +43,11 @@
         protected $viewData;
         protected $uniqueLayoutId;
 
+        /**
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
+         */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -77,6 +82,13 @@
             return 'OpportunitiesModule';
         }
 
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
+        }
+
         protected static function resolveMetadataClassNameToUse()
         {
             return 'OpportunityEditAndDetailsView';
@@ -88,6 +100,16 @@
         private function resolveControllerId()
         {
             return 'default';
+        }
+
+        /**
+         * Override to add a starring link to the title
+         * @return string
+         */
+        public function getTitle()
+        {
+            $starLink = StarredUtil::getToggleStarStatusLink($this->model, null);
+            return parent::getTitle() . $starLink;
         }
 
         /**

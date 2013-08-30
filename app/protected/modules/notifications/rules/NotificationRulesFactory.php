@@ -39,6 +39,10 @@
      */
     class NotificationRulesFactory
     {
+        /**
+         * @param string $type
+         * @return mixed
+         */
         public static function createNotificationRulesByType($type)
         {
             assert('$type !== null');

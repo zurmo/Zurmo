@@ -162,14 +162,20 @@
                             $moduleClassNameId . '\"]:checked").val() + ' .
                             '\'&rowNumber=\' + $(\'#' . $rowCounterInputId . '\').val()',
                         'url'     =>  $url,
-                        'beforeSend' => 'js:function(){ $(this).makeOrRemoveLoadingSpinner(true, "#" + $(this).attr("id")); }',
+                        'beforeSend' => 'js:function()
+                        {                                                       ;
+                            $(".ui-overlay-block").fadeIn(50);
+                            $(this).makeLargeLoadingSpinner(true, ".ui-overlay-block"); //- add spinner to block anything else
+                        }',
                         'success' => 'js:function(data)
                         {
                             $(\'#' . $rowCounterInputId . '\').val(parseInt($(\'#' . $rowCounterInputId . '\').val()) + 1);
                             $(".droppable-dynamic-rows-container.' . ComponentForWorkflowForm::TYPE_EMAIL_MESSAGES
-                                . '").find(".dynamic-rows").find("ul:first").first().append(data);
+                                . '").find(".dynamic-rows").find("ul:first").first().append("<li>" + data + "</li>");
                             rebuildWorkflowEmailMessageRowNumbers("' . get_class($this) . '");
                             $(".' . static::getZeroComponentsClassName() . '").hide();
+                            $(this).makeLargeLoadingSpinner(false, ".ui-overlay-block");
+                            $(".ui-overlay-block").fadeOut(50);
                         }',
                     ),
                     array('id' => self::ADD_EMAIL_MESSAGE_LINK_ID,
@@ -203,7 +209,7 @@
         {
             assert('is_int($rowCount)');
             assert('is_array($emailMessages)');
-            $items                      = array();
+            $items = array();
             foreach ($emailMessages as $emailMessage)
             {
                 $inputPrefixData   = array(get_class($this->model), ComponentForWorkflowForm::TYPE_EMAIL_MESSAGES, (int)$rowCount);

@@ -81,6 +81,10 @@
             }
         }
 
+        /**
+         * @param int $value
+         * @return string
+         */
         public static function sanitizeLatitudeOrLongitude($value)
         {
             assert('is_numeric($value)');

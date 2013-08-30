@@ -47,6 +47,12 @@
 
         protected $activeActionElementType;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param Group $model
+         * @param string $activeActionElementType
+         */
         public function __construct($controllerId, $moduleId, Group $model, $activeActionElementType)
         {
             assert('is_string($controllerId)');

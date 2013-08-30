@@ -40,9 +40,19 @@
         {
             return array(
                 'name'  => $this->attribute,
-                'value' => 'DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($data->' . $this->attribute . ')',
+                'value' => array($this, 'renderDataCellContent'),
                 'type'  => 'raw',
             );
+        }
+
+        public function renderDataCellContent($data, $row)
+        {
+           return $this->renderValue($data->{$this->attribute});
+        }
+
+        public function renderValue($value)
+        {
+            return DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($value);
         }
     }
 ?>

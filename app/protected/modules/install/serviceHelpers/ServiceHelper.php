@@ -128,6 +128,11 @@
             }
         }
 
+        /**
+         * @param string $methodName
+         * @param string $displayLabel
+         * @return bool
+         */
         protected function checkServiceAndSetMessagesByMethodNameAndDisplayLabel($methodName, $displayLabel)
         {
             assert('$this->minimumVersion != null &&
@@ -159,6 +164,11 @@
             }
         }
 
+        /**
+         * @param string $methodName
+         * @param $actualVersion
+         * @return mixed
+         */
         protected function callCheckServiceMethod($methodName, & $actualVersion)
         {
             assert('is_string($methodName)');

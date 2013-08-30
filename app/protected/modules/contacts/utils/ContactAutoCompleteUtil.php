@@ -43,6 +43,10 @@
         /**
          * @return array - Jui AutoComplete ready array
          *  containing id, value, and label elements.
+         * @param string $partialName
+         * @param int $pageSize
+         * @param null|string $stateMetadataAdapterClassName
+         * @return array
          */
         public static function getByPartialName($partialName, $pageSize, $stateMetadataAdapterClassName = null)
         {

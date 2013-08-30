@@ -36,6 +36,9 @@
 
     class UnsupportedBrowserPageView extends ZurmoPageView
     {
+        /**
+         * @param string $browserName
+         */
         public function __construct($browserName)
         {
             assert('is_string($browserName)');

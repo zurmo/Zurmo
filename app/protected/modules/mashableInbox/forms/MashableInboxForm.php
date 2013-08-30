@@ -47,6 +47,12 @@
 
         const  FILTERED_BY_UNREAD = 'unread';
 
+        /**
+         * True to scope data by starred only
+         * @var boolean
+         */
+        public $filterByStarred;
+
         public $searchTerm;
 
         public $filteredBy = self::FILTERED_BY_ALL;
@@ -68,6 +74,7 @@
         public function rules()
         {
             return array(
+                array('filterByStarred',     'boolean'),
                 array('searchTerm',          'type',    'type' => 'string'),
                 array('filteredBy',          'type',    'type' => 'string'),
                 array('optionForModel',      'type',    'type' => 'string'),

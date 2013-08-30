@@ -40,10 +40,24 @@
     abstract class ExternalSystemIdSuppportedSanitizerUtil extends SanitizerUtil
     {
         /**
+         * Max allowed length of a value when the type of value is IdValueTypeMappingRuleForm::EXTERNAL_SYSTEM_ID
+         * @var integer
+         */
+        protected $externalSystemIdMaxLength = 40;
+
+        /**
+         * When the attribute is expected to be a relation. This is the model class name for that relation.
+         * @var string
+         */
+        protected $attributeModelClassName;
+
+        /**
          * Given an external system id and model class name, try to find the associated model if it exists. If it is
          * not found, a NotFoundException will be thrown.  Otherwise the model will be made and returned.
          * @param string $id
          * @param string $modelClassName
+         * @return RedBeanModel $model
+         * @throws NotFoundException
          */
         public static function getModelByExternalSystemIdAndModelClassName($id, $modelClassName)
         {
@@ -57,6 +71,85 @@
                 throw new NotFoundException();
             }
             return RedBeanModel::makeModel(end($beans), $modelClassName);
+        }
+
+        /**
+         * Tries to find the value in the system. If found, returns true, otherwise false.
+         * @param string $value
+         * @return boolean
+         */
+        protected function resolveFoundIdByValue($value)
+        {
+            assert('is_int($value) || is_string($value) || $value == null');
+            if ($value == null)
+            {
+                return false;
+            }
+            elseif (is_int($value))
+            {
+                $sqlReadyString = $value;
+            }
+            else
+            {
+                $sqlReadyString = '\'' . $value . '\'';
+            }
+            $modelClassName = $this->attributeModelClassName;
+            $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .
+                   ' where id = ' . $sqlReadyString . ' limit 1';
+            $ids =  R::getCol($sql);
+            assert('count($ids) <= 1');
+            if (count($ids) == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * Given a model and an attribute, return the model class name for the attribute.
+         * @param RedBeanModel $model
+         * @param string $attributeName
+         * @return string $attributeModelClassName
+         */
+        protected function resolveAttributeModelClassName(RedBeanModel $model, $attributeName)
+        {
+            assert('is_string($attributeName)');
+            if ($attributeName == 'id')
+            {
+                return get_class($model);
+            }
+            return $model->getRelationModelClassName($attributeName);
+        }
+
+        protected function resolveForFoundModel()
+        {
+            $label = Zurmo::t('ImportModule', 'Is an existing record and will be updated.');
+            $this->analysisMessages[] = $label;
+        }
+
+        /**
+         * Tries to find the value in the system. If found, returns true, otherwise false.
+         * @param string $value
+         * @return boolean
+         */
+        protected function resolveFoundExternalSystemIdByValue($value)
+        {
+            assert('is_int($value) || is_string($value) || $value == null');
+            if ($value == null)
+            {
+                return false;
+            }
+            $modelClassName = $this->attributeModelClassName;
+            $columnName     = ExternalSystemIdUtil::EXTERNAL_SYSTEM_ID_COLUMN_NAME;
+            $sql = 'select id from ' . $modelClassName::getTableName($modelClassName) .
+                ' where ' . $columnName . ' = \'' . $value . '\' limit 1';
+            $ids =  R::getCol($sql);
+            assert('count($ids) <= 1');
+            if (count($ids) == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 ?>

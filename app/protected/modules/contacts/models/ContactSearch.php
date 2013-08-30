@@ -39,7 +39,9 @@
         /**
          * For a give Contact name, run a partial search by
          * full name and retrieve contact models.
-         *
+         * @param string $partialName
+         * @param int $pageSize
+         * @param null|string $stateMetadataAdapterClassName
          */
         public static function getContactsByPartialFullName($partialName, $pageSize, $stateMetadataAdapterClassName = null)
         {
@@ -71,7 +73,10 @@
         /**
          * For a give Contact name or email address, run a partial search by
          * full name and email address and retrieve contact models.
-         *
+         * @param string $partialNameOrEmailAddress
+         * @param int $pageSize
+         * @param null|string $stateMetadataAdapterClassName
+         * @param null|string $operatorType
          */
         public static function getContactsByPartialFullNameOrAnyEmailAddress($partialNameOrEmailAddress, $pageSize,
                                                                              $stateMetadataAdapterClassName = null, $operatorType = null)
@@ -125,6 +130,9 @@
 
         /**
          * For a given email address, run search by email address and retrieve contact models.
+         * @param string $emailAddress
+         * @param null|int $pageSize
+         * @param null|sting $stateMetadataAdapterClassName
          */
         public static function getContactsByAnyEmailAddress($emailAddress, $pageSize = null, $stateMetadataAdapterClassName = null)
         {

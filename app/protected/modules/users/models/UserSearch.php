@@ -39,7 +39,8 @@
         /**
          * For a give User name, run a partial search by
          * full name and retrieve user models.
-         *
+         * @param string $partialName
+         * @param int $pageSize
          */
         public static function getUsersByPartialFullName($partialName, $pageSize)
         {
@@ -51,17 +52,25 @@
             $fullNameSql = DatabaseCompatibilityUtil::concat(array('person.firstname',
                                                                    '\' \'',
                                                                    'person.lastname'));
-             $where = "      (person.firstname      like lower('$partialName%') or "    .
-                      "       person.lastname       like lower('$partialName%') or "    .
-                      "       $fullNameSql like lower('$partialName%')) ";
+             $where  = '(_user.hidefromselecting is null OR _user.hidefromselecting = 0) and ';
+             $where .= "      (person.firstname      like lower('$partialName%') or "    .
+                       "       person.lastname       like lower('$partialName%') or "    .
+                       "       $fullNameSql like lower('$partialName%')) ";
             return User::getSubset($joinTablesAdapter, null, $pageSize,
                                             $where, "person.firstname, person.lastname");
         }
 
-        public static function getUsersByEmailAddress($emailAddress, $operatorType = null)
+        /**
+         * @param string $emailAddress
+         * @param null|string $operatorType
+         * @param bool $filterOutHideFromSelecting
+         * @return An
+         */
+        public static function getUsersByEmailAddress($emailAddress, $operatorType = null, $filterOutHideFromSelecting = false)
         {
             assert('is_string($emailAddress)');
             assert('$operatorType == null || is_string($operatorType)');
+            assert('is_bool($filterOutHideFromSelecting)');
             if ($operatorType == null)
             {
               $operatorType = 'equals';
@@ -75,7 +84,22 @@
                             'value'                => $emailAddress,
                     ),
             );
-            $metadata['structure'] = '(1)';
+            if ($filterOutHideFromSelecting)
+            {
+                $metadata['clauses'][2] = array(
+                    'attributeName'        => 'hideFromSelecting',
+                    'operatorType'         => 'equals',
+                    'value'                => 0);
+                $metadata['clauses'][3] = array(
+                    'attributeName'        => 'hideFromSelecting',
+                    'operatorType'         => 'isNull',
+                    'value'                => null);
+                $metadata['structure'] = '(1 and (2 or 3))';
+            }
+            else
+            {
+                $metadata['structure'] = '(1)';
+            }
             $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter('User');
             $where  = RedBeanModelDataProvider::makeWhere('User', $metadata, $joinTablesAdapter);
             $users = User::getSubset($joinTablesAdapter, null, null, $where);

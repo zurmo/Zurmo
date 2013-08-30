@@ -39,7 +39,7 @@
      */
     class ProductsSuperUserExportWalkthroughTest extends ZurmoWalkthroughBaseTest
     {
-        protected static $asynchronusThreshold;
+        protected static $asynchronousThreshold;
 
         public static function setUpBeforeClass()
         {
@@ -48,13 +48,13 @@
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            self::$asynchronusThreshold = ExportModule::$asynchronusThreshold;
-            ExportModule::$asynchronusThreshold = 3;
+            self::$asynchronousThreshold = ExportModule::$asynchronousThreshold;
+            ExportModule::$asynchronousThreshold = 3;
         }
 
         public static function tearDownAfterClass()
         {
-            ExportModule::$asynchronusThreshold = self::$asynchronusThreshold;
+            ExportModule::$asynchronousThreshold = self::$asynchronousThreshold;
             parent::tearDownAfterClass();
         }
 
@@ -151,7 +151,7 @@
                 }
             }
             $products = array();
-            for ($i = 0; $i <= (ExportModule::$asynchronusThreshold + 1); $i++)
+            for ($i = 0; $i <= (ExportModule::$asynchronousThreshold + 1); $i++)
             {
                 $products[] = ProductTestHelper::createProductByNameForOwner('superProduct' . $i, $super);
             }

@@ -66,6 +66,11 @@
             throw new NotImplementedException();
         }
 
+        public function renderValue($value)
+        {
+            return $value;
+        }
+
         /**
          * True/False, if true will
          * render as link

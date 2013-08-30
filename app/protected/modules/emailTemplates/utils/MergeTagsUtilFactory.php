@@ -36,6 +36,13 @@
 
     class MergeTagsUtilFactory
     {
+        /**
+         * @param $emailTemplateType
+         * @param string $language
+         * @param string $content
+         * @return ContactMergeTagsUtil|WorkflowMergeTagsUtil
+         * @throws NotSupportedException
+         */
         public static function make($emailTemplateType, $language, $content)
         {
             if ($emailTemplateType == EmailTemplate::TYPE_WORKFLOW)

@@ -43,7 +43,7 @@
             => 'Per continuare l\'importazione, è necessario inviare un file.',
         'A file must be uploaded with at least one row to import.'
             => 'Necessario inviare un file con almena una riga ad importare.',
-        'A full name value is required but missing.'
+        'Full name value required, but missing.'
             => 'Il nome completo è richisto.',
         'Access Import Tool'
             => 'Accesso al utensile di importazione',

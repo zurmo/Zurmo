@@ -44,6 +44,11 @@
             return $permissions;
         }
 
+        /**
+         * @param null|Permitable $permitable
+         * @return array
+         * @throws NoCurrentUserSecurityException
+         */
         public function getActualPermissions($permitable = null)
         {
             assert('$permitable === null || $permitable instanceof Permitable');
@@ -285,6 +290,11 @@
             return array($allowPermissions, $denyPermissions);
         }
 
+        /**
+         * @param Permitable $permitable
+         * @param int $permissions
+         * @param array $type
+         */
         public function addPermissions(Permitable $permitable, $permissions, $type = Permission::ALLOW)
         {
             assert('is_int($permissions)');
@@ -321,6 +331,11 @@
             }
         }
 
+        /**
+         * @param Permitable $permitable
+         * @param int $permissions
+         * @param array $type
+         */
         public function removePermissions(Permitable $permitable, $permissions = Permission::ALL, $type = Permission::ALLOW_DENY)
         {
             assert('is_int($permissions)');
@@ -402,6 +417,10 @@
             return parent::delete();
         }
 
+        /**
+         * @param int $requiredPermissions
+         * @throws AccessDeniedSecurityException
+         */
         protected function checkPermissionsHasAnyOf($requiredPermissions)
         {
             assert('is_int($requiredPermissions)');

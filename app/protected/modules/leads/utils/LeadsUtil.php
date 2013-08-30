@@ -131,6 +131,7 @@
         /**
          * Get an array of only the states from the starting state onwards, order/translated label pairings of the
          * existing lead states ordered by order.
+         * @param string $language
          * @return array
          */
         public static function getLeadStateDataFromStartingStateKeyedByIdAndLabelByLanguage($language)
@@ -153,6 +154,7 @@
         /**
          * Get an array of states from the starting state onwards, id/translated label pairings of the
          * existing contact states ordered by order.
+         * @param string $language
          * @return array
          */
         public static function getLeadStateDataFromStartingStateLabelByLanguage($language)
@@ -173,6 +175,10 @@
             return $leadStatesData;
         }
 
+        /**
+         * @param ContactState $state
+         * @return bool
+         */
         public static function isStateALead(ContactState $state)
         {
             assert('$state->id > 0');
@@ -187,6 +193,10 @@
             }
         }
 
+        /**
+         * @param string $stateName
+         * @return bool
+         */
         public static function isStateALeadByStateName($stateName)
         {
             assert('is_string($stateName)');

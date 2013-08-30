@@ -39,6 +39,10 @@
      */
     class ModelAttributeToReportOperatorTypeUtil extends ModelAttributeToOperatorTypeUtil
     {
+        /**
+         * @param $data
+         * @param $type
+         */
         public static function resolveOperatorsToIncludeByType(& $data, $type)
         {
             if ($type == self::AVAILABLE_OPERATORS_TYPE_BOOLEAN)

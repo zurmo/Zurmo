@@ -42,6 +42,9 @@
     {
         protected $user;
 
+        /**
+         * @param User $user
+         */
         public function __construct($user)
         {
             assert('$user instanceof User && $user->id >0');

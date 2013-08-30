@@ -38,6 +38,16 @@
     {
         protected $verticalGridView;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param array $settingsMenuItems
+         * @param array $userMenuItems
+         * @param array $shortcutsCreateMenuItems
+         * @param array $moduleNamesAndLabels
+         * @param string $sourceUrl
+         * @param string $applicationName
+         */
         public function __construct($controllerId, $moduleId, $settingsMenuItems, $userMenuItems,
                                     $shortcutsCreateMenuItems,
                                     $moduleNamesAndLabels, $sourceUrl, $applicationName)

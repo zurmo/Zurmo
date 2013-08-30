@@ -43,6 +43,14 @@
 
         protected $ownerOnly = false;
 
+        /**
+         * @param string $controllerId
+         * @param string $moduleId
+         * @param string $stringTime
+         * @param string $redirectUrl
+         * @param bool $ownerOnly
+         * @param null|RedBeanModel $relationModel
+         */
         public function __construct($controllerId, $moduleId, $stringTime, $redirectUrl,
                                     $ownerOnly = false, $relationModel = null)
         {

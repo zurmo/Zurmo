@@ -58,6 +58,9 @@
             $demoDataHelper->setRangeByModelName('EmailMessageUrl', $emailMessageUrls[0], $emailMessageUrls[count($emailMessageUrls)-1]);
         }
 
+        /**
+         * @param EmailMessageUrl $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof EmailMessageUrl');

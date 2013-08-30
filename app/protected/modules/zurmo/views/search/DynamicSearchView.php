@@ -220,6 +220,10 @@
             return $dynamicClauseOnlyWithAttributes;
         }
 
+        /**
+         * @param int $rowCount
+         * @return string
+         */
         protected function renderAddExtraRowContent($rowCount)
         {
             assert('is_int($rowCount)');

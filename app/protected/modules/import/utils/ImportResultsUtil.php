@@ -97,6 +97,10 @@
             }
         }
 
+        /**
+         * @param array $messages
+         * @return null|string
+         */
         public static function convertSerializedMessagesToDisplayReadyString($messages)
         {
             assert('is_string($messages)');

@@ -67,8 +67,7 @@
             }
             elseif ($this->model->dynamicClauses != null)
             {
-                $searchArray = $this->model->dynamicClauses;
-                return SearchUtil::getSearchAttributesFromSearchArray($searchArray);
+                return $this->model->dynamicClauses;
             }
             else
             {

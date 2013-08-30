@@ -61,6 +61,9 @@
                                         'type' => 'AutorespondersPortlet'
                                     ),
                                     array(
+                                        'type' => 'CampaignsForMarketingListRelatedList',
+                                    ),
+                                    array(
                                         'type' => 'MarketingListOverallMetrics'
                                     ),
                                 )

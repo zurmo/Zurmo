@@ -41,6 +41,9 @@
     {
         protected $modelClassName;
 
+        /**
+         * @param string $modelClassName
+         */
         public function __construct($modelClassName)
         {
             assert('is_string($modelClassName)');

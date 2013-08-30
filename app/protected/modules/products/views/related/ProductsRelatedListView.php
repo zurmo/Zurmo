@@ -1,7 +1,7 @@
 <?php
     /*********************************************************************************
      * Zurmo is a customer relationship management program developed by
-     * Zurmo, Inc. Copyright (C) 2012 Zurmo Inc.
+     * Zurmo, Inc. Copyright (C) 2013 Zurmo Inc.
      *
      * Zurmo is free software; you can redistribute it and/or modify it under
      * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,8 +20,18 @@
      * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
      * 02110-1301 USA.
      *
-     * You can contact Zurmo, Inc. with a mailing address at 113 McHenry Road Suite 207,
-     * Buffalo Grove, IL 60089, USA. or at email address contact@zurmo.com.
+     * You can contact Zurmo, Inc. with a mailing address at 27 North Wacker Drive
+     * Suite 370 Chicago, IL 60606. or at email address contact@zurmo.com.
+     *
+     * The interactive user interfaces in original and modified versions
+     * of this program must display Appropriate Legal Notices, as required under
+     * Section 5 of the GNU Affero General Public License version 3.
+     *
+     * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+     * these Appropriate Legal Notices must retain the display of the Zurmo
+     * logo and Zurmo copyright notice. If the display of the logo is not reasonably
+     * feasible for technical reasons, the Appropriate Legal Notices must display the words
+     * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
     abstract class ProductsRelatedListView extends SecuredRelatedListView
@@ -233,15 +243,8 @@
          */
         protected function getCGridViewParams()
         {
-            $columns = $this->getCGridViewColumns();
-            assert('is_array($columns)');
-            $gridViewParams = parent::getCGridViewParams();
-            $gridViewParams['id']              = $this->getGridViewId();
-            $gridViewParams['pager']           = $this->getCGridViewPagerParams();
-            $gridViewParams['afterAjaxUpdate'] = $this->getCGridViewAfterAjaxUpdate();
-            $gridViewParams['columns']         = $columns;
-            $gridViewParams['template']        = static::getGridTemplate();
-            $gridViewParams['params']          = $this->params;
+            $gridViewParams           = parent::getCGridViewParams();
+            $gridViewParams['params'] = $this->params;
             return $gridViewParams;
         }
 
@@ -251,7 +254,7 @@
         protected function getCGridViewPagerParams()
         {
             $gridViewPagerParams = parent::getCGridViewPagerParams();
-            $defaultData = array('id' => $this->params["relationModel"]->id, 'stickyOffset' => 0);
+            $defaultData = array_merge(GetUtil::getData(), array('id' => $this->params["relationModel"]->id, 'stickyOffset' => 0));
             $gridViewPagerParams['paginationParams'] = array_merge($defaultData, array('portletId' => $this->params['portletId']));
             return $gridViewPagerParams;
         }

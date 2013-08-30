@@ -83,6 +83,12 @@
             $session[self::getCacheId($modelClassName)] = $temp;
         }
 
+        /**
+         * @param int $skipCount
+         * @param string $modelClassName
+         * @return string
+         * @throws NotSupportedException
+         */
         public static function getSkipCountMessageContentByModelClassName($skipCount, $modelClassName)
         {
             if ($skipCount > 0)

@@ -120,6 +120,11 @@
             }
         }
 
+        /**
+         * @param array $contactStatesLabels
+         * @param int $order
+         * @return null|string
+         */
         protected function makeSerializedLabelsByLabelsAndOrder($contactStatesLabels, $order)
         {
             assert('is_array($contactStatesLabels) || $contactStatesLabels == null');

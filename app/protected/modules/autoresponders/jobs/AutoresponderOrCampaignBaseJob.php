@@ -36,6 +36,8 @@
 
     abstract class AutoresponderOrCampaignBaseJob extends BaseJob
     {
+        protected $modelIdentifiersForForgottenValidators = array();
+
         /**
          * @return The type of the NotificationRules
          */
@@ -54,6 +56,52 @@
         protected function resolveBatchSize()
         {
             return AutoresponderOrCampaignBatchSizeConfigUtil::getBatchSize();
+        }
+
+        /**
+         * Not pretty, but gets the job done. Solves memory leak problem.
+         * @param AutoresponderItem or CampaignItem $item
+         */
+        protected function runGarbageCollection($item)
+        {
+            $item->contact->primaryEmail->forgetValidators();
+            $item->contact->forgetValidators();
+            $item->emailMessage->content->forgetValidators();
+            $item->emailMessage->sender->forgetValidators();
+            $item->emailMessage->forgetValidators();
+            $this->modelIdentifiersForForgottenValidators[$item->contact->primaryEmail->getModelIdentifier()] = true;
+            $this->modelIdentifiersForForgottenValidators[$item->contact->getModelIdentifier()]               = true;
+            $this->modelIdentifiersForForgottenValidators[$item->emailMessage->content->getModelIdentifier()] = true;
+            $this->modelIdentifiersForForgottenValidators[$item->emailMessage->sender->getModelIdentifier()]  = true;
+            $this->modelIdentifiersForForgottenValidators[$item->emailMessage->getModelIdentifier()]          = true;
+        }
+
+        protected function forgetModelsWithForgottenValidators()
+        {
+            foreach ($this->modelIdentifiersForForgottenValidators as $modelIdentifier => $notUsed)
+            {
+                RedBeanModelsCache::forgetModelByIdentifier($modelIdentifier);
+            }
+        }
+
+        protected function addMaxmimumProcessingCountMessage($modelsProcessedCount, $startingMemoryUsage)
+        {
+            assert('is_int($modelsProcessedCount)');
+            $endingMemoryUsage = memory_get_usage();
+            if ($modelsProcessedCount == 0)
+            {
+                $costPerModel =  0;
+            }
+            else
+            {
+                $costPerModel = ($endingMemoryUsage - $startingMemoryUsage) / $modelsProcessedCount;
+            }
+            $message = Zurmo::t('CampaignsModule', 'Models processed: {count} Memory cost per model: {cost}',
+                                                    array('{count}' => $modelsProcessedCount,
+                                                          '{cost}'  => round($costPerModel, 2)));
+            $this->getMessageLogger()->addInfoMessage($message);
+            $message = Zurmo::t('CampaignsModule', 'Final memory usage: {usage}', array('{usage}' => $endingMemoryUsage));
+            $this->getMessageLogger()->addInfoMessage($message);
         }
     }
 ?>

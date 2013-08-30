@@ -36,6 +36,11 @@
 
     class ZurmoModelSearch
     {
+        /**
+         * @param string $modelClassName
+         * @param string $fullName
+         * @return mixed
+         */
         public static function getModelsByFullName($modelClassName, $fullName)
         {
             assert('is_string($modelClassName)');

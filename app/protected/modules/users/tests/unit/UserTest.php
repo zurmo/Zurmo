@@ -48,6 +48,18 @@
             Yii::app()->user->userModel = User::getByUsername('super');
         }
 
+        /**
+         * You can only use setIsSystemUser to set the isSystemUser attribute
+         * @expectedException NotSupportedException
+         */
+        public function testCannotSetIsSystemUserDirectlyOnModel()
+        {
+            $user = User::getByUsername('super');
+            Yii::app()->user->userModel = $user;
+            $user = new User();
+            $user->isSystemUser = true;
+        }
+
         public function testEmailUniquenessValidation()
         {
             $user = User::getByUsername('super');
@@ -1167,6 +1179,235 @@
 
             $user = User::getByUsername('trimusername');
             $this->assertEquals('trimusername', $user->username);
+        }
+
+        /**
+         * test for checking hideFromSelecting attribute
+         */
+        public function testHideFromSelectingOnUserSave()
+        {
+            $user = new User();
+            $user->username           = 'hidefromselectuser';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'hidefromselectuser';
+            $user->hideFromSelecting  = true;
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('hidefromselectuser');
+            $this->assertEquals(1, $user->hideFromSelecting);
+            unset($user);
+
+            $userSet = UserSearch::getUsersByPartialFullName('hide', 20);
+            $this->assertEquals(0, count($userSet));
+
+            $user = User::getByUsername('hidefromselectuser');
+            $user->hideFromSelecting  = false;
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('hidefromselectuser');
+            $this->assertEquals(0, $user->hideFromSelecting);
+            unset($user);
+
+            $userSet = UserSearch::getUsersByPartialFullName('hide', 20);
+
+            $this->assertEquals(1, count($userSet));
+        }
+
+        /**
+         * test for checking hideFromLeaderboard attribute
+         */
+        public function testHideFromLeaderboardOnUserSave()
+        {
+            $user = new User();
+            $user->username           = 'leaderboard';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'leaderboard';
+            $user->hideFromLeaderboard  = true;
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('leaderboard');
+            Yii::app()->user->userModel = $user;
+
+            $pointTypeAndValueData = array('some type' => 400);
+            GamePointUtil::addPointsByPointData(Yii::app()->user->userModel, $pointTypeAndValueData);
+            Yii::app()->gameHelper->processDeferredPoints();
+
+            $user = User::getByUsername('leaderboard');
+            $this->assertEquals(1, $user->hideFromLeaderboard);
+            unset($user);
+
+            $userSet = GamePointUtil::getUserLeaderboardData(GamePointUtil::LEADERBOARD_TYPE_OVERALL);
+            $this->assertEquals(0, count($userSet));
+
+            $user = User::getByUsername('leaderboard');
+            $user->hideFromLeaderboard  = false;
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('leaderboard');
+            $this->assertEquals(0, $user->hideFromLeaderboard);
+            unset($user);
+
+            $userSet = GamePointUtil::getUserLeaderboardData(GamePointUtil::LEADERBOARD_TYPE_OVERALL);
+
+            $this->assertTrue(count($userSet) > 0);
+        }
+
+        /**
+         * test for checking hideFromSelecting attribute
+         */
+        public function testIsRootUserOnUserSave()
+        {
+            $user = new User();
+            $user->username           = 'rootuser';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'rootuser';
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('rootuser');
+            $this->assertNull($user->isRootUser);
+            unset($user);
+
+            $superUser = User::getByUsername('leaderboard');
+            Yii::app()->user->userModel = $superUser;
+
+            $user = User::getByUsername('rootuser');
+            $this->assertTrue(UserAccessUtil::resolveCanCurrentUserAccessRootUser($user));
+
+            $user->setIsRootUser();
+            $this->assertTrue($user->save());
+            unset($user);
+            $user = User::getByUsername('rootuser');
+            $this->assertFalse(UserAccessUtil::resolveCanCurrentUserAccessRootUser($user, false));
+
+            $user = new User();
+            $user->username           = 'rootuser2';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'rootuser2';
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            //Get root user count
+            $this->assertEquals(1, User::getRootUserCount());
+
+            //Take care that only root user could be there
+            $user = User::getByUsername('rootuser2');
+            try
+            {
+                $user->setIsRootUser();
+            }
+            catch (Exception $e)
+            {
+                $this->assertEquals('ExistingRootUserException', get_class($e));
+            }
+        }
+
+        /**
+         * test for checking hideFromSelecting attribute
+         */
+        public function testIsSystemUserAndActiveUserCountOnUserSave()
+        {
+            $user = new User();
+            $user->username           = 'sysuser';
+            $user->title->value       = 'Mr.';
+            $user->firstName          = 'My';
+            $user->lastName           = 'sysuser';
+            $user->setPassword('myuser');
+            $this->assertTrue($user->save());
+            unset($user);
+
+            $user = User::getByUsername('sysuser');
+            $this->assertNull($user->isSystemUser);
+            unset($user);
+
+            //Check active user count
+            $activeUserCount = User::getActiveUserCount();
+            $this->assertEquals(26, $activeUserCount);
+
+            $user = User::getByUsername('sysuser');
+            $this->assertTrue(UserAccessUtil::resolveAccessingASystemUser($user));
+
+            $user->setIsSystemUser();
+            $this->assertTrue($user->save());
+            unset($user);
+            $user = User::getByUsername('sysuser');
+            $this->assertFalse(UserAccessUtil::resolveAccessingASystemUser($user, false));
+
+            //As the user has been made a system user so count should reduce
+            $activeUserCount = User::getActiveUserCount();
+            $this->assertEquals(25, $activeUserCount);
+
+            $user = User::getByUsername('rootuser');
+            $user->setIsNotRootUser();
+            $this->assertTrue($user->save());
+            unset($user);
+
+            //As the user removed from root user so count should increase
+            $activeUserCount = User::getActiveUserCount();
+            $this->assertEquals(26, $activeUserCount);
+        }
+
+        /**
+         * test getUsersByEmailAddress
+         */
+        public function testGetUsersByEmailAddress()
+        {
+            $user = UserTestHelper::createBasicUserWithEmailAddress("emailhideuser");
+            $user->hideFromSelecting  = true;
+            $this->assertTrue($user->save());
+            unset($user);
+            $users = UserSearch::getUsersByEmailAddress("emailhideuser@zurmo.com", null, false);
+            $this->assertEquals(true, (bool)$users[0]->hideFromSelecting);
+            $this->assertEquals(1, count($users));
+
+            $users = UserSearch::getUsersByEmailAddress("emailhideuser@zurmo.com", null, true);
+            $this->assertEquals(0, count($users));
+        }
+
+        /**
+         * test getUsersByPartialFullName
+         */
+        public function testGetUsersByPartialFullName()
+        {
+            $user = UserTestHelper::createBasicUserWithEmailAddress("partialhideuser");
+            $user->hideFromSelecting  = true;
+            $this->assertTrue($user->save());
+            unset($user);
+            $users = UserSearch::getUsersByPartialFullName("partial", 1);
+            $this->assertEquals(0, count($users));
+
+            $user = User::getByUsername('partialhideuser');
+            $user->hideFromSelecting  = false;
+            $this->assertTrue($user->save());
+            unset($user);
+            $users = UserSearch::getUsersByPartialFullName("partial", 1);
+            $this->assertEquals(1, count($users));
+        }
+
+        /**
+         * Test structure and clauses for NonSystemUsersStateMetadataAdapter
+         */
+        public function testNonSystemUsersStateMetadataAdapter()
+        {
+            $nonSystemUsersStateMetadataAdapter = new NonSystemUsersStateMetadataAdapter(array('clauses' => array(), 'structure' => ''));
+            $metadata = $nonSystemUsersStateMetadataAdapter->getAdaptedDataProviderMetadata();
+            $this->assertEquals('(1 or 2)', $metadata['structure']);
+
+            $nonSystemUsersStateMetadataAdapter1 = new NonSystemUsersStateMetadataAdapter(array('clauses' => array(), 'structure' => 'x and y'));
+            $metadata = $nonSystemUsersStateMetadataAdapter1->getAdaptedDataProviderMetadata();
+            $this->assertEquals('(x and y) and (1 or 2)', $metadata['structure']);
         }
     }
 ?>

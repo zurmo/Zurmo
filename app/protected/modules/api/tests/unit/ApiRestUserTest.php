@@ -195,6 +195,10 @@
             unset($response['data']['id']);
             unset($response['data']['password']);
             unset($response['data']['manager']['username']);
+            unset($response['data']['hideFromLeaderboard']);
+            unset($response['data']['hideFromSelecting']);
+            unset($response['data']['isRootUser']);
+            unset($response['data']['isSystemUser']);
             $hash = User::encryptPassword($data['password']);
             unset($data['password']);
 

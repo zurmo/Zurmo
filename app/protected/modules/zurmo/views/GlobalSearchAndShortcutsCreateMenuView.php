@@ -45,6 +45,11 @@
 
         protected $shortcutsCreateMenuView;
 
+        /**
+         * @param array $moduleNamesAndLabelsAndAll
+         * @param string $sourceUrl
+         * @param ShortcutsCreateMenuView $shortcutsCreateMenuView
+         */
         public function __construct($moduleNamesAndLabelsAndAll, $sourceUrl, $shortcutsCreateMenuView)
         {
             assert('is_array($moduleNamesAndLabelsAndAll)');

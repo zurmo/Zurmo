@@ -46,6 +46,9 @@
             return array('contacts', 'emailMessages');
         }
 
+        /**
+         * @param DemoDataHelper $demoDataHelper
+         */
         public function makeAll(& $demoDataHelper)
         {
             assert('$demoDataHelper instanceof DemoDataHelper');
@@ -75,6 +78,9 @@
             $this->populateMarketingItems('AutoresponderItem', $activity->autoresponderItem->autoresponder->subject);
         }
 
+        /**
+         * @param AutoresponderItemActivity $model
+         */
         public function populateModel(& $model)
         {
             assert('$model instanceof AutoresponderItemActivity');

@@ -82,6 +82,13 @@
             return $metadata;
         }
 
+        /**
+         * @param $leftTopView
+         * @param $leftBottomView
+         * @param $rightTopView
+         * @param bool $renderRightSide
+         * @return string
+         */
         protected function renderLeftAndRightGridViewContent($leftTopView, $leftBottomView, $rightTopView, $renderRightSide)
         {
             assert('$leftTopView instanceof View');

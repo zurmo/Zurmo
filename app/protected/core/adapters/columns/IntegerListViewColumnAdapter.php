@@ -54,7 +54,7 @@
             }
             else
             {
-                return Yii::app()->format->formatNumber((int)$model->{$attribute});
+                return Yii::app()->numberFormatter->formatDecimal((int)$model->{$attribute});
             }
         }
     }

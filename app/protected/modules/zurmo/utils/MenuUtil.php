@@ -48,6 +48,10 @@
             return self::resolveByCacheAndGetVisibleAndOrderedTabMenuByUser($user);
         }
 
+        /**
+         * @param User $user
+         * @return array|mixed
+         */
         public static function resolveByCacheAndGetVisibleAndOrderedTabMenuByUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -70,6 +74,10 @@
             return self::resolveByCacheAndGetVisibleAndOrderedAdminTabMenuByUser($user);
         }
 
+        /**
+         * @param $user
+         * @return array|mixed
+         */
         public static function resolveByCacheAndGetVisibleAndOrderedAdminTabMenuByUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -94,6 +102,10 @@
             return self::getMenuViewItemsCacheIdentifierByUser(Yii::app()->user->userModel);
         }
 
+        /**
+         * @param $user
+         * @return string
+         */
         public static function getMenuViewItemsCacheIdentifierByUser($user)
         {
             return self::MENU_VIEW_ITEMS . $user->id . Yii::app()->language;
@@ -108,12 +120,19 @@
             return self::getAdminMenuViewItemsCacheIdentifierByUser(Yii::app()->user->userModel);
         }
 
+        /**
+         * @param User $user
+         * @return string
+         */
         public static function getAdminMenuViewItemsCacheIdentifierByUser($user)
         {
             assert('$user instanceof User && $user != null');
             return self::ADMIN_MENU_VIEW_ITEMS . $user->id . Yii::app()->language;
         }
 
+        /**
+         * @param $user
+         */
         public static function forgetCacheEntryForTabMenuByUser($user)
         {
             $identifier = self::getMenuViewItemsCacheIdentifierByUser($user);
@@ -132,6 +151,10 @@
             return self::getVisibleAndOrderedTabMenuByUser(Yii::app()->user->userModel);
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getVisibleAndOrderedTabMenuByUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -171,6 +194,10 @@
             return $tabMenuItems;
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getCustomVisibleAndOrderedTabMenuItemsByUser($user)
         {
             $tabMenuItems = array();
@@ -198,6 +225,10 @@
             return self::getVisibleAndOrderedAdminTabMenuByUser(Yii::app()->user->userModel);
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getVisibleAndOrderedAdminTabMenuByUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -239,6 +270,10 @@
             return self::getAccessibleShortcutsCreateMenuByUser($user);
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getAccessibleShortcutsCreateMenuByUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -276,6 +311,11 @@
             return self::getAccessibleConfigureMenuByUser($moduleClassName, $user);
         }
 
+        /**
+         * @param string $moduleClassName
+         * @param $user
+         * @return menu
+         */
         public static function getAccessibleConfigureMenuByUser($moduleClassName, $user)
         {
             assert('is_string($moduleClassName)');
@@ -287,6 +327,10 @@
                                                                  array('titleLabel', 'descriptionLabel'));
         }
 
+        /**
+         * @param $moduleClassName
+         * @return menu
+         */
         public static function getAccessibleConfigureSubMenuByCurrentUser($moduleClassName)
         {
             assert('is_string($moduleClassName)');
@@ -294,6 +338,11 @@
             return self::getAccessibleConfigureSubMenuByUser($moduleClassName, $user);
         }
 
+        /**
+         * @param string $moduleClassName
+         * @param $user
+         * @return menu
+         */
         public static function getAccessibleConfigureSubMenuByUser($moduleClassName, $user)
         {
             assert('is_string($moduleClassName)');
@@ -311,6 +360,10 @@
             return self::getOrderedAccessibleHeaderMenuForUser($user);
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getOrderedAccessibleHeaderMenuForUser($user)
         {
             assert('$user instanceof User && $user != null');
@@ -381,6 +434,10 @@
             return self::getAccessibleOrderedUserHeaderMenuForUser($user);
         }
 
+        /**
+         * @param $user
+         * @return array
+         */
         public static function getAccessibleOrderedUserHeaderMenuForUser($user)
         {
             assert('$user instanceof User && $user != null');

@@ -43,6 +43,11 @@
         protected $viewData;
         protected $uniqueLayoutId;
 
+        /**
+         * @param array $viewData
+         * @param array $params
+         * @param string $uniqueLayoutId
+         */
         public function __construct($viewData, $params, $uniqueLayoutId)
         {
             assert('isset($params["controllerId"])');
@@ -91,6 +96,16 @@
         }
 
         /**
+         * Override to add a starring link to the title
+         * @return string
+         */
+        public function getTitle()
+        {
+            $starLink = StarredUtil::getToggleStarStatusLink($this->model, null);
+            return parent::getTitle() . $starLink;
+        }
+
+        /**
          * Module Id for the link to models from rows in the grid view.
          */
         private function resolveModuleId()
@@ -116,6 +131,13 @@
         public static function getDesignerRulesType()
         {
             return 'DetailsPortletView';
+        }
+
+        /**
+         * Override to add a description for the view to be shown when adding a portlet
+         */
+        public static function getPortletDescription()
+        {
         }
 
         /**

@@ -73,11 +73,14 @@
          * Given a value and mapping data, run each sanitizer and process any messages or error information into the
          * ImportSanitizeResultsUtil object provided.
          * @param mixed $value
+         * @param string $columnName
          * @param array $columnMappingData
-         * @param object $importSanitizeResultsUtil
+         * @param ImportSanitizeResultsUtil $importSanitizeResultsUtil
+         * @return mixed $value
          */
-        public function resolveValueForImport($value, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
+        public function resolveValueForImport($value, $columnName, $columnMappingData, ImportSanitizeResultsUtil $importSanitizeResultsUtil)
         {
+            assert('is_string($columnName)');
             assert('is_array($columnMappingData)');
             $modelClassName = $this->getModelClassName();
             $value  = ImportSanitizerUtil::
@@ -85,6 +88,7 @@
                                                     $this->getModelClassName(),
                                                     $this->getModelAttributeName(),
                                                     $value,
+                                                    $columnName,
                                                     $columnMappingData,
                                                     $importSanitizeResultsUtil);
             return array($this->getModelAttributeName() => $value);

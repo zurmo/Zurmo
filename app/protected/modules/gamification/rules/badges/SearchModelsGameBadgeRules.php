@@ -55,6 +55,12 @@
             13 => 300
         );
 
+        /**
+         * @param array $userPointsByType
+         * @param array $userScoresByType
+         * @param string $modelClassName
+         * @return int|string
+         */
         public static function badgeGradeUserShouldHaveByPointsAndScoresByModelClassName(
                                $userPointsByType, $userScoresByType, $modelClassName)
         {
