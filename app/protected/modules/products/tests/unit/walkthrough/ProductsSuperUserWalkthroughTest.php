@@ -308,5 +308,70 @@
             $products = Product::getAll();
             $this->assertEquals(1, count($products));
         }
+
+        public function testFilteredResultsByStageForProductPortlet()
+        {
+            $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            Yii::app()->user->userModel = $super;
+            //Setup test data owned by the super user.
+            $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
+            ProductTestHelper::createProductStagesIfDoesNotExist();
+            $superProductId = self::getModelIdByModelNameAndName('Product', 'My Product 1');
+            $product = Product::getById($superProductId);
+            $product->account = $account;
+            $product->stage->value = 'Open';
+            $this->assertTrue($product->save());
+
+            ProductTestHelper::createProductByNameForOwner("My Product 2", $super);
+            $superProductId2 = self::getModelIdByModelNameAndName('Product', 'My Product 2');
+            $product = Product::getById($superProductId2);
+            $product->account = $account;
+            $product->stage->value = 'Won';
+            $this->assertTrue($product->save());
+
+            $portlet = new Portlet();
+            $portlet->column    = 1;
+            $portlet->position  = 1;
+            $portlet->layoutId  = 'AccountDetailsAndRelationsView';
+            $portlet->user      = $super;
+            $portlet->viewType  = 'ProductsForAccountRelatedList';
+            $this->assertTrue($portlet->save());
+
+            $this->setGetArray(array(
+                'id' => $account->id,
+                'portletParams' => array('relationModuleId' => 'accounts', 'relationModelId' => $account->id),
+                'ProductsConfigurationForm' => array('filteredByStage' => 'Open'),
+                'redirectUrl' => Yii::app()->createUrl('accounts/default/details', array('id' => $account->id)),
+                'portletId'   => $portlet->id,
+                'uniqueLayoutId' => 'AccountDetailsAndRelationsView_' . $portlet->id));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/defaultPortlet/modalRefresh');
+            $this->assertTrue(strpos($content, 'My Product 1') > 0);
+            $this->assertFalse(strpos($content, 'My Product 2') > 0);
+
+            $this->setGetArray(array(
+                'id' => $account->id,
+                'portletParams' => array('relationModuleId' => 'accounts', 'relationModelId' => $account->id),
+                'ProductsConfigurationForm' => array('filteredByStage' => 'All'),
+                'redirectUrl' => Yii::app()->createUrl('accounts/default/details', array('id' => $account->id)),
+                'portletId'   => $portlet->id,
+                'uniqueLayoutId' => 'AccountDetailsAndRelationsView_' . $portlet->id));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/defaultPortlet/modalRefresh');
+            $this->assertTrue(strpos($content, 'My Product 1') > 0);
+            $this->assertTrue(strpos($content, 'My Product 2') > 0);
+
+            $this->setGetArray(array(
+                'id' => $account->id,
+                'portletParams' => array('relationModuleId' => 'accounts', 'relationModelId' => $account->id),
+                'ProductsConfigurationForm' => array('filteredByStage' => 'Won'),
+                'redirectUrl' => Yii::app()->createUrl('accounts/default/details', array('id' => $account->id)),
+                'portletId'   => $portlet->id,
+                'uniqueLayoutId' => 'AccountDetailsAndRelationsView_' . $portlet->id));
+
+            $content = $this->runControllerWithNoExceptionsAndGetContent('accounts/defaultPortlet/modalRefresh');
+            $this->assertFalse(strpos($content, 'My Product 1') > 0);
+            $this->assertTrue(strpos($content, 'My Product 2') > 0);
+        }
     }
 ?>

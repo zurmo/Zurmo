@@ -66,7 +66,20 @@
          */
         public function resolveHeaderData(& $headerData)
         {
-            $headerData[] = $this->model->getAttributeLabel($this->attribute);
+            $headerData[] = $this->getLabel();
+        }
+
+        /**
+         * Gets the label for the header form the params if its set
+         * @return string
+         */
+        protected function getLabel()
+        {
+            if (isset($this->params['label']))
+            {
+                return $this->params['label'];
+            }
+            return $this->model->getAttributeLabel($this->attribute);
         }
     }
 ?>

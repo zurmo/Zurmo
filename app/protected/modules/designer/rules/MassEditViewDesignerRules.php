@@ -68,7 +68,7 @@
 
         public function getDisplayName()
         {
-            return Zurmo::t('DesignerModule', 'Mass Edit View');
+            return Zurmo::t('DesignerModule', 'Mass Update View');
         }
 
         public function getSavableMetadataRules()

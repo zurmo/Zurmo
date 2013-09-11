@@ -89,9 +89,9 @@
         {
             static::renderScripts();
             $content  = '<h3>' . $this->getAfterFormLayoutTranslatedTitleContent() . '</h3>';
-            //$content .= '<div class="horizontal-line"></div>' . "\n";
             $content .= $form->error($this->model, 'mappingData');
             $content .= $this->renderContainerAndMappingLayoutContent($this->model, $this->controllerId, $this->moduleId);
+            $content  = ZurmoHtml::tag('div', array('class' => 'left-column full-width'), $content);
             return $content;
         }
 
@@ -135,7 +135,7 @@
 
         protected function getAfterFormLayoutTranslatedTitleContent()
         {
-            return Zurmo::t('DesignerModule', 'Dropdown Dependency Mapping');
+            return Zurmo::t('DesignerModule', 'Pick List Dependency Mapping');
         }
 
         protected static function renderScripts()

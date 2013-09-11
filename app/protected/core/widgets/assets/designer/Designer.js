@@ -100,7 +100,7 @@ var designer = {
                             var cellSettingId = $(this).attr('id').substring(0, $(this).attr('id').indexOf("_"));
                             //$(this).attr('name', 'layoutSettings[panels][' + panelCount + ']' +
                             //'[rows][' + rowCount + '][cells][' + cellCount + '][' + elementId + '][' +  cellSettingId + ']');
-                            if(!($(this).is(':checkbox') && $(this).attr('checked') == false))
+                            if(!($(this).is(':checkbox') && !$(this).parent('label').hasClass('c_on')))
                             {
                                 var cellSettingValue = $(this).val();
                                 data['layout[panels][' + panelCount + '][rows][' + rowCount + '][cells][' + cellCount + '][' + cellSettingId + ']'] = $(this).val();
@@ -115,8 +115,14 @@ var designer = {
             });
             $(this).children('.panel-settings').find('.settings-form-field').each(function(){
                 var panelSettingId = $(this).attr('id').substring(0, $(this).attr('id').indexOf("_"));
-                data['layout[panels][' + panelCount + '][' + panelSettingId + ']'] = $(this).attr('value');
-                //$(this).attr('name', 'layoutSettings[panels][' + panelCount + '][' + panelSettingId + ']');
+                if($(this).is(':checkbox') && !$(this).parent('label').hasClass('c_on'))
+                {
+                    data['layout[panels][' + panelCount + '][' + panelSettingId + ']'] = 0;
+                }
+                else
+                {
+                    data['layout[panels][' + panelCount + '][' + panelSettingId + ']'] = $(this).attr('value');
+                }
             });
             panelCount ++;
         });

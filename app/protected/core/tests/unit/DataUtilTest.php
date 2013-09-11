@@ -53,6 +53,14 @@
             $text = "<SCRIPT>alert('XSS')</SCRIPT>Valid text.";
             $purifiedText = DataUtil::purifyHtml($text);
             $this->assertEquals('Valid text.', $purifiedText);
+
+            $text = "|\/!'#$%&()=?«»´`~^ºª.;,<>Çéã";
+            $purifiedText = DataUtil::purifyHtml($text);
+            $this->assertEquals($text, $purifiedText);
+
+            $text = '"';
+            $purifiedText = DataUtil::purifyHtml($text);
+            $this->assertEquals($text, $purifiedText);
         }
 
         /**

@@ -52,14 +52,13 @@
             $htmlOptions['name']     = $this->getEditableInputName();
             $htmlOptions['disabled'] = $this->getDisabledValue();
             $htmlOptions             = array_merge($htmlOptionsFromParams, $htmlOptions);
-
-            if (isset($htmlOptionsFromParams['encode']) && $htmlOptionsFromParams['encode'])
+            if (isset($htmlOptionsFromParams['encode']) && !$htmlOptionsFromParams['encode'])
             {
-                $htmlOptions['encode'] = true;
+                $htmlOptions['encode'] = false;
             }
             else
             {
-                $htmlOptions['encode'] = false;
+                $htmlOptions['encode'] = true;
             }
             return $this->form->textField($this->model, $this->attribute, $htmlOptions);
         }

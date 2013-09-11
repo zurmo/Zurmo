@@ -1,0 +1,5 @@
+Name,Description,Sell Price Formula - Type,Discount Percent,Cost,List Price,Sell Price,"Price Frequency","Type","Status"
+"A Gift of Monotheists import invalid price frequency","Test Desc","6",10,"200","200","180",4,4,3
+"A Gift of Monotheists import Copy","Test Desc 1","2",5,"200","200","180",2,2,2
+"A Gift of Monotheists import string price frequency","Test Desc","Profit Margin Percent",10,"200","200","180","Monthly","Subscription","Inactive"
+"A Gift of Monotheists import string price frequency lower","Test Desc","Markup Over Cost Percent",10,"200","200","180","one time","product","inactive"

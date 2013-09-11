@@ -140,7 +140,7 @@
                 $userUrl        = Yii::app()->createUrl('/users/default/details', array('id' => $comment->createdByUser->id));
                 $stringContent  = ZurmoHtml::link($comment->createdByUser->getAvatarImage(36), $userUrl);
                 $userName       = ZurmoHtml::link(strval($comment->createdByUser), $userUrl, array('class' => 'user-link'));
-                $element        = new TextAreaElement($comment, 'description');
+                $element        = new CommentTextAreaElement($comment, 'description');
                 $element->nonEditableTemplate = '<div class="comment-content"><p>'. $userName . ': {content}</p>';
                 $stringContent .= $element->render();
 

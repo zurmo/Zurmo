@@ -95,7 +95,7 @@
             $cClipWidget->beginClip($componentType . 'WorkflowComponentSortable');
             $cClipWidget->widget('application.core.widgets.JuiSortable', array(
                 'items' => $items,
-                'itemTemplate' => '<li>content</li>',
+                'itemTemplate' => 'content',
                 'htmlOptions' =>
                 array(
                     'id'    => $componentType . 'attributeRowsUl',

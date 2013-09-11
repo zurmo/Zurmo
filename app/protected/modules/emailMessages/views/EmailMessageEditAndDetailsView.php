@@ -44,8 +44,8 @@
                         'elements' => array(
                             array('type'  => 'SaveButton',    'renderType' => 'Edit'),
                             array('type'  => 'CancelLink',    'renderType' => 'Edit'),
-                            array('type' => 'EditLink',       'renderType' => 'Details'),
-                            array('type' => 'EmailMessageDeleteLink', 'renderType' => 'Details'),
+                            array('type'  => 'EditLink',       'renderType' => 'Details'),
+                            array('type'  => 'EmailMessageDeleteLink', 'renderType' => 'Details'),
                         ),
                     ),
                     'derivedAttributeTypes' => array(

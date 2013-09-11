@@ -39,16 +39,21 @@
      */
     class CalculatedNumberFormulaElement extends TextAreaElement
     {
+        public $editableTemplate = '<th>{label}</th><td colspan="{colspan}">{content}{error}{availableAttributesContent}</td>';
+
         /**
          * Render additional help information besides the text input box.
          * @return The element's content as a string.
          */
-        protected function renderControlEditable()
+        protected function renderEditable()
         {
-            $content      = parent::renderControlEditable();
-            $content     .= '<div class="field-instructions">' . $this->renderAvailableAttributesContent() . '</div>';
-
-            return $content;
+            $data                               = array();
+            $data['label']                      = $this->renderLabel();
+            $data['content']                    = $this->renderControlEditable();
+            $data['error']                      = $this->renderError();
+            $data['colspan']                    = ArrayUtil::getArrayValue($this->params, 'wide') ? 3 : 1;
+            $data['availableAttributesContent'] = $this->renderAvailableAttributesContent();
+            return $this->resolveContentTemplate($this->editableTemplate, $data);
         }
 
         protected function renderAvailableAttributesContent()
@@ -99,7 +104,7 @@
             }
             $qtip = new ZurmoTip();
             $qtip->addQTip("#formula-tooltip");
-            return $content;
+            return ZurmoHtml::tag('div', array('class' => 'field-instructions'), $content);
         }
     }
 ?>

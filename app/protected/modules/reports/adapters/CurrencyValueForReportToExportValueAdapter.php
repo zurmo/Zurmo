@@ -73,8 +73,8 @@
          */
         public function resolveHeaderData(& $headerData)
         {
-            $headerData[] = $this->model->getAttributeLabel($this->attribute);
-            $headerData[] = $this->model->getAttributeLabel($this->attribute) . ' ' . Zurmo::t('ZurmoModule', 'Currency');
+            $headerData[] = $this->getLabel();
+            $headerData[] = $this->getLabel() . ' ' . Zurmo::t('ZurmoModule', 'Currency');
         }
     }
 ?>

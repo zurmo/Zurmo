@@ -161,6 +161,7 @@
             $displayAttribute1 = new DisplayAttributeForReportForm('ReportsTestModule', 'ReportModelTestItem',
                                      Report::TYPE_MATRIX);
             $displayAttribute1->attributeIndexOrDerivedType = 'date__Maximum';
+            $displayAttribute1->label                       = 'New Label For Date -(Max)';
             $this->assertTrue($displayAttribute1->columnAliasName == 'col0');
             $report->addDisplayAttribute($displayAttribute1);
 
@@ -331,7 +332,7 @@
                                               'xFirst',
                                              ),
                                         array('Last Name',
-                                              'Date -(Max)',
+                                              'New Label For Date -(Max)',
                                               'Date -(Min)',
                                               'Date Time -(Max)',
                                               'Date Time -(Min)',
@@ -459,7 +460,7 @@
                                              ),
                                         array('Last Name',
                                               'Phone',
-                                              'Date -(Max)',
+                                              'New Label For Date -(Max)',
                                               'Date -(Min)',
                                               'Date Time -(Max)',
                                               'Date Time -(Min)',
@@ -514,6 +515,82 @@
                                               '2'
                                             ),
                                        );
+            $this->assertEmpty($adapter->getHeaderData());
+            $this->assertEquals($compareRowData, $adapter->getData());
+        }
+
+        public function testGetLeadingHeadersDataFromMatrixReportDataProviderWithALinkableAttribute()
+        {
+            $reportModelTestItem2        = new ReportModelTestItem2();
+            $reportModelTestItem2->name  = 'report name';
+            $reportModelTestItem2->phone = '123456789';
+            $this->assertTrue($reportModelTestItem2->save());
+
+            $reportModelTestItem2        = new ReportModelTestItem2();
+            $reportModelTestItem2->name  = 'report name';
+            $reportModelTestItem2->phone = '987654321';
+            $this->assertTrue($reportModelTestItem2->save());
+
+            $report = new Report();
+            $report->setType(Report::TYPE_MATRIX);
+            $report->setModuleClassName('ReportsTest2Module');
+            $report->setFiltersStructure('');
+
+            $displayAttribute = new DisplayAttributeForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                                            Report::TYPE_MATRIX);
+            $displayAttribute->attributeIndexOrDerivedType = 'Count';
+            $report->addDisplayAttribute($displayAttribute);
+
+            $groupBy           = new GroupByForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                                            Report::TYPE_MATRIX);
+            $groupBy->attributeIndexOrDerivedType = 'phone';
+            $report->addGroupBy($groupBy);
+
+            $groupBy           = new GroupByForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                                            Report::TYPE_MATRIX);
+            $groupBy->attributeIndexOrDerivedType = 'name';
+            $groupBy->axis = 'y';
+            $report->addGroupBy($groupBy);
+
+            $dataProvider       = new MatrixReportDataProvider($report);
+            $adapter            = ReportToExportAdapterFactory::createReportToExportAdapter($report, $dataProvider);
+            $compareRowData     = array(
+                                    array(null, '123456789', '987654321'),
+                                    array('Name', 'Count', 'Count'),
+                                    array('report name', 1, 1)
+                                  );
+            $this->assertEmpty($adapter->getHeaderData());
+            $this->assertEquals($compareRowData, $adapter->getData());
+
+            $report = new Report();
+            $report->setType(Report::TYPE_MATRIX);
+            $report->setModuleClassName('ReportsTest2Module');
+            $report->setFiltersStructure('');
+
+            $displayAttribute = new DisplayAttributeForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                Report::TYPE_MATRIX);
+            $displayAttribute->attributeIndexOrDerivedType = 'Count';
+            $report->addDisplayAttribute($displayAttribute);
+
+            $groupBy           = new GroupByForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                Report::TYPE_MATRIX);
+            $groupBy->attributeIndexOrDerivedType = 'name';
+            $report->addGroupBy($groupBy);
+
+            $groupBy           = new GroupByForReportForm('ReportsTest2Module', 'ReportModelTestItem2',
+                Report::TYPE_MATRIX);
+            $groupBy->attributeIndexOrDerivedType = 'phone';
+            $groupBy->axis = 'y';
+            $report->addGroupBy($groupBy);
+
+            $dataProvider       = new MatrixReportDataProvider($report);
+            $adapter            = ReportToExportAdapterFactory::createReportToExportAdapter($report, $dataProvider);
+            $compareRowData     = array(
+                array(null, 'report name'),
+                array('Phone', 'Count',),
+                array('123456789', 1),
+                array('987654321', 1)
+            );
             $this->assertEmpty($adapter->getHeaderData());
             $this->assertEquals($compareRowData, $adapter->getData());
         }

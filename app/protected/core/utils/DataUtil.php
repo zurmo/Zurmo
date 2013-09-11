@@ -164,7 +164,13 @@
         {
             if (is_string($text))
             {
-                $safeCharacters     = array('&' => '&amp;', '[' => '%5B', '^' => '%5E', ']' => '%5D', '%' => '%25');
+                $safeCharacters     = array('&' => '&amp;',
+                                            '[' => '%5B',
+                                            '^' => '%5E',
+                                            ']' => '%5D',
+                                            '%' => '%25',
+                                            '<' => '&lt;',
+                                            '>' => '&gt;');
                 $purifier           = new CHtmlPurifier();
                 $purifier->options  = array('Cache.SerializerPermissions' => 0777);
                 $purifiedText       = $purifier->purify($text);

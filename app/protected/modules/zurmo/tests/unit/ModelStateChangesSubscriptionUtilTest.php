@@ -173,6 +173,7 @@
             $this->assertEquals($account1->name, $models[0]->name);
 
             // Check pagination
+            sleep(2);
             $timestamp = time();
             $account2 = AccountTestHelper::createAccountByNameForOwner('Second Test Update Account', Yii::app()->user->userModel);
             $account3 = AccountTestHelper::createAccountByNameForOwner('Third Test Update Account', Yii::app()->user->userModel);
@@ -184,19 +185,15 @@
             $this->assertTrue($account2->save());
             $this->assertTrue($account3->save());
             $this->assertTrue($account4->save());
-            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 2, 0, $timestamp);
+            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 3, 0, $timestamp);
             $this->assertTrue(is_array($models));
-            $this->assertEquals(2, count($models));
-            $this->assertTrue($account2->id == $models[0]->id || $account2->id == $models[1]->id);
-            $this->assertTrue($account2->name == $models[0]->name || $account2->name == $models[1]->name);
-            $this->assertTrue($account3->id == $models[0]->id || $account3->id == $models[1]->id);
-            $this->assertTrue($account3->name == $models[0]->name || $account3->name == $models[1]->name);
-
-            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 2, 2, $timestamp);
-            $this->assertTrue(is_array($models));
-            $this->assertEquals(1, count($models));
-            $this->assertEquals($account4->id, $models[0]->id);
-            $this->assertEquals($account4->name, $models[0]->name);
+            $this->assertEquals(3, count($models));
+            $this->assertTrue($account2->id == $models[0]->id || $account2->id == $models[1]->id || $account2->id == $models[2]->id);
+            $this->assertTrue($account2->name == $models[0]->name || $account2->name == $models[1]->name || $account2->name == $models[2]->name);
+            $this->assertTrue($account3->id == $models[0]->id || $account3->id == $models[1]->id || $account3->id == $models[2]->id);
+            $this->assertTrue($account3->name == $models[0]->name || $account3->name == $models[1]->name || $account3->name == $models[2]->name);
+            $this->assertTrue($account4->id == $models[0]->id || $account4->id == $models[1]->id || $account4->id == $models[2]->id);
+            $this->assertTrue($account4->name == $models[0]->name || $account4->name == $models[1]->name || $account4->name == $models[2]->name);
         }
     }
 ?>

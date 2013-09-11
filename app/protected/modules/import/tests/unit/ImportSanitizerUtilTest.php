@@ -176,7 +176,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Boolean Invalid check box format.';
+            $compareMessage = 'Import - Boolean Invalid check box format.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required boolean with a value that is invalidly mapped and a specified default value. The specified
@@ -194,7 +194,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Boolean Invalid check box format.';
+            $compareMessage = 'Import - Boolean Invalid check box format.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required boolean with a valid mapped value of 'no' where it evaluates to false, and a default
@@ -495,7 +495,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Drop Down Pick list value specified is missing from existing pick ' .
+            $compareMessage = 'Import - Drop Down Pick list value specified is missing from existing pick ' .
                               'list and no valid instructions were provided on how to resolve this.';
             $this->assertEquals($compareMessage, $messages[0]);
 
@@ -566,7 +566,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Drop Down Pick list value specified is missing from existing pick list, ' .
+            $compareMessage = 'Import - Drop Down Pick list value specified is missing from existing pick list, ' .
                               'has a specified mapping value, but the mapping value is not a valid value.';
             $this->assertEquals($compareMessage, $messages[0]);
             $customFieldData = CustomFieldData::getByName('ImportTestDropDown');
@@ -681,7 +681,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Full name value required, but missing.';
+            $compareMessage = 'Import - Full name value required, but missing.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required FullName with no value, but a valid default value
@@ -744,7 +744,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last Name specified is too long.';
+            $compareMessage = 'Import - Last Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required FullName with a value that is too long and a specified default value. The specified
@@ -763,7 +763,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Last Name specified is too long.';
+            $compareMessage = 'Import - Last Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //A first name that is too large, but the last name is ok.
@@ -781,7 +781,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - First Name specified is too long.';
+            $compareMessage = 'Import - First Name specified is too long.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
@@ -814,7 +814,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - ImportModelTestItem3 id specified did not match any existing records.';
+            $compareMessage = 'Import - ImportModelTestItem3 id specified did not match any existing records.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required related model with no value.
@@ -943,7 +943,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Float Invalid number format.';
+            $compareMessage = 'Import - Float Invalid number format.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             ///////////////////////
@@ -1025,7 +1025,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Integer Invalid integer format.';
+            $compareMessage = 'Import - Integer Invalid integer format.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
@@ -1058,7 +1058,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Has One Id specified did not match any existing records.';
+            $compareMessage = 'Import - Has One Id specified did not match any existing records.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a non-required related model with no value.
@@ -1167,7 +1167,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Id Id specified did not match any existing records.';
+            $compareMessage = 'Import - Id Id specified did not match any existing records.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test the id attribute with no value.
@@ -1232,7 +1232,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - String This field is required and neither a value' .
+            $compareMessage = 'Import - String This field is required and neither a value' .
                               ' nor a default value was specified.';
             $this->assertEquals($compareMessage, $messages[0]);
 
@@ -1517,7 +1517,7 @@
             $this->assertTrue($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Url Invalid url format.';
+            $compareMessage = 'Import - Url Invalid url format.';
             $this->assertEquals($compareMessage, $messages[0]);
         }
 
@@ -1551,7 +1551,7 @@
             $this->assertFalse($importSanitizeResultsUtil->shouldSaveModel());
             $messages = $importSanitizeResultsUtil->getMessages();
             $this->assertEquals(1, count($messages));
-            $compareMessage = 'ImportModelTestItem - Owner Id is required and was not specified.';
+            $compareMessage = 'Import - Owner Id is required and was not specified.';
             $this->assertEquals($compareMessage, $messages[0]);
 
             //Test a required string with no value, but a valid default value, a user id.

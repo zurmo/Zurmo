@@ -36,6 +36,9 @@
 
     class ContactWebFormsDefaultController extends ZurmoModuleController
     {
+        const ZERO_MODELS_CHECK_FILTER_PATH =
+                    'application.modules.contactWebForms.controllers.filters.ContactWebFormsZeroModelsCheckControllerFilter';
+
         public function filters()
         {
             $modelClassName   = $this->getModule()->getPrimaryModelName();
@@ -47,9 +50,11 @@
                         'moduleClassName' => get_class($this->getModule()),
                         'viewClassName'   => $viewClassName,
                    ),
-                    array(
-                        ZurmoModuleController::ZERO_MODELS_CHECK_FILTER_PATH . ' + list, index',
+                   array(
+                        static::ZERO_MODELS_CHECK_FILTER_PATH . ' + list, index',
                         'controller' => $this,
+                        'activeActionElementType' => 'ContactWebFormsListLink',
+                        'breadcrumbLinks'         => static::getListBreadcrumbLinks(),
                    ),
                )
             );

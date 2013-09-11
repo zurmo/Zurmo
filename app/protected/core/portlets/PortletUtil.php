@@ -43,7 +43,12 @@
             ksort($sortablePortlets);
             foreach ($sortablePortlets as $title => $data)
             {
-                $onClick = 'window.location.href="' . $data['url'] . '"';
+                $onClick = 'js:$("#ModalView").html("");
+                               $(this).makeLargeLoadingSpinner(true, "#ModalView");
+                               $("#ModalView").addClass("attachLoadingTarget");
+                               $("#ModalView").addClass("loading");
+                               $("#ModalView").addClass("loading-ajax-submit");
+                               window.location.href="' . $data['url'] . '"';
                 $content .= '<li>';
                 $link     = ZurmoHtml::link($data['title'], null, array('onclick' => $onClick));
                 $icon     = '<span class="' . $data['portletRules']->resolveIconName() . '"></span>';

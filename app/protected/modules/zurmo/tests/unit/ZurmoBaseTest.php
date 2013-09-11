@@ -79,6 +79,7 @@
         {
             $content = ob_get_contents();
             ob_end_clean();
+            self::cleanUpOutputBuffer();
             return $content;
         }
 
@@ -86,6 +87,14 @@
         {
             echo $this->endAndGetOutputBuffer();
             $this->fail();
+        }
+        
+        private static function cleanUpOutputBuffer()
+        {
+            while(count(ob_get_status(true)) > 1)
+            {
+                ob_end_clean();
+            }
         }
     }
 ?>

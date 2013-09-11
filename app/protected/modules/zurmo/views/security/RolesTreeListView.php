@@ -71,58 +71,14 @@
             return $content;
         }
 
-        protected static function renderTreeListViewNode(& $content, $data, $indent)
-        {
-            assert('is_string($content)');
-            assert('is_array($data)');
-            foreach ($data as $node)
-            {
-                $content .= '<tr>';
-                $content .= '<td class="level-' . $indent . '">';
-                $content .= $node['link'];
-                $content .= '</td>';
-                $content .= '<td>';
-                $content .= static::renderUserCount($node['userCount'], $node['route']);
-                $content .= '</td>';
-                $content .= '<td>';
-                if (isset($node['route']) && $node['route'] != null && static::shouldRenderConfigureLink())
-                {
-                    $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Configure') ),
-                        $node['route']);
-                }
-                $content .= '</td>';
-                $content .= '</tr>';
-                if (isset($node['children']))
-                {
-                    static::renderTreeListViewNode($content, $node['children'], $indent + 1);
-                }
-            }
-        }
-
-        protected static function resolveRoleIdFromRoute($route)
-        {
-            return substr($route, strpos($route, 'id=') + 3); // Not Coding Standard
-        }
-
-        protected static function renderUserCount($userCount, $route)
-        {
-            if ($userCount && static::resolveShouldShowLinkableUserCount())
-            {
-                $element = new UsersModalListLinkActionElement(Yii::app()->controller->id,
-                    Yii::app()->controller->module->id,
-                    static::resolveRoleIdFromRoute($route),
-                    array('label' => $userCount, 'htmlOptions' => array('class' => 'z-link')));
-                return $element->render();
-            }
-            else
-            {
-                return $userCount;
-            }
-        }
-
         protected static function resolveShouldShowLinkableUserCount()
         {
             return true;
+        }
+
+        protected static function resolveRouteAction()
+        {
+            return '/usersInRoleModalList/';
         }
     }
 ?>

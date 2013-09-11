@@ -80,7 +80,7 @@
                 {
                     $resolvedAttributeName = $displayAttribute->resolveAttributeNameForGridViewColumn($key);
                     $className             = $this->resolveExportClassNameForReportToExportValueAdapter($displayAttribute);
-                    $params                = array();
+                    $params                = array('label' => $displayAttribute->label);
                     $this->resolveParamsForCurrencyTypes($displayAttribute, $params);
                     $adapter = new $className($reportResultsRowData, $resolvedAttributeName, $params);
                     $adapter->resolveData($data);

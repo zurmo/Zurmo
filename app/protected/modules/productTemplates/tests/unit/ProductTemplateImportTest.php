@@ -135,5 +135,307 @@
                                                                  . ImportRowDataResultsUtil::ERROR);
             $this->assertEquals(0, count($beansWithErrors));
         }
+
+        public function testAnalyzeByRowForPriceFrequencySanitization()
+        {
+            Yii::app()->user->userModel            = User::getByUsername('super');
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ProductTemplates';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::
+            createTempTableByFileNameAndTableName('productTemplates.csv', $import->getTempTableName(),
+                                                  Yii::getPathOfAlias('application.modules.productTemplates.tests.unit.files'));
+
+            $this->assertEquals(3, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $currencies     = Currency::getAll();
+
+            $mappingData = array(
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('name'),
+                'column_1'  => ImportMappingUtil::makeTextAreaColumnMappingData    ('description'),
+                'column_2'  => ImportMappingUtil::makeIntegerColumnMappingData     ('sellPriceFormula__type'),
+                'column_3'  => ImportMappingUtil::makeFloatColumnMappingData       ('sellPriceFormula__discountOrMarkupPercentage'),
+                'column_4'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('cost', $currencies[0]),
+                'column_5'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('listPrice', $currencies[0]),
+                'column_6'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('sellPrice', $currencies[0]),
+                'column_7'  => ImportMappingUtil::makeIntegerColumnMappingData     ('priceFrequency'),
+                'column_8'  => ImportMappingUtil::makeIntegerColumnMappingData     ('type'),
+                'column_9'  => ImportMappingUtil::makeIntegerColumnMappingData     ('status'),
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ProductTemplates');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+
+            $sanitizer = ImportSanitizerUtilFactory::
+                                         make('PriceFrequency', 'ProductTemplate', 'priceFrequency',
+                                         'pricefrequency', $mappingData['column_7']);
+            $data = $dataProvider->getData(true);
+            foreach ($data as $rowBean)
+            {
+                $sanitizer->analyzeByRow($rowBean);
+                $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+            }
+        }
+
+        public function testPriceFrequencySanitizationWithBothInvalidAndValidData()
+        {
+            $mappingData = array();
+            $data = array();
+            $this->processSantizerCSVAndGetData($mappingData, $data);
+            $counter = 1;
+            foreach ($data as $rowBean)
+            {
+                //@see ImportDataAnalyze::analyzePage
+                $sanitizer = ImportSanitizerUtilFactory::
+                                         make('PriceFrequency', 'ProductTemplate', 'priceFrequency',
+                                         'column_7', $mappingData['column_7']);
+                if($counter == 1)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
+                    $this->assertTrue((bool)$sanitizer->getShouldSkipRow());
+                    try
+                    {
+                        $sanitizer->sanitizeValue($rowBean->column_7);
+                    }
+                    catch(InvalidValueToSanitizeException $e)
+                    {
+                        $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Price Frequency specified is invalid.'), $e->getMessage());
+                    }
+                }
+                elseif($counter == 2)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                    $value = $sanitizer->sanitizeValue($rowBean->column_7);
+                    $this->assertEquals(2, $value);
+                }
+                elseif($counter == 3)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_7);
+                    $this->assertEquals(2, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                elseif($counter == 4)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_7);
+                    $this->assertEquals(1, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                $counter++;
+            }
+        }
+
+        public function testStatusSanitizationWithBothInvalidAndValidData()
+        {
+            $mappingData = array();
+            $data = array();
+            $this->processSantizerCSVAndGetData($mappingData, $data);
+            $counter = 1;
+            foreach ($data as $rowBean)
+            {
+                //@see ImportDataAnalyze::analyzePage
+                $sanitizer = ImportSanitizerUtilFactory::
+                                         make('ProductTemplateStatus', 'ProductTemplate', 'status',
+                                         'column_9', $mappingData['column_9']);
+                if($counter == 1)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
+                    $this->assertTrue((bool)$sanitizer->getShouldSkipRow());
+                    try
+                    {
+                        $sanitizer->sanitizeValue($rowBean->column_9);
+                    }
+                    catch(InvalidValueToSanitizeException $e)
+                    {
+                        $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Status specified is invalid.'), $e->getMessage());
+                    }
+                }
+                elseif($counter == 2)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                    $value = $sanitizer->sanitizeValue($rowBean->column_9);
+                    $this->assertEquals(2, $value);
+                }
+                elseif($counter == 3)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_9);
+                    $this->assertEquals(1, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                elseif($counter == 4)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_9);
+                    $this->assertEquals(1, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                $counter++;
+            }
+        }
+
+        public function testProductTemplateTypeSanitizationWithBothInvalidAndValidData()
+        {
+            $mappingData = array();
+            $data = array();
+            $this->processSantizerCSVAndGetData($mappingData, $data);
+            $counter = 1;
+            foreach ($data as $rowBean)
+            {
+                //@see ImportDataAnalyze::analyzePage
+                $sanitizer = ImportSanitizerUtilFactory::
+                                         make('ProductTemplateType', 'ProductTemplate', 'type',
+                                         'column_8', $mappingData['column_8']);
+                if($counter == 1)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
+                    $this->assertTrue((bool)$sanitizer->getShouldSkipRow());
+                    try
+                    {
+                        $sanitizer->sanitizeValue($rowBean->column_8);
+                    }
+                    catch(InvalidValueToSanitizeException $e)
+                    {
+                        $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Type specified is invalid.'), $e->getMessage());
+                    }
+                }
+                elseif($counter == 2)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                    $value = $sanitizer->sanitizeValue($rowBean->column_8);
+                    $this->assertEquals(2, $value);
+                }
+                elseif($counter == 3)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_8);
+                    $this->assertEquals(3, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                elseif($counter == 4)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_8);
+                    $this->assertEquals(1, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                $counter++;
+            }
+        }
+
+        public function testSellPriceFormulaSanitizationWithBothInvalidAndValidData()
+        {
+            $mappingData = array();
+            $data = array();
+            $this->processSantizerCSVAndGetData($mappingData, $data);
+            $counter = 1;
+            foreach ($data as $rowBean)
+            {
+                //@see ImportDataAnalyze::analyzePage
+                $sanitizer = ImportSanitizerUtilFactory::
+                                         make('SellPriceFormulaType', 'ProductTemplate', 'sellPriceFormula__type',
+                                         'column_2', $mappingData['column_2']);
+                if($counter == 1)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
+                    $this->assertTrue((bool)$sanitizer->getShouldSkipRow());
+                    try
+                    {
+                        $sanitizer->sanitizeValue($rowBean->column_2);
+                    }
+                    catch(InvalidValueToSanitizeException $e)
+                    {
+                        $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Sell Price Formula type specified is invalid.'), $e->getMessage());
+                    }
+                }
+                elseif($counter == 2)
+                {
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                    $value = $sanitizer->sanitizeValue($rowBean->column_2);
+                    $this->assertEquals(2, $value);
+                }
+                elseif($counter == 3)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_2);
+                    $this->assertEquals(2, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                elseif($counter == 4)
+                {
+                    $value = $sanitizer->sanitizeValue($rowBean->column_2);
+                    $this->assertEquals(3, $value);
+                    R::store($rowBean);
+                    $sanitizer->analyzeByRow($rowBean);
+                    $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
+                }
+                $counter++;
+            }
+        }
+
+        /**
+         * Process csv and get data
+         * @param array $mappingData
+         * @param array $data
+         */
+        protected function processSantizerCSVAndGetData(&$mappingData, &$data)
+        {
+            Yii::app()->user->userModel            = User::getByUsername('super');
+            $import                                = new Import();
+            $serializedData['importRulesType']     = 'ProductTemplates';
+            $serializedData['firstRowIsHeaderRow'] = true;
+            $import->serializedData                = serialize($serializedData);
+            $this->assertTrue($import->save());
+
+            ImportTestHelper::
+            createTempTableByFileNameAndTableName('productTemplatesSanitizer.csv', $import->getTempTableName(),
+                                                  Yii::getPathOfAlias('application.modules.productTemplates.tests.unit.files'));
+
+            $this->assertEquals(5, ImportDatabaseUtil::getCount($import->getTempTableName())); // includes header rows.
+
+            $currencies     = Currency::getAll();
+
+            $mappingData = array(
+                'column_0'  => ImportMappingUtil::makeStringColumnMappingData      ('name'),
+                'column_1'  => ImportMappingUtil::makeTextAreaColumnMappingData    ('description'),
+                'column_2'  => ImportMappingUtil::makeIntegerColumnMappingData     ('sellPriceFormula__type'),
+                'column_3'  => ImportMappingUtil::makeFloatColumnMappingData       ('sellPriceFormula__discountOrMarkupPercentage'),
+                'column_4'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('cost', $currencies[0]),
+                'column_5'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('listPrice', $currencies[0]),
+                'column_6'  => ImportMappingUtil::makeCurrencyColumnMappingData    ('sellPrice', $currencies[0]),
+                'column_7'  => ImportMappingUtil::makeIntegerColumnMappingData     ('priceFrequency'),
+                'column_8'  => ImportMappingUtil::makeIntegerColumnMappingData     ('type'),
+                'column_9'  => ImportMappingUtil::makeIntegerColumnMappingData     ('status'),
+            );
+
+            $importRules  = ImportRulesUtil::makeImportRulesByType('ProductTemplates');
+            $page         = 0;
+            $config       = array('pagination' => array('pageSize' => 50)); //This way all rows are processed.
+            $dataProvider = new ImportDataProvider($import->getTempTableName(), true, $config);
+            $dataProvider->getPagination()->setCurrentPage($page);
+            $data = $dataProvider->getData(true);
+        }
     }
 ?>

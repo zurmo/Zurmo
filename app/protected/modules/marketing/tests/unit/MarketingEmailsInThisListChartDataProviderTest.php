@@ -713,14 +713,14 @@
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      null,
+                      '2013-08-25',
                       false),
                 array(array(CampaignItemActivity::TYPE_CLICK       => 1,
                             CampaignItemActivity::TYPE_BOUNCE      => 1,
                             CampaignItemActivity::TYPE_OPEN        => 1,
                             CampaignItemActivity::TYPE_SKIP        => 1,
                             CampaignItemActivity::TYPE_UNSUBSCRIBE => 1),
-                      null,
+                      '2013-08-25',
                       true),
             );
             return $data;

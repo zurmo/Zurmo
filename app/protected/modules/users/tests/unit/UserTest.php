@@ -1409,5 +1409,14 @@
             $metadata = $nonSystemUsersStateMetadataAdapter1->getAdaptedDataProviderMetadata();
             $this->assertEquals('(x and y) and (1 or 2)', $metadata['structure']);
         }
+
+        public function testIsSuperAdministrator()
+        {
+            $userA = User::getByUsername('super');
+            $userB = User::getByUsername('dick');
+            $this->assertTrue($userA->isSuperAdministrator());
+            $this->assertFalse($userB->isSuperAdministrator());
+        }
+
     }
 ?>

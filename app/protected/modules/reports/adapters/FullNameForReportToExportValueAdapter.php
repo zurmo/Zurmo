@@ -55,7 +55,16 @@
          */
         public function resolveHeaderData(& $headerData)
         {
-            $headerData[] = Zurmo::t('ReportsModule', 'Name');
+            $headerData[] = $this->getLabel();
+        }
+
+        protected function getLabel()
+        {
+            if (isset($this->params['label']))
+            {
+                return $this->params['label'];
+            }
+            return Zurmo::t('ReportsModule', 'Name');
         }
     }
 ?>

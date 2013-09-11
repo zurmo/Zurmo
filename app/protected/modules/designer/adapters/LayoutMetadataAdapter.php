@@ -304,8 +304,8 @@
             foreach ($settingsAttributes as $elementInformation)
             {
                 $elementclassname = $elementInformation['type'] . 'LayoutSettingElement';
-                $element  = new $elementclassname($elementInformation['attributeName']);
-                $panelMetadata = $element->processToMetadata($cell, $cellMetadata);
+                $element          = new $elementclassname($elementInformation['attributeName']);
+                $cellMetadata    = $element->processToMetadata($cell, $cellMetadata);
             }
             return $cellMetadata;
         }

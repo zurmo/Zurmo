@@ -398,8 +398,9 @@
             {
                 $product->productCategories->add($productCategory);
             }
-            $relationModel                      = $relationModelClassName::getById((int)$relationModelId);
-            $product->$relationAttributeName    = $relationModel;
+            $relatedModel                      = $relationModelClassName::getById((int)$relationModelId);
+            $product->$relationAttributeName   = $relatedModel;
+            $this->addRelatedModelAccountToModel($product, $relatedModel);
             $product->save();
             ZurmoControllerUtil::updatePermissionsWithDefaultForModelByCurrentUser($product);
 

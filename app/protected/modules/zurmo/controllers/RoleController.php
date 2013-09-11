@@ -177,10 +177,10 @@
         {
             $model = Role::getById((int)$id);
             ControllerSecurityUtil::resolveAccessCanCurrentUserReadModel($model);
-            $searchAttributeData = UsersByRoleModalListControllerUtil::makeModalSearchAttributeDataByRoleModel($model);
-            $dataProvider = UsersByRoleModalListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
+            $searchAttributeData = UsersByModelModalListControllerUtil::makeModalSearchAttributeDataByModel($model, 'role');
+            $dataProvider = UsersByModelModalListControllerUtil::makeDataProviderBySearchAttributeData($searchAttributeData);
             Yii::app()->getClientScript()->setToAjaxMode();
-            echo UsersByRoleModalListControllerUtil::renderList($this, $dataProvider);
+            echo UsersByModelModalListControllerUtil::renderList($this, $dataProvider, 'usersInRoleModalList');
         }
     }
 ?>

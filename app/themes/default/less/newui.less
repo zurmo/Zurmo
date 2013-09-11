@@ -53,6 +53,7 @@
 	font-style: normal;
 }
 */
+
 .symbly( @size : 32px ) {
 	font-weight:normal;
 	font-size:@size;
@@ -2393,7 +2394,7 @@ body div.form-toolbar{
 		.radius(~"0 !important");
 		padding:0  !important;
 		border: none !important;
-		margin:!important;
+		//margin:!important;
 		text-decoration:underline;
 		font-weight:normal;
 		&:hover{
@@ -2428,7 +2429,7 @@ a.simple-link{
 	padding:0  !important;
 	border: none !important;
 	margin-left:10px;
-	text-decoration:underline;
+	text-decoration:underline !important;
 	.smaller();
 	font-weight:normal;
 	&:before{
@@ -5084,13 +5085,19 @@ div.hasHalfs{
 			font-weight:normal;
 		}
 	}
-	#AccountConvertToView > div{
-		margin-right:0;
+}
+
+#AccountConvertToView{
+	> div{
+		margin-bottom: 0;
+	}
+	.left-column{
+		padding-right: 0;
 	}
 }
 
 .lead-conversion-actions{
-	padding:10px;
+	padding:15px 15px 5px 15px;
 	a{
 		.zLink;
 	}

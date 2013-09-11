@@ -81,7 +81,7 @@
 
         public static function getDesignerRulesType()
         {
-            return 'AccountConvertToView';
+            return 'ForMixedModelsSearchListView';
         }
     }
 ?>

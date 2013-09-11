@@ -169,38 +169,45 @@
             $maximumColumnCount = DetailsViewFormLayout::getMaximumColumnCountForAllPanels($metadata);
             foreach ($metadata['global']['panels'] as $panelNumber => $panel)
             {
-                foreach ($panel['rows'] as $rowIndex => $row)
+                if ($this->shouldDisplayPanel(ArrayUtil::getArrayValue($panel, 'detailViewOnly')))
                 {
-                    foreach ($row['cells'] as $cellIndex => $cell)
+                    foreach ($panel['rows'] as $rowIndex => $row)
                     {
-                        if (is_array($cell['elements']) && $this->shouldDisplayCell(ArrayUtil::getArrayValue($cell, 'detailViewOnly')))
+                        foreach ($row['cells'] as $cellIndex => $cell)
                         {
-                            foreach ($cell['elements'] as $elementIndex => $elementInformation)
+                            if (is_array($cell['elements']) && $this->shouldDisplayCell(ArrayUtil::getArrayValue($cell, 'detailViewOnly')))
                             {
-                                if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow &&
-                                    count($row['cells']) < $maximumColumnCount)
+                                foreach ($cell['elements'] as $elementIndex => $elementInformation)
                                 {
-                                    $elementInformation['wide'] = true;
+                                    if (count($row['cells']) == 1 && count($row['cells']) < $maxCellsPerRow &&
+                                        count($row['cells']) < $maximumColumnCount)
+                                    {
+                                        $elementInformation['wide'] = true;
+                                    }
+                                    $this->resolveElementInformationDuringFormLayoutRender($elementInformation);
+                                    Yii::app()->custom->resolveElementInformationDuringFormLayoutRender($this, $elementInformation);
+                                    $elementclassname = $elementInformation['type'] . 'Element';
+                                    $element  = new $elementclassname($this->getModel(), $elementInformation['attributeName'],
+                                                                      $form, array_slice($elementInformation, 2));
+                                    $this->resolveElementDuringFormLayoutRender($element);
+                                    $metadata['global']['panels'][$panelNumber]['rows']
+                                    [$rowIndex]['cells'][$cellIndex]['elements'][$elementIndex] = $element->render();
                                 }
-                                $this->resolveElementInformationDuringFormLayoutRender($elementInformation);
-                                Yii::app()->custom->resolveElementInformationDuringFormLayoutRender($this, $elementInformation);
-                                $elementclassname = $elementInformation['type'] . 'Element';
-                                $element  = new $elementclassname($this->getModel(), $elementInformation['attributeName'],
-                                                                  $form, array_slice($elementInformation, 2));
-                                $this->resolveElementDuringFormLayoutRender($element);
-                                $metadata['global']['panels'][$panelNumber]['rows']
-                                [$rowIndex]['cells'][$cellIndex]['elements'][$elementIndex] = $element->render();
                             }
-                        }
-                        else
-                        {
-                            foreach ($cell['elements'] as $elementIndex => $elementInformation)
+                            else
                             {
-                                $metadata['global']['panels'][$panelNumber]['rows']
-                                [$rowIndex]['cells'][$cellIndex]['elements'][$elementIndex] = null;
+                                foreach ($cell['elements'] as $elementIndex => $elementInformation)
+                                {
+                                    $metadata['global']['panels'][$panelNumber]['rows']
+                                    [$rowIndex]['cells'][$cellIndex]['elements'][$elementIndex] = null;
+                                }
                             }
                         }
                     }
+                }
+                else
+                {
+                    unset($metadata['global']['panels'][$panelNumber]);
                 }
             }
             return $metadata;
@@ -335,6 +342,11 @@
         }
 
         protected function shouldDisplayCell($detailViewOnly)
+        {
+            return true;
+        }
+
+        protected function shouldDisplayPanel($detailViewOnly)
         {
             return true;
         }

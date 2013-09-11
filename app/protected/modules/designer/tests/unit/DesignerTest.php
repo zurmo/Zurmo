@@ -128,7 +128,7 @@
                             ),
                             array(
                                 'cells' => array(
-                                    array('element' => 'name'),
+                                    array('element' => 'name', 'detailViewOnly' => 1),
                                 )
                             )
                         )
@@ -180,6 +180,54 @@
             $this->assertNotEquals($editableMetadataNew, $editableMetadata);
             $this->assertEquals($editableMetadataNew['global']['panels'], $compareMetadata['panels']);
             $this->assertNotEmpty($adapter->getMessage());
+
+            //DetailViewOnly is setted
+            $compareMetadata = array('panels' =>
+                                     array(
+                                         array(
+                                             'rows' => array(
+                                                 array(
+                                                     'cells' => array(
+                                                         array('elements' => array(
+                                                             array('attributeName' => null,
+                                                                   'type' => 'Null')
+                                                         )
+                                                         ),
+                                                     ),
+                                                 ),
+                                                 array(
+                                                     'cells' => array(
+                                                         array('elements' => array(
+                                                             array('attributeName' => 'name',
+                                                                   'type' => 'Text')
+                                                         ),
+                                                         'detailViewOnly' => 1
+                                                         ),
+                                                     )
+                                                 )
+                                             )
+                                         )
+                                     )
+            );
+            $editableMetadata = AccountEditAndDetailsView::getMetadata();
+            $this->assertNotEquals($editableMetadata['global']['panels'], $layout);
+            $attributesLayoutAdapter = AttributesLayoutAdapterUtil::makeAttributesLayoutAdapter(
+                $modelAttributesAdapter->getAttributes(),
+                new EditAndDetailsViewDesignerRules(),
+                $editableMetadata
+            );
+            $adapter = new LayoutMetadataAdapter('AccountEditAndDetailsView',
+                'AccountsModule',
+                $editableMetadata,
+                new EditAndDetailsViewDesignerRules(),
+                $attributesLayoutAdapter->getPlaceableLayoutAttributes(),
+                $attributesLayoutAdapter->getRequiredDerivedLayoutAttributeTypes()
+            );
+            $this->assertTrue($adapter->setMetadataFromLayout($layout, array()));
+            $editableMetadataNew = AccountEditAndDetailsView::getMetadata();
+            $this->assertNotEquals($editableMetadataNew, $editableMetadata);
+            $this->assertEquals($editableMetadataNew['global']['panels'], $compareMetadata['panels']);
+            $this->assertEquals('Layout saved successfully.', $adapter->getMessage());
         }
 
         /**

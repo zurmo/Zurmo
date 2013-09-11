@@ -139,5 +139,10 @@
         {
             return true;
         }
+
+        public static function getModuleClassName()
+        {
+            return 'ImportModule';
+        }
     }
 ?>

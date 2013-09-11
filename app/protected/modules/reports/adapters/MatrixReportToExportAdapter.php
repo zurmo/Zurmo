@@ -68,9 +68,9 @@
                                             $displayAttribute->columnAliasName);
                     $params             = array();
                     $line[]             = $displayAttribute->resolveValueAsLabelForHeaderCell(
-                                            $reportResultsRowData->$attributeName);
+                                            $reportResultsRowData->$attributeName, true);
                 }
-                $leadingHeaders         = $this->dataProvider->makeAxisCrossingColumnCountAndLeadingHeaderRowsData();
+                $leadingHeaders         = $this->dataProvider->makeAxisCrossingColumnCountAndLeadingHeaderRowsData(true);
                 $rows                   = count($leadingHeaders['rows']);
                 $matrixColumnCount      = $leadingHeaders['rows'][$rows - 1]['colSpan']; //This is the true columns count, the other are repeated for each grouping
                 $attributeKey           = 0;
@@ -80,10 +80,10 @@
                     {
                         if (!$displayAttribute->queryOnly)
                         {
-                            $params        = array();
                             $column        = MatrixReportDataProvider::resolveColumnAliasName($attributeKey);
                             $className     = $this->resolveExportClassNameForReportToExportValueAdapter(
                                                 $displayAttribute);
+                            $params        = array('label' => $displayAttribute->label);
                             $adapter       = new $className($reportResultsRowData, $column, $params);
                             $adapter->resolveData($line);
                             if ($attributeKey < $matrixColumnCount)
@@ -113,7 +113,7 @@
 
         protected function getLeadingHeadersDataFromMatrixReportDataProvider($extraLeadingHeaderColumns)
         {
-            $leadingHeaders             = $this->dataProvider->makeAxisCrossingColumnCountAndLeadingHeaderRowsData();
+            $leadingHeaders             = $this->dataProvider->makeAxisCrossingColumnCountAndLeadingHeaderRowsData(true);
             $previousGroupByValuesCount = 1;
             $headerData = array();
             for ($i = 0; $i < count($leadingHeaders['rows']); $i++)

@@ -156,6 +156,10 @@
 
         protected function renderTitleContent()
         {
+            if ($this->getTitle() == '')
+            {
+                return null;
+            }
             return StringUtil::renderFluidTitleContent($this->getTitle());
         }
 

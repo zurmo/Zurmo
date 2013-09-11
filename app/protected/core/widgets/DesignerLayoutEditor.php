@@ -179,7 +179,7 @@
             $content .= '</tr>';
             $content .= '<tr>';
             $content .= '<th><label>' . Zurmo::t('Core', 'Detail View Only') . '</label></th>';
-            $content .= '<td>' . ZurmoHtml::checkBox( 'panelDetailViewOnly_' . $panelIdName, $detailViewOnly,
+            $content .= '<td>' . ZurmoHtml::checkBox( 'detailViewOnly_' . $panelIdName, $detailViewOnly,
             array('class' => 'panel-title settings-form-field')
             ) . '</td>';
             $content .= '</tr>';

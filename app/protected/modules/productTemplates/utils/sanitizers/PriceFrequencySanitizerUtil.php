@@ -88,7 +88,7 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'Price Frequency specified is invalid.'));
                 }
             }
             catch (NotFoundException $e)

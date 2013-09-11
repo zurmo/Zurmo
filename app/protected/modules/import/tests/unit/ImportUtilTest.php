@@ -63,6 +63,20 @@
             assert($saved);    // Not Coding Standard
         }
 
+        public function testResolveLinkMessageToModel()
+        {
+            Yii::app()->user->userModel = User::getByUsername('super');
+            $account = AccountTestHelper::createAccountByNameForOwner('account', Yii::app()->user->userModel);
+            $content =  ImportUtil::resolveLinkMessageToModel($account);
+            $this->assertFalse(strpos($content, 'accounts/default/details?id') === false);
+            $contact = ContactTestHelper::createContactByNameForOwner('contact', Yii::app()->user->userModel);
+            $content =  ImportUtil::resolveLinkMessageToModel($contact);
+            $this->assertFalse(strpos($content, 'contacts/default/details?id') === false);
+            $lead = LeadTestHelper::createLeadByNameForOwner('lead', Yii::app()->user->userModel);
+            $content =  ImportUtil::resolveLinkMessageToModel($lead);
+            $this->assertFalse(strpos($content, 'leads/default/details?id') === false);
+        }
+
         public function testImportNameAndRelatedNameWithApostrophes()
         {
             Yii::app()->user->userModel = User::getByUsername('super');
@@ -546,16 +560,16 @@
 
             //Confirm the messages are as expected.
             $compareMessages = array(
-                'ImportModelTestItem - Last Name specified is too long.',
-                'ImportModelTestItem - Last Name - Last Name cannot be blank.',
+                'Import - Last Name specified is too long.',
+                'Import - Last Name - Last Name cannot be blank.',
             );
             $this->assertEquals($compareMessages, unserialize(current($beansWithErrors)->serializedMessages));
 
             $compareMessages = array(
-                'ImportModelTestItem - String This field is required and neither a value nor a default value was specified.',
-                'ImportModelTestItem - Full name value required, but missing.',
-                'ImportModelTestItem - Last Name - Last Name cannot be blank.',
-                'ImportModelTestItem - String - String cannot be blank.',
+                'Import - String This field is required and neither a value nor a default value was specified.',
+                'Import - Full name value required, but missing.',
+                'Import - Last Name - Last Name cannot be blank.',
+                'Import - String - String cannot be blank.',
             );
             $this->assertEquals($compareMessages, unserialize(next($beansWithErrors)->serializedMessages));
 

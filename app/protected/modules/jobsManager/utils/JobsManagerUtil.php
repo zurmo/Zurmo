@@ -69,6 +69,7 @@
                                   array('{type}' => $type,
                                          '{dateTimeString}' => static::getLocalizedDateTimeTimeZoneString())));
             $messageLogger = new $messageLoggerClassName($messageStreamer);
+            $messageLogger->addDebugMessage('Showing Debug Messages');
             if ($type == 'Monitor')
             {
                 static::runMonitorJob($messageLogger);

@@ -107,11 +107,6 @@
             return Zurmo::t('TasksModule', 'My Open TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
         }
 
-        public static function getPortletDescription()
-        {
-            return Zurmo::t('TasksModule', 'Easily access your own TasksModulePluralLabel', LabelUtil::getTranslationParamsForAllModules());
-        }
-
         protected function getSearchModel()
         {
             $modelClassName = $this->modelClassName;

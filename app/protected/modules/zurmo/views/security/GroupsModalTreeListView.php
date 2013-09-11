@@ -105,5 +105,10 @@
         {
             return false;
         }
+
+        protected static function resolveShouldShowLinkableUserCount()
+        {
+            return false;
+        }
     }
 ?>

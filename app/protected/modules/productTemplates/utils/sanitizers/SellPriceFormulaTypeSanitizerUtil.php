@@ -88,14 +88,15 @@
                 {
                     return SellPriceFormula::TYPE_PROFIT_MARGIN;
                 }
-                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_MARKUP_OVER_COST) ||
+                elseif (strtolower($value) == strtolower(SellPriceFormula::TYPE_SAME_AS_LIST) ||
                     strtolower($value) == strtolower('Same As List'))
                 {
-                    return SellPriceFormula::TYPE_MARKUP_OVER_COST;
+                    return SellPriceFormula::TYPE_SAME_AS_LIST;
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule',
+                                                                   'Sell Price Formula type specified is invalid.'));
                 }
             }
             catch (NotFoundException $e)

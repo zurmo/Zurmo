@@ -241,19 +241,26 @@
             $super                      = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
 
-            //add a message in the outbox_error folder.
-            $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2', $super);
-            $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
-            $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_ERROR);
-            $emailMessage->sendAttempts = 5;
-            $emailMessage->save();
+            if (EmailMessageTestHelper::isSetEmailAccountsTestConfiguration())
+            {
+                //add a message in the outbox_error folder.
+                $emailMessage = EmailMessageTestHelper::createDraftSystemEmail('a test email 2', $super);
+                $box                  = EmailBox::resolveAndGetByName(EmailBox::NOTIFICATIONS_NAME);
+                $emailMessage->folder = EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_ERROR);
+                $emailMessage->sendAttempts = 5;
+                $emailMessage->save();
 
-            $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(4, Yii::app()->emailHelper->getSentCount());
-            Yii::app()->emailHelper->sendQueued();
-            $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
-            $this->assertEquals(4, Yii::app()->emailHelper->getSentCount());
-            $this->assertTrue($emailMessage->folder->isSame(EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_FAILURE)));
+                $this->assertEquals(1, Yii::app()->emailHelper->getQueuedCount());
+                $this->assertEquals(4, Yii::app()->emailHelper->getSentCount());
+                Yii::app()->emailHelper->sendQueued();
+                $this->assertEquals(0, Yii::app()->emailHelper->getQueuedCount());
+                $this->assertEquals(4, Yii::app()->emailHelper->getSentCount());
+                $this->assertTrue($emailMessage->folder->isSame(EmailFolder::getByBoxAndType($box, EmailFolder::TYPE_OUTBOX_FAILURE)));
+            }
+            else
+            {
+                $this->markTestSkipped();
+            }
         }
     }
 ?>

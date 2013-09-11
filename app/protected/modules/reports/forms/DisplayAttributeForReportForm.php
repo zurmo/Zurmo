@@ -223,7 +223,7 @@
          * @param $value
          * @return string
          */
-        public function resolveValueAsLabelForHeaderCell($value)
+        public function resolveValueAsLabelForHeaderCell($value, $forExport = false)
         {
             $tContent             = null;
             $translatedValue      = $value;
@@ -276,7 +276,7 @@
             {
                 $translatedValue = '';
             }
-            if ($this->isALinkableAttribute())
+            if ($this->isALinkableAttribute() && !$forExport)
             {
                 $modelClassName  = get_class($modelToReportAdapter->getModel());
                 $moduleClassName = $modelToReportAdapter->getModuleClassName();

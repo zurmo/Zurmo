@@ -47,12 +47,21 @@
          */
         public function resolveHeaderData(& $headerData)
         {
+            $headerData[] = $this->getLabel();
+        }
+
+        protected function getLabel()
+        {
+            if (isset($this->params['label']))
+            {
+                return $this->params['label'];
+            }
             list($notUsed, $displayAttributeKey) = explode(ReportResultsRowData::ATTRIBUTE_NAME_PREFIX, $this->attribute);
             $displayAttributes = $this->model->getDisplayAttributes();
             $metadata          = CalculatedDerivedAttributeMetadata::
-                                 getByNameAndModelClassName($displayAttributes[$displayAttributeKey]->getResolvedAttribute(),
-                                 $displayAttributes[$displayAttributeKey]->getResolvedAttributeModelClassName());
-            $headerData[] = $metadata->getLabelByLanguage(Yii::app()->language);
+                getByNameAndModelClassName($displayAttributes[$displayAttributeKey]->getResolvedAttribute(),
+                    $displayAttributes[$displayAttributeKey]->getResolvedAttributeModelClassName());
+            return $metadata->getLabelByLanguage(Yii::app()->language);
         }
     }
 ?>

@@ -428,7 +428,7 @@
                 {
                     $("#' . self::ACTION_TYPE_NAME . '").val("").removeAttr("disabled");
                     $(this).parents("li").remove(); //removes the <li>
-                    $(this).parentsUntil("ul").siblings().show();
+                    $("#' . ComponentForWorkflowForm::TYPE_ACTIONS .'attributeRowsUl").children("li").show();
                     var size = $("#' . get_class($this) . ' .dynamic-rows > ul > li").length;
                     if (size < 1)
                     {

@@ -93,7 +93,7 @@
                 }
                 else
                 {
-                    throw new InvalidValueToSanitizeException();
+                    throw new InvalidValueToSanitizeException(Zurmo::t('ProductTemplatesModule', 'Status specified is invalid.'));
                 }
             }
             catch (NotFoundException $e)

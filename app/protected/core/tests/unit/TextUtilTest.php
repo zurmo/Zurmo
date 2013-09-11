@@ -61,5 +61,28 @@
             $lowercaseString = TextUtil::strToLowerWithDefaultEncoding($lowercaseString);
             $this->assertEquals($correctLowercase, $lowercaseString);
         }
+
+        public function testTextWithUrlToTextWithLink()
+        {
+            $textWithUrl = "Do you know the guys who made http://www.zurmo.com. They are awsome.";
+            $textWithLink = TextUtil::textWithUrlToTextWithLink($textWithUrl);
+            $this->assertEquals('Do you know the guys who made <a href="http://www.zurmo.com">www.zurmo.com</a>. They are awsome.',
+                                $textWithLink);
+
+            $textWithUrl = "Do you know the guys who made https://www.zurmo.com. They are awsome.";
+            $textWithLink = TextUtil::textWithUrlToTextWithLink($textWithUrl);
+            $this->assertEquals('Do you know the guys who made <a href="https://www.zurmo.com">www.zurmo.com</a>. They are awsome.',
+                $textWithLink);
+
+            $textWithUrl = "Do you know the guys who made www.zurmo.com. They are awsome.";
+            $textWithLink = TextUtil::textWithUrlToTextWithLink($textWithUrl);
+            $this->assertEquals('Do you know the guys who made <a href="http://www.zurmo.com">www.zurmo.com</a>. They are awsome.',
+                $textWithLink);
+
+            $textWithUrl = "Please, send an email to jonny@zurmo.com";
+            $textWithLink = TextUtil::textWithUrlToTextWithLink($textWithUrl);
+            $this->assertEquals('Please, send an email to <a href="mailto:jonny@zurmo.com">jonny@zurmo.com</a>',
+                $textWithLink);
+        }
     }
 ?>

@@ -49,6 +49,7 @@
             //Setup test data owned by the super user.
             $account = AccountTestHelper::createAccountByNameForOwner('superAccount', $super);
             ContactTestHelper::createContactWithAccountByNameForOwner('superContact', $super, $account);
+            OpportunityTestHelper::createOpportunityWithAccountByNameForOwner('superOpportunity', $super, $account);
             ProductTestHelper::createProductStagesIfDoesNotExist();
             ProductTestHelper::createProductByNameForOwner("My Product 1", $super);
             //Setup test data owned by the super user.
@@ -157,6 +158,129 @@
             $this->assertEquals('Test CategoryII', $productSavedCategoryII->name);
             $this->assertEquals('My Product Template', $latestProduct->name);
             $this->assertEquals(500.54, $latestProduct->sellPrice->value);
+
+            //When created from contact should copy the contact account to product
+            $contactId = self::getModelIdByModelNameAndName('Contact', 'superContact superContactson');
+            $this->setGetArray(array('relationModuleId'         => 'accounts',
+                                     'portletId'               => '1',
+                                     'uniqueLayoutId'          => 'ContactDetailsAndRelationsView_1',
+                                     'id'                      => $superProductTemplateId,
+                                     'relationModelId'         => $contactId,
+                                     'relationAttributeName'   => 'contact',
+                                     'relationModelClassName'  => 'Contact',
+                                     'redirect'                => '0'
+                )
+            );
+            $this->runControllerWithNoExceptionsAndGetContent('products/default/createProductFromProductTemplate', true);
+            $products           = Product::getAll();
+            $this->assertEquals(3, count($products));
+
+            $latestProduct = $products[2];
+            $this->assertEquals($accountId, $latestProduct->account->id);
+        }
+
+        public function testSuperUserCreateFromRelationAction()
+        {
+            $super         = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
+            $products      = Product::getAll();
+            $productsCount = count($products);
+
+            $accountId     = self::getModelIdByModelNameAndName('Account',     'superAccount');
+            $contactId     = self::getModelIdByModelNameAndName('Contact',     'superContact superContactson');
+            $opportunityId = self::getModelIdByModelNameAndName('Opportunity', 'superOpportunity');
+
+            //Create a new product from a related account.
+            $this->setGetArray(array(   'relationAttributeName' => 'account',
+                                        'relationModelId'       => $accountId,
+                                        'relationModuleId'      => 'accounts',
+                                        'redirectUrl'           => 'someRedirect'));
+
+            $currency                                   = new Currency();
+            $currency->code                             = 'USD';
+            $currency->rateToBase                       = 1;
+            $currency->save();
+            $currencyRec                                = Currency::getByCode('USD');
+            $currencyValue1Array                        = array('currency' => array('id' => $currencyRec->id), 'value' => 500.54);
+
+            $product['name']                            = 'myUltraNewProduct';
+            $product['quantity']                        = 50;
+            $product['priceFrequency']                  = ProductTemplate::PRICE_FREQUENCY_ONE_TIME;
+            $product['sellPrice']                       = $currencyValue1Array;
+            $product['type']                            = ProductTemplate::TYPE_PRODUCT;
+            $product['stage']['value']                  = Product::OPEN_STAGE;
+            $this->setPostArray(array('Product' => $product));
+
+            $this->runControllerWithRedirectExceptionAndGetContent('products/default/createFromRelation');
+            $products = Product::getByName('myUltraNewProduct');
+            $this->assertEquals(1, count($products));
+            $this->assertTrue($products[0]->id > 0);
+            $this->assertTrue($products[0]->owner == $super);
+            $this->assertEquals($accountId,                                 $products[0]->account->id);
+            $this->assertEquals('50',                                       $products[0]->quantity);
+            $this->assertEquals('500.54',                                   $products[0]->sellPrice->value);
+            $this->assertEquals(ProductTemplate::PRICE_FREQUENCY_ONE_TIME,  $products[0]->priceFrequency);
+            $this->assertEquals(ProductTemplate::TYPE_PRODUCT,              $products[0]->type);
+            $this->assertEquals(Product::OPEN_STAGE,                        $products[0]->stage->value);
+            $products = Product::getAll();
+            $this->assertEquals(++$productsCount, count($products));
+
+            //Create a new product from a related contact.
+            $this->setGetArray(array(   'relationAttributeName' => 'contact',
+                                        'relationModelId'       => $contactId,
+                                        'relationModuleId'      => 'contacts',
+                                        'redirectUrl'           => 'someRedirect'));
+
+            $product['name']                            = 'myUltraNewProduct2';
+            $product['quantity']                        = 51;
+            $product['priceFrequency']                  = ProductTemplate::PRICE_FREQUENCY_ANNUALLY;
+            $product['sellPrice']                       = $currencyValue1Array;
+            $product['type']                            = ProductTemplate::TYPE_SERVICE;
+            $product['stage']['value']                  = Product::OPEN_STAGE;
+            $this->setPostArray(array('Product' => $product));
+
+            $this->runControllerWithRedirectExceptionAndGetContent('products/default/createFromRelation');
+            $products = Product::getByName('myUltraNewProduct2');
+            $this->assertEquals(1, count($products));
+            $this->assertTrue($products[0]->id > 0);
+            $this->assertTrue($products[0]->owner == $super);
+            $this->assertEquals($accountId,                                 $products[0]->account->id);
+            $this->assertEquals($contactId,                                 $products[0]->contact->id);
+            $this->assertEquals('51',                                       $products[0]->quantity);
+            $this->assertEquals('500.54',                                   $products[0]->sellPrice->value);
+            $this->assertEquals(ProductTemplate::PRICE_FREQUENCY_ANNUALLY,  $products[0]->priceFrequency);
+            $this->assertEquals(ProductTemplate::TYPE_SERVICE,              $products[0]->type);
+            $this->assertEquals(Product::OPEN_STAGE,                        $products[0]->stage->value);
+            $products = Product::getAll();
+            $this->assertEquals(++$productsCount, count($products));
+
+            //Create a new product from a related opportunity.
+            $this->setGetArray(array(   'relationAttributeName' => 'opportunity',
+                                        'relationModelId'       => $opportunityId,
+                                        'relationModuleId'      => 'opportunities',
+                                        'redirectUrl'           => 'someRedirect'));
+
+            $product['name']                            = 'myUltraNewProduct3';
+            $product['quantity']                        = 51;
+            $product['priceFrequency']                  = ProductTemplate::PRICE_FREQUENCY_ANNUALLY;
+            $product['sellPrice']                       = $currencyValue1Array;
+            $product['type']                            = ProductTemplate::TYPE_SERVICE;
+            $product['stage']['value']                  = Product::OPEN_STAGE;
+            $this->setPostArray(array('Product' => $product));
+
+            $this->runControllerWithRedirectExceptionAndGetContent('products/default/createFromRelation');
+            $products = Product::getByName('myUltraNewProduct3');
+            $this->assertEquals(1, count($products));
+            $this->assertTrue($products[0]->id > 0);
+            $this->assertTrue($products[0]->owner == $super);
+            $this->assertEquals($accountId,                                 $products[0]->account->id);
+            $this->assertEquals($opportunityId,                             $products[0]->opportunity->id);
+            $this->assertEquals('51',                                       $products[0]->quantity);
+            $this->assertEquals('500.54',                                   $products[0]->sellPrice->value);
+            $this->assertEquals(ProductTemplate::PRICE_FREQUENCY_ANNUALLY,  $products[0]->priceFrequency);
+            $this->assertEquals(ProductTemplate::TYPE_SERVICE,              $products[0]->type);
+            $this->assertEquals(Product::OPEN_STAGE,                        $products[0]->stage->value);
+            $products = Product::getAll();
+            $this->assertEquals(++$productsCount, count($products));
         }
     }
 ?>

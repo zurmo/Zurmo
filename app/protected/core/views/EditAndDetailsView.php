@@ -177,6 +177,15 @@
             return !$detailViewOnly;
         }
 
+        protected function shouldDisplayPanel($detailViewOnly)
+        {
+            if ($this->renderType == 'Details')
+            {
+                return true;
+            }
+            return !$detailViewOnly;
+        }
+
         protected function shouldRenderToolBarElement($element, $elementInformation)
         {
             assert('$element instanceof ActionElement');

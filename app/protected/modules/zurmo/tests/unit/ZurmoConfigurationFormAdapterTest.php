@@ -58,7 +58,7 @@
             Yii::app()->pagination->setGlobalValueByType('modalListPageSize',     52);
             Yii::app()->pagination->setGlobalValueByType('dashboardListPageSize', 53);
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'applicationName', 'demoCompany');
-            $logoFileName = 'testImage.png';
+            $logoFileName = 'testLogo.png';
             $logoFilePath = Yii::getPathOfAlias('application.modules.zurmo.tests.unit.files') . DIRECTORY_SEPARATOR . $logoFileName;
             ZurmoConfigurationFormAdapter::resizeLogoImageFile($logoFilePath, $logoFilePath, null, ZurmoConfigurationForm::DEFAULT_LOGO_HEIGHT);
             $logoFileId   = ZurmoConfigurationFormAdapter::saveLogoFile($logoFileName, $logoFilePath, 'logoFileModelId');
@@ -83,7 +83,7 @@
             $form->dashboardListPageSize = 63;
             $form->applicationName       = 'demoCompany2';
             $form->autoresponderOrCampaignBatchSize = 20;
-            $logoFileName2               = 'testLogo.png';
+            $logoFileName2               = 'testLogo2.png';
             $form->autoresponderOrCampaignFooterPlainText   = 'abc';
             $form->autoresponderOrCampaignFooterRichText    = 'def';
             $logoFilePath2               = Yii::getPathOfAlias('application.modules.zurmo.tests.unit.files') . DIRECTORY_SEPARATOR . $logoFileName2;

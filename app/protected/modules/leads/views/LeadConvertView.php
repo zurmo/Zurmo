@@ -223,7 +223,8 @@
                 $content .= '</div>';
             }
             $content .= '</div>'; //this was missing..
-            return '<div class="wrapper">' . $content . parent::renderContent() . '</div>';
+            $content  = $content . ZurmoHtml::tag('div', array('class' => 'left-column full-width clearfix'), parent::renderContent());
+            return '<div class="wrapper">' . $content . '</div>';
         }
 
         public function isUniqueToAPage()

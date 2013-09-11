@@ -49,6 +49,10 @@
 
         protected function getRouteAction()
         {
+            if (isset($this->params['routeAction']))
+            {
+                return $this->params['routeAction'];
+            }
             return '/usersInRoleModalList/';
         }
     }

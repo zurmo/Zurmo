@@ -78,5 +78,15 @@
             }
             return $item->{$this->getModelRelationNameForUserCount()}->count();
         }
+
+        protected static function resolveShouldShowLinkableUserCount()
+        {
+            return true;
+        }
+
+        protected static function resolveRouteAction()
+        {
+            return '/usersInGroupModalList/';
+        }
     }
 ?>

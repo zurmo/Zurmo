@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>CreateAccount</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>setTimeout</td>
+	<td>45000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeGlobal</td>
+	<td>javascript{Math.floor(Math.random()*11000)}</td>
+	<td>randomSuffix</td>
+</tr>
+<!--Go to create contact webform-->
+<tr>
+	<td>open</td>
+	<td>index.php/contactWebForms/default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Contact Web Forms</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Contact Web Form Entries</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='SecuredActionBarForContactWebFormsSearchAndListView']/div/div/a[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create Contact Web Form</td>
+	<td></td>
+</tr>
+<!--check validation-->
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Name cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Redirect Url cannot be blank.</td>
+	<td></td>
+</tr>
+<!--check default values-->
+<tr>
+	<td>assertValue</td>
+	<td>ContactWebForm_submitButtonLabel</td>
+	<td>Submit</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ContactWebForm_language_value</td>
+	<td>English (English)</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>ContactWebForm_defaultState_id</td>
+	<td>New</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>ContactWebForm_defaultOwner_name</td>
+	<td>Super User</td>
+</tr>
+<!--add catalog item details-->
+<tr>
+	<td>type</td>
+	<td>id=ContactWebForm_name</td>
+	<td>Test Create Contact Web Form ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=ContactWebForm_redirectUrl</td>
+	<td>www.test.com</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=ContactWebForm_defaultState_id</td>
+	<td>label=In Progress</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Test Create Contact Web Form ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[1]/td</td>
+	<td>Test Create Contact Web Form ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[2]/td</td>
+	<td>http://www.test.com</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[3]/td</td>
+	<td>Submit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[4]/td</td>
+	<td>English (English)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[5]/td</td>
+	<td>In Progress</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[6]/td</td>
+	<td>Super User</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[7]/td</td>
+	<td>Everyone</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ContactWebFormEditAndDetailsView']/div/div[2]/div[2]/table/tbody/tr[9]/td</td>
+	<td>Last Name</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

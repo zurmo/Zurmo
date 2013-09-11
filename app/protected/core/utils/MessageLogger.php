@@ -49,6 +49,11 @@
          */
         const INFO = 2;
 
+        /**
+         * Debug Message type.
+         */
+        const DEBUG = 3;
+
         protected $errorMessagePresent = false;
 
         protected $messages = array();
@@ -86,13 +91,26 @@
             $this->add(array(MessageLogger::ERROR, $message));
         }
 
+        /**
+         * Add debug message.
+         * @param string $message
+         */
+        public function addDebugMessage($message)
+        {
+            $this->add(array(MessageLogger::DEBUG, $message));
+        }
+
         protected function add($message)
         {
             assert('is_array($message)');
             $this->messages[] = $message;
             if ($this->messageStreamer != null)
             {
-                $this->messageStreamer->add(static::getTypeLabel($message[0]) . ' - ' . $message[1]);
+                if($message[0] != MessageLogger::DEBUG ||
+                    ($this->shouldPrintDebugMessages() && $message[0] == MessageLogger::DEBUG))
+                {
+                    $this->messageStreamer->add(static::getTypeLabel($message[0]) . ' - ' . $message[1]);
+                }
             }
         }
 
@@ -113,7 +131,11 @@
             {
                 if (!$errorOnly || ($errorOnly && $messageInfo[0] == MessageLogger::ERROR))
                 {
-                    $content .= static::getTypeLabel($messageInfo[0]) . ' - ' . $messageInfo[1] . "\n";
+                    if($messageInfo[0] != MessageLogger::DEBUG ||
+                        ($this->shouldPrintDebugMessages() && $messageInfo[0] == MessageLogger::DEBUG))
+                    {
+                        $content .= static::getTypeLabel($messageInfo[0]) . ' - ' . $messageInfo[1] . "\n";
+                    }
                 }
             }
             if ($return)
@@ -129,14 +151,18 @@
          */
         public static function getTypeLabel($type)
         {
-            assert('$type == MessageLogger::ERROR || $type == MessageLogger::INFO');
+            assert('$type == MessageLogger::ERROR || $type == MessageLogger::INFO || $type == MessageLogger::DEBUG');
             if ($type == MessageLogger::ERROR)
             {
                 return Zurmo::t('Core', 'Error');
             }
-            else
+            elseif($type == MessageLogger::INFO)
             {
                 return Zurmo::t('Core', 'Info');
+            }
+            else
+            {
+                return Zurmo::t('Core', 'Debug');
             }
         }
 
@@ -146,6 +172,18 @@
         public function isErrorMessagePresent()
         {
             return $this->errorMessagePresent;
+        }
+
+        /**
+         * @return bool
+         */
+        protected function shouldPrintDebugMessages()
+        {
+            if(YII_DEBUG)
+            {
+                return true;
+            }
+            return false;
         }
     }
 ?>
