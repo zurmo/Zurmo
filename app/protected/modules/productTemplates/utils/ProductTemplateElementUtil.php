@@ -226,7 +226,7 @@
         public static function getProductTemplateTypeDropdownArray()
         {
             return array(
-                ProductTemplate::TYPE_PRODUCT       => Yii::t('Default', 'Product'),
+                ProductTemplate::TYPE_PRODUCT       => Yii::t('ProductsModule', 'Product'),
                 ProductTemplate::TYPE_SERVICE       => Yii::t('Default', 'Service'),
                 ProductTemplate::TYPE_SUBSCRIPTION  => Yii::t('Default', 'Subscription'),
             );

@@ -94,7 +94,7 @@
         {
             return array(
                 'applicationName'                        => Zurmo::t('ZurmoModule', 'Application Name'),
-                'timeZone'                               => Zurmo::t('ZurmoModule', 'Time zone'),
+                'timeZone'                               => Zurmo::t('ZurmoModule', 'Time Zone'),
                 'listPageSize'                           => Zurmo::t('ZurmoModule', 'List page size'),
                 'subListPageSize'                        => Zurmo::t('ZurmoModule', 'Sublist page size'),
                 'modalListPageSize'                      => Zurmo::t('ZurmoModule', 'Popup list page size'),

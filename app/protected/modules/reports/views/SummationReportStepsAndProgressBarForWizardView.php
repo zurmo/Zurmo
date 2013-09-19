@@ -46,7 +46,7 @@
                          Zurmo::t('ReportsModule', 'Groupings'),
                          Zurmo::t('ReportsModule', 'Columns'),
                          Zurmo::t('ReportsModule', 'Drill Down'),
-                         Zurmo::t('ReportsModule', 'Ordering'),
+                         Zurmo::t('ZurmoModule', 'Ordering'),
                          Zurmo::t('ReportsModule', 'Chart'),
                          Zurmo::t('ReportsModule', 'General'));
         }

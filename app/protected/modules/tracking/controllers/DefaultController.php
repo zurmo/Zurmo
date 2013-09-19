@@ -45,7 +45,7 @@
         {
             try
             {
-                Yii::app()->user->userModel = BaseActionControlUserConfigUtil::getUserToRunAs();
+                Yii::app()->user->userModel = BaseControlUserConfigUtil::getUserToRunAs();
                 $response                   = EmailMessageActivityUtil::resolveQueryStringFromUrlAndCreateOrUpdateActivity();
                 if ($response['redirect'])
                 {

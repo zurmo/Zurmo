@@ -37,7 +37,7 @@
     /**
      * Inform user that export process is completed, and that user can download exported file.
      */
-    class ExportProcessCompletedNotificationRules extends JobsManagerAccessNotificationRules
+    class ExportProcessCompletedNotificationRules extends NotificationRules
     {
         protected $critical    = false;
 

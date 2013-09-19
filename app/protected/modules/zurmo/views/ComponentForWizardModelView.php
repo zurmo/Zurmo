@@ -184,7 +184,7 @@
         protected function renderPreviousPageLinkContent()
         {
             return ZurmoHtml::link(ZurmoHtml::tag('span', array('class' => 'z-label'),
-                   Zurmo::t('ReportsModule', 'Previous')), '#', array('id' => static::getPreviousPageLinkId()));
+                   Zurmo::t('Core', 'Previous')), '#', array('id' => static::getPreviousPageLinkId()));
         }
 
         /**
@@ -193,7 +193,7 @@
         protected function renderNextPageLinkContent()
         {
             $params                = array();
-            $params['label']       = Zurmo::t('ReportsModule', 'Next');
+            $params['label']       = Zurmo::t('Core', 'Next');
             $params['htmlOptions'] = array('id' => static::getNextPageLinkId(),
                                            'onclick' => 'js:$(this).addClass("attachLoadingTarget");');
             $element               = new SaveButtonActionElement(null, null, null, $params);

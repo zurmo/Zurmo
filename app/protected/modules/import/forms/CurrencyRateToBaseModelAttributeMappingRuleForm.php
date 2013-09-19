@@ -60,7 +60,7 @@
 
         public function attributeLabels()
         {
-            return array('rateToBase'   => Zurmo::t('ImportModule', 'Rate To Base'));
+            return array('rateToBase'   => Zurmo::t('ZurmoModule', 'Rate To Base'));
         }
 
         public static function getAttributeName()

@@ -38,7 +38,7 @@
     {
         protected function getDefaultLabel()
         {
-            return Zurmo::t('MarketingListsModule', 'Unsubscribe');
+            return Zurmo::t('Core', 'Unsubscribe');
         }
 
         protected function getDefaultParams()

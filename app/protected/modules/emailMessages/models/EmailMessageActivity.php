@@ -54,7 +54,7 @@
             return array(
                 static::TYPE_OPEN           => Zurmo::t('EmailMessagesModule', 'Open'),
                 static::TYPE_CLICK          => Zurmo::t('EmailMessagesModule', 'Click'),
-                static::TYPE_UNSUBSCRIBE    => Zurmo::t('EmailMessagesModule', 'Unsubscribe'),
+                static::TYPE_UNSUBSCRIBE    => Zurmo::t('Core', 'Unsubscribe'),
                 static::TYPE_BOUNCE         => Zurmo::t('EmailMessagesModule', 'Bounce'),
                 static::TYPE_SKIP           => Zurmo::t('EmailMessagesModule', 'Skipped'),
             );

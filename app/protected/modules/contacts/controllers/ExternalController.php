@@ -43,7 +43,7 @@
 
         public function beforeAction($action)
         {
-            Yii::app()->user->userModel = BaseActionControlUserConfigUtil::getUserToRunAs();
+            Yii::app()->user->userModel = BaseControlUserConfigUtil::getUserToRunAs();
             return parent::beforeAction($action);
         }
 

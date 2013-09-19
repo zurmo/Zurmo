@@ -97,7 +97,7 @@
          */
         protected function getFormattedAttributeLabel()
         {
-            return Yii::app()->format->text(Zurmo::t('ProductsModule', 'Categories'));
+            return Yii::app()->format->text(Zurmo::t('ProductTemplatesModule', 'Categories'));
         }
 
         /**

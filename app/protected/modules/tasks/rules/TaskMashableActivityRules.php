@@ -75,12 +75,12 @@
                 {
                     return "<span>{modelStringContent}</span><br/><span>" .
                            "{relatedModelsByImportanceContent} </span><span class='less-pronounced-text'>" .
-                           Zurmo::t('TasksModule', 'owned by {ownerStringContent}') . "</span>";
+                           Zurmo::t('ZurmoModule', 'owned by {ownerStringContent}') . "</span>";
                 }
                 else
                 {
                     return "<span>{modelStringContent} </span><span class='less-pronounced-text'>" .
-                           Zurmo::t('TasksModule', 'owned by {ownerStringContent}') . "</span>";
+                           Zurmo::t('ZurmoModule', 'owned by {ownerStringContent}') . "</span>";
                 }
             }
             else

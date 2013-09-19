@@ -154,7 +154,7 @@
         public function actionModalList()
         {
             echo $this->renderModalList(
-                'ProductCategoriesModalTreeListView', Zurmo::t('ProductTemplatesModule', 'Select a category'));
+                'ProductCategoriesModalTreeListView', Zurmo::t('ProductTemplatesModule', 'Select a Category'));
         }
 
         protected function renderModalList($modalViewName, $pageTitle)

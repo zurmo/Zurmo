@@ -142,7 +142,7 @@
                 array(
                     'currency'      => Zurmo::t('ZurmoModule', 'Currency',      array(), null, $language),
                     'rateToBase'    => Zurmo::t('ZurmoModule', 'Rate To Base',  array(), null, $language),
-                    'value'         => Zurmo::t('ZurmoModule', 'Value',         array(), null, $language),
+                    'value'         => Zurmo::t('Core',        'Value',         array(), null, $language),
                 )
             );
         }

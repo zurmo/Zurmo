@@ -183,8 +183,8 @@
 
         public static function getDropDownArray($subscribeUrl, $unsubscribeUrl)
         {
-            return array($subscribeUrl => Zurmo::t('MarketingListsModule', 'Subscribe'),
-                        $unsubscribeUrl => Zurmo::t('MarketingListsModule', 'Unsubcribe'));
+            return array($subscribeUrl => Zurmo::t('Core', 'Subscribe'),
+                        $unsubscribeUrl => Zurmo::t('Core', 'Unsubcribe'));
         }
 
         protected function renderScripts()

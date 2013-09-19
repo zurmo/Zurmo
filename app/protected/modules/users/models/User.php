@@ -488,7 +488,7 @@
                     'primaryEmail'      => Zurmo::t('ZurmoModule',         'Email',             array(), null, $language),
                     'primaryAddress'    => Zurmo::t('ZurmoModule',         'Address',           array(), null, $language),
                     'role'              => Zurmo::t('ZurmoModule',         'Role',              array(), null, $language),
-                    'timeZone'          => Zurmo::t('UsersModule',         'Time Zone',         array(), null, $language),
+                    'timeZone'          => Zurmo::t('ZurmoModule',         'Time Zone',         array(), null, $language),
                     'title'             => Zurmo::t('ZurmoModule',         'Salutation',        array(), null, $language),
                     'username'          => Zurmo::t('UsersModule',         'Username',          array(), null, $language),
                     'lastLoginDateTime' => Zurmo::t('UsersModule',         'Last Login',        array(), null, $language),

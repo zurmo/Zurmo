@@ -58,7 +58,7 @@
             $gridViewId              = 'notUsed';
             $pageVar                 = 'notUsed';
             $listModel               = new EmailTemplate();
-            $actionBarView           = new SecuredActionBarForMarketingSearchAndListView(
+            $actionBarView           = new SecuredActionBarForMarketingListsSearchAndListView(
                                        'default',
                                        'marketing',
                                        $listModel,

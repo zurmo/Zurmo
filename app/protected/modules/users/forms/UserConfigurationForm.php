@@ -123,8 +123,8 @@
         public function attributeLabels()
         {
             return array(
-                'listPageSize'                  => Zurmo::t('UsersModule', 'List page size'),
-                'subListPageSize'               => Zurmo::t('UsersModule', 'Sublist page size'),
+                'listPageSize'                  => Zurmo::t('ZurmoModule', 'List page size'),
+                'subListPageSize'               => Zurmo::t('ZurmoModule', 'Sublist page size'),
                 'themeColor'                    => Zurmo::t('UsersModule', 'Theme'),
                 'backgroundTexture'             => Zurmo::t('UsersModule', 'Texture'),
                 'hideWelcomeView'               => Zurmo::t('UsersModule', 'Hide welcome page'),

@@ -105,7 +105,7 @@
 
         protected function renderPreviousPageLinkLabel()
         {
-            return Zurmo::t('ImportModule', 'Previous');
+            return Zurmo::t('Core', 'Previous');
         }
 
         /**
@@ -118,7 +118,7 @@
 
         protected function renderNextPageLinkLabel()
         {
-            return Zurmo::t('ImportModule', 'Next');
+            return Zurmo::t('Core', 'Next');
         }
 
         /**

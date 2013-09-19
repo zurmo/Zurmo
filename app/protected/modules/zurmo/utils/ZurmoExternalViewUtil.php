@@ -79,9 +79,17 @@
                 {
                     if ($child->getAttribute('rel') == 'stylesheet')
                     {
+                        if (strpos($child->getAttribute('href'), 'jquery-ui-timepicker-addon.css'))
+                        {
+                            $resourceUrl = Yii::app()->getRequest()->getHostInfo() . $child->getAttribute('href');
+                        }
+                        else
+                        {
+                            $resourceUrl = $child->getAttribute('href');
+                        }
                         $headBody['css'][] = array('rel'  => $child->getAttribute('rel'),
                                                    'type' => $child->getAttribute('type'),
-                                                   'href' => $child->getAttribute('href'));
+                                                   'href' => $resourceUrl);
                     }
                 }
                 elseif (!$excludeStyles && $child->nodeName == 'style')

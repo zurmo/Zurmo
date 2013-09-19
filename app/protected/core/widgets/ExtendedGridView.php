@@ -197,7 +197,7 @@
         {
             if ($this->emptyText === null)
             {
-                $emptyText = Yii::t('zii', 'No results found.');
+                $emptyText = Zurmo::t('Core', 'No results found.');
             }
             else
             {

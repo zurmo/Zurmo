@@ -160,7 +160,7 @@
             $this->assertTrue(strpos($emailMessage->content->htmlContent, $autoresponder->htmlContent) !== false);
             $this->assertTrue(strpos($emailMessage->content->htmlContent, '/marketingLists/external/') !== false);
             $this->assertEquals(2, substr_count($emailMessage->content->htmlContent, '/marketingLists/external/'));
-            $userToSendMessagesFrom     = BaseJobControlUserConfigUtil::getUserToRunAs();
+            $userToSendMessagesFrom     = BaseControlUserConfigUtil::getUserToRunAs();
             $defaultFromAddress         = Yii::app()->emailHelper->resolveFromAddressByUser($userToSendMessagesFrom);
             $defaultFromName            = strval($userToSendMessagesFrom);
             $this->assertEquals($defaultFromAddress, $emailMessage->sender->fromAddress);

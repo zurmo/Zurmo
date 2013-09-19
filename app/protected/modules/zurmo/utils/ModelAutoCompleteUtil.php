@@ -116,13 +116,13 @@
             $modelClassNamesAndSearchAttributeData = self::makeModelClassNamesAndSearchAttributeData($partialTerm, $user, $scopeData);
             if (empty($modelClassNamesAndSearchAttributeData))
             {
-                return array(array('href' => '', 'label' => Zurmo::t('ZurmoModule', 'No Results Found'), 'iconClass' => ''));
+                return array(array('href' => '', 'label' => Zurmo::t('Core', 'No results found'), 'iconClass' => ''));
             }
             $dataProvider = new RedBeanModelsDataProvider('anId', null, false, $modelClassNamesAndSearchAttributeData);
             $data = $dataProvider->getData();
             if (empty($data))
             {
-                return array(array('href' => '', 'label' => Zurmo::t('ZurmoModule', 'No Results Found'), 'iconClass' => ''));
+                return array(array('href' => '', 'label' => Zurmo::t('Core', 'No results found'), 'iconClass' => ''));
             }
             $autoCompleteResults = array();
             foreach ($data as $model)

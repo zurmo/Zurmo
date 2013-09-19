@@ -34,113 +34,35 @@
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
 
-    /**
-     * Class BaseControlUserConfigUtil
-     * Helper class to extend when we want to get/set control user for some action or job using ZurmoConfigUtil
-     */
     abstract class BaseControlUserConfigUtil
     {
-        /**
-         * Module name to which this config would belong, not necessarily the module name of translation inside this class
-         */
-        const CONFIG_MODULE_NAME       = 'ZurmoModule';
-
-        /**
-         * Config key for the control user we are querying
-         */
-        const CONFIG_KEY                = null;
+        const USERNAME       = 'backendjoboractionuser';
 
         /**
          * When running a special action or a job an elevated user must be used in order to ensure the activities can
-         * be processed properly.  if there is not a user specified, then a fall back of the first user that is a super
-         * administrator will be returned
-         * @param boolean $setOnMissing whether function set the fallback user inside config for future requests or not
+         * be processed properly.
+         * @param boolean $createIfMissing creates system user if its missing
          * @return User $user
-         * @throws NotSupportedException if there is no user specified and there are no users in the super admin group
-         * @throws MissingASuperAdministratorException if there are no super administrators available
+         * @throws NotFoundException if backend user can not be found and $createIfMissing is false
          */
-        public static function getUserToRunAs($setOnMissing = true)
+        public static function getUserToRunAs($createIfMissing = true)
         {
-            $configModuleName   = static::getConfigModuleId();
-            $configKey          = static::getConfigKey();
-            $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            if (null != $userId = ZurmoConfigurationUtil::getByModuleName($configModuleName, $configKey))
+            try
             {
-                try
+                $user               = User::getByUsername(static::USERNAME);
+            }
+            catch (NotFoundException $e)
+            {
+                if ($createIfMissing)
                 {
-                    $user  = User::getById($userId);
-                    if ($user->groups->contains($superGroup))
-                    {
-                        return $user;
-                    }
+                    $user = InstallUtil::createBaseControlUserConfigUtilUserAccount();
                 }
-                catch (NotFoundException $e)
+                else
                 {
+                    throw new NotFoundException("Backend User: " . static::USERNAME . " was not found.");
                 }
             }
-            if ($superGroup->users->count() == 0)
-            {
-                throw new MissingASuperAdministratorException();
-            }
-            else
-            {
-                foreach ($superGroup->users as $user)
-                {
-                    if ($user->isSystemUser)
-                    {
-                        if ($setOnMissing)
-                        {
-                            ZurmoConfigurationUtil::setByModuleName($configModuleName, $configKey, $user->id);
-                        }
-                        return $user;
-                    }
-                }
-                //Fallback if there is no system user for some reason.
-                $user = $superGroup->users->offsetGet(0);
-                if ($setOnMissing)
-                {
-                    ZurmoConfigurationUtil::setByModuleName($configModuleName, $configKey, $user->id);
-                }
-                return $user;
-            }
-        }
-
-        /**
-         * @see getUserToRunTrackActionAs
-         * @param User $user
-         * @throws NotSupportedException
-         */
-        public static function setUserToRunAs(User $user)
-        {
-            assert('$user->id > 0');
-            $superGroup   = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            if (!$user->groups->contains($superGroup))
-            {
-                throw new NotSupportedException();
-            }
-            $configModuleName   = static::getConfigModuleId();
-            $configKey          = static::getConfigKey();
-            ZurmoConfigurationUtil::setByModuleName($configModuleName, $configKey, $user->id);
-        }
-
-        protected static function getConfigModuleId()
-        {
-            $configModuleName = static::CONFIG_MODULE_NAME;
-            if (empty($configModuleName))
-            {
-                throw new NotSupportedException();
-            }
-            return $configModuleName;
-        }
-
-        protected static function getConfigKey()
-        {
-            $configKey  = static::CONFIG_KEY;
-            if (empty($configKey))
-            {
-                throw new NotSupportedException();
-            }
-            return $configKey;
+            return $user;
         }
     }
 ?>

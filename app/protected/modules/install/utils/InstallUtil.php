@@ -602,6 +602,24 @@
         }
 
         /**
+         * creates user account to be used in backend tasks such as actions and jobs
+         * @return User
+         */
+        public static function createBaseControlUserConfigUtilUserAccount()
+        {
+            return static::createSystemUser(BaseControlUserConfigUtil::USERNAME);
+        }
+
+        /**
+         * generates a random password for system user accounts.
+         * @return string
+         */
+        public static function generateRandomPasswordForSystemUser()
+        {
+            return md5(time() . mt_rand(1, 10000));
+        }
+
+        /**
          * Create a system user that can be used for running jobs and workflow background processes. Block
          * login via mobile, web, and api. Also mark user as hideFromSelecting and hideFromLeaderboard
          * @param string $username
@@ -609,8 +627,12 @@
          * @return User
          * @throws FailedToSaveModelException
          */
-        public static function createSystemUser($username, $password)
+        public static function createSystemUser($username, $password = null)
         {
+            if (!isset($password))
+            {
+                $password = static::generateRandomPasswordForSystemUser();
+            }
             $user = new User();
             $user->username            = $username;
             $user->firstName           = 'System';
@@ -1010,7 +1032,7 @@
                                             $form->submitCrashToSentry);
             $messageStreamer->add(Zurmo::t('InstallModule', 'Setting up default data.'));
             DefaultDataUtil::load($messageLogger);
-            InstallUtil::createSystemUser('system', md5(time() . mt_rand(1, 10000)));
+            static::createBaseControlUserConfigUtilUserAccount();
             Yii::app()->custom->runAfterInstallationDefaultDataLoad($messageLogger);
 
             // Send notification to super admin to delete test.php file in case if this

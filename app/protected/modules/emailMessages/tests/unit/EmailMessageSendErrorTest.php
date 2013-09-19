@@ -56,7 +56,7 @@
             $this->assertEquals(0, count(EmailMessage::getAll()));
 
             $emailMessage = new EmailMessage();
-            $emailMessage->owner   = BaseJobControlUserConfigUtil::getUserToRunAs();
+            $emailMessage->owner   = BaseControlUserConfigUtil::getUserToRunAs();
             $emailMessage->subject = 'My First Email';
             //Set sender, and recipient, and content
             $emailContent              = new EmailMessageContent();

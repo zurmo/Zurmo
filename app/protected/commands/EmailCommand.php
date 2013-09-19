@@ -153,7 +153,7 @@ EOD;
         echo 'Sending Email Message' . "\n";
 
         $emailMessage = new EmailMessage();
-        $emailMessage->owner   = BaseJobControlUserConfigUtil::getUserToRunAs();
+        $emailMessage->owner   = BaseControlUserConfigUtil::getUserToRunAs();
         $emailMessage->subject = $subject;
         $emailContent              = new EmailMessageContent();
         $emailContent->textContent = $textContent;

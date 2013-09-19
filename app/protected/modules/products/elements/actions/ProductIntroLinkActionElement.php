@@ -79,7 +79,7 @@
 
         protected function getDefaultLabel()
         {
-            return Zurmo::t('ProductsModule', 'Screen Options');
+            return Zurmo::t('ZurmoModule', 'Screen Options');
         }
 
         protected function getDefaultRoute()

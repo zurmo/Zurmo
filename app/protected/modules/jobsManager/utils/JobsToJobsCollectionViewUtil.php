@@ -123,7 +123,7 @@
             assert('$jobLog instanceof JobLog || $jobLog == null');
             if ($jobLog == null)
             {
-                return ZurmoHtml::wrapLabel(Zurmo::t('JobsManagerModule', 'Never'), 'jobHasNeverRun');
+                return ZurmoHtml::wrapLabel(Zurmo::t('ZurmoModule', 'Never'), 'jobHasNeverRun');
             }
             if ($jobLog != null && $jobLog->status == JobLog::STATUS_COMPLETE_WITH_ERROR)
             {

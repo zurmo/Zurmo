@@ -64,7 +64,7 @@
          */
         protected function getModalTitleForSelectingModel()
         {
-            return Zurmo::t('ZurmoModule', 'Select a Category');
+            return Zurmo::t('ProductTemplatesModule', 'Select a Category');
         }
     }
 ?>

@@ -263,7 +263,7 @@
         {
             assert('$form instanceof ZurmoActiveForm');
             $content = parent::renderRightSideFormLayoutForEdit($form);
-            $content .= "<h3>".Zurmo::t('UsersModule', 'Quick Tip') . '</h3>';
+            $content .= "<h3>".Zurmo::t('Core', 'Quick Tip') . '</h3>';
             $content .= ZurmoHtml::tag('p', array(),
                                        Zurmo::t('UsersModule', 'Users cannot be deleted. You can however change their status to inactive.'));
             return $content;

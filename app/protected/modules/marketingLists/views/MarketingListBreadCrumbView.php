@@ -41,7 +41,7 @@
     {
         protected function getHomeLinkLabel()
         {
-            return Zurmo::t('Default', 'Marketing');
+            return Zurmo::t('MarketingModule', 'Marketing');
         }
     }
 ?>

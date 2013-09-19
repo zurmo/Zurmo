@@ -223,7 +223,7 @@
                                        $name, $term);
             if (count($autoCompleteResults) == 0)
             {
-                $data = 'No Results Found';
+                $data = Zurmo::t('Core', 'No results found');
                 $autoCompleteResults[] = array('id'    => '',
                                                'name' => $data
                 );

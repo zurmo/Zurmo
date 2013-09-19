@@ -53,7 +53,7 @@
 
         public function attributeLabels()
         {
-            return array('timeZone' => Zurmo::t('UsersModule', 'Time Zone'));
+            return array('timeZone' => Zurmo::t('ZurmoModule', 'Time Zone'));
         }
     }
 ?>

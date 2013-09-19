@@ -70,7 +70,7 @@
             $params = Yii::app()->apiRequest->getParams();
             if (!isset($params['id']))
             {
-                $message = Zurmo::t('UsersModule', 'The ID specified was invalid.');
+                $message = Zurmo::t('ZurmoModule', 'The ID specified was invalid.');
                 throw new ApiException($message);
             }
             $this->resolvePasswordParameter($params);

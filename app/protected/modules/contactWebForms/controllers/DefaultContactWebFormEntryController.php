@@ -37,6 +37,7 @@
     /**
      * Default controller for ContactWebFormEntry actions
       */
+    Yii::import('application.modules.contactWebForms.controllers.DefaultController', true);
     class ContactWebFormsDefaultContactWebFormEntryController extends ZurmoBaseController
     {
         public static function getListBreadcrumbLinks()

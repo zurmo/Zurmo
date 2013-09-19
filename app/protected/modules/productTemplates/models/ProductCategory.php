@@ -204,7 +204,7 @@
                 'productCategory'   => Zurmo::t('ProductTemplatesModule', 'Parent ' . self::getModelLabelByTypeAndLanguage('Singular', $language), array(), null, $language),
                 'productCategories' => self::getModelLabelByTypeAndLanguage('Plural', $language),
                 'productCatalogs'   => ProductCatalog::getModelLabelByTypeAndLanguage('Plural', $language),
-                'products'          => Zurmo::t('ProductTemplatesModule', 'ProductsModulePluralLabel', array(), null, $language),
+                'products'          => Zurmo::t('ProductsModule', 'ProductsModulePluralLabel', array(), null, $language),
                 'productTemplates'  => Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModulePluralLabel', array(), null, $language)
             ));
         }

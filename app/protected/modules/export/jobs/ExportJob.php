@@ -357,7 +357,7 @@
                     '{dateTime}' => DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($exportItem->createdDateTime, 'long'),
                 )
             );
-            $rules                      = new ExportProcessCompletedNotificationRules();
+            $rules                      = $this->getExportProcessCompletedNotificationRulesForExportItem($exportItem);
             NotificationsUtil::submit($message, $rules);
         }
 
@@ -379,7 +379,7 @@
                     '{dateTime}' => DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay($exportItem->createdDateTime, 'long'),
                 )
             );
-            $rules                      = new ExportProcessCompletedNotificationRules();
+            $rules                      = $this->getExportProcessCompletedNotificationRulesForExportItem($exportItem);
             NotificationsUtil::submit($message, $rules);
         }
 
@@ -562,6 +562,17 @@
                                                     array('{memoryInUse}'         => $memoryInUse,
                                                           '{memoryUsageIncrease}' => $memoryInUse - $startingMemoryUsage));
             $this->getMessageLogger()->addInfoMessage($message);
+        }
+
+        /**
+         * @param ExportItem $exportItem
+         * @return ExportProcessCompletedNotificationRules
+         */
+        protected function getExportProcessCompletedNotificationRulesForExportItem(ExportItem $exportItem)
+        {
+            $rules = new ExportProcessCompletedNotificationRules();
+            $rules->addUser($exportItem->owner);
+            return $rules;
         }
     }
 ?>

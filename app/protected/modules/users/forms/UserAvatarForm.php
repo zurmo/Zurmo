@@ -77,7 +77,7 @@
         {
             return array(
                 'avatarType'               => Zurmo::t('UsersModule', 'Type'),
-                'customAvatarEmailAddress' => Zurmo::t('UsersModule', 'Email Address'),
+                'customAvatarEmailAddress' => Zurmo::t('ZurmoModule', 'Email Address'),
             );
         }
 

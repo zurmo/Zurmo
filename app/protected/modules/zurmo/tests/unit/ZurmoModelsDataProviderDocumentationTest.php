@@ -123,24 +123,27 @@
 
             $dataProvider = new RedBeanModelDataProvider('User', 'username');
             $users = $dataProvider->getData();
-            $this->assertEquals(3, count($users));
-            $this->assertEquals('billy',  $users[0]->username);
-            $this->assertEquals('dicky',  $users[1]->username);
-            $this->assertEquals('super', $users[2]->username);
+            $this->assertEquals(4, count($users));
+            $this->assertEquals(BaseControlUserConfigUtil::USERNAME, $users[0]->username);
+            $this->assertEquals('billy',  $users[1]->username);
+            $this->assertEquals('dicky',  $users[2]->username);
+            $this->assertEquals('super', $users[3]->username);
 
             $dataProvider = new RedBeanModelDataProvider('User', 'username', false);
             $users = $dataProvider->getData();
-            $this->assertEquals(3, count($users));
-            $this->assertEquals('billy',  $users[0]->username);
-            $this->assertEquals('dicky',  $users[1]->username);
-            $this->assertEquals('super', $users[2]->username);
+            $this->assertEquals(4, count($users));
+            $this->assertEquals(BaseControlUserConfigUtil::USERNAME, $users[0]->username);
+            $this->assertEquals('billy',  $users[1]->username);
+            $this->assertEquals('dicky',  $users[2]->username);
+            $this->assertEquals('super', $users[3]->username);
 
             $dataProvider = new RedBeanModelDataProvider('User', 'username', true);
             $users = $dataProvider->getData();
-            $this->assertEquals(3, count($users));
+            $this->assertEquals(4, count($users));
             $this->assertEquals('super', $users[0]->username);
             $this->assertEquals('dicky',  $users[1]->username);
             $this->assertEquals('billy',  $users[2]->username);
+            $this->assertEquals(BaseControlUserConfigUtil::USERNAME, $users[3]->username);
         }
 
        /**

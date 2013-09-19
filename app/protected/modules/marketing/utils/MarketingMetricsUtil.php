@@ -101,8 +101,8 @@
                                      array('title'       => "'" . Zurmo::t('MarketingModule', 'Bounced') . "'",
                                            'balloonText' => "'" . Zurmo::t('MarketingModule', 'Bounced') . ": [[value]]'"));
             $amChart->addSerialGraph(MarketingChartDataProvider::UNSUBSCRIBED, 'column',
-                                     array('title'       => "'" . Zurmo::t('MarketingModule', 'Unsubscribed') . "'",
-                                           'balloonText' => "'" . Zurmo::t('MarketingModule', 'Unsubscribed') . ": [[value]]'"));
+                                     array('title'       => "'" . Zurmo::t('Core', 'Unsubscribed') . "'",
+                                           'balloonText' => "'" . Zurmo::t('Core', 'Unsubscribed') . ": [[value]]'"));
 
             $amChart->xAxisName        = $chartDataProvider->getXAxisName();
             $amChart->yAxisName        = $chartDataProvider->getYAxisName();

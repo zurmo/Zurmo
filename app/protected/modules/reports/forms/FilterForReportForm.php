@@ -164,7 +164,7 @@
         {
             if ($this->getAvailableOperatorsType() != null && $this->operator == null)
             {
-                $this->addError('operator', Zurmo::t('ReportsModule', 'Operator cannot be blank.'));
+                $this->addError('operator', Zurmo::t('ZurmoModule', 'Operator cannot be blank.'));
                 return  false;
             }
         }
@@ -196,7 +196,7 @@
                 {
                     if (!is_string($subValue))
                     {
-                        $this->addError('value', Zurmo::t('ReportsModule', 'Value must be a string.'));
+                        $this->addError('value', Zurmo::t('Core', 'Value must be a string.'));
                         $passedValidation = false;
                     }
                 }
@@ -237,7 +237,7 @@
         {
             if ($this->getValueElementType() == 'MixedDateTypesForReport' && $this->valueType == null)
             {
-                $this->addError('valueType', Zurmo::t('ReportsModule', 'Type cannot be blank.'));
+                $this->addError('valueType', Zurmo::t('ZurmoModule', 'Type cannot be blank.'));
                 return false;
             }
         }

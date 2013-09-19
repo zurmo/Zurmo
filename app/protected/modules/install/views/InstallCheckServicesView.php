@@ -62,7 +62,7 @@
                 $currentPageUrl, array('class' => 'z-button'));
             if (count($this->checkResultsDisplayData[$failedIndexId][$requiredIndexId]) == 0)
             {
-                $content .= ' <span class="install-or">' . Zurmo::t('InstallModule', 'or') . '</span> ';
+                $content .= ' <span class="install-or">' . Zurmo::t('Core', 'or') . '</span> ';
                 $content .= ZurmoHtml::link(ZurmoHtml::wrapLabel(Zurmo::t('InstallModule', 'Continue')),
                     $nextPageUrl, array('class' => 'z-button'));
             }

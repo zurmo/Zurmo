@@ -28,6 +28,8 @@ app/protected/config/perInstance.php
 app/protected/config/debug.php
 app/protected/config/perInstanceTest.php
 app/protected/config/debugTest.php
+app/protected/commands/log
+app/protected/commands/logs
 app/report
 .git
 .DS_Store

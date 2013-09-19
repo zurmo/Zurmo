@@ -173,7 +173,7 @@
         {
             if ($this->getAvailableOperatorsType() != null && $this->operator == null)
             {
-                $this->addError('operator', Zurmo::t('WorkflowsModule', 'Operator cannot be blank.'));
+                $this->addError('operator', Zurmo::t('ZurmoModule', 'Operator cannot be blank.'));
                 return  false;
             }
         }
@@ -217,7 +217,7 @@
                 {
                     if (!is_string($subValue))
                     {
-                        $this->addError('value', Zurmo::t('WorkflowsModule', 'Value must be a string.'));
+                        $this->addError('value', Zurmo::t('Core', 'Value must be a string.'));
                         $passedValidation = false;
                     }
                 }
@@ -258,7 +258,7 @@
         {
             if ($this->getValueElementType() == 'MixedDateTypesForWorkflow' && $this->valueType == null)
             {
-                $this->addError('valueType', Zurmo::t('WorkflowsModule', 'Type cannot be blank.'));
+                $this->addError('valueType', Zurmo::t('ZurmoModule', 'Type cannot be blank.'));
                 return false;
             }
         }

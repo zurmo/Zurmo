@@ -123,8 +123,8 @@
             $this->assertEquals('some subject the lastName',  $emailMessages[0]->subject);
             $this->assertEquals('text content the phone',     $emailMessages[0]->content->textContent);
             $this->assertEquals('html content the string',    $emailMessages[0]->content->htmlContent);
-            $this->assertEquals('Clark Kent',      $emailMessages[0]->sender->fromName);
-            $this->assertEquals('super@zurmo.com', $emailMessages[0]->sender->fromAddress);
+            $this->assertEquals('System User',      $emailMessages[0]->sender->fromName);
+            $this->assertEquals('notification@zurmoalerts.com', $emailMessages[0]->sender->fromAddress);
             $this->assertEquals(1,                 $emailMessages[0]->recipients->count());
             $this->assertEquals('super@zurmo.com', $emailMessages[0]->recipients[0]->toAddress);
             $emailMessages[0]->delete();

@@ -63,7 +63,7 @@
             return array_merge(parent::filters(),
                 array(
                     array(
-                        static::ZERO_MODELS_FOR_CONTACT_CHECK_FILTER_PATH . ' + listForMarketing',
+                        static::ZERO_MODELS_FOR_CONTACT_CHECK_FILTER_PATH . ' + listForMarketing, index',
                         'controller'                    => $this,
                         'activeActionElementType'       => EmailTemplatesForMarketingLinkActionElement::getType(),
                         'breadcrumbLinks'               => static::getListBreadcrumbLinks(),

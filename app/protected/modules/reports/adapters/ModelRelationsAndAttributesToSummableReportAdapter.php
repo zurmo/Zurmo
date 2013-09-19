@@ -144,11 +144,11 @@
         protected static function translatedGroupByCalculationShortLabels()
         {
             return array(
-                self::GROUP_BY_CALCULATION_DAY       => Zurmo::t('ReportsModule', 'Day'),
-                self::GROUP_BY_CALCULATION_WEEK      => Zurmo::t('ReportsModule', 'Week'),
-                self::GROUP_BY_CALCULATION_MONTH     => Zurmo::t('ReportsModule', 'Month'),
-                self::GROUP_BY_CALCULATION_QUARTER   => Zurmo::t('ReportsModule', 'Quarter'),
-                self::GROUP_BY_CALCULATION_YEAR      => Zurmo::t('ReportsModule', 'Year'),
+                self::GROUP_BY_CALCULATION_DAY       => Zurmo::t('Core', 'Day'),
+                self::GROUP_BY_CALCULATION_WEEK      => Zurmo::t('Core', 'Week'),
+                self::GROUP_BY_CALCULATION_MONTH     => Zurmo::t('Core', 'Month'),
+                self::GROUP_BY_CALCULATION_QUARTER   => Zurmo::t('Core', 'Quarter'),
+                self::GROUP_BY_CALCULATION_YEAR      => Zurmo::t('Core', 'Year'),
             );
         }
 

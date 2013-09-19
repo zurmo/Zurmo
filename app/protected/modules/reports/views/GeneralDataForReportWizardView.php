@@ -96,7 +96,7 @@
          */
         protected function renderRightSideFormLayout()
         {
-            $content  = '<h3>' . Zurmo::t('ReportsModule', 'Rights and Permissions') . '</h3><div id="owner-box">';
+            $content  = '<h3>' . Zurmo::t('ZurmoModule', 'Rights and Permissions') . '</h3><div id="owner-box">';
             $element  = new OwnerNameIdElement($this->model, 'null', $this->form);
             $element->editableTemplate = '{label}{content}{error}';
             $content .= $element->render().'</div>';

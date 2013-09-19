@@ -110,7 +110,7 @@
          */
         protected function renderRightSideDropZoneContent()
         {
-            return ZurmoHtml::tag('div', array('class' => 'drop-zone'), ZurmoHtml::tag('div', array(), Zurmo::t('ReportsModule', 'Drop Here')));
+            return ZurmoHtml::tag('div', array('class' => 'drop-zone'), ZurmoHtml::tag('div', array(), Zurmo::t('Core', 'Drop Here')));
         }
 
         /**

@@ -52,7 +52,7 @@
         'Game on!'
              => 'Game on!', // Same Word Translated
         'I reached level {nextLevel}'
-             => 'Erreichte ich Ebene {NextLevel}',
+             => 'Erreichte ich Ebene {nextLevel}',
         'I received a new badge: {badgeContent}'
              => 'Ich verdiente ein neues Abzeiche {badgeContent}',
         'Leaderboard'
@@ -86,7 +86,7 @@
         'Weekly'
              => 'Wöchentlich',
         'You have reached level {nextLevel}'
-             => 'Du hast Ebene {NextLevel} erreicht',
+             => 'Du hast Ebene {nextLevel} erreicht',
         '{n} Zurmo early morning login|{n} Zurmo early morning logins'
              => '{n} Zurmo Morgenstund hat Gold im Mund login |{n} Zurmo Morgenstund hat Gold im Mund Logins',
         '{n} Zurmo login|{n} Zurmo logins'

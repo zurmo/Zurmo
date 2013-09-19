@@ -224,7 +224,7 @@
 
         protected static function getUnsubscribedContent()
         {
-            $content = '<i>&#9679;</i><span>' . Zurmo::t('MarketingModule', 'Unsubscribed') . '</span>';
+            $content = '<i>&#9679;</i><span>' . Zurmo::t('Core', 'Unsubscribed') . '</span>';
             return ZurmoHtml::tag('div', array('class' => 'email-recipient-stage-status stage-false'), $content);
         }
 

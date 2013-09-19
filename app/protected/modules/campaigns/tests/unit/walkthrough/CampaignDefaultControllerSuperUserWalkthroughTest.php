@@ -69,18 +69,6 @@
                                                                'MarketingList Description',
                                                                'first',
                                                                'first@zurmo.com');
-            CampaignTestHelper::createCampaign('campaign01',
-                                               'campaign subject 01',
-                                               'text content for campaign 01',
-                                                'html content for campaign 01',
-                                                'fromCampaign',
-                                                'fromCampaign@zurmo.com');
-            CampaignTestHelper::createCampaign('campaign02',
-                                                'campaign subject 02',
-                                                'text content for campaign 02',
-                                                'html content for campaign 02',
-                                                'fromCampaign2',
-                                                'fromCampaign2@zurmo.com');
         }
 
         public function setUp()
@@ -89,12 +77,32 @@
             $this->user = User::getByUsername('super');
             Yii::app()->user->userModel = $this->user;
             $campaigns = Campaign::getAll();
-            $this->campaign = $campaigns[0];
+            if (count($campaigns) > 0)
+            {
+                $this->campaign = $campaigns[0];
+            }
         }
 
         public function testSuperUserAllDefaultControllerActions()
         {
             // Test all default controller actions that do not require any POST/GET variables to be passed.
+            $this->runControllerWithNoExceptionsAndGetContent('campaigns/default');
+            $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/list');
+
+            CampaignTestHelper::createCampaign('campaign01',
+                'campaign subject 01',
+                'text content for campaign 01',
+                'html content for campaign 01',
+                'fromCampaign',
+                'fromCampaign@zurmo.com');
+            CampaignTestHelper::createCampaign('campaign02',
+                'campaign subject 02',
+                'text content for campaign 02',
+                'html content for campaign 02',
+                'fromCampaign2',
+                'fromCampaign2@zurmo.com');
+
             $this->runControllerWithNoExceptionsAndGetContent('campaigns/default');
             $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/index');
             $content = $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/list');
@@ -103,6 +111,7 @@
             $content = $this->runControllerWithNoExceptionsAndGetContent('campaigns/default/create');
             $compareContent = 'Campaigns will not run properly until scheduled jobs are set up. Contact your administrator.';
             $this->assertTrue(strpos($content, $compareContent) !== false);
+
         }
 
         /**

@@ -44,7 +44,7 @@
 
         protected function getAjaxLinkTitle()
         {
-            return Zurmo::t('ZurmoModule', 'Users');
+            return Zurmo::t('UsersModule', 'Users');
         }
 
         protected function getRouteAction()

@@ -96,7 +96,7 @@
          */
         protected function getDefaultLabel()
         {
-            return Zurmo::t('ReportsModule', 'Export');
+            return Zurmo::t('ExportModule', 'Export');
         }
 
         /**

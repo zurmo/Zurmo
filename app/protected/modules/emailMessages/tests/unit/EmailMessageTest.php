@@ -60,7 +60,7 @@
             $this->assertEquals(0, count(EmailMessage::getAll()));
 
             $emailMessage = new EmailMessage();
-            $emailMessage->owner   = BaseJobControlUserConfigUtil::getUserToRunAs();
+            $emailMessage->owner   = BaseControlUserConfigUtil::getUserToRunAs();
             $emailMessage->subject = 'My First Email';
 
             //Attempt to save without setting required information

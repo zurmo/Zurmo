@@ -50,12 +50,6 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-
-            // Setup test data owned by the super user.
-            EmailTemplateTestHelper::createEmailTemplateByName(EmailTemplate::TYPE_WORKFLOW, 'Test Subject', 'Contact',
-                                                                    'Test Name', 'Test HtmlContent', 'Test TextContent');
-            EmailTemplateTestHelper::createEmailTemplateByName(EmailTemplate::TYPE_CONTACT, 'Test Subject1', 'Contact',
-                                                                    'Test Name1', 'Test HtmlContent1', 'Test TextContent1');
             ReadPermissionsOptimizationUtil::rebuild();
         }
 
@@ -71,6 +65,19 @@
             // This does not include portlet controller actions.
             $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default');
             $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/listForWorkflow');
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/listForMarketing');
+
+            // Setup test data owned by the super user.
+            EmailTemplateTestHelper::createEmailTemplateByName(EmailTemplate::TYPE_WORKFLOW, 'Test Subject', 'Contact',
+                'Test Name', 'Test HtmlContent', 'Test TextContent');
+            EmailTemplateTestHelper::createEmailTemplateByName(EmailTemplate::TYPE_CONTACT, 'Test Subject1', 'Contact',
+                'Test Name1', 'Test HtmlContent1', 'Test TextContent1');
+
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default');
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/listForWorkflow');
+            $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/listForMarketing');
             $this->setGetArray(array('type' => EmailTemplate::TYPE_CONTACT));
             $this->runControllerWithNoExceptionsAndGetContent('emailTemplates/default/create');
         }

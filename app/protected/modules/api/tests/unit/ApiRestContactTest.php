@@ -897,15 +897,15 @@
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/contact/api/create/', 'POST', $headers, array('data' => $data));
             $response = json_decode($response, true);
             $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals(3, count($response['errors']));
+            $this->assertEquals(2, count($response['errors']));
 
             $id = $contact->id;
             $data = array();
             $data['companyName']         = "A";
             $response = ApiRestTestHelper::createApiCall($this->serverUrl . '/test.php/contacts/contact/api/update/' . $id, 'PUT', $headers, array('data' => $data));
             $response = json_decode($response, true);
-            $this->assertEquals(ApiResponse::STATUS_FAILURE, $response['status']);
-            $this->assertEquals(1, count($response['errors']));
+            $this->assertEquals(ApiResponse::STATUS_SUCCESS, $response['status']);
+            $this->assertEquals(0, count($response['errors']));
         }
     }
 ?>

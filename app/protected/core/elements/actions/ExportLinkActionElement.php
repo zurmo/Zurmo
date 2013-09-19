@@ -71,7 +71,7 @@
 
         protected function getDefaultLabel()
         {
-            return Zurmo::t('Core', 'Export');
+            return Zurmo::t('ExportModule', 'Export');
         }
     }
 ?>

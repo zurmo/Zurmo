@@ -55,6 +55,8 @@
                 $messageStreamer->add(Zurmo::t('Core', 'Checking permissions, files, upgrade version....'));
                 $messageLogger = new MessageLogger($messageStreamer);
 
+                $messageStreamer->add(Zurmo::t('Core', 'Clearing cache.'));
+                self::clearCache();
                 self::setUpgradeState('zurmoUpgradeTimestamp', time());
                 self::isApplicationInUpgradeMode();
                 self::checkPermissions();

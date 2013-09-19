@@ -75,7 +75,7 @@
             $this->assertEquals(18, Meeting::getCount());
             $this->assertEquals(12, Note::getCount());
             $this->assertEquals(9,  Task::getCount());
-            $this->assertEquals(9,  User::getCount());
+            $this->assertEquals(10,  User::getCount());
             $this->assertEquals(1, ProductCatalog::getCount());
             $this->assertEquals(6, ProductCategory::getCount());
             $this->assertEquals(32, ProductTemplate::getCount());

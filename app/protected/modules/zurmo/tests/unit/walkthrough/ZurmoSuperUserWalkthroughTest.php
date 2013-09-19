@@ -219,7 +219,7 @@
             $this->setGetArray(array('term' => 'something'));
             $this->resetPostArray();
             $content        = $this->runControllerWithNoExceptionsAndGetContent('zurmo/default/globalSearchAutoComplete');
-            $compareContent = '[{"href":"","label":"No Results Found","iconClass":""}'; // Not Coding Standard
+            $compareContent = '[{"href":"","label":"No results found","iconClass":""}'; // Not Coding Standard
             $this->assertTrue(strpos($content, $compareContent) !== false);
         }
 

@@ -47,7 +47,7 @@
         public static function sendSystemEmail($subject, $recipients, $textContent = '', $htmlContent = '')
         {
             $emailMessage = new EmailMessage();
-            $emailMessage->owner   = BaseJobControlUserConfigUtil::getUserToRunAs();
+            $emailMessage->owner   = BaseControlUserConfigUtil::getUserToRunAs();
             $emailMessage->subject = $subject;
 
             $emailContent              = new EmailMessageContent();

@@ -126,8 +126,8 @@
         protected function getExpiresDropDownArray()
         {
             return array(
-                ''          => Zurmo::t('UsersModule', 'Not Set'),
-                Policy::YES => Zurmo::t('UsersModule', 'Yes'),
+                ''          => Zurmo::t('ZurmoModule', 'Not Set'),
+                Policy::YES => Zurmo::t('Core', 'Yes'),
             );
         }
 
@@ -156,7 +156,7 @@
             $inheritedAttributeName = $this->getExpiryAttributeName() . '__inherited';
             if ($this->model->{$inheritedAttributeName} != null)
             {
-                return Zurmo::t('UsersModule', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
+                return Zurmo::t('ZurmoModule', 'Inherited Value:') . '&#160;' . $this->model->{$inheritedAttributeName} . '<br/>';
             }
             return null;
         }

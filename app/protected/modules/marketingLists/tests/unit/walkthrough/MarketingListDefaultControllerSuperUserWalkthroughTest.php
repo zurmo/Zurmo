@@ -44,11 +44,6 @@
             SecurityTestHelper::createSuperAdmin();
             $super = User::getByUsername('super');
             Yii::app()->user->userModel = $super;
-
-            MarketingListTestHelper::createMarketingListByName('MarketingListName', 'MarketingList Description',
-                                                                                            'first', 'first@zurmo.com');
-            MarketingListTestHelper::createMarketingListByName('MarketingListName2', 'MarketingList Description2',
-                                                                                        'second', 'second@zurmo.com');
             ReadPermissionsOptimizationUtil::rebuild();
         }
 
@@ -62,6 +57,16 @@
         public function testSuperUserAllDefaultControllerActions()
         {
             // Test all default controller actions that do not require any POST/GET variables to be passed.
+            $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default');
+            $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/index');
+            $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');
+            $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/create');
+
+            MarketingListTestHelper::createMarketingListByName('MarketingListName', 'MarketingList Description',
+                'first', 'first@zurmo.com');
+            MarketingListTestHelper::createMarketingListByName('MarketingListName2', 'MarketingList Description2',
+                'second', 'second@zurmo.com');
+
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default');
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/index');
             $this->runControllerWithNoExceptionsAndGetContent('marketingLists/default/list');

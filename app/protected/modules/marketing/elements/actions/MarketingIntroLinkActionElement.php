@@ -80,7 +80,7 @@
 
         protected function getDefaultLabel()
         {
-            return Zurmo::t('MarketingModule', 'Screen Options');
+            return Zurmo::t('ZurmoModule', 'Screen Options');
         }
 
         protected function getDefaultRoute()

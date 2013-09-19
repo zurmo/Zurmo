@@ -36,11 +36,42 @@
 
     class SummationReportDataProviderTest extends ZurmoBaseTest
     {
+        protected $super;
+
         public static function setUpBeforeClass()
         {
             parent::setUpBeforeClass();
             ContactsModule::loadStartingData();
             SecurityTestHelper::createSuperAdmin();
+        }
+
+        public function setUp()
+        {
+            $this->super = User::getByUsername('super');
+            Yii::app()->user->userModel = $this->super;
+        }
+
+        public function testRunQueryAndGrandTotalsData()
+        {
+            ContactTestHelper::createContactByNameForOwner('testContact', $this->super);
+
+            $report = new Report();
+            $report->setType(Report::TYPE_SUMMATION);
+            $report->setModuleClassName('ContactsModule');
+            $report->setFiltersStructure('');
+
+            $groupBy                               = new GroupByForReportForm('ContactsModule', 'Contact',
+                Report::TYPE_SUMMATION);
+            $groupBy->attributeIndexOrDerivedType  = 'createdDateTime__Day';
+            $report->addGroupBy($groupBy);
+
+            $displayAttribute = new DisplayAttributeForReportForm('ContactsModule', 'Contact',
+                Report::TYPE_SUMMATION);
+            $displayAttribute->attributeIndexOrDerivedType = 'createdDateTime__Day';
+            $report->addDisplayAttribute($displayAttribute);
+
+            $dataProvider       = new SummationReportDataProvider($report);
+            $this->assertEmpty($dataProvider->runQueryAndGrandTotalsData());
         }
 
         public function testMethods()

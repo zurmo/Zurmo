@@ -445,7 +445,7 @@ PTN;
         {
             if ($isHtmlContent)
             {
-                $unsubscribeTranslated          = Zurmo::t('MarketingListsModule', 'Unsubscribe');
+                $unsubscribeTranslated          = Zurmo::t('Core', 'Unsubscribe');
                 $unsubscribeUrl = ZurmoHtml::link($unsubscribeTranslated, $unsubscribeUrl);
             }
         }

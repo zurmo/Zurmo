@@ -109,7 +109,7 @@
             {
                 $element  = new FilesElement($this->model, 'null');
                 $element->nonEditableTemplate = '<div>{content}</div>';
-                $content .= '<div><strong>' . Zurmo::t('MissionsModule', 'Attachments'). '</strong></div>';
+                $content .= '<div><strong>' . Zurmo::t('ZurmoModule', 'Attachments'). '</strong></div>';
                 $content .= $element->render();
             }
             $element                      = new MissionStatusElement($this->model, 'status');

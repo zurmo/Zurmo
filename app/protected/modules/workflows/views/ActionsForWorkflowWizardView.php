@@ -80,7 +80,7 @@
             assert('is_string($moduleClassName)');
             assert('is_string($modelClassName)');
             assert('is_string($workflowType)');
-            $data = array('' => Zurmo::t('WorkflowsModule', 'Select Module'));
+            $data = array('' => Zurmo::t('Core', 'Select Module'));
             return array_merge($data, ActionForWorkflowForm::
                                       getTypeRelationDataAndLabels($moduleClassName, $modelClassName, $workflowType));
         }
@@ -98,7 +98,7 @@
             assert('is_string($modelClassName)');
             assert('is_string($workflowType)');
             assert('is_string($relation)');
-            $data = array('' => Zurmo::t('WorkflowsModule', 'Select Module'));
+            $data = array('' => Zurmo::t('Core', 'Select Module'));
             return array_merge($data, ActionForWorkflowForm::getTypeRelatedModelRelationDataAndLabels($moduleClassName,
                                       $modelClassName, $workflowType, $relation));
         }

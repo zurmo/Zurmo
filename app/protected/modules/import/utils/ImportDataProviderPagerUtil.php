@@ -64,10 +64,10 @@
                 $nextStyle = 'display:none;';
             }
             $content .= '&#160;';
-            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Zurmo::t('ImportModule', 'Previous'),
+            $content .= self::renderAjaxLink('sample-column-header-previous-page-link', Zurmo::t('Core', 'Previous'),
                                              $url, $dataProvider->getPagination()->pageVar, $currentPage, $previousStyle);
             $content .= '&#160;';
-            $content .= self::renderAjaxLink('sample-column-header-next-page-link', Zurmo::t('ImportModule', 'Next'),
+            $content .= self::renderAjaxLink('sample-column-header-next-page-link', Zurmo::t('Core', 'Next'),
                                              $url, $dataProvider->getPagination()->pageVar, $currentPage + 2, $nextStyle);
             return $content;
         }

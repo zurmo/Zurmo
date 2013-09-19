@@ -215,7 +215,7 @@
             return array_merge(parent::translatedAttributeLabels($language),
                 array(
                     'productTemplate'       => Zurmo::t('ProductTemplatesModule', 'ProductTemplatesModuleSingularLabel',  $params, null, $language),
-                    'products'              => Zurmo::t('ProductTemplatesModule', 'ProductsModulePluralLabel',  $params, null, $language),
+                    'products'              => Zurmo::t('ProductsModule', 'ProductsModulePluralLabel',  $params, null, $language),
                     'sellPriceFormula'      => Zurmo::t('ProductTemplatesModule', 'Sell Price Formula',  array(), null, $language),
                     'productCategories'     => ProductCategory::getModelLabelByTypeAndLanguage('Plural', $language),
                     'cost'                  => Zurmo::t('ProductTemplatesModule', 'Cost',  array(), null, $language),

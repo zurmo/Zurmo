@@ -244,7 +244,7 @@
         public function actionMassDelete()
         {
             $params          = LabelUtil::getTranslationParamsForAllModules();
-            $title           = Zurmo::t('ProductTemplatesModule', 'Mass Delete ProductsModulePluralLabel', $params);
+            $title           = Zurmo::t('ProductsModule', 'Mass Delete ProductsModulePluralLabel', $params);
             $breadcrumbLinks = array(
                  $title,
             );

@@ -49,7 +49,7 @@
             $content .= '</p>';
             $content .= '</div>';
             $content .= '<div class="third catalog-item-description"><span class="icon"></span>';
-            $content .= '<p><strong>' . Zurmo::t('ProductsModule', 'Catalog Item') . '</strong>';
+            $content .= '<p><strong>' . Zurmo::t('ProductTemplatesModule', 'Catalog Item') . '</strong>';
             $content .= Zurmo::t('ProductsModule', 'Create a <em>Catalog Item</em> that describes and categorizes your ' .
                                                    'item and lists preset pricing information');
             $content .= '</p>';

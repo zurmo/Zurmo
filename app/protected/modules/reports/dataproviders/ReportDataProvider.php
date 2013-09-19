@@ -395,7 +395,10 @@
         protected function getGrandTotalsRowsData()
         {
             $sql = $this->makeSqlQueryForGrandTotals();
-            return R::getAll($sql);
+            if ($sql !== null)
+            {
+                return R::getAll($sql);
+            }
         }
 
         /**
@@ -481,20 +484,28 @@
 
         protected function makeSqlQueryForGrandTotals()
         {
-            $selectQueryAdapter     = new RedBeanModelSelectQueryAdapter();
-            $moduleClassName        = $this->report->getModuleClassName();
-            $modelClassName         = $moduleClassName::getPrimaryModelName();
-            $joinTablesAdapter      = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
-            $builder                = new DisplayAttributesReportQueryBuilder($joinTablesAdapter, $selectQueryAdapter,
-                                          $this->report->getCurrencyConversionType());
-            $builder->makeQueryContent($this->getDisplayAttributesForGrandTotals());
-            $where                  = $this->makeFiltersContent($joinTablesAdapter);
-            $orderBy                = null;
-            $groupBy                = $this->makeGroupBysContentForGrandTotals($joinTablesAdapter);
-            $offset                 = null;
-            $limit                  = null;
-            return                    SQLQueryUtil::makeQuery($modelClassName::getTableName($modelClassName),
-                                      $selectQueryAdapter, $joinTablesAdapter, $offset, $limit, $where, $orderBy, $groupBy);
+            try
+            {
+                $selectQueryAdapter     = new RedBeanModelSelectQueryAdapter();
+                $moduleClassName        = $this->report->getModuleClassName();
+                $modelClassName         = $moduleClassName::getPrimaryModelName();
+                $joinTablesAdapter      = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+                $builder                = new DisplayAttributesReportQueryBuilder($joinTablesAdapter, $selectQueryAdapter,
+                                              $this->report->getCurrencyConversionType());
+                $builder->makeQueryContent($this->getDisplayAttributesForGrandTotals());
+                $where                  = $this->makeFiltersContent($joinTablesAdapter);
+                $orderBy                = null;
+                $groupBy                = $this->makeGroupBysContentForGrandTotals($joinTablesAdapter);
+                $offset                 = null;
+                $limit                  = null;
+                $sql = SQLQueryUtil::makeQuery($modelClassName::getTableName($modelClassName),
+                            $selectQueryAdapter, $joinTablesAdapter, $offset, $limit, $where, $orderBy, $groupBy);
+            }
+            catch (NotSupportedException $exception)
+            {
+                return null;
+            }
+            return $sql;
         }
 
         /**

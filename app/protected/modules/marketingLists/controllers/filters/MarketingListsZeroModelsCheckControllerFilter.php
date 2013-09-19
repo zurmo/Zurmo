@@ -53,7 +53,7 @@
             $gridViewId              = 'notUsed';
             $pageVar                 = 'notUsed';
             $listModel               = new MarketingList();
-            $actionBarView           = new SecuredActionBarForMarketingSearchAndListView(
+            $actionBarView           = new SecuredActionBarForMarketingListsSearchAndListView(
                                        'default',
                                        'marketing',
                                        $listModel,

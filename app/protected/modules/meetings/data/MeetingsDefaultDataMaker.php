@@ -42,7 +42,7 @@
         public function make()
         {
             $values = array(
-                        Zurmo::t('CustomField', 'Meeting'),
+                        Zurmo::t('MeetingsModule', 'Meeting'),
                         Zurmo::t('CustomField', 'Call'),
             );
             static::makeCustomFieldDataByValuesAndDefault('MeetingCategories', $values, $values[0]);

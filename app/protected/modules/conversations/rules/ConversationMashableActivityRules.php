@@ -102,13 +102,13 @@
                 {
                     return "<span>{modelStringContent}</span><br/>" .
                            "<span class='less-pronounced-text'>" .
-                           Zurmo::t('ConversationsModule', 'created by {ownerStringContent}') . "</span>" .
+                           Zurmo::t('ZurmoModule', 'created by {ownerStringContent}') . "</span>" .
                            "<span>{extraContent}</span><span>{relatedModelsByImportanceContent} </span>";
                 }
                 else
                 {
                     return "<span>{modelStringContent} </span><span class='less-pronounced-text'>" .
-                           Zurmo::t('ConversationsModule', 'created by {ownerStringContent}') . "</span><span>{extraContent}</span>";
+                           Zurmo::t('ZurmoModule', 'created by {ownerStringContent}') . "</span><span>{extraContent}</span>";
                 }
             }
             else

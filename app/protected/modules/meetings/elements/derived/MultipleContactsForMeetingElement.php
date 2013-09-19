@@ -152,22 +152,28 @@
         {
             assert('$contact instanceof Contact && $contact->id > 0');
             assert('$keyword == null || is_string($keyword)');
-
-            if (substr($contact->secondaryEmail->emailAddress, 0, strlen($keyword)) === $keyword)
+            try
             {
-                $emailAddressToUse = $contact->secondaryEmail->emailAddress;
+                if (substr($contact->secondaryEmail->emailAddress, 0, strlen($keyword)) === $keyword)
+                {
+                    $emailAddressToUse = $contact->secondaryEmail->emailAddress;
+                }
+                else
+                {
+                    $emailAddressToUse = $contact->primaryEmail->emailAddress;
+                }
+                if ($emailAddressToUse != null)
+                {
+                    return strval($contact) . '&#160&#160<b>' . strval($emailAddressToUse) . '</b>';
+                }
+                else
+                {
+                    return strval($contact);
+                }
             }
-            else
+            catch (AccessDeniedSecurityException $exception)
             {
-                $emailAddressToUse = $contact->primaryEmail->emailAddress;
-            }
-            if ($emailAddressToUse != null)
-            {
-                return strval($contact) . '&#160&#160<b>' . strval($emailAddressToUse) . '</b>';
-            }
-            else
-            {
-                return strval($contact);
+                return Zurmo::t('MeetingsModule', 'Restricted');
             }
         }
     }
