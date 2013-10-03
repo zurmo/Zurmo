@@ -57,6 +57,7 @@
         public static function textWithUrlToTextWithLink($text)
         {
             assert('is_string($text)');
+            // Begin Not Coding Standard
             $rexProtocol  = '(https?://)?';
             $rexDomain    = '(?:[-a-zA-Z0-9]{1,63}\.)+[a-zA-Z][-a-zA-Z0-9]{1,62}';
             $rexIp        = '(?:[1-9][0-9]{0,2}\.|0\.){3}(?:[1-9][0-9]{0,2}|0)';
@@ -68,7 +69,7 @@
             $rexPassword  = $rexUsername;
             $rexUrl       = "$rexProtocol(?:($rexUsername)(:$rexPassword)?@)?($rexDomain|$rexIp)($rexPort$rexPath$rexQuery$rexFragment)";
             $rexUrlLinker = "{\\b$rexUrl(?=[?.!,;:\"]?(\s|$))}";
-
+            // End Not Coding Standard
             $html = '';
 
             $position = 0;
@@ -101,7 +102,7 @@
 
                 // Check that the TLD is valid or that $domain is an IP address.
                 $tld = strtolower(strrchr($domain, '.'));
-                if (preg_match('{^\.[0-9]{1,3}$}', $tld) || isset($validTlds[$tld]))
+                if (preg_match('{^\.[0-9]{1,3}$}', $tld) || isset($validTlds[$tld])) // Not Coding Standard
                 {
                     // Do not permit implicit protocol if a password is specified, as
                     // this causes too many errors (e.g. "my email:foo@example.org").
@@ -127,7 +128,7 @@
                         $linkText = "$domain$port$path";
                     }
 
-                    $linkHtml = '<a href="' .$completeUrl . '">'
+                    $linkHtml = '<a href="' . $completeUrl . '">'
                         . $linkText
                         . '</a>';
 

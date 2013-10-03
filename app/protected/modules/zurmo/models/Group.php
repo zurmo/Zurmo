@@ -127,6 +127,10 @@
 
         public function canModifyMemberships()
         {
+            if (!static::isUserASuperAdministrator(Yii::app()->user->userModel) && $this->isSuperAdministrators)
+            {
+                return false;
+            }
             return !$this->isEveryone;
         }
 

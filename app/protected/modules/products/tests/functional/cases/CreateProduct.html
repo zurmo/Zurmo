@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>CreateProduct</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Create Product</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -22,9 +22,168 @@
 	<td>javascript{Math.floor(Math.random()*11000)}</td>
 	<td>randomSuffix</td>
 </tr>
+<!--create account to link with product-->
+<tr>
+    <td>open</td>
+    <td>index.php/accounts/default/create</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Create Account</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>Account_name</td>
+    <td>Test Account ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Test Account ${randomSuffix}</td>
+    <td></td>
+</tr>
+<!--create contact to link with product-->
+<tr>
+    <td>open</td>
+    <td>index.php/contacts/default/create</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Create Contact</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>Contact_firstName</td>
+    <td>Test</td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>Contact_lastName</td>
+    <td>Contact ${randomSuffix}</td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Test Contact ${randomSuffix}</td>
+    <td></td>
+</tr>
+<!--create opportunity to link with product-->
+<tr>
+    <td>open</td>
+    <td>index.php/opportunities/default/create</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>waitForTextPresent</td>
+    <td>Create Opportunity</td>
+    <td></td>
+</tr>
+<tr>
+    <td>type</td>
+    <td>Opportunity_name</td>
+    <td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//form[@id='edit-form']/div[2]/div[1]/div/table/tbody/tr[4]/td/div[1]/button</td>
+	<td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=19</td>
+	<td></td>
+</tr>
+<tr>
+    <td>clickAndWait</td>
+    <td>save</td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForPageToLoad</td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td>waitForCondition</td>
+    <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+    <td>30000</td>
+</tr>
+<tr>
+    <td>assertTextPresent</td>
+    <td>Test Opportunity ${randomSuffix}</td>
+    <td></td>
+</tr>
+<!--Go to create product-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,12 +203,27 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Advanced</td>
+	<td>Products</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Columns</td>
+	<td>Catalog Items</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Categories</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,14 +246,10 @@
 	<td>Create Product</td>
 	<td></td>
 </tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
+<!--check validation-->
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='ProductEditAndDetailsView']/div/div/form/div[3]/div/div/a[2]</td>
+	<td>save</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,6 +277,33 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--check default values-->
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>Product_type_value</td>
+	<td>Product</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>Product_priceFrequency_value</td>
+	<td>One Time</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>Product_sellPrice_currency_id</td>
+	<td>USD</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>Product_sellPrice_value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>Product_stage_value</td>
+	<td>Open</td>
+</tr>
+<!--add product details-->
 <tr>
 	<td>click</td>
 	<td>id=Product_productTemplate_SelectLink</td>
@@ -149,52 +346,12 @@
 </tr>
 <tr>
 	<td>setSpeed</td>
-	<td>3000</td>
+	<td>1000</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_type_value</td>
-	<td>Product</td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_priceFrequency_value</td>
-	<td>Monthly</td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_stage_value</td>
-	<td>Open</td>
-</tr>
-<tr>
-	<td>setSpeed</td>
-	<td>0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>Product_name</td>
-	<td>Product ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>Product_quantity</td>
-	<td>20000</td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='ProductEditAndDetailsView']/div/div/form/div[3]/div/div/a[2]</td>
+	<td>click</td>
+	<td>//a[@id='Product_account_SelectLink']/span[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -208,9 +365,300 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>assertTextPresent</td>
-	<td>Product ${randomSuffix}</td>
+	<td>type</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>Test Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td</td>
+	<td>Test Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Test Account ${randomSuffix}</td>
 	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>AccountsSearchForm_anyMixedAttributes</td>
+	<td>Test Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='Product_contact_SelectLink']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>Test Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td</td>
+	<td>Test Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Test Contact ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>ContactsSearchForm_anyMixedAttributes</td>
+	<td>Test Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//a[@id='Product_opportunity_SelectLink']/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>OpportunitiesSearchForm_anyMixedAttributes</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>OpportunitiesSearchForm_anyMixedAttributes</td>
+	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr[1]/td</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>OpportunitiesSearchForm_anyMixedAttributes</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='list-viewmodal']/table/tbody/tr/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=token-input-ProductCategoriesForm_ProductCategory_ids</td>
+	<td>Came</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ProductCategoriesForm_ProductCategory_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//*[@id=&quot;token-input-ProductCategoriesForm_ProductCategory_ids&quot;]</td>
+	<td>Jil</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Camera</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Product_type_value</td>
+	<td>label=Product</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Product_sellPrice_currency_id</td>
+	<td>label=EUR</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Product_priceFrequency_value</td>
+	<td>label=Monthly</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=Product_stage_value</td>
+	<td>label=Open</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Product_name</td>
+	<td>Test Product ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Product_quantity</td>
+	<td>20000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<!--verify values after creating product-->
+<tr>
+	<td>assertTextPresent</td>
+	<td>Test Product ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[1]/td/a</td>
+	<td>A Bend in the River</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[2]/td</td>
+	<td>Test Product ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[3]/td</td>
+	<td>20,000</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[4]/td/a</td>
+	<td>Test Account ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[5]/td</td>
+	<td>Test Contact ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[6]/td</td>
+	<td>Test Opportunity ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[7]/td</td>
+	<td>Books, Camera</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[8]/td</td>
+	<td>Product</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[9]/td</td>
+	<td>Monthly</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[10]/td</td>
+	<td>€200.00</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[11]/td</td>
+	<td>Open</td>
 </tr>
 </tbody>
 </table>

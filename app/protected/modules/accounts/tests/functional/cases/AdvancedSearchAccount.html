@@ -21,15 +21,41 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to accounts list-->
 <tr>
 	<td>open</td>
 	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Update</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
 </tr>
 <!--Test empty search-->
 <tr>
@@ -115,7 +141,7 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Changing The Account ${randomSuffix}</td>
+	<td>Test Account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <!--Teste many clauses-->
@@ -162,7 +188,7 @@
 <tr>
 	<td>type</td>
 	<td>id=AccountsSearchForm_dynamicClauses_0_name</td>
-	<td>Changing The Account ${randomSuffix}</td>
+	<td>Test Account ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -266,7 +292,7 @@
 </tr>
 <tr>
 	<td>waitForTextPresent</td>
-	<td>Changing The Account ${randomSuffix}</td>
+	<td>Test Account ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>

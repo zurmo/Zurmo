@@ -1417,6 +1417,5 @@
             $this->assertTrue($userA->isSuperAdministrator());
             $this->assertFalse($userB->isSuperAdministrator());
         }
-
     }
 ?>

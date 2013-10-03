@@ -33,7 +33,7 @@
      * feasible for technical reasons, the Appropriate Legal Notices must display the words
      * "Copyright Zurmo Inc. 2013. All rights reserved".
      ********************************************************************************/
-    
+
     Yii::import('application.modules.contacts.controllers.DefaultController', true);
     class ContactsDemoController extends ContactsDefaultController
     {
@@ -46,8 +46,8 @@
             {
                 throw new NotSupportedException();
             }
-            
-            //Load 12 contacts so there is sufficient data for marketing list pagination testing.
+
+            //Load 12 contacts so there is sufficient data for marketing list pagination testing and mass delete.
             for ($i = 1; $i <= 12; $i++)
             {
                 $firstName           = 'Test';
@@ -55,7 +55,7 @@
                 $owner               = Yii::app()->user->userModel;
                 $contact             = new Contact();
                 $contact->firstName  = $firstName;
-                $contact->lastName   = $lastName.' '.$i;
+                $contact->lastName   = $lastName.' '. $i;
                 $contact->owner      = $owner;
                 $contact->state      = ContactsUtil::getStartingState();
                 $saved               = $contact->save();

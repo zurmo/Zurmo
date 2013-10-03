@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to templates list-->
 <tr>
 	<td>open</td>
-	<td>index.php/workflows/default</td>
+	<td>index.php/workflows/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,6 +32,36 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Workflows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Templates</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Time Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Message Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ordering</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -47,6 +78,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--select template created in functional test-->
 <tr>
 	<td>type</td>
 	<td>id=EmailTemplatesSearchForm_anyMixedAttributes</td>
@@ -72,6 +104,7 @@
 	<td>EmailTemplatesSearchForm_anyMixedAttributes</td>
 	<td>EmailTemplateTest ${randomSuffix}</td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>click</td>
 	<td>id=clear-search-link</td>
@@ -81,6 +114,11 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>Criteria Selected</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

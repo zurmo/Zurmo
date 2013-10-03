@@ -174,7 +174,8 @@
                     }
                 }
                 $oldExpression            = $expression;
-                $expression               = str_replace($attribute, $replacementValue, $expression);
+                $pattern                  = '/\b' . $attribute . '\b/';
+                $expression               = preg_replace($pattern, $replacementValue, $expression);
                 $extraZerosForDecimalPart = '';
                 if ($expression !== $oldExpression)
                 {
@@ -262,10 +263,12 @@
             }
             $model          = new $modelClassName(false);
             $adapter        = new ModelNumberOrCurrencyAttributesAdapter($model);
+            $patterns       = array();
             foreach ($adapter->getAttributes() as $attribute => $data)
             {
-                $expression = str_replace($attribute, 1, $expression);
+                $patterns[] = '/\b' . $attribute . '\b/';
             }
+            $expression = preg_replace($patterns, '1', $expression);
             if ($expression != strtoupper($expression) || $expression != strtolower($expression))
             {
                 return false;

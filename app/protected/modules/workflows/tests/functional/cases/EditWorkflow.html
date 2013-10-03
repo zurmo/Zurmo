@@ -17,6 +17,7 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to workflows list-->
 <tr>
 	<td>open</td>
 	<td>index.php/workflows/default?clearingSearch=1</td>
@@ -33,10 +34,36 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
+	<td>assertTextPresent</td>
+	<td>Create</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Workflows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Templates</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Time Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Message Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ordering</td>
+	<td></td>
+</tr>
+<!--select workflow created in functional test-->
 <tr>
 	<td>type</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
@@ -72,14 +99,10 @@
 	<td>WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
-<!--tr>
-	<td>click</td>
-	<td>//div[@id='list-view']/table/tbody/tr/td[2]/a</td>
-	<td></td>
-</tr-->
+<!--go in detail view of workflow-->
 <tr>
-	<td>clickAndWait</td>
-	<td>link=WorkflowTest ${randomSuffix}</td>
+	<td>click</td>
+	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -93,10 +116,16 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>waitForText</td>
     <td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--edit workflow-->
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Edit</td>
@@ -111,6 +140,11 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -174,8 +208,8 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=OnSaveWorkflowWizardForm_name</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>OnSaveWorkflowWizardForm_description</td>
+	<td>test description edited</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -192,10 +226,31 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after saving workflow-->
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='WorkflowDetailsView']/div/h1/span/span</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>
+	<td>WorkflowTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[2]/td</td>
+	<td>test description edited</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[3]/td</td>
+	<td>New Records Only</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
 </tr>
 </tr>
 </tbody>

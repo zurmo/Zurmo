@@ -85,7 +85,7 @@
         {
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
             //Set the date and datetime variable values here
-            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormatForInput(), time());
             $dateAssert     = date('Y-m-d');
             $baseCurrency   = Currency::getByCode(Yii::app()->currencyHelper->getBaseCode());
 

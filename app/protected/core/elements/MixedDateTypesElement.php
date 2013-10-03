@@ -161,7 +161,8 @@
             $cClipWidget->widget('application.core.widgets.ZurmoJuiDatePicker', array(
                 'attribute'           => $this->attribute,
                 'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
-                                         $this->getValueFirstDate()),
+                                         $this->getValueFirstDate(),
+                                         DateTimeUtil::DISPLAY_FORMAT_FOR_INPUT),
                 'htmlOptions'         => array(
                     'id'              => $this->getValueFirstDateEditableInputId(),
                     'name'            => $this->getValueFirstDateEditableInputName(),
@@ -180,7 +181,8 @@
             $cClipWidget->widget('application.core.widgets.ZurmoJuiDatePicker', array(
                 'attribute'           => $this->attribute,
                 'value'               => DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
-                                         $this->getValueSecondDate()),
+                                         $this->getValueSecondDate(),
+                                         DateTimeUtil::DISPLAY_FORMAT_FOR_INPUT),
                 'htmlOptions'         => array(
                     'id'              => $this->getValueSecondDateEditableInputId(),
                     'name'            => $this->getValueSecondDateEditableInputName(),

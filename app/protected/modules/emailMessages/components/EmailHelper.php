@@ -131,8 +131,8 @@
          */
         public function loadDefaultFromAndToAddresses()
         {
-            $this->defaultFromAddress   = EmailHelper::resolveDefaultEmailAddress('notification');
-            $this->defaultTestToAddress = EmailHelper::resolveDefaultEmailAddress('testJobEmail');
+            $this->defaultFromAddress   = $this->resolveAndGetDefaultFromAddress();
+            $this->defaultTestToAddress = $this->resolveAndGetDefaultTestToAddress();
         }
 
         protected function loadOutboundSettings()
@@ -400,6 +400,7 @@
          * Given a user, attempt to get the user's email address, but if it is not available, then return the default
          * address.  @see EmailHelper::defaultFromAddress
          * @param User $user
+         * @return string
          */
         public function resolveFromAddressByUser(User $user)
         {
@@ -417,6 +418,40 @@
         public static function resolveDefaultEmailAddress($defaultEmailAddress)
         {
             return $defaultEmailAddress . '@' . StringUtil::resolveCustomizedLabel() . 'alerts.com';
+        }
+
+        public function resolveAndGetDefaultFromAddress()
+        {
+            $defaultFromAddress = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'defaultFromAddress');
+            if($defaultFromAddress == null)
+            {
+                $defaultFromAddress = static::resolveDefaultEmailAddress('notification');
+                $this->setDefaultFromAddress($defaultFromAddress);
+            }
+            return $defaultFromAddress;
+        }
+
+        public function setDefaultFromAddress($defaultFromAddress)
+        {
+            assert('is_string($defaultFromAddress)');
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'defaultFromAddress', $defaultFromAddress);
+        }
+
+        public function resolveAndGetDefaultTestToAddress()
+        {
+            $defaultTestToAddress = ZurmoConfigurationUtil::getByModuleName('ZurmoModule', 'defaultTestToAddress');
+            if($defaultTestToAddress == null)
+            {
+                $defaultTestToAddress = static::resolveDefaultEmailAddress('testJobEmail');
+                $this->setDefaultTestToAddress($defaultTestToAddress);
+            }
+            return $defaultTestToAddress;
+        }
+
+        public function setDefaultTestToAddress($defaultTestToAddress)
+        {
+            assert('is_string($defaultTestToAddress)');
+            ZurmoConfigurationUtil::setByModuleName('ZurmoModule', 'defaultTestToAddress', $defaultTestToAddress);
         }
     }
 ?>

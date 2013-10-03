@@ -62,6 +62,7 @@
          */
         public static function resolveHeadTag($rawXHtml, $excludeStyles = false)
         {
+            $hostInfo   = Yii::app()->getRequest()->getHostInfo();
             $dom        = new DOMDocument();
             $headBody   = array('js'    => array(),
                                 'css'   => array(),
@@ -73,7 +74,14 @@
             {
                 if ($child->nodeName == 'script' && $child->hasAttribute('src'))
                 {
-                    $headBody['js'][] = $child->getAttribute('src');
+                    if (strpos($child->getAttribute('src'), $hostInfo) === false)
+                    {
+                        $headBody['js'][] = $hostInfo . $child->getAttribute('src');
+                    }
+                    else
+                    {
+                        $headBody['js'][] = $child->getAttribute('src');
+                    }
                 }
                 elseif (!$excludeStyles && $child->nodeName == 'link' && $child->hasAttribute('rel'))
                 {
@@ -81,15 +89,19 @@
                     {
                         if (strpos($child->getAttribute('href'), 'jquery-ui-timepicker-addon.css'))
                         {
-                            $resourceUrl = Yii::app()->getRequest()->getHostInfo() . $child->getAttribute('href');
+                            $stylesheetReference = $hostInfo . $child->getAttribute('href');
+                        }
+                        elseif (strpos($child->getAttribute('href'), $hostInfo) === false)
+                        {
+                            $stylesheetReference = $hostInfo . $child->getAttribute('href');
                         }
                         else
                         {
-                            $resourceUrl = $child->getAttribute('href');
+                            $stylesheetReference = $child->getAttribute('href');
                         }
                         $headBody['css'][] = array('rel'  => $child->getAttribute('rel'),
                                                    'type' => $child->getAttribute('type'),
-                                                   'href' => $resourceUrl);
+                                                   'href' => $stylesheetReference);
                     }
                 }
                 elseif (!$excludeStyles && $child->nodeName == 'style')
@@ -128,6 +140,7 @@
          */
         public static function resolveScriptTagsInBody(&$bodyContent)
         {
+            $hostInfo       = Yii::app()->getRequest()->getHostInfo();
             $scriptTagNodes = $bodyContent->getElementsByTagName('script');
             $scriptTags     = array();
             foreach ($scriptTagNodes as $scriptTagNode)
@@ -136,8 +149,16 @@
                 $scriptTagDetail = array();
                 if ($scriptTagNode->hasAttribute('src'))
                 {
+                    if (strpos($scriptTagNode->getAttribute('src'), $hostInfo) === false)
+                    {
+                        $scriptSrcReference = $hostInfo . $scriptTagNode->getAttribute('src');
+                    }
+                    else
+                    {
+                        $scriptSrcReference = $scriptTagNode->getAttribute('src');
+                    }
                     $scriptTagDetail['type']    = 'file';
-                    $scriptTagDetail['src']     = $scriptTagNode->getAttribute('src');
+                    $scriptTagDetail['src']     = $scriptSrcReference;
                     $scriptTagDetail['body']    = null;
                     $scriptTags[]               = $scriptTagDetail;
                 }
@@ -258,6 +279,11 @@
             $scriptPathRelativeToAssets = substr($scriptSrcPath, strpos($scriptSrcPath, 'assets') + 6);
             $scriptFullPath             = $assetsBasePath . $scriptPathRelativeToAssets;
             return $scriptFullPath;
+        }
+
+        public static function resolveExternalRequestHeader()
+        {
+            header('Access-Control-Allow-Origin: *');
         }
     }
 ?>

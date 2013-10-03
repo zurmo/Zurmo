@@ -124,7 +124,11 @@
                     'id' => $user->id,
                 ),
                 'name' => 'New Name',
-                'startDateTime' => DateTimeUtil::convertTimestampToDisplayFormat($timeStamp),
+                'startDateTime' => DateTimeUtil::convertTimestampToDisplayFormat(
+                                            $timeStamp,
+                                            DateTimeUtil::DATETIME_FORMAT_DATE_WIDTH,
+                                            DateTimeUtil::DATETIME_FORMAT_TIME_WIDTH,
+                                            true)
             );
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($meeting, $postData);
             $meeting->setAttributes($sanitizedPostData);
@@ -144,7 +148,11 @@
                     'id' => $user->id,
                 ),
                 'name' => 'Lamazing',
-                'startDateTime' => DateTimeUtil::convertTimestampToDisplayFormat($timeStamp),
+                'startDateTime' => DateTimeUtil::convertTimestampToDisplayFormat(
+                                            $timeStamp,
+                                            DateTimeUtil::DATETIME_FORMAT_DATE_WIDTH,
+                                            DateTimeUtil::DATETIME_FORMAT_TIME_WIDTH,
+                                            true)
             );
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($meeting, $postData);
             $meeting->setAttributes($sanitizedPostData);

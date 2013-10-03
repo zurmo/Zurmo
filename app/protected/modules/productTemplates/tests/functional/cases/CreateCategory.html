@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>CreateCategory</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Create Category</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -20,7 +20,7 @@
 <!--Go to create category-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,6 +145,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after creating category-->
 <tr>
 	<td>assertText</td>
 	<td>//div[@id='ProductCategoryDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>

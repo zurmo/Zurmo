@@ -39,8 +39,6 @@
      */
     class ContactWebFormsZeroModelsCheckControllerFilter extends ZeroModelsCheckControllerFilter
     {
-
-
         public $activeActionElementType;
 
         public $breadcrumbLinks;

@@ -48,7 +48,8 @@
         {
             $themePath = Yii::app()->themeManager->baseUrl . '/' . Yii::app()->theme->name;
             $value     = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay(
-                            $this->model->{$this->attribute});
+                            $this->model->{$this->attribute},
+                            DateTimeUtil::DISPLAY_FORMAT_FOR_INPUT);
             $cClipWidget = new CClipWidget();
             $cClipWidget->beginClip("EditableDateElement");
             $cClipWidget->widget('application.core.widgets.ZurmoJuiDatePicker', array(

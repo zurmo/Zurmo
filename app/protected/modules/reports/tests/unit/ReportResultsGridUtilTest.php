@@ -62,9 +62,30 @@
             $account2 = AccountTestHelper::createAccountByNameForOwner('account1', $this->user);
             $result   = ReportResultsGridUtil::makeStringForMultipleLinks('account1', 'Account', 'AccountsModule');
             $this->assertContains('<span class="tooltip">2</span>', $result);
+        }
 
-            $result   = ReportResultsGridUtil::makeStringForMultipleLinks('account1', 'Account', 'AccountsModule', false);
+        /**
+         * @depends testMakeStringForMultipleLinks
+         */
+        public function testMakeStringForLinkOrLinks()
+        {
+            $accounts = Account::getByName('account1');
+            $account1 = $accounts[0];
+            $account2 = $accounts[1];
+
+            $displayAttribute = new DisplayAttributeForReportForm('AccountsModule', 'Account',
+                Report::TYPE_ROWS_AND_COLUMNS);
+            $displayAttribute->setModelAliasUsingTableAliasName('abc');
+            $displayAttribute->attributeIndexOrDerivedType = 'name';
+
+            $reportResultsRowData = new ReportResultsRowData(array($displayAttribute), 4);
+            $reportResultsRowData->addModelAndAlias($account2, 'abc');
+            $result = ReportResultsGridUtil::makeStringForLinkOrLinks('attribute0', $reportResultsRowData, true, 'account1');
+            $this->assertContains('<span class="tooltip">2</span>', $result);
+
+            $result = ReportResultsGridUtil::makeStringForLinkOrLinks('attribute0', $reportResultsRowData, false, 'account1');
             $this->assertContains   ('a target="new"', $result);
+            $this->assertContains   ('id=' . $account2->id, $result);
             $this->assertNotContains('tooltip',        $result);
         }
     }

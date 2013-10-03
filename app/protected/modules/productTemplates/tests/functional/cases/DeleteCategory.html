@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>DeleteCategory</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Delete Category</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to categories list-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,6 +78,7 @@
 	<td>Export</td>
 	<td></td>
 </tr>
+<!--go in detail view of category-->
 <tr>
 	<td>click</td>
 	<td>link=Test Category ${randomSuffix}</td>
@@ -97,6 +99,7 @@
 	<td>3000</td>
 	<td></td>
 </tr>
+<!--delete category-->
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Delete</td>
@@ -116,6 +119,11 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Test Category ${randomSuffix}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>setSpeed</td>

@@ -49,13 +49,13 @@
             $language = Yii::app()->getLanguage();
             $this->assertEquals($language, 'en');
             $postData = array(
-                'aDate' => '5/4/11',
-                'aDateTime' => '5/4/11 5:45 PM'
+                'aDate' => '5/4/2011',
+                'aDateTime' => '5/4/2011 5:45 PM'
             );
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new DateDateTime(), $postData);
             $compareData = array(
                 'aDate' => '2011-05-04',
-                'aDateTime' => DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('5/4/11 5:45 PM'),
+                'aDateTime' => DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('5/4/2011 5:45 PM'),
             );
             $this->assertEquals($compareData, $sanitizedPostData);
             $this->assertTrue(is_string($compareData['aDateTime']));
@@ -63,13 +63,13 @@
             //now do German (de) to check a different locale.
             Yii::app()->setLanguage('de');
             $postData = array(
-                'aDate' => '04.05.11',
-                'aDateTime' => '04.05.11 17:45'
+                'aDate' => '04.05.2011',
+                'aDateTime' => '04.05.2011 17:45'
             );
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel(new DateDateTime(), $postData);
             $compareData = array(
                 'aDate' => '2011-05-04',
-                'aDateTime' => DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('04.05.11 17:45'),
+                'aDateTime' => DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('04.05.2011 17:45'),
             );
             $this->assertEquals($compareData, $sanitizedPostData);
             $this->assertTrue(is_string($compareData['aDateTime']));
@@ -122,14 +122,14 @@
             $searchForm        = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
             $postData          = array( 'date__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
-                                          'firstDate' => '3/25/11'),
+                                          'firstDate' => '3/25/2011'),
                                          'date2__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
-                                          'firstDate' =>  '5/25/11',
-                                          'secondDate' => '6/25/11'),
+                                          'firstDate' =>  '5/25/2011',
+                                          'secondDate' => '6/25/2011'),
                                 'dateTime__DateTime'  =>
                                    array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
-                                          'firstDate' => '3/26/11'));
+                                          'firstDate' => '3/26/2011'));
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($searchForm, $postData);
             $compareData = array( 'date__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
@@ -158,14 +158,14 @@
             $searchForm        = new MixedRelationsModelSearchFormTestModel(new MixedRelationsModel());
             $postData          = array( 'dateDateTimeADate__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
-                                          'firstDate' => '3/25/11'),
+                                          'firstDate' => '3/25/2011'),
                                          'dateDateTimeADate__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_BETWEEN,
-                                          'firstDate' =>  '5/25/11',
-                                          'secondDate' => '6/25/11'),
+                                          'firstDate' =>  '5/25/2011',
+                                          'secondDate' => '6/25/2011'),
                                 'dateDateTimeADateTime__DateTime'  =>
                                    array('type'       => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,
-                                          'firstDate' => '3/26/11'));
+                                          'firstDate' => '3/26/2011'));
             $sanitizedPostData = PostUtil::sanitizePostByDesignerTypeForSavingModel($searchForm, $postData);
             $compareData = array( 'dateDateTimeADate__Date'  =>
                                     array('type'      => MixedDateTypesSearchFormAttributeMappingRules::TYPE_AFTER,

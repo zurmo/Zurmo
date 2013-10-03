@@ -233,30 +233,52 @@
             $value = strtotime("3 June 1980");
             $displayValue = DateTimeUtil::resolveTimeStampForDateTimeLocaleFormattedDisplay($value);
             $this->assertEquals('6/3/80 12:00 AM', $displayValue);
+            //For input
+            $value = strtotime("3 June 1080");
+            $displayValue = DateTimeUtil::resolveTimeStampForDateTimeLocaleFormattedDisplay(
+                $value,
+                DateTimeUtil::DATETIME_FORMAT_DATE_WIDTH,
+                DateTimeUtil::DATETIME_FORMAT_TIME_WIDTH,
+                true);
+            $this->assertEquals('6/3/1080 12:00 AM', $displayValue);
             //other locales
             Yii::app()->setLanguage('de');
             $value = strtotime("3 June 1980");
             $displayValue = DateTimeUtil::resolveTimeStampForDateTimeLocaleFormattedDisplay($value);
             $this->assertEquals('03.06.80 00:00', $displayValue);
+            //For input
+            $value = strtotime("3 June 1080");
+            $displayValue = DateTimeUtil::resolveTimeStampForDateTimeLocaleFormattedDisplay(
+                $value,
+                DateTimeUtil::DATETIME_FORMAT_DATE_WIDTH,
+                DateTimeUtil::DATETIME_FORMAT_TIME_WIDTH,
+                true);
+            $this->assertEquals('03.06.1080 00:00', $displayValue);
         }
 
         public function testResolveValueForDateLocaleFormattedDisplay()
         {
             $displayValue = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay('2007-07-01');
             $this->assertEquals('7/1/07', $displayValue);
+            //For input
+            $displayValue = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay('2007-07-01', DateTimeUtil::DISPLAY_FORMAT_FOR_INPUT);
+            $this->assertEquals('7/1/2007', $displayValue);
             //other locales
             Yii::app()->setLanguage('de');
             $displayValue = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay('2007-07-01');
             $this->assertEquals('01.07.07', $displayValue);
+            //For input
+            $displayValue = DateTimeUtil::resolveValueForDateLocaleFormattedDisplay('2007-07-01', DateTimeUtil::DISPLAY_FORMAT_FOR_INPUT);
+            $this->assertEquals('01.07.2007', $displayValue);
         }
 
         public function testResolveValueForDateDBFormatted()
         {
-            $displayValue = DateTimeUtil::resolveValueForDateDBFormatted('7/1/07');
+            $displayValue = DateTimeUtil::resolveValueForDateDBFormatted('7/1/2007');
             $this->assertEquals('2007-07-01', $displayValue);
             //other locales
             Yii::app()->setLanguage('de');
-            $displayValue = DateTimeUtil::resolveValueForDateDBFormatted('01.07.07');
+            $displayValue = DateTimeUtil::resolveValueForDateDBFormatted('01.07.2007');
             $this->assertEquals('2007-07-01', $displayValue);
         }
 
@@ -320,25 +342,69 @@
         {
             $timeZone   = date_default_timezone_get();
             date_default_timezone_set('GMT');
-            $dbValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('6/3/80 12:00 AM');
+            $dbValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('6/3/1980 12:00 AM');
             $this->assertEquals('1980-06-03 00:00:00', $dbValue);
 
             //other locales
             Yii::app()->setLanguage('de');
-            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03.06.80 00:00');
+            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03.06.1980 00:00');
             $this->assertEquals('1980-06-03 00:00:00', $displayValue);
 
             Yii::app()->setLanguage('it');
-            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/80 00:00');
+            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/1980 00:00');
             $this->assertEquals('1980-06-03 00:00:00', $displayValue);
 
             Yii::app()->setLanguage('fr');
-            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/80 00:00');
+            $displayValue = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('03/06/1980 00:00');
             $this->assertEquals('1980-06-03 00:00:00', $displayValue);
 
             //test null value returns null.
             $displayValue = DateTimeUtil::convertDbFormattedDateTimeToLocaleFormattedDisplay(null);
             $this->assertEquals(null, $displayValue);
+            date_default_timezone_set($timeZone);
+        }
+
+        public function testGetLocaleDateTimeFormatForInput()
+        {
+            $timeZone   = date_default_timezone_get();
+            date_default_timezone_set('GMT');
+            $localDateTimeFormatForInput = DateTimeUtil::getLocaleDateTimeFormatForInput();
+            $this->assertEquals('M/d/yyyy h:mm a', $localDateTimeFormatForInput);
+
+            //other locales
+            Yii::app()->setLanguage('de');
+            $localDateTimeFormatForInput = DateTimeUtil::getLocaleDateTimeFormatForInput();
+            $this->assertEquals('dd.MM.yyyy HH:mm', $localDateTimeFormatForInput);
+
+            Yii::app()->setLanguage('it');
+            $localDateTimeFormatForInput = DateTimeUtil::getLocaleDateTimeFormatForInput();
+            $this->assertEquals('dd/MM/yyyy HH:mm', $localDateTimeFormatForInput);
+
+            Yii::app()->setLanguage('fr');
+            $localDateTimeFormatForInput = DateTimeUtil::getLocaleDateTimeFormatForInput();
+            $this->assertEquals('dd/MM/yyyy HH:mm', $localDateTimeFormatForInput);
+            date_default_timezone_set($timeZone);
+        }
+
+        public function testGetLocaleDateFormatForInput()
+        {
+            $timeZone   = date_default_timezone_get();
+            date_default_timezone_set('GMT');
+            $localDateFormatForInput = DateTimeUtil::getLocaleDateFormatForInput();
+            $this->assertEquals('M/d/yyyy', $localDateFormatForInput);
+
+            //other locales
+            Yii::app()->setLanguage('de');
+            $localDateFormatForInput = DateTimeUtil::getLocaleDateFormatForInput();
+            $this->assertEquals('dd.MM.yyyy', $localDateFormatForInput);
+
+            Yii::app()->setLanguage('it');
+            $localDateFormatForInput = DateTimeUtil::getLocaleDateFormatForInput();
+            $this->assertEquals('dd/MM/yyyy', $localDateFormatForInput);
+
+            Yii::app()->setLanguage('fr');
+            $localDateFormatForInput = DateTimeUtil::getLocaleDateFormatForInput();
+            $this->assertEquals('dd/MM/yyyy', $localDateFormatForInput);
             date_default_timezone_set($timeZone);
         }
     }

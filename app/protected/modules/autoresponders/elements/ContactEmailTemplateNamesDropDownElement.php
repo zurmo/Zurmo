@@ -119,9 +119,10 @@
                                     {
                                         url:        url,
                                         dataType:   "json",
-                                        data:       {
-                                                        commaSeparatedExistingModelIds: filesIdsString
-                                                    },
+                                        data:
+                                        {
+                                            commaSeparatedExistingModelIds: filesIdsString
+                                        },
                                         success:    function(data, status, request)
                                                     {
                                                         $(templateId).tmpl(data).appendTo(targetClass);
@@ -163,11 +164,12 @@
                                     {
                                         url:        url,
                                         dataType:   "json",
-                                        data:       {
-                                                        id: selectedOptionValue,
-                                                        renderJson: true,
-                                                        includeFilesInJson: true
-                                                    },
+                                        data:
+                                        {
+                                            id: selectedOptionValue,
+                                            renderJson: true,
+                                            includeFilesInJson: true
+                                        },
                                         beforeSend: function(request, settings)
                                                     {
                                                         $(this).makeLargeLoadingSpinner(true, ".email-template-content");

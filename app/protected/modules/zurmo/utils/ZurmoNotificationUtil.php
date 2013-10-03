@@ -88,7 +88,7 @@
                         {
                             window.webkitNotifications.requestPermission();
                         }
-                        else if (window.webkitNotifications.checkPermission() == 2)
+                        elseif (window.webkitNotifications.checkPermission() == 2)
                         {
                             alert('" . Zurmo::t('ZurmoModule', 'You have blocked desktop notifications for this browser.') . "');
                         }

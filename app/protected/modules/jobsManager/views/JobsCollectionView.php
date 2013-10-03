@@ -49,7 +49,7 @@
 
         protected $jobsData = array();
 
-        protected $showRunJobLink;
+        protected $showRunJobLink = true;
 
         /**
          * @param string $controllerId
@@ -57,23 +57,19 @@
          * @param array $monitorJobData
          * @param array $jobsData
          * @param null|string $messageBoxContent
-         * @param bool $showRunJobLink
          */
-        public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null,
-                                    $showRunJobLink = false)
+        public function __construct($controllerId, $moduleId, $monitorJobData, $jobsData, $messageBoxContent = null)
         {
             assert('is_string($controllerId)');
             assert('is_string($moduleId)');
             assert('is_array($monitorJobData)');
             assert('is_array($jobsData) && count($jobsData) > 0');
             assert('$messageBoxContent == null || is_string($messageBoxContent)');
-            assert('is_bool($showRunJobLink)');
             $this->controllerId           = $controllerId;
             $this->moduleId               = $moduleId;
             $this->monitorJobData         = $monitorJobData;
             $this->jobsData               = $jobsData;
             $this->messageBoxContent      = $messageBoxContent;
-            $this->showRunJobLink         = $showRunJobLink;
         }
 
         protected function renderContent()

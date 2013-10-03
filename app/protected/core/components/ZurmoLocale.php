@@ -319,6 +319,20 @@
         }
 
         /**
+         * @param string $width date format width. It can be 'full', 'long', 'medium' or 'short'.
+         * @return string date format for input fields
+         */
+        public function getDateFormatForInput($width = 'medium')
+        {
+            $dateFormat = $this->getDateFormat($width);
+            if (strpos($dateFormat, 'yy') !== false && strpos($dateFormat, 'yyyy') === false)
+            {
+                $dateFormat =  str_replace('yy', 'yyyy', $dateFormat);
+            }
+            return $dateFormat;
+        }
+
+        /**
          * @param string $width time format width. It can be 'full', 'long', 'medium' or 'short'.
          * @return string date format
          */

@@ -52,6 +52,8 @@
             $form->subListPageSize                        = Yii::app()->pagination->getGlobalValueByType('subListPageSize');
             $form->modalListPageSize                      = Yii::app()->pagination->getGlobalValueByType('modalListPageSize');
             $form->dashboardListPageSize                  = Yii::app()->pagination->getGlobalValueByType('dashboardListPageSize');
+            $form->defaultFromEmailAddress                = Yii::app()->emailHelper->resolveAndGetDefaultFromAddress();
+            $form->defaultTestToEmailAddress              = Yii::app()->emailHelper->resolveAndGetDefaultTestToAddress();
             $form->gamificationModalNotificationsEnabled  = Yii::app()->gameHelper->modalNotificationsEnabled;
             $form->realtimeUpdatesEnabled                 = static::getRealtimeUpdatesEnabled();
             $form->autoresponderOrCampaignBatchSize       = AutoresponderOrCampaignBatchSizeConfigUtil::getBatchSize();
@@ -72,6 +74,8 @@
             Yii::app()->pagination->setGlobalValueByType('subListPageSize',       (int)   $form->subListPageSize);
             Yii::app()->pagination->setGlobalValueByType('modalListPageSize',     (int)   $form->modalListPageSize);
             Yii::app()->pagination->setGlobalValueByType('dashboardListPageSize', (int)   $form->dashboardListPageSize);
+            Yii::app()->emailHelper->setDefaultFromAddress($form->defaultFromEmailAddress);
+            Yii::app()->emailHelper->setDefaultTestToAddress($form->defaultTestToEmailAddress);
             ZurmoConfigurationUtil::setByModuleName('ZurmoModule',
                                                     'gamificationModalNotificationsEnabled',
                                                     (boolean) $form->gamificationModalNotificationsEnabled);

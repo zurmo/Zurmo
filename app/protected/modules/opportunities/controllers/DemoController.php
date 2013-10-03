@@ -53,5 +53,35 @@
             DesignerTestHelper::createRadioDropDownAttribute      ('radioDropDown', false, 'Opportunity');
             DesignerTestHelper::createUrlAttribute                ('url', false, 'Opportunity');
         }
+
+        //Load opportunity for functional testing of mass delete
+        public function actionLoadOpportunitiesSampler()
+        {
+            if (!Group::isUserASuperAdministrator(Yii::app()->user->userModel))
+            {
+                throw new NotSupportedException();
+            }
+
+            for ($i = 0; $i < 11; $i++)
+            {
+                $owner                      = Yii::app()->user->userModel;
+                $name                       = 'Mass Delete '. $i;
+                $currencies                 = Currency::getAll();
+                $currencyValue              = new CurrencyValue();
+                $currencyValue->value       = 500.54;
+                $currencyValue->currency    = $currencies[0];
+                $opportunity                = new Opportunity();
+                $opportunity->owner         = $owner;
+                $opportunity->name          = $name;
+                $opportunity->amount        = $currencyValue;
+                $opportunity->closeDate     = '2011-01-01'; //eventually fix to make correct format
+                $opportunity->stage->value  = 'Negotiating';
+                $saved                      = $opportunity->save();
+                if (!$saved)
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
     }
 ?>

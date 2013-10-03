@@ -43,12 +43,11 @@
             $moduleId,
             $monitorJobData,
             $jobsData,
-            $messageBoxContent = null,
-            $showRunJobLink = false)
+            $messageBoxContent = null)
         {
             parent::__construct(1, 1);
             $this->setView(new JobsCollectionView($controllerId, $moduleId, $monitorJobData, $jobsData,
-                                                  $messageBoxContent, $showRunJobLink), 0, 0);
+                                                  $messageBoxContent), 0, 0);
         }
     }
 ?>

@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>EditProduct</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Edit Product</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to products list-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,18 +40,34 @@
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Advanced</td>
+	<td>Products</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>Columns</td>
+	<td>Catalog Items</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertTextPresent</td>
+	<td>Categories</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<!--select product created in functional test-->
+<tr>
 	<td>type</td>
 	<td>id=ProductsSearchForm_anyMixedAttributes</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>keyUp</td>
@@ -60,18 +77,19 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='list-view']/table/tbody/tr/td[2]</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyValue</td>
 	<td>ProductsSearchForm_anyMixedAttributes</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
+<!--go in detail view of product-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='list-view']/table/tbody/tr/td[2]/a</td>
@@ -92,90 +110,11 @@
 	<td>3000</td>
 	<td></td>
 </tr>
+<!--edit product-->
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Edit</td>
 	<td></td>
-</tr>
-<tr>
-	<td>setSpeed</td>
-	<td>0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=Product_productTemplate_SelectLink</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=ProductTemplatesSearchForm_anyMixedAttributes</td>
-	<td>A Gift of Monotheists</td>
-</tr>
-<tr>
-	<td>keyUp</td>
-	<td>id=ProductTemplatesSearchForm_anyMixedAttributes</td>
-	<td>\10</td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>A Gift of Monotheists</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyValue</td>
-	<td>ProductTemplatesSearchForm_anyMixedAttributes</td>
-	<td>A Gift of Monotheists</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=A Gift of Monotheists</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>setSpeed</td>
-	<td>3000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_type_value</td>
-	<td>Product</td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_priceFrequency_value</td>
-	<td>Monthly</td>
-</tr>
-<tr>
-	<td>assertSelectedLabel</td>
-	<td>Product_stage_value</td>
-	<td>Open</td>
-</tr>
-<tr>
-	<td>setSpeed</td>
-	<td>0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>Product_name</td>
-	<td>Product ${randomSuffix}</td>
-</tr>
-<tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -189,7 +128,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@id='ProductEditAndDetailsView']/div/div/form/div[3]/div/div/a[2]</td>
+	<td>save</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,6 +141,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after saving product-->
 <tr>
 	<td>assertText</td>
     <td>//div[@id='ProductEditAndDetailsView']/div/div[2]/div/table/tbody/tr[3]/td</td>

@@ -51,25 +51,24 @@
             );
         }
 
-        public function actionIndex($showRunJobLink = false)
+        public function actionIndex()
         {
-            $this->actionList($showRunJobLink);
+            $this->actionList();
         }
 
-        public function actionList($showRunJobLink = false)
+        public function actionList()
         {
-            $this->processListAction(null, $showRunJobLink);
+            $this->processListAction(null);
         }
 
-        protected function processListAction($messageBoxContent = null, $showRunJobLink = false)
+        protected function processListAction($messageBoxContent = null)
         {
             $view = new JobsManagerTitleBarAndListView(
                             $this->getId(),
                             $this->getModule()->getId(),
                             JobsToJobsCollectionViewUtil::getMonitorJobData(),
                             JobsToJobsCollectionViewUtil::getNonMonitorJobsData(),
-                            $messageBoxContent,
-                            (bool)$showRunJobLink);
+                            $messageBoxContent);
             $view = new JobsManagerPageView(ZurmoDefaultAdminViewUtil::
                                             makeStandardViewForCurrentUser($this, $view));
             echo $view->render();

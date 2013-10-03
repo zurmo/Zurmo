@@ -41,6 +41,7 @@
             $metadata = parent::getDefaultMetadata();
             $metadata[__CLASS__] = array(
                 'members' => array(
+                    'integerS',
                     'integerStandard',
                     'dateStandard',
                     'dateTimeStandard',
@@ -51,6 +52,7 @@
                     'urlStandard',
                 ),
                 'rules' => array(
+                    array('integerS',         'type', 'type' => 'integer'),
                     array('integerStandard',  'type', 'type' => 'integer'),
                     array('dateStandard',     'type', 'type' => 'date'),
                     array('dateTimeStandard', 'type', 'type' => 'datetime'),

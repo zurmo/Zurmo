@@ -65,8 +65,8 @@
             $data['spotConversionCurrencyCode'] = 'EUR';
             $data[ComponentForReportForm::TYPE_FILTERS][]   = array('attributeIndexOrDerivedType' => 'date',
                                                                     'valueType'                    => 'Between',
-                                                                    'value'                       => '2/24/12',
-                                                                    'secondValue'                 => '2/28/12');
+                                                                    'value'                       => '2/24/2012',
+                                                                    'secondValue'                 => '2/28/2012');
             $data[ComponentForReportForm::TYPE_ORDER_BYS][] = array('attributeIndexOrDerivedType' => 'string',
                                                                     'order' => 'desc');
             $data[ComponentForReportForm::TYPE_DISPLAY_ATTRIBUTES][] = array('attributeIndexOrDerivedType' => 'phone',
@@ -113,8 +113,8 @@
             $data['spotConversionCurrencyCode'] = 'EUR';
             $data[ComponentForReportForm::TYPE_FILTERS][]   = array('attributeIndexOrDerivedType' => 'date',
                                                                     'valueType'                    => 'Between',
-                                                                    'value'                       => '2/24/12',
-                                                                    'secondValue'                 => '2/28/12');
+                                                                    'value'                       => '2/24/2012',
+                                                                    'secondValue'                 => '2/28/2012');
             $data[ComponentForReportForm::TYPE_ORDER_BYS][] = array('attributeIndexOrDerivedType' => 'string',
                                                                     'order' => 'desc');
             $data[ComponentForReportForm::TYPE_DISPLAY_ATTRIBUTES][] = array('attributeIndexOrDerivedType' => 'phone',
@@ -173,10 +173,10 @@
             $data   = array();
             $data[ComponentForReportForm::TYPE_FILTERS][] = array('attributeIndexOrDerivedType' => 'date',
                                                                   'valueType'                   => 'Between',
-                                                                  'value'                       => '2/24/12',
-                                                                  'secondValue'                 => '2/28/12');
+                                                                  'value'                       => '2/24/2012',
+                                                                  'secondValue'                 => '2/28/2012');
             $data[ComponentForReportForm::TYPE_FILTERS][] = array('attributeIndexOrDerivedType' => 'dateTime',
-                                                                  'value'                       => '2/25/12',
+                                                                  'value'                       => '2/25/2012',
                                                                   'availableAtRunTime'          => true);
             DataToReportUtil::resolveFilters($data, $report);
             $filters = $report->getFilters();
@@ -189,7 +189,7 @@
             //Should remove only the runtime filter
             $data   = array();
             $data[ComponentForReportForm::TYPE_FILTERS][] = array('attributeIndexOrDerivedType' => 'dateTime',
-                                                                  'value'                       => '2/25/12',
+                                                                  'value'                       => '2/25/2012',
                                                                   'availableAtRunTime'          => true);
             DataToReportUtil::resolveFilters($data, $report, true);
             $filters = $report->getFilters();
@@ -204,10 +204,10 @@
         {
             //test specifically for date/dateTime conversion from local to db format.
             $filtersData         = array();
-            $filtersData[0]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/12');
-            $filtersData[1]      = array('attributeIndexOrDerivedType' => 'dateTime', 'value' => '2/25/12');
-            $filtersData[2]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/12',
-                                         'secondValue'                 => '2/28/12');
+            $filtersData[0]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/2012');
+            $filtersData[1]      = array('attributeIndexOrDerivedType' => 'dateTime', 'value' => '2/25/2012');
+            $filtersData[2]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/2012',
+                                         'secondValue'                 => '2/28/2012');
             $sanitizedFilterData = DataToReportUtil::sanitizeFiltersData('ReportsTestModule',
                                                                          Report::TYPE_ROWS_AND_COLUMNS, $filtersData);
             $this->assertEquals('2012-02-24', $sanitizedFilterData[0]['value']);

@@ -129,7 +129,7 @@
             $this->setGetArray(array(   'relationAttributeName' => 'Account', 'relationModelId' => $account->id,
                                         'relationModuleId'      => 'accounts', 'redirectUrl' => 'someRedirect'));
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
-                                      'Meeting' => array('name' => 'myMeeting', 'startDateTime' => '11/1/11 7:45 PM')));
+                                      'Meeting' => array('name' => 'myMeeting', 'startDateTime' => '11/1/2011 7:45 PM')));
             $this->runControllerWithRedirectExceptionAndGetContent('meetings/default/createFromRelation');
 
             //Test nobody can delete an existing meeting he created and it redirects to index.

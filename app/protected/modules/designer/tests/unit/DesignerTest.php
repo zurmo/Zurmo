@@ -190,7 +190,7 @@
                                                      'cells' => array(
                                                          array('elements' => array(
                                                              array('attributeName' => null,
-                                                                   'type' => 'Null')
+                                                                   'type' => 'Null') // Not Coding Standard
                                                          )
                                                          ),
                                                      ),

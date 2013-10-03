@@ -60,7 +60,12 @@
                                                          $this->modelAttributeName,
                                                          static::getAttributeName(),
                                                          $requiredRuleIsApplicable);
-            return array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            $rules = array_merge(parent::rules(), $defaultValueApplicableModelAttributeRules);
+            if (empty($rules))
+            {
+                $rules = array(array(static::getAttributeName(), 'safe'));
+            }
+            return $rules;
         }
     }
 ?>

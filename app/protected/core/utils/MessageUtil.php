@@ -624,7 +624,7 @@
                         $message = strtolower($message);
                         if (isset($messageAndCategories[$message]))
                         {
-                            if(!in_array($category, $messageAndCategories[$message]))
+                            if (!in_array($category, $messageAndCategories[$message]))
                             {
                                 $messageAndCategories[$message][] = $category;
                             }

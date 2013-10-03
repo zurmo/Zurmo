@@ -4,33 +4,55 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>Search</title>
+<title>KanbanBoard</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Search</td></tr>
+<tr><td rowspan="1" colspan="3">Kanban Board</td></tr>
 </thead><tbody>
 <tr>
   <td>setTimeout</td>
   <td>45000</td>
   <td></td>
 </tr>
+<!--Go to opportunities list-->
 <tr>
-  <td>open</td>
-  <td>index.php/opportunities/default</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/opportunities/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForCondition</td>
-  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-  <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Update</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<!--Go to opportunities kanban board view-->
 <tr>
   <td>clickAndWait</td>
   <td>link=Kanban</td>
@@ -47,10 +69,26 @@
   <td>30000</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Create</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
 </tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Update</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<!--change visible column and theme-->
 <tr>
   <td>click</td>
   <td>id=kanban-board-options-link</td>
@@ -101,6 +139,7 @@
   <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
   <td>30000</td>
 </tr>
+<!--select opportunity created in functional test-->
 <tr>
   <td>type</td>
   <td>OpportunitiesSearchForm_anyMixedAttributes</td>
@@ -118,7 +157,7 @@
 </tr>
 <tr>
   <td>waitForText</td>
-  <td>//div[@id='kanban-board']/div[5]/div/ul/li[1]/div/span[3]/a</td>
+  <td>//div[@id='kanban-board']/div[3]/div/ul/li/div/span[3]/a</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
 <tr>
@@ -131,6 +170,7 @@
   <td>OpportunitiesSearchForm_anyMixedAttributes</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
+<!--clear search result-->
 <tr>
   <td>click</td>
   <td>id=clear-search-link</td>

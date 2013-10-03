@@ -89,8 +89,8 @@
             $data[ComponentForWorkflowForm::TYPE_TRIGGERS][] = array('attributeIndexOrDerivedType' => 'date',
                 'operator'                    => null,
                 'valueType'                   => 'Between',
-                'value'                       => '2/24/12',
-                'secondValue'                 => '2/28/12');
+                'value'                       => '2/24/2012',
+                'secondValue'                 => '2/28/2012');
             $data[ComponentForWorkflowForm::TYPE_TRIGGERS][] = array('attributeIndexOrDerivedType' => 'string',
                 'operator'                    => OperatorRules::TYPE_EQUALS,
                 'value'                       => 'something');
@@ -154,8 +154,8 @@
             $data[ComponentForWorkflowForm::TYPE_TRIGGERS][] = array('attributeIndexOrDerivedType' => 'date',
                                                                   'operator'                    => null,
                                                                   'valueType'                   => 'Between',
-                                                                  'value'                       => '2/24/12',
-                                                                  'secondValue'                 => '2/28/12');
+                                                                  'value'                       => '2/24/2012',
+                                                                  'secondValue'                 => '2/28/2012');
             DataToWorkflowUtil::resolveTriggers($data, $workflow);
             $triggers = $workflow->getTriggers();
             $this->assertCount(1, $triggers);
@@ -171,10 +171,10 @@
         {
             //test specifically for date/dateTime conversion from local to db format.
             $triggersData         = array();
-            $triggersData[0]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/12');
-            $triggersData[1]      = array('attributeIndexOrDerivedType' => 'dateTime', 'value' => '2/25/12');
-            $triggersData[2]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/12',
-                                          'secondValue'                 => '2/28/12');
+            $triggersData[0]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/2012');
+            $triggersData[1]      = array('attributeIndexOrDerivedType' => 'dateTime', 'value' => '2/25/2012');
+            $triggersData[2]      = array('attributeIndexOrDerivedType' => 'date',     'value' => '2/24/2012',
+                                          'secondValue'                 => '2/28/2012');
             $sanitizedTriggerData = DataToWorkflowUtil::sanitizeTriggersData('WorkflowsTestModule',
                                                                              Workflow::TYPE_ON_SAVE, $triggersData);
             $this->assertEquals('2012-02-24', $sanitizedTriggerData[0]['value']);
@@ -212,10 +212,10 @@
                         'currencyId'   => $currency->id),
                     'date'          => array('shouldSetValue'    => '1',
                         'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
-                        'value'  => '2/24/12'),
+                        'value'  => '2/24/2012'),
                     'dateTime'      => array('shouldSetValue'    => '1',
                         'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
-                        'value'  => '2/24/12 03:00 AM'),
+                        'value'  => '2/24/2012 03:00 AM'),
                     'dropDown'      => array('shouldSetValue'    => '1',
                         'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
                         'value'  => 'Value 1'),
@@ -286,7 +286,7 @@
 
             $this->assertTrue($actions[0]->getActionAttributeFormByName('dateTime') instanceof DateTimeWorkflowActionAttributeForm);
             $this->assertEquals('Static',    $actions[0]->getActionAttributeFormByName('dateTime')->type);
-            $compareDateTime = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('2/24/12 03:00 AM');
+            $compareDateTime = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('2/24/2012 03:00 AM');
             $this->assertEquals($compareDateTime,  $actions[0]->getActionAttributeFormByName('dateTime')->value);
 
             $this->assertTrue($actions[0]->getActionAttributeFormByName('dropDown') instanceof DropDownWorkflowActionAttributeForm);
@@ -478,10 +478,10 @@
                     'currencyId'   => $currency->id),
                 'date'          => array('shouldSetValue'    => '1',
                     'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
-                    'value'  => '2/24/12'),
+                    'value'  => '2/24/2012'),
                 'dateTime'      => array('shouldSetValue'    => '1',
                     'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
-                    'value'  => '2/24/12 03:00 AM'),
+                    'value'  => '2/24/2012 03:00 AM'),
                 'dropDown'      => array('shouldSetValue'    => '1',
                     'type'   => WorkflowActionAttributeForm::TYPE_STATIC,
                     'value'  => 'Value 1'),
@@ -555,7 +555,7 @@
 
             $this->assertTrue($actions[0]->getActionAttributeFormByName('dateTime') instanceof DateTimeWorkflowActionAttributeForm);
             $this->assertEquals('Static',    $actions[0]->getActionAttributeFormByName('dateTime')->type);
-            $compareDateTime = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('2/24/12 03:00 AM');
+            $compareDateTime = DateTimeUtil::convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('2/24/2012 03:00 AM');
             $this->assertEquals($compareDateTime,  $actions[0]->getActionAttributeFormByName('dateTime')->value);
 
             $this->assertTrue($actions[0]->getActionAttributeFormByName('dropDown') instanceof DropDownWorkflowActionAttributeForm);

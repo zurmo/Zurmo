@@ -123,7 +123,7 @@
                                         " : prints absolute url to the current model attached to template.";
             $specialTagsItems[]     = $this->renderBoldMergeTag(MergeTagsUtil::TAG_PREFIX . "BASE" .
                                         MergeTagsUtil::CAPITAL_DELIMITER . "URL" . MergeTagsUtil::TAG_SUFFIX) .
-                                        " : prints absolute url current zurmo install without trailing slash.";
+                                        " : prints absolute url to the current install without trailing slash.";
             $specialTagsItems[]     = $this->renderBoldMergeTag(MergeTagsUtil::TAG_PREFIX . "APPLICATION" .
                                         MergeTagsUtil::CAPITAL_DELIMITER . "NAME" . MergeTagsUtil::TAG_SUFFIX) .
                                         " : prints application name as set in global settings > application name.";

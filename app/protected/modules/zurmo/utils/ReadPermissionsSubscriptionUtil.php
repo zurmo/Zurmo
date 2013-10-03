@@ -108,12 +108,12 @@
             if (!$tableExists)
             {
                 R::exec("create table $modelSubscriptionTableName (
-                                           id int(11)         unsigned not null PRIMARY KEY AUTO_INCREMENT ,
-                                           userid int(11)     unsigned not null,
-                                           modelid int(11)    unsigned not null,
-                                           modifieddatetime   datetime DEFAULT null,
-                                           subscriptiontype   tinyint(4) DEFAULT null
-                                    )");
+                                               id int(11)         unsigned not null PRIMARY KEY AUTO_INCREMENT ,
+                                               userid int(11)     unsigned not null,
+                                               modelid int(11)    unsigned not null,
+                                               modifieddatetime   datetime DEFAULT null,
+                                               subscriptiontype   tinyint(4) DEFAULT null
+                                        )");
             }
         }
 
@@ -228,13 +228,13 @@
                 foreach ($modelIdsToAdd as $modelId)
                 {
                     $sql = "DELETE FROM $tableName WHERE
-                                            userid = '" . $user->id . "'
-                                            AND modelid = '{$modelId}'
-                                            AND subscriptiontype='" . self::TYPE_DELETE . "';";
+                                                userid = '" . $user->id . "'
+                                                AND modelid = '{$modelId}'
+                                                AND subscriptiontype='" . self::TYPE_DELETE . "';";
                     R::exec($sql);
 
                     $sql = "INSERT INTO $tableName VALUES
-                                            (null, '" . $user->id . "', '{$modelId}', '{$nowDateTime}', '" . self::TYPE_ADD . "');";
+                                                (null, '" . $user->id . "', '{$modelId}', '{$nowDateTime}', '" . self::TYPE_ADD . "');";
                     R::exec($sql);
                 }
             }
@@ -244,13 +244,13 @@
                 foreach ($modelIdsToDelete as $modelId)
                 {
                     $sql = "DELETE FROM $tableName WHERE
-                                            userid = '" . $user->id . "'
-                                            AND modelid = '{$modelId}'
-                                            AND subscriptiontype='" . self::TYPE_ADD . "';";
+                                                userid = '" . $user->id . "'
+                                                AND modelid = '{$modelId}'
+                                                AND subscriptiontype='" . self::TYPE_ADD . "';";
                     R::exec($sql);
 
                     $sql = "INSERT INTO $tableName VALUES
-                                            (null, '" . $user->id . "', '{$modelId}', '{$nowDateTime}', '" . self::TYPE_DELETE . "');";
+                                                (null, '" . $user->id . "', '{$modelId}', '{$nowDateTime}', '" . self::TYPE_DELETE . "');";
                     R::exec($sql);
                 }
             }
@@ -301,6 +301,46 @@
                 foreach ($modelIdsRows as $modelIdRow)
                 {
                     $modelIds[] = $modelIdRow['modelid'];
+                }
+            }
+            return $modelIds;
+        }
+
+        /**
+         * Get all added model names and ids from read permission subscription table
+         * @param $serviceName
+         * @param $modelClassName
+         * @param $lastUpdateTimestamp
+         * @param $user
+         * @return array
+         */
+        public static function getAddedModelNamesAndIdsFromReadSubscriptionTable($serviceName,
+                                                                                 $modelClassName,
+                                                                                 $lastUpdateTimestamp,
+                                                                                 $user)
+        {
+            assert('$user instanceof User');
+            $tableName = self::getSubscriptionTableName($modelClassName);
+            $modelTableName = RedBeanModel::getTableName($modelClassName);
+            $dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($lastUpdateTimestamp);
+            $sql = "SELECT {$tableName}.modelid, {$modelTableName}.name FROM $tableName" .
+                " left join " . ModelCreationApiSyncUtil::TABLE_NAME . " isct " .
+                " on isct.modelid = {$tableName}.modelid" .
+                " AND isct.servicename = '" . $serviceName . "'" .
+                " AND isct.modelclassname = '" . $modelClassName . "'" .
+                " left join {$modelTableName} on {$modelTableName}.id = {$tableName}.modelid" .
+                " WHERE {$tableName}.userid = " . $user->id .
+                " AND {$tableName}.subscriptiontype = " . self::TYPE_ADD .
+                " AND {$tableName}.modifieddatetime >= '" . $dateTime . "'" .
+                " AND isct.modelid is null" .
+                " order by {$tableName}.modifieddatetime ASC, {$tableName}.modelid  ASC";
+            $modelIdsRows = R::getAll($sql);
+            $modelIds = array();
+            if (is_array($modelIdsRows) && !empty($modelIdsRows))
+            {
+                foreach ($modelIdsRows as $modelIdRow)
+                {
+                    $modelIds[$modelIdRow['modelid']] = $modelIdRow['name'];
                 }
             }
             return $modelIds;

@@ -208,9 +208,9 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Set the date and datetime variable values here.
-            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormatForInput(), time());
             $dateAssert     = date('Y-m-d');
-            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormatForInput(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
             //Get the super user, account, opportunity and contact id.
@@ -300,9 +300,9 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Set the date and datetime variable values here.
-            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormatForInput(), time());
             $dateAssert     = date('Y-m-d');
-            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormatForInput(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
             //Get the super user, account, opportunity and contact id.
@@ -397,9 +397,9 @@
             $super = $this->logoutCurrentUserLoginNewUserAndGetByUsername('super');
 
             //Set the date and datetime variable values here.
-            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormat(), time());
+            $date           = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateFormatForInput(), time());
             $dateAssert     = date('Y-m-d');
-            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormat(), time());
+            $datetime       = Yii::app()->dateFormatter->format(DateTimeUtil::getLocaleDateTimeFormatForInput(), time());
             $datetimeAssert = date('Y-m-d H:i:')."00";
 
             //Get the super user, account, opportunity and contact id.

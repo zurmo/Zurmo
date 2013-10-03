@@ -36,7 +36,6 @@
 
     class AccountConvertToView extends EditView
     {
-
         protected $wrapContentInWrapperDiv = false;
 
         /**

@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>SearchProduct</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Search Product</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to products list-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,14 +34,40 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>assertTextPresent</td>
 	<td>Create</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertTextPresent</td>
+	<td>Products</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Catalog Items</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Categories</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<!--select product created in functional test-->
+<tr>
 	<td>type</td>
 	<td>id=ProductsSearchForm_anyMixedAttributes</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>keyUp</td>
@@ -50,18 +77,19 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='list-view']/table/tbody/tr/td[2]</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyValue</td>
 	<td>ProductsSearchForm_anyMixedAttributes</td>
-	<td>Product ${randomSuffix}</td>
+	<td>Test Product ${randomSuffix}</td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>click</td>
 	<td>id=clear-search-link</td>

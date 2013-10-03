@@ -16,6 +16,7 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to contacts list-->
 <tr>
 	<td>open</td>
 	<td>index.php/contacts/default?clearingSearch=1</td>
@@ -32,20 +33,26 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
+	<td>assertTextPresent</td>
 	<td>Create</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
+	<td>assertTextPresent</td>
 	<td>Update</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced</td>
+	<td>assertTextPresent</td>
+	<td>Export</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<!--select contact created in functional test-->
 <tr>
 	<td>type</td>
 	<td>ContactsSearchForm_anyMixedAttributes</td>
@@ -76,6 +83,7 @@
 	<td>ContactsSearchForm_anyMixedAttributes</td>
 	<td>Jane ${randomSuffix}</td>
 </tr>
+<!--go in detail view of contact-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
@@ -96,6 +104,7 @@
 	<td>3000</td>
 	<td></td>
 </tr>
+<!--star contact-->
 <tr>
   <td>click</td>
   <td>//div[@id='ContactDetailsPortletView']/div/div/div[2]/h2/a</td>
@@ -111,6 +120,7 @@
 	<td>0</td>
 	<td></td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>open</td>
 	<td>index.php/contacts/default?clearingSearch=1</td>
@@ -126,6 +136,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify contact is starred or not-->
 <tr>
   <td>click</td>
   <td>id=starDataColumn_filterByStarred</td>

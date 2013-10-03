@@ -41,16 +41,18 @@
     {
         /**
          * Given a string and a length, return the chopped string if it is larger than the length.
-         * @param string $string
-         * @param integer $length
+         * @param $string
+         * @param $length
+         * @param string $ellipsis
+         * @return string
          */
-        public static function getChoppedStringContent($string, $length)
+        public static function getChoppedStringContent($string, $length, $ellipsis = '...')
         {
             assert('is_string($string)');
             assert('is_int($length)');
             if (strlen($string) > $length)
             {
-                return substr($string, 0, ($length - 3)) . '...';
+                return substr($string, 0, ($length - 3)) . $ellipsis;
             }
             else
             {

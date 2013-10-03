@@ -78,17 +78,21 @@
             }
             $modelClassName  = get_class($data->getModel($attribute));
             $moduleClassName = self::resolveModuleClassName($attribute, $data);
+            if (!$shouldRenderMultipleLinks)
+            {
+                $url = static::makeUrl($model->id, $moduleClassName);
+                return ZurmoHtml::link($attributeString, $url, array("target" => "new"));
+            }
             return static::makeStringForMultipleLinks($attributeString,
                                                       $modelClassName,
-                                                      $moduleClassName,
-                                                      $shouldRenderMultipleLinks);
+                                                      $moduleClassName);
         }
 
-        public static function makeStringForMultipleLinks($value, $modelClassName, $moduleClassName, $shouldRenderMultipleLinks = true)
+        public static function makeStringForMultipleLinks($value, $modelClassName, $moduleClassName)
         {
             assert('is_string($modelClassName)');
             $models          = $modelClassName::getByName(strval($value));
-            if (count($models) <= 1 || !$shouldRenderMultipleLinks)
+            if (count($models) <= 1)
             {
                 $url = static::makeUrl($models[0]->id, $moduleClassName);
                 return ZurmoHtml::link($value, $url, array("target" => "new"));

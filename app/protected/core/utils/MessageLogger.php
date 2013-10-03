@@ -106,7 +106,7 @@
             $this->messages[] = $message;
             if ($this->messageStreamer != null)
             {
-                if($message[0] != MessageLogger::DEBUG ||
+                if ($message[0] != MessageLogger::DEBUG ||
                     ($this->shouldPrintDebugMessages() && $message[0] == MessageLogger::DEBUG))
                 {
                     $this->messageStreamer->add(static::getTypeLabel($message[0]) . ' - ' . $message[1]);
@@ -131,7 +131,7 @@
             {
                 if (!$errorOnly || ($errorOnly && $messageInfo[0] == MessageLogger::ERROR))
                 {
-                    if($messageInfo[0] != MessageLogger::DEBUG ||
+                    if ($messageInfo[0] != MessageLogger::DEBUG ||
                         ($this->shouldPrintDebugMessages() && $messageInfo[0] == MessageLogger::DEBUG))
                     {
                         $content .= static::getTypeLabel($messageInfo[0]) . ' - ' . $messageInfo[1] . "\n";
@@ -156,7 +156,7 @@
             {
                 return Zurmo::t('Core', 'Error');
             }
-            elseif($type == MessageLogger::INFO)
+            elseif ($type == MessageLogger::INFO)
             {
                 return Zurmo::t('Core', 'Info');
             }
@@ -179,7 +179,7 @@
          */
         protected function shouldPrintDebugMessages()
         {
-            if(YII_DEBUG)
+            if (YII_DEBUG)
             {
                 return true;
             }

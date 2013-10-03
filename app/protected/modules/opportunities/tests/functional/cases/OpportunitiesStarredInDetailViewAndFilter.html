@@ -16,36 +16,43 @@
   <td>45000</td>
   <td></td>
 </tr>
+<!--Go to opportunities list-->
 <tr>
-  <td>open</td>
-  <td>index.php/opportunities/default?clearingSearch=1</td>
-  <td></td>
+	<td>open</td>
+	<td>index.php/opportunities/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForPageToLoad</td>
-  <td></td>
-  <td></td>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
-  <td>waitForCondition</td>
-  <td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-  <td>30000</td>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Create</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Update</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>Update</td>
+	<td></td>
 </tr>
 <tr>
-  <td>verifyTextPresent</td>
-  <td>Advanced</td>
-  <td></td>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<!--select opportunity created in functional test-->
 <tr>
   <td>type</td>
   <td>OpportunitiesSearchForm_anyMixedAttributes</td>
@@ -76,6 +83,7 @@
   <td>OpportunitiesSearchForm_anyMixedAttributes</td>
   <td>Test Opportunity ${randomSuffix}</td>
 </tr>
+<!--go in detail view of opportunity-->
 <tr>
   <td>click</td>
   <td>//div[@id='list-view']/table/tbody/tr/td[3]/a</td>
@@ -96,6 +104,7 @@
 	<td>3000</td>
 	<td></td>
 </tr>
+<!--star opportunity-->
 <tr>
   <td>click</td>
   <td>//div[@id='OpportunityDetailsAndRelationsView']/div[2]/div/ul[1]/li[1]/div/h3/a</td>
@@ -111,6 +120,7 @@
 	<td>0</td>
 	<td></td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>open</td>
 	<td>index.php/opportunities/default?clearingSearch=1</td>
@@ -126,6 +136,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify opportunity is starred or not-->
 <tr>
   <td>click</td>
   <td>id=starDataColumn_filterByStarred</td>

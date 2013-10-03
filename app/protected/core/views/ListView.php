@@ -220,7 +220,8 @@
         protected static function getGridTemplate()
         {
             $preloader = '<div class="list-preloader"><span class="z-spinner"></span></div>';
-            return "{summary}\n{items}\n{pager}" . $preloader;
+            $items     = '<div class="items-wrapper">{items}</div>';
+            return "{summary}" . $items . "{pager}" . $preloader;
         }
 
         protected static function getPagerCssClass()

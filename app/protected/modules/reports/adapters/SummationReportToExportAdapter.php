@@ -88,6 +88,8 @@
             $pageSize               = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                                             'reportResultsSubListPageSize', $report->getModuleClassName());
             $dataProvider           = ReportDataProviderFactory::makeForSummationDrillDown($report, $pageSize);
+            $totalItems = intval($dataProvider->calculateTotalItemCount());
+            $dataProvider->getPagination()->setPageSize($totalItems);
             $reportToExportAdapter  = ReportToExportAdapterFactory::createReportToExportAdapter($report, $dataProvider);
             $drillDownHeaderData    = $reportToExportAdapter->getHeaderData();
             $drillDownData          = $reportToExportAdapter->getData();

@@ -17,9 +17,55 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to create template-->
 <tr>
 	<td>open</td>
-	<td>index.php/workflows/default</td>
+	<td>index.php/workflows/default?clearingSearch=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Workflows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Templates</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Time Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Message Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ordering</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//ul[@id='MashableInboxCreateDropdown']/li/ul/li[1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,12 +80,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//ul[@id='MashableInboxCreateDropdown']/li/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//ul[@id='MashableInboxCreateDropdown']/li/ul/li[2]/a/span</td>
+	<td>//ul[@id='MashableInboxCreateDropdown']/li/ul/li[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,10 +94,43 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/h1/span/span</td>
+	<td>waitForTextPresent</td>
 	<td>Create Email Template</td>
+	<td></td>
 </tr>
+<!--check validation-->
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Name cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Subject cannot be blank.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Please provide at least one of the contents field.</td>
+	<td></td>
+</tr>
+<!--check default values-->
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>EmailTemplate_modelClassName_value</td>
+	<td>Accounts</td>
+</tr>
+<!--add template details-->
 <tr>
 	<td>click</td>
 	<td>id=EmailTemplate_name</td>
@@ -102,10 +176,41 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after creating template-->
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/div[2]/div/table/tbody/tr[2]/td</td>
+	<td>assertTextPresent</td>
 	<td>EmailTemplateTest ${randomSuffix}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/div[2]/div[1]/table/tbody/tr[1]/td</td>
+	<td>Accounts</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/div[2]/div[1]/table/tbody/tr[2]/td</td>
+	<td>EmailTemplateTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='EmailTemplateEditAndDetailsView']/div/div[2]/div[1]/table/tbody/tr[3]/td</td>
+	<td>Email Template Subject ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='tab1']</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

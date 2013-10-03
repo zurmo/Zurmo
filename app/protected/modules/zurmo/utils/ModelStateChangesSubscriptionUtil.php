@@ -58,7 +58,6 @@
             $modelIds = ReadPermissionsSubscriptionUtil::getAddedOrDeletedModelsFromReadSubscriptionTable(
                 $serviceName, $modelClassName, $timestamp, ReadPermissionsSubscriptionUtil::TYPE_ADD,
                 Yii::app()->user->userModel);
-
             if (!is_array($modelIds) || empty($modelIds))
             {
                 return false;
@@ -127,38 +126,45 @@
         public static function getUpdatedModels($modelClassName, $pageSize, $offset, $timestamp,
                                                 $stateMetadataAdapterClassName = null, $owner = null)
         {
-            $metadata = array();
-            $dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($timestamp);
-            $metadata['clauses'] = array(
-                1 => array(
-                    'attributeName'        => 'modifiedDateTime',
-                    'operatorType'         => 'greaterThan',
-                    'value'                => $dateTime
-                )
-            );
-
-            if (isset($owner) && $owner instanceof User)
+            if ($timestamp != 0)
             {
-                $metadata['clauses'][2] = array(
-                    'attributeName'        => 'owner',
-                    'operatorType'         => 'equals',
-                    'value'                => $owner->id
+                $metadata = array();
+                $dateTime = DateTimeUtil::convertTimestampToDbFormatDateTime($timestamp);
+                $metadata['clauses'] = array(
+                    1 => array(
+                        'attributeName'        => 'modifiedDateTime',
+                        'operatorType'         => 'greaterThan',
+                        'value'                => $dateTime
+                    )
                 );
-                $metadata['structure'] = "(1 AND 2) AND (item.modifiedDateTime > (3 + item.createdDateTime))";
+
+                if (isset($owner) && $owner instanceof User)
+                {
+                    $metadata['clauses'][2] = array(
+                        'attributeName'        => 'owner',
+                        'operatorType'         => 'equals',
+                        'value'                => $owner->id
+                    );
+                    $metadata['structure'] = "(1 AND 2) AND (item.modifiedDateTime > (3 + item.createdDateTime))";
+                }
+                else
+                {
+                    $metadata['structure'] = "1 AND (item.modifiedDateTime > (3 + item.createdDateTime))";
+                }
+
+                $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
+                if ($stateMetadataAdapterClassName != null)
+                {
+                    $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
+                    $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
+                }
+                $where  = RedBeanModelDataProvider::makeWhere($modelClassName, $metadata, $joinTablesAdapter);
+                return $modelClassName::getSubset($joinTablesAdapter, $offset, $pageSize, $where, 'modifiedDateTime asc');
             }
             else
             {
-                $metadata['structure'] = "1 AND (item.modifiedDateTime > (3 + item.createdDateTime))";
+                return array();
             }
-
-            $joinTablesAdapter   = new RedBeanModelJoinTablesQueryAdapter($modelClassName);
-            if ($stateMetadataAdapterClassName != null)
-            {
-                $stateMetadataAdapter = new $stateMetadataAdapterClassName($metadata);
-                $metadata = $stateMetadataAdapter->getAdaptedDataProviderMetadata();
-            }
-            $where  = RedBeanModelDataProvider::makeWhere($modelClassName, $metadata, $joinTablesAdapter);
-            return $modelClassName::getSubset($joinTablesAdapter, $offset, $pageSize, $where, 'modifiedDateTime asc');
         }
     }
 ?>

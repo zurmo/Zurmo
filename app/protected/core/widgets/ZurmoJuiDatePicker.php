@@ -54,7 +54,7 @@
             $this->options['showButtonPanel'] = true;
             $this->options['buttonImageOnly'] = false;
             $this->options['dateFormat']      = YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
-                                                    DateTimeUtil::getLocaleDateFormat());
+                                                    DateTimeUtil::getLocaleDateFormatForInput());
         }
 
         protected function resolveDefaultLanguage()

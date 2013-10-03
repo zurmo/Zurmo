@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>MassDeleteProduct</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Mass Delete Product</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -17,11 +17,7 @@
 	<td>45000</td>
 	<td></td>
 </tr>
-<tr>
-	<td>setSpeed</td>
-	<td>3000</td>
-	<td></td>
-</tr>
+<!--Go to products list-->
 <tr>
 	<td>open</td>
 	<td>index.php/products/default?clearingSearch=1</td>
@@ -38,10 +34,36 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>assertTextPresent</td>
 	<td>Create</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Products</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Catalog Items</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Categories</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<!--select products created in demo controller-->
 <tr>
 	<td>type</td>
 	<td>id=ProductsSearchForm_anyMixedAttributes</td>
@@ -67,11 +89,13 @@
 	<td>ProductsSearchForm_anyMixedAttributes</td>
 	<td>Product</td>
 </tr>
+<!--select all products-->
 <tr>
 	<td>click</td>
 	<td>id=list-view-rowSelector_all</td>
 	<td></td>
 </tr>
+<!--go to mass delete view-->
 <tr>
 	<td>clickAndWait</td>
 	<td>//ul[@id='MassDeleteLinkActionElement']/li/ul/li/a/span</td>
@@ -92,6 +116,7 @@
 	<td>selected for removal</td>
 	<td></td>
 </tr>
+<!--mass delete products-->
 <tr>
 	<td>clickAndWait</td>
 	<td>name=delete</td>
@@ -137,6 +162,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>click</td>
 	<td>id=clear-search-link</td>

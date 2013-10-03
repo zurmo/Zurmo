@@ -45,6 +45,7 @@
         {
             parent::setUpBeforeClass();
             $super = SecurityTestHelper::createSuperAdmin();
+            Yii::app()->pagination->setReportResultsSubListPageSize(1);
         }
 
         public function setUp()

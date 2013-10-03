@@ -88,10 +88,10 @@
             echo $this->endAndGetOutputBuffer();
             $this->fail();
         }
-        
+
         private static function cleanUpOutputBuffer()
         {
-            while(count(ob_get_status(true)) > 1)
+            while (count(ob_get_status(true)) > 1)
             {
                 ob_end_clean();
             }

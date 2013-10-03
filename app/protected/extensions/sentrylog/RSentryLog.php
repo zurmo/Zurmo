@@ -72,8 +72,7 @@ class RSentryLog extends CLogRoute
       } else if ($log[1] == 'trace') {
         $level = self::DEBUG;
       }
-
-      if (isset($log[3]) && $log[3] == true)
+      if ($level != self::ERROR)
       {
           return;
       }

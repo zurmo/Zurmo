@@ -16,10 +16,11 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to accounts list-->
 <tr>
-     <td>open</td>
-     <td>index.php/accounts/default?clearingSearch=1</td>
-     <td></td>
+	<td>open</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForPageToLoad</td>
@@ -32,10 +33,26 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Advanced</td>
+	<td>assertTextPresent</td>
+	<td>Create</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Update</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Export</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Delete</td>
+	<td></td>
+</tr>
+<!--checkbox checked and unchecked-->
 <tr>
 	<td>verifyValue</td>
 	<td>list-view-rowSelector_0</td>
@@ -51,9 +68,10 @@
 	<td>list-view-rowSelector_0</td>
 	<td>on</td>
 </tr>
+<!--select accounts for mass edit-->
 <tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +114,7 @@
 	<td>list-view-rowSelector_1</td>
 	<td></td>
 </tr>
+<!--mass edit accounts-->
 <tr>
 	<td>clickAndWait</td>
 	<td>//ul[@id='MassEditLinkActionElement']/li/ul/li/a/span</td>
@@ -116,6 +135,7 @@
 	<td>2 records selected for updating</td>
 	<td></td>
 </tr>
+<!--check validation-->
 <tr>
 	<td>click</td>
 	<td>MassEdit_owner</td>
@@ -171,6 +191,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after mass editing contacts-->
 <tr>
 	<td>clickAndWait</td>
 	<td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
@@ -191,9 +212,10 @@
 	<td>Financial Services</td>
 	<td></td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>open</td>
-	<td>index.php/accounts/default</td>
+	<td>index.php/accounts/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>

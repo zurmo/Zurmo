@@ -1039,12 +1039,11 @@
         public function isSuperAdministrator()
         {
             $superGroup = Group::getByName(Group::SUPER_ADMINISTRATORS_GROUP_NAME);
-            if($this->groups->contains($superGroup))
+            if ($this->groups->contains($superGroup))
             {
                 return true;
             }
             return false;
         }
-
     }
 ?>

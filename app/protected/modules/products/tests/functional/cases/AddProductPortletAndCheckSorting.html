@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>SortingProductPortlet</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Sorting Product Portlet</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -17,7 +17,7 @@
   <td>45000</td>
   <td></td>
 </tr>
-<!--check sorting and paging-->
+<!--load account and products related to account-->
 <tr>
 	<td>open</td>
 	<td>index.php/products/demo/loadProductsSampler</td>
@@ -28,6 +28,7 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--go to accounts list-->
 <tr>
 	<td>open</td>
 	<td>index.php/accounts/default?clearingSearch=1</td>
@@ -58,6 +59,7 @@
 	<td>Advanced</td>
 	<td></td>
 </tr>
+<!--select account we have created in demo controller-->
 <tr>
 	<td>type</td>
 	<td>AccountsSearchForm_anyMixedAttributes</td>
@@ -88,6 +90,7 @@
 	<td>AccountsSearchForm_anyMixedAttributes</td>
 	<td>My Account For Product Test</td>
 </tr>
+<!--go in detail view of account-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='list-view']/table/tbody/tr[1]/td[3]/a</td>
@@ -113,6 +116,7 @@
 	<td>//div[@id='AccountDetailsPortletView']/div/div/div/table/tbody/tr[1]/td</td>
 	<td>My Account For Product Test</td>
 </tr>
+<!--unlock to edit this screen's layout-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='AccountDetailsAndRelationsView']/div[1]/div/a</td>
@@ -128,6 +132,7 @@
 	<td>//a[@id='AddPortletLink']</td>
 	<td>Add Portlet</td>
 </tr>
+<!--remove existing product portlet-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[2]/li[1]/div[1]/ul/li/ul/li/a</td>
@@ -138,6 +143,7 @@
 	<td>This portlet will be removed, ok?</td>
 	<td></td>
 </tr>
+<!--add product portlet-->
 <tr>
 	<td>click</td>
 	<td>id=AddPortletLink</td>
@@ -173,6 +179,7 @@
 	<td>//div[@id='AccountDetailsAndRelationsView']/div[2]/div/ul[2]/li[1]/div[1]/h3</td>
 	<td>Products</td>
 </tr>
+<!--check sorting of product portlet-->
 <tr>
 	<td>click</td>
 	<td>id=ProductsConfigurationForm_filteredByStage_0</td>

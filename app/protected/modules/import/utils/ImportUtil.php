@@ -236,10 +236,10 @@
         {
             $moduleClassName   = $model::getModuleClassName();
             $stateMetadataAdapterClassName = $moduleClassName::getStateMetadataAdapterClassName();
-            if($stateMetadataAdapterClassName != null)
+            if ($stateMetadataAdapterClassName != null)
             {
                 //todo: eventually refactor this to be more broad in handling, but for now we want the scope of this to be narrow
-                if($model instanceof OwnedSecurableItem)
+                if ($model instanceof OwnedSecurableItem)
                 {
                     $model->setTreatCurrentUserAsOwnerForPermissions(true);
                 }

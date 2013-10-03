@@ -60,7 +60,7 @@
             $this->options['buttonImageOnly'] = false;
             $this->options['timeFormat']      = $this->getTimeFormat();
             $this->options['dateFormat']      = YiiToJqueryUIDatePickerLocalization::resolveDateFormat(
-                                                    DateTimeUtil::getLocaleDateFormat());
+                                                    DateTimeUtil::getLocaleDateFormatForInput());
         }
 
         protected function resolveDefaultLanguage()

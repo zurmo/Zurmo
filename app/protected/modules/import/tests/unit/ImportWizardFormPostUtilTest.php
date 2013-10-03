@@ -44,16 +44,16 @@
                 'column_0' => array('attributeIndexOrDerivedType' => 'date',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
-                                            array('defaultValue' => '5/4/11'))),
+                                            array('defaultValue' => '5/4/2011'))),
                 'column_1' => array('attributeIndexOrDerivedType' => 'dateTime',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
-                                            array('defaultValue' => '5/4/11 5:45 PM'))),
+                                            array('defaultValue' => '5/4/2011 5:45 PM'))),
             );
             $sanitizedPostData = ImportWizardFormPostUtil::
                                  sanitizePostByTypeForSavingMappingData('ImportModelTestItem', $postData);
             $compareDateTime   = DateTimeUtil::
-                                 convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('5/4/11 5:45 PM');
+                                 convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('5/4/2011 5:45 PM');
             $compareData = array(
                 'column_0' => array('attributeIndexOrDerivedType' => 'date',
                                     'mappingRulesData' => array(
@@ -72,16 +72,16 @@
                 'column_0' => array('attributeIndexOrDerivedType' => 'date',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
-                                            array('defaultValue' => '04.05.11'))),
+                                            array('defaultValue' => '04.05.2011'))),
                 'column_1' => array('attributeIndexOrDerivedType' => 'dateTime',
                                     'mappingRulesData' => array(
                                         'DefaultValueModelAttributeMappingRuleForm' =>
-                                            array('defaultValue' => '04.05.11 17:45'))),
+                                            array('defaultValue' => '04.05.2011 17:45'))),
             );
             $sanitizedPostData = ImportWizardFormPostUtil::
                                  sanitizePostByTypeForSavingMappingData('ImportModelTestItem', $postData);
             $compareDateTime   = DateTimeUtil::
-                                 convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('04.05.11 17:45');
+                                 convertDateTimeLocaleFormattedDisplayToDbFormattedDateTimeWithSecondsAsZero('04.05.2011 17:45');
             $compareData = array(
                 'column_0' => array('attributeIndexOrDerivedType' => 'date',
                                     'mappingRulesData' => array(

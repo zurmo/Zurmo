@@ -262,7 +262,7 @@
                 'selectAll' => '',
                 'Opportunity_page' => 1));
             $this->setPostArray(array(
-                'Opportunity'  => array('closeDate' => '12/5/12'),
+                'Opportunity'  => array('closeDate' => '12/5/2012'),
                 'MassEdit' => array('closeDate' => 1)
             ));
             $pageSize = Yii::app()->pagination->getForCurrentUserByType('massEditProgressPageSize');
@@ -431,7 +431,7 @@
             $this->setPostArray(array('Opportunity' => array(
                                             'name'        => 'myNewOpportunity',
                                             'description' => '456765421',
-                                            'closeDate'   => '11/1/11',
+                                            'closeDate'   => '11/1/2011',
                                             'amount' => array(  'value' => '545',
                                                                 'currency' => array('id' => $currencies[0]->id)),
                                             'stage'       => array('value' => 'Negotiating'))));
@@ -471,7 +471,7 @@
             $this->setPostArray(array('Opportunity' => array(
                                         'name'        => 'myUltraNewOpportunity',
                                         'description' => '456765421',
-                                        'closeDate'   => '11/1/11',
+                                        'closeDate'   => '11/1/2011',
                                         'amount' => array(  'value' => '545',
                                                             'currency' => array('id' => $currencies[0]->id)),
                                         'stage'       => array('value' => 'Negotiating'))));
@@ -496,7 +496,7 @@
             $this->setPostArray(array('Opportunity' => array(
                                         'name'        => 'mySuperNewOpportunity',
                                         'description' => '456765421',
-                                        'closeDate'   => '11/1/11',
+                                        'closeDate'   => '11/1/2011',
                                         'amount' => array(  'value' => '545',
                                                             'currency' => array('id' => $currencies[0]->id)),
                                         'stage'       => array('value' => 'Negotiating'))));
@@ -560,7 +560,7 @@
             );
 
             $postArray['Opportunity']['name']       = 'myNewClonedOpportunity';
-            $postArray['Opportunity']['closeDate']  = '11/1/12';
+            $postArray['Opportunity']['closeDate']  = '11/1/2012';
 
             $this->setGetArray(array('id' => $opportunities[0]->id));
             $this->setPostArray($postArray);

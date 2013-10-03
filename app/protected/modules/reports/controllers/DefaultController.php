@@ -571,8 +571,11 @@
             $pageSize     = Yii::app()->pagination->resolveActiveForCurrentUserByType(
                             'reportResultsListPageSize', get_class($this->getModule()));
             $dataProvider = ReportDataProviderFactory::makeByReport($report, $pageSize);
-            $totalItems = intval($dataProvider->calculateTotalItemCount());
-            $dataProvider->getPagination()->setPageSize($totalItems);
+            if (!($dataProvider instanceof MatrixReportDataProvider))
+            {
+                $totalItems = intval($dataProvider->calculateTotalItemCount());
+                $dataProvider->getPagination()->setPageSize($totalItems);
+            }
             if ($runReport)
             {
                 $dataProvider->setRunReport($runReport);

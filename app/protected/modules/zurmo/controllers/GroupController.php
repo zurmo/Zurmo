@@ -149,8 +149,8 @@
         public function actionEditUserMembership($id)
         {
             $group              = Group::getById(intval($id));
-            $title           = Zurmo::t('ZurmoModule', 'User Membership');
-            $breadcrumbLinks = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
+            $title              = Zurmo::t('ZurmoModule', 'User Membership');
+            $breadcrumbLinks    = array(strval($group) => array('group/' . static::resolveBreadCrumbActionByGroup($group),  'id' => $id), $title);
             $membershipForm     = GroupUserMembershipFormUtil::makeFormFromGroup($group);
             $postVariableName   = get_class($membershipForm);
             if (isset($_POST[$postVariableName]))
@@ -160,6 +160,10 @@
                 if (null != $message = GroupUserMembershipFormUtil::validateMembershipChange($membershipForm, $group))
                 {
                     Yii::app()->user->setFlash('notification', $message);
+                }
+                elseif (!$group->canModifyMemberships())
+                {
+                    throw new SecurityException();
                 }
                 elseif (GroupUserMembershipFormUtil::setMembershipFromForm($membershipForm, $group))
                 {

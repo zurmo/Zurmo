@@ -78,6 +78,7 @@
             $emailMessage->content      = $emailContent;
             $emailMessage->sender       = $this->resolveSender();
             $this->resolveRecipients($emailMessage);
+            $this->resolveAttachments($emailMessage, $emailTemplate);
             if ($emailMessage->recipients->count() == 0)
             {
                 throw new MissingRecipientsForEmailMessageException();
@@ -170,6 +171,23 @@
                 foreach ($emailMessageRecipient->makeRecipients($this->triggeredModel, $this->triggeredByUser) as $recipient)
                 {
                     $emailMessage->recipients->add($recipient);
+                }
+            }
+        }
+
+        /**
+         * Add the files from EmailTemplate to the EmailMessage
+         * @param EmailMessage $emailMessage
+         * @param EmailTemplate $emailTemplate
+         */
+        protected function resolveAttachments(EmailMessage $emailMessage, EmailTemplate $emailTemplate)
+        {
+            if (!empty($emailTemplate->files))
+            {
+                foreach ($emailTemplate->files as $file)
+                {
+                    $emailMessageFile   = FileModelUtil::makeByFileModel($file);
+                    $emailMessage->files->add($emailMessageFile);
                 }
             }
         }

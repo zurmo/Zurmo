@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>CreateAccount</title>
+<title>CreateCatalogItem</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create Account</td></tr>
+<tr><td rowspan="1" colspan="3">Create Catalog Item</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -25,7 +25,7 @@
 <!--Go to create catalog item-->
 <tr>
 	<td>open</td>
-	<td>index.php/products/default</td>
+	<td>index.php/products/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -131,14 +131,29 @@
 	<td>USD</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>ProductTemplate_cost_value</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertSelectedLabel</td>
 	<td>ProductTemplate_listPrice_currency_id</td>
 	<td>USD</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>ProductTemplate_listPrice_value</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertSelectedLabel</td>
 	<td>ProductTemplate_sellPrice_currency_id</td>
 	<td>USD</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>ProductTemplate_sellPrice_value</td>
+	<td></td>
 </tr>
 <!--add catalog item details-->
 <tr>
@@ -164,12 +179,12 @@
 <tr>
 	<td>typeKeys</td>
 	<td>//*[@id=&quot;token-input-ProductTemplateCategoriesForm_ProductCategory_ids&quot;]</td>
-	<td>boo</td>
+	<td>Jil</td>
 </tr>
 <tr>
 	<td>typeKeys</td>
 	<td>//*[@id=&quot;token-input-ProductTemplateCategoriesForm_ProductCategory_ids&quot;]</td>
-	<td>boo</td>
+	<td>Jil</td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
@@ -231,6 +246,7 @@
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
 </tr>
+<!--verify values after creating catalog item-->
 <tr>
 	<td>assertTextPresent</td>
 	<td>Test Catalog Item ${randomSuffix}</td>
@@ -250,6 +266,11 @@
 	<td>assertText</td>
 	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[2]/td</td>
 	<td>test description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='ProductTemplateDetailsView']/div/div[2]/div/table/tbody/tr[3]/td</td>
+	<td>Books</td>
 </tr>
 <tr>
 	<td>assertText</td>

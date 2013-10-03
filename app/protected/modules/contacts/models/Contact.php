@@ -189,5 +189,10 @@
         {
             return true;
         }
+
+        public static function supportsQueueing()
+        {
+            return true;
+        }
     }
 ?>

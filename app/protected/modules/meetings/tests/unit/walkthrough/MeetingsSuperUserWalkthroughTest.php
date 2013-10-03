@@ -104,7 +104,7 @@
             $this->setGetArray(array(   'relationAttributeName' => 'Account', 'relationModelId' => $superAccountId,
                                         'relationModuleId'      => 'accounts', 'redirectUrl' => 'someRedirect'));
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
-                                      'Meeting' => array('name' => 'myMeeting', 'startDateTime' => '11/1/11 7:45 PM')));
+                                      'Meeting' => array('name' => 'myMeeting', 'startDateTime' => '11/1/2011 7:45 PM')));
             $this->runControllerWithRedirectExceptionAndGetContent('meetings/default/createFromRelation');
 
             //now test that the new meeting exists, and is related to the account.
@@ -168,7 +168,7 @@
             $this->setGetArray(array(   'relationAttributeName' => 'Account', 'relationModelId' => $superAccountId,
                                         'relationModuleId'      => 'accounts', 'redirectUrl' => 'someRedirect'));
             $this->setPostArray(array('ActivityItemForm' => $activityItemPostData,
-                                      'Meeting' => array('name' => 'myMeeting2', 'startDateTime' => '11/1/11 7:45 PM')));
+                                      'Meeting' => array('name' => 'myMeeting2', 'startDateTime' => '11/1/2011 7:45 PM')));
             $this->runControllerWithRedirectExceptionAndGetContent('meetings/default/createFromRelation');
 
             //now test that the new meeting exists, and is related to the account.

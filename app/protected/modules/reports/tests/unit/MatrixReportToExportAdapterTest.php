@@ -587,7 +587,7 @@
             $adapter            = ReportToExportAdapterFactory::createReportToExportAdapter($report, $dataProvider);
             $compareRowData     = array(
                 array(null, 'report name'),
-                array('Phone', 'Count',),
+                array('Phone', 'Count'),
                 array('123456789', 1),
                 array('987654321', 1)
             );

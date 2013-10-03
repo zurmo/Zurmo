@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to workflows list-->
 <tr>
 	<td>open</td>
-	<td>index.php/workflows/default</td>
+	<td>index.php/workflows/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,9 +34,45 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>assertTextPresent</td>
+	<td>Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Workflows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Templates</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Time Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Message Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ordering</td>
+	<td></td>
+</tr>
+<!--select workflow created in functional test-->
+<tr>
 	<td>type</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>WorkflowTest ${randomSuffix}</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>keyUp</td>
@@ -43,20 +80,26 @@
 	<td>\10</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>waitForText</td>
 	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>WorkflowTest ${randomSuffix}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyValue</td>
 	<td>WorkflowsSearchForm_anyMixedAttributes</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
+<!--go in detail view of workflow-->
 <tr>
 	<td>click</td>
 	<td>//div[@id='list-view']/table/tbody/tr[1]/td[2]/a</td>
@@ -74,32 +117,23 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>
-	<td>WorkflowTestEdit ${randomSuffix}</td>
+    <td>//div[@id='WorkflowDetailsView']/div/div[2]/div/table/tbody/tr[1]/td</td>
+	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
 <tr>
 	<td>setSpeed</td>
 	<td>3000</td>
 	<td></td>
 </tr>
+<!--delete workflow-->
 <tr>
-	<td>click</td>
+	<td>clickAndWait</td>
 	<td>link=Delete</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForCondition</td>
-	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
-	<td>30000</td>
-</tr>
-<tr>
-	<td>waitForConfirmation</td>
+	<td>assertConfirmation</td>
 	<td>Are you sure you want to delete this workflow?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>chooseOkOnNextConfirmation</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -113,9 +147,30 @@
 	<td>30000</td>
 </tr>
 <tr>
+	<td>verifyTextPresent</td>
+	<td>If you can't describe what you are doing as a process, you don't know what you're doing.</td>
+	<td></td>
+</tr>
+<tr>
 	<td>setSpeed</td>
 	<td>0</td>
 	<td></td>
+</tr>
+<!--clear search result-->
+<tr>
+	<td>open</td>
+	<td>index.php/productTemplates/default/list?clearingSearch=1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 </tbody>
 </table>

@@ -128,6 +128,24 @@
                                     array(
                                         array(
                                             'elements' => array(
+                                                array('attributeName' => 'defaultFromEmailAddress', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
+                                                array('attributeName' => 'defaultTestToEmailAddress', 'type' => 'Text'),
+                                            ),
+                                        ),
+                                    )
+                                ),
+                                array('cells' =>
+                                    array(
+                                        array(
+                                            'elements' => array(
                                                 array('attributeName' => 'gamificationModalNotificationsEnabled',
                                                                                                 'type' => 'CheckBox'),
                                             ),

@@ -194,6 +194,35 @@
             $this->assertTrue($account3->name == $models[0]->name || $account3->name == $models[1]->name || $account3->name == $models[2]->name);
             $this->assertTrue($account4->id == $models[0]->id || $account4->id == $models[1]->id || $account4->id == $models[2]->id);
             $this->assertTrue($account4->name == $models[0]->name || $account4->name == $models[1]->name || $account4->name == $models[2]->name);
+
+            // Not test for non super user
+            $job = new ReadPermissionSubscriptionQuickUpdateJob();
+            $mike = UserTestHelper::createBasicUser('Mike');
+            $mikeAccount1 = AccountTestHelper::createAccountByNameForOwner('ABC Account', Yii::app()->user->userModel);
+            $timestamp = time();
+            $this->assertTrue($job->run());
+            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 2, 0, $timestamp);
+            $this->assertTrue(is_array($models));
+            $this->assertTrue(empty($models));
+
+            $mikeAccount1->name = 'ABCD Account';
+            $this->assertTrue($mikeAccount1->save());
+            // This should return true, because there should be 3 second gap between created and modified timestamps
+            $this->assertTrue($job->run());
+            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 2, 0, $timestamp);
+            $this->assertTrue(is_array($models));
+            $this->assertTrue(empty($models));
+
+            sleep(4);
+            $mikeAccount1->name = 'AB Account';
+            $this->assertTrue($mikeAccount1->save());
+            $this->assertTrue($job->run());
+            $models = ModelStateChangesSubscriptionUtil::getUpdatedModels('Account', 2, 0, $timestamp);
+
+            $this->assertTrue(is_array($models));
+            $this->assertEquals(1, count($models));
+            $this->assertEquals($mikeAccount1->id, $models[0]->id);
+            $this->assertEquals($mikeAccount1->name, $models[0]->name);
         }
     }
 ?>

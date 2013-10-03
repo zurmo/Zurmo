@@ -1265,7 +1265,7 @@
                               )
             begin
                 set @select_statement  = concat("select permission.securableitem_id, _group.id, permission.permitable_id
-                                         from ", model_table_name ,", ownedsecurableitem, permission, _group
+                                         from ", model_table_name , ", ownedsecurableitem, permission, _group
                                          where
                                          ", model_table_name, ".ownedsecurableitem_id = ownedsecurableitem.id AND
                                          ownedsecurableitem.securableitem_id = permission.securableitem_id AND

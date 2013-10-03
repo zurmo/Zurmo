@@ -195,7 +195,7 @@
                 $sanitizer = ImportSanitizerUtilFactory::
                                          make('PriceFrequency', 'ProductTemplate', 'priceFrequency',
                                          'column_7', $mappingData['column_7']);
-                if($counter == 1)
+                if ($counter == 1)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
@@ -204,19 +204,19 @@
                     {
                         $sanitizer->sanitizeValue($rowBean->column_7);
                     }
-                    catch(InvalidValueToSanitizeException $e)
+                    catch (InvalidValueToSanitizeException $e)
                     {
                         $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Price Frequency specified is invalid.'), $e->getMessage());
                     }
                 }
-                elseif($counter == 2)
+                elseif ($counter == 2)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                     $value = $sanitizer->sanitizeValue($rowBean->column_7);
                     $this->assertEquals(2, $value);
                 }
-                elseif($counter == 3)
+                elseif ($counter == 3)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_7);
                     $this->assertEquals(2, $value);
@@ -224,7 +224,7 @@
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                 }
-                elseif($counter == 4)
+                elseif ($counter == 4)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_7);
                     $this->assertEquals(1, $value);
@@ -248,7 +248,7 @@
                 $sanitizer = ImportSanitizerUtilFactory::
                                          make('ProductTemplateStatus', 'ProductTemplate', 'status',
                                          'column_9', $mappingData['column_9']);
-                if($counter == 1)
+                if ($counter == 1)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
@@ -257,19 +257,19 @@
                     {
                         $sanitizer->sanitizeValue($rowBean->column_9);
                     }
-                    catch(InvalidValueToSanitizeException $e)
+                    catch (InvalidValueToSanitizeException $e)
                     {
                         $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Status specified is invalid.'), $e->getMessage());
                     }
                 }
-                elseif($counter == 2)
+                elseif ($counter == 2)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                     $value = $sanitizer->sanitizeValue($rowBean->column_9);
                     $this->assertEquals(2, $value);
                 }
-                elseif($counter == 3)
+                elseif ($counter == 3)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_9);
                     $this->assertEquals(1, $value);
@@ -277,7 +277,7 @@
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                 }
-                elseif($counter == 4)
+                elseif ($counter == 4)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_9);
                     $this->assertEquals(1, $value);
@@ -301,7 +301,7 @@
                 $sanitizer = ImportSanitizerUtilFactory::
                                          make('ProductTemplateType', 'ProductTemplate', 'type',
                                          'column_8', $mappingData['column_8']);
-                if($counter == 1)
+                if ($counter == 1)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
@@ -310,19 +310,19 @@
                     {
                         $sanitizer->sanitizeValue($rowBean->column_8);
                     }
-                    catch(InvalidValueToSanitizeException $e)
+                    catch (InvalidValueToSanitizeException $e)
                     {
                         $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Type specified is invalid.'), $e->getMessage());
                     }
                 }
-                elseif($counter == 2)
+                elseif ($counter == 2)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                     $value = $sanitizer->sanitizeValue($rowBean->column_8);
                     $this->assertEquals(2, $value);
                 }
-                elseif($counter == 3)
+                elseif ($counter == 3)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_8);
                     $this->assertEquals(3, $value);
@@ -330,7 +330,7 @@
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                 }
-                elseif($counter == 4)
+                elseif ($counter == 4)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_8);
                     $this->assertEquals(1, $value);
@@ -354,7 +354,7 @@
                 $sanitizer = ImportSanitizerUtilFactory::
                                          make('SellPriceFormulaType', 'ProductTemplate', 'sellPriceFormula__type',
                                          'column_2', $mappingData['column_2']);
-                if($counter == 1)
+                if ($counter == 1)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(1, count($sanitizer->getAnalysisMessages()));
@@ -363,19 +363,19 @@
                     {
                         $sanitizer->sanitizeValue($rowBean->column_2);
                     }
-                    catch(InvalidValueToSanitizeException $e)
+                    catch (InvalidValueToSanitizeException $e)
                     {
                         $this->assertEquals(Zurmo::t('ProductTemplatesModule', 'Sell Price Formula type specified is invalid.'), $e->getMessage());
                     }
                 }
-                elseif($counter == 2)
+                elseif ($counter == 2)
                 {
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                     $value = $sanitizer->sanitizeValue($rowBean->column_2);
                     $this->assertEquals(2, $value);
                 }
-                elseif($counter == 3)
+                elseif ($counter == 3)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_2);
                     $this->assertEquals(2, $value);
@@ -383,7 +383,7 @@
                     $sanitizer->analyzeByRow($rowBean);
                     $this->assertEquals(0, count($sanitizer->getAnalysisMessages()));
                 }
-                elseif($counter == 4)
+                elseif ($counter == 4)
                 {
                     $value = $sanitizer->sanitizeValue($rowBean->column_2);
                     $this->assertEquals(3, $value);

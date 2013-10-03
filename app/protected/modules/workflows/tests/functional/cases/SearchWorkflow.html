@@ -17,9 +17,10 @@
 	<td>45000</td>
 	<td></td>
 </tr>
+<!--Go to workflows list-->
 <tr>
 	<td>open</td>
-	<td>index.php/workflows/default</td>
+	<td>index.php/workflows/default?clearingSearch=1</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,19 +34,55 @@
 	<td>30000</td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
+	<td>assertTextPresent</td>
+	<td>Create</td>
 	<td></td>
 </tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Workflows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Templates</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Time Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Message Queue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>Ordering</td>
+	<td></td>
+</tr>
+<!--select workflow created in functional test-->
 <tr>
 	<td>type</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
 <tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
+</tr>
+<tr>
 	<td>keyUp</td>
 	<td>id=WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>\10</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>30000</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -62,6 +99,7 @@
 	<td>WorkflowsSearchForm_anyMixedAttributes</td>
 	<td>WorkflowTest ${randomSuffix}</td>
 </tr>
+<!--clear search result-->
 <tr>
 	<td>click</td>
 	<td>id=clear-search-link</td>
@@ -71,6 +109,11 @@
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>Criteria Selected</td>
+	<td></td>
 </tr>
 </tbody>
 </table>
